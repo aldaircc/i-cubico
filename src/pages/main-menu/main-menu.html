@@ -1,0 +1,85 @@
+<!--
+  Generated template for the MainMenuPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header >
+
+  <ion-toolbar >
+    <ion-title>SGAA Principal</ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="goBackWarehouseSelect()">
+          <ion-icon name="shuffle"></ion-icon>
+        </button>
+      </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding >
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+       
+        <ion-item>
+            <ion-icon name="home" item-start></ion-icon>
+            {{userProfile.Almacen}}
+        </ion-item>
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <p align="center">
+      <button ion-button  item-end icon-start block  (click)="goReciboPage()">
+        <ion-icon name="clipboard"></ion-icon>
+        Recibo
+      </button>
+      <button ion-button  item-end icon-start block  >
+          <ion-icon name="cart"></ion-icon>
+          Picking
+      </button>
+      <button ion-button  item-end icon-start block (click)="goAlmacenajePage()" >
+            <ion-icon name="grid"></ion-icon>
+            Almacenaje
+      </button>
+      <button ion-button  item-end icon-start block >
+          <ion-icon name="repeat"></ion-icon>
+          Transferencias
+      </button>
+      <button ion-button  item-end icon-start block >
+          <ion-icon name="logo-dropbox"></ion-icon>
+          Packing
+      </button>
+      <button ion-button  item-end icon-start block >
+            <ion-icon name="paper"></ion-icon>
+            Embarque
+      </button>
+      <button ion-button  item-end icon-start block >
+          <ion-icon name="barcode"></ion-icon>
+          Inventario
+      </button>
+      <button ion-button  item-end icon-start block  >
+            <ion-icon name="map"></ion-icon>
+            Etiquetado
+      </button>
+      <button ion-button  icon-start color="danger" block round (click)="goBackLoginPage()">
+              <ion-icon name="home"></ion-icon>
+              Salir
+      </button>
+  </p>
+
+  <ion-card >
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+              <ion-icon name="contact" item-start></ion-icon>
+              {{userProfile.ApeNom}}
+          </ion-item>
+          
+  
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+</ion-content>
