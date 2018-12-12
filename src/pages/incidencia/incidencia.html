@@ -21,7 +21,7 @@
           <ion-label>N° Orden:</ion-label>
         </ion-col>
         <ion-col>
-          <ion-label></ion-label>
+          <ion-label>123456789</ion-label>
         </ion-col>
       </ion-row>
 
@@ -29,8 +29,33 @@
         <ion-col>
           <ion-label>Causal:</ion-label>
         </ion-col>
-        <ion-col>
-          
+        <ion-col col-sm col-9>
+            <ion-select [(ngModel)]="notifications" interface="action-sheet">
+              <ion-option value="mute_15">For 15 Minutes</ion-option>
+              <ion-option value="mute_1">For 1 Hour</ion-option>
+              <ion-option value="mute_23">For 24 Hours</ion-option>
+              <ion-option value="mute_inf">Until I turn it back on</ion-option>
+            </ion-select>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-12 col-sm>
+          <ion-label>Date</ion-label>
+          <ion-select interface="popover">
+            <ion-option value="01">January</ion-option>
+            <ion-option value="02">February</ion-option>
+            <ion-option value="03" selected="true">March</ion-option>
+            <ion-option value="04">April</ion-option>
+            <ion-option value="05">May</ion-option>
+            <ion-option value="06">June</ion-option>
+            <ion-option value="07">July</ion-option>
+            <ion-option value="08">August</ion-option>
+            <ion-option value="09">September</ion-option>
+            <ion-option value="10">October</ion-option>
+            <ion-option value="11">November</ion-option>
+            <ion-option value="12">December</ion-option>
+    </ion-select>
         </ion-col>
       </ion-row>
 
