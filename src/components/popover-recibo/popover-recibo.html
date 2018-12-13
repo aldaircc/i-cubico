@@ -1,0 +1,16 @@
+<!-- Generated template for the PopoverReciboComponent component -->
+<!-- <div>
+  <ion-item *ngFor="let item of items" (click)="itemClick(item)">
+    <ion-icon name="options"></ion-icon> {{ item.item }}
+  </ion-item>
+</div> -->
+
+<ion-list>
+    <ion-list-header color="primary">Options</ion-list-header>
+    <button ion-item (tap)="backup()">Backup</button>
+    <button ion-item (tap)="restore()"> <ion-icon name="ios-clock"></ion-icon> Restore backup</button>
+    <button ion-button icon-start>
+        <ion-icon name="ios-clock"></ion-icon>
+        Left Icon
+      </button>
+ </ion-list>

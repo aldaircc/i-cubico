@@ -5,11 +5,18 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
+  <ion-toolbar>
   <ion-navbar>
-    <ion-title>Registrar incidencia</ion-title>
-  </ion-navbar>
+      <ion-title>Registrar incidencia</ion-title>
+    </ion-navbar>
 
+  <ion-buttons start>
+    <button ion-button (click)="dismiss()">
+      <span ion-text color="primary" showWhen="ios">Cancel</span>
+      <ion-icon name='md-close'></ion-icon>
+    </button>
+  </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 
