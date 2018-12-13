@@ -15,7 +15,20 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class EtiquetaCajaLpnPage {
 
+  public event = {
+    month: '1990-02-19',
+    timeStarts: '07:43',
+    timeEnds: '1990-02-20'
+  }
+
+  selectOptions : any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.selectOptions = {
+      title: 'Pizza Toppings',
+      subTitle: 'Select your toppings',
+      mode: 'md'
+    };
   }
 
   ionViewDidLoad() {
