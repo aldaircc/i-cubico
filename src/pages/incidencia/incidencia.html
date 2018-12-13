@@ -15,21 +15,21 @@
 
 <ion-content padding>
 
-    <ion-grid>
+    <ion-grid class="bgWhite borderSolid">
       <ion-row>
-        <ion-col>
+        <ion-col col-4 col-sm>
           <ion-label>N° Orden:</ion-label>
         </ion-col>
-        <ion-col>
+        <ion-col col-8 col-sm>
           <ion-label>123456789</ion-label>
         </ion-col>
       </ion-row>
 
       <ion-row>
-        <ion-col>
+        <ion-col col-4 col-sm>
           <ion-label>Causal:</ion-label>
         </ion-col>
-        <ion-col col-sm col-9>
+        <ion-col col-8 col-sm>
             <ion-select [(ngModel)]="notifications" interface="action-sheet">
               <ion-option value="mute_15">For 15 Minutes</ion-option>
               <ion-option value="mute_1">For 1 Hour</ion-option>
@@ -41,30 +41,12 @@
 
       <ion-row>
         <ion-col col-12 col-sm>
-          <ion-label>Date</ion-label>
-          <ion-select interface="popover">
-            <ion-option value="01">January</ion-option>
-            <ion-option value="02">February</ion-option>
-            <ion-option value="03" selected="true">March</ion-option>
-            <ion-option value="04">April</ion-option>
-            <ion-option value="05">May</ion-option>
-            <ion-option value="06">June</ion-option>
-            <ion-option value="07">July</ion-option>
-            <ion-option value="08">August</ion-option>
-            <ion-option value="09">September</ion-option>
-            <ion-option value="10">October</ion-option>
-            <ion-option value="11">November</ion-option>
-            <ion-option value="12">Diciembre</ion-option>
-    </ion-select>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>
           <ion-label>Observación:</ion-label>
         </ion-col>
-        <ion-col>
-          
+        <ion-col col-12 col-sm>
+          <ion-item>
+            <ion-textarea type="text" rows="7" autosize></ion-textarea>
+          </ion-item>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -72,6 +54,6 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <button ion-button full>Full Button</button>
+    <button ion-button full>Continuar</button>
   </ion-toolbar>
 </ion-footer>

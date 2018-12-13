@@ -22,4 +22,11 @@ export class IncidenciaPage {
     console.log('ionViewDidLoad IncidenciaPage');
   }
 
+  protected adjustTextarea(event: any): void {
+    debugger;
+    let textarea: any = event.target;
+    textarea.rows = textarea.value.split('\n').length;
+    return;
+  }
+
 }
