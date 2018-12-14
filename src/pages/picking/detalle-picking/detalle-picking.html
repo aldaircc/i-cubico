@@ -25,7 +25,35 @@
   
   
   <ion-content >
-      <ion-row style="background: #00BFFF" >
+
+      <ion-grid style="padding: 0px;">
+          <ion-row no-padding no-margin style="background: #00BFFF" > 
+              <ion-col col-3 style="padding-left: 0px; padding-right: 0px">
+                <ion-label style="padding-left: 10px; margin-top: 3px; margin-bottom: 1px; color: yellow; font-weight:bold ">
+                    N° Orden:
+                </ion-label>
+              </ion-col>
+              <ion-col col-9 style="padding-left: 0px; padding-right: 0px">
+                <ion-label style="padding-left: 10px; margin-top: 3px; margin-bottom: 1px; color: white; font-weight:bold ">
+                  ORD2018181
+                </ion-label>
+              </ion-col>
+          </ion-row>
+          <ion-row no-padding no-margin style="background: #00BFFF" > 
+              <ion-col col-3 style="padding-left: 0px; padding-right: 0px; padding-top: 0px">
+                  <ion-label style="padding-left: 10px; margin-top: 1px; margin-bottom: 5px; color: yellow; font-weight:bold ">
+                    Cliente:
+                  </ion-label>
+              </ion-col>
+              <ion-col col-9 style="padding-left: 0px; padding-right: 0px; padding-top: 0px">
+                  <ion-label style="padding-left: 10px; margin-top: 1px; margin-bottom: 5px; color: white; font-weight:bold ">
+                    INVERSIONES BALBIN S.A.C.
+                  </ion-label>
+              </ion-col>
+          </ion-row>
+      </ion-grid>
+
+      <!-- <ion-row style="background: #00BFFF" >
           <ion-label style="padding-left: 10px; margin-top: 5px; margin-bottom: 5px; color: yellow; font-weight:bold ">
             N° Orden:
           </ion-label>
@@ -34,7 +62,7 @@
           <ion-label style="padding-left: 10px; margin-top: 5px; margin-bottom: 5px; color: yellow; font-weight:bold ">
             Cliente:
           </ion-label>
-      </ion-row>
+      </ion-row> -->
   
     <ion-row class="bgLightBlue" >
       <ion-searchbar (input)="getItems($event)"></ion-searchbar>

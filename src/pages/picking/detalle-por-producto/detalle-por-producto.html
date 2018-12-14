@@ -25,21 +25,45 @@
 
 
 <ion-content >
-    <ion-row style="background: #00BFFF" >
-        <ion-label style="padding-left: 10px; margin-top: 5px; margin-bottom: 5px; color: yellow; font-weight:bold ">
-          N° Orden:
-        </ion-label>
-    </ion-row>
-    <ion-row style="background: #00BFFF" >
-        <ion-label style="padding-left: 10px; margin-top: 5px; margin-bottom: 5px; color: yellow; font-weight:bold ">
-          Producto:
-        </ion-label>
-    </ion-row>
-    <ion-row style="background: #00BFFF" >
-      <ion-label style="padding-left: 10px; margin-top: 5px; margin-bottom: 5px; color: yellow; font-weight:bold ">
-        Código:
-      </ion-label>
-  </ion-row>
+
+    <ion-grid style="padding: 0px;">
+        <ion-row no-padding no-margin style="background: #00BFFF" > 
+            <ion-col col-3 style="padding-left: 0px; padding-right: 0px">
+                <ion-label style="padding-left: 10px; margin-top: 5px; margin-bottom: 1px; color: yellow; font-weight:bold ">
+                    N° Orden:
+                  </ion-label>
+            </ion-col>
+            <ion-col col-9 style="padding-left: 0px; padding-right: 0px">
+                <ion-label style="padding-left: 10px; margin-top: 5px; margin-bottom: 1px; color: white; font-weight:bold ">
+                    ORD2018181
+                  </ion-label>
+            </ion-col>
+        </ion-row>
+        <ion-row no-padding no-margin style="background: #00BFFF" > 
+            <ion-col col-3 style="padding-left: 0px; padding-right: 0px; padding-TOP: 0px">
+                <ion-label style="padding-left: 10px; margin-top: 1px; margin-bottom: 1px; color: yellow; font-weight:bold ">
+                    Producto:
+                  </ion-label>
+            </ion-col>
+            <ion-col col-9 style="padding-left: 0px; padding-right: 0px; padding-TOP: 0px">
+                <ion-label style="padding-left: 10px; margin-top: 1px; margin-bottom: 1px; color: white; font-weight:bold ">
+                    ALERGIS 0.75 % GEL X 5 g M.M.
+                  </ion-label>
+            </ion-col>
+        </ion-row>
+        <ion-row no-padding no-margin style="background: #00BFFF" > 
+            <ion-col col-3 style="padding-left: 0px; padding-right: 0px; padding-TOP: 0px">
+                <ion-label style="padding-left: 10px; margin-top: 1px; margin-bottom: 1px; color: yellow; font-weight:bold ">
+                    Código:
+                  </ion-label>
+            </ion-col>
+            <ion-col col-9 style="padding-left: 0px; padding-right: 0px; padding-TOP: 0px">
+                <ion-label style="padding-left: 10px; margin-top: 1px; margin-bottom: 1px; color: white; font-weight:bold ">
+                    121904A1002001
+                  </ion-label>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 
   <ion-row class="bgLightBlue" >
     <ion-searchbar (input)="getItems($event)"></ion-searchbar>
