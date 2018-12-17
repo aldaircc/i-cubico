@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController, PopoverController } from 'ionic-angular';
 import { ReciboServiceProvider } from '../../../providers/recibo-service/recibo-service';
 import { ReciboPage_03Page } from '../recibo-page-03/recibo-page-03';
 import { ImpresoraPage } from '../../impresora/impresora';
+import { PopoverReciboComponent } from '../../../components/popover-recibo/popover-recibo';
+import { IncidenciaPage } from '../../incidencia/incidencia';
 
 /**
  * Generated class for the ReciboPage_02Page page.
@@ -30,12 +32,48 @@ export class ReciboPage_02Page {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private alertCtrl: AlertController, public sRecibo: ReciboServiceProvider,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController, public popoverCtrl: PopoverController) {
       this.vReciboPage01 = navParams.get('data');
       const data = JSON.parse(localStorage.getItem('vUserData'));
       this.userDetail = data;
       this.getDetailXTx(this.vReciboPage01.Id_Tx);
       console.log('From p01', this.vReciboPage01);
+  }
+
+  presentPopover(myEvent){
+    debugger;
+    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 2});
+    popover.present({
+      ev: myEvent
+    });
+
+    popover.onDidDismiss(popoverData =>{
+      debugger;
+      console.log('data popover', popoverData);
+      if(popoverData == 1){
+
+      }else if(popoverData == 2){
+
+        this.showModalIncidencia(this.vReciboPage01);
+      }
+    });
+  }
+
+  showModalIncidencia(data){
+    debugger;
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, 
+      { 
+        'Id_Tx' : data.Id_Tx,
+        'FlagPausa' : data.FlagPausa,
+        'Cliente' : data.Cliente,
+        'Proveedor' : data.Proveedor,
+        'Id_TipoMovimiento' : data.Id_TipoMovimiento 
+      });
+    modalIncidencia.onDidDismiss(data =>{
+      debugger;
+      console.log("datos", data);
+    });
+    modalIncidencia.present();
   }
 
   switchStyle() {
