@@ -60,15 +60,17 @@ export class ReciboPage_02Page {
   }
 
   showModalIncidencia(data){
-    debugger;
-    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, 
-      { 
+    let obj = { 
         'Id_Tx' : data.Id_Tx,
         'FlagPausa' : data.FlagPausa,
         'Cliente' : data.Cliente,
+        'Id_Cliente' : data.Id_Cliente,
         'Proveedor' : data.Proveedor,
-        'Id_TipoMovimiento' : data.Id_TipoMovimiento 
-      });
+        'Id_TipoMovimiento' : data.Id_TipoMovimiento,
+        'Origen' : 'RP02'
+      };
+
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'objRecPage02' : obj});
     modalIncidencia.onDidDismiss(data =>{
       debugger;
       console.log("datos", data);

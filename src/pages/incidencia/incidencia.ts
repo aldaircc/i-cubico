@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IncidenciaServiceProvider } from '../../providers/incidencia-service/incidencia-service';
 
 /**
  * Generated class for the IncidenciaPage page.
@@ -15,22 +16,29 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 })
 export class IncidenciaPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl:ViewController) {
+  vParameters : any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl:ViewController,
+    public sIncidencia: IncidenciaServiceProvider) {
+    this.vParameters = navParams.get('objRecPage02');
+    debugger;
+    this.listarCausalesXModulo(0, 1);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad IncidenciaPage');
   }
 
-  protected adjustTextarea(event: any): void {
-    debugger;
-    let textarea: any = event.target;
-    textarea.rows = textarea.value.split('\n').length;
-    return;
-  }
-
   dismiss(){
     let data = { 'foo': 'bar' };
     this.viewCtrl.dismiss(data);
   }
+
+  listarCausalesXModulo(id_Cliente, id_Modulo){
+    this.sIncidencia.listarCausalesXModulo(id_Cliente, id_Modulo).then(result=>{
+      debugger;
+      console.log('Result', result);
+    });
+  }
+
 }
