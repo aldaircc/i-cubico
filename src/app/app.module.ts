@@ -31,6 +31,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ImpresoraServiceProvider } from '../providers/impresora-service/impresora-service';
 import { IncidenciaPage } from '../pages/incidencia/incidencia';
 import { IncidenciaServiceProvider } from '../providers/incidencia-service/incidencia-service';
+import { EtiquetaCajaLpnPage } from '../pages/etiqueta-caja-lpn/etiqueta-caja-lpn';
+import { PopoverReciboComponent } from '../components/popover-recibo/popover-recibo';
 
 @NgModule({
   declarations: [
@@ -48,11 +50,16 @@ import { IncidenciaServiceProvider } from '../providers/incidencia-service/incid
     AlmacenajePage,
     ImpresoraPage,
     IncidenciaPage,
+    EtiquetaCajaLpnPage,
+    PopoverReciboComponent,
     MomentjsPipe //Pipe to give format to dates.
   ],
   imports: [
     BrowserModule,HttpModule,HttpClientModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp,{
+      monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Setiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      monthShortNames: ['ENE','FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SET', 'OCT', 'NOV', 'DIC']
+    }),
     WarehouseSelectPageModule,
     MainMenuPageModule,
     NgxDatatableModule
@@ -72,7 +79,9 @@ import { IncidenciaServiceProvider } from '../providers/incidencia-service/incid
     ReciboPage_04Page,
     AlmacenajePage,
     ImpresoraPage,
-    IncidenciaPage
+    IncidenciaPage,
+    EtiquetaCajaLpnPage,
+    PopoverReciboComponent
   ],
   providers: [
     StatusBar,

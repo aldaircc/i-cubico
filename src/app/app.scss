@@ -71,6 +71,10 @@
     .bgYellow{
         background-color: #ffff00;
     }
+
+    .borderSolid{
+        border: 1px solid #0000001a;
+    }
     
   @import 'themes/bootstrap';
   @import 'themes/dark';
