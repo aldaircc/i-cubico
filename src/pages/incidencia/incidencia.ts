@@ -29,4 +29,8 @@ export class IncidenciaPage {
     return;
   }
 
+  dismiss(){
+    let data = { 'foo': 'bar' };
+    this.viewCtrl.dismiss(data);
+  }
 }
