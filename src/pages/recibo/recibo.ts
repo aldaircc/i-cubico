@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { ReciboServiceProvider } from '../../providers/recibo-service/recibo-service';
 import { ReciboPage_02Page } from './recibo-page-02/recibo-page-02';
+import { IncidenciaPage } from '../incidencia/incidencia';
 
 /**
  * Generated class for the ReciboPage page.
@@ -29,7 +30,7 @@ export class ReciboPage {
   rowCount: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    public sRecibo: ReciboServiceProvider) {
+    public sRecibo: ReciboServiceProvider, public modalCtrl: ModalController) {
     const data = JSON.parse(localStorage.getItem('vUserData'));
     this.userDetail = data;
     this.getDataRecepcion();
@@ -67,21 +68,47 @@ export class ReciboPage {
   }
 
   goToReciboPage02(data){
-    this.vReciboPage01 = {
-      "Id_Tx": data.Id_Tx,
-      "NumOrden":data.NumOrden,
-      "Cuenta":data.Cliente,
-      "Proveedor":data.Proveedor,
-      "Id_TipoMovimiento":data.Id_TipoMovimiento,
-      "FlagPausa":data.FlagPausa,
-      "Id_Cliente": data.Id_Cliente
-    };
-    this.navCtrl.push(ReciboPage_02Page, {
-      data: this.vReciboPage01
-    });
+
+    if(data.FlagPausa == true){
+      this.showModalIncidencia(data);
+    }else{
+      
+      this.vReciboPage01 = {
+        "Id_Tx": data.Id_Tx,
+        "NumOrden":data.NumOrden,
+        "Cuenta":data.Cliente,
+        "Proveedor":data.Proveedor,
+        "Id_TipoMovimiento":data.Id_TipoMovimiento,
+        "FlagPausa":data.FlagPausa,
+        "Id_Cliente": data.Id_Cliente
+      };
+
+      this.navCtrl.push(ReciboPage_02Page, {
+        data: this.vReciboPage01
+      });
+    }
   }
 
   getDataRecepcion(){
     this.getRecepcionesXUsuario(this.userDetail[0].Usuario, 2, 1);
+  }
+
+  showModalIncidencia(data){
+    let obj = { 
+        'Id_Tx' : data.Id_Tx,
+        'FlagPausa' : data.FlagPausa,
+        'Cliente' : data.Cliente,
+        'Id_Cliente' : data.Id_Cliente,
+        'Proveedor' : data.Proveedor,
+        'Id_TipoMovimiento' : data.Id_TipoMovimiento,
+        'Origen' : 'RP01'
+      };
+
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'objRecPage01' : obj});
+    modalIncidencia.onDidDismiss(data =>{
+      debugger;
+      console.log("datos", data);
+    });
+    modalIncidencia.present();
   }
 }

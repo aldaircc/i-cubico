@@ -32,16 +32,20 @@
       </ion-row>
 
       <ion-row>
-        <ion-col col-4 col-sm>
+        <ion-col col-3 col-sm>
           <ion-label>Causal:</ion-label>
         </ion-col>
-        <ion-col col-8 col-sm>
-            <ion-select [(ngModel)]="notifications" interface="action-sheet">
-              <ion-option value="mute_15">For 15 Minutes</ion-option>
-              <ion-option value="mute_1">For 1 Hour</ion-option>
-              <ion-option value="mute_23">For 24 Hours</ion-option>
-              <ion-option value="mute_inf">Until I turn it back on</ion-option>
+        <ion-col col-9 col-sm>
+            <!-- <ion-select [(ngModel)]="id_Causal" interface="action-sheet">
+              <ion-option *ngFor="#causal of listCausal" [value]="causal">
+                  {{ causal.Causal }}
+              </ion-option>
+            </ion-select> -->
+
+            <ion-select #causal [(ngModel)]="id_Causal" interface="action-sheet" [disabled]="flagPausa">
+              <ion-option *ngFor="let causal of listCausal" value="{{ causal.Id_Causal }}" >{{causal.Causal}} </ion-option>
             </ion-select>
+
         </ion-col>
       </ion-row>
 
@@ -51,7 +55,8 @@
         </ion-col>
         <ion-col col-12 col-sm>
           <ion-item>
-            <ion-textarea type="text" rows="7" autosize></ion-textarea>
+            <ion-textarea type="text" rows="7" autosize [(ngModel)]="observacion"></ion-textarea>
+            
           </ion-item>
         </ion-col>
       </ion-row>
@@ -60,6 +65,6 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <button ion-button full>Continuar</button>
+    <button ion-button full (click)="btnProcesar()">{{ (flagPausa == false) ? 'Continuar' : 'Detener' }}</button>
   </ion-toolbar>
 </ion-footer>
