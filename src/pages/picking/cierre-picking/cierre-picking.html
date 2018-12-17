@@ -5,17 +5,33 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-    <ion-toolbar color="primary">
+    <ion-toolbar no-padding no-margin color="primary">
         
+            <ion-grid style="padding: 0px;">
+                    <ion-row no-padding no-margin  > 
+                        <ion-col no-margin no-padding col-10>
+                            <ion-navbar no-padding no-margin>
+                                <ion-label style="font-size: 15px; color: white; font-weight:bold;">CIERRE DE PICKING</ion-label>
+                            </ion-navbar>
+                        </ion-col>
+                        <ion-col no-margin no-padding col-2>
+                          <ion-buttons start style="margin-top: 12px;">                          
+                            <button no-margin no-padding ion-button icon-only>
+                              <ion-icon name="more"></ion-icon>
+                            </button>
+                            </ion-buttons>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
   
-      <ion-title>CIERRE DE PICKING</ion-title>
+      <!-- <ion-title>CIERRE DE PICKING</ion-title>
   
       <ion-buttons start>  
           
         <button ion-button icon-only>
           <ion-icon name="more"></ion-icon>
         </button>
-      </ion-buttons>
+      </ion-buttons> -->
   
     </ion-toolbar>
   </ion-header>
@@ -103,16 +119,3 @@
             </ion-row>
         </ion-grid>
     </ion-footer>
-
-  <!-- <ion-footer>   
-      <ion-grid>
-          <ion-row no-padding no-margin > 
-              <ion-col col-6 style="padding-left: 2px; padding-right: 2px">
-                  <button ion-button full style="font-size: 10px">Detalle Picking</button>
-              </ion-col>
-              <ion-col col-6 style="padding-left: 2px; padding-right: 2px">
-                  <button ion-button full style="font-size: 10px"> Cerrar Picking</button>
-              </ion-col>
-          </ion-row>
-      </ion-grid>
-    </ion-footer> -->

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { DetallePorProductoPage } from '../detalle-por-producto/detalle-por-producto'
+import { ReabastecimientoPage } from '../reabastecimiento/reabastecimiento'
 
 /**
  * Generated class for the PickingPorProductoPage page.
@@ -16,6 +18,14 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class PickingPorProductoPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+  }
+
+  goDetallePorProductoPage():void{
+    this.navCtrl.push(DetallePorProductoPage);
+  }
+
+  goReabastecimientoPage():void{
+    this.navCtrl.push(ReabastecimientoPage);
   }
 
   ionViewDidLoad() {

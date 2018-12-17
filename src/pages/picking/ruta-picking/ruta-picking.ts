@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { DetallePickingPage } from '../detalle-picking/detalle-picking';
+import {PickingPorProductoPage} from '../picking-por-producto/picking-por-producto';
+import {CierrePickingPage} from '../cierre-picking/cierre-picking';
+
+
 
 /**
  * Generated class for the RutaPickingPage page.
@@ -18,8 +23,24 @@ export class RutaPickingPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
+  goDetallePickingPage():void{
+    this.navCtrl.push(DetallePickingPage);
+  }  
+
+  goCerrarPickingPage():void{
+    this.navCtrl.push(CierrePickingPage);
+  }
+
+  goPickingPorProductoPage():void{
+    this.navCtrl.push(PickingPorProductoPage);
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad RutaPickingPage');
   }
 
 }
+
+
+
+

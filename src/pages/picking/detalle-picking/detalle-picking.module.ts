@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
+import { NgModule, Component } from '@angular/core';
+import { IonicPageModule, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DetallePickingPage } from './detalle-picking';
 
 @NgModule({
@@ -10,4 +10,14 @@ import { DetallePickingPage } from './detalle-picking';
     IonicPageModule.forChild(DetallePickingPage),
   ],
 })
-export class DetallePickingPageModule {}
+
+
+
+export class DetallePickingPageModule {
+constructor(public navCtrl: NavController, public navParams: NavParams){
+
+}
+
+
+
+}

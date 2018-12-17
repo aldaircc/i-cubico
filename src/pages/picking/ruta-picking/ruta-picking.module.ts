@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
+import { IonicPageModule, NavController } from 'ionic-angular';
 import { RutaPickingPage } from './ruta-picking';
+import { PickingPage } from '../picking';
+
 
 @NgModule({
   declarations: [
@@ -10,4 +12,8 @@ import { RutaPickingPage } from './ruta-picking';
     IonicPageModule.forChild(RutaPickingPage),
   ],
 })
-export class RutaPickingPageModule {}
+export class RutaPickingPageModule {
+
+  
+
+}
