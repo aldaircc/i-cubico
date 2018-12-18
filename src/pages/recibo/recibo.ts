@@ -117,7 +117,6 @@ export class ReciboPage {
       console.log("datos", result);
 
       if(result.response == 200){
-        //this.getDataRecepcion();
         data.FlagPausa = !data.FlagPausa;
         this.goToReciboPage02(data);
       }
