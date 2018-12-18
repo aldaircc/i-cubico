@@ -5,6 +5,7 @@ import { ReciboPage_03Page } from '../recibo-page-03/recibo-page-03';
 import { ImpresoraPage } from '../../impresora/impresora';
 import { PopoverReciboComponent } from '../../../components/popover-recibo/popover-recibo';
 import { IncidenciaPage } from '../../incidencia/incidencia';
+import { EtiquetaCajaLpnPage } from '../../etiqueta-caja-lpn/etiqueta-caja-lpn';
 
 /**
  * Generated class for the ReciboPage_02Page page.
@@ -36,7 +37,7 @@ export class ReciboPage_02Page {
       this.vReciboPage01 = navParams.get('data');
       const data = JSON.parse(localStorage.getItem('vUserData'));
       this.userDetail = data;
-      this.getDetailXTx(this.vReciboPage01.Id_Tx);
+      this.getDetailXTx(this.vReciboPage01.Id_Tx);      
   }
 
   presentPopover(myEvent){
@@ -88,7 +89,7 @@ export class ReciboPage_02Page {
   }
 
   ionViewDidLoad() {
-    
+
   }
 
   getDetailXTx(strIdTx){
@@ -191,13 +192,40 @@ export class ReciboPage_02Page {
     }
   }
 
-  navigateToEtqCajaLpn(){
+  navigateToEtqCajaLpn(data){
     debugger;
-    let printModal = this.modalCtrl.create(ImpresoraPage, { Id_Impresora: 12345 });
-    printModal.onDidDismiss(data => {
+    let objEtq = {
+    "LoteLab": data.Lote,
+    "Id_Producto": data.Id_Producto,
+    "Id_UM": data.UM,
+    "CantidadPedida": data.CantidadPedida,
+    "Codigo": data.Codigo,
+    "Articulo": data.Descripcion, //Articulo
+    "UM": data.UM,
+    "Cliente": this.vReciboPage01.Cuenta,//data.Cuenta,
+    "UM_Base": data.UMBase,
+    "TipoAlmacenaje": data.TipoAlmacenaje,
+    "Item": data.Item,
+    "Acceso": 0,
+    "NroDoc": this.vReciboPage01.NumOrden,
+    "FecEmi": data.FechaEmision,
+    "FecVen": data.FechaVencimiento,
+    "FlagSerie": data.FlagSeriePT,
+    "FlagLote": data.FlagLotePT,
+    "CondicionAlmac": data.CondicionAlmacenamiento,
+    "Condicion": data.Condicion,
+    "Id_Condicion": data.Id_Condicion,
+    "Id_Cliente": this.vReciboPage01.Id_Cliente,
+    "idTipoMovimiento": this.vReciboPage01.Id_TipoMovimiento,
+    "IdCuentaLPN": this.vReciboPage01.Id_Cliente,
+    "Id_SubAlmacen": data.Id_SubAlmacen
+  }
+
+    let etqModal = this.modalCtrl.create(EtiquetaCajaLpnPage, { vEtq: objEtq });
+    etqModal.onDidDismiss(data => {
       console.log("Data retornada", data);
     });
-    printModal.present();
+    etqModal.present();
   }
   
 }
