@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import moment from 'moment';
 
 /**
  * Generated class for the EtiquetaCajaLpnPage page.
@@ -22,17 +23,31 @@ export class EtiquetaCajaLpnPage {
   }
 
   selectOptions : any;
+  vEtq : any;
+  fecEmi : any;
+  fecVen : any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
     this.selectOptions = {
       title: 'Pizza Toppings',
       subTitle: 'Select your toppings',
       mode: 'md'
     };
+
+      this.vEtq = navParams.get('vEtq');
+    console.log('Parametro recibido', this.vEtq);
+    debugger;
+    this.fecEmi = moment(this.vEtq.FecEmi).toISOString();// .format('YYYY-MM-DD');
+    this.fecVen = moment(this.vEtq.FecVen).format('YYYY-MM-DD');
+    console.log('FecEmi', this.fecEmi);
+    console.log('FecVen', this.fecVen);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EtiquetaCajaLpnPage');
   }
 
+  dismiss(){
+    this.viewCtrl.dismiss();
+  }
 }
