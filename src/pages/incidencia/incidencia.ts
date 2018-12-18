@@ -29,7 +29,7 @@ export class IncidenciaPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl:ViewController,
     public sIncidencia: IncidenciaServiceProvider) {
-    this.vParameters = navParams.get('objRecPage02');
+    this.vParameters = navParams.get('pIncidencia');
     this.listarCausalesXModulo(0, 1);
     
     debugger;
@@ -44,7 +44,6 @@ export class IncidenciaPage {
     this.sIncidencia.buscarControlUsuario(strId_OP, strUsuario).then(result=>{
       debugger;
       console.log('resultado control usuario', result);
-      this.observacion = "I'm your baby from Peru";
       if(result.length != 0){
         this.observacion = result[0].Observacion;
         this.flagPausa = result[0].FlagPausa;
@@ -68,7 +67,6 @@ export class IncidenciaPage {
     this.sIncidencia.buscarControlPendiente(strIdTx, strUsuario).then(result=>{
       debugger;
       console.log('resultado pendiente', result);
-      this.observacion = "I'm your baby";
       if(result.length != 0){
         this.observacion = result[0].Observacion;
         this.flagPausa = result[0].FlagPausa;
@@ -92,8 +90,7 @@ export class IncidenciaPage {
     console.log('ionViewDidLoad IncidenciaPage');
   }
 
-  dismiss(){
-    let data = { 'foo': 'bar' };
+  dismiss(data = { 'response' : 400 }){
     this.viewCtrl.dismiss(data);
   }
 
@@ -142,11 +139,13 @@ export class IncidenciaPage {
       let content = (this.flagPausa == true) ? "Continuar transacción":"Transacción detenida";
       //toast -> content
       //cerrar ventana de incidencia -> this.dismiss();
+      let data = { 'response': 200 };
+      this.dismiss(data);
+
     }else{
       //toast -> message.message
     }
       console.log('registrarControl', result);
     });
   }
-
 }

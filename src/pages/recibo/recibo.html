@@ -40,7 +40,7 @@
           Id Tx: {{objRecepcion.Id_Tx}}
       </ion-card-header>
 
-      <ion-card-content (click)="goToReciboPage02(objRecepcion)">
+      <ion-card-content (click)="evaluateGoReciboPage02(objRecepcion)">
           <h5><b>Nro. Orden: </b> {{objRecepcion.NumOrden}}</h5>
           <h5><b>Fecha: </b> {{ objRecepcion.FechaDocumento|momentjs}} </h5>
           <h5><b>Proveedor: </b> {{objRecepcion.Proveedor}}</h5>

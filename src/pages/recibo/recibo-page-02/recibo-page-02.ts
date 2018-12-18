@@ -37,7 +37,6 @@ export class ReciboPage_02Page {
       const data = JSON.parse(localStorage.getItem('vUserData'));
       this.userDetail = data;
       this.getDetailXTx(this.vReciboPage01.Id_Tx);
-      console.log('From p01', this.vReciboPage01);
   }
 
   presentPopover(myEvent){
@@ -48,8 +47,6 @@ export class ReciboPage_02Page {
     });
 
     popover.onDidDismiss(popoverData =>{
-      debugger;
-      console.log('data popover', popoverData);
       if(popoverData == 1){
 
       }else if(popoverData == 2){
@@ -70,10 +67,14 @@ export class ReciboPage_02Page {
         'Origen' : 'RP02'
       };
 
-    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'objRecPage02' : obj});
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia' : obj});
     modalIncidencia.onDidDismiss(data =>{
       debugger;
       console.log("datos", data);
+      console.log('Regresar a pagina 01');
+      if(data.response == 200){
+        this.navCtrl.pop();
+      }
     });
     modalIncidencia.present();
   }
@@ -87,7 +88,7 @@ export class ReciboPage_02Page {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ReciboPage_02Page');
+    
   }
 
   getDetailXTx(strIdTx){

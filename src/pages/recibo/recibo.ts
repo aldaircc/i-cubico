@@ -34,9 +34,11 @@ export class ReciboPage {
     const data = JSON.parse(localStorage.getItem('vUserData'));
     this.userDetail = data;
     this.getDataRecepcion();
+    console.log('constructor');
   }
 
   ionViewDidLoad() {
+
   }
 
   filterItems(ev: any){
@@ -58,7 +60,7 @@ export class ReciboPage {
       this.listAuxRecepcion = this.listRecepcion;
       this.rowCount = this.listAuxRecepcion.length;
       if(this.listRecepcion.length > 0){
-        console.log('Datos recepcion', this.listRecepcion);
+
       }else{
         alert('No se encontrarón datos.');
       }
@@ -67,26 +69,30 @@ export class ReciboPage {
     });
   }
 
-  goToReciboPage02(data){
+  evaluateGoReciboPage02(data){
 
+    debugger;
     if(data.FlagPausa == true){
       this.showModalIncidencia(data);
     }else{
-      
-      this.vReciboPage01 = {
-        "Id_Tx": data.Id_Tx,
-        "NumOrden":data.NumOrden,
-        "Cuenta":data.Cliente,
-        "Proveedor":data.Proveedor,
-        "Id_TipoMovimiento":data.Id_TipoMovimiento,
-        "FlagPausa":data.FlagPausa,
-        "Id_Cliente": data.Id_Cliente
-      };
-
-      this.navCtrl.push(ReciboPage_02Page, {
-        data: this.vReciboPage01
-      });
+      this.goToReciboPage02(data);
     }
+  }
+
+  goToReciboPage02(data){
+    this.vReciboPage01 = {
+      "Id_Tx": data.Id_Tx,
+      "NumOrden":data.NumOrden,
+      "Cuenta":data.Cliente,
+      "Proveedor":data.Proveedor,
+      "Id_TipoMovimiento":data.Id_TipoMovimiento,
+      "FlagPausa":data.FlagPausa,
+      "Id_Cliente": data.Id_Cliente
+    };
+
+    this.navCtrl.push(ReciboPage_02Page, {
+      data: this.vReciboPage01
+    });
   }
 
   getDataRecepcion(){
@@ -104,11 +110,25 @@ export class ReciboPage {
         'Origen' : 'RP01'
       };
 
-    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'objRecPage01' : obj});
-    modalIncidencia.onDidDismiss(data =>{
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia' : obj});
+    
+    modalIncidencia.onDidDismiss(result =>{
       debugger;
-      console.log("datos", data);
+      console.log("datos", result);
+
+      if(result.response == 200){
+        //this.getDataRecepcion();
+        data.FlagPausa = !data.FlagPausa;
+        this.goToReciboPage02(data);
+      }
+
     });
     modalIncidencia.present();
+  }
+
+  ionViewWillEnter(){
+    debugger;
+    console.log('Regresando - ionViewWillEnter');
+    this.getDataRecepcion();
   }
 }
