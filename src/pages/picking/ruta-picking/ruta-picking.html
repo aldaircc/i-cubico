@@ -57,7 +57,7 @@
                             <ion-icon name='arrow-dropleft'></ion-icon>              
                         </button>
                         
-                        <button ion-button style="background: #2ECCFA" icon-end>                
+                        <button ion-button (click)="NextRutaPicking()" style="background: #2ECCFA" icon-end>                
                             <ion-icon name='arrow-dropright'></ion-icon>
                         </button>
                     </ion-col>
@@ -73,7 +73,7 @@
                 </ion-col>
                 <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
                     <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                        12070A0802001
+                            {{ vPickingPage.NumOrden }} 
                     </ion-label> 
                 </ion-col>
             </ion-row>
@@ -85,7 +85,7 @@
                 </ion-col>
                 <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px; padding-bottom: 0px;">
                     <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                        SECTOR PT 1
+                            {{ rutaPicking.Sector }}
                     </ion-label> 
                 </ion-col>
             </ion-row>
@@ -97,7 +97,7 @@
                 </ion-col>
                 <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px; padding-bottom: 0px;">
                     <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                        01
+                            {{ rutaPicking.Pasillo }}
                     </ion-label> 
                 </ion-col>
             </ion-row>
@@ -134,28 +134,28 @@
               <ion-col col-3 no-padding>
                   <ion-row  style="margin-left:10px; margin-right:10px; background: #00BFFF"> 
               <ion-label style="font-weight:bold; color: white; text-align: center">
-                  A
+                    {{ rutaPicking.Fila }}
               </ion-label> 
           </ion-row> 
               </ion-col>
               <ion-col col-3 no-padding>
                   <ion-row  style="margin-left:10px; margin-right:10px; background: #00BFFF"> 
               <ion-label style="font-weight:bold; color: white; text-align: center">
-                  01
+                    {{ rutaPicking.Columna }}
               </ion-label> 
           </ion-row> 
               </ion-col>
               <ion-col col-3 no-padding>
                   <ion-row  style="margin-left:10px; margin-right:10px; background: #00BFFF"> 
               <ion-label style="font-weight:bold; color: white; text-align: center">
-                  02
+                    {{ rutaPicking.Nivel }} 
               </ion-label> 
           </ion-row>
               </ion-col>
               <ion-col col-3 no-padding>
                   <ion-row  style="margin-left:10px; margin-right:10px; background: #00BFFF"> 
               <ion-label style="font-weight:bold; color: white; text-align: center">
-                  01
+                    {{ rutaPicking.Posicion }}
               </ion-label> 
           </ion-row>
               </ion-col>
