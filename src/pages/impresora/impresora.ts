@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { ImpresoraServiceProvider } from '../../providers/impresora-service/impresora-service';
+import { GlobalServiceProvider } from '../../providers/global-service/global-service';
 
 /**
  * Generated class for the ImpresoraPage page.
@@ -21,7 +22,7 @@ export class ImpresoraPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sImpresora:ImpresoraServiceProvider, public alertCtrl: AlertController,
-    public viewCtrl:ViewController) {
+    public viewCtrl:ViewController, public sGlobal:GlobalServiceProvider) {
       // const data = JSON.parse(localStorage.getItem('vUserData'));
       // this.userDetail = data;
       debugger;
@@ -49,6 +50,7 @@ export class ImpresoraPage {
         {
           text: 'Si',
           handler: () => {
+            this.sGlobal.Id_Impresora = print.Id_Impresora;
             console.log('Disagree clicked', print.Nombre);
           }
         },

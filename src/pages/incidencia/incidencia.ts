@@ -124,7 +124,8 @@ export class IncidenciaPage {
   registrarControlOP(strIdOP, intIdLineaMaq, intId_Causal, strUsuario, strObservacion, bolFlagPausa){
     this.sIncidencia.registrarControlOP(strIdOP, intIdLineaMaq, intId_Causal, strUsuario, strObservacion, bolFlagPausa).then(result=>{
       debugger;
-      if(result.errNumber == 0){
+      let res : any = result;
+      if(res.errNumber == 0){
         let content = (this.flagPausa == true) ? "Continuar transacción":"Transacción detenida";
         //toast -> content
       }else{
@@ -137,7 +138,8 @@ export class IncidenciaPage {
   registrarControl(id_Tx, id_Causal, usuario, id_TerminalRF, observacion, flagPausa){
     this.sIncidencia.registrarControl(id_Tx, id_Causal, usuario, id_TerminalRF, observacion, flagPausa).then(result=>{
     debugger;
-    if(result.errNumber == 0){
+    let res : any = result;
+    if(res.errNumber == 0){
       let content = (this.flagPausa == true) ? "Continuar transacción":"Transacción detenida";
       //toast -> content
       //cerrar ventana de incidencia -> this.dismiss();

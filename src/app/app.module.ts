@@ -33,6 +33,8 @@ import { IncidenciaPage } from '../pages/incidencia/incidencia';
 import { IncidenciaServiceProvider } from '../providers/incidencia-service/incidencia-service';
 import { EtiquetaCajaLpnPage } from '../pages/etiqueta-caja-lpn/etiqueta-caja-lpn';
 import { PopoverReciboComponent } from '../components/popover-recibo/popover-recibo';
+import { EtqCajaServiceProvider } from '../providers/etq-caja-service/etq-caja-service';
+import { GlobalServiceProvider } from '../providers/global-service/global-service';
 
 @NgModule({
   declarations: [
@@ -90,7 +92,9 @@ import { PopoverReciboComponent } from '../components/popover-recibo/popover-rec
     AuthService,
     ReciboServiceProvider,
     ImpresoraServiceProvider,
-    IncidenciaServiceProvider
+    IncidenciaServiceProvider,
+    EtqCajaServiceProvider,
+    GlobalServiceProvider //Loque#369Dev
   ]
 })
 export class AppModule {}
