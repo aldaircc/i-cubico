@@ -7,10 +7,9 @@
 
 
 <ion-header>
-  <ion-toolbar no-padding no-margin color="primary">
-      
+  <ion-toolbar no-padding no-margin color="primary">      
         <ion-grid style="padding: 0px;">
-                <ion-row no-padding no-margin  > 
+                <ion-row no-padding no-margin> 
                     <ion-col col-9 no-padding no-margin>
                         <ion-navbar no-padding no-margin>
                                 <ion-label style="font-size: 15px; color: white; font-weight:bold;">ORDENES DE PICKING</ion-label>
@@ -21,25 +20,13 @@
                         <button ion-button icon-only (click)="getDataOrdenes()">
                           <ion-icon name="sync"></ion-icon>
                         </button>
-                        <button ion-button icon-only>
+                        <button ion-button icon-only (click)="presentPopover($event)">
                           <ion-icon name="more"></ion-icon>
                         </button>
                         </ion-buttons>
                     </ion-col>
                 </ion-row>
             </ion-grid>
-
-    <!-- <ion-title>ORDENES DE PICKING</ion-title>
-
-    <ion-buttons start>  
-        <button ion-button icon-only>
-            <ion-icon name="sync"></ion-icon>
-          </button>
-      <button ion-button icon-only>
-        <ion-icon name="more"></ion-icon>
-      </button>
-    </ion-buttons> -->
-
   </ion-toolbar>
 </ion-header>
 
@@ -75,8 +62,7 @@
     </ion-grid>
 
   <ion-row class="bgLightBlue" >
-    <!-- <ion-searchbar (input)="getItems($event)"></ion-searchbar> -->
-    <ion-searchbar (ionInput)="filterItems($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Buscar" (ionInput)="filterItems($event)" [(ngModel)]="searchQuery"></ion-searchbar>
   </ion-row>
 
    <ion-row class="bgWhite">

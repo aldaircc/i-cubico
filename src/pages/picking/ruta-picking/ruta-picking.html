@@ -49,15 +49,15 @@
                     </ion-col>
                     <ion-col col-5 style="padding-left: 2px; padding-right: 2px">
                         <ion-label style="padding-left: 10px; margin-top: 15px; margin-bottom: 1px; color: white; font-weight:bold;  ">
-                            1
+                            {{ contador }}  
                         </ion-label>
                     </ion-col>
                     <ion-col col-4 style="padding-left: 2px; padding-right: 2px">
-                        <button ion-button style="background: #2ECCFA" icon-start>
+                        <button ion-button (click)="BackRutaPicking()" [disabled]="!Backisenabled" style="background: #2ECCFA" icon-start>
                             <ion-icon name='arrow-dropleft'></ion-icon>              
                         </button>
                         
-                        <button ion-button (click)="NextRutaPicking()" style="background: #2ECCFA" icon-end>                
+                        <button ion-button (click)="NextRutaPicking()" [disabled]="Nextisenabled" style="background: #2ECCFA" icon-end>                
                             <ion-icon name='arrow-dropright'></ion-icon>
                         </button>
                     </ion-col>

@@ -16,6 +16,7 @@ import { PickingServiceProvider } from '../../../providers/picking-service/picki
 })
 export class DetallePickingPage {
 
+  searchQuery: string='';
   vRutaPickingPage: any = [];
   listDetallePicking: any = [];
   listAuxDetallePicking: any = [];
@@ -24,6 +25,12 @@ export class DetallePickingPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider) {
     this.vRutaPickingPage = navParams.get('data');
+    this.getDetallePickingLoad();
+    //this.getDetallePicking(this.vRutaPickingPage.Id_Tx, 'Admin', 2);
+  }
+
+  getDetallePickingLoad(){
+    this.searchQuery = "";
     this.getDetallePicking(this.vRutaPickingPage.Id_Tx, 'Admin', 2);
   }
 
@@ -41,6 +48,20 @@ export class DetallePickingPage {
     }, (err)=>{
       console.log('E-Detalle Picking listar', err);
     });    
+  }
+
+  filterItems(ev: any){
+    debugger;
+    const val = ev.target.value;
+    if(val && val.trim() != ''){
+      this.listAuxDetallePicking = this.listDetallePicking.filter((item)=>{
+        return (item.CodigoProducto.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      });
+      this.rowCount = this.listAuxDetallePicking.length;
+    }else{
+      this.rowCount = this.listDetallePicking.length;
+      return this.listAuxDetallePicking = this.listDetallePicking;
+    }
   }
 
   ionViewDidLoad() {

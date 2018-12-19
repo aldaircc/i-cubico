@@ -16,7 +16,7 @@
                 <ion-col col-3 no-padding no-margin>
                   <ion-buttons start style="margin-top: 12px; text-align: center">  
                     <button ion-button icon-only>
-                      <ion-icon name="sync"></ion-icon>
+                      <ion-icon name="sync" (click)="getDetallePickingLoad()"></ion-icon>
                     </button>
                     <button ion-button icon-only>
                       <ion-icon name="more"></ion-icon>
@@ -58,20 +58,20 @@
       </ion-grid>
   
     <ion-row class="bgLightBlue" >
-      <ion-searchbar (input)="getItems($event)"></ion-searchbar>
+      <ion-searchbar placeholder="Buscar" (ionInput)="filterItems($event)" [(ngModel)]="searchQuery"></ion-searchbar>
     </ion-row>
 
     <ion-row class="bgWhite">
-            <ion-card *ngFor="let objDetallePicking of listDetallePicking">      
-                <ion-card-content >
-                    <h5><b>Código: </b> {{objDetallePicking.CodigoProducto}}</h5>
-                    <h5><b>Articulo: </b> {{ objDetallePicking.Producto}} </h5>
-                    <h5><b>U.M.: </b> {{objDetallePicking.UMBase}}</h5>
-                    <h5><b>Cant. Pedida: </b> {{objDetallePicking.CantidadPedida}}</h5>
-                    <h5><b>Cant. Atendida: </b> {{objDetallePicking.TipoMovimiento}}</h5>
-                </ion-card-content>
-            </ion-card>
-        </ion-row>
+        <ion-card *ngFor="let objDetallePicking of listAuxDetallePicking">      
+            <ion-card-content >
+                <h5><b>Código: </b> {{objDetallePicking.CodigoProducto}}</h5>
+                <h5><b>Articulo: </b> {{ objDetallePicking.Producto}} </h5>
+                <h5><b>U.M.: </b> {{objDetallePicking.UMBase}}</h5>
+                <h5><b>Cant. Pedida: </b> {{objDetallePicking.CantidadPedida}}</h5>
+                <h5><b>Cant. Atendida: </b> {{objDetallePicking.TipoMovimiento}}</h5>
+            </ion-card-content>
+        </ion-card>
+    </ion-row>
   
   </ion-content>
   

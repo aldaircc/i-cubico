@@ -27,6 +27,11 @@ export class RutaPickingPage {
   listaTempRutaPicking: any = [];
   rutaPicking: any = [];
   posicion:number = 0;
+  contador:number = 1;  
+
+  Backisenabled:boolean=false;
+  Nextisenabled:boolean=false;
+  
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider) {
@@ -64,6 +69,10 @@ export class RutaPickingPage {
       debugger;
       this.listaTempRutaPicking = result;
       this.rutaPicking = result[0];
+      this.contador = 1;
+      if(this.contador==this.listaTempRutaPicking.length){
+        this.Nextisenabled=true;
+      }
       console.log('detalles', this.rutaPicking);
       if(this.rutaPicking.length == 0){
         console.log('No se encontraron detalles', this.rutaPicking);  
@@ -77,12 +86,28 @@ export class RutaPickingPage {
     debugger;
     this.posicion = this.posicion + 1;
     if(this.posicion<this.listaTempRutaPicking.length){
+      this.contador = this.contador + 1;
       this.rutaPicking = this.listaTempRutaPicking[this.posicion];
+      this.Backisenabled=true;
     }
-    
-    
-
+    if(this.contador==this.listaTempRutaPicking.length){
+      this.Nextisenabled=true;
+    }
   }
+
+    BackRutaPicking(){
+      debugger;
+      this.posicion = this.posicion - 1;
+      if(this.posicion>=0){
+        this.contador = this.contador - 1;
+        this.rutaPicking = this.listaTempRutaPicking[this.posicion];
+        this.Nextisenabled=false;
+      }
+      if(this.contador==1){
+        this.Backisenabled=false;
+      }
+    }
+  
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RutaPickingPage');

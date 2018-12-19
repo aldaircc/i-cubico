@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { PickingServiceProvider } from '../../providers/picking-service/picking-service';
-import { IonicPage, NavController, NavParams, ModalController  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, PopoverController  } from 'ionic-angular';
 import { RutaPickingPage } from '../picking/ruta-picking/ruta-picking'
 import { IncidenciaPage } from '../incidencia/incidencia';
+import { PopoverPickingPage } from '../picking/popover-picking/popover-picking'
 
 /**
  * Generated class for the PickingPage page.
@@ -14,18 +15,27 @@ import { IncidenciaPage } from '../incidencia/incidencia';
 @IonicPage()
 @Component({
   selector: 'page-picking',
-  templateUrl: 'picking.html',
+  templateUrl: 'picking.html'
 })
+
+
+
+
 export class PickingPage {
 
+  searchQuery: string='';
   userDetail: any;
   listOrdenesPicking: any;
   listAuxOrdenesPicking: any;
   rowCount: any;
   vPickingPage: any;
 
+  // @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
+  // @ViewChild('popoverText', { read: ElementRef }) text: ElementRef;
+  
+
   constructor(public navCtrl: NavController, public navParams: NavParams,    
-    public sPicking: PickingServiceProvider, public modalCtrl: ModalController) {
+    public sPicking: PickingServiceProvider, public modalCtrl: ModalController, private popoverCtrl: PopoverController) {
     const data = JSON.parse(localStorage.getItem('vUserData'));
     this.userDetail = data;
     this.getDataOrdenes();
@@ -35,10 +45,9 @@ export class PickingPage {
     console.log('ionViewDidLoad PickingPage');
   }
 
-   
-
   getDataOrdenes(){
     // this.getOrdenesXUsuario(this.userDetail[0].Usuario, 2);
+    this.searchQuery = "";
     this.getOrdenesXUsuario('Admin', 2);
   }
 
@@ -104,5 +113,19 @@ export class PickingPage {
     });
     modalIncidencia.present();
   }
+
+  presentPopover(ev) {
+
+    let popover = this.popoverCtrl.create(PopoverPickingPage, {
+      // contentEle: this.content.nativeElement,
+      // textEle: this.text.nativeElement
+    });
+
+    popover.present({
+      ev: ev
+    });
+  }
+
+ 
 
 }
