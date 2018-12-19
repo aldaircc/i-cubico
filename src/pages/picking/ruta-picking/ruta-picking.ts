@@ -23,6 +23,7 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
 export class RutaPickingPage {
 
   vPickingPage: any = [];
+  vRutaPickingPage: any = [];
   listaTempRutaPicking: any = [];
   rutaPicking: any = [];
   posicion:number = 0;
@@ -33,9 +34,22 @@ export class RutaPickingPage {
     this.getDataRutaPicking(this.vPickingPage.Id_Tx, 'Admin', 2);
   }
 
-  goDetallePickingPage():void{
-    this.navCtrl.push(DetallePickingPage);
-  }  
+  goDetallePickingPage(){
+
+    debugger;  
+      this.vRutaPickingPage = {
+        'Id_Tx' : this.vPickingPage.Id_Tx,
+        'NumOrden' : this.vPickingPage.NumOrden
+      };
+
+      this.navCtrl.push(DetallePickingPage, {
+        data: this.vRutaPickingPage
+      });    
+  }
+
+  // goDetallePickingPage():void{
+  //   this.navCtrl.push(DetallePickingPage);
+  // }  
 
   goCerrarPickingPage():void{
     this.navCtrl.push(CierrePickingPage);

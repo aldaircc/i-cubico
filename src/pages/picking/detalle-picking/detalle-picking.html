@@ -39,7 +39,7 @@
               </ion-col>
               <ion-col col-9 style="padding-left: 0px; padding-right: 0px">
                 <ion-label style="padding-left: 10px; margin-top: 3px; margin-bottom: 1px; color: white; font-weight:bold ">
-                  ORD2018181
+                        {{ vRutaPickingPage.NumOrden }} 
                 </ion-label>
               </ion-col>
           </ion-row>
@@ -56,52 +56,22 @@
               </ion-col>
           </ion-row>
       </ion-grid>
-
-      <!-- <ion-row style="background: #00BFFF" >
-          <ion-label style="padding-left: 10px; margin-top: 5px; margin-bottom: 5px; color: yellow; font-weight:bold ">
-            N° Orden:
-          </ion-label>
-      </ion-row>
-      <ion-row style="background: #00BFFF" >
-          <ion-label style="padding-left: 10px; margin-top: 5px; margin-bottom: 5px; color: yellow; font-weight:bold ">
-            Cliente:
-          </ion-label>
-      </ion-row> -->
   
     <ion-row class="bgLightBlue" >
       <ion-searchbar (input)="getItems($event)"></ion-searchbar>
     </ion-row>
-  
-    <ion-list>
-        <ion-item>
-          <h4>Código: </h4>
-          <h4>Articulo: </h4>
-          <h4>U.M.:</h4>
-          <h4>Cant. Pedida:</h4>
-          <h4>Cant. Atendida: </h4>
-        </ion-item>
-        <ion-item>
-            <h4>Código: </h4>
-          <h4>Articulo: </h4>
-          <h4>U.M.:</h4>
-          <h4>Cant. Pedida:</h4>
-          <h4>Cant. Atendida: </h4>
-          </ion-item>
-          <ion-item>
-              <h4>Código: </h4>
-          <h4>Articulo: </h4>
-          <h4>U.M.:</h4>
-          <h4>Cant. Pedida:</h4>
-          <h4>Cant. Atendida: </h4>
-            </ion-item>
-            <ion-item>
-                <h4>Código: </h4>
-          <h4>Articulo: </h4>
-          <h4>U.M.:</h4>
-          <h4>Cant. Pedida:</h4>
-          <h4>Cant. Atendida: </h4>
-              </ion-item>
-      </ion-list>
+
+    <ion-row class="bgWhite">
+            <ion-card *ngFor="let objDetallePicking of listDetallePicking">      
+                <ion-card-content >
+                    <h5><b>Código: </b> {{objDetallePicking.CodigoProducto}}</h5>
+                    <h5><b>Articulo: </b> {{ objDetallePicking.Producto}} </h5>
+                    <h5><b>U.M.: </b> {{objDetallePicking.UMBase}}</h5>
+                    <h5><b>Cant. Pedida: </b> {{objDetallePicking.CantidadPedida}}</h5>
+                    <h5><b>Cant. Atendida: </b> {{objDetallePicking.TipoMovimiento}}</h5>
+                </ion-card-content>
+            </ion-card>
+        </ion-row>
   
   </ion-content>
   

@@ -59,6 +59,20 @@ export class PickingPage {
     });
   }
 
+  filterItems(ev: any){
+    debugger;
+    const val = ev.target.value;
+    if(val && val.trim() != ''){
+      this.listAuxOrdenesPicking = this.listOrdenesPicking.filter((item)=>{
+        return (item.NumOrden.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      });
+      this.rowCount = this.listAuxOrdenesPicking.length;
+    }else{
+      this.rowCount = this.listOrdenesPicking.length;
+      return this.listAuxOrdenesPicking = this.listOrdenesPicking;
+    }
+  }
+
   goRutaPickingPage(data){
 
     debugger;
