@@ -44,7 +44,8 @@ export class IncidenciaPage {
     this.sIncidencia.buscarControlUsuario(strId_OP, strUsuario).then(result=>{
       debugger;
       console.log('resultado control usuario', result);
-      if(result.length != 0){
+      let res : any = result;
+      if(res.length != 0){
         this.observacion = result[0].Observacion;
         this.flagPausa = result[0].FlagPausa;
         this.fechaInicio = result[0].FechaHoraInicio;
@@ -67,7 +68,8 @@ export class IncidenciaPage {
     this.sIncidencia.buscarControlPendiente(strIdTx, strUsuario).then(result=>{
       debugger;
       console.log('resultado pendiente', result);
-      if(result.length != 0){
+      let res : any = result;
+      if(res.length != 0){
         this.observacion = result[0].Observacion;
         this.flagPausa = result[0].FlagPausa;
         this.fechaInicio = result[0].FechaHoraInicio;
