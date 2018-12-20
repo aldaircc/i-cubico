@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
  * Generated class for the PopoverPickingPage page.
@@ -17,7 +17,7 @@ import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-an
 
 export class PopoverPickingPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private popoverCtrl: PopoverController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {

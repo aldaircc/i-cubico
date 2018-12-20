@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
 import { DetallePickingPage } from '../detalle-picking/detalle-picking';
 import { PickingPorProductoPage } from '../picking-por-producto/picking-por-producto';
 import { CierrePickingPage } from '../cierre-picking/cierre-picking';
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { PopoverRutaPickingPage } from '../../picking/popover/popover-ruta-picking/popover-ruta-picking'
 
 
 
@@ -34,7 +35,7 @@ export class RutaPickingPage {
   
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public sPicking: PickingServiceProvider) {
+    public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController) {
     this.vPickingPage = navParams.get('data');
     this.getDataRutaPicking(this.vPickingPage.Id_Tx, 'Admin', 2);
   }
@@ -113,6 +114,17 @@ export class RutaPickingPage {
     console.log('ionViewDidLoad RutaPickingPage');
   }
 
+  presentPopover(ev) {
+
+    let popover = this.popoverCtrl.create(PopoverRutaPickingPage, {
+      // contentEle: this.content.nativeElement,
+      // textEle: this.text.nativeElement
+    });
+
+    popover.present({
+      ev: ev
+    });
+  }
 
 
 }

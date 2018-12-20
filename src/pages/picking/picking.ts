@@ -3,7 +3,7 @@ import { PickingServiceProvider } from '../../providers/picking-service/picking-
 import { IonicPage, NavController, NavParams, ModalController, PopoverController  } from 'ionic-angular';
 import { RutaPickingPage } from '../picking/ruta-picking/ruta-picking'
 import { IncidenciaPage } from '../incidencia/incidencia';
-import { PopoverPickingPage } from '../picking/popover-picking/popover-picking'
+import { PopoverPickingPage } from '../picking/popover/popover-picking/popover-picking'
 
 /**
  * Generated class for the PickingPage page.
@@ -17,9 +17,6 @@ import { PopoverPickingPage } from '../picking/popover-picking/popover-picking'
   selector: 'page-picking',
   templateUrl: 'picking.html'
 })
-
-
-
 
 export class PickingPage {
 

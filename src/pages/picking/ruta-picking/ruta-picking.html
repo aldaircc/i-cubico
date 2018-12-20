@@ -16,7 +16,7 @@
                         </ion-col>
                         <ion-col no-margin no-padding col-2>
                           <ion-buttons start style="margin-top: 12px; text-align: center">                          
-                            <button no-margin no-padding ion-button icon-only>
+                            <button no-margin no-padding ion-button icon-only (click)="presentPopover($event)">
                               <ion-icon name="more"></ion-icon>
                             </button>
                             </ion-buttons>
@@ -182,7 +182,7 @@
         <ion-grid style="color: #054B77; padding-left: 0px; padding-right: 0px; padding-top: 0px; padding-bottom: 5px;">
             <ion-row no-padding no-margin > 
                 <ion-col col-4 style="margin: 0px; padding: 1px; ">
-                    <button ion-button (click)="goDetallePickingPage()" large  full  >
+                    <button ion-button style="background:  #A4A4A4" (click)="goDetallePickingPage()" large  full  >
                         <div> 
                             <ion-icon name='list-box'></ion-icon> <br> 
                             <label style="font-size: 10px">Detalle Picking</label> 
@@ -190,7 +190,7 @@
                     </button>
                 </ion-col>
                 <ion-col col-4 style="margin: 0px; padding: 1px; ">
-                    <button ion-button (click)="goCerrarPickingPage()"  large  full >
+                    <button ion-button style="background:  #A4A4A4"  (click)="goCerrarPickingPage()"  large  full >
                         <div> 
                             <ion-icon name='cube'></ion-icon> <br> 
                             <label style="font-size: 10px">Cerrar Picking</label> 
@@ -199,7 +199,7 @@
                     </button>
                 </ion-col>
                 <ion-col col-4 style="margin: 0px; padding: 1px; ">
-                    <button ion-button (click)="goPickingPorProductoPage()" large  full >
+                    <button ion-button style="background:  #A4A4A4"  (click)="goPickingPorProductoPage()" large  full >
                         <div> 
                             <ion-icon name='checkbox-outline'></ion-icon> <br> 
                             <label style="font-size: 10px">Verificar</label> 
