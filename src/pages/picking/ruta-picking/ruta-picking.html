@@ -49,7 +49,7 @@
                     </ion-col>
                     <ion-col col-5 style="padding-left: 2px; padding-right: 2px">
                         <ion-label style="padding-left: 10px; margin-top: 15px; margin-bottom: 1px; color: white; font-weight:bold;  ">
-                            {{ contador }}  
+                            {{ contador }}  / {{ total }}
                         </ion-label>
                     </ion-col>
                     <ion-col col-4 style="padding-left: 2px; padding-right: 2px">
@@ -161,6 +161,16 @@
               </ion-col>
           </ion-row>
       </ion-grid>
+
+      <ion-grid style="padding: 0px;">
+        <ion-row no-padding style="margin-top: 15px; margin-bottom: 15px; margin-left: 10px; margin-right: 10px; background: #F2F5A9 "> 
+            <ion-col col-12 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
+                <ion-label style="text-align: center; padding-left: 0px; font-weight:bold; margin-top: 0px; margin-bottom: 0px;">
+                    <h5>{{ rutaPicking.Referencia }}</h5>
+                </ion-label> 
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 
       <ion-grid style="padding: 0px;">
             <ion-row no-padding style="margin-top: 15px; margin-bottom: 15px; "> 

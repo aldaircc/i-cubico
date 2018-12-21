@@ -29,6 +29,7 @@ export class RutaPickingPage {
   rutaPicking: any = [];
   posicion:number = 0;
   contador:number = 1;  
+  total:number = 1;  
 
   Backisenabled:boolean=false;
   Nextisenabled:boolean=false;
@@ -45,7 +46,8 @@ export class RutaPickingPage {
     debugger;  
       this.vRutaPickingPage = {
         'Id_Tx' : this.vPickingPage.Id_Tx,
-        'NumOrden' : this.vPickingPage.NumOrden
+        'NumOrden' : this.vPickingPage.NumOrden,
+        'Cliente' : this.vPickingPage.Cliente
       };
 
       this.navCtrl.push(DetallePickingPage, {
@@ -57,12 +59,41 @@ export class RutaPickingPage {
   //   this.navCtrl.push(DetallePickingPage);
   // }  
 
-  goCerrarPickingPage():void{
-    this.navCtrl.push(CierrePickingPage);
+  // goCerrarPickingPage():void{
+  //   this.navCtrl.push(CierrePickingPage);
+  // }
+
+  goCerrarPickingPage(){
+
+    debugger;  
+      this.vRutaPickingPage = {
+        'Id_Tx' : this.vPickingPage.Id_Tx,
+        'NumOrden' : this.vPickingPage.NumOrden,
+        'Ciudad' : this.vPickingPage.Ciudad,
+        'Zona' : this.vPickingPage.Zona
+      };
+
+      this.navCtrl.push(CierrePickingPage, {
+        data: this.vRutaPickingPage
+      });    
   }
 
-  goPickingPorProductoPage():void{
-    this.navCtrl.push(PickingPorProductoPage);
+  // goPickingPorProductoPage():void{
+  //   this.navCtrl.push(PickingPorProductoPage);
+  // }
+
+  goPickingPorProductoPage(){
+
+    debugger;  
+      this.vRutaPickingPage = {
+        'Id_Tx' : this.vPickingPage.Id_Tx,
+        'NumOrden' : this.vPickingPage.NumOrden,
+        'Cliente' : this.vPickingPage.Cliente
+      };
+
+      this.navCtrl.push(PickingPorProductoPage, {
+        data: this.vRutaPickingPage
+      });    
   }
 
   getDataRutaPicking(strNroDoc, strUsuario, intIdAlmacen){
@@ -71,6 +102,7 @@ export class RutaPickingPage {
       this.listaTempRutaPicking = result;
       this.rutaPicking = result[0];
       this.contador = 1;
+      this.total = this.listaTempRutaPicking.length;      
       if(this.contador==this.listaTempRutaPicking.length){
         this.Nextisenabled=true;
       }
@@ -85,6 +117,7 @@ export class RutaPickingPage {
 
   NextRutaPicking(){
     debugger;
+    this.total = this.listaTempRutaPicking.length;
     this.posicion = this.posicion + 1;
     if(this.posicion<this.listaTempRutaPicking.length){
       this.contador = this.contador + 1;
@@ -98,6 +131,7 @@ export class RutaPickingPage {
 
     BackRutaPicking(){
       debugger;
+      this.total = this.listaTempRutaPicking.length;
       this.posicion = this.posicion - 1;
       if(this.posicion>=0){
         this.contador = this.contador - 1;

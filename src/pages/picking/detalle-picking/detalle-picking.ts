@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
+import { PopoverRutaPickingPage } from '../../picking/popover/popover-ruta-picking/popover-ruta-picking'
 
 /**
  * Generated class for the DetallePickingPage page.
@@ -23,7 +24,7 @@ export class DetallePickingPage {
   rowCount: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public sPicking: PickingServiceProvider) {
+    public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController) {
     this.vRutaPickingPage = navParams.get('data');
     this.getDetallePickingLoad();
     //this.getDetallePicking(this.vRutaPickingPage.Id_Tx, 'Admin', 2);
@@ -55,13 +56,25 @@ export class DetallePickingPage {
     const val = ev.target.value;
     if(val && val.trim() != ''){
       this.listAuxDetallePicking = this.listDetallePicking.filter((item)=>{
-        return (item.CodigoProducto.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        return (item.CodigoProducto.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.Producto.toLowerCase().indexOf(val.toLowerCase()) > -1);
       });
       this.rowCount = this.listAuxDetallePicking.length;
     }else{
       this.rowCount = this.listDetallePicking.length;
       return this.listAuxDetallePicking = this.listDetallePicking;
     }
+  }
+
+  presentPopover(ev) {
+
+    let popover = this.popoverCtrl.create(PopoverRutaPickingPage, {
+      // contentEle: this.content.nativeElement,
+      // textEle: this.text.nativeElement
+    });
+
+    popover.present({
+      ev: ev
+    });
   }
 
   ionViewDidLoad() {

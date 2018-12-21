@@ -15,10 +15,10 @@
                     </ion-col>
                     <ion-col no-margin no-padding col-3>
                       <ion-buttons start style="margin-top: 12px; text-align: center">  
-                        <button no-margin no-padding ion-button icon-only>
+                        <button no-margin no-padding ion-button icon-only (click)="getPickingProductoLoad()">
                           <ion-icon name="sync"></ion-icon>
                         </button>
-                        <button no-margin no-padding ion-button icon-only>
+                        <button no-margin no-padding ion-button icon-only (click)="presentPopover($event)">
                           <ion-icon name="more"></ion-icon>
                         </button>
                         </ion-buttons>
@@ -41,15 +41,15 @@
             </ion-col>
             <ion-col col-5 style="padding-left: 2px; padding-right: 2px">
                 <ion-label style="padding-left: 10px; margin-top: 15px; margin-bottom: 1px; color: white; font-weight:bold;  ">
-                    17/19
+                    {{ contador }}  / {{ total }}
                 </ion-label>
             </ion-col>
             <ion-col col-4 style="padding-left: 2px; padding-right: 2px">
-                <button ion-button style="background: #2ECCFA" icon-start>
+                <button ion-button (click)="BackRutaPicking()" [disabled]="!Backisenabled " style="background: #2ECCFA" icon-start>
                     <ion-icon name='arrow-dropleft'></ion-icon>              
                 </button>
                 
-                <button ion-button style="background: #2ECCFA" icon-end>                
+                <button ion-button (click)="NextRutaPicking()" [disabled]="Nextisenabled" style="background: #2ECCFA" icon-end>                
                     <ion-icon name='arrow-dropright'></ion-icon>
                 </button>
             </ion-col>
@@ -65,7 +65,7 @@
         </ion-col>
         <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
             <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                12070A0802001
+                {{ pickingProducto.CodigoProducto }}
             </ion-label> 
         </ion-col>
     </ion-row>
@@ -77,7 +77,7 @@
         </ion-col>
         <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
             <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                HIRUDOID FORE GEL X 14 G
+                {{ pickingProducto.Producto }}  
             </ion-label> 
         </ion-col>
     </ion-row>
@@ -89,7 +89,7 @@
         </ion-col>
         <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
             <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                10306878
+                {{pickingProducto.LoteProducto}}
             </ion-label> 
         </ion-col>
     </ion-row>
@@ -101,7 +101,7 @@
         </ion-col>
         <ion-col col-2 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
             <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                182.00
+                {{pickingProducto.CantidadPedida}}
             </ion-label> 
         </ion-col>
         <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
@@ -111,7 +111,7 @@
         </ion-col>
         <ion-col col-2 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
             <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                178.00
+                {{pickingProducto.CantidadPedida - pickingProducto.Saldo}}
             </ion-label> 
         </ion-col>
     </ion-row>
@@ -123,7 +123,7 @@
         </ion-col>
         <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
             <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                4.00
+                {{pickingProducto.Saldo}} 
             </ion-label> 
         </ion-col>
     </ion-row>
@@ -135,7 +135,7 @@
         </ion-col>
         <ion-col col-2 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
             <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                0.00
+                {{pickingProducto.Caja}}
             </ion-label> 
         </ion-col>
         <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
@@ -145,7 +145,7 @@
         </ion-col>
         <ion-col col-2 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
             <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                0.00
+                {{pickingProducto.SaldoCaja}}
             </ion-label> 
         </ion-col>
     </ion-row>
@@ -157,7 +157,7 @@
         </ion-col>
         <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
             <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-                 <ion-input  type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+                 <ion-input  type="text" value="" [(ngModel)]="TextcodBarra" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
             </ion-item>                    
          </ion-col>
     </ion-row>
@@ -169,7 +169,7 @@
         </ion-col>
         <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
             <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-                 <ion-input  type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+                 <ion-input  type="text" value="" [(ngModel)]="Textcantidad" placeholder="0.00" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
             </ion-item>                    
          </ion-col>
     </ion-row>

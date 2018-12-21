@@ -84,11 +84,13 @@ export class PickingPage {
     debugger;
     if(data.FlagPausa == true){
       this.showModalIncidencia(data);
-    }else{
-      
+    }else{      
       this.vPickingPage = {
         'Id_Tx' : data.Id_Tx,
-        'NumOrden' : data.NumOrden
+        'NumOrden' : data.NumOrden,
+        'Cliente' : data.Cliente,
+        'Ciudad' : data.Ciudad,
+        'Zona' : data.Zona
       };
 
       this.navCtrl.push(RutaPickingPage, {
@@ -100,7 +102,10 @@ export class PickingPage {
   showModalIncidencia(data){
     let obj = { 
         'Id_Tx' : data.Id_Tx,
-        'NumOrden' : data.NumOrden
+        'NumOrden' : data.NumOrden,
+        'Cliente' : data.Cliente,
+        'Ciudad' : data.Ciudad,
+        'Zona' : data.Zona
       };
 
     let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia' : obj});
