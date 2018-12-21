@@ -31,14 +31,16 @@ export class ReciboPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public sRecibo: ReciboServiceProvider, public modalCtrl: ModalController) {
-    const data = JSON.parse(localStorage.getItem('vUserData'));
-    this.userDetail = data;
-    this.getDataRecepcion();
-    console.log('constructor');
+    //alert('constructor Recibo');
+    //const data = JSON.parse(localStorage.getItem('vUserData'));
+    //this.userDetail = data;
+
+    //this.getDataRecepcion();
+    //console.log('constructor');
   }
 
   ionViewDidLoad() {
-
+    //alert('ionViewDidLoad - Recibo');
   }
 
   filterItems(ev: any){
@@ -70,8 +72,6 @@ export class ReciboPage {
   }
 
   evaluateGoReciboPage02(data){
-
-    debugger;
     if(data.FlagPausa == true){
       this.showModalIncidencia(data);
     }else{
@@ -96,7 +96,7 @@ export class ReciboPage {
   }
 
   getDataRecepcion(){
-    this.getRecepcionesXUsuario(this.userDetail[0].Usuario, 2, 1);
+    this.getRecepcionesXUsuario("ADMIN"/** this.userDetail[0].Usuario**/, 2, 1);
   }
 
   showModalIncidencia(data){
@@ -113,9 +113,6 @@ export class ReciboPage {
     let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia' : obj});
     
     modalIncidencia.onDidDismiss(result =>{
-      debugger;
-      console.log("datos", result);
-
       if(result.response == 200){
         data.FlagPausa = !data.FlagPausa;
         this.goToReciboPage02(data);
@@ -126,8 +123,9 @@ export class ReciboPage {
   }
 
   ionViewWillEnter(){
-    debugger;
-    console.log('Regresando - ionViewWillEnter');
+    //debugger;
+    alert('Regresando - ionViewWillEnter');
+    //console.log('Regresando - ionViewWillEnter');
     this.getDataRecepcion();
   }
 }
