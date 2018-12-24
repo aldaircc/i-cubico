@@ -1,0 +1,22 @@
+page-etiqueta-caja-lpn {
+
+    p{
+        background-color: black;
+        color: white;
+        padding: 10px;
+    }
+
+    .item-md{
+        padding-left: 0px !important;
+    }
+
+    ion-select{
+        max-width: 100% !important;
+    }
+
+    .totalSuma{
+        background-color: #7FDB6A;
+        padding: 12px;
+        font-size: initial;
+    }
+}
