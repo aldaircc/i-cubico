@@ -30,6 +30,7 @@ export class ReciboPage_02Page {
   listAuxDetailTx:any = [];
   rowCount:number = 0;
   userDetail: any;
+  bolAutomatic: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private alertCtrl: AlertController, public sRecibo: ReciboServiceProvider,
@@ -139,7 +140,7 @@ export class ReciboPage_02Page {
     "Factor":data.Factor,
     "FlagSeriePT":data.FlagSeriePT,
     "Id_TipoMovimiento":this.vReciboPage01.Id_TipoMovimiento,
-    "bolAutomatic":this.vReciboPage01, //value check
+    "bolAutomatic": this.bolAutomatic, //value check
     "FlagPausa":this.vReciboPage01.FlagPausa,
     "Cuenta":this.vReciboPage01.Cuenta,
     "Id_Cliente":this.vReciboPage01.Id_Cliente

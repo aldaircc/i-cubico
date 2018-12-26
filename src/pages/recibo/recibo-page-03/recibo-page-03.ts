@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, IonicFormInput, Button } from 'ionic-angular';
 import { ReciboServiceProvider } from '../../../providers/recibo-service/recibo-service';
 import { isNullOrUndefined } from '../../../../node_modules/@swimlane/ngx-datatable/release/utils';
+import { ReciboPage_04Page } from '../recibo-page-04/recibo-page-04';
 
 /**
  * Generated class for the ReciboPage_03Page page.
@@ -42,7 +43,7 @@ export class ReciboPage_03Page {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ReciboPage_03Page');
+
   }
 
   presentToast(message) {
@@ -158,19 +159,16 @@ export class ReciboPage_03Page {
                   }
 
               }else if(rpta.errNumber === 1){
-                  //lySection03.setBackgroundResource(R.color.redColor);
                   this.isBgRed = true;
                 this.isBgYellow = false;
                   this.iCodeBar.setFocus();
                   this.presentToast(rpta.message);
               }else if(rpta.errNumber === -1){
-                  //lySection03.setBackgroundResource(R.color.redColor);
                   this.isBgRed = true;
                 this.isBgYellow = false;
                   this.presentToast(rpta.message);
                   this.iCodeBar.setFocus();
               }else{
-                //lySection03.setBackgroundResource(R.color.redColor);
                 this.isBgRed = true;
                 this.isBgYellow = false;
                   this.presentToast(rpta.message);
@@ -203,7 +201,6 @@ export class ReciboPage_03Page {
                 this.iCantidadRecibida.selectAll();
                 
               }else if(rpta.errNumber === 1){
-                //lySection03.setBackgroundResource(R.color.redColor);
                 this.isBgRed = true;
                 this.isBgYellow = false;
                 this.iCodeBar.setTag("");
@@ -211,14 +208,12 @@ export class ReciboPage_03Page {
                 this.iCodeBar.setFocus();
                 this.iCodeBar.selectAll();
               }else if(rpta.errNumber === -1){
-                //lySection03.setBackgroundResource(R.color.redColor);
                 //this.iCodeBar.setTag("");
                 this.isBgRed = true;
                 this.isBgYellow = false;
                 this.presentToast(rpta.message);
                 this.iCodeBar.setFocus();
               }else{
-                //lySection03.setBackgroundResource(R.color.redColor);
                 this.isBgRed = true;
                 this.isBgYellow = false;
                 this.presentToast(rpta.message);
@@ -310,7 +305,6 @@ export class ReciboPage_03Page {
         let rpta : any = result;
         
         var sumCantidad = this.cantidadRec +  this.vReciboPage02.CantidadOperacion;
-        //vReciboPage02.CantPedida
 
         if(this.cantidad != 0){
           if(this.cantidad != this.cantidadRec){
@@ -349,29 +343,14 @@ export class ReciboPage_03Page {
         if(this.vReciboPage02.Id_TipoMovimiento === 11 ||
            this.vReciboPage02.Id_TipoMovimiento === 13 ||
            this.vReciboPage02.Id_TipoMovimiento === 14){
-            //presenter.registerUATransferencia(objUA);
             this.sRecibo.registrarUATransferencia(objUA).then(result=>{
               this.evaluarResultado(result);
             });
         }else{
-            //presenter.registerUA(objUA);
             this.sRecibo.registrarUA(objUA).then(result=>{
               this.evaluarResultado(result);
             });
         }
-        /**
-        Double cantRetorno = Double.parseDouble(edtCantRecibida.getText().toString());
-        Double cantRecibidaUA = Double.parseDouble(tvCantTotalRecibida.getText().toString());
-        Double sumCantidad = cantRetorno + cantRecibidaUA;
-        Double cantPedida = Double.parseDouble(tvCantPedida.getText().toString());
-
-        if(_cantidad != 0){
-            if (!String.format("%.2f", _cantidad).equals(String.format("%.2f", cantRetorno))){
-                Toast.makeText(getApplicationContext(), "Esta cantidad no corresponde", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }
-        **/
       });
 
   }
@@ -414,39 +393,34 @@ export class ReciboPage_03Page {
         this.iCodeBar.setFocus();
       }
     }
-
-    /**
-    void evaluateResultSave(Mensaje message){
-
-        if (message.errNumber == 0){
-            Double dSaldo, dValor1, dBultos;
-            dSaldo = Double.parseDouble(tvSaldo.getText().toString());
-            dValor1 = Double.parseDouble(message.valor1.toString());
-            dBultos = Double.parseDouble(tvBultos.getText().toString()) + 1;
-            tvSaldo.setText(decFormatt.format(dSaldo-dValor1));//String.format("%.3f", dSaldo - dValor1));
-            dSaldo = (dSaldo - dValor1);
-            tvBultos.setText(decFormatt.format(dBultos));
-            tvCantTotalRecibida.setText(decFormatt.format(dBultos * dValor1));//String.format("%.3f", (dBultos * dValor1)));
-            //TabPage1.BackColor = Color.GreenYellow;
-            lySection03.setBackgroundResource(R.color.greenBottomBar);
-
-            edtCodBar.requestFocus();
-            edtCodBar.selectAll();
-            edtAveriado.setText(decFormatt.format(0));//"0");
-            edtCantRecibida.setText("");
-            edtCodBar.setTag("");
-
-            if (dSaldo == 0){
-                Toast.makeText(this, "Item completo", Toast.LENGTH_SHORT).show();
-                //CargarListaDetalleTransaccion
-                //manejoPaneles(2); - In this case I will go to the next activity.
-            }
-        }else if (message.errNumber == 1){
-        }else if (message.errNumber == -1){
-        }else{
-            
-        } 
-    **/
   }
 
+  goToReciboPage04(){
+
+    let obj = {
+      "Id_Tx" : this.vReciboPage02.Id_Tx,
+      "NumOrden" : this.vReciboPage02.NumOrden,
+      "Codigo" : this.vReciboPage02.Codigo,
+      "Articulo" : this.vReciboPage02.Descripcion,
+      "Id_Articulo" : this.vReciboPage02.Id_Producto,
+      "UM" : this.vReciboPage02.UM,
+      "Id_UM" : this.vReciboPage02.Id_UM,
+      "Fecha_Emi" : this.vReciboPage02.Fecha_Emi,
+      "Fecha_Venci" : this.vReciboPage02.Fecha_Venci,
+      "Lote" : this.vReciboPage02.Lote,
+      "CantPedida" : this.vReciboPage02.CantPedida,
+      "CantRecib" : this.vReciboPage02.CantidadOperacion,
+      "Saldo" : this.vReciboPage02.Saldo,
+      "Item" : this.vReciboPage02.Item,
+      "Factor" : this.vReciboPage02.Factor,
+      "FlagSeriePT" : this.vReciboPage02.FlagSeriePT,
+      "Id_TipoMovimiento" : this.vReciboPage02.Id_TipoMovimiento,
+      "bolAutomatic" : this.vReciboPage02.bolAutomatic,
+      "currentSaldo" : this.vReciboPage02.Saldo
+    };
+
+    this.navCtrl.push(ReciboPage_04Page, {
+      dataPage03: obj
+    });
+  }
 }

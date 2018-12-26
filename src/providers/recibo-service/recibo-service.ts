@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Http, Headers} from '@angular/http';
+import { GlobalServiceProvider } from '../global-service/global-service';
 /*
   Generated class for the ReciboServiceProvider provider.
 
@@ -8,12 +9,9 @@ import {Http, Headers} from '@angular/http';
 */
 @Injectable()
 export class ReciboServiceProvider {
-
-  apiUrl = 'http://172.16.32.15:8085/SGAA_WCF/RecepcionService.svc/rest/';
   headers = new Headers();
 
-  constructor(public http: Http) {
-    console.log('Hello ReciboServiceProvider Provider');
+  constructor(public http: Http, public sGlobal: GlobalServiceProvider) {
     this.headers.append('Accept', 'application/json');
     this.headers.append('Content-Type', 'application/json');
   }
@@ -23,7 +21,7 @@ export class ReciboServiceProvider {
     parameter = {"strUsuario": strUsuario,"intIdAlmacen": intIdAlmacen, "intIdMuelle": intIdMuelle};
 
     return new Promise(resolve=>{
-      this.http.get(this.apiUrl + 'ListarRecepcionesXUsuario_V2', { params: parameter})
+      this.http.get(this.sGlobal.recepcion + 'ListarRecepcionesXUsuario_V2', { params: parameter})
       .map(res=>res.json())
       .subscribe(data=>{
         resolve(data);
@@ -36,7 +34,7 @@ export class ReciboServiceProvider {
   getDetalleXTx(strIdTx){
     var parameter = {'strIdTx' : strIdTx};
     return new Promise(resolve=>{
-      this.http.get(this.apiUrl+'TxDetalleXTx_v2', {params: parameter})
+      this.http.get(this.sGlobal.recepcion + 'TxDetalleXTx_v2', {params: parameter})
       .map(res=>res.json())
       .subscribe(data=>{
         resolve(data);
@@ -49,11 +47,7 @@ export class ReciboServiceProvider {
   cerrarRecepcion(idTx, idEstado, usuario){
    var parameter = {'idTx': idTx, 'idEstado': idEstado, 'usuario': usuario};
     return new Promise((resolve, reject)=>{
-      //let headers = new Headers();
-      //headers.append("Accept", 'application/json');
-      //headers.append('Content-Type', 'application/json');
-      debugger;
-      this.http.post(this.apiUrl+'CerrarRecepcion/idTx/idEstado/usuario', JSON.stringify(parameter), {headers:this.headers})
+      this.http.post(this.sGlobal.recepcion + 'CerrarRecepcion/idTx/idEstado/usuario', JSON.stringify(parameter), {headers:this.headers})
       .map(res=>res.json())
       .subscribe(data=>{
         console.log("it's work", data);
@@ -66,10 +60,7 @@ export class ReciboServiceProvider {
   registrarUATransito(txUbi){
     var parameter = {'TxUbi': txUbi};
     return new Promise((resolve, reject)=>{
-      //let headers = new Headers();
-      //headers.append('Accept', 'application/json');
-      //headers.append('Content-Type', 'application/json');
-      this.http.post(this.apiUrl+'RegistrarUATransito/TxUbi', JSON.stringify(parameter), {headers: this.headers})
+      this.http.post(this.sGlobal.recepcion + 'RegistrarUATransito/TxUbi', JSON.stringify(parameter), {headers: this.headers})
       .map(res=>res.json())
       .subscribe(data=>{
         console.log('registrarUATransito', data);
@@ -82,7 +73,7 @@ export class ReciboServiceProvider {
   validarReciboTransferenciaSerie(strNumOrden, strSerie, intItem){
     var parameter = {'strNumOrden': strNumOrden, 'strSerie': strSerie,'intItem': intItem};
     return new Promise(resolve=>{
-      this.http.get(this.apiUrl + 'ValidarReciboTransferenciaSerie', {params: parameter})
+      this.http.get(this.sGlobal.recepcion + 'ValidarReciboTransferenciaSerie', {params: parameter})
       .map(res=>res.json())
       .subscribe(data=>{
           resolve(data);
@@ -95,7 +86,7 @@ export class ReciboServiceProvider {
   validarReciboSerie(strSerie, strIdTx, intIdProducto){
     var parameter = {'strSerie': strSerie, 'strIdTx': strIdTx, 'intIdProducto':intIdProducto};
     return new Promise(resolve=>{
-      this.http.get(this.apiUrl+'ValidarReciboSerie', {params:parameter})
+      this.http.get(this.sGlobal.recepcion + 'ValidarReciboSerie', {params:parameter})
       .map(res=>res.json())
       .subscribe(data=>{
         resolve(data);
@@ -109,7 +100,7 @@ export class ReciboServiceProvider {
     var parameter = {'ua': ua};
 
     return new Promise((resolve, reject)=>{
-        this.http.post(this.apiUrl+'ValidarUAReciboTransferencia/ua', JSON.stringify(parameter), {headers:this.headers})
+        this.http.post(this.sGlobal.recepcion + 'ValidarUAReciboTransferencia/ua', JSON.stringify(parameter), {headers:this.headers})
           .map(res=>res.json())
           .subscribe(data=>{
             resolve(data);
@@ -124,7 +115,7 @@ export class ReciboServiceProvider {
     var parameter = {'ua':ua};
 
     return new Promise((resolve, reject)=>{
-        this.http.post(this.apiUrl+'ValidarUARecibo/ua', JSON.stringify(parameter), {headers:this.headers})
+        this.http.post(this.sGlobal.recepcion + 'ValidarUARecibo/ua', JSON.stringify(parameter), {headers:this.headers})
           .map(res=>res.json())
           .subscribe(data=>{
             console.log('validarUARecibo', data);
@@ -138,7 +129,7 @@ export class ReciboServiceProvider {
   registrarUATransferencia(ua){
     let parameter = { 'ua' : ua };
     return new Promise((resolve, reject)=>{
-      this.http.post(this.apiUrl+'RecepcionUATransferencia/ua', JSON.stringify(parameter), {headers: this.headers})
+      this.http.post(this.sGlobal.recepcion + 'RecepcionUATransferencia/ua', JSON.stringify(parameter), {headers: this.headers})
       .map(res=>res.json())
       .subscribe(data=>{
         resolve(data);
@@ -151,7 +142,7 @@ export class ReciboServiceProvider {
   registrarUA(ua){
     let parameter = { 'ua': ua };
     return new Promise((resolve, reject)=>{
-      this.http.post(this.apiUrl+'RecepcionUA/ua', JSON.stringify(parameter),{headers:this.headers})
+      this.http.post(this.sGlobal.recepcion + 'RecepcionUA/ua', JSON.stringify(parameter),{headers:this.headers})
       .map(res=>res.json())
       .subscribe(data=>{
         resolve(data);
@@ -160,4 +151,26 @@ export class ReciboServiceProvider {
       })
     });
   }
+
+  listarUAXProductoTx(strIdTx, intIdProducto, intItem){
+    debugger;
+    let parameter = { 'strIdTx' : strIdTx, 'intIdProducto' : intIdProducto, 'intItem' : intItem };
+    return new Promise(result=>{
+      this.http.get(this.sGlobal.recepcion + 'ListarUAXProductoTx', {params : parameter})
+      .map(res=> res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('Error - listarUAXProductoTx', err);
+      })
+    });
+  }
+  /**
+    @GET("ListarUAXProductoTx")
+    Call<List<UAXProductoTxA>> getUAXProductoTx(
+        @Query("strIdTx") String strIdTx,
+        @Query("intIdProducto") Integer intIdProducto,
+        @Query("intItem") Integer intItem
+    ); 
+  **/
 }

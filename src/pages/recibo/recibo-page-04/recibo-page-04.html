@@ -5,38 +5,120 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
     <ion-title>recibo-page-04</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content padding>
-
+<ion-content>
     <ion-grid class="bgHeader">        
-        <ion-row align-items-center>
+      <ion-row align-items-center>
+        <ion-col col-4 col-sm>
+          <div class="textHeader">Transacción</div>
+        </ion-col>
+        <ion-col col-8 col-sm>
+          <div class="valueHeader">{{ vReciboPage03.Id_Tx }}</div>
+        </ion-col>
+      </ion-row>
+      <ion-row align-items-center>
           <ion-col col-4 col-sm>
-            <div class="textHeader">Transacción</div>
+            <div class="textHeader">Producto</div>
           </ion-col>
           <ion-col col-8 col-sm>
-            <div class="valueHeader">A20182210036</div>
+            <div class="valueHeader">{{ vReciboPage03.Codigo }}</div>
           </ion-col>
-        </ion-row>
-        <ion-row align-items-center>
-            <ion-col col-4 col-sm>
-              <div class="textHeader">Producto</div>
-            </ion-col>
-            <ion-col col-8 col-sm>
-              <div class="valueHeader">100108B242002</div>
-            </ion-col>
-          </ion-row>
-        <ion-row align-items-center>
-          <ion-col>
-            <div class="valueHeader"> HIRUDOID GEL x 40 g (CEX) OTC</div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col>
+          <div class="valueHeader"> {{ vReciboPage03.Articulo }}</div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    <!--
+      <ion-row class="bgLightBlue">
+        <ion-searchbar (ionInput)="filterItems($event)"></ion-searchbar>
+      </ion-row>
+
+      <ion-row class="bgWhite">
+      <ion-card *ngFor="let objRecepcion of listAuxRecepcion">
+          <ion-card-header class="headerCard">
+              Id Tx: {{objRecepcion.Id_Tx}}
+          </ion-card-header>
+
+          <ion-card-content (click)="evaluateGoReciboPage02(objRecepcion)">
+              <h5><b>Nro. Orden: </b> {{objRecepcion.NumOrden}}</h5>
+              <h5><b>Fecha: </b> {{ objRecepcion.FechaDocumento|momentjs}} </h5>
+              <h5><b>Proveedor: </b> {{objRecepcion.Proveedor}}</h5>
+              <h5><b>Cuenta: </b> {{objRecepcion.Cliente}}</h5>
+              <h5><b>Estado: </b> {{objRecepcion.Estado}}</h5>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+
+      <ion-row class="bgLightBlue">
+      <ion-col col-2 col-sm>
+          <div class="fieldForm">Total</div>
+      </ion-col>
+      <ion-col col-9 col-sm>
+          <div class="fieldForm"> {{ rowCount }} fila(s) </div>
+      </ion-col>
+      </ion-row>
+    -->
+    <ion-card *ngFor="let obj of listBulto">
+      <ion-card-content>
+          <h5><b>Contenedor: </b> {{ obj.Contenedor }}</h5>
+          <h5><b>UA: </b> {{ obj.UA }}</h5>
+          <h5><b>Lote: </b> {{ obj.LoteLab }}</h5>
+          <h5><b>Fecha: </b> {{ obj.FechaIngreso | momentjs }}</h5>
+          <h5><b>Cantidad: </b> {{ obj.Cantidad }}</h5>
+          <h5><b>Cant. Aver.: </b> {{ obj.CantidadAveriada }}</h5>
+          <button ion-button (click)="deleteItem(obj)" icon-only float-right>
+              <ion-icon name="trash"></ion-icon>
+          </button>
+        <!-- 
+          <ion-grid>
+            <ion-row>
+              <ion-col col-3 col-sm>Contenedor</ion-col>
+              <ion-col col-6 col-sm>{{ obj.Contenedor }}</ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-3 col-sm>UA</ion-col>
+                <ion-col col-6 col-sm>{{ obj.UA }}</ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-3 col-sm>Lote</ion-col>
+                <ion-col col-6 col-sm>{{ obj.LoteLab }}</ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-3 col-sm>Fecha</ion-col>
+                <ion-col col-6 col-sm>{{ obj.FechaIngreso | momentjs }}</ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-3 col-sm>Cantidad</ion-col>
+                <ion-col col-6 col-sm>{{ obj.Cantidad }}</ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-3 col-sm>Cant. Aver.</ion-col>
+                <ion-col col-6 col-sm>{{ obj.CantidadAveriada }}</ion-col>
+            </ion-row>
+
+            <div>
+              <button ion-button icon-only float-right>
+                  <ion-icon name="trash"></ion-icon>
+              </button>
+            </div>
+
+            <ion-row>
+              <ion-col>
+                <button ion-button icon-only float-right>
+                    <ion-icon name="trash"></ion-icon>
+                </button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>-->
+
+      </ion-card-content>
+    </ion-card>
 </ion-content>
