@@ -57,6 +57,7 @@ export class ReciboPage {
   }
 
   getRecepcionesXUsuario(strUsuario, intIdAlmacen, intIdMuelle) {
+    debugger;
     this.sRecibo.getRecepcionesXUsuario(strUsuario, intIdAlmacen, intIdMuelle).then((result) => {
       this.listRecepcion = result;
       this.listAuxRecepcion = this.listRecepcion;

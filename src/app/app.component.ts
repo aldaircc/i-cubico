@@ -12,6 +12,7 @@ import { ReciboPage_04Page } from '../pages/recibo/recibo-page-04/recibo-page-04
 import { ImpresoraPage } from '../pages/impresora/impresora';
 import { IncidenciaPage } from '../pages/incidencia/incidencia';
 import { EtiquetaCajaLpnPage } from '../pages/etiqueta-caja-lpn/etiqueta-caja-lpn';
+import { ReciboPage_05Page } from '../pages/recibo/recibo-page-05/recibo-page-05';
 
 @Component({
   templateUrl: 'app.html'
