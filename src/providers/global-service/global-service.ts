@@ -15,8 +15,8 @@ export class GlobalServiceProvider {
   nombreImpresora : string;
   nomberEmpresa : string;
   userName : string = "";
-  url : string = "http://172.16.32.15:8085/SGAA_WCF/";
-  urlPrint : string = "http://172.16.32.3/SGAA_WCF_PRINTV2/";
+  url : string = "";
+  urlPrint : string = "";
   usuario: string;
   produccion: string;
   tablaEst : string;
