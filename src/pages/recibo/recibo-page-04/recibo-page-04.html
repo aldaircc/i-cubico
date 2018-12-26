@@ -4,10 +4,22 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-  <ion-navbar>
-    <ion-title>recibo-page-04</ion-title>
-  </ion-navbar>
+<ion-header no-border>
+  <ion-toolbar no-border-top>
+      <ion-buttons start>
+        <button ion-button icon-only (click)="evaluateSaldo()">
+          <ion-icon name="grid"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-buttons end>
+        <button ion-button icon-only>
+          <ion-icon name="more"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-navbar>
+          <ion-title>Recibo page 04</ion-title>
+      </ion-navbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -121,4 +133,14 @@
 
       </ion-card-content>
     </ion-card>
+    
+    <ion-row class="bgLightBlue" align-items-center>
+        <ion-col col-2 col-sm>
+            <div class="fieldForm">Total</div>
+        </ion-col>
+        <ion-col col-4 col-sm>
+            <div class="fieldForm"> {{ rowCount }} fila(s) </div>
+        </ion-col>
+    </ion-row>
+
 </ion-content>

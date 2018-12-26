@@ -165,12 +165,4 @@ export class ReciboServiceProvider {
       })
     });
   }
-  /**
-    @GET("ListarUAXProductoTx")
-    Call<List<UAXProductoTxA>> getUAXProductoTx(
-        @Query("strIdTx") String strIdTx,
-        @Query("intIdProducto") Integer intIdProducto,
-        @Query("intItem") Integer intItem
-    ); 
-  **/
 }
