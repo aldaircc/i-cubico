@@ -72,13 +72,18 @@ export class RutaPickingPage {
 
   goCerrarPickingPage(){
 
+    let saldoTotal = this.listaTempRutaPicking.reduce(function(prev, cur){
+      return prev + cur.Saldo;
+    }, 0);
+
+
     debugger;  
       this.vRutaPickingPage = {
         'Id_Tx' : this.vPickingPage.Id_Tx,
         'NumOrden' : this.vPickingPage.NumOrden,
         'Ciudad' : this.vPickingPage.Ciudad,
         'Zona' : this.vPickingPage.Zona,
-        'Saldo' : this.rutaPicking.Saldo
+        'Saldo' : saldoTotal
         
       };
 

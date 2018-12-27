@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController, ToastController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController, ToastController, AlertController, ModalController } from 'ionic-angular';
 import { PopoverRutaPickingPage } from '../../picking/popover/popover-ruta-picking/popover-ruta-picking'
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
+import {ImpresoraPage } from '../../impresora/impresora'
 
 /**
  * Generated class for the CierrePickingPage page.
@@ -23,7 +24,8 @@ export class CierrePickingPage {
   listNombreMuelleXAlmacen: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController, public toastCtrl: ToastController, public alertCtrl: AlertController) {
+    public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController, public toastCtrl: ToastController, public alertCtrl: AlertController,
+    public modalCtrl : ModalController) {
     this.vRutaPickingPage = navParams.get('data');
   }
 
@@ -49,6 +51,7 @@ export class CierrePickingPage {
             this.presentAlertConfirm("Va a cerrar orden de picking incompleta, ¿Desea continuar?”.").then((result) => {
               if (result) {
                 // Cerrar Picking
+                this.CerrarPicking(this.vRutaPickingPage.Id_Tx, 6, "Admin", this.listNombreMuelleXAlmacen[0].Id_Muelle, 2);
                 this.presentAlert("Operación exitosa").then((result) => {
                   if (result) {
                     this.presentAlertConfirm("¿Desea imprimir el picking?”.").then((result) => {
@@ -67,6 +70,7 @@ export class CierrePickingPage {
             this.presentAlertConfirm("Desea cerrar picking?”.").then((result) => {
               if (result) {
                 // Cerrar Picking
+                this.CerrarPicking(this.vRutaPickingPage.Id_Tx, 5, "Admin", this.listNombreMuelleXAlmacen[0].Id_Muelle, 2);
                 this.presentAlert("Operación exitosa").then((result) => {
                   if (result) {
                     this.presentAlertConfirm("¿Desea imprimir el picking?”.").then((result) => {
@@ -94,9 +98,10 @@ export class CierrePickingPage {
     }
   }
 
-  getMuelleXAlmacen(intIdAlmacen, strCodigoBarra) {
+
+  CerrarPicking(idTx, idEstado, usuario, idMuelle, IdAlmacen) {
     debugger;
-    this.sPicking.getMuelleXAlmacen(intIdAlmacen, strCodigoBarra).then((result) => {
+    this.sPicking.CerrarPicking(idTx, idEstado, usuario, idMuelle, IdAlmacen).then((result) => {
       debugger;
       this.listNombreMuelleXAlmacen = result;
       if (this.listNombreMuelleXAlmacen.length > 0) {
@@ -109,14 +114,21 @@ export class CierrePickingPage {
     });
   }
 
-  // presentAlert(message) {
-  //   const alert = this.alertCtrl.create({
-  //     title: 'Mensaje',
-  //     subTitle: message,
-  //     buttons: ['OK']
+  // getMuelleXAlmacen(intIdAlmacen, strCodigoBarra) {
+  //   debugger;
+  //   this.sPicking.getMuelleXAlmacen(intIdAlmacen, strCodigoBarra).then((result) => {
+  //     debugger;
+  //     this.listNombreMuelleXAlmacen = result;
+  //     if (this.listNombreMuelleXAlmacen.length > 0) {
+  //       console.log('Datos Muelle por almacen', this.listNombreMuelleXAlmacen);
+  //     } else {
+  //       console.log('No se encontrarón datos.', this.listNombreMuelleXAlmacen);
+  //     }
+  //   }, (err) => {
+  //     console.log('E-Muelle por almacen', err);
   //   });
-  //   alert.present();
   // }
+
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -163,6 +175,11 @@ export class CierrePickingPage {
       confirm.present();
     })
 
+  }
+
+  showModalImpresora(){
+    let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
+    modalIncidencia.present();
   }
 
   ionViewDidLoad() {
