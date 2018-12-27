@@ -11,12 +11,23 @@ import { ReciboPage_03Page } from '../pages/recibo/recibo-page-03/recibo-page-03
 import { ReciboPage_04Page } from '../pages/recibo/recibo-page-04/recibo-page-04';
 import { ImpresoraPage } from '../pages/impresora/impresora';
 import { IncidenciaPage } from '../pages/incidencia/incidencia';
+import { PickingPage } from '../pages/picking/picking';
+import { RutaPickingPage } from '../pages/picking/ruta-picking/ruta-picking';
+import { DetallePickingPage } from '../pages/picking/detalle-picking/detalle-picking';
+import { CierrePickingPage } from '../pages/picking/cierre-picking/cierre-picking';
+import { PickingPorProductoPage } from '../pages/picking/picking-por-producto/picking-por-producto';
+import { DetallePorProductoPage } from '../pages/picking/detalle-por-producto/detalle-por-producto';
+import { ReabastecimientoPage } from '../pages/picking/reabastecimiento/reabastecimiento';
+import { DespachoPage} from '../pages/despacho/despacho';
+import { EmbalajePage} from '../pages/embalaje/embalaje';
+import { InventarioPage} from '../pages/inventario/inventario';
+
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = IncidenciaPage;//ReciboPage;
+  rootPage:any = PickingPage;//ReciboPage;
   userProfile={"Almacen":"","ApeNom":"","Cliente":"","Correo":"","FlagActivo":false,"FlagPermiso":false,"FlagRestablecer":false,"Foto":null,"Id_Almacen":"","Id_Cliente":null,"Id_Perfil":"","Perfil":"","Usuario":""};
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

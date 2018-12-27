@@ -31,6 +31,25 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ImpresoraServiceProvider } from '../providers/impresora-service/impresora-service';
 import { IncidenciaPage } from '../pages/incidencia/incidencia';
 import { IncidenciaServiceProvider } from '../providers/incidencia-service/incidencia-service';
+import { PickingPage } from '../pages/picking/picking';
+import { RutaPickingPage } from '../pages/picking/ruta-picking/ruta-picking';
+import { DetallePickingPage } from '../pages/picking/detalle-picking/detalle-picking';
+import { CierrePickingPage } from '../pages/picking/cierre-picking/cierre-picking';
+import { PickingPorProductoPage } from '../pages/picking/picking-por-producto/picking-por-producto';
+import { DetallePorProductoPage } from '../pages/picking/detalle-por-producto/detalle-por-producto';
+import { ReabastecimientoPage } from '../pages/picking/reabastecimiento/reabastecimiento';
+import { PopoverPickingPage } from '../pages/picking/popover/popover-picking/popover-picking'
+import { PopoverRutaPickingPage } from '../pages/picking/popover/popover-ruta-picking/popover-ruta-picking'
+
+
+
+
+
+import { DespachoPage} from '../pages/despacho/despacho';
+import { EmbalajePage} from '../pages/embalaje/embalaje';
+import { InventarioPage} from '../pages/inventario/inventario'
+import { PickingServiceProvider } from '../providers/picking-service/picking-service';
+
 
 @NgModule({
   declarations: [
@@ -48,6 +67,18 @@ import { IncidenciaServiceProvider } from '../providers/incidencia-service/incid
     AlmacenajePage,
     ImpresoraPage,
     IncidenciaPage,
+    PickingPage,
+    RutaPickingPage,
+    DetallePickingPage,
+    CierrePickingPage,
+    PickingPorProductoPage,
+    DetallePorProductoPage,
+    ReabastecimientoPage,
+    PopoverPickingPage,
+    PopoverRutaPickingPage,
+    DespachoPage,
+    EmbalajePage,
+    InventarioPage,
     MomentjsPipe //Pipe to give format to dates.
   ],
   imports: [
@@ -72,7 +103,19 @@ import { IncidenciaServiceProvider } from '../providers/incidencia-service/incid
     ReciboPage_04Page,
     AlmacenajePage,
     ImpresoraPage,
-    IncidenciaPage
+    IncidenciaPage,
+    PickingPage,
+    RutaPickingPage,
+    DetallePickingPage,
+    CierrePickingPage,
+    PickingPorProductoPage,
+    DetallePorProductoPage,
+    ReabastecimientoPage,
+    PopoverPickingPage,
+    PopoverRutaPickingPage,
+    DespachoPage,
+    EmbalajePage,
+    InventarioPage
   ],
   providers: [
     StatusBar,
@@ -81,7 +124,8 @@ import { IncidenciaServiceProvider } from '../providers/incidencia-service/incid
     AuthService,
     ReciboServiceProvider,
     ImpresoraServiceProvider,
-    IncidenciaServiceProvider
+    IncidenciaServiceProvider,
+    PickingServiceProvider
   ]
 })
 export class AppModule {}
