@@ -83,7 +83,7 @@
                 </ion-col>
                 <ion-col col-7 no-padding no-margin>
                     <ion-label no-padding no-margin style="font-weight:bold; color:dimgray">
-                        MUELLE EJEMPLO
+                            {{ listNombreMuelleXAlmacen.Muelle }}    
                     </ion-label> 
                 </ion-col>
             </ion-row>
@@ -91,7 +91,7 @@
 
         <ion-row >            
           <ion-item>
-            <ion-input type="text" value=""></ion-input>
+            <ion-input type="text" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()"></ion-input>
           </ion-item>
         </ion-row>       
   </ion-content>

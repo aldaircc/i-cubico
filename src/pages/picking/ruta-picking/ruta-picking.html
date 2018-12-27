@@ -38,7 +38,7 @@
   
   
   
-  <ion-content >
+  <ion-content [ngClass]="{bgWhite: (!isBgRed && !isBgGreen), bgRed:(isBgRed), bgGreen:(isBgGreen)}"  >
 
         <ion-grid style="padding: 0px;">
                 <ion-row no-padding no-margin style="background: #00BFFF" > 
@@ -133,7 +133,7 @@
           <ion-row no-padding no-margin > 
               <ion-col col-3 no-padding>
                   <ion-row  style="margin-left:10px; margin-right:10px; background: #00BFFF"> 
-              <ion-label style="font-weight:bold; color: white; text-align: center">
+              <ion-label  style="font-weight:bold; color: white; text-align: center">
                     {{ rutaPicking.Fila }}
               </ion-label> 
           </ion-row> 
@@ -181,7 +181,7 @@
                 </ion-col>
                 <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
                    <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-                        <ion-input  type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+                        <ion-input [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()"  type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
                    </ion-item>                    
                 </ion-col>
             </ion-row>
@@ -209,7 +209,7 @@
                     </button>
                 </ion-col>
                 <ion-col col-4 style="margin: 0px; padding: 1px; ">
-                    <button ion-button style="background:  #A4A4A4"  (click)="goPickingPorProductoPage()" large  full >
+                    <button ion-button style="background:  #A4A4A4" (click)="validarCodeBar()" large  full >
                         <div> 
                             <ion-icon name='checkbox-outline'></ion-icon> <br> 
                             <label style="font-size: 10px">Verificar</label> 

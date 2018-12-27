@@ -6,33 +6,33 @@
 -->
 
 <ion-header>
-  <ion-toolbar no-padding no-margin color="primary">      
+    <ion-toolbar no-padding no-margin color="primary">
         <ion-grid style="padding: 0px;">
-                <ion-row no-padding no-margin> 
-                    <ion-col col-9 no-padding no-margin>
-                        <ion-navbar no-padding no-margin>
-                                <ion-label style="font-size: 15px; color: white; font-weight:bold;">ORDENES DE PICKING</ion-label>
-                        </ion-navbar>
-                    </ion-col>
-                    <ion-col col-3 no-padding no-margin>
-                      <ion-buttons start style="margin-top: 12px; text-align: center">  
+            <ion-row no-padding no-margin>
+                <ion-col col-9 no-padding no-margin>
+                    <ion-navbar no-padding no-margin>
+                        <ion-label style="font-size: 15px; color: white; font-weight:bold;">ORDENES DE PICKING</ion-label>
+                    </ion-navbar>
+                </ion-col>
+                <ion-col col-3 no-padding no-margin>
+                    <ion-buttons start style="margin-top: 12px; text-align: center">
                         <button ion-button icon-only (click)="getDataOrdenes()">
-                          <ion-icon name="sync"></ion-icon>
+                            <ion-icon name="sync"></ion-icon>
                         </button>
                         <button ion-button icon-only (click)="presentPopover($event)">
-                          <ion-icon name="more"></ion-icon>
+                            <ion-icon name="more"></ion-icon>
                         </button>
-                        </ion-buttons>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-  </ion-toolbar>
+                    </ion-buttons>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
 
     <ion-grid style="padding: 0px;">
-        <ion-row no-padding no-margin style="background: #00BFFF" > 
+        <ion-row no-padding no-margin style="background: #00BFFF">
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px">
                 <ion-label style="padding-left: 10px; margin-top: 3px; margin-bottom: 0px; color: yellow; font-weight:bold ">
                     Usuario:
@@ -44,7 +44,7 @@
                 </ion-label>
             </ion-col>
         </ion-row>
-        <ion-row no-padding no-margin style="background: #00BFFF" > 
+        <ion-row no-padding no-margin style="background: #00BFFF">
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px; padding-top: 0px">
                 <ion-label style="padding-left: 10px; margin-top: 1px; margin-bottom: 5px; color: yellow; font-weight:bold ">
                     Almacén:
@@ -53,89 +53,98 @@
             <ion-col col-9 style="padding-left: 0px; padding-right: 0px; padding-top: 0px">
                 <ion-label style="padding-left: 10px; margin-top: 1px; margin-bottom: 5px; color: white; font-weight:bold ">
                     Almacen APT
-                  </ion-label>
+                </ion-label>
             </ion-col>
         </ion-row>
     </ion-grid>
 
-  <ion-row class="bgLightBlue" >
-    <ion-searchbar placeholder="Buscar" (ionInput)="filterItems($event)" [(ngModel)]="searchQuery"></ion-searchbar>
-  </ion-row>
+    <ion-row class="bgLightBlue">
+        <ion-searchbar placeholder="Buscar" (ionInput)="filterItems($event)" [(ngModel)]="searchQuery"></ion-searchbar>
+    </ion-row>
 
-   <ion-row class="bgWhite">
-        <ion-card *ngFor="let objPicking of listAuxOrdenesPicking">      
-            <ion-card-content style="padding: 8px 4px; font-size: 12px" (click)="goRutaPickingPage(objPicking)">
-                <ion-row no-padding no-margin> 
-                    <ion-col col-3 no-padding no-margin >
-                        <ion-label no-padding no-margin style="font-weight:bold;" >
-                            N° Orden:
-                        </ion-label>
-                    </ion-col>
-                    <ion-col col-9 no-padding no-margin >
-                        <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                            {{objPicking.NumOrden}}
-                        </ion-label>
-                    </ion-col>
-                </ion-row>
-                <ion-row no-padding no-margin> 
-                        <ion-col col-3 no-padding no-margin >
-                            <ion-label no-padding no-margin style="font-weight:bold;">
-                                    Cliente:
-                            </ion-label>
-                        </ion-col>
-                        <ion-col col-9 no-padding no-margin >
-                            <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                                    {{ objPicking.Cliente}}
-                            </ion-label>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row no-padding no-margin> 
+    <ion-row class="bgWhite">
+        <ion-card *ngFor="let objPicking of listAuxOrdenesPicking">
+            <ion-card-content style="padding: 8px 2px; font-size: 12px" (click)="goRutaPickingPage(objPicking)">
+                <ion-row no-padding no-margin>
+                    <div no-margin 
+                    [ngClass]="{plomo : (objPicking.Id_Estado == 2), amarillo: (objPicking.Id_Estado == 3), verde: (objPicking.Id_Estado ==5 || objPicking.Id_Estado ==6) }" style="margin-right: 2px;  width: 2%;">
+                    </div>
+                    <div no-padding no-margin style=" width: 97%;" > 
+                        <ion-row no-padding no-margin>
                             <ion-col col-3 no-padding no-margin>
                                 <ion-label no-padding no-margin style="font-weight:bold;">
-                                        Fecha Doc.:
+                                    N° Orden:
+                                </ion-label>
+                            </ion-col>
+                            <ion-col col-9 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                    {{objPicking.NumOrden}}
+                                </ion-label>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row no-padding no-margin>
+                            <ion-col col-3 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold;">
+                                    Cliente:
+                                </ion-label>
+                            </ion-col>
+                            <ion-col col-9 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                    {{ objPicking.Cliente}}
+                                </ion-label>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row no-padding no-margin>
+                            <ion-col col-3 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold;">
+                                    Fecha Doc.:
                                 </ion-label>
                             </ion-col>
                             <ion-col col-3 no-padding no-margin>
                                 <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                                        {{objPicking.FechaDocumento|momentjs}}
+                                    {{objPicking.FechaDocumento|momentjs}}
                                 </ion-label>
                             </ion-col>
-                            <ion-col col-3 no-padding no-margin >
-                                    <ion-label no-padding no-margin style="font-weight:bold;" >
-                                            Fecha Entrega:
-                                    </ion-label>
-                                    
-                                </ion-col>
-                                <ion-col col-3 no-padding no-margin>
-                                    <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                                            {{objPicking.FechaLlegada|momentjs}}
-                                    </ion-label>
-                                </ion-col>
+                            <ion-col col-3 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold;">
+                                    Fecha Entrega:
+                                </ion-label>
+        
+                            </ion-col>
+                            <ion-col col-3 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                    {{objPicking.FechaLlegada|momentjs}}
+                                </ion-label>
+                            </ion-col>
                         </ion-row>
-                        <ion-row no-padding no-margin> 
-                                <ion-col col-3 no-padding no-margin>
-                                    <ion-label no-padding no-margin style="font-weight:bold;">
-                                            Tipo Mov.:
-                                    </ion-label>
-                                </ion-col>
-                                <ion-col col-9 no-padding no-margin >
-                                    <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                                            {{objPicking.TipoMovimiento}}
-                                    </ion-label>
-                                </ion-col>
-                            </ion-row>
-                            <ion-row no-padding no-margin> 
-                                    <ion-col col-3 no-padding no-margin>
-                                        <ion-label no-padding no-margin style="font-weight:bold;">
-                                                Cuenta:
-                                        </ion-label>
-                                    </ion-col>
-                                    <ion-col col-9 no-padding no-margin >
-                                        <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                                                {{objPicking.Cuenta}}
-                                        </ion-label>
-                                    </ion-col>
-                                </ion-row>
+                        <ion-row no-padding no-margin>
+                            <ion-col col-3 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold;">
+                                    Tipo Mov.:
+                                </ion-label>
+                            </ion-col>
+                            <ion-col col-9 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                    {{objPicking.TipoMovimiento}}
+                                </ion-label>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row no-padding no-margin>
+                            <ion-col col-3 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold;">
+                                    Cuenta:
+                                </ion-label>
+                            </ion-col>
+                            <ion-col col-9 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                    {{objPicking.Cuenta}}
+                                </ion-label>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                </ion-row>
+                
+                
 
                 <!-- <h5><b>Nro. Orden: </b> {{objPicking.NumOrden}}</h5>
                 <h5><b>Cliente: </b> {{ objPicking.Cliente}} </h5>

@@ -64,86 +64,97 @@
     <ion-row class="bgWhite">
         <ion-card *ngFor="let objDetallePicking of listAuxDetallePicking">      
             <ion-card-content style="padding: 8px 4px; font-size: 12px">
-                <ion-row no-padding no-margin> 
-                    <ion-col col-4 no-padding no-margin >
-                        <ion-label no-padding no-margin style="font-weight:bold;" >
-                            Código:
-                        </ion-label>
-                    </ion-col>
-                    <ion-col col-8 no-padding no-margin >
-                        <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                            {{objDetallePicking.CodigoProducto}}
-                        </ion-label>
-                    </ion-col>
-                </ion-row>
-                <ion-row no-padding no-margin> 
-                    <ion-col col-4 no-padding no-margin >
-                        <ion-label no-padding no-margin style="font-weight:bold;" >
-                            Articulo:
-                        </ion-label>
-                    </ion-col>
-                    <ion-col col-8 no-padding no-margin >
-                        <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                            {{ objDetallePicking.Producto}}
-                        </ion-label>
-                    </ion-col>
-                </ion-row>
-                <ion-row no-padding no-margin> 
-                    <ion-col col-4 no-padding no-margin >
-                        <ion-label no-padding no-margin style="font-weight:bold;" >
-                            U.M.:
-                        </ion-label>
-                    </ion-col>
-                    <ion-col col-3 no-padding no-margin >
-                        <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                            {{objDetallePicking.UMBase}}
-                        </ion-label>
-                    </ion-col>
-                    <ion-col col-2 no-padding no-margin >
-                        <ion-label no-padding no-margin style="font-weight:bold;" >
-                            Lote:
-                        </ion-label>
-                    </ion-col>
-                    <ion-col col-3 no-padding no-margin >
-                        <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                            {{objDetallePicking.LoteProducto}}
-                        </ion-label>
-                    </ion-col>
-                </ion-row>
-                <ion-row no-padding no-margin> 
-                    <ion-col col-4 no-padding no-margin >
-                        <ion-label no-padding no-margin style="font-weight:bold;" >
-                            Cant. Pedida:
-                        </ion-label>
-                    </ion-col>
-                    <ion-col col-3 no-padding no-margin >
-                        <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                            {{objDetallePicking.CantidadPedida}}
-                        </ion-label>
-                    </ion-col>
-                    <ion-col col-2 no-padding no-margin >
-                        <ion-label no-padding no-margin style="font-weight:bold;" >
-                            Saldo:
-                        </ion-label>
-                    </ion-col>
-                    <ion-col col-3 no-padding no-margin >
-                        <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                            {{objDetallePicking.Saldo}}
-                        </ion-label>
-                    </ion-col>
-                </ion-row>
-                <ion-row no-padding no-margin> 
-                    <ion-col col-4 no-padding no-margin >
-                        <ion-label no-padding no-margin style="font-weight:bold;" >
-                            Cant. Atendida:
-                        </ion-label>
-                    </ion-col>
-                    <ion-col col-8 no-padding no-margin >
-                        <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                            {{objDetallePicking.CantidadPedida - objDetallePicking.Saldo}}
-                        </ion-label>
-                    </ion-col>
-                </ion-row>
+                    <ion-row no-padding no-margin>
+                            <div no-margin 
+                            [ngClass]="{plomo : (objDetallePicking.Id_Estado != 2)}" style="margin-right: 2px;  width: 2%;">
+                            </div>
+                            <div no-padding no-margin style=" width: 97%;">
+                                    <ion-row no-padding no-margin>                     
+                                            <ion-col col-4 no-padding no-margin>
+                                                <ion-label no-padding no-margin style="font-weight:bold;" >
+                                                    Código:
+                                                </ion-label>
+                                            </ion-col>
+                                            <ion-col col-8 no-padding no-margin >
+                                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                                    {{objDetallePicking.CodigoProducto}}
+                                                </ion-label>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row no-padding no-margin> 
+                                            <ion-col col-4 no-padding no-margin >
+                                                <ion-label no-padding no-margin style="font-weight:bold;" >
+                                                    Articulo:
+                                                </ion-label>
+                                            </ion-col>
+                                            <ion-col col-8 no-padding no-margin >
+                                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                                    {{ objDetallePicking.Producto}}
+                                                </ion-label>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row no-padding no-margin> 
+                                            <ion-col col-4 no-padding no-margin >
+                                                <ion-label no-padding no-margin style="font-weight:bold;" >
+                                                    U.M.:
+                                                </ion-label>
+                                            </ion-col>
+                                            <ion-col col-3 no-padding no-margin >
+                                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                                    {{objDetallePicking.UMBase}}
+                                                </ion-label>
+                                            </ion-col>
+                                            <ion-col col-2 no-padding no-margin >
+                                                <ion-label no-padding no-margin style="font-weight:bold;" >
+                                                    Lote:
+                                                </ion-label>
+                                            </ion-col>
+                                            <ion-col col-3 no-padding no-margin >
+                                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                                    {{objDetallePicking.LoteProducto}}
+                                                </ion-label>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row no-padding no-margin> 
+                                            <ion-col col-4 no-padding no-margin >
+                                                <ion-label no-padding no-margin style="font-weight:bold;" >
+                                                    Cant. Pedida:
+                                                </ion-label>
+                                            </ion-col>
+                                            <ion-col col-3 no-padding no-margin >
+                                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                                    {{objDetallePicking.CantidadPedida}}
+                                                </ion-label>
+                                            </ion-col>
+                                            <ion-col col-2 no-padding no-margin >
+                                                <ion-label no-padding no-margin style="font-weight:bold;" >
+                                                    Saldo:
+                                                </ion-label>
+                                            </ion-col>
+                                            <ion-col col-3 no-padding no-margin >
+                                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                                    {{objDetallePicking.Saldo}}
+                                                </ion-label>
+                                            </ion-col>
+                                        </ion-row>
+                                        <ion-row no-padding no-margin> 
+                                            <ion-col col-4 no-padding no-margin >
+                                                <ion-label no-padding no-margin style="font-weight:bold;" >
+                                                    Cant. Atendida:
+                                                </ion-label>
+                                            </ion-col>
+                                            <ion-col col-8 no-padding no-margin >
+                                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                                    {{objDetallePicking.CantidadPedida - objDetallePicking.Saldo}}
+                                                </ion-label>
+                                            </ion-col>
+                                        </ion-row>
+                            </div>
+
+                    </ion-row>
+                    
+
+                
             </ion-card-content>
         </ion-card>
     </ion-row>

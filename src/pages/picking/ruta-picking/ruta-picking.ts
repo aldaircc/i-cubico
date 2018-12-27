@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController, ToastController } from 'ionic-angular';
 import { DetallePickingPage } from '../detalle-picking/detalle-picking';
 import { PickingPorProductoPage } from '../picking-por-producto/picking-por-producto';
 import { CierrePickingPage } from '../cierre-picking/cierre-picking';
@@ -31,12 +31,19 @@ export class RutaPickingPage {
   contador:number = 1;  
   total:number = 1;  
 
+  codBar:string;
+  codeBar:string;
+  isBgRed:boolean = false;
+  isBgGreen:boolean = false;
+  Fila:string;
+  
+
   Backisenabled:boolean=false;
   Nextisenabled:boolean=false;
   
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController) {
+    public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController, public toastCtrl: ToastController) {
     this.vPickingPage = navParams.get('data');
     this.getDataRutaPicking(this.vPickingPage.Id_Tx, 'Admin', 2);
   }
@@ -70,7 +77,9 @@ export class RutaPickingPage {
         'Id_Tx' : this.vPickingPage.Id_Tx,
         'NumOrden' : this.vPickingPage.NumOrden,
         'Ciudad' : this.vPickingPage.Ciudad,
-        'Zona' : this.vPickingPage.Zona
+        'Zona' : this.vPickingPage.Zona,
+        'Saldo' : this.rutaPicking.Saldo
+        
       };
 
       this.navCtrl.push(CierrePickingPage, {
@@ -160,6 +169,46 @@ export class RutaPickingPage {
     });
   }
 
+  validarCodeBar(){
+    debugger;
+    if(this.codeBar){
+      if(this.codeBar.trim()!=""){
+        if (this.codeBar.trim().length >= 5){
+      
+          this.codBar = this.rutaPicking.Fila.trim() + this.rutaPicking.Columna.toString() + this.rutaPicking.Nivel.toString() + this.rutaPicking.Posicion.toString();
+          if(this.codeBar.trim() == this.codBar){
+            this.isBgGreen = true;
+            this.isBgRed = false;
+            this.goPickingPorProductoPage();
+          }else{
+            this.isBgGreen = false;
+            this.isBgRed = true;
+            this.codeBar = "";
+          }
+        }else{
+          this.isBgGreen = false;
+          this.isBgRed = true;
+          this.codeBar = "";
+        }
+      }
+      else{
+        this.presentToast("Ingrese código de ubicación");
+      }
+      
+    }else{
+      this.presentToast("Ingrese código de ubicación");
+    }
+    
+  }
+
+  presentToast(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 2000,
+      position: 'bottom'
+    });  
+    toast.present();
+  }
 
 }
 
