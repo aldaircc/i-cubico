@@ -6,7 +6,8 @@
 </div> -->
 
 <ion-list>
-    <ion-list-header color="primary">Options</ion-list-header>
-    <button ion-item (tap)="itemClick(1)"> <ion-icon name="ios-clock"></ion-icon> Imprimir etiqueta</button>
-    <button ion-item (tap)="itemClick(2)">Registrar incidencia</button>
+    <ion-list-header color="primary">Opciones</ion-list-header>
+    <button ion-item (tap)="itemClick(1)" [hidden]="!isDisplayEtq"> <ion-icon name="ios-barcode-outline"></ion-icon> Imprimir etiqueta</button>
+    <button ion-item (tap)="itemClick(2)" [hidden]="!isDisplayIncidencia"> <ion-icon name="ios-alert-outline"></ion-icon> Registrar incidencia</button>
+    <button ion-item (tap)="itemClick(3)" [hidden]="!isDisplayPrint"> <ion-icon name="ios-print-outline"></ion-icon> Seleccionar impresora</button>
 </ion-list>

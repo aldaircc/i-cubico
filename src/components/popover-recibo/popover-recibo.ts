@@ -13,22 +13,48 @@ import { ViewController } from 'ionic-angular';
 })
 export class PopoverReciboComponent {
 
-  items:any;
+  // items:any;
   text: string;
 
+  isDisplayEtq : boolean = false;
+  isDisplayIncidencia : boolean = false;
+  isDisplayPrint : boolean = false;
+
   constructor(public viewCtrl: ViewController) {
-    debugger;
-    console.log('view controller', viewCtrl.data);
-    console.log('Hello PopoverReciboComponent Component');
-    this.text = 'Hello World';
-    this.items = [
-      {item : 'Impresora'},
-      {item : 'Incidencia'}
-    ]
+    let page = viewCtrl.data.page;
+    this.evaluateDisplayOptions(page);
+    
+    // this.items = [
+    //   {item : 'Impresora'},
+    //   {item : 'Incidencia'}
+    // ]
+  }
+
+  evaluateDisplayOptions(value){
+    switch (value) {
+      case 11:
+      this.isDisplayPrint = false;
+      this.isDisplayIncidencia = false;
+      this.isDisplayEtq = false;
+        break;
+      case 12:
+        this.isDisplayPrint = true;
+        this.isDisplayIncidencia = true;
+        this.isDisplayEtq = false;
+        break;
+      case 13:
+        break;
+      case 14:
+        this.isDisplayPrint = true;
+        this.isDisplayIncidencia = false;
+        this.isDisplayEtq = false;
+        break;
+      default:
+        break;
+    }
   }
 
   itemClick(item){
-    debugger;
     this.viewCtrl.dismiss(item);
   }
 

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, PopoverController, ModalController } from 'ionic-angular';
 import { ReciboServiceProvider } from '../../../providers/recibo-service/recibo-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { ReciboPage_05Page } from '../recibo-page-05/recibo-page-05';
+import { PopoverReciboComponent } from '../../../components/popover-recibo/popover-recibo';
+import { ImpresoraPage } from '../../impresora/impresora';
 
 /**
  * Generated class for the ReciboPage_04Page page.
@@ -24,7 +26,8 @@ export class ReciboPage_04Page {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController , public sRecibo: ReciboServiceProvider,
-    public sGlobal: GlobalServiceProvider) {
+    public sGlobal: GlobalServiceProvider, public popoverCtrl: PopoverController,
+    public modalCtrl: ModalController) {
     this.vReciboPage03 = navParams.get('dataPage03');
     console.log('data received - Page 03', this.vReciboPage03);
     this.listarUAXProductoTx(this.vReciboPage03.Id_Tx, this.vReciboPage03.Id_Articulo, this.vReciboPage03.Item);
@@ -163,5 +166,30 @@ export class ReciboPage_04Page {
     this.navCtrl.push(ReciboPage_05Page, {
       dataPage04: obj
     });
+  }
+
+  //
+  presentPopover(myEvent){
+    debugger;
+    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 14});
+    popover.present({
+      ev: myEvent
+    });
+
+    popover.onDidDismiss(option =>{
+      debugger;
+      if(option == 3){
+        this.showModalImpresora();
+      }
+    });
+  }
+
+  showModalImpresora(){
+    debugger;
+    let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
+    modalIncidencia.onDidDismiss(data =>{
+      console.log('Id_Impresora - actualizada', this.sGlobal.Id_Impresora);
+    });
+    modalIncidencia.present();
   }
 }

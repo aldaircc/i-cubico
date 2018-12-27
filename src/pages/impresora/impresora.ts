@@ -27,11 +27,11 @@ export class ImpresoraPage {
       // this.userDetail = data;
       debugger;
       console.log('Id_Impresora', navParams.get('Id_Impresora'));
-      this.listarAccesosImpresoraXUsuario('ADMIN');
+      this.listarAccesosImpresoraXUsuario(this.sGlobal.userName);//'ADMIN');
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ImpresoraPage');
+    
   }
 
   listarAccesosImpresoraXUsuario(usuario){
@@ -42,9 +42,8 @@ export class ImpresoraPage {
   }
 
   selectImpresora(print){
-    console.log('Print selected', print);
     const confirm = this.alertCtrl.create({
-      //title: 'Use this lightsaber?',
+      title: 'Impresora',
       message: 'Ha seleccionado la impresora '+ print.Nombre+'. ¿Desea continuar?',
       buttons: [
         {
@@ -52,7 +51,7 @@ export class ImpresoraPage {
           handler: () => {
             this.sGlobal.Id_Impresora = print.Id_Impresora;
             this.sGlobal.nombreImpresora = print.Nombre;
-            console.log('Disagree clicked', print.Nombre);
+            this.dismiss();
           }
         },
         {
@@ -67,7 +66,7 @@ export class ImpresoraPage {
   }
 
   dismiss(){
-    let data = { 'foo': 'bar' };
-    this.viewCtrl.dismiss(data);
+    //let data = { 'foo': 'bar' };
+    this.viewCtrl.dismiss();//data);
   }
 }

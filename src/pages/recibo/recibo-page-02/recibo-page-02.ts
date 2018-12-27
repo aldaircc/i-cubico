@@ -43,19 +43,23 @@ export class ReciboPage_02Page {
 
   presentPopover(myEvent){
     debugger;
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 2});
+    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 12});
     popover.present({
       ev: myEvent
     });
 
     popover.onDidDismiss(popoverData =>{
-      if(popoverData == 1){
-
-      }else if(popoverData == 2){
-
+      if(popoverData == 2){
         this.showModalIncidencia(this.vReciboPage01);
+      }else if(popoverData == 3){
+        this.showModalImpresora();
       }
     });
+  }
+
+  showModalImpresora(){
+    let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
+    modalIncidencia.present();
   }
 
   showModalIncidencia(data){
