@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController, ToastController } from 'ionic-angular';
 import { DetallePorProductoPage } from '../detalle-por-producto/detalle-por-producto'
 import { ReabastecimientoPage } from '../reabastecimiento/reabastecimiento'
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
@@ -27,18 +27,20 @@ export class PickingPorProductoPage {
   Backisenabled:boolean=false;
   Nextisenabled:boolean=false;
 
-  TextcodBarra: string='';
+  codeBar: string;
   Textcantidad : string='';
 
+  isBgRed:boolean = false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController) {
+    public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController, public toastCtrl: ToastController) {
     this.vRutaPickingPage = navParams.get('data');
     this.getPickingProductoLoad();
     
   }
 
   getPickingProductoLoad(){
-    this.TextcodBarra = "";
+    this.codeBar = "";
     this.Textcantidad = "";
     this.getPickingProducto(this.vRutaPickingPage.Id_Tx, 'Admin', 2);
   }
@@ -68,6 +70,24 @@ export class PickingPorProductoPage {
     },err=>{
       console.log('E-getPickingProducto',err);
     });
+  }
+
+  validarCodeBar() {
+    debugger;
+    if(this.codeBar){
+      if(this.codeBar.trim()!=""){
+        if (this.codeBar.trim().length >= 6) {
+          
+        } 
+      }else{
+        this.presentToast("UA no pertenece a la ubicación");
+        this.isBgRed = true;
+        this.codeBar = "";
+      }
+    }else{
+      //this.presentToast("Ingrese código de muelle");
+    }
+    
   }
 
   NextRutaPicking(){
@@ -108,6 +128,15 @@ export class PickingPorProductoPage {
       popover.present({
         ev: ev
       });
+    }
+
+    presentToast(message) {
+      let toast = this.toastCtrl.create({
+        message: message,
+        duration: 2000,
+        position: 'bottom'
+      });  
+      toast.present();
     }
 
   ionViewDidLoad() {

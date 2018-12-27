@@ -100,7 +100,7 @@
         <ion-grid  style="padding-left: 0px; padding-right: 0px; padding-top: 0px; padding-bottom: 5px;">
             <ion-row no-padding no-margin > 
                 <ion-col col-6 style="margin: 0px; padding: 1px; ">
-                    <button ion-button large  full style="background:  #A4A4A4" >
+                    <button ion-button large  full style="background:  #A4A4A4" (click)="goBackRutaPicking()">
                         <div> 
                             <ion-icon name='close'></ion-icon> <br> 
                             <label style="font-size: 10px">Cancelar</label> 
@@ -108,7 +108,7 @@
                     </button>
                 </ion-col>
                 <ion-col col-6 style="margin: 0px; padding: 1px; ">
-                    <button ion-button large  full  style="background:  #A4A4A4">
+                    <button ion-button large  full  style="background:  #A4A4A4" (click)="validarCodeBar()" >
                         <div> 
                             <ion-icon name='checkbox-outline'></ion-icon> <br> 
                             <label style="font-size: 10px">Aceptar</label> 

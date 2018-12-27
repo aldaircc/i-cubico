@@ -157,7 +157,7 @@
         </ion-col>
         <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
             <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-                 <ion-input  type="text" value="" [(ngModel)]="TextcodBarra" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+                 <ion-input  type="text" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
             </ion-item>                    
          </ion-col>
     </ion-row>
