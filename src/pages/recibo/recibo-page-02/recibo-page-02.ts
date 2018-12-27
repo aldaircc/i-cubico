@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController, PopoverController } from 'ionic-angular';
 import { ReciboServiceProvider } from '../../../providers/recibo-service/recibo-service';
 import { ReciboPage_03Page } from '../recibo-page-03/recibo-page-03';
 import { ImpresoraPage } from '../../impresora/impresora';
+import { PopoverReciboComponent } from '../../../components/popover-recibo/popover-recibo';
+import { IncidenciaPage } from '../../incidencia/incidencia';
+import { EtiquetaCajaLpnPage } from '../../etiqueta-caja-lpn/etiqueta-caja-lpn';
 
 /**
  * Generated class for the ReciboPage_02Page page.
@@ -27,15 +30,59 @@ export class ReciboPage_02Page {
   listAuxDetailTx:any = [];
   rowCount:number = 0;
   userDetail: any;
+  bolAutomatic: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private alertCtrl: AlertController, public sRecibo: ReciboServiceProvider,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController, public popoverCtrl: PopoverController) {
       this.vReciboPage01 = navParams.get('data');
       const data = JSON.parse(localStorage.getItem('vUserData'));
       this.userDetail = data;
-      this.getDetailXTx(this.vReciboPage01.Id_Tx);
-      console.log('From p01', this.vReciboPage01);
+      this.getDetailXTx(this.vReciboPage01.Id_Tx);      
+  }
+
+  presentPopover(myEvent){
+    debugger;
+    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 12});
+    popover.present({
+      ev: myEvent
+    });
+
+    popover.onDidDismiss(popoverData =>{
+      if(popoverData == 2){
+        this.showModalIncidencia(this.vReciboPage01);
+      }else if(popoverData == 3){
+        this.showModalImpresora();
+      }
+    });
+  }
+
+  showModalImpresora(){
+    let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
+    modalIncidencia.present();
+  }
+
+  showModalIncidencia(data){
+    let obj = { 
+        'Id_Tx' : data.Id_Tx,
+        'FlagPausa' : data.FlagPausa,
+        'Cliente' : data.Cliente,
+        'Id_Cliente' : data.Id_Cliente,
+        'Proveedor' : data.Proveedor,
+        'Id_TipoMovimiento' : data.Id_TipoMovimiento,
+        'Origen' : 'RP02'
+      };
+
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia' : obj});
+    modalIncidencia.onDidDismiss(data =>{
+      debugger;
+      console.log("datos", data);
+      console.log('Regresar a pagina 01');
+      if(data.response == 200){
+        this.navCtrl.pop();
+      }
+    });
+    modalIncidencia.present();
   }
 
   switchStyle() {
@@ -47,7 +94,7 @@ export class ReciboPage_02Page {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ReciboPage_02Page');
+
   }
 
   getDetailXTx(strIdTx){
@@ -97,7 +144,7 @@ export class ReciboPage_02Page {
     "Factor":data.Factor,
     "FlagSeriePT":data.FlagSeriePT,
     "Id_TipoMovimiento":this.vReciboPage01.Id_TipoMovimiento,
-    "bolAutomatic":this.vReciboPage01, //value check
+    "bolAutomatic": this.bolAutomatic, //value check
     "FlagPausa":this.vReciboPage01.FlagPausa,
     "Cuenta":this.vReciboPage01.Cuenta,
     "Id_Cliente":this.vReciboPage01.Id_Cliente
@@ -150,13 +197,40 @@ export class ReciboPage_02Page {
     }
   }
 
-  navigateToEtqCajaLpn(){
+  navigateToEtqCajaLpn(data){
     debugger;
-    let printModal = this.modalCtrl.create(ImpresoraPage, { Id_Impresora: 12345 });
-    printModal.onDidDismiss(data => {
+    let objEtq = {
+    "LoteLab": data.Lote,
+    "Id_Producto": data.Id_Producto,
+    "Id_UM": data.UM,
+    "CantidadPedida": data.CantidadPedida,
+    "Codigo": data.Codigo,
+    "Articulo": data.Descripcion, //Articulo
+    "UM": data.UM,
+    "Cliente": this.vReciboPage01.Cuenta,//data.Cuenta,
+    "UM_Base": data.UMBase,
+    "TipoAlmacenaje": data.TipoAlmacenaje,
+    "Item": data.Item,
+    "Acceso": 0,
+    "NroDoc": this.vReciboPage01.NumOrden,
+    "FecEmi": data.FechaEmision,
+    "FecVen": data.FechaVencimiento,
+    "FlagSerie": data.FlagSeriePT,
+    "FlagLote": data.FlagLotePT,
+    "CondicionAlmac": data.CondicionAlmacenamiento,
+    "Condicion": data.Condicion,
+    "Id_Condicion": data.Id_Condicion,
+    "Id_Cliente": this.vReciboPage01.Id_Cliente,
+    "idTipoMovimiento": this.vReciboPage01.Id_TipoMovimiento,
+    "IdCuentaLPN": this.vReciboPage01.Id_Cliente,
+    "Id_SubAlmacen": data.Id_SubAlmacen
+  }
+
+    let etqModal = this.modalCtrl.create(EtiquetaCajaLpnPage, { vEtq: objEtq });
+    etqModal.onDidDismiss(data => {
       console.log("Data retornada", data);
     });
-    printModal.present();
+    etqModal.present();
   }
   
 }

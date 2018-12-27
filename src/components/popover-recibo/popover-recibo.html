@@ -1,0 +1,13 @@
+<!-- Generated template for the PopoverReciboComponent component -->
+<!-- <div>
+  <ion-item *ngFor="let item of items" (click)="itemClick(item)">
+    <ion-icon name="options"></ion-icon> {{ item.item }}
+  </ion-item>
+</div> -->
+
+<ion-list>
+    <ion-list-header color="primary">Opciones</ion-list-header>
+    <button ion-item (tap)="itemClick(1)" [hidden]="!isDisplayEtq"> <ion-icon name="ios-barcode-outline"></ion-icon> Imprimir etiqueta</button>
+    <button ion-item (tap)="itemClick(2)" [hidden]="!isDisplayIncidencia"> <ion-icon name="ios-alert-outline"></ion-icon> Registrar incidencia</button>
+    <button ion-item (tap)="itemClick(3)" [hidden]="!isDisplayPrint"> <ion-icon name="ios-print-outline"></ion-icon> Seleccionar impresora</button>
+</ion-list>

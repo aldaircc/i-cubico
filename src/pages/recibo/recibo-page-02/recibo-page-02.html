@@ -5,23 +5,41 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar color="dark">
-<ion-title>ngx-table</ion-title>
-<ion-buttons end>
-<button ion-button icon-only (click)="switchStyle()">
-  <ion-icon name="bulb"></ion-icon>
-</button>
-</ion-buttons>
-  </ion-navbar>
+  <!--<ion-navbar color="dark">
+    <ion-title>ngx-table</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="switchStyle()">
+        <ion-icon name="bulb"></ion-icon>
+      </button>
+    </ion-buttons>    
+  </ion-navbar>-->
 <!--
   <ion-navbar>
     <ion-title>recibo-page-02</ion-title>
+  </ion-navbar>-->
+
+   <ion-navbar color="danger">
+    <!--<ion-title>recibo-page-02</ion-title>-->
+    <ion-buttons left>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title text-center>
+      Page Title
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
--->
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
     <ion-grid class="bgHeader">        
         <ion-row align-items-center>
@@ -60,7 +78,7 @@
               <ion-item class="header" no-lines no-padding>
                   <div class="headerCard">Código: {{objDetail.Codigo}}</div>
                 <!-- <span item-start>Código: {{objDetail.Codigo}}</span> -->
-                <button item-end ion-button icon-only small (click)="navigateToEtqCajaLpn()">
+                <button item-end ion-button icon-only small (click)="navigateToEtqCajaLpn(objDetail)">
                   <ion-icon name="label" name="barcode"></ion-icon>
                 </button>
               </ion-item>
@@ -88,7 +106,7 @@
         
         <ion-col col-5>
             <label class="checkbox">
-              <ion-checkbox></ion-checkbox>
+              <ion-checkbox [(ngModel)]="bolAutomatic"></ion-checkbox>
               Verificación automatica
             </label>
         </ion-col>

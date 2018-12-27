@@ -18,7 +18,8 @@
     background: #55acee;
 }
 .sgaaGrad {
-    background-image:-webkit-gradient(linear, 50% 0%, 70% 100%, color-stop(0%, #ffffff),     color-stop(100%, #488aff));
+    background-image:-webkit-gradient(linear, 50% 0%, 70% 100%, color-stop(0%, #ffffff),     
+    color-stop(100%, #488aff));
   }
   .sgaaTitleBackcolor{
     background: #054B77;
@@ -72,8 +73,14 @@
         background-color: #ffff00;
     }
 
+
     .bgGreen{
         background-color: #04B404;
+    }
+
+    .borderSolid{
+        border: 1px solid #0000001a;
+
     }
     
   @import 'themes/bootstrap';

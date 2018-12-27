@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 import { ImpresoraServiceProvider } from '../../providers/impresora-service/impresora-service';
+import { GlobalServiceProvider } from '../../providers/global-service/global-service';
 
 /**
  * Generated class for the ImpresoraPage page.
@@ -21,16 +22,16 @@ export class ImpresoraPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sImpresora:ImpresoraServiceProvider, public alertCtrl: AlertController,
-    public viewCtrl:ViewController) {
+    public viewCtrl:ViewController, public sGlobal:GlobalServiceProvider) {
       // const data = JSON.parse(localStorage.getItem('vUserData'));
       // this.userDetail = data;
       debugger;
       console.log('Id_Impresora', navParams.get('Id_Impresora'));
-      this.listarAccesosImpresoraXUsuario('ADMIN');
+      this.listarAccesosImpresoraXUsuario(this.sGlobal.userName);//'ADMIN');
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ImpresoraPage');
+    
   }
 
   listarAccesosImpresoraXUsuario(usuario){
@@ -41,15 +42,16 @@ export class ImpresoraPage {
   }
 
   selectImpresora(print){
-    console.log('Print selected', print);
     const confirm = this.alertCtrl.create({
-      //title: 'Use this lightsaber?',
+      title: 'Impresora',
       message: 'Ha seleccionado la impresora '+ print.Nombre+'. ¿Desea continuar?',
       buttons: [
         {
           text: 'Si',
           handler: () => {
-            console.log('Disagree clicked', print.Nombre);
+            this.sGlobal.Id_Impresora = print.Id_Impresora;
+            this.sGlobal.nombreImpresora = print.Nombre;
+            this.dismiss();
           }
         },
         {
@@ -64,7 +66,7 @@ export class ImpresoraPage {
   }
 
   dismiss(){
-    let data = { 'foo': 'bar' };
-    this.viewCtrl.dismiss(data);
+    //let data = { 'foo': 'bar' };
+    this.viewCtrl.dismiss();//data);
   }
 }
