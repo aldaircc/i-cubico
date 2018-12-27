@@ -44,11 +44,14 @@
 
   <ion-footer>
     <ion-toolbar>
-      <ion-buttons>
-          <button ion-button icon-only small (click)="cerrarTx()">
-              <ion-icon name="label" name="close"></ion-icon>
-          </button>
-      </ion-buttons>
+      <ion-grid>
+          <ion-row no-padding no-margin>
+              <ion-col col-4 no-padding offset-4>
+                  <button ion-button full >Refresh</button>
+              </ion-col>
+          </ion-row>
+      </ion-grid>
+
     </ion-toolbar>
   </ion-footer>
 </ion-content>

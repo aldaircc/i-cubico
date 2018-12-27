@@ -13,19 +13,19 @@
 <ion-content>
   <ion-item>
     <ion-label stacked>Nro. de pallet</ion-label>
-    <ion-input type="text"></ion-input>
+    <ion-input type="text" [(ngModel)]="etqPallet" #inputEtqPallet></ion-input>
   </ion-item>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
     <ion-buttons left>
-      <button ion-button icon-only small (click)="goToEtqPallet()">
+      <button ion-button icon-only small (click)="onClickEtqPallet()">
         <ion-icon name="barcode"></ion-icon>
       </button>
     </ion-buttons>
     <ion-buttons right>
-      <button ion-button icon-only small (click)="registrar()">
+      <button ion-button icon-only small (click)="onClickRegistrar()">
         <ion-icon name="label" name="md-checkbox-outline"></ion-icon>
       </button>
     </ion-buttons>

@@ -165,4 +165,46 @@ export class ReciboServiceProvider {
       })
     });
   }
+
+  insertarPallet(idAlmacen, user, idCentro){
+    debugger;
+    var parameter = { 'idAlmacen' : idAlmacen, 'user' : user, 'idCentro' : idCentro };
+    return new Promise((result,reject)=>{
+      this.http.post(this.sGlobal.recepcion + 'InsertarPallet/idAlmacen/user/idCentro', JSON.stringify(parameter), {headers:this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('Error - insertarPallet');
+      })
+    });
+  }
+
+  validarPallet(strPallet, IdAlmacen){
+    debugger;
+    var parameter = { 'strPallet' : strPallet, 'IdAlmacen' : IdAlmacen };
+    return new Promise((result, reject)=>{
+      this.http.post(this.sGlobal.recepcion + 'ValidarPallet/strPallet/IdAlmacen', JSON.stringify(parameter), {headers:this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      }, err=>{
+        console.log('Error - validarPallet', err);        
+      })
+    });
+  }
+
+  registrarPallet(ua){
+    debugger;
+    var parameter = {'ua' : ua};
+    return new Promise((result,reject)=>{
+      this.http.post(this.sGlobal.recepcion + '', JSON.stringify(parameter), { headers : this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('Error - registrarPallet', err);
+      })
+    });
+  }
 }

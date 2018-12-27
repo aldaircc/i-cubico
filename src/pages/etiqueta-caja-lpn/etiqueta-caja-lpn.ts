@@ -274,7 +274,7 @@ export class EtiquetaCajaLpnPage {
           listEtq.push({ "|TXTSALDO|" : (i == 0 && this.cantEtqSaldo > 0) ? "SALDO" : "" });
           listEtq.push({ "|COPIAS|" : this.numCopia });
           listEtq.push({ "|CODBARRA|" : res[i].UA_CodBarra });
-          listEtq.push({ "|CUENTA|" : this.sGlobal.nomberEmpresa });
+          listEtq.push({ "|CUENTA|" : this.sGlobal.nombreEmpresa });
           listEtq.push({ "|PRODUCTO|" : this.vEtq.Articulo });
           listEtq.push({ "|EAN14|" :  obj.EAN14 });
           listEtq.push({ "|EAN|" : (obj.Nombre.toUpperCase() == this.vEtq.UM.toString().trim()) ? "13" : "14" });
