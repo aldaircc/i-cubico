@@ -99,15 +99,14 @@ export class ReciboPage_04Page {
       this.sRecibo.registrarUATransferencia(objUA).then(result=>{
         let res : any = result;
         alert(res.message);
-        this.listarUAXProductoTx(this.vReciboPage03.Id_Tx, this.vReciboPage03.Id_Articulo, this.vReciboPage03.Item);
       });
     }else{
       this.sRecibo.registrarUA(objUA).then(result=>{
         let res : any = result;
         alert(res.message);
-        this.listarUAXProductoTx(this.vReciboPage03.Id_Tx, this.vReciboPage03.Id_Articulo, this.vReciboPage03.Item);
       });
     }
+    this.listarUAXProductoTx(this.vReciboPage03.Id_Tx, this.vReciboPage03.Id_Articulo, this.vReciboPage03.Item);
   }
 
   evaluateSaldo(){
@@ -168,16 +167,13 @@ export class ReciboPage_04Page {
     });
   }
 
-  //
   presentPopover(myEvent){
-    debugger;
     let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 14});
     popover.present({
       ev: myEvent
     });
 
     popover.onDidDismiss(option =>{
-      debugger;
       if(option == 3){
         this.showModalImpresora();
       }
@@ -185,11 +181,7 @@ export class ReciboPage_04Page {
   }
 
   showModalImpresora(){
-    debugger;
     let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
-    modalIncidencia.onDidDismiss(data =>{
-      console.log('Id_Impresora - actualizada', this.sGlobal.Id_Impresora);
-    });
     modalIncidencia.present();
   }
 }
