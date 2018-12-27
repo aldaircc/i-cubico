@@ -13,6 +13,51 @@
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content>
+  <ion-grid class="bgHeader">
+    <!-- Header caption -->
+    <ion-row align-items-center>
+      <ion-col col-4 col-sm>
+        <div class="textHeader">Producto </div>
+      </ion-col>
+      <ion-col col-8 col-sm>
+        <div class="valueHeader">X</div>
+      </ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-4 col-sm>
+        <div class="textHeader">N° de trans.: </div>
+      </ion-col>
+      <ion-col col-8 col-sm>
+        <div class="valueHeader">X</div>
+      </ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-4 col-sm>
+        <div class="textHeader">Lote </div>
+      </ion-col>
+      <ion-col col-8 col-sm>
+        <div class="valueHeader">X</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+
+<ion-footer class="bgLightBlue">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-3 col-sm>
+        <div class="fieldForm">Total</div>
+      </ion-col>
+      <ion-col col-9 col-sm>
+        <div class="fieldForm"> {{ rowCount }} fila(s) </div>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center>
+      <button ion-button icon-start>
+        <ion-icon name="checkmark"></ion-icon>
+        Ir a verificar
+      </button>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

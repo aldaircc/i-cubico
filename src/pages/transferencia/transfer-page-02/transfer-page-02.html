@@ -4,14 +4,18 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>transfer-page-02</ion-title>
-  </ion-navbar>
-
+<ion-header no-border>
+  <ion-toolbar no-border-top>
+    <ion-navbar>
+      <ion-title>transfer-page-02</ion-title>
+    </ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only>
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
-
 
 <ion-content>
   <ion-grid class="bgHeader">
@@ -42,16 +46,16 @@
     </ion-row>
   </ion-grid>
 
-  <ion-footer>
-    <ion-toolbar>
-      <ion-grid>
-          <ion-row no-padding no-margin>
-              <ion-col col-4 no-padding offset-4>
-                  <button ion-button full >Refresh</button>
-              </ion-col>
-          </ion-row>
-      </ion-grid>
-
-    </ion-toolbar>
+  <ion-footer class="bgLightBlue">
+    <ion-grid>
+      <ion-row>
+        <ion-col col-3 col-sm>
+          <div class="fieldForm">Total</div>
+        </ion-col>
+        <ion-col col-9 col-sm>
+            <div class="fieldForm"> {{ rowCount }} fila(s) </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-footer>
 </ion-content>
