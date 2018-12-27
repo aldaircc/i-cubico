@@ -7,7 +7,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Description
+      Impresoras
     </ion-title>
     <ion-buttons start>
       <button ion-button (click)="dismiss()">
@@ -25,20 +25,28 @@
     {{ objPrint.Nombre }}
   </ion-card-header>
   <ion-card-content (click)="selectImpresora(objPrint)">
+      <!-- <ion-row>
+          <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
+            This column will be 12 columns wide by default,
+            9 columns at the small breakpoint,
+            6 at the medium breakpoint, 4 at large, and 3 at xl.
+          </ion-col>
+        </ion-row> -->
+
     <ion-row>
-        <ion-col col-2 col-sm-12>
+        <ion-col col-2 col-sm-2 col-md-12>
           IP:
         </ion-col>
-        <ion-col col-3 col-sm-12>
+        <ion-col col-5 col-sm-12>
           {{ objPrint.IpImpresora }}
         </ion-col>
-        <ion-col col-2 col-sm-12>
+        <ion-col col-2 col-sm-2>
           Puerto:
         </ion-col>
-        <ion-col col-3 col-sm-12>
+        <ion-col col-3 col-sm-5>
           {{ objPrint.PuertoImpresora }}
         </ion-col>
-        <ion-col col-2 col-sm-12>
+        <ion-col col-2 col-sm-2>
           <ion-icon name='md-checkmark'></ion-icon>
         </ion-col>
     </ion-row>

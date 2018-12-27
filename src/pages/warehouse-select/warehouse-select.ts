@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MainMenuPage } from '../main-menu/main-menu';
 import { AuthService } from '../../providers/auth-service/auth-service';
+import { GlobalServiceProvider } from '../../providers/global-service/global-service';
 
 
 /**
@@ -26,10 +27,11 @@ export class WarehouseSelectPage {
   cedisInfo={"Centro":"","Id_Centro":""};
   wareHouseInfo={"Almacen":"","Cliente":null,"CorreoSupervisor":"","Id_Almacen":"","Id_Cliente":"","NombreSupervisor":""};
   
-  constructor(public navCtrl: NavController, public navParams: NavParams,public auth:AuthService) {
-    //debugger;
-    const data = JSON.parse(localStorage.getItem('vUserData'));
-    this.userDetails = data
+  constructor(public navCtrl: NavController, public navParams: NavParams,public auth:AuthService,
+    public sGlobal: GlobalServiceProvider) {
+    debugger;
+    //const data = JSON.parse(localStorage.getItem('vUserData'));
+    this.userDetails = this.sGlobal.vUserData;
    // console.log(this.userDetails);
     this.userProfile.ApeNom=this.userDetails[0].ApeNom;
     this.userProfile.Correo=this.userDetails[0].Correo;
@@ -39,9 +41,7 @@ export class WarehouseSelectPage {
     this.userProfile.Id_Almacen=this.userDetails[0].Id_Almacen;
     this.userProfile.Usuario=this.userDetails[0].Usuario;
     this.userInfo.strUsuario=this.userProfile.Usuario;
-    //console.log(this.userProfile[0].ApeNom);
     this.getCedis();
-
   }
 
   ionViewDidLoad() {
@@ -57,7 +57,6 @@ export class WarehouseSelectPage {
           /* localStorage.setItem('vUserData', JSON.stringify(this.responseData));
           this.navCtrl.push(WarehouseSelectPage); */
           this.listCedis=this.responseData;
-          
      }
      else{
          
@@ -85,14 +84,11 @@ export class WarehouseSelectPage {
          }
     }, (err) => {
         console.log(err);
-      // Error log
     });
   }
 
   selectWareHouse(data){
     let wareBodega:any =data;
-   /*  console.log("Clicked:", wareBodega.Almacen);
-    console.log(this.wareHouseInfo.Id_Almacen);*/
     this.userProfile.Id_Almacen=wareBodega.Id_Almacen;
     this.userProfile.Almacen=wareBodega.Almacen;
   }
@@ -103,7 +99,6 @@ export class WarehouseSelectPage {
 
   goNext():void{
     this.navCtrl.push(MainMenuPage, this.userProfile);
-
   }
 
   
@@ -111,5 +106,4 @@ export class WarehouseSelectPage {
       localStorage.clear();
       setTimeout(() => this.goBack(), 1000);
  }
-
 }

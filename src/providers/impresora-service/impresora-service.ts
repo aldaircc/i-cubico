@@ -11,7 +11,22 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ImpresoraServiceProvider {
 
+  apiUrl = 'http://172.16.32.15:8085/SGAA_WCF/UsuarioService.svc/rest/';
+  
   constructor(public http: Http) {
     console.log('Hello ImpresoraServiceProvider Provider');
+  }
+
+  listarAccesosImpresoraXUsuario(usuario){
+    var parameter = {'strUsuario' : usuario };
+    return new Promise((resolve)=>{
+      this.http.get(this.apiUrl+'ListarAccesosImpresoraXUsuario', {params: parameter})
+      .map(res => res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err =>{
+        console.log('Error - listarAccesosImpresoraXUsuario', err);
+      });
+    });
   }
 }
