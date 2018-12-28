@@ -40,5 +40,6 @@ export class GlobalServiceProvider {
     this.UMService = this.url + 'UnidadMedidaService.svc/rest/';
     this.impresoraService = this.urlPrint + "Impresiones.svc/rest/";
     this.pickingService = this.urlPrint + "PickingService.svc/rest";
+    this.pickingServiceTest = this.urlPrint + "PickingService.svc/rest";
   }
 }
