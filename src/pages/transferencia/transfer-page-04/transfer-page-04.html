@@ -28,24 +28,22 @@
       </ion-col>
     </ion-row>
 
-    <ion-row>
-      <div class="hr">
-      </div>
+    <ion-row class="hr">
     </ion-row>
 
     <ion-row align-items-center>
       <ion-col col-3 col-sm>
-        <div class="fieldForm">Cantidad</div>
+        <ion-label class="textHeader">Cantidad</ion-label>
       </ion-col>
-      <ion-col>
+      <ion-col col-3 col-sm>
         <ion-item>
           <ion-input type="text" placeholder="0"></ion-input>
         </ion-item>
       </ion-col>
-      <ion-col>
-        <div class="fieldForm">Recibida</div>
+      <ion-col col-3 col-sm>
+        <ion-label class="textHeader">Recibida</ion-label>
       </ion-col>
-      <ion-col>
+      <ion-col col-3 col-sm>
         <ion-item>
           <ion-input type="text" placeholder="0"></ion-input>
         </ion-item>
@@ -54,17 +52,80 @@
 
     <ion-row align-items-center>
       <ion-col col-3 col-sm>
-          <div class="fieldForm">Saldo</div>
+        <ion-label class="textHeader">Saldo</ion-label>
       </ion-col>
-      <ion-col>
+      <ion-col col-3 col-sm>
         <ion-item>
           <ion-input type="text" placeholder="0"></ion-input>
         </ion-item>
       </ion-col>
-      <ion-col>
-        <ion-label>BETISTIN</ion-label>
+      <ion-col col-6 col-sm text-center>
+        <ion-label class="bgCustomSkyBlue textColorNavy textBold">BETISTIN</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="bgCustomSkyBlue">
+    <ion-row align-items-center class="textColorNavy textBold">
+      <ion-col col-3 col-sm text-center>Fila</ion-col>
+      <ion-col col-3 col-sm text-center>Columna</ion-col>
+      <ion-col col-3 col-sm text-center>Nivel</ion-col>
+      <ion-col col-3 col-sm text-center>Posición</ion-col>
+    </ion-row>
+    <ion-row center text-center>
+      <ion-col><div class="boxUbicacion"> X </div></ion-col>
+      <ion-col><div class="boxUbicacion"> X </div></ion-col>
+      <ion-col><div class="boxUbicacion"> X </div></ion-col>
+      <ion-col><div class="boxUbicacion"> X </div></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="bgHeader">
+    <ion-row align-items-center>
+      <ion-col col-3 col-sm >
+        <ion-label class="textHeader">Lote</ion-label>
+      </ion-col>
+      <ion-col col-9 col-sm>
+        <ion-item>
+          <ion-input type="text" placeholder="0"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-3 col-sm>
+        <ion-label class="textHeader">Cod. barra</ion-label>
+      </ion-col>
+      <ion-col col-9 col-sm>
+        <ion-item>
+          <ion-input type="text" placeholder="0"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-3 col-sm class="textHeader">
+          Cantidad UA
+      </ion-col>
+      <ion-col col-3 col-sm>
+        <ion-item>
+          <ion-input type="text" placeholder="0"></ion-input>
+        </ion-item>
       </ion-col>
     </ion-row>
   </ion-grid>
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons left>
+        <button ion-button icon-only>
+            <ion-icon name="label" name="md-grid"></ion-icon>
+        </button>
+    </ion-buttons>
+    <ion-buttons right>
+      <button ion-button icon-only>
+          <ion-icon name="label" name="md-checkbox-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

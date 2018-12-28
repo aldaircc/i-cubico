@@ -41,12 +41,17 @@ import { EtiquetaCajaLpnPage } from '../pages/etiqueta-caja-lpn/etiqueta-caja-lp
 import { PopoverReciboComponent } from '../components/popover-recibo/popover-recibo'; //Loque#369Dev
 import { EtqCajaServiceProvider } from '../providers/etq-caja-service/etq-caja-service'; //Loque#369Dev
 import { GlobalServiceProvider } from '../providers/global-service/global-service'; //Loque#369Dev
-import { TransferPage_01Page } from '../pages/transferencia/transfer-page-01/transfer-page-01';
-import { TransferPage_02Page } from '../pages/transferencia/transfer-page-02/transfer-page-02';
+import { TransferPage_01Page } from '../pages/transferencia/transfer-page-01/transfer-page-01'; //Loque#369Dev
+import { TransferPage_02Page } from '../pages/transferencia/transfer-page-02/transfer-page-02'; //Loque#369Dev
+import { TransferPage_03Page } from '../pages/transferencia/transfer-page-03/transfer-page-03'; //Loque#369Dev
+import { TransferPage_04Page } from '../pages/transferencia/transfer-page-04/transfer-page-04'; //Loque#369Dev
+import { TransferPage_05Page } from '../pages/transferencia/transfer-page-05/transfer-page-05'; //Loque#369Dev
+import { TransferPage_06Page } from '../pages/transferencia/transfer-page-06/transfer-page-06'; //Loque#369Dev
 import { DespachoPage } from '../pages/despacho/despacho';
 import { EmbalajePage } from '../pages/embalaje/embalaje';
 import { InventarioPage } from '../pages/inventario/inventario';
 import { PickingServiceProvider } from '../providers/picking-service/picking-service';
+
 
 @NgModule({
   declarations: [
@@ -62,8 +67,12 @@ import { PickingServiceProvider } from '../providers/picking-service/picking-ser
     ReciboPage_03Page, //Loque#369Dev
     ReciboPage_04Page, //Loque#369Dev
     ReciboPage_05Page, //Loque#369Dev
-	TransferPage_01Page, //Loque#369Dev
+	  TransferPage_01Page, //Loque#369Dev
     TransferPage_02Page, //Loque#369Dev
+    TransferPage_03Page, //Loque#369Dev
+    TransferPage_04Page, //Loque#369Dev
+    TransferPage_05Page, //Loque#369Dev
+    TransferPage_06Page, //Loque#369Dev
     AlmacenajePage, //Loque#369Dev
     ImpresoraPage, //Loque#369Dev
     IncidenciaPage, //Loque#369Dev
@@ -112,6 +121,10 @@ import { PickingServiceProvider } from '../providers/picking-service/picking-ser
     ReciboPage_05Page, //Loque#369Dev
     TransferPage_01Page, //Loque#369Dev
     TransferPage_02Page, //Loque#369Dev
+    TransferPage_03Page, //Loque#369Dev
+    TransferPage_04Page, //Loque#369Dev
+    TransferPage_05Page, //Loque#369Dev
+    TransferPage_06Page, //Loque#369Dev
     AlmacenajePage, //Loque#369Dev
     ImpresoraPage, //Loque#369Dev
     IncidenciaPage, //Loque#369Dev
