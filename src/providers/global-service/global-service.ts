@@ -42,5 +42,6 @@ export class GlobalServiceProvider {
     this.impresoraService = this.urlPrint + "Impresiones.svc/rest/";
     this.pickingService = this.urlPrint + "PickingService.svc/rest";
     this.usu = this.urlPrint+"xdd";
+    this.pickingServiceTest = this.urlPrint + "PickingService.svc/rest";
   }
 }
