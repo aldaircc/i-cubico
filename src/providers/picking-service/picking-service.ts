@@ -108,7 +108,20 @@ export class PickingServiceProvider {
         console.log('Error CerrarPicking', err);
       })
     });
+  }
 
+  getValidarUAPicking(strIdTx, UA, IdProducto, Item, lote, IdUbicacion){
+    var parameter : any;
+    parameter = {"strIdTx": strIdTx, "UA": UA, "IdProducto": IdProducto, "Item": Item, "lote": lote, "IdUbicacion": IdUbicacion};
+    return new Promise(resolve=>{
+      this.http.get(this.sGlobal.picking + 'ValidarUAPicking', { params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error getValidarUAPicking', err);
+      })
+    });
   }
 
   

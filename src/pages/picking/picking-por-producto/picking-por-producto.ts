@@ -29,6 +29,9 @@ export class PickingPorProductoPage {
 
   codeBar: string;
   Textcantidad : string='';
+  codUbicacion:string;
+
+  UAPicking: any = [];
 
   isBgRed:boolean = false;
 
@@ -77,15 +80,48 @@ export class PickingPorProductoPage {
     if(this.codeBar){
       if(this.codeBar.trim()!=""){
         if (this.codeBar.trim().length >= 6) {
+          this.codUbicacion = this.vRutaPickingPage.Fila.trim() + this.vRutaPickingPage.Columna.toString() + this.vRutaPickingPage.Nivel.toString() + this.vRutaPickingPage.Posicion.toString();
+          this.sPicking.getValidarUAPicking(this.vRutaPickingPage.Id_Tx, this.codeBar.trim(), this.pickingProducto.CodigoProducto, this.pickingProducto.Item, this.pickingProducto.LoteProducto, this.pickingProducto.IdUbicacion).then((result) => {
+            debugger;
+            this.UAPicking = result;
+            if (this.UAPicking.length > 0) {
+              //Mostrar cantidad de la UA
+               if(this.UAPicking.cantidad > this.pickingProducto.Saldo){ //Cantidad de la UA es mayor al saldo
+                 //Editar cantidad de la UA
+                 if(this.UAPicking.cantidad > this.pickingProducto.Saldo){ //Cantidad de la UA es mayor al saldo
+                  //Volver a escanear codigo de barra
+                }else{
+                  //Registrar cantidad de la UA
+                }
+ 
+               }else{
+                 //Registrar cantidad de la UA
+               }
+
+    
+            } else {
+              this.presentToast("UA no pertenece a la ubicación");
+              this.isBgRed = true;
+              this.codeBar = "";
+            }
+          }, (err) => {
+            console.log('E-Verficar UA', err);
+          });
           
+        }else{
+          this.presentToast("UA no pertenece a la ubicación");
+          this.isBgRed = true;
+          this.codeBar = "";
         } 
       }else{
-        this.presentToast("UA no pertenece a la ubicación");
+        this.presentToast("Ingresar código de UA");
         this.isBgRed = true;
         this.codeBar = "";
       }
     }else{
-      //this.presentToast("Ingrese código de muelle");
+      this.presentToast("Ingresar código de UA");
+        this.isBgRed = true;
+        this.codeBar = "";
     }
     
   }
