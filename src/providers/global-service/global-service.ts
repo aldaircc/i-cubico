@@ -25,6 +25,7 @@ export class GlobalServiceProvider {
   UMService : string;
   impresoraService : string;
   vUserData: any;
+  pickingService:any;
   
   constructor(public http: HttpClient) {
     this.userName = "acosetito";
@@ -37,5 +38,6 @@ export class GlobalServiceProvider {
     this.recepcion = this.url + 'RecepcionService.svc/rest/';
     this.UMService = this.url + 'UnidadMedidaService.svc/rest/';
     this.impresoraService = this.urlPrint + "Impresiones.svc/rest/";
+    this.pickingService = this.urlPrint + "PickingService.svc/rest";
   }
 }
