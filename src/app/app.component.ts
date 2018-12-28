@@ -23,13 +23,13 @@ import { EmbalajePage} from '../pages/embalaje/embalaje';
 import { InventarioPage} from '../pages/inventario/inventario';
 import { EtiquetaCajaLpnPage } from '../pages/etiqueta-caja-lpn/etiqueta-caja-lpn';
 import { ReciboPage_05Page } from '../pages/recibo/recibo-page-05/recibo-page-05';
-import { TransferPage_02Page } from '../pages/transferencia/transfer-page-02/transfer-page-02';
+import { TransferPage_06Page } from '../pages/transferencia/transfer-page-06/transfer-page-06';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = PickingPage;
+  rootPage:any = TransferPage_06Page;
   userProfile={"Almacen":"","ApeNom":"","Cliente":"","Correo":"","FlagActivo":false,"FlagPermiso":false,"FlagRestablecer":false,"Foto":null,"Id_Almacen":"","Id_Cliente":null,"Id_Perfil":"","Perfil":"","Usuario":""};
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

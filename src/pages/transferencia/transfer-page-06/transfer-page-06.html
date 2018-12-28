@@ -13,6 +13,59 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <ion-grid class="bgHeader">
+    <!-- Header caption -->
+    <ion-row align-items-center>
+      <ion-col col-3 col-sm class="textHeader"> Producto</ion-col>
+      <ion-col col-9 col-sm class="valueHeader"> X</ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-9 col-sm class="valueHeader"> X </ion-col>
+    </ion-row>
+    <ion-row align-items-center class="hr">
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-3 col-sm class="textHeader">Ingrese ubicación</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-input type="text" placeholder="0"></ion-input>
+      </ion-item>
+    </ion-row>
+  </ion-grid>
 
+  <ion-grid class="bgCustomSkyBlue">
+    <ion-row align-items-center class="textColorNavy textBold">
+      <ion-col col-3 col-sm text-center>Fila</ion-col>
+      <ion-col col-3 col-sm text-center>Columna</ion-col>
+      <ion-col col-3 col-sm text-center>Nivel</ion-col>
+      <ion-col col-3 col-sm text-center>Posición</ion-col>
+    </ion-row>
+    <ion-row center text-center>
+      <ion-col><div class="boxUbicacion"> X </div></ion-col>
+      <ion-col><div class="boxUbicacion"> X </div></ion-col>
+      <ion-col><div class="boxUbicacion"> X </div></ion-col>
+      <ion-col><div class="boxUbicacion"> X </div></ion-col>
+    </ion-row>
+  </ion-grid>
+  
 </ion-content>
+
+<ion-footer class="bgLightBlue">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4 col-sm>
+        <div class="fieldForm">Total Pallets/UAs</div>
+      </ion-col>
+      <ion-col col-8 col-sm>
+        <div class="fieldForm"> {{ rowCount }} fila(s) </div>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center>
+      <button ion-button icon-start icon-only>
+        <ion-icon name="label" name="md-checkbox-outline"></ion-icon>
+      </button>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
