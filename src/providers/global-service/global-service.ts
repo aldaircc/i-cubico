@@ -26,6 +26,7 @@ export class GlobalServiceProvider {
   impresoraService : string;
   vUserData: any;
   pickingService:any;
+  pickingServiceTest:any;
   
   constructor(public http: HttpClient) {
     this.userName = "acosetito";
