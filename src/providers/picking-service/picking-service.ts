@@ -25,7 +25,7 @@ export class PickingServiceProvider {
     parameter = {"strUsuario": strUsuario,"intIdAlmacen": intIdAlmacen};
 
     return new Promise(resolve=>{
-      this.http.get(this.sGlobal.picking + 'ListarPickingXUsuarioV2', { params: parameter})
+      this.http.get(this.sGlobal.pickingService + 'ListarPickingXUsuarioV2', { params: parameter})
       .map(res=>res.json())
       .subscribe(data=>{
         resolve(data);
@@ -40,7 +40,7 @@ export class PickingServiceProvider {
     parameter = {"strNroDoc": strNroDoc, "strUsuario": strUsuario, "intIdAlmacen": intIdAlmacen};
 
     return new Promise(resolve=>{
-      this.http.get(this.sGlobal.picking + 'RutaPickingXTxXModelo', { params: parameter})
+      this.http.get(this.sGlobal.pickingService + 'RutaPickingXTxXModelo', { params: parameter})
       .map(res=>res.json())
       .subscribe(data=>{
         resolve(data);
@@ -56,7 +56,7 @@ export class PickingServiceProvider {
     parameter = {"strNroDoc": strNroDoc, "strUsuario": strUsuario,"intIdAlmacen": intIdAlmacen};
 
     return new Promise(resolve=>{
-      this.http.get(this.sGlobal.picking + 'RutaPickingXTxXModelo', { params: parameter})
+      this.http.get(this.sGlobal.pickingService + 'RutaPickingXTxXModelo', { params: parameter})
       .map(res=>res.json())
       .subscribe(data=>{
         resolve(data);
@@ -71,7 +71,7 @@ export class PickingServiceProvider {
     parameter = {"strNroDoc": strNroDoc, "strUsuario": strUsuario, "intIdAlmacen": intIdAlmacen};
 
     return new Promise(resolve=>{
-      this.http.get(this.sGlobal.picking + 'RutaPickingXTxXModelo', { params: parameter})
+      this.http.get(this.sGlobal.pickingService + 'RutaPickingXTxXModelo', { params: parameter})
       .map(res=>res.json())
       .subscribe(data=>{
         resolve(data);
@@ -86,7 +86,7 @@ export class PickingServiceProvider {
     parameter = {"intIdAlmacen": intIdAlmacen, "strCodigoBarra": strCodigoBarra};
 
     return new Promise(resolve=>{
-      this.http.get(this.sGlobal.picking + 'ListarNombreMuelleXAlmacen', { params: parameter})
+      this.http.get(this.sGlobal.pickingService + 'ListarNombreMuelleXAlmacen', { params: parameter})
       .map(res=>res.json())
       .subscribe(data=>{
         resolve(data);
@@ -100,7 +100,7 @@ export class PickingServiceProvider {
     var parameter : any;
     parameter = {"idTx": idTx, "idEstado": idEstado, "usuario": usuario, "idMuelle": idMuelle, "IdAlmacen": IdAlmacen};
     return new Promise(resolve=>{
-      this.http.get(this.sGlobal.picking + 'CerrarPicking', { params: parameter})
+      this.http.get(this.sGlobal.pickingService + 'CerrarPicking', { params: parameter})
       .map(res=>res.json())
       .subscribe(data=>{
         resolve(data);
@@ -114,7 +114,7 @@ export class PickingServiceProvider {
     var parameter : any;
     parameter = {"strIdTx": strIdTx, "UA": UA, "IdProducto": IdProducto, "Item": Item, "lote": lote, "IdUbicacion": IdUbicacion};
     return new Promise(resolve=>{
-      this.http.get(this.sGlobal.picking + 'ValidarUAPicking', { params: parameter})
+      this.http.get(this.sGlobal.pickingService + 'ValidarUAPicking', { params: parameter})
       .map(res=>res.json())
       .subscribe(data=>{
         resolve(data);
@@ -127,5 +127,156 @@ export class PickingServiceProvider {
   
 
   
+  //Loque#369Dev
 
+  listarTransferenciaSubAlmacenXUsuario(strUsuario, intIdAlmacen){
+    let parameter = { 'strUsuario' : strUsuario, 'intIdAlmacen' : intIdAlmacen };
+    return new Promise((result, reject)=>{
+      this.http.post(this.sGlobal.pickingService + 'ListarTransferenciaSubAlmacenXUsuario/strUsuario/intIdAlmacen', JSON.stringify(parameter), {headers:this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-listarTransferenciaSubAlmacenXUsuario', err);
+      })
+    });
+  }
+
+  listarDetalleTransfXTx(strIdTx){
+    var parameter = { 'strIdTx' : strIdTx };
+    return new Promise((result, reject)=>{
+      this.http.post(this.sGlobal.pickingService + 'ListarDetalleTransfXTx/strIdTx', JSON.stringify(parameter), {headers:this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('Error - listarDetalleTransfXTx', err);
+      })
+    });
+  }
+
+  listarStockProductoXUbicaciones(intIdAlmacen, intIdSubAlmacen, intIdProducto, strLote){
+    var parameter = { 
+        'intIdAlmacen' : intIdAlmacen, 
+        'intIdSubAlmacen' : intIdSubAlmacen, 
+        'intIdProducto' : intIdProducto,
+        'strLote': strLote
+      };
+
+    return new Promise((result)=>{
+      this.http.get(this.sGlobal.pickingService + 'ListarStockProductoXUbicaciones', { params : parameter })
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-listarStockProductoXUbicaciones', err);
+      })
+    });
+  }
+
+  validarUATransfSubAlmacen(strIdTx, strUA, strLote, intIdSubAlmacen, intIdUbicacion, intItem){
+    let parameter = {
+      'strIdTx' : strIdTx, 
+      'strUA' : strUA,
+      'strLote' : strLote, 
+      'intIdSubAlmacen' : intIdSubAlmacen, 
+      'intIdUbicacion' : intIdUbicacion, 
+      'intItem' : intItem
+    };
+
+    return new Promise((result)=>{
+      this.http.get(this.sGlobal.pickingService + 'ValidarUATransfSubAlmacen', {params:parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-ValidarUATransfSubAlmacen', err);
+      })
+    });
+  }
+
+  pickingUASubAlmacen(strUA, strIdTx, intIdProducto, strLote, decCantidad, bolAnular, intIdRF, intItem, intIdAlmacen, intIdSubAlmacen, strUser){
+    let parameter = {
+      'strUA' : strUA,
+      'strIdTx' : strIdTx, 
+      'intIdProducto' : intIdProducto,
+      'strLote' : strLote,
+      'decCantidad' : decCantidad, 
+      'bolAnular' : bolAnular,
+      'intIdRF' : intIdRF,
+      'intItem' : intItem, 
+      'intIdAlmacen' : intIdAlmacen,
+      'intIdSubAlmacen' : intIdSubAlmacen,
+      'strUser' : strUser
+    };
+
+    return new Promise((result, reject)=>{
+      this.http.post(this.sGlobal.pickingService + 'PickingUASubAlmacen/strUA/strIdTx/intIdProducto/strLote/decCantidad/bolAnular/intIdRF/intItem/intIdAlmacen/intIdSubAlmacen/strUser', JSON.stringify(parameter), {headers:this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-PickingUASubAlmacen', err);
+      })
+    });
+  }
+
+  listarUAsTransferidasXSubAlmacen(strIdTx, intId_Producto, strLote, intId_Ubicacion){
+    let parameter = {
+      'strIdTx' : strIdTx,
+      'intId_Producto' : intId_Producto,
+      'strLote' : strLote,
+      'intId_Ubicacion' : intId_Ubicacion
+    };
+
+    return new Promise((result)=>{
+      this.http.get(this.sGlobal.pickingService + 'ListarUAsTransferidasXSubAlmacen', {params:parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-listarUAsTransferidasXSubAlmacen', err);
+      })
+    });
+  }
+
+  reubicarUAsXSubAlmacen(strIdTx, intIdProducto, strLote, intIdUbicacionOrigen, intIdUbicacionDestino, intIdAlmacen, intIdSubAlmacen, strUser){
+    let parameter = {
+      'strIdTx' : strIdTx,
+      'intIdProducto' : intIdProducto,
+      'strLote' : strLote,
+      'intIdUbicacionOrigen' : intIdUbicacionOrigen,
+      'intIdUbicacionDestino' : intIdUbicacionDestino,
+      'intIdAlmacen' : intIdAlmacen,
+      'intIdSubAlmacen' : intIdSubAlmacen,
+      'strUser' : strUser
+    };
+
+    return new Promise((result, reject)=>{
+      this.http.post(this.sGlobal.pickingService + 'ReubicarUAsXSubAlmacen/strIdTx/intIdProducto/strLote/intIdUbicacionOrigen/intIdUbicacionDestino/intIdAlmacen/intIdSubAlmacen/strUser', JSON.stringify(parameter), {headers:this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-reubicarUAsXSubAlmacen', err);
+      })
+    });
+  }
+
+  cerrarTransferenciaXSubAlmacen(strIdTx, strUser){
+    let parameter = {
+      'strIdTx' : strIdTx,
+      'strUser' : strUser
+    };
+
+    return new Promise((result, reject)=>{
+      this.http.post(this.sGlobal.pickingService + 'CerrarTransferenciaXSubAlmacen/strIdTx/strUser',JSON.stringify(parameter), {headers:this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-cerrarTransferenciaXSubAlmacen', err);
+      })
+    });
+  }
 }

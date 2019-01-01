@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ReciboPage_02Page } from './recibo-page-02';
-//import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [
@@ -9,7 +9,7 @@ import { ReciboPage_02Page } from './recibo-page-02';
   ],
   imports: [
     IonicPageModule.forChild(ReciboPage_02Page),
-    //NgxDatatableModule
+    NgxDatatableModule
   ],
 })
 export class ReciboPage_02PageModule {}

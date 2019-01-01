@@ -6,15 +6,25 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>transfer-page-01</ion-title>
+  <ion-navbar color="dark">
+    <ion-title>ngx-Table</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="switchStyle()">
+        <ion-icon name="bulb"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content>
-
+  <ngx-datatable class="fullscreen" [ngClass]="tableStyle"
+    [rows]="rows" [rowClass]="getRowClass" [columnMode]="'force'" [sortType]="'multi'"
+    reordable="false">
+    <ngx-datatable-column name="Name"></ngx-datatable-column>
+    <ngx-datatable-column name="Gender"></ngx-datatable-column>
+    <ngx-datatable-column name="Age"></ngx-datatable-column>
+  </ngx-datatable>
 </ion-content>
 
 <ion-footer>
