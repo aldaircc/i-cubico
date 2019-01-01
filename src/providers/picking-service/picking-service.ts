@@ -275,7 +275,7 @@ export class PickingServiceProvider {
       .subscribe(data=>{
         result(data);
       },err=>{
-        console.log('E-cerrarTransferenciaXSubAlmacen', err);
+        console.log('E - cerrarTransferenciaXSubAlmacen', err);
       })
     });
   }
