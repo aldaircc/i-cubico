@@ -159,7 +159,8 @@ export class ReciboPage_04Page {
         'FlagSeriePT' : data.FlagSeriePT,
         'Id_TipoMovimiento' : data.Id_TipoMovimiento,
         'bolAutomatic' : data.bolAutomatic,
-        'currentSaldo' : data.Saldo
+        'currentSaldo' : data.Saldo,
+        "Cuenta" : this.vReciboPage03.Cuenta //Nuevo campo
     };
 
     this.navCtrl.push(ReciboPage_05Page, {

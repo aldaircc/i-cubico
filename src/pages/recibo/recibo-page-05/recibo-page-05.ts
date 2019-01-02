@@ -51,12 +51,13 @@ export class ReciboPage_05Page {
         if(res.length != 0){
           this.etqPallet = res;
           
-          listEtq.push({ '|ALMACEN|' : '2' });
-          listEtq.push({ '|CODIGO|' : this.vReciboPage04.Id_Articulo });
-          listEtq.push({ '|PRODUCTO|' : this.vReciboPage04.Articulo });
-          listEtq.push({ '|CUENTA|' : "Loque#369Dev" });
-          listEtq.push({ '|CODBARRA|' : this.etqPallet });
-          listContainerEtq.push({ 'Etiqueta' : listEtq });
+          listEtq.push({ 'campo': '|ALMACEN|',  'valor' : '2' });
+          listEtq.push({ 'campo': '|CODIGO|',  'valor' : this.vReciboPage04.Id_Articulo });
+          listEtq.push({ 'campo': '|PRODUCTO|',  'valor' : this.vReciboPage04.Articulo });
+          listEtq.push({ 'campo': '|CUENTA|',  'valor' : "Loque#369Dev" });
+          listEtq.push({ 'campo': '|CODBARRA|',  'valor' : this.etqPallet });
+          listEtq.push({ 'campo': '|EMPRESA|',  'valor' : this.vReciboPage04.Cuenta });
+          listContainerEtq.push({ 'etiqueta' : listEtq });
           this.sEtq.imprimirListaEtiquetas(listContainerEtq, "ETQ_PALLETS_UA.txt", this.sGlobal.nombreImpresora, true).then(result=>{
             let res : any = result;
             debugger;

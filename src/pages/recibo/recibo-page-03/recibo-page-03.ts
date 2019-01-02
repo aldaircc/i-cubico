@@ -66,7 +66,7 @@ export class ReciboPage_03Page {
     debugger;
     if (this.codeBar.trim().length >= 12){
 
-      if(this.vReciboPage02.FlagSeriePT === true){
+      if(this.vReciboPage02.FlagSeriePT == true){
         
         if(this.vReciboPage02.Id_TipoMovimiento === 0){
           this.presentToast("Esta transacción no tiene tipo de movimiento");
@@ -127,9 +127,9 @@ export class ReciboPage_03Page {
 
         var ua: any;
 
-        if(this.vReciboPage02.Id_TipoMovimiento === 11 || 
-          this.vReciboPage02.Id_TipoMovimiento === 13 || 
-          this.vReciboPage02.Id_TipoMovimiento === 14){
+        if(this.vReciboPage02.Id_TipoMovimiento == 11 || 
+          this.vReciboPage02.Id_TipoMovimiento == 13 || 
+          this.vReciboPage02.Id_TipoMovimiento == 14){
             ua = {
               'Id_Tx': this.vReciboPage02.Id_Tx,
               'UA_CodBarra': this.codeBar,
@@ -416,7 +416,8 @@ export class ReciboPage_03Page {
       "FlagSeriePT" : this.vReciboPage02.FlagSeriePT,
       "Id_TipoMovimiento" : this.vReciboPage02.Id_TipoMovimiento,
       "bolAutomatic" : this.vReciboPage02.bolAutomatic,
-      "currentSaldo" : this.vReciboPage02.Saldo
+      "currentSaldo" : this.vReciboPage02.Saldo,
+      "Cuenta" : this.vReciboPage02.Cuenta //Nuevo campo
     };
 
     this.navCtrl.push(ReciboPage_04Page, {

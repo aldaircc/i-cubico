@@ -47,37 +47,6 @@
       </ion-row>
     </ion-grid>
 
-
-    <!--
-      <ion-row class="bgLightBlue">
-        <ion-searchbar (ionInput)="filterItems($event)"></ion-searchbar>
-      </ion-row>
-
-      <ion-row class="bgWhite">
-      <ion-card *ngFor="let objRecepcion of listAuxRecepcion">
-          <ion-card-header class="headerCard">
-              Id Tx: {{objRecepcion.Id_Tx}}
-          </ion-card-header>
-
-          <ion-card-content (click)="evaluateGoReciboPage02(objRecepcion)">
-              <h5><b>Nro. Orden: </b> {{objRecepcion.NumOrden}}</h5>
-              <h5><b>Fecha: </b> {{ objRecepcion.FechaDocumento|momentjs}} </h5>
-              <h5><b>Proveedor: </b> {{objRecepcion.Proveedor}}</h5>
-              <h5><b>Cuenta: </b> {{objRecepcion.Cliente}}</h5>
-              <h5><b>Estado: </b> {{objRecepcion.Estado}}</h5>
-          </ion-card-content>
-        </ion-card>
-      </ion-row>
-
-      <ion-row class="bgLightBlue">
-      <ion-col col-2 col-sm>
-          <div class="fieldForm">Total</div>
-      </ion-col>
-      <ion-col col-9 col-sm>
-          <div class="fieldForm"> {{ rowCount }} fila(s) </div>
-      </ion-col>
-      </ion-row>
-    -->
     <ion-card *ngFor="let obj of listBulto">
       <ion-card-content>
           <h5><b>Contenedor: </b> {{ obj.Contenedor }}</h5>
@@ -89,58 +58,19 @@
           <button ion-button (click)="deleteItem(obj)" icon-only float-right>
               <ion-icon name="trash"></ion-icon>
           </button>
-        <!-- 
-          <ion-grid>
-            <ion-row>
-              <ion-col col-3 col-sm>Contenedor</ion-col>
-              <ion-col col-6 col-sm>{{ obj.Contenedor }}</ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col col-3 col-sm>UA</ion-col>
-                <ion-col col-6 col-sm>{{ obj.UA }}</ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col col-3 col-sm>Lote</ion-col>
-                <ion-col col-6 col-sm>{{ obj.LoteLab }}</ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col col-3 col-sm>Fecha</ion-col>
-                <ion-col col-6 col-sm>{{ obj.FechaIngreso | momentjs }}</ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col col-3 col-sm>Cantidad</ion-col>
-                <ion-col col-6 col-sm>{{ obj.Cantidad }}</ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col col-3 col-sm>Cant. Aver.</ion-col>
-                <ion-col col-6 col-sm>{{ obj.CantidadAveriada }}</ion-col>
-            </ion-row>
-
-            <div>
-              <button ion-button icon-only float-right>
-                  <ion-icon name="trash"></ion-icon>
-              </button>
-            </div>
-
-            <ion-row>
-              <ion-col>
-                <button ion-button icon-only float-right>
-                    <ion-icon name="trash"></ion-icon>
-                </button>
-              </ion-col>
-            </ion-row>
-          </ion-grid>-->
-
       </ion-card-content>
     </ion-card>
-    
-    <ion-row class="bgLightBlue" align-items-center>
-        <ion-col col-2 col-sm>
-            <div class="fieldForm">Total</div>
-        </ion-col>
-        <ion-col col-4 col-sm>
-            <div class="fieldForm"> {{ rowCount }} fila(s) </div>
-        </ion-col>
-    </ion-row>
-
 </ion-content>
+
+<ion-footer class="bgLightBlue">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-2 col-sm>
+          <div class="fieldForm">Total</div>
+      </ion-col>
+      <ion-col col-9 col-sm>
+          <div class="fieldForm"> {{ rowCount }} fila(s) </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
