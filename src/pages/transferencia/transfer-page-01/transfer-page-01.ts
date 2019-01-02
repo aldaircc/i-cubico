@@ -29,4 +29,26 @@ export class TransferPage_01Page {
       this.listTransf = result;
     });
   }
+
+  goToPage02(){
+    
+    // if (smartGridTx.SelectedCell.RowIndex == -1)
+    // {
+    //     Resco.Controls.MessageBox.MessageBoxEx.Show(" Seleccione una transacción ", "Picking",
+    //     MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button2);
+    //     return;
+    // }
+    // else
+    // {
+    //     string strIdTx = smartGridTx.Cells[smartGridTx.SelectedCell.RowIndex, 0].Text;
+    //     lblNumTx.Text = smartGridTx.Cells[smartGridTx.SelectedCell.RowIndex, 0].Text;
+    //     lblFecReg.Text = Convert.ToDateTime(smartGridTx.Cells[smartGridTx.SelectedCell.RowIndex, 1].Text).ToShortDateString();
+    //     lblCuenta.Text = smartGridTx.Cells[smartGridTx.SelectedCell.RowIndex, 2].Text;
+    //     intIdSubAlmacenOrigen = Convert.ToInt32(smartGridTx.Cells[smartGridTx.SelectedCell.RowIndex, 6].Data);
+    //     intIdSubAlmacenDestino = Convert.ToInt32(smartGridTx.Cells[smartGridTx.SelectedCell.RowIndex, 7].Data);
+
+    //     initDetailTx(strIdTx);
+    //     manejoPaneles(2);
+    // }
+  }
 }
