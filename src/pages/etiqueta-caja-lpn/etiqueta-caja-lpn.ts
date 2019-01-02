@@ -257,67 +257,67 @@ export class EtiquetaCajaLpnPage {
       if(this.findArticulo == true){
 
         for(let i = 0; i < res.length; i++){
-          listEtq.push({ "|MES|" :  currentDate.format("MM") });
-          listEtq.push({ "|ANIO|" :  currentDate.format("yyyy") });
-          listEtq.push({ "|LOTE|" :  this.lote });
-          listEtq.push({ "|ESTADO|" : this.vEtq.Condicion });
-          listEtq.push({ "|CODIGO|" :  this.vEtq.Codigo });
-          listEtq.push({ "|VENCIMIENTO|" :  moment(this.fecVen).format('dd/MM/yyyy') });
-          listEtq.push({ "|CANTBULTO|" : this.cantxEtq });
-          listEtq.push({ "|CANTXBULTO|" :  this.cantXBulto });
-          listEtq.push({ "|SALDO|" :  "0" });
-          listEtq.push({ "|FECHA_INGRESO|" :  (this.findArticulo == true) ? "" : currentDate.format('dd/MM/yyyy') });
-          listEtq.push({ "|ORDEN|" :  (this.findArticulo == true) ? "": this.vEtq.NroDoc });
-          listEtq.push({ "|USUARIO|" :  this.sGlobal.userName });
-          listEtq.push({ "|COMPOSICION|" :  this.vEtq.CondicionAlmac });
-          listEtq.push({ "|UM|" : this.vEtq.UM });
-          listEtq.push({ "|TXTSALDO|" : (i == 0 && this.cantEtqSaldo > 0) ? "SALDO" : "" });
-          listEtq.push({ "|COPIAS|" : this.numCopia });
-          listEtq.push({ "|CODBARRA|" : res[i].UA_CodBarra });
-          listEtq.push({ "|CUENTA|" : this.sGlobal.nombreEmpresa });
-          listEtq.push({ "|PRODUCTO|" : this.vEtq.Articulo });
-          listEtq.push({ "|EAN14|" :  obj.EAN14 });
-          listEtq.push({ "|EAN|" : (obj.Nombre.toUpperCase() == this.vEtq.UM.toString().trim()) ? "13" : "14" });
-          listEtq.push({ "|CANTIDAD|" : (i == 0 && this.cantEtqSaldo > 0) ? this.cantEtqSaldo : this.cantxEtq});
-          listEtq.push({ "|SALDOTEXT|" :  "0" });
+          listEtq.push({ "campo": "|MES|", "valor" :  currentDate.format("MM") });
+          listEtq.push({ "campo": "|ANIO|", "valor" :  currentDate.format("YYYY") });
+          listEtq.push({ "campo": "|LOTE|", "valor" :  this.lote });
+          listEtq.push({ "campo": "|ESTADO|", "valor" : this.vEtq.Condicion });
+          listEtq.push({ "campo": "|CODIGO|", "valor" :  this.vEtq.Codigo });
+          listEtq.push({ "campo": "|VENCIMIENTO|", "valor" :  moment(this.fecVen).format('dd/MM/yyyy') });
+          listEtq.push({ "campo": "|CANTBULTO|", "valor" : this.cantxEtq });
+          listEtq.push({ "campo": "|CANTXBULTO|", "valor" :  this.cantXBulto });
+          listEtq.push({ "campo": "|SALDO|", "valor" :  "0" });
+          listEtq.push({ "campo": "|FECHA_INGRESO|", "valor" :  (this.findArticulo == true) ? "" : currentDate.format('dd/MM/yyyy') });
+          listEtq.push({ "campo": "|ORDEN|", "valor" :  (this.findArticulo == true) ? "": this.vEtq.NroDoc });
+          listEtq.push({ "campo": "|USUARIO|", "valor" :  this.sGlobal.userName });
+          listEtq.push({ "campo": "|COMPOSICION|", "valor" :  this.vEtq.CondicionAlmac });
+          listEtq.push({ "campo": "|UM|", "valor" : this.vEtq.UM });
+          listEtq.push({ "campo": "|TXTSALDO|", "valor" : (i == 0 && this.cantEtqSaldo > 0) ? "SALDO" : "" });
+          listEtq.push({ "campo": "|COPIAS|", "valor" : this.numCopia });
+          listEtq.push({ "campo": "|CODBARRA|", "valor" : res[i].UA_CodBarra });
+          listEtq.push({ "campo": "|CUENTA|", "valor" : this.sGlobal.nombreEmpresa });
+          listEtq.push({ "campo": "|PRODUCTO|", "valor" : this.vEtq.Articulo });
+          listEtq.push({ "campo": "|EAN14|", "valor" :  obj.EAN14 });
+          listEtq.push({ "campo": "|EAN|", "valor" : (obj.Nombre.toUpperCase() == this.vEtq.UM.toString().trim()) ? "13" : "14" });
+          listEtq.push({ "campo": "|CANTIDAD|", "valor" : (i == 0 && this.cantEtqSaldo > 0) ? this.cantEtqSaldo : this.cantxEtq});
+          listEtq.push({ "campo": "|SALDOTEXT|", "valor" :  "0" });
           listContainer.push({ 'Etiqueta' : listEtq });
         }
 
       }else{
 
         for(let i = 0; i < res.length; i++){  
-          listEtq.push({ "|MES|" : currentDate.format('MMMM') });
-          listEtq.push({ "|ANIO|" : currentDate.format('yyyy') });
-          listEtq.push({ "LOTE" : this.lote });
-          listEtq.push({ "ESTADO" : this.vEtq.Id_Condicion });
-          listEtq.push({ "|CODIGO|" : this.vEtq.Codigo });
-          listEtq.push({ "|VENCIMIENTO|" : moment(this.fecVen).format('MMM-yyyy')});
-          listEtq.push({ "|CANTBULTO|" : (i == 0 && this.cantEtqSaldo > 0) ? this.residuo/this.cantXBulto: this.cantxEtq });
-          listEtq.push({ "|CANTXBULTO|" : this.cantXBulto});
-          listEtq.push({ "|SALDO|" : (i == 0 && this.cantEtqSaldo > 0) ? this.residuo % this.cantXBulto: 0 });
-          listEtq.push({ "|FECHA_INGRESO|" : (this.findArticulo != false) ? "" : currentDate.format('dd/MM/yyyy') });
-          listEtq.push({ "|ORDEN|" : (this.findArticulo != false)? "" : this.vEtq.NroDoc });
-          listEtq.push({ "|USUARIO|" : this.sGlobal.userName });
-          listEtq.push({ "|COMPOSICION|" : this.vEtq.CondicionAlmac });
-          listEtq.push({ "|UM|" : this.vEtq.UM });
-          listEtq.push({ "|TXTSALDO|" : (i == 0 && this.cantEtqSaldo > 0) ? "SALDO" : "" });
-          listEtq.push({ "|COPIAS|" : this.numCopia });
-          listEtq.push({ "|CODBARRA|" : res[i].UA_CodBarra });
-          listEtq.push({ "|PRODUCTO|" : this.vEtq.Articulo });
-          listEtq.push({ "|EAN14|" : obj.EAN14 });
-          listEtq.push({ "|EAN|" : (obj.Nombre.toUpperCase() == this.vEtq.UM) ? "13": "14" });
-          listEtq.push({ "|CANTIDAD|" : (i == 0 && this.cantEtqSaldo > 0) ? this.cantEtqSaldo : this.cantxEtq });
-          listContainer.push({ 'Etiqueta' : listEtq });
+          listEtq.push({ "campo": "|MES|", "valor": currentDate.format('MMMM') });
+          listEtq.push({ "campo": "|ANIO|", "valor": currentDate.format('YYYY') });
+          listEtq.push({ "campo": "|LOTE|", "valor": this.lote });
+          listEtq.push({ "campo": "|ESTADO|",  "valor" : this.vEtq.Id_Condicion });
+          listEtq.push({ "campo": "|CODIGO|", "valor" : this.vEtq.Codigo });
+          listEtq.push({ "campo": "|VENCIMIENTO|", "valor" : moment(this.fecVen).format('MMM-YYYY')});
+          listEtq.push({ "campo": "|CANTBULTO|", "valor": (i == 0 && this.cantEtqSaldo > 0) ? this.residuo/this.cantXBulto: this.cantxEtq });
+          listEtq.push({ "campo": "|CANTXBULTO|", "valor" : this.cantXBulto});
+          listEtq.push({ "campo": "|SALDO|", "valor": (i == 0 && this.cantEtqSaldo > 0) ? this.residuo % this.cantXBulto: 0 });
+          listEtq.push({ "campo": "|FECHA_INGRESO|", "valor" : (this.findArticulo != false) ? "" : currentDate.format('dd/MM/yyyy') });
+          listEtq.push({ "campo": "|ORDEN|", "valor" : (this.findArticulo != false)? "" : this.vEtq.NroDoc });
+          listEtq.push({ "campo": "|USUARIO|", "valor": this.sGlobal.userName });
+          listEtq.push({ "campo": "|COMPOSICION|", "valor" : this.vEtq.CondicionAlmac });
+          listEtq.push({ "campo": "|UM|", "valor" : this.vEtq.UM });
+          listEtq.push({ "campo": "|TXTSALDO|", "valor" : (i == 0 && this.cantEtqSaldo > 0) ? "SALDO" : "" });
+          listEtq.push({ "campo": "|COPIAS|", "valor" : this.numCopia });
+          listEtq.push({ "campo": "|CODBARRA|", "valor" : res[i].UA_CodBarra });
+          listEtq.push({ "campo": "|PRODUCTO|", "valor" : this.vEtq.Articulo });
+          listEtq.push({ "campo": "|EAN14|" , "valor" : obj.EAN14 });
+          listEtq.push({ "campo": "|EAN|", "valor" : (obj.Nombre.toUpperCase() == this.vEtq.UM) ? "13": "14" });
+          listEtq.push({ "campo": "|CANTIDAD|", "valor" : (i == 0 && this.cantEtqSaldo > 0) ? this.cantEtqSaldo : this.cantxEtq });
+          listContainer.push({ 'etiqueta' : listEtq });
         }
       }
 
-      debugger;
       let format = this.formatLabels.filter(x=>x.Id_Format == this.id_FormatLabel)[0];
       this.sEtq.imprimirListaEtiquetas(listContainer, format.Label, this.sGlobal.nombreImpresora, true).then(result=>{
+        debugger;
         var message : any = result;
         if (message.errNumber == -1){
           //Toast.makeText(this, "Print"+ message.message, Toast.LENGTH_SHORT).show();
-          alert(message.message);
+          alert(message.mensaje);
         }
       });
 
