@@ -68,7 +68,6 @@ export class EtqCajaServiceProvider {
       'esScript' : esScript 
     };
     console.log(JSON.stringify(parameter));
-    debugger;
     return new Promise((result, reject)=>{
       this.http.post(this.sGlobal.impresoraService+'imprimirListaEtiquetas/lista/formato/nombreImpresora/esScript', 
       JSON.stringify(parameter), {headers: this.headers})
@@ -80,29 +79,4 @@ export class EtqCajaServiceProvider {
       })
     });
   }
-
-//   $.ajax({
-//     type: 'POST',
-//     url: proxy.svcPrint + 'imprimirListaEtiquetas/lista/formato/nombreImpresora/esScript',
-//     data: JSON.stringify(datos),
-//     dataType: 'json',
-//     contentType: 'application/json',
-//     beforeSend: function () {
-
-//         $("#mImprimir .btn.imprimir").hide();
-//     },
-//     success: function (data) {
-//         var error = (data.errNumber == 0) ? false : true;
-
-//         toastr[(error) ? "error" : "success"](data.mensaje, (error) ? "Error" : "Correcto");
-//         $('#mImprimir').modal('hide');
-//         //console.log(data);
-//     },
-//     complete: function () {
-//         $("#mImprimir .btn.imprimir").show();
-//     },
-//     error: function () {
-//         toastr.error('No se pudo imprimir', "Error");
-//     }
-// });
 }
