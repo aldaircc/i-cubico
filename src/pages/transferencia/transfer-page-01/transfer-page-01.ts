@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
+import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 
 /**
  * Generated class for the TransferPage_01Page page.
@@ -15,11 +17,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class TransferPage_01Page {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  listTransf : any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    public sGlobal: GlobalServiceProvider, public sPicking: PickingServiceProvider) {
+      this.listarTransferenciaSubAlmacenXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TransferPage_01Page');
+  listarTransferenciaSubAlmacenXUsuario(strUsuario, intIdAlmacen){
+    this.sPicking.listarTransferenciaSubAlmacenXUsuario(strUsuario, intIdAlmacen).then(result=>{
+      this.listTransf = result;
+    });
   }
-
 }
