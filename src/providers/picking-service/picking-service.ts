@@ -11,7 +11,6 @@ import { GlobalServiceProvider } from '../global-service/global-service';
 @Injectable()
 export class PickingServiceProvider {
 
-  apiUrl = 'http://172.16.32.15:8085/SGAA_WCF/PickingService.svc/rest/';
   headers = new Headers();
 
   constructor(public http: Http, public sGlobal: GlobalServiceProvider) {
