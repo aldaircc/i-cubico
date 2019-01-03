@@ -67,6 +67,7 @@ export class EtqCajaServiceProvider {
       'nombreImpresora' : nombreImpresora,
       'esScript' : esScript 
     };
+    console.log(JSON.stringify(parameter));
     return new Promise((result, reject)=>{
       this.http.post(this.sGlobal.impresoraService+'imprimirListaEtiquetas/lista/formato/nombreImpresora/esScript', 
       JSON.stringify(parameter), {headers: this.headers})
@@ -77,5 +78,5 @@ export class EtqCajaServiceProvider {
         console.log('Error imprimirListaEtiquetas', err);
       })
     });
-  }  
+  }
 }

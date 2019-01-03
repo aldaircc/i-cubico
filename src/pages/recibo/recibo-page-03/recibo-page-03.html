@@ -16,10 +16,10 @@
   <ion-grid class="bgHeader">
     <!-- Header caption -->
     <ion-row align-items-center>
-      <ion-col col-4 col-sm>
-        <div class="textHeader">Producto</div>
+      <ion-col col-3 col-sm>
+        <ion-label class="textHeader">Producto</ion-label>
       </ion-col>
-      <ion-col col-5 col-sm>
+      <ion-col col-6 col-sm>
         <div class="valueHeader">{{ vReciboPage02.Descripcion }}</div>
       </ion-col>
       <ion-col col-3 col-sm>
@@ -36,13 +36,13 @@
   <ion-grid class="bgLightBlue">
     <ion-row align-items-center>
       <ion-col col-3 col-sm>
-        <div class="fieldForm">Pedida</div>
+        <ion-label class="fieldForm">Pedida</ion-label>
       </ion-col>
       <ion-col col-3 col-sm>
         <div>{{ vReciboPage02.CantPedida|number : '1.2-2' }}</div>
       </ion-col>
       <ion-col col-3 col-sm>
-        <div class="fieldForm">Recibida</div>
+        <ion-label class="fieldForm">Recibida</ion-label>
       </ion-col>
       <ion-col col-3 col-sm>
         <div>{{ vReciboPage02.CantidadOperacion|number : '1.2-2' }}</div>
@@ -51,13 +51,13 @@
 
     <ion-row align-items-center>
       <ion-col col-3 col-sm>
-        <div class="fieldForm">Saldo</div>
+        <ion-label class="fieldForm">Saldo</ion-label>
       </ion-col>
       <ion-col col-3 col-sm>
         <div>{{ vReciboPage02.Saldo|number : '1.2-2' }}</div>
       </ion-col>
       <ion-col col-3 col-sm>
-        <div class="fieldForm">Bultos</div>
+          <ion-label class="fieldForm">Bultos</ion-label>
       </ion-col>
       <ion-col col-3 col-sm>
         <div>
@@ -72,13 +72,13 @@
 
     <ion-row align-items-center>
       <ion-col col-2 col-sm> 
-        <div class="fieldForm">F.E</div>
+        <ion-label class="fieldForm">F.E</ion-label>
       </ion-col>
       <ion-col col-4 col-sm>
         <div>{{ vReciboPage02.Fecha_Emi | momentjs}}</div>
       </ion-col>
       <ion-col col-2 col-sm>
-        <div class="fieldForm">F.V </div>
+        <ion-label class="fieldForm">F.V</ion-label>
       </ion-col>
       <ion-col col-4 col-sm>
           <div>{{ vReciboPage02.Fecha_Venci | momentjs }}</div>
@@ -90,40 +90,44 @@
   align-items-center> <!-- Background dinamyc -->
     <ion-row align-items-center>
       <ion-col col-3 col-sm>
-          <div class="fieldForm">Lote</div>
+        <ion-label class="fieldForm">Lote</ion-label>
       </ion-col>
       <ion-col col-9 col-sm>
           {{ vReciboPage02.Lote }}
       </ion-col>
     </ion-row>
     <ion-row align-items-center>
-      <ion-col col-4 col-sm>
-        <div class="fieldForm">Cod. barra</div>
+      <ion-col col-3 col-sm>
+        <ion-label class="fieldForm">Cod. barra</ion-label>
       </ion-col>
       <ion-col col-8 col-sm>
-        <ion-input #iCodeBar [(ngModel)]="codeBar" #ctrl="ngModel" type="text" placeholder="Ingrese código de barra" 
-        (keyup.enter)="validarCodeBar()"></ion-input>
+        <ion-item>
+          <ion-input select-all #iCodeBar [(ngModel)]="codeBar" #ctrl="ngModel" type="text" placeholder="A20000103123" 
+          (keyup.enter)="validarCodeBar()"></ion-input>
+        </ion-item>
       </ion-col>
     </ion-row>
     
     <ion-row align-items-center>
       <ion-col col-3 col-sm>
-        <div class="fieldForm">Cantidad</div>
+        <ion-label class="fieldForm">Cantidad</ion-label>
       </ion-col>
       <ion-col col-3 col-sm>
-          <ion-input #iCantidadRecibida [(ngModel)]="cantidadRec" #ctrl="ngModel" type="text" placeholder="0" value=""></ion-input>      
+        <ion-item>
+          <ion-input #iCantidadRecibida [(ngModel)]="cantidadRec" #ctrl="ngModel" type="text" placeholder="0" value=""></ion-input>
+        </ion-item>
       </ion-col>
       <ion-col col-3 col-sm>
-          <div class="fieldForm">Ave.</div>
+          <ion-label class="fieldForm">Ave.</ion-label>
       </ion-col>
       <ion-col col-3 col-sm>
-        <ion-input [(ngModel)]="cantidadAve" #ctrl="ngModel" type="text" placeholder="0" value=""></ion-input>
+        <ion-item>
+          <ion-input [(ngModel)]="cantidadAve" #ctrl="ngModel" type="text" placeholder="0" value=""></ion-input>
+        </ion-item>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <button #myButton></button>
-  
 </ion-content>
 
 <ion-footer>

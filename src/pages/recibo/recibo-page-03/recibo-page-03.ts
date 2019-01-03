@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController, IonicFormInput, B
 import { ReciboServiceProvider } from '../../../providers/recibo-service/recibo-service';
 import { isNullOrUndefined } from '../../../../node_modules/@swimlane/ngx-datatable/release/utils';
 import { ReciboPage_04Page } from '../recibo-page-04/recibo-page-04';
+import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 
 /**
  * Generated class for the ReciboPage_03Page page.
@@ -34,16 +35,17 @@ export class ReciboPage_03Page {
 
   @ViewChild('iCodeBar') iCodeBar;
   @ViewChild('iCantidadRecibida') iCantidadRecibida;
-  @ViewChild('iBtnSave') iBtnSave:Button;
+  @ViewChild('iBtnSave') iBtnSave : Button;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    public toastCtrl: ToastController , public sRecibo: ReciboServiceProvider) {
+    public toastCtrl: ToastController , public sRecibo: ReciboServiceProvider,
+    public sGlobal: GlobalServiceProvider) {
     this.vReciboPage02 = navParams.get('dataPage02');
     console.log('data received', this.vReciboPage02);
   }
 
   ionViewDidLoad() {
-
+    
   }
 
   presentToast(message) {
@@ -66,7 +68,7 @@ export class ReciboPage_03Page {
     debugger;
     if (this.codeBar.trim().length >= 12){
 
-      if(this.vReciboPage02.FlagSeriePT === true){
+      if(this.vReciboPage02.FlagSeriePT == true){
         
         if(this.vReciboPage02.Id_TipoMovimiento === 0){
           this.presentToast("Esta transacción no tiene tipo de movimiento");
@@ -93,16 +95,13 @@ export class ReciboPage_03Page {
               console.log('E-validarReciboTransferenciaSerie', err);
             });
         }else{
-          this.sRecibo.validarReciboTransferenciaSerie(this.vReciboPage02.NumOrden, this.codeBar, 
-            this.vReciboPage02.Item).then((result)=>{
-              let rpta : any = result;
-              if(rpta.errNumber != 0){
-                this.isBgRed = true;
-                this.isBgYellow = false;
+          this.sRecibo.validarReciboSerie(this.codeBar, this.vReciboPage02.Id_Tx, this.vReciboPage02.Id_Producto).then(result=>{
+              let res: any = result;
+              if(res.errNumber != 0){
                 this.codeBar = "";
                 this.cantidadRec = 0;
                 this.iCodeBar.setFocus();
-                this.presentToast(rpta.message);
+                this.presentToast(res.message);
               }
           });
         }
@@ -127,9 +126,9 @@ export class ReciboPage_03Page {
 
         var ua: any;
 
-        if(this.vReciboPage02.Id_TipoMovimiento === 11 || 
-          this.vReciboPage02.Id_TipoMovimiento === 13 || 
-          this.vReciboPage02.Id_TipoMovimiento === 14){
+        if(this.vReciboPage02.Id_TipoMovimiento == 11 || 
+          this.vReciboPage02.Id_TipoMovimiento == 13 || 
+          this.vReciboPage02.Id_TipoMovimiento == 14){
             ua = {
               'Id_Tx': this.vReciboPage02.Id_Tx,
               'UA_CodBarra': this.codeBar,
@@ -235,14 +234,14 @@ export class ReciboPage_03Page {
         return result;
     }
 
-    if(this.codeBar.trim() === ""){
+    if(isNullOrUndefined(this.codeBar) || this.codeBar.trim() == ""){
       this.presentToast('Ingrese el código de barras');
       this.iCodeBar.setFocus();
       result = false;
       return result;
     }
 
-    if(this.cantidadRec === 0 || isNullOrUndefined(this.cantidadRec)){
+    if(isNullOrUndefined(this.cantidadRec) || this.cantidadRec === 0){
       this.presentToast("Ingrese el cantidad");
       this.iCantidadRecibida.setFocus();
       result = false;
@@ -278,9 +277,9 @@ export class ReciboPage_03Page {
   }
 
   saveTransaction(){
-    debugger;
     if(!this.validarCamposIngreso()){
       console.log('hay campos pendientes de llenar');
+      return;
     }
     /**
     TxUbicacion objTxUbi = new TxUbicacion();
@@ -294,12 +293,15 @@ export class ReciboPage_03Page {
         'TipoUbicacion': 1,
         'Id_Producto': this.vReciboPage02.Id_Producto,
         'Id_Ubicacion_Origen': 0,
-        'Id_Almacen': 1,//(Global.IdWarehouse);
+        'Id_Almacen': 1, //this.sGlobal.Id_Almacen
         'Id_Tx': this.vReciboPage02.Id_Tx,
         'Prioridad': 10,
         'Observacion': ' from ionic ',
-        'UsuarioModificacion': 'ADMIN' //(Global.userName);
+        'UsuarioModificacion': this.sGlobal.userName
       };
+
+      debugger;
+      this.vReciboPage02.TipoAlmacenaje = (this.vReciboPage02.TipoAlmacenaje == undefined) ? 0 : this.vReciboPage02.TipoAlmacenaje;
 
       this.sRecibo.registrarUATransito(objTxUbi).then((result)=>{
         let rpta : any = result;
@@ -329,13 +331,13 @@ export class ReciboPage_03Page {
           'Id_Ubicacion' : 0,  //objUA.setId_Ubicacion(0);
           'Id_Tx_Ubi' : (result === "") ? null: result,  //objUA.setId_Tx_Ubi((result == "") ? null: result);
           'Observacion' : '-AiYoNik-',  //objUA.setObservacion(edtObserv.getText().toString());
-          'UsuarioRegistro' : 'ADMIN',  //objUA.setUsuarioRegistro("ADMIN"); //Global.userName
-          'Id_Almacen' : 1,  //objUA.setId_Almacen(1); //Global.IdWarehouse
+          'UsuarioRegistro' : this.sGlobal.userName,  //objUA.setUsuarioRegistro("ADMIN"); //Global.userName
+          'Id_Almacen' : this.sGlobal.Id_Almacen,  //objUA.setId_Almacen(1); //Global.IdWarehouse
           'Id_UM': this.vReciboPage02.Id_UM,  //objUA.setId_UM(objReceived.getId_UMB());
-          'FlagAnulado': this.vReciboPage02.FlagAnulado //objUA.setFlagAnulado(false); 
+          'FlagAnulado': false //?this.vReciboPage02.FlagAnulado //objUA.setFlagAnulado(false); 
         };
 
-        if(this.vReciboPage02.Id_TipoMovimiento === 0){
+        if(this.vReciboPage02.Id_TipoMovimiento == 0){
           this.presentToast('Esta transacción no tiene tipo de movimiento');
           return;
         }
@@ -416,7 +418,8 @@ export class ReciboPage_03Page {
       "FlagSeriePT" : this.vReciboPage02.FlagSeriePT,
       "Id_TipoMovimiento" : this.vReciboPage02.Id_TipoMovimiento,
       "bolAutomatic" : this.vReciboPage02.bolAutomatic,
-      "currentSaldo" : this.vReciboPage02.Saldo
+      "currentSaldo" : this.vReciboPage02.Saldo,
+      "Cuenta" : this.vReciboPage02.Cuenta //Nuevo campo
     };
 
     this.navCtrl.push(ReciboPage_04Page, {
