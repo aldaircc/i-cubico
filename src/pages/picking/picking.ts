@@ -1,9 +1,10 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { PickingServiceProvider } from '../../providers/picking-service/picking-service';
-import { IonicPage, NavController, NavParams, ModalController, PopoverController  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, PopoverController, ToastController  } from 'ionic-angular';
 import { RutaPickingPage } from '../picking/ruta-picking/ruta-picking'
 import { IncidenciaPage } from '../incidencia/incidencia';
 import { PopoverPickingPage } from '../picking/popover/popover-picking/popover-picking'
+import { DetallePickingPage } from '../picking/detalle-picking/detalle-picking'
 
 /**
  * Generated class for the PickingPage page.
@@ -27,12 +28,15 @@ export class PickingPage {
   rowCount: any;
   vPickingPage: any;
 
+  listaTempRutaPicking: any = [];
+
   // @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
   // @ViewChild('popoverText', { read: ElementRef }) text: ElementRef;
   
 
   constructor(public navCtrl: NavController, public navParams: NavParams,    
-    public sPicking: PickingServiceProvider, public modalCtrl: ModalController, private popoverCtrl: PopoverController) {
+    public sPicking: PickingServiceProvider, public modalCtrl: ModalController, private popoverCtrl: PopoverController,
+    public toastCtrl: ToastController) {
     const data = JSON.parse(localStorage.getItem('vUserData'));
     this.userDetail = data;
     this.getDataOrdenes();
@@ -79,24 +83,66 @@ export class PickingPage {
     }
   }
 
-  goRutaPickingPage(data){
+  ValidarOrden(data){
 
     debugger;
     if(data.FlagPausa == true){
       this.showModalIncidencia(data);
-    }else{      
+    }else{
+      this.getDataRutaPicking(data.Id_Tx, 'Admin', 2, data)  
+    }
+  }
+
+  getDataRutaPicking(strNroDoc, strUsuario, intIdAlmacen, data){
+    this.sPicking.getDataRutaPicking(strNroDoc, strUsuario, intIdAlmacen).then((result)=>{
+      debugger;
+      this.listaTempRutaPicking = result;
+      for(var i = 0; i< this.listaTempRutaPicking.length; i++){
+        if(result[0].Saldo>0){ 
+          if(result[0].FlagTransito == false){     
+            //Ir a ruta picking
+            this.goRutaPickingPage(data);
+            return;
+          }else{
+            this.presentToast("No existe ruta para este producto");
+            this.goDetallePickingPage(data);
+            return;
+          }        
+        }
+        if(i==this.listaTempRutaPicking.length-1){
+          this.presentToast("No existe ruta para este producto");
+          this.goDetallePickingPage(data);
+          return;
+        }
+      }      
+    },err=>{
+      console.log('E-getDetailXTx',err);
+    });
+  }
+
+  goRutaPickingPage(data){
+    this.vPickingPage = {
+      'Id_Tx' : data.Id_Tx,
+      'NumOrden' : data.NumOrden,
+      'Cliente' : data.Cliente,
+      'Ciudad' : data.Ciudad,
+      'Zona' : data.Zona
+    };
+    this.navCtrl.push(RutaPickingPage, {
+      data: this.vPickingPage
+    });
+  }
+
+  goDetallePickingPage(data){
+    debugger;  
       this.vPickingPage = {
         'Id_Tx' : data.Id_Tx,
         'NumOrden' : data.NumOrden,
-        'Cliente' : data.Cliente,
-        'Ciudad' : data.Ciudad,
-        'Zona' : data.Zona
+        'Cliente' : data.Cliente
       };
-
-      this.navCtrl.push(RutaPickingPage, {
+      this.navCtrl.push(DetallePickingPage, {
         data: this.vPickingPage
-      });
-    }
+      });    
   }
 
   showModalIncidencia(data){
@@ -116,8 +162,16 @@ export class PickingPage {
     modalIncidencia.present();
   }
 
-  presentPopover(ev) {
+  presentToast(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 2000,
+      position: 'bottom'
+    });  
+    toast.present();
+  }
 
+  presentPopover(ev) {
     let popover = this.popoverCtrl.create(PopoverPickingPage, {
       // contentEle: this.content.nativeElement,
       // textEle: this.text.nativeElement
