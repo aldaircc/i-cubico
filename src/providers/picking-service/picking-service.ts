@@ -96,17 +96,14 @@ export class PickingServiceProvider {
   }
 
   CerrarPicking(idTx, idEstado, usuario, idMuelle, IdAlmacen){
-    var parameter = {
+    var parameter = 
+    {
       "idTx": idTx, "idEstado": idEstado, "usuario": usuario, "idMuelle": idMuelle, "IdAlmacen": IdAlmacen
     };
+
     return new Promise((result, reject)=>{
       this.http.post(this.sGlobal.pickingService + 'CerrarPicking/idTx/idEstado/usuario/idMuelle/IdAlmacen', JSON.stringify(parameter), { headers : this.headers })
       .map(res => res.json())
-    var parameter : any;
-    parameter = {"idTx": idTx, "idEstado": idEstado, "usuario": usuario, "idMuelle": idMuelle, "IdAlmacen": IdAlmacen};
-    return new Promise(resolve=>{
-      this.http.get(this.sGlobal.pickingService + 'CerrarPicking', { params: parameter})
-      .map(res=>res.json())
       .subscribe(data=>{
         result(data);
       },err =>{
@@ -114,7 +111,7 @@ export class PickingServiceProvider {
       })
     });
   }
-
+  
   getValidarUAPicking(strIdTx, UA, IdProducto, Item, lote, IdUbicacion){
     var parameter : any;
     parameter = {"strIdTx": strIdTx, "UA": UA, "IdProducto": IdProducto, "Item": Item, "lote": lote, "IdUbicacion": IdUbicacion};
