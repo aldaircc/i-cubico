@@ -182,9 +182,9 @@ export class ReciboPage_02Page {
             text: 'Aceptar',
             handler: () => {
               console.log('Buy clicked');
+              debugger;
               this.sRecibo.cerrarRecepcion('99999'/**this.vReciboPage01.Id_Tx**/, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result=>{
                 let res: any = result; 
-                alert('Cerrar recepción:' + res.errNumber + ' - ' + res.message);
                 this.getDetailXTx(this.vReciboPage01.Id_Tx);
               });
             }

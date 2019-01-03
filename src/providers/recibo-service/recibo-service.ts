@@ -50,7 +50,7 @@ export class ReciboServiceProvider {
       this.http.post(this.sGlobal.recepcion + 'CerrarRecepcion/idTx/idEstado/usuario', JSON.stringify(parameter), {headers:this.headers})
       .map(res=>res.json())
       .subscribe(data=>{
-        console.log("it's work", data);
+        resolve(data);
       },err=>{
         console.log('Error cerrarRecepcion', err);
       })
@@ -63,6 +63,7 @@ export class ReciboServiceProvider {
       this.http.post(this.sGlobal.recepcion + 'RegistrarUATransito/TxUbi', JSON.stringify(parameter), {headers: this.headers})
       .map(res=>res.json())
       .subscribe(data=>{
+        resolve(data);
         console.log('registrarUATransito', data);
       },err=>{
         console.log('Error registrarUATransito', err);
