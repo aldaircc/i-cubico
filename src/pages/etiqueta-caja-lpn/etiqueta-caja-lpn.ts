@@ -234,11 +234,7 @@ export class EtiquetaCajaLpnPage {
   registrarUAMasivo(objImp){
     debugger;
     this.sEtq.registrarUAMasivo(objImp, 1).then(result=>{
-      debugger;
-      alert('registrarUAMasivo');
-
       var res : any = result;
-
       if(res.length <= 0){
         return;
       }
