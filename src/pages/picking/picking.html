@@ -64,7 +64,7 @@
 
     <ion-row class="bgWhite">
         <ion-card *ngFor="let objPicking of listAuxOrdenesPicking">
-            <ion-card-content style="padding: 8px 2px; font-size: 12px" (click)="goRutaPickingPage(objPicking)">
+            <ion-card-content style="padding: 8px 2px; font-size: 12px" (click)="ValidarOrden(objPicking)">
                 <ion-row no-padding no-margin>
                     <div no-margin 
                     [ngClass]="{plomo : (objPicking.Id_Estado == 2), amarillo: (objPicking.Id_Estado == 3), verde: (objPicking.Id_Estado ==5 || objPicking.Id_Estado ==6) }" style="margin-right: 2px;  width: 2%;">

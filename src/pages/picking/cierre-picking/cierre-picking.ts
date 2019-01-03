@@ -23,6 +23,8 @@ export class CierrePickingPage {
 
   listNombreMuelleXAlmacen: any = [];
 
+  resultCierre: any = [];
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController, public toastCtrl: ToastController, public alertCtrl: AlertController,
     public modalCtrl : ModalController) {
@@ -40,51 +42,101 @@ export class CierrePickingPage {
   }
 
   validarCodeBar() {
-    debugger;
     if(this.codeBar){
       if(this.codeBar.trim()!=""){
-        if (this.codeBar.trim().length >= 6) {
-          this.sPicking.getMuelleXAlmacen(2, this.codeBar.trim()).then((result) => {
-            debugger;
+          this.sPicking.getMuelleXAlmacen(2, this.codeBar.trim()).then((result) => {            
             this.listNombreMuelleXAlmacen = result;
             if (this.listNombreMuelleXAlmacen.length > 0) {
               console.log('Datos Muelle por almacen', this.listNombreMuelleXAlmacen);
               if (this.vRutaPickingPage.Saldo > 0) {
-                this.presentAlertConfirm("Va a cerrar orden de picking incompleta, ¿Desea continuar?”.").then((result) => {
-                  if (result) {
+                this.presentAlertConfirm("Va a cerrar orden de picking incompleta, ¿Desea continuar?”.").then((resultAlert) => {
+                  if (resultAlert) {
                     // Cerrar Picking
-                    this.CerrarPicking(this.vRutaPickingPage.Id_Tx, 6, "Admin", this.listNombreMuelleXAlmacen[0].Id_Muelle, 2);
-                    this.presentAlert("Operación exitosa").then((result) => {
-                      if (result) {
-                        this.presentAlertConfirm("¿Desea imprimir el picking?”.").then((result) => {
-                          if (result) {
-                            // Mostrar lista de impresoras
-                            this.showModalImpresora();
+                    this.sPicking.CerrarPicking(this.vRutaPickingPage.Id_Tx, 6, "Admin", this.listNombreMuelleXAlmacen[0].Id_Muelle, 2).then((resultCerrar) => {
+                      debugger;
+                      this.resultCierre = resultCerrar;
+                      if (this.resultCierre.errNumber == 0) {
+                        
+                        this.presentAlert("Operación exitosa").then((resultAlert2) => {
+                          if (resultAlert2) {
+                            this.presentAlertConfirm("¿Desea imprimir el picking?”.").then((resultAlert3) => {
+                              if (resultAlert3) {
+                                // Mostrar lista de impresoras
+                                this.showModalImpresora();
+                              }
+                            })
                           }
                         })
+                        console.log('Operación exitosa', this.listNombreMuelleXAlmacen);
+                      } else {
+                        this.presentToast(this.resultCierre.message);
+                        console.log(this.resultCierre.message, this.listNombreMuelleXAlmacen);
                       }
-                    })
-    
+                    }, (err) => {
+                      console.log('E-Muelle por almacen', err);
+                    });
+                    // this.CerrarPicking(this.vRutaPickingPage.Id_Tx, 6, "Admin", this.listNombreMuelleXAlmacen[0].Id_Muelle, 2);
+                    // debugger;
+                    // if(this.resultCierre.errNumber == 0){
+                    //   this.presentAlert("Operación exitosa").then((result) => {
+                    //     if (result) {
+                    //       this.presentAlertConfirm("¿Desea imprimir el picking?”.").then((result) => {
+                    //         if (result) {
+                    //           // Mostrar lista de impresoras
+                    //           this.showModalImpresora();
+                    //         }
+                    //       })
+                    //     }
+                    //   })
+                    // }else{
+                    //   this.presentToast(this.resultCierre.message);
+                    // }   
                   } else {
                     this.goBackRutaPicking();
                     //this.navCtrl.pop();
                   }
                 })
               } else {
-                this.presentAlertConfirm("Desea cerrar picking?”.").then((result) => {
-                  if (result) {
+                this.presentAlertConfirm("Desea cerrar picking?”.").then((resultAlertCompleto) => {
+                  if (resultAlertCompleto) {
                     // Cerrar Picking
-                    this.CerrarPicking(this.vRutaPickingPage.Id_Tx, 5, "Admin", this.listNombreMuelleXAlmacen[0].Id_Muelle, 2);
-                    this.presentAlert("Operación exitosa").then((result) => {
-                      if (result) {
-                        this.presentAlertConfirm("¿Desea imprimir el picking?”.").then((result) => {
-                          if (result) {
-                            // Mostrar lista de impresoras
-                            this.showModalImpresora();
+                    this.sPicking.CerrarPicking(this.vRutaPickingPage.Id_Tx, 5, "Admin", this.listNombreMuelleXAlmacen[0].Id_Muelle, 2).then((resultCerrar) => {
+                      debugger;
+                      this.resultCierre = resultCerrar;
+                      if (this.resultCierre.errNumber == 0) {                        
+                        this.presentAlert("Operación exitosa").then((resultAlert) => {
+                          if (resultAlert) {
+                            this.presentAlertConfirm("¿Desea imprimir el picking?”.").then((result) => {
+                              if (result) {
+                                // Mostrar lista de impresoras
+                                this.showModalImpresora();
+                              }
+                            })
                           }
                         })
+                        console.log('Operación exitosa', this.listNombreMuelleXAlmacen);
+                      } else {
+                        this.presentToast(this.resultCierre.message);
+                        console.log(this.resultCierre.message, this.listNombreMuelleXAlmacen);
                       }
+                    }, (err) => {
+                      console.log('E-Muelle por almacen', err);
                     });
+                    // this.CerrarPicking(this.vRutaPickingPage.Id_Tx, 5, "Admin", this.listNombreMuelleXAlmacen[0].Id_Muelle, 2);
+                    // if(this.resultCierre.errNumber == 0){
+                    //   this.presentAlert("Operación exitosa").then((result) => {
+                    //     if (result) {
+                    //       this.presentAlertConfirm("¿Desea imprimir el picking?”.").then((result) => {
+                    //         if (result) {
+                    //           // Mostrar lista de impresoras
+                    //           this.showModalImpresora();
+                    //         }
+                    //       })
+                    //     }
+                    //   });
+                    // }else{
+                    //   this.presentToast(this.resultCierre.message);
+                    // }
                   }
                 })
               }
@@ -96,11 +148,7 @@ export class CierrePickingPage {
             }
           }, (err) => {
             console.log('E-Muelle por almacen', err);
-          });
-        } else {
-          this.presentAlert("Código de barras muelle no es correcto");
-          this.codeBar = "";
-        }
+          }); 
       }else{
         this.presentToast("Ingrese código de muelle");
       }
@@ -115,11 +163,11 @@ export class CierrePickingPage {
     debugger;
     this.sPicking.CerrarPicking(idTx, idEstado, usuario, idMuelle, IdAlmacen).then((result) => {
       debugger;
-      this.listNombreMuelleXAlmacen = result;
-      if (this.listNombreMuelleXAlmacen.length > 0) {
-        console.log('Datos Muelle por almacen', this.listNombreMuelleXAlmacen);
+      this.resultCierre = result;
+      if (this.resultCierre.errNumber == 0) {
+        console.log('Operación exitosa', this.listNombreMuelleXAlmacen);
       } else {
-        console.log('No se encontrarón datos.', this.listNombreMuelleXAlmacen);
+        console.log(this.resultCierre.message, this.listNombreMuelleXAlmacen);
       }
     }, (err) => {
       console.log('E-Muelle por almacen', err);

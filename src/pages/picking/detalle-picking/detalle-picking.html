@@ -63,7 +63,7 @@
 
     <ion-row class="bgWhite">
         <ion-card *ngFor="let objDetallePicking of listAuxDetallePicking">      
-            <ion-card-content style="padding: 8px 4px; font-size: 12px">
+            <ion-card-content style="padding: 8px 4px; font-size: 12px" (click)="ValidarProducto(objDetallePicking)">
                     <ion-row no-padding no-margin>
                             <div no-margin 
                             [ngClass]="{plomo : (objDetallePicking.Id_Estado != 2)}" style="margin-right: 2px;  width: 2%;">

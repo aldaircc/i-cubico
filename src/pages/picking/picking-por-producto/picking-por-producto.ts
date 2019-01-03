@@ -80,7 +80,8 @@ export class PickingPorProductoPage {
     if(this.codeBar){
       if(this.codeBar.trim()!=""){
         if (this.codeBar.trim().length >= 6) {
-          this.codUbicacion = this.vRutaPickingPage.Fila.trim() + this.vRutaPickingPage.Columna.toString() + this.vRutaPickingPage.Nivel.toString() + this.vRutaPickingPage.Posicion.toString();
+          //this.codUbicacion = this.vRutaPickingPage.Fila.trim() + this.vRutaPickingPage.Columna.toString() + this.vRutaPickingPage.Nivel.toString() + this.vRutaPickingPage.Posicion.toString();
+          //this.codUbicacion =  this.pickingProducto.CodBarraUbi.trim();
           this.sPicking.getValidarUAPicking(this.vRutaPickingPage.Id_Tx, this.codeBar.trim(), this.pickingProducto.CodigoProducto, this.pickingProducto.Item, this.pickingProducto.LoteProducto, this.pickingProducto.IdUbicacion).then((result) => {
             debugger;
             this.UAPicking = result;
