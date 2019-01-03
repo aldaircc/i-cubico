@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { ReciboServiceProvider } from '../../providers/recibo-service/recibo-service';
 import { ReciboPage_02Page } from './recibo-page-02/recibo-page-02';
 import { IncidenciaPage } from '../incidencia/incidencia';
+import { GlobalServiceProvider } from '../../providers/global-service/global-service';
 
 /**
  * Generated class for the ReciboPage page.
@@ -18,30 +19,14 @@ import { IncidenciaPage } from '../incidencia/incidencia';
 })
 export class ReciboPage {
 
-  searchQuery: string = '';
-  items: string[];
-
   userDetail: any;
   listAuxRecepcion: any;
   listRecepcion: any;
-  today: number;
   vReciboPage01: any;
-
   rowCount: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public sRecibo: ReciboServiceProvider, public modalCtrl: ModalController) {
-    //alert('constructor Recibo');
-    //const data = JSON.parse(localStorage.getItem('vUserData'));
-    //this.userDetail = data;
-
-    //this.getDataRecepcion();
-    //console.log('constructor');
-  }
-
-  ionViewDidLoad() {
-    //alert('ionViewDidLoad - Recibo');
-  }
+    public sRecibo: ReciboServiceProvider, public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider) { }
 
   filterItems(ev: any) {
     const val = ev.target.value;
@@ -57,7 +42,6 @@ export class ReciboPage {
   }
 
   getRecepcionesXUsuario(strUsuario, intIdAlmacen, intIdMuelle) {
-    debugger;
     this.sRecibo.getRecepcionesXUsuario(strUsuario, intIdAlmacen, intIdMuelle).then((result) => {
       this.listRecepcion = result;
       this.listAuxRecepcion = this.listRecepcion;
@@ -67,8 +51,6 @@ export class ReciboPage {
       } else {
         alert('No se encontrarón datos.');
       }
-    }, (err) => {
-      console.log('E-Recepcion listar', err);
     });
   }
 
@@ -97,7 +79,7 @@ export class ReciboPage {
   }
 
   getDataRecepcion() {
-    this.getRecepcionesXUsuario("ADMIN"/** this.userDetail[0].Usuario**/, 2, 1);
+    this.getRecepcionesXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen, this.sGlobal.Id_Muelle);
   }
 
   showModalIncidencia(data) {

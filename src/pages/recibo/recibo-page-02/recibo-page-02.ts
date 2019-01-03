@@ -6,6 +6,7 @@ import { ImpresoraPage } from '../../impresora/impresora';
 import { PopoverReciboComponent } from '../../../components/popover-recibo/popover-recibo';
 import { IncidenciaPage } from '../../incidencia/incidencia';
 import { EtiquetaCajaLpnPage } from '../../etiqueta-caja-lpn/etiqueta-caja-lpn';
+import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 
 /**
  * Generated class for the ReciboPage_02Page page.
@@ -34,7 +35,7 @@ export class ReciboPage_02Page {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private alertCtrl: AlertController, public sRecibo: ReciboServiceProvider,
-    public modalCtrl: ModalController, public popoverCtrl: PopoverController) {
+    public modalCtrl: ModalController, public popoverCtrl: PopoverController, public sGlobal: GlobalServiceProvider) {
       this.vReciboPage01 = navParams.get('data');
       const data = JSON.parse(localStorage.getItem('vUserData'));
       this.userDetail = data;
@@ -75,9 +76,6 @@ export class ReciboPage_02Page {
 
     let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia' : obj});
     modalIncidencia.onDidDismiss(data =>{
-      debugger;
-      console.log("datos", data);
-      console.log('Regresar a pagina 01');
       if(data.response == 200){
         this.navCtrl.pop();
       }
@@ -102,12 +100,9 @@ export class ReciboPage_02Page {
       this.listDetailTx = result;
       this.listAuxDetailTx = this.listDetailTx;
       this.rowCount = this.listAuxDetailTx.length;
-      console.log('detalles', this.listDetailTx);
       if(this.listDetailTx.length == 0){
-        console.log('No se encontraron detalles', this.listDetailTx);  
+        alert('No se encontraron detalles');
       }
-    },err=>{
-      console.log('E-getDetailXTx',err);
     });
   }
 
@@ -149,7 +144,6 @@ export class ReciboPage_02Page {
     "Cuenta":this.vReciboPage01.Cuenta,
     "Id_Cliente":this.vReciboPage01.Id_Cliente
   };
-  console.log('going to go page 03', this.vReciboPage02);
 
     this.navCtrl.push(ReciboPage_03Page, {
       dataPage02: this.vReciboPage02
@@ -173,7 +167,7 @@ export class ReciboPage_02Page {
         message = "¿Está seguro de cerrar la transacción?";
       }
 
-      let alert = this.alertCtrl.create({
+      let alerta = this.alertCtrl.create({
         title: 'Confirm purchase',
         message: message,
         buttons: [
@@ -188,17 +182,20 @@ export class ReciboPage_02Page {
             text: 'Aceptar',
             handler: () => {
               console.log('Buy clicked');
-              this.sRecibo.cerrarRecepcion('99999'/**this.vReciboPage01.Id_Tx**/, (saldo > 0 ? 6 : 5), "ADMIN"/**this.userDetail[0].Usuario**/)
+              this.sRecibo.cerrarRecepcion('99999'/**this.vReciboPage01.Id_Tx**/, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result=>{
+                let res: any = result; 
+                alert('Cerrar recepción:' + res.errNumber + ' - ' + res.message);
+                this.getDetailXTx(this.vReciboPage01.Id_Tx);
+              });
             }
           }
         ]
       });
-      alert.present();
+      alerta.present();
     }
   }
 
   navigateToEtqCajaLpn(data){
-    debugger;
     let objEtq = {
     "LoteLab": data.Lote,
     "Id_Producto": data.Id_Producto,
@@ -228,7 +225,7 @@ export class ReciboPage_02Page {
 
     let etqModal = this.modalCtrl.create(EtiquetaCajaLpnPage, { vEtq: objEtq });
     etqModal.onDidDismiss(data => {
-      console.log("Data retornada", data);
+      console.log("Data retornada del modal", data);
     });
     etqModal.present();
   }
