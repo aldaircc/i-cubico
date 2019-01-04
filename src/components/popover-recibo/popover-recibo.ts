@@ -23,11 +23,6 @@ export class PopoverReciboComponent {
   constructor(public viewCtrl: ViewController) {
     let page = viewCtrl.data.page;
     this.evaluateDisplayOptions(page);
-    
-    // this.items = [
-    //   {item : 'Impresora'},
-    //   {item : 'Incidencia'}
-    // ]
   }
 
   evaluateDisplayOptions(value){
@@ -43,6 +38,9 @@ export class PopoverReciboComponent {
         this.isDisplayEtq = false;
         break;
       case 13:
+        this.isDisplayPrint = false;
+        this.isDisplayIncidencia = false;
+        this.isDisplayEtq = true;
         break;
       case 14:
         this.isDisplayPrint = true;

@@ -96,7 +96,8 @@ export class EtiquetaCajaLpnPage {
      this.listarUMxProducto(this.vEtq.Id_Producto);
     }
 
-    this.listarSubAlmacenesXCuenta(this.vEtq.Id_CuentaLPN, 2 /** Almacen global **/);
+    debugger;
+    this.listarSubAlmacenesXCuenta(this.vEtq.IdCuentaLPN, 2 /** Almacen global **/);
 
     this.isEnabled = this.vEtq.FlagLote;
     this.fecEmiChecked = this.vEtq.FlagLote;
@@ -193,9 +194,10 @@ export class EtiquetaCajaLpnPage {
               cantEtqSaldo = this.cantEtqSaldo;
               cantxEtq = this.cantxEtq;
 
+              debugger;
               var objImp = 
               {
-                'CantidadEtiqueta' : ((numEtq + cantEtqSaldo) > 0 ? 1 : 0),
+                'CantidadEtiqueta' : parseInt(numEtq) + ((cantEtqSaldo) > 0 ? 1 : 0),
                 'Cantidad' : cantxEtq,
                 'Id_Producto' : this.vEtq.Id_Producto,
                 'LoteLab' : (this.vEtq.FlagLote == true) ? this.lote.toUpperCase() : null,
@@ -251,8 +253,9 @@ export class EtiquetaCajaLpnPage {
       let obj = this.listUM.filter(x=>x.Id_UM == this.id_UAlt)[0];
 
       if(this.findArticulo == true){
-
+        debugger;
         for(let i = 0; i < res.length; i++){
+          listEtq = [];
           listEtq.push({ "campo": "|MES|", "valor" :  currentDate.format("MM") });
           listEtq.push({ "campo": "|ANIO|", "valor" :  currentDate.format("YYYY") });
           listEtq.push({ "campo": "|LOTE|", "valor" :  this.lote });
@@ -280,8 +283,9 @@ export class EtiquetaCajaLpnPage {
         }
 
       }else{
-
+        debugger;
         for(let i = 0; i < res.length; i++){  
+          listEtq = [];
           listEtq.push({ "campo": "|MES|", "valor": currentDate.format('MMMM') });
           listEtq.push({ "campo": "|ANIO|", "valor": currentDate.format('YYYY') });
           listEtq.push({ "campo": "|LOTE|", "valor": this.lote });
