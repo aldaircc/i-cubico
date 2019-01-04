@@ -9,7 +9,9 @@ import { GlobalServiceProvider } from '../global-service/global-service';
   and Angular DI.
 */
 @Injectable()
-export class EtqCajaServiceProvider {
+
+export class EtiquetadoServiceProvider{
+//export class EtqCajaServiceProvider {
   
   headers = new Headers();
   constructor(public http: Http, public sGlobal: GlobalServiceProvider) {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 
@@ -17,17 +17,27 @@ import { PickingServiceProvider } from '../../../providers/picking-service/picki
 })
 export class TransferPage_01Page {
 
+  tablestyle = 'bootstrap';
   listTransf : any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    public sGlobal: GlobalServiceProvider, public sPicking: PickingServiceProvider) {
+    public sGlobal: GlobalServiceProvider, public sPicking: PickingServiceProvider,
+    public alertCtrl: AlertController) {
       this.listarTransferenciaSubAlmacenXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
 
   listarTransferenciaSubAlmacenXUsuario(strUsuario, intIdAlmacen){
-    this.sPicking.listarTransferenciaSubAlmacenXUsuario(strUsuario, intIdAlmacen).then(result=>{
+    this.sPicking.listarTransferenciaSubAlmacenXUsuario("ADMIN", intIdAlmacen).then(result=>{
       this.listTransf = result;
     });
+  }
+
+  switchStyle() {
+    if (this.tablestyle == 'dark') {
+      this.tablestyle = 'bootstrap';
+    } else {
+      this.tablestyle = 'dark';
+    }
   }
 
   goToPage02(){
@@ -50,5 +60,25 @@ export class TransferPage_01Page {
     //     initDetailTx(strIdTx);
     //     manejoPaneles(2);
     // }
+  }
+
+  selected = [];
+  
+  open(row) {
+    debugger;
+    let alert = this.alertCtrl.create({
+      title: 'Row',
+      message: `${row.name} is ${row.age} years old!`,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  onSelect({ selected }) {
+    console.log('Select Event', selected, this.selected);
+  }
+
+  onActivate(event) {
+    console.log('Activate Event', event);
   }
 }

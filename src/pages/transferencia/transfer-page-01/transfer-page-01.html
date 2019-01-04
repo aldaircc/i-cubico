@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar color="dark">
-    <ion-title>ngx-Table</ion-title>
+    <ion-title>Tranfer-page-01</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="switchStyle()">
         <ion-icon name="bulb"></ion-icon>
@@ -18,12 +18,50 @@
 
 
 <ion-content>
-  <ngx-datatable class="fullscreen" [ngClass]="tableStyle"
+  <!-- <ngx-datatable class="fullscreen" [ngClass]="tableStyle"
     [rows]="rows" [rowClass]="getRowClass" [columnMode]="'force'" [sortType]="'multi'"
     reordable="false">
     <ngx-datatable-column name="Name"></ngx-datatable-column>
     <ngx-datatable-column name="Gender"></ngx-datatable-column>
     <ngx-datatable-column name="Age"></ngx-datatable-column>
+  </ngx-datatable> -->
+  <ngx-datatable class="fullscreen" [ngClass]="tableStyle" [rows]="listTransf" 
+    [columnMode]="'force'" [sortType]="'multi'" [reorderable]="false"
+    [rowHeight]="50"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [scrollbarH]="true"
+    
+    [selected]="selected"
+    [selectionType]="'single'"
+    (activate)="onActivate($event)"
+    (select)='onSelect($event)'
+    >
+    <ngx-datatable-column prop="Id_Tx" name="Id_Tx"></ngx-datatable-column>
+    <!-- <ngx-datatable-column prop="FechaDocumento" name="Fecha"></ngx-datatable-column> -->
+    <ngx-datatable-column prop="FechaDocumento" name="Fecha">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        {{ value|momentjs }}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="Cuenta" name="Cuenta"></ngx-datatable-column>
+    <ngx-datatable-column prop="Tx" name="Motivo"></ngx-datatable-column>
+    <ngx-datatable-column prop="SubAlmacenOrigen" name="SA Origen"></ngx-datatable-column>
+    <ngx-datatable-column prop="SubAlmacenDestino" name="SA Destino"></ngx-datatable-column>
+    <ngx-datatable-column prop="Estado" name="Estado"></ngx-datatable-column>
+    
+    <ngx-datatable-column name="id" [resizeable]="false">
+      <ng-template ngx-datatable-header-template>
+        Action
+      </ng-template>
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <!-- <button ion-button small outline color="light" (click)="open(row)">Details</button> -->
+        <button ion-button small only-icon (click)="open(row)">
+          <ion-icon name="checkmark"></ion-icon>
+        </button>
+      </ng-template>
+    </ngx-datatable-column>
+
   </ngx-datatable>
 </ion-content>
 

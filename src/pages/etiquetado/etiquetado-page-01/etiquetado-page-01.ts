@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController, AlertController } from 'ionic-angular';
+import { ImpresoraPage } from '../../impresora/impresora';
+import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
+import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import moment from 'moment';
-import { EtqCajaServiceProvider } from '../../providers/etq-caja-service/etq-caja-service';
-import { GlobalServiceProvider } from '../../providers/global-service/global-service';
-import { ImpresoraPage } from '../impresora/impresora';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 /**
- * Generated class for the EtiquetaCajaLpnPage page.
+ * Generated class for the EtiquetadoPage_01Page page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -15,11 +14,11 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @IonicPage()
 @Component({
-  selector: 'page-etiqueta-caja-lpn',
-  templateUrl: 'etiqueta-caja-lpn.html',
+  selector: 'page-etiquetado-page-01',
+  templateUrl: 'etiquetado-page-01.html',
 })
-export class EtiquetaCajaLpnPage {
-
+export class EtiquetadoPage_01Page {
+  
   formatLabels : any = [
     { 'Id_Format' : 1 , 'Label' : 'ETQ_UA.txt' },
     { 'Id_Format' : 2 , 'Label' : 'ETQ_Pallet.txt' }
@@ -55,12 +54,12 @@ export class EtiquetaCajaLpnPage {
   //Campos de ingreso
   cantxEtq : number;
   numEtq : number;
-  numCopia : number;
+  numCopia : number = 1;
   cantEtqSaldo : number;
   totalSuma : number;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    public viewCtrl: ViewController, public sEtq: EtqCajaServiceProvider, 
+    public viewCtrl: ViewController, public sEtq: EtiquetadoServiceProvider, 
     public modalCtrl: ModalController, public alertCtrl: AlertController,
     public sGlobal: GlobalServiceProvider) {
 
@@ -103,6 +102,7 @@ export class EtiquetaCajaLpnPage {
     this.fecEmiChecked = this.vEtq.FlagLote;
     this.fecVenChecked = this.vEtq.FlagLote;
     this.lote = (this.vEtq.FlagLote == true) ? this.vEtq.LoteLab : "";
+    this.id_SubAlm = this.vEtq.Id_SubAlmacen;
   }
 
   ionViewDidLoad() {

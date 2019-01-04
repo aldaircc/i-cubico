@@ -132,6 +132,7 @@ export class PickingServiceProvider {
   //Loque#369Dev
 
   listarTransferenciaSubAlmacenXUsuario(strUsuario, intIdAlmacen){
+    debugger;
     let parameter = { 'strUsuario' : strUsuario, 'intIdAlmacen' : intIdAlmacen };
     return new Promise((result, reject)=>{
       this.http.post(this.sGlobal.pickingService + 'ListarTransferenciaSubAlmacenXUsuario/strUsuario/intIdAlmacen', JSON.stringify(parameter), {headers:this.headers})

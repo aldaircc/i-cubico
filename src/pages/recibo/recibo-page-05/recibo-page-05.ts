@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { ImpresoraPage } from '../../impresora/impresora';
 import { ReciboServiceProvider } from '../../../providers/recibo-service/recibo-service';
-import { EtqCajaServiceProvider } from '../../../providers/etq-caja-service/etq-caja-service';
+import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
 
 /**
  * Generated class for the ReciboPage_05Page page.
@@ -27,7 +27,7 @@ export class ReciboPage_05Page {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public modalCtrl: ModalController, public sRecibo:ReciboServiceProvider,
-    public sEtq : EtqCajaServiceProvider, public sGlobal: GlobalServiceProvider) {
+    public sEtq : EtiquetadoServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vReciboPage04 = this.navParams.get('dataPage04');
     console.log('data page 04', this.navParams.get('dataPage04'));
   }

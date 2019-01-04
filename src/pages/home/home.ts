@@ -12,7 +12,7 @@ import { GlobalServiceProvider } from '../../providers/global-service/global-ser
 export class HomePage {
 
   responseData : any;
-  userData = {"Usuario": "admin","Clave": "cipsa2018", "idterminal": "1"};
+  userData = {"Usuario": "acosetito","Clave": "123456", "idterminal": "1"};
   
   constructor(public navCtrl: NavController,public auth:AuthService, public sGlobal: GlobalServiceProvider) { }
 
