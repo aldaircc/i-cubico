@@ -47,6 +47,11 @@ export class PopoverReciboComponent {
         this.isDisplayIncidencia = false;
         this.isDisplayEtq = false;
         break;
+      case 21:
+        this.isDisplayPrint = true;
+        this.isDisplayIncidencia = false;
+        this.isDisplayEtq = false;
+        break;
       default:
         break;
     }

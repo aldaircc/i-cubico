@@ -10,14 +10,15 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class GlobalServiceProvider {
 
-  Id_Almacen : number = 1;
+  Id_Almacen : number = 2;
   Id_Impresora : number = 0;
+  Id_Muelle : number = 0;
   Id_Centro : number = 0;
   nombreImpresora : string;
   nombreEmpresa : string;
   userName : string = "";
-  url : string = "";
-  urlPrint : string = "";
+  url : string = "http://172.16.32.15:8085/SGAA_WCF/";
+  urlPrint : string = "http://172.16.32.15/SGAA_WCF_PRINT/";
   usuario: string;
   produccion: string;
   tablaEst : string;
@@ -29,8 +30,11 @@ export class GlobalServiceProvider {
 
   constructor(public http: HttpClient) {
     this.userName = "acosetito";
+    this.Id_Almacen = 2;
+    this.Id_Muelle = 1;
+
     this.nombreEmpresa = "TESLA S.A";
-    this.nombreImpresora = "Intermec";
+    this.nombreImpresora = "INTERMEC";
 
     this.usuario = this.url + 'UsuarioService.svc/rest/';
     this.produccion = this.url + 'ProduccionService.svc/rest/';
@@ -38,6 +42,6 @@ export class GlobalServiceProvider {
     this.recepcion = this.url + 'RecepcionService.svc/rest/';
     this.UMService = this.url + 'UnidadMedidaService.svc/rest/';
     this.impresoraService = this.urlPrint + "Impresiones.svc/rest/";
-    this.pickingService = this.urlPrint + "PickingService.svc/rest";
+    this.pickingService = this.url + "PickingService.svc/rest/";
   }
 }

@@ -34,7 +34,32 @@ export class EtiquetadoPage_02Page {
   }
 
   filtrarProducto(): void{
+    let message = this.validarCampos();
+    if(message.length > 0){
+      alert(message);
+      return;
+    }
+
     this.listarProductoXFiltro(this.tipoFiltro, this.filterText, this.IdCuenta);
+  }
+
+  validarCampos(){
+    var message = "";
+    if(this.IdCuenta == 0){
+      message = "Seleccione una cuenta";
+      return message;
+    }
+
+    if(this.tipoFiltro == 0){
+      message = "Seleccione un tipo de filtro"
+      return message;
+    }
+
+    if(this.filterText.trim() == ""){
+      message = "Ingrese filtro";
+      return message;
+    }
+    return message;
   }
 
   selectCard(data){

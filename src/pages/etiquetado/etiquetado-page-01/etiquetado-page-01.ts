@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ModalController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ModalController, AlertController, PopoverController, App } from 'ionic-angular';
 import { ImpresoraPage } from '../../impresora/impresora';
 import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import moment from 'moment';
 import { EtiquetadoPage_02Page } from '../etiquetado-page-02/etiquetado-page-02';
+import { PopoverReciboComponent } from '../../../components/popover-recibo/popover-recibo';
+import { HomePage } from '../../home/home';
 
 /**
  * Generated class for the EtiquetadoPage_01Page page.
@@ -86,10 +88,10 @@ export class EtiquetadoPage_01Page {
   cantEtqSaldo : number;
   totalSuma : number;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, 
     public viewCtrl: ViewController, public sEtq: EtiquetadoServiceProvider, 
     public modalCtrl: ModalController, public alertCtrl: AlertController,
-    public sGlobal: GlobalServiceProvider) {
+    public sGlobal: GlobalServiceProvider, public popoverCtrl: PopoverController) {
 
     this.selectOptions = {
       title: 'Pizza Toppings',
@@ -494,4 +496,33 @@ export class EtiquetadoPage_01Page {
     // this.fecVenChecked = this.vEtq.FlagLote;
 
   };
+
+  presentPopover(myEvent){
+    debugger;
+    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 21});
+    popover.present({
+      ev: myEvent
+    });
+
+    popover.onDidDismiss(popoverData =>{
+      if(popoverData == 3){
+        this.showModalImpresora();
+      }else if(popoverData == 4){
+        //cerrarSesion
+        debugger;
+        //this.app.getRootNavs()[0].setRoot(HomePage);
+        this.navCtrl.pop();
+        var nav = this.app.getRootNav();
+        nav.setRoot(HomePage);
+
+        /**
+            console.log("Logout");
+            //this.authService.logout();
+            this.menuCtrl.close();
+            var nav = this.app.getRootNav();
+            //nav.setRoot(LoginPage); 
+        **/
+      }
+    });
+  }
 }
