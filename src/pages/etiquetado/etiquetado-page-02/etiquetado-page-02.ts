@@ -22,10 +22,11 @@ export class EtiquetadoPage_02Page {
   tipoFiltro: number = 0;
   IdCuenta: number = 0;
   filterText: string = "";
+  rowCount: number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public sEtq: EtiquetadoServiceProvider, public sGlobal: GlobalServiceProvider) {
-    this.listarCuentasXAlmacenUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen, 0);
+      this.listarCuentasXAlmacenUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen, 0);
   }
 
   ionViewDidLoad() {
@@ -33,8 +34,14 @@ export class EtiquetadoPage_02Page {
   }
 
   filtrarProducto(): void{
-    debugger;
     this.listarProductoXFiltro(this.tipoFiltro, this.filterText, this.IdCuenta);
+  }
+
+  selectCard(data){
+      this.navCtrl.pop().then(() => {
+        data.IdCuentaLPN = this.IdCuenta;
+        this.navParams.get('producto')(data);
+      });
   }
 
   listarCuentasXAlmacenUsuario(strUsuario, intIdAlmacen, intIdCuenta): void{
@@ -46,6 +53,7 @@ export class EtiquetadoPage_02Page {
   listarProductoXFiltro(intTipo, strFiltro, intIdCuenta): void{
     this.sEtq.listarProductoXFiltro(intTipo, strFiltro, intIdCuenta).then(result=>{
       this.listFilter = result;
+      this.rowCount = this.listFilter.length;
     });
   }  
 }
