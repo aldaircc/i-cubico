@@ -81,4 +81,42 @@ export class EtiquetadoServiceProvider{
       })
     });
   }
+
+  //Loque#369Dev
+  listarCuentasXAlmacenUsuario(strUsuario, intIdAlmacen, intIdCuenta){
+    let parameter = {
+      'strUsuario' : strUsuario,
+      'intIdAlmacen' : intIdAlmacen,
+      'intIdCuenta' : intIdCuenta
+    };
+
+    return new Promise((result)=>{
+      this.http.get(this.sGlobal.tablaEst + 'ListarCuentasXAlmacenUsuario', {params:parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-listarCuentasXAlmacenUsuario', err);
+      })
+    });
+  }
+
+  listarProductoXFiltro(intTipo, strFiltro, intIdCuenta){
+    let parameter = {
+      'intTipo' : intTipo,
+      'strFiltro' : strFiltro,
+      'intIdCuenta' : intIdCuenta
+    };
+    return new Promise((result)=>{
+      this.http.get(this.sGlobal.recepcion + 'ListarProductoXFiltro', {params:parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-listarProductoXFiltro', err);
+      })
+    });
+  }
+
+  
 }
