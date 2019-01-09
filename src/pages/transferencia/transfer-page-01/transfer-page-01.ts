@@ -17,8 +17,8 @@ import { PickingServiceProvider } from '../../../providers/picking-service/picki
 })
 export class TransferPage_01Page {
 
-  tablestyle = 'bootstrap';
   listTransf : any;
+  rowCount: number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public sGlobal: GlobalServiceProvider, public sPicking: PickingServiceProvider,
@@ -32,16 +32,8 @@ export class TransferPage_01Page {
     });
   }
 
-  switchStyle() {
-    if (this.tablestyle == 'dark') {
-      this.tablestyle = 'bootstrap';
-    } else {
-      this.tablestyle = 'dark';
-    }
-  }
-
-  goToPage02(){
-    
+  goToTransferPage02(data){
+    console.log('Data selected', data);
     // if (smartGridTx.SelectedCell.RowIndex == -1)
     // {
     //     Resco.Controls.MessageBox.MessageBoxEx.Show(" Seleccione una transacción ", "Picking",
@@ -62,23 +54,23 @@ export class TransferPage_01Page {
     // }
   }
 
-  selected = [];
+   selected = [];
   
-  open(row) {
-    debugger;
-    let alert = this.alertCtrl.create({
-      title: 'Row',
-      message: `${row.name} is ${row.age} years old!`,
-      buttons: ['OK']
-    });
-    alert.present();
-  }
+   open(row) {
+  //   debugger;
+  //   let alert = this.alertCtrl.create({
+  //     title: 'Row',
+  //     message: `${row.name} is ${row.age} years old!`,
+  //     buttons: ['OK']
+  //   });
+  //   alert.present();
+   }
 
-  onSelect({ selected }) {
-    console.log('Select Event', selected, this.selected);
-  }
+   onSelect({ selected }) {
+  //   console.log('Select Event', selected, this.selected);
+   }
 
-  onActivate(event) {
-    console.log('Activate Event', event);
-  }
+   onActivate(event) {
+  //   console.log('Activate Event', event);
+   }
 }

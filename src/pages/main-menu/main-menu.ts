@@ -4,6 +4,7 @@ import { HomePage } from '../home/home';
 import { ReciboPage } from '../recibo/recibo';
 import { AlmacenajePage } from '../almacenaje/almacenaje';
 import { EtiquetadoPage_01Page } from '../etiquetado/etiquetado-page-01/etiquetado-page-01';
+import { TransferPage_01Page } from '../transferencia/transfer-page-01/transfer-page-01';
 
 /**
  * Generated class for the MainMenuPage page.
@@ -49,5 +50,9 @@ export class MainMenuPage {
 
   goEtiquetado(){
     this.navCtrl.push(EtiquetadoPage_01Page, { codePage: 7 });
+  }
+
+  goTransferencia(){
+    this.navCtrl.push(TransferPage_01Page);
   }
 }

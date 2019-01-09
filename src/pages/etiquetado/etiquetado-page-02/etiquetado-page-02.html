@@ -10,24 +10,24 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content scroll="false"  has-bouncing="false">
-  
-  <ion-grid>
+<ion-content> 
+  <!-- Original -->
+  <ion-list>
+   <ion-grid>
     <ion-row>
-      <!-- <ion-col>
-        <ion-label>Cuenta:</ion-label>
-      </ion-col> -->
       <ion-col>
-        <ion-item>
-          <ion-label>
-            Cuenta:
-          </ion-label>
-          <ion-select [(ngModel)]="IdCuenta">
-            <ion-option *ngFor="let cuenta of listCuentaAlmac" value="{{ cuenta.Id_Cuenta}}">{{ cuenta.NombreCuenta }}</ion-option>
-          </ion-select>
-        </ion-item>
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              Cuenta:
+            </ion-label>
+            <ion-select [(ngModel)]="IdCuenta">
+              <ion-option *ngFor="let cuenta of listCuentaAlmac" value="{{ cuenta.Id_Cuenta}}">{{ cuenta.NombreCuenta }}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
       </ion-col>
-    </ion-row>
+    </ion-row> 
     <ion-row radio-group [(ngModel)]="tipoFiltro">
       <ion-col>
         <ion-item>
@@ -49,32 +49,15 @@
           <ion-radio mode="md" item-left value="3"></ion-radio>
         </ion-item>
       </ion-col>
-        
-      <!-- <ion-col col-4 col-sm>
-        <ion-item>
-          <ion-label>Código</ion-label>
-          <ion-radio item-left value="1"></ion-radio>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <ion-label>Descripción</ion-label>
-          <ion-radio item-left value="2"></ion-radio>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <ion-label>EAN13</ion-label>
-          <ion-radio item-left value="3"></ion-radio>
-        </ion-item>
-      </ion-col>  -->
     </ion-row>
 
     <ion-row>
       <ion-col col-10 col-sm>
-        <ion-item>
-          <ion-input placeholder="Ingrese texto" [(ngModel)]="filterText" clearInput></ion-input>
-        </ion-item>
+        <ion-list>
+          <ion-item>
+            <ion-input placeholder="Ingrese texto" [(ngModel)]="filterText" clearInput></ion-input>
+          </ion-item>
+        </ion-list>
       </ion-col>
       <ion-col col-2 col-sm>
         <button ion-button only-icon small (click)="filtrarProducto()">
@@ -83,13 +66,11 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+</ion-list>
+  <!-- Fin original -->
 
-  <ion-card *ngFor="let obj of listFilter">
-    <!-- <ion-card-header>
-      Card Header
-    </ion-card-header> -->
-  
-    <ion-card-content no-padding>
+  <ion-card *ngFor="let obj of listFilter">  
+    <ion-card-content no-padding (click)="selectCard(obj)">
       <ion-grid>
         <ion-row>
           <ion-col col-10 col-sm>
@@ -119,9 +100,9 @@
             </ion-row>
           </ion-col>
           <ion-col col-2 col-sm align-self-center>
-            <button ion-button icon-only (click)="selectCard(obj)">
-              <ion-icon name="checkmark-circle"></ion-icon>
-            </button>
+            <!-- <button ion-button icon-only> -->
+              <ion-icon name="checkmark"></ion-icon>
+            <!-- </button> -->
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -131,14 +112,14 @@
 </ion-content>
 
 <ion-footer class="bgLightBlue">
-    <ion-grid>
-      <ion-row>
-        <ion-col col-2 col-sm>
-            <div class="fieldForm">Total</div>
-        </ion-col>
-        <ion-col col-9 col-sm>
-            <div class="fieldForm"> {{ rowCount }} fila(s) </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-2 col-sm>
+        <div class="fieldForm">Total</div>
+      </ion-col>
+      <ion-col col-9 col-sm>
+        <div class="fieldForm"> {{ rowCount }} fila(s) </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
