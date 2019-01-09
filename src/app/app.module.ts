@@ -38,6 +38,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable'; //Loque#369Dev
 import { IncidenciaServiceProvider } from '../providers/incidencia-service/incidencia-service'; //Loque#369Dev
 import { IncidenciaPage } from '../pages/incidencia/incidencia'; //Loque#369Dev
 import { EtiquetadoPage_01Page } from '../pages/etiquetado/etiquetado-page-01/etiquetado-page-01'; //Loque#369Dev
+import { EtiquetadoPage_02Page } from '../pages/etiquetado/etiquetado-page-02/etiquetado-page-02'; //Loque#369Dev
 import { PopoverReciboComponent } from '../components/popover-recibo/popover-recibo'; //Loque#369Dev
 import { EtiquetadoServiceProvider } from '../providers/etiquetado-service/etiquetado-service'; //Loque#369Dev
 import { GlobalServiceProvider } from '../providers/global-service/global-service'; //Loque#369Dev
@@ -78,6 +79,7 @@ import { SelectAllDirective } from '../directives/select-all/select-all';
     ImpresoraPage, //Loque#369Dev
     IncidenciaPage, //Loque#369Dev
     EtiquetadoPage_01Page, //Loque#369Dev
+    EtiquetadoPage_02Page, //Loque#369Dev
     PopoverReciboComponent, //Loque#369Dev
     AlmacenajePage,
     ImpresoraPage,
@@ -131,6 +133,7 @@ import { SelectAllDirective } from '../directives/select-all/select-all';
     ImpresoraPage, //Loque#369Dev
     IncidenciaPage, //Loque#369Dev
     EtiquetadoPage_01Page, //Loque#369Dev
+    EtiquetadoPage_02Page, //Loque#369Dev
     PopoverReciboComponent, //Loque#369Dev
     PickingPage,
     RutaPickingPage,
