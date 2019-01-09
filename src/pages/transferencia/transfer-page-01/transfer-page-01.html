@@ -16,11 +16,19 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-tabs selectedIndex="0">
+      <ion-tab [root]="introduction" tabTitle="Introduction"></ion-tab>
+      <ion-tab [root]="form" tabTitle="Form"></ion-tab>
+      <ion-tab [root]="faq" tabTitle="FAQ"></ion-tab>
+  </ion-tabs>
+  
   <ion-card *ngFor="let obj of listTransf">  
     <ion-card-content no-padding (click)="goToTransferPage02(obj)">
       <ion-grid>
         <ion-row>
-          <ion-col col-1 col-sm class="label-color">
+          <ion-col col-1 col-sm
+          [ngClass]="obj.Id_Estado === 3 ? 'label-color bg-confirm' : 'label-color bg-process'">
           </ion-col>
           <ion-col col-10 col-sm>
             <ion-row>
@@ -116,10 +124,12 @@
 
 <ion-footer>
   <ion-grid>
-    <ion-row>
-        <p class="subtitleForm fieldForm">
-          Total Items: {{ rowCount }}
+      <p class="subtitleForm fieldForm" text-center>
+          TOTAL ITEMS: {{ rowCount }}
         </p>
+    <ion-row>
+        <ion-col col-2 offset-3 col-sm class="box-counter-confirm bg-confirm"> {{ countConfirm }} </ion-col>
+        <ion-col col-2 offset-2 col-sm class="box-counter-confirm bg-process"> {{ countProcess }} </ion-col>
     </ion-row>
   </ion-grid>
   <!-- <ion-toolbar>

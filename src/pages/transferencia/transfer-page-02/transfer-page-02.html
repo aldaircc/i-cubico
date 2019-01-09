@@ -25,7 +25,7 @@
         <div class="textHeader">Cuenta </div>
       </ion-col>
       <ion-col col-8 col-sm>
-        <div class="valueHeader">X</div>
+        <div class="valueHeader">{{ vParameter.Cuenta }}</div>
       </ion-col>
     </ion-row>
     <ion-row align-items-center>
@@ -33,7 +33,7 @@
         <div class="textHeader">N° de trans.: </div>
       </ion-col>
       <ion-col col-8 col-sm>
-        <div class="valueHeader">X</div>
+        <div class="valueHeader">{{ vParameter.Id_Tx }}</div>
       </ion-col>
     </ion-row>
     <ion-row align-items-center>
@@ -41,7 +41,7 @@
         <div class="textHeader">Fecha de regist.: </div>
       </ion-col>
       <ion-col col-8 col-sm>
-        <div class="valueHeader">X</div>
+        <div class="valueHeader">{{ vParameter.FechaDocumento|momentjs }}</div>
       </ion-col>
     </ion-row>
   </ion-grid>
