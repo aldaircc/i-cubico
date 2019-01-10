@@ -6,6 +6,7 @@ import { CierrePickingPage } from '../cierre-picking/cierre-picking';
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { PopoverRutaPickingPage } from '../../picking/popover/popover-ruta-picking/popover-ruta-picking'
+import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 
 
 
@@ -46,13 +47,13 @@ export class RutaPickingPage {
   
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController, public toastCtrl: ToastController) {
+    public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController, 
+    public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider) {
     this.vPickingPage = navParams.get('data');
-    this.getDataRutaPicking(this.vPickingPage.Id_Tx, 'Admin', 2);
+    this.getDataRutaPicking(this.vPickingPage.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
 
   goDetallePickingPage(){
-
     debugger;  
       this.vRutaPickingPage = {
         'Id_Tx' : this.vPickingPage.Id_Tx,
@@ -70,10 +71,6 @@ export class RutaPickingPage {
   // goDetallePickingPage():void{
   //   this.navCtrl.push(DetallePickingPage);
   // }  
-
-  // goCerrarPickingPage():void{
-  //   this.navCtrl.push(CierrePickingPage);
-  // }
 
   goCerrarPickingPage(){
 
@@ -105,9 +102,12 @@ export class RutaPickingPage {
 
     debugger;  
       this.vRutaPickingPage = {
+        'idRutaPicking': this.listaRutaPicking[this.posicion].idRutaPicking,
         'Id_Tx' : this.vPickingPage.Id_Tx,
         'NumOrden' : this.vPickingPage.NumOrden,
-        'Cliente' : this.vPickingPage.Cliente
+        'Cliente' : this.vPickingPage.Cliente,
+        'Ciudad' :  this.vPickingPage.Ciudad,
+        'Zona' :  this.vPickingPage.Zona
       };
 
       this.navCtrl.push(PickingPorProductoPage, {
@@ -158,9 +158,8 @@ export class RutaPickingPage {
       //Agregar columna idRuta, para que se pueda usar al momento de volver de detalle
       //comparar idRuta para actualizar la posicion de la lista
       for(var i = 0; i< this.listaRutaPicking.length; i++){
-        if(result[0].Saldo>0){ 
-          if(result[0].FlagTransito == false){
-
+        if(result[i].Saldo>0){ 
+          if(result[i].FlagTransito == false){
             var id = this.vPickingPage.idRutaPicking;
             this.contador = 1;
             if(id){
@@ -176,7 +175,17 @@ export class RutaPickingPage {
                 this.Nextisenabled=false;
               }
             }else{
-              this.rutaPicking = result[0];
+              this.contador = i + 1;
+              this.posicion = i;
+              this.rutaPicking = result[i];
+              if(this.contador==1){
+                this.Backisenabled=false;
+              }else{this.Backisenabled=true;}
+              if(this.contador==this.listaRutaPicking.length){
+                this.Nextisenabled=true;
+              }else{
+                this.Nextisenabled=false;
+              }
             }
 
             //this.rutaPicking = result[0];
@@ -191,8 +200,10 @@ export class RutaPickingPage {
             }
             return;
           }else{
-            this.goDetallePickingPage();
-            return;
+            if(i==this.listaRutaPicking.length-1){
+              this.goDetallePickingPage();
+              return;
+            }
           }        
         }
         if(i==this.listaRutaPicking.length-1){

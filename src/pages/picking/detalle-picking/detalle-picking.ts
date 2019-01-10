@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, PopoverController, ToastController
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 import { PopoverRutaPickingPage } from '../../picking/popover/popover-ruta-picking/popover-ruta-picking'
 import { RutaPickingPage } from '../ruta-picking/ruta-picking';
+import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 
 /**
  * Generated class for the DetallePickingPage page.
@@ -27,9 +28,11 @@ export class DetallePickingPage {
   vDetallePickingPage: any;
 
   idRutaPicking:number = 0; 
+  listaTempRutaPicking: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController, public toastCtrl: ToastController) {
+    public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController, 
+    public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider) {
     this.vRutaPickingPage = navParams.get('data');
     this.getDetallePickingLoad();
     //this.getDetallePicking(this.vRutaPickingPage.Id_Tx, 'Admin', 2);
@@ -37,7 +40,7 @@ export class DetallePickingPage {
 
   getDetallePickingLoad(){
     this.searchQuery = "";
-    this.getDetallePicking(this.vRutaPickingPage.Id_Tx, 'Admin', 2);
+    this.getDetallePicking(this.vRutaPickingPage.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
 
   getDetallePicking(strNroDoc, strUsuario, intIdAlmacen){
@@ -80,8 +83,6 @@ export class DetallePickingPage {
         this.listAuxDetallePicking.push(obj);
         this.idRutaPicking = this.idRutaPicking + 1;
       }
-
-
       //this.listAuxDetallePicking = this.listDetallePicking;
 
 
@@ -102,8 +103,38 @@ export class DetallePickingPage {
       this.presentToast("No existe ruta para este producto");
     }else{
       //Ir a ruta picking y ubicarse en el producto seleccionado, enviar idRuta 
-      this.goRutaPickingPage(data)
+      //this.goRutaPickingPage(data)
+      this.getDataRutaPicking(this.vRutaPickingPage.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen, data)  
     }      
+  }
+
+  getDataRutaPicking(strNroDoc, strUsuario, intIdAlmacen, data){
+    this.sPicking.getDataRutaPicking(strNroDoc, strUsuario, intIdAlmacen).then((result)=>{
+      debugger;
+      this.listaTempRutaPicking = result;
+      for(var i = 0; i< this.listaTempRutaPicking.length; i++){
+        if(result[i].Saldo>0){ 
+          if(result[i].FlagTransito == false){     
+            //Ir a ruta picking
+            this.goRutaPickingPage(data);
+            return;
+          }else{
+            if(i==this.listaTempRutaPicking.length-1){
+              this.presentToast("No existe ruta para este producto");
+              //this.goDetallePickingPage(data);
+              return;
+            }
+          }        
+        }
+        if(i==this.listaTempRutaPicking.length-1){
+          this.presentToast("No existe ruta para este producto");
+          //this.goDetallePickingPage(data);
+          return;
+        }
+      }      
+    },err=>{
+      console.log('E-getDataRutaPicking',err);
+    });
   }
 
   goRutaPickingPage(data){

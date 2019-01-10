@@ -17,7 +17,7 @@ export class PickingServiceProvider {
     console.log('Hello PickingServiceProvider Provider');
     this.headers.append('Accept', 'application/json');
     this.headers.append('Content-Type', 'application/json');
-  }
+  }  
 
   getOrdenesXUsuario(strUsuario, intIdAlmacen){
     var parameter : any;
@@ -112,9 +112,9 @@ export class PickingServiceProvider {
     });
   }
   
-  getValidarUAPicking(strIdTx, UA, IdProducto, Item, lote, IdUbicacion){
+  getValidarUAPicking(strIdTx, UA, IdProducto, lote, IdUbicacion){
     var parameter : any;
-    parameter = {"strIdTx": strIdTx, "UA": UA, "IdProducto": IdProducto, "Item": Item, "lote": lote, "IdUbicacion": IdUbicacion};
+    parameter = {"strIdTx": strIdTx, "UA": UA, "IdProducto": IdProducto, "lote": lote, "IdUbicacion": IdUbicacion};
     return new Promise(resolve=>{
       this.http.get(this.sGlobal.pickingService + 'ValidarUAPicking', { params: parameter})
       .map(res=>res.json())
@@ -126,6 +126,32 @@ export class PickingServiceProvider {
     });
   }
 
+  getDetalleXProducto(strIdTx, intIdProducto, intItem){
+    var parameter : any;
+    parameter = {"strIdTx": strIdTx,"intIdProducto": intIdProducto, "intItem": intItem};
+    return new Promise(resolve=>{
+      this.http.get(this.sGlobal.pickingService + 'ListarUAsXPicking', { params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error getDetalleXProducto', err);
+      })
+    });
+  }
+
+  RegistarEliminarUA(ua){
+    let parameter = { 'ua' : ua };
+    return new Promise((resolve, reject)=>{
+      this.http.post(this.sGlobal.pickingService + 'PickingUA/ua', JSON.stringify(parameter), {headers: this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error RegistarEliminarUA', err);
+      })
+    });
+  }
   
 
   

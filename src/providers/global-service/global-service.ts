@@ -29,10 +29,9 @@ export class GlobalServiceProvider {
   pickingService:any;
 
   constructor(public http: HttpClient) {
-    this.userName = "acosetito";
+    this.userName = "aromero";
     this.Id_Almacen = 2;
     this.Id_Muelle = 1;
-
     this.nombreEmpresa = "TESLA S.A";
     this.nombreImpresora = "INTERMEC";
 

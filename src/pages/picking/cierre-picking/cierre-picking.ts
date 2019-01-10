@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, PopoverController, ToastController
 import { PopoverRutaPickingPage } from '../../picking/popover/popover-ruta-picking/popover-ruta-picking'
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 import {ImpresoraPage } from '../../impresora/impresora'
+import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 
 /**
  * Generated class for the CierrePickingPage page.
@@ -26,8 +27,9 @@ export class CierrePickingPage {
   resultCierre: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController, public toastCtrl: ToastController, public alertCtrl: AlertController,
-    public modalCtrl : ModalController) {
+    public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController, 
+    public toastCtrl: ToastController, public alertCtrl: AlertController,
+    public modalCtrl : ModalController, public sGlobal: GlobalServiceProvider) {
     this.vRutaPickingPage = navParams.get('data');
   }
 
@@ -52,7 +54,7 @@ export class CierrePickingPage {
                 this.presentAlertConfirm("Va a cerrar orden de picking incompleta, ¿Desea continuar?”.").then((resultAlert) => {
                   if (resultAlert) {
                     // Cerrar Picking
-                    this.sPicking.CerrarPicking(this.vRutaPickingPage.Id_Tx, 6, "Admin", this.listNombreMuelleXAlmacen[0].Id_Muelle, 2).then((resultCerrar) => {
+                    this.sPicking.CerrarPicking(this.vRutaPickingPage.Id_Tx, 6, this.sGlobal.userName, this.listNombreMuelleXAlmacen[0].Id_Muelle, this.sGlobal.Id_Almacen).then((resultCerrar) => {
                       debugger;
                       this.resultCierre = resultCerrar;
                       if (this.resultCierre.errNumber == 0) {
@@ -100,7 +102,7 @@ export class CierrePickingPage {
                 this.presentAlertConfirm("Desea cerrar picking?”.").then((resultAlertCompleto) => {
                   if (resultAlertCompleto) {
                     // Cerrar Picking
-                    this.sPicking.CerrarPicking(this.vRutaPickingPage.Id_Tx, 5, "Admin", this.listNombreMuelleXAlmacen[0].Id_Muelle, 2).then((resultCerrar) => {
+                    this.sPicking.CerrarPicking(this.vRutaPickingPage.Id_Tx, 5, this.sGlobal.userName, this.listNombreMuelleXAlmacen[0].Id_Muelle, this.sGlobal.Id_Almacen).then((resultCerrar) => {
                       debugger;
                       this.resultCierre = resultCerrar;
                       if (this.resultCierre.errNumber == 0) {                        
