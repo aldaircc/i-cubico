@@ -25,15 +25,14 @@ export class TransferPage_01Page {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public sGlobal: GlobalServiceProvider, public sPicking: PickingServiceProvider,
-    public alertCtrl: AlertController) {
-      this.listarTransferenciaSubAlmacenXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen);
-  }
+    public alertCtrl: AlertController) { }
 
   listarTransferenciaSubAlmacenXUsuario(strUsuario, intIdAlmacen){
     this.sPicking.listarTransferenciaSubAlmacenXUsuario("ADMIN", intIdAlmacen).then(result=>{
       this.listTransf = result;
       this.countConfirm = this.listTransf.reduce((acc, cur) => cur.Id_Estado === 3 ? ++acc : acc, 0);
       this.countProcess = this.listTransf.reduce((acc, cur) => cur.Id_Estado === 1 ? ++acc : acc, 0);
+      this.rowCount = this.listTransf.length;
     });
   }
 
@@ -47,7 +46,7 @@ export class TransferPage_01Page {
       'Id_SubAlmacenDestino' : data.Id_SubAlmacenDestino
     };
 
-    this.navCtrl.push(TransferPage_02Page, { vParameter: parameter });
+    this.navCtrl.push(TransferPage_02Page, { 'vParameter': parameter });
     
     // if (smartGridTx.SelectedCell.RowIndex == -1)
     // {
@@ -87,5 +86,9 @@ export class TransferPage_01Page {
 
    onActivate(event) {
   //   console.log('Activate Event', event);
+   }
+
+   ionViewWillEnter(){
+      this.listarTransferenciaSubAlmacenXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen);
    }
 }
