@@ -37,9 +37,10 @@ import { MomentjsPipe } from '../pipes/momentjs/momentjs'; //Loque#369Dev
 import { NgxDatatableModule } from '@swimlane/ngx-datatable'; //Loque#369Dev
 import { IncidenciaServiceProvider } from '../providers/incidencia-service/incidencia-service'; //Loque#369Dev
 import { IncidenciaPage } from '../pages/incidencia/incidencia'; //Loque#369Dev
-import { EtiquetaCajaLpnPage } from '../pages/etiqueta-caja-lpn/etiqueta-caja-lpn'; //Loque#369Dev
+import { EtiquetadoPage_01Page } from '../pages/etiquetado/etiquetado-page-01/etiquetado-page-01'; //Loque#369Dev
+import { EtiquetadoPage_02Page } from '../pages/etiquetado/etiquetado-page-02/etiquetado-page-02'; //Loque#369Dev
 import { PopoverReciboComponent } from '../components/popover-recibo/popover-recibo'; //Loque#369Dev
-import { EtqCajaServiceProvider } from '../providers/etq-caja-service/etq-caja-service'; //Loque#369Dev
+import { EtiquetadoServiceProvider } from '../providers/etiquetado-service/etiquetado-service'; //Loque#369Dev
 import { GlobalServiceProvider } from '../providers/global-service/global-service'; //Loque#369Dev
 import { TransferPage_01Page } from '../pages/transferencia/transfer-page-01/transfer-page-01'; //Loque#369Dev
 import { TransferPage_02Page } from '../pages/transferencia/transfer-page-02/transfer-page-02'; //Loque#369Dev
@@ -52,6 +53,7 @@ import { EmbalajePage } from '../pages/embalaje/embalaje';
 import { InventarioPage } from '../pages/inventario/inventario';
 import { PickingServiceProvider } from '../providers/picking-service/picking-service';
 
+import { SelectAllDirective } from '../directives/select-all/select-all';
 
 @NgModule({
   declarations: [
@@ -76,7 +78,8 @@ import { PickingServiceProvider } from '../providers/picking-service/picking-ser
     AlmacenajePage, //Loque#369Dev
     ImpresoraPage, //Loque#369Dev
     IncidenciaPage, //Loque#369Dev
-    EtiquetaCajaLpnPage, //Loque#369Dev
+    EtiquetadoPage_01Page, //Loque#369Dev
+    EtiquetadoPage_02Page, //Loque#369Dev
     PopoverReciboComponent, //Loque#369Dev
     AlmacenajePage,
     ImpresoraPage,
@@ -93,7 +96,8 @@ import { PickingServiceProvider } from '../providers/picking-service/picking-ser
     DespachoPage,
     EmbalajePage,
     InventarioPage,
-    MomentjsPipe //Loque#369Dev
+    MomentjsPipe, //Loque#369Dev
+    SelectAllDirective //Loque#369Dev
   ],
   imports: [
     BrowserModule,HttpModule,HttpClientModule,
@@ -128,7 +132,8 @@ import { PickingServiceProvider } from '../providers/picking-service/picking-ser
     AlmacenajePage, //Loque#369Dev
     ImpresoraPage, //Loque#369Dev
     IncidenciaPage, //Loque#369Dev
-    EtiquetaCajaLpnPage, //Loque#369Dev
+    EtiquetadoPage_01Page, //Loque#369Dev
+    EtiquetadoPage_02Page, //Loque#369Dev
     PopoverReciboComponent, //Loque#369Dev
     PickingPage,
     RutaPickingPage,
@@ -152,7 +157,7 @@ import { PickingServiceProvider } from '../providers/picking-service/picking-ser
     ReciboServiceProvider, //Loque#369Dev
     ImpresoraServiceProvider, //Loque#369Dev
     IncidenciaServiceProvider, //Loque#369Dev
-    EtqCajaServiceProvider, //Loque#369Dev
+    EtiquetadoServiceProvider, //Loque#369Dev
     GlobalServiceProvider, //Loque#369Dev
     PickingServiceProvider
   ]

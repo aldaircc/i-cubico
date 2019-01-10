@@ -5,25 +5,18 @@
   Ionic pages and navigation.
 -->
 <ion-header no-border>
-  <!--<ion-navbar color="dark">
-    <ion-title>ngx-table</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="switchStyle()">
-        <ion-icon name="bulb"></ion-icon>
-      </button>
-    </ion-buttons>    
-  </ion-navbar>-->
-<!--
-  <ion-navbar>
-    <ion-title>recibo-page-02</ion-title>
-  </ion-navbar>-->
-
    <ion-navbar>
     <ion-buttons left>
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
     </ion-buttons>
+
+    <!-- <ion-buttons end>
+      <button ion-button icon-only (click)="switchStyle()">
+        <ion-icon name="bulb"></ion-icon>
+      </button>
+    </ion-buttons> -->
 
     <ion-title>
       recibo-page-02
@@ -93,33 +86,37 @@
           </ion-card>
       </ion-row>
 
-  <!-- Start: Datatable -->
   <!--<ngx-datatable class="fullscreen" [ngClass]="tablestyle" [rows]="rows" [columnMode]="'force'" [sortType]="'multi'" [reorderable]="false">
     <ngx-datatable-column name="name"></ngx-datatable-column>
     <ngx-datatable-column name="gender"></ngx-datatable-column>
     <ngx-datatable-column name="age"></ngx-datatable-column>
   </ngx-datatable>-->
 
-  <ngx-datatable class="fullscreen" [ngClass]="tablestyle" [rows]="rows_2" 
+  <!--<ngx-datatable class="fullscreen" [ngClass]="tablestyle" [rows]="rows_2" 
   [columnMode]="'force'" [sortType]="'multi'" [reorderable]="false">
   <ngx-datatable-column prop="Alias" name="Alias"></ngx-datatable-column>
   <ngx-datatable-column prop="Edad" name="Edad"></ngx-datatable-column>
   <ngx-datatable-column prop="UM" name="UM"></ngx-datatable-column>
-  </ngx-datatable>
+  </ngx-datatable>-->
 
-  <ngx-datatable class="fullscreen" [ngClass]="tablestyle" [rows]="listDetailTx" 
-  [columnMode]="'force'" [sortType]="'multi'" [reorderable]="false">
-  <ngx-datatable-column prop="Codigo" name="Codigo"></ngx-datatable-column>
-  <ngx-datatable-column prop="Lote" name="Lote"></ngx-datatable-column>
-  <ngx-datatable-column prop="Descripcion" name="Descripcion"></ngx-datatable-column>
-  <ngx-datatable-column prop="Id_Tx" name="Id_Tx"></ngx-datatable-column>
-  <ngx-datatable-column prop="CantidadPedida" name="CantidadPedida"></ngx-datatable-column>
-  <ngx-datatable-column prop="CantidadBulto" name="CantidadBulto"></ngx-datatable-column>
-  <ngx-datatable-column prop="UM" name="UM"></ngx-datatable-column>
-  </ngx-datatable>
-  
-  <!-- End: Datatable -->
-  
+   
+  <!--<div class="panel-body">
+    <ngx-datatable class="material" [rows]="listDetailTx" 
+    [columnMode]="'force'" [sortType]="'multi'" [reorderable]="false"
+    [rowHeight]="50"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [scrollbarH]="true">
+      <ngx-datatable-column prop="Codigo" name="Codigo"></ngx-datatable-column>
+      <ngx-datatable-column prop="Lote" name="Lote"></ngx-datatable-column>
+      <ngx-datatable-column prop="Descripcion" name="Descripcion"></ngx-datatable-column>
+      <ngx-datatable-column prop="Id_Tx" name="Id_Tx"></ngx-datatable-column>
+      <ngx-datatable-column prop="CantidadPedida" name="CantidadPedida"></ngx-datatable-column>
+      <ngx-datatable-column prop="CantidadBulto" name="CantidadBulto"></ngx-datatable-column>
+      <ngx-datatable-column prop="UM" name="UM"></ngx-datatable-column>
+    </ngx-datatable>
+  </div>-->
+  <!---->  
 
 </ion-content>
 

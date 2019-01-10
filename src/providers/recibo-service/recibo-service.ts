@@ -50,7 +50,7 @@ export class ReciboServiceProvider {
       this.http.post(this.sGlobal.recepcion + 'CerrarRecepcion/idTx/idEstado/usuario', JSON.stringify(parameter), {headers:this.headers})
       .map(res=>res.json())
       .subscribe(data=>{
-        console.log("it's work", data);
+        resolve(data);
       },err=>{
         console.log('Error cerrarRecepcion', err);
       })
@@ -58,11 +58,13 @@ export class ReciboServiceProvider {
   }
 
   registrarUATransito(txUbi){
+    debugger;
     var parameter = {'TxUbi': txUbi};
     return new Promise((resolve, reject)=>{
       this.http.post(this.sGlobal.recepcion + 'RegistrarUATransito/TxUbi', JSON.stringify(parameter), {headers: this.headers})
       .map(res=>res.json())
       .subscribe(data=>{
+        resolve(data);
         console.log('registrarUATransito', data);
       },err=>{
         console.log('Error registrarUATransito', err);
@@ -140,13 +142,16 @@ export class ReciboServiceProvider {
   }
 
   registrarUA(ua){
+    debugger;
     let parameter = { 'ua': ua };
     return new Promise((resolve, reject)=>{
       this.http.post(this.sGlobal.recepcion + 'RecepcionUA/ua', JSON.stringify(parameter),{headers:this.headers})
       .map(res=>res.json())
       .subscribe(data=>{
+        debugger;
         resolve(data);
       },err=>{
+        debugger;
         console.log('Erro registrarUA', err);
       })
     });

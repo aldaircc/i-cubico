@@ -27,7 +27,7 @@
 
 
     ion-content{
-      font-size: 90%;
+      //font-size: 90%;
     }
     
     .subtitleForm {
@@ -117,7 +117,9 @@
         background: yellow;
         padding: 20%;
     }
-    
+    .scroll-content {
+        padding-bottom: 0 !important;
+    }
   @import 'themes/bootstrap';
   @import 'themes/dark';
   @import 'assets/icons';

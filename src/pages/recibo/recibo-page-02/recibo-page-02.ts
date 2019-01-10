@@ -5,7 +5,7 @@ import { ReciboPage_03Page } from '../recibo-page-03/recibo-page-03';
 import { ImpresoraPage } from '../../impresora/impresora';
 import { PopoverReciboComponent } from '../../../components/popover-recibo/popover-recibo';
 import { IncidenciaPage } from '../../incidencia/incidencia';
-import { EtiquetaCajaLpnPage } from '../../etiqueta-caja-lpn/etiqueta-caja-lpn';
+import { EtiquetadoPage_01Page } from '../../etiquetado/etiquetado-page-01/etiquetado-page-01';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 
 /**
@@ -120,6 +120,7 @@ export class ReciboPage_02Page {
   }
 
   goToReciboPage03(data){
+  debugger;
 
   this.vReciboPage02 = {
     "Id_Tx":this.vReciboPage01.Id_Tx,
@@ -128,7 +129,7 @@ export class ReciboPage_02Page {
     "Descripcion":data.Descripcion, //Articulo
     "Id_Producto":data.Id_Producto, //Id_Articulio
     "UM":data.UM,
-    "Id_UM":data.UM,
+    "Id_UM":data.Id_UM,
     "Fecha_Emi":data.FechaEmision,
     "Fecha_Venci":data.FechaVencimiento,
     "Lote":data.Lote,
@@ -142,7 +143,27 @@ export class ReciboPage_02Page {
     "bolAutomatic": this.bolAutomatic, //value check
     "FlagPausa":this.vReciboPage01.FlagPausa,
     "Cuenta":this.vReciboPage01.Cuenta,
-    "Id_Cliente":this.vReciboPage01.Id_Cliente
+    "Id_Cliente":this.vReciboPage01.Id_Cliente,
+
+    //Campos utiles para impresión
+    "CantidadPedida": data.CantidadPedida,
+	  "LoteLab": data.Lote,
+	  "Articulo": data.Descripcion,
+	  "Cliente": this.vReciboPage01.Cuenta,
+	  "UM_Base": data.UMBase,
+	  "TipoAlmacenaje": data.TipoAlmacenaje,
+    "Acceso": 0,
+    "NroDoc": this.vReciboPage01.NumOrden,
+    "FecEmi": data.FechaEmision,
+    "FecVen": data.FechaVencimiento,
+    "FlagSerie": data.FlagSeriePT,
+    "FlagLote": data.FlagLotePT,
+    "CondicionAlmac": data.CondicionAlmacenamiento,
+    "Condicion": data.Condicion,
+    "Id_Condicion": data.Id_Condicion,
+    "idTipoMovimiento": this.vReciboPage01.Id_TipoMovimiento,
+	  "IdCuentaLPN": this.vReciboPage01.Id_Cliente,
+	  "Id_SubAlmacen": data.Id_SubAlmacen
   };
 
     this.navCtrl.push(ReciboPage_03Page, {
@@ -182,9 +203,9 @@ export class ReciboPage_02Page {
             text: 'Aceptar',
             handler: () => {
               console.log('Buy clicked');
+              debugger;
               this.sRecibo.cerrarRecepcion('99999'/**this.vReciboPage01.Id_Tx**/, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result=>{
                 let res: any = result; 
-                alert('Cerrar recepción:' + res.errNumber + ' - ' + res.message);
                 this.getDetailXTx(this.vReciboPage01.Id_Tx);
               });
             }
@@ -223,7 +244,7 @@ export class ReciboPage_02Page {
     "Id_SubAlmacen": data.Id_SubAlmacen
   }
 
-    let etqModal = this.modalCtrl.create(EtiquetaCajaLpnPage, { vEtq: objEtq });
+    let etqModal = this.modalCtrl.create(EtiquetadoPage_01Page, { vEtq: objEtq });
     etqModal.onDidDismiss(data => {
       console.log("Data retornada del modal", data);
     });

@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ModalController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ModalController, AlertController, PopoverController, App } from 'ionic-angular';
+import { ImpresoraPage } from '../../impresora/impresora';
+import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
+import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import moment from 'moment';
-import { EtqCajaServiceProvider } from '../../providers/etq-caja-service/etq-caja-service';
-import { GlobalServiceProvider } from '../../providers/global-service/global-service';
-import { ImpresoraPage } from '../impresora/impresora';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { EtiquetadoPage_02Page } from '../etiquetado-page-02/etiquetado-page-02';
+import { PopoverReciboComponent } from '../../../components/popover-recibo/popover-recibo';
+import { HomePage } from '../../home/home';
 
 /**
- * Generated class for the EtiquetaCajaLpnPage page.
+ * Generated class for the EtiquetadoPage_01Page page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -15,11 +17,11 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @IonicPage()
 @Component({
-  selector: 'page-etiqueta-caja-lpn',
-  templateUrl: 'etiqueta-caja-lpn.html',
+  selector: 'page-etiquetado-page-01',
+  templateUrl: 'etiquetado-page-01.html',
 })
-export class EtiquetaCajaLpnPage {
-
+export class EtiquetadoPage_01Page {
+  
   formatLabels : any = [
     { 'Id_Format' : 1 , 'Label' : 'ETQ_UA.txt' },
     { 'Id_Format' : 2 , 'Label' : 'ETQ_Pallet.txt' }
@@ -32,9 +34,35 @@ export class EtiquetaCajaLpnPage {
   }
 
   selectOptions : any;
-  vEtq : any;
-  fecEmi : any;
-  fecVen : any;
+  vEtq : any ={
+    'Acceso' : 0,
+    'Articulo' : "",
+    'CantidadPedida' : 0,
+    'Cliente' : "",
+    'Codigo' : null,
+    'Condicion' : "",
+    'CondicionAlmac' : null,
+    'FecEmi' : null,
+    'FecVen' : null,
+    'FlagLote' : null,
+    'FlagSerie' : null,
+    'IdCuentaLPN' : 0,
+    'Id_Cliente' : 0,
+    'Id_Condicion' : 0,
+    'Id_Producto' : 0,
+    'Id_SubAlmacen' : 0,
+    'Id_UM' : "",
+    'Item' : 0,
+    'LoteLab' : "",
+    'NroDoc' : "",
+    'TipoAlmacenaje' : null,
+    'UM' : "",
+    'UM_Base' : "",
+    'idTipoMovimiento' : 0
+  };
+
+  fecEmi : any = new Date().toISOString();
+  fecVen : any = new Date().toISOString();
   
   listUM : any = [];
   id_UAlt : number = 0;
@@ -45,8 +73,9 @@ export class EtiquetaCajaLpnPage {
   id_FormatLabel : any;
 
   lote : string = "";
+  isVisibleSearchButton : boolean = false;
   findArticulo : boolean = false;
-  isEnabled : boolean = true;
+  isEnabledLote : boolean = true;
   fecEmiChecked : boolean = true;
   fecVenChecked : boolean = true;
   cantXBulto : number = 0;
@@ -55,14 +84,14 @@ export class EtiquetaCajaLpnPage {
   //Campos de ingreso
   cantxEtq : number;
   numEtq : number;
-  numCopia : number;
+  numCopia : number = 1;
   cantEtqSaldo : number;
   totalSuma : number;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
-    public viewCtrl: ViewController, public sEtq: EtqCajaServiceProvider, 
+  constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, 
+    public viewCtrl: ViewController, public sEtq: EtiquetadoServiceProvider, 
     public modalCtrl: ModalController, public alertCtrl: AlertController,
-    public sGlobal: GlobalServiceProvider) {
+    public sGlobal: GlobalServiceProvider, public popoverCtrl: PopoverController) {
 
     this.selectOptions = {
       title: 'Pizza Toppings',
@@ -70,38 +99,51 @@ export class EtiquetaCajaLpnPage {
       mode: 'md'
     };
 
+    this.isVisibleSearchButton = (navParams.get('codePage') != null) ? true : false;
+    this.vEtq = (navParams.get('vEtq') != null) ? navParams.get('vEtq') : this.vEtq;
+    this.initPage();
+  }
+
+  initPage(): void{
     debugger;
-    this.vEtq = navParams.get('vEtq');
-    this.lote = this.vEtq.LoteLab;
-    this.fecEmi = moment(this.vEtq.FecEmi).toISOString(); // .format('YYYY-MM-DD');
-    this.fecVen = moment(this.vEtq.FecVen).toISOString();//format('YYYY-MM-DD');
+    console.log('fecha emi', this.fecEmi);
+    console.log('fecha ven', this.fecVen);
+    if(this.vEtq.Codigo != null){
+      
+      this.lote = this.vEtq.LoteLab;
+      this.fecEmi = (this.vEtq.FecEmi != null) ? moment(this.vEtq.FecEmi).toISOString() : this.fecEmi; // .format('YYYY-MM-DD');
+      this.fecVen = (this.vEtq.FecVen != null) ? moment(this.vEtq.FecVen).toISOString() : this.fecVen;//format('YYYY-MM-DD');
 
-    if(this.findArticulo == false){
-      /**
-        presenter = new EtqPresenterImpl(this);
-        presenter.listUMxProducto(intR_IdProducto);
-        prepareFormatLabel();
 
-        if (strR_TipoAlmacenaje == "1"){
-            strEtq = "ETQ_UA.txt";
-        }else if (strR_TipoAlmacenaje == "2"){
-            strEtq = "ETQ_Pallet.txt";
-        }else if (strR_TipoAlmacenaje == "3"){
-            strEtq = "ETQ_UA.txt";
-        }else{
-            strEtq = "";
-        }
-        spnSubAlmacen.setEnabled(false); 
-      **/
-     this.listarUMxProducto(this.vEtq.Id_Producto);
+      if(this.findArticulo == false){
+        /**
+          presenter = new EtqPresenterImpl(this);
+          presenter.listUMxProducto(intR_IdProducto);
+          prepareFormatLabel();
+  
+          if (strR_TipoAlmacenaje == "1"){
+              strEtq = "ETQ_UA.txt";
+          }else if (strR_TipoAlmacenaje == "2"){
+              strEtq = "ETQ_Pallet.txt";
+          }else if (strR_TipoAlmacenaje == "3"){
+              strEtq = "ETQ_UA.txt";
+          }else{
+              strEtq = "";
+          }
+          spnSubAlmacen.setEnabled(false); 
+        **/
+       this.listarUMxProducto(this.vEtq.Id_Producto);
+      }
+  
+      debugger;
+      this.listarSubAlmacenesXCuenta(this.vEtq.IdCuentaLPN, this.sGlobal.Id_Almacen);
+  
+      this.isEnabledLote = this.vEtq.FlagLote;
+      this.fecEmiChecked = this.vEtq.FlagLote;
+      this.fecVenChecked = this.vEtq.FlagLote;
+      this.lote = (this.vEtq.FlagLote == true) ? this.vEtq.LoteLab : "";
+      this.id_SubAlm = this.vEtq.Id_SubAlmacen;
     }
-
-    this.listarSubAlmacenesXCuenta(this.vEtq.Id_CuentaLPN, 2 /** Almacen global **/);
-
-    this.isEnabled = this.vEtq.FlagLote;
-    this.fecEmiChecked = this.vEtq.FlagLote;
-    this.fecVenChecked = this.vEtq.FlagLote;
-    this.lote = (this.vEtq.FlagLote == true) ? this.vEtq.LoteLab : "";
   }
 
   ionViewDidLoad() {
@@ -193,9 +235,10 @@ export class EtiquetaCajaLpnPage {
               cantEtqSaldo = this.cantEtqSaldo;
               cantxEtq = this.cantxEtq;
 
+              debugger;
               var objImp = 
               {
-                'CantidadEtiqueta' : ((numEtq + cantEtqSaldo) > 0 ? 1 : 0),
+                'CantidadEtiqueta' : parseInt(numEtq) + ((cantEtqSaldo) > 0 ? 1 : 0),
                 'Cantidad' : cantxEtq,
                 'Id_Producto' : this.vEtq.Id_Producto,
                 'LoteLab' : (this.vEtq.FlagLote == true) ? this.lote.toUpperCase() : null,
@@ -251,8 +294,9 @@ export class EtiquetaCajaLpnPage {
       let obj = this.listUM.filter(x=>x.Id_UM == this.id_UAlt)[0];
 
       if(this.findArticulo == true){
-
+        debugger;
         for(let i = 0; i < res.length; i++){
+          listEtq = [];
           listEtq.push({ "campo": "|MES|", "valor" :  currentDate.format("MM") });
           listEtq.push({ "campo": "|ANIO|", "valor" :  currentDate.format("YYYY") });
           listEtq.push({ "campo": "|LOTE|", "valor" :  this.lote });
@@ -276,12 +320,13 @@ export class EtiquetaCajaLpnPage {
           listEtq.push({ "campo": "|EAN|", "valor" : (obj.Nombre.toUpperCase() == this.vEtq.UM.toString().trim()) ? "13" : "14" });
           listEtq.push({ "campo": "|CANTIDAD|", "valor" : (i == 0 && this.cantEtqSaldo > 0) ? this.cantEtqSaldo : this.cantxEtq});
           listEtq.push({ "campo": "|SALDOTEXT|", "valor" :  "0" });
-          listContainer.push({ 'Etiqueta' : listEtq });
+          listContainer.push({ 'etiqueta' : listEtq });
         }
 
       }else{
-
+        debugger;
         for(let i = 0; i < res.length; i++){  
+          listEtq = [];
           listEtq.push({ "campo": "|MES|", "valor": currentDate.format('MMMM') });
           listEtq.push({ "campo": "|ANIO|", "valor": currentDate.format('YYYY') });
           listEtq.push({ "campo": "|LOTE|", "valor": this.lote });
@@ -400,5 +445,84 @@ export class EtiquetaCajaLpnPage {
 
   dismiss(){
     this.viewCtrl.dismiss();
+  }
+
+  goToEtqPage02(){
+    debugger;
+    this.navCtrl.push(EtiquetadoPage_02Page, {
+      producto: this.productSelectedcallback
+    });
+  }
+
+  dataFromEtqPage02 : any;
+  productSelectedcallback = data => {
+    debugger;
+    this.dataFromEtqPage02 = data;
+    console.log('data received from other page', this.dataFromEtqPage02);
+    
+    this.vEtq.Codigo = this.dataFromEtqPage02.Codigo;
+    this.vEtq.Condicion = this.dataFromEtqPage02.Condicion;
+    this.vEtq.CondicionAlmac = this.dataFromEtqPage02.CondicionAlmacenamiento;
+    this.vEtq.Articulo = this.dataFromEtqPage02.Descripcion;
+    this.vEtq.FlagLote = this.dataFromEtqPage02.FlagLotePT;
+    this.vEtq.FlagSerie = this.dataFromEtqPage02.FlagSeriePT;
+    this.vEtq.Id_Condicion = this.dataFromEtqPage02.Id_Condicion;
+    this.vEtq.Id_Producto = this.dataFromEtqPage02.Id_Producto;
+    this.vEtq.Id_UM = this.dataFromEtqPage02.Id_UM;
+    this.vEtq.TipoAlmacenaje = this.dataFromEtqPage02.TipoAlmacenaje;
+    this.vEtq.UM = this.dataFromEtqPage02.UM;
+    this.vEtq.CondicionAlmac = this.dataFromEtqPage02.Composicion; //Composicion
+    this.vEtq.IdCuentaLPN = this.dataFromEtqPage02.IdCuentaLPN;
+    this.isEnabledLote = this.vEtq.FlagLote;
+    // Alias: "Und"
+    // Codigo: "101904A1802001"                 OK
+    // Composicion: ""                          OK
+    // Condicion: "Cuarentena"                  OK
+    // CondicionAlmacenamiento: null            OK
+    // Descripcion: "ALERGIS 0,75% GEL x 20 g"  OK
+    // EAN13: "2018110700008       "
+    // FlagLotePT: true                         OK
+    // FlagSeriePT: false                       OK
+    // Id_Condicion: 3                          OK
+    // Id_Producto: 1                           OK
+    // Id_UM: 13                                OK
+    // TipoAlmacenaje: null                     OK
+    // UM: "UNIDAD"                             OK
+
+    this.initPage();
+    // this.listarUMxProducto(this.vEtq.Id_Producto);
+    // this.listarSubAlmacenesXCuenta(this.vEtq.IdCuentaLPN, this.sGlobal.Id_Almacen);
+    // this.fecEmiChecked = this.vEtq.FlagLote;
+    // this.fecVenChecked = this.vEtq.FlagLote;
+
+  };
+
+  presentPopover(myEvent){
+    debugger;
+    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 21});
+    popover.present({
+      ev: myEvent
+    });
+
+    popover.onDidDismiss(popoverData =>{
+      if(popoverData == 3){
+        this.showModalImpresora();
+      }else if(popoverData == 4){
+        //cerrarSesion
+        debugger;
+        //this.app.getRootNavs()[0].setRoot(HomePage);
+        this.navCtrl.pop();
+        var nav = this.app.getRootNav();
+        nav.setRoot(HomePage);
+
+        /**
+            console.log("Logout");
+            //this.authService.logout();
+            this.menuCtrl.close();
+            var nav = this.app.getRootNav();
+            //nav.setRoot(LoginPage); 
+        **/
+      }
+    });
   }
 }
