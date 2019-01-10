@@ -100,7 +100,10 @@ export class TransferPage_04Page {
     if (!this.isError)
     {
       if(this.cantUA > 0){
-
+        //decimal cantCurrentUA = Convert.ToDecimal(txtCountUA.Text), saldo = Convert.ToDecimal(txtSaldo.Text);
+        let cantCurrentUA = this.cantUA;
+        let saldo = parseFloat(this.vParameter.Saldo);
+        
       }else{
         this.codeBar.Text = "";
         this.cantUA = 0;
