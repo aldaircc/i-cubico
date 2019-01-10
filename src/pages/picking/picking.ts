@@ -5,6 +5,7 @@ import { RutaPickingPage } from '../picking/ruta-picking/ruta-picking'
 import { IncidenciaPage } from '../incidencia/incidencia';
 import { PopoverPickingPage } from '../picking/popover/popover-picking/popover-picking'
 import { DetallePickingPage } from '../picking/detalle-picking/detalle-picking'
+import { GlobalServiceProvider } from '../../providers/global-service/global-service';
 
 /**
  * Generated class for the PickingPage page.
@@ -36,7 +37,7 @@ export class PickingPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,    
     public sPicking: PickingServiceProvider, public modalCtrl: ModalController, private popoverCtrl: PopoverController,
-    public toastCtrl: ToastController) {
+    public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider) {
     const data = JSON.parse(localStorage.getItem('vUserData'));
     this.userDetail = data;
     this.getDataOrdenes();
@@ -49,7 +50,7 @@ export class PickingPage {
   getDataOrdenes(){
     // this.getOrdenesXUsuario(this.userDetail[0].Usuario, 2);
     this.searchQuery = "";
-    this.getOrdenesXUsuario('Admin', 2);
+    this.getOrdenesXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
 
   getOrdenesXUsuario(strUsuario, intIdAlmacen){
@@ -89,7 +90,7 @@ export class PickingPage {
     if(data.FlagPausa == true){
       this.showModalIncidencia(data);
     }else{
-      this.getDataRutaPicking(data.Id_Tx, 'Admin', 2, data)  
+      this.getDataRutaPicking(data.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen, data)  
     }
   }
 
@@ -98,15 +99,20 @@ export class PickingPage {
       debugger;
       this.listaTempRutaPicking = result;
       for(var i = 0; i< this.listaTempRutaPicking.length; i++){
-        if(result[0].Saldo>0){ 
-          if(result[0].FlagTransito == false){     
+        if(result[i].Saldo>0){ 
+          if(result[i].FlagTransito == false){     
             //Ir a ruta picking
             this.goRutaPickingPage(data);
             return;
           }else{
-            this.presentToast("No existe ruta para este producto");
-            this.goDetallePickingPage(data);
-            return;
+            // this.presentToast("No existe ruta para este producto");
+            // this.goDetallePickingPage(data);
+            //return;
+            if(i==this.listaTempRutaPicking.length-1){
+              this.presentToast("No existe ruta para este producto");
+              this.goDetallePickingPage(data);
+              return;
+            }
           }        
         }
         if(i==this.listaTempRutaPicking.length-1){
@@ -116,7 +122,7 @@ export class PickingPage {
         }
       }      
     },err=>{
-      console.log('E-getDetailXTx',err);
+      console.log('E-getDataRutaPicking',err);
     });
   }
 
