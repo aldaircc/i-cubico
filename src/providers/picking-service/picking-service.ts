@@ -267,13 +267,14 @@ export class PickingServiceProvider {
   }
 
   cerrarTransferenciaXSubAlmacen(strIdTx, strUser){
+    
     let parameter = {
       'strIdTx' : strIdTx,
       'strUser' : strUser
     };
 
     return new Promise((result, reject)=>{
-      this.http.post(this.sGlobal.pickingService + 'CerrarTransferenciaXSubAlmacen/strIdTx/strUser',JSON.stringify(parameter), {headers:this.headers})
+      this.http.post(this.sGlobal.pickingService + 'CerrarTransferenciaXSubAlmacen/strIdTx/strUser)',JSON.stringify(parameter), {headers:this.headers})
       .map(res=>res.json())
       .subscribe(data=>{
         result(data);
