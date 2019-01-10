@@ -17,8 +17,8 @@ export class GlobalServiceProvider {
   nombreImpresora : string;
   nombreEmpresa : string;
   userName : string = "";
-  url : string = "http://172.16.32.15:8085/SGAA_WCF/";
-  urlPrint : string = "http://172.16.32.15/SGAA_WCF_PRINT/";
+  url : string = "";
+  urlPrint : string = "";
   usuario: string;
   produccion: string;
   tablaEst : string;
@@ -29,7 +29,7 @@ export class GlobalServiceProvider {
   pickingService:any;
 
   constructor(public http: HttpClient) {
-    this.userName = "aromero";
+    this.userName = "acosetito";
     this.Id_Almacen = 2;
     this.Id_Muelle = 1;
     this.nombreEmpresa = "TESLA S.A";
