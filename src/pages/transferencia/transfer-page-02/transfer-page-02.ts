@@ -34,7 +34,6 @@ export class TransferPage_02Page {
   listarDetalleTransfXTx(strIdTx){
     this.sPicking.listarDetalleTransfXTx(strIdTx).then(result=>{
       this.listDetalle = result;
-      console.log('Datos detail', result);
       this.rowCount = this.listDetalle.length;
       this.countPendient = this.listDetalle.reduce((acc, cur) => cur.Id_Estado === 1 ? ++acc : acc, 0);
       this.countConfirm = this.listDetalle.reduce((acc, cur) => cur.Id_Estado === 2 ? ++acc : acc, 0);
@@ -74,8 +73,6 @@ export class TransferPage_02Page {
   }
 
   goToTransferPage03(data): void{
-    console.log('Data selected pg. 02', data);
-    debugger;
     let parameter = {
       'Id_Almacen' : this.sGlobal.Id_Almacen,
       'Id_SubAlmacenOrigen': this.vParameter.Id_SubAlmacenOrigen,
@@ -93,21 +90,5 @@ export class TransferPage_02Page {
     };
 
     this.navCtrl.push(TransferPage_03Page, {'vParameter' : parameter});
-
-    // intIdAlmacen = SGAAMobile.control.Global.IdAlmacen;
-    // strIdTx = smgDetailTx.Cells[smgDetailTx.SelectedCell.RowIndex, 0].Text;
-    // intItem = Convert.ToInt32(smgDetailTx.Cells[smgDetailTx.SelectedCell.RowIndex, 1].Data);
-    // strCodProduct = smgDetailTx.Cells[smgDetailTx.SelectedCell.RowIndex, 2].Text;
-    // producto = smgDetailTx.Cells[smgDetailTx.SelectedCell.RowIndex, 3].Text;
-    // strLote = smgDetailTx.Cells[smgDetailTx.SelectedCell.RowIndex, 4].Text;
-    // cantidad = Convert.ToDecimal(smgDetailTx.Cells[smgDetailTx.SelectedCell.RowIndex, 5].Data);
-    // intIdProducto = Convert.ToInt32(smgDetailTx.Cells[smgDetailTx.SelectedCell.RowIndex, 6].Data);
-    // decCantOper = Convert.ToDecimal(smgDetailTx.Cells[smgDetailTx.SelectedCell.RowIndex, 7].Data);
-    // decSaldo = Convert.ToDecimal(smgDetailTx.Cells[smgDetailTx.SelectedCell.RowIndex, 8].Data);
-    // initUbicacionLote(intIdAlmacen, intIdSubAlmacenOrigen, intIdProducto, strLote);
-    // lblCodProduct03.Text = strCodProduct;
-    // lblProductName03.Text = producto;
-    // lblLoteProduct03.Text = strLote;
-    // manejoPaneles(3);
   }
 }

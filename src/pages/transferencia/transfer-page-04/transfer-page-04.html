@@ -114,17 +114,19 @@
 <ion-footer>
   <ion-toolbar>
     <ion-buttons left>
-        <button ion-button icon-only>
-            <ion-icon name="label" name="md-grid"></ion-icon>
-        </button>
-    </ion-buttons>
-    <ion-buttons>
       <button ion-button icon-only>
+          <ion-icon name="label" name="md-cube"></ion-icon>
+      </button>
+    </ion-buttons>
+    
+    <ion-buttons>
+      <button ion-button icon-only (click)="listarUAs()" style="margin-left: 43.33%">
         <ion-icon name="label" name="md-grid"></ion-icon>
       </button>
     </ion-buttons>
+
     <ion-buttons right>
-      <button ion-button icon-only (click)="pickingUA()" [disabled]="!isEnablebtnPicking">
+      <button ion-button icon-only (click)="pickingUA()"> <!--[disabled]="!isEnablebtnPicking">-->
           <ion-icon name="label" name="md-checkbox-outline"></ion-icon>
       </button>
     </ion-buttons>

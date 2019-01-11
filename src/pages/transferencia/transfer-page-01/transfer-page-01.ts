@@ -28,7 +28,7 @@ export class TransferPage_01Page {
     public alertCtrl: AlertController) { }
 
   listarTransferenciaSubAlmacenXUsuario(strUsuario, intIdAlmacen){
-    this.sPicking.listarTransferenciaSubAlmacenXUsuario("ADMIN", intIdAlmacen).then(result=>{
+    this.sPicking.listarTransferenciaSubAlmacenXUsuario(strUsuario, intIdAlmacen).then(result=>{
       this.listTransf = result;
       this.countConfirm = this.listTransf.reduce((acc, cur) => cur.Id_Estado === 3 ? ++acc : acc, 0);
       this.countProcess = this.listTransf.reduce((acc, cur) => cur.Id_Estado === 1 ? ++acc : acc, 0);
@@ -37,7 +37,6 @@ export class TransferPage_01Page {
   }
 
   goToTransferPage02(data){
-    console.log('Data selected', data);
     let parameter = {
       'Id_Tx' : data.Id_Tx,
       'FechaDocumento' : data.FechaDocumento,
@@ -45,27 +44,7 @@ export class TransferPage_01Page {
       'Id_SubAlmacenOrigen' : data.Id_SubAlmacenOrigen,
       'Id_SubAlmacenDestino' : data.Id_SubAlmacenDestino
     };
-
     this.navCtrl.push(TransferPage_02Page, { 'vParameter': parameter });
-    
-    // if (smartGridTx.SelectedCell.RowIndex == -1)
-    // {
-    //     Resco.Controls.MessageBox.MessageBoxEx.Show(" Seleccione una transacción ", "Picking",
-    //     MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button2);
-    //     return;
-    // }
-    // else
-    // {
-    //     string strIdTx = smartGridTx.Cells[smartGridTx.SelectedCell.RowIndex, 0].Text;
-    //     lblNumTx.Text = smartGridTx.Cells[smartGridTx.SelectedCell.RowIndex, 0].Text;
-    //     lblFecReg.Text = Convert.ToDateTime(smartGridTx.Cells[smartGridTx.SelectedCell.RowIndex, 1].Text).ToShortDateString();
-    //     lblCuenta.Text = smartGridTx.Cells[smartGridTx.SelectedCell.RowIndex, 2].Text;
-    //     intIdSubAlmacenOrigen = Convert.ToInt32(smartGridTx.Cells[smartGridTx.SelectedCell.RowIndex, 6].Data);
-    //     intIdSubAlmacenDestino = Convert.ToInt32(smartGridTx.Cells[smartGridTx.SelectedCell.RowIndex, 7].Data);
-
-    //     initDetailTx(strIdTx);
-    //     manejoPaneles(2);
-    // }
   }
 
    selected = [];

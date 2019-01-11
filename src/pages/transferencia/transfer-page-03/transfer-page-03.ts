@@ -25,7 +25,6 @@ export class TransferPage_03Page {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sGlobal: GlobalServiceProvider, public sPicking: PickingServiceProvider) {
-      debugger;
     this.vParameter = this.navParams.get('vParameter');
     this.listarStockProductoXUbicaciones(this.sGlobal.Id_Almacen, this.vParameter.Id_SubAlmacenOrigen, this.vParameter.Id_Producto, this.vParameter.Lote);
   }
@@ -68,7 +67,6 @@ export class TransferPage_03Page {
         });
         el.Ubicacion_2 = el.Ubicacion.replace(strSector, '');
       });
-      debugger;
       this.listUbiLote = res;
       this.lote = (this.listUbiLote.length > 0) ? this.listUbiLote[0].Lote : '';
       this.rowCount = this.listUbiLote.length;
@@ -76,8 +74,6 @@ export class TransferPage_03Page {
   }
 
   goToTransferPage04(data):void{
-    console.log('data selected page 04', data);
-    debugger;
     let parameter = {
       'CantidadOperacion': this.vParameter.CantidadOperacion,
       'CantidadPedida': this.vParameter.CantidadPedida,
