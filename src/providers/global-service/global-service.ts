@@ -30,7 +30,7 @@ export class GlobalServiceProvider {
   almacenajeService:any;
 
   constructor(public http: HttpClient) {
-    this.userName = "aromero";
+    this.userName = "acosetito";
     this.Id_Almacen = 2;
     this.Id_Muelle = 1;
     this.nombreEmpresa = "TESLA S.A";
