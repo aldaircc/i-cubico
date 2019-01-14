@@ -49,29 +49,7 @@ export class TransferPage_05Page {
   }
 
   goToTransferPage06(): void{
-    // Cantidad: 2196
-    // CantidadOperacion: 170
-    // CantidadPedida: 170
-    // Cod_Producto: "120502A2602001"
-    // Columna: "04"
-    // Fila: "B"
-    // Id_Producto: 129
-    // Id_SubAlmacen: 2
-    // Id_Tx: "A20190110001"
-    // Id_UM: 13
-    // Id_Ubicacion: 43
-    // Item: 1
-    // Lote: "10603677"
-    // Nivel: "01"
-    // Posicion: "01"
-    // Producto: "PURINOR SUSPENSION x 50 mL M.M."
-    // Saldo: 0
-    // Sector: "SECTOR PT 1"
-    // UM: "UNIDAD"
-    // Ubicacion: "SECTOR PT 1 F: B  - N: 1 - C: 4 - P: 1"
-    // Ubicacion_2: " F: B  - N: 1 - C: 4 - P: 1"
-
-    if(this.listUAsTrans.length > 0){
+    if(this.listAxUATrans.length > 0){
       let parameter = {
         'Id_Tx': this.vParameter.Id_Tx,
         'Id_Producto': this.vParameter.Id_Producto,
@@ -87,5 +65,9 @@ export class TransferPage_05Page {
       alert('No existen UAs para reubicar.');
       return;
     }
+  }
+
+  ionViewWillEnter(){
+    this.listarUAsTransferidasXSubAlmacen(this.vParameter.Id_Tx, this.vParameter.Id_Producto, this.vParameter.Lote, this.vParameter.Id_Ubicacion);
   }
 }

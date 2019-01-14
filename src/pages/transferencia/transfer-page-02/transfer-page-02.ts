@@ -28,7 +28,6 @@ export class TransferPage_02Page {
   constructor(public navCtrl: NavController, public navParams: NavParams, public sPicking: PickingServiceProvider,
     public alertCtrl: AlertController, public sGlobal: GlobalServiceProvider) {
       this.vParameter = this.navParams.get('vParameter');
-      this.listarDetalleTransfXTx(this.vParameter.Id_Tx);
   }
 
   listarDetalleTransfXTx(strIdTx){
@@ -90,5 +89,9 @@ export class TransferPage_02Page {
     };
 
     this.navCtrl.push(TransferPage_03Page, {'vParameter' : parameter});
+  }
+
+  ionViewWillEnter(){
+    this.listarDetalleTransfXTx(this.vParameter.Id_Tx);
   }
 }

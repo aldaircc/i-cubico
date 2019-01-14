@@ -8,7 +8,7 @@
   <ion-navbar>
     <ion-title>Listado de transferencias</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only>
+      <button ion-button icon-only (click)="listarTransferenciaSubAlmacenXUsuario(sGlobal.userName, sGlobal.Id_Almacen)">
         <ion-icon name="refresh"></ion-icon>
       </button>
     </ion-buttons>
@@ -16,64 +16,66 @@
 </ion-header>
 
 <ion-content>  
-  <ion-card *ngFor="let obj of listTransf">  
-    <ion-card-content no-padding (click)="goToTransferPage02(obj)">
-      <ion-grid>
-        <ion-row>
-          <ion-col col-1 col-sm
-          [ngClass]="obj.Id_Estado === 3 ? 'label-color bg-confirm' : 'label-color bg-process'">
-          </ion-col>
-          <ion-col col-10 col-sm>
-            <ion-row>
-              <ion-col class="tf01-card-col" col-5 col-sm>
-                <ion-label class="tf01-card-label fieldForm">N° Transferencia:</ion-label>
-              </ion-col>
-              <ion-col class="tf01-card-col" col-7 col-sm>
-                <ion-label class="tf01-card-label">{{ obj.Id_Tx }}</ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col class="tf01-card-col" col-5 col-sm>
-                <ion-label class="tf01-card-label fieldForm">Fecha:</ion-label>
-              </ion-col>
-              <ion-col class="tf01-card-col">
-                <ion-label class="tf01-card-label">{{ obj.Fecha|momentjs }}</ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col class="tf01-card-col" col-5 col-sm>
-                <ion-label class="tf01-card-label fieldForm">S.A Origen:</ion-label>
-              </ion-col>
-              <ion-col class="tf01-card-col" col-7 col-sm>
-                <ion-label class="tf01-card-label">{{ obj.SubAlmacenOrigen }}</ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col class="tf01-card-col" col-5 col-sm>
-                <ion-label class="tf01-card-label fieldForm">S.A Destino:</ion-label>
-              </ion-col>
-              <ion-col class="tf01-card-col" col-7 col-sm>
-                <ion-label class="tf01-card-label">{{ obj.SubAlmacenDestino }}</ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col class="tf01-card-col" col-5 col-sm>
-                <ion-label class="tf01-card-label fieldForm">Cuenta:</ion-label>
-              </ion-col>
-              <ion-col class="tf01-card-col" col-7 col-sm>
-                <ion-label class="tf01-card-label">{{ obj.Cuenta }}</ion-label>
-              </ion-col>
-            </ion-row>
-          </ion-col>
-          <ion-col col-1 col-sm align-self-center>
-            <!-- <button ion-button icon-only> -->
-              <ion-icon name="arrow-round-forward"></ion-icon>
-            <!-- </button> -->
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+  <ion-scroll scrollY="true">
+    <ion-card *ngFor="let obj of listTransf"> 
+      <ion-card-content no-padding (click)="goToTransferPage02(obj)">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-1 col-sm
+            [ngClass]="obj.Id_Estado === 3 ? 'label-color bg-confirm' : 'label-color bg-process'">
+            </ion-col>
+            <ion-col col-10 col-sm>
+              <ion-row>
+                <ion-col class="tf01-card-col" col-5 col-sm>
+                  <ion-label class="tf01-card-label fieldForm">N° Transferencia:</ion-label>
+                </ion-col>
+                <ion-col class="tf01-card-col" col-7 col-sm>
+                  <ion-label class="tf01-card-label">{{ obj.Id_Tx }}</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="tf01-card-col" col-5 col-sm>
+                  <ion-label class="tf01-card-label fieldForm">Fecha:</ion-label>
+                </ion-col>
+                <ion-col class="tf01-card-col">
+                  <ion-label class="tf01-card-label">{{ obj.Fecha|momentjs }}</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="tf01-card-col" col-5 col-sm>
+                  <ion-label class="tf01-card-label fieldForm">S.A Origen:</ion-label>
+                </ion-col>
+                <ion-col class="tf01-card-col" col-7 col-sm>
+                  <ion-label class="tf01-card-label">{{ obj.SubAlmacenOrigen }}</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="tf01-card-col" col-5 col-sm>
+                  <ion-label class="tf01-card-label fieldForm">S.A Destino:</ion-label>
+                </ion-col>
+                <ion-col class="tf01-card-col" col-7 col-sm>
+                  <ion-label class="tf01-card-label">{{ obj.SubAlmacenDestino }}</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="tf01-card-col" col-5 col-sm>
+                  <ion-label class="tf01-card-label fieldForm">Cuenta:</ion-label>
+                </ion-col>
+                <ion-col class="tf01-card-col" col-7 col-sm>
+                  <ion-label class="tf01-card-label">{{ obj.Cuenta }}</ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col col-1 col-sm align-self-center>
+              <!-- <button ion-button icon-only> -->
+                <ion-icon name="arrow-round-forward"></ion-icon>
+              <!-- </button> -->
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </ion-scroll>
 
   <!--<ngx-datatable class="fullscreen" [ngClass]="tableStyle" [rows]="listTransf" 
     [columnMode]="'force'" [sortType]="'multi'" [reorderable]="false"

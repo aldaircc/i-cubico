@@ -25,12 +25,7 @@ export class TransferPage_03Page {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sGlobal: GlobalServiceProvider, public sPicking: PickingServiceProvider) {
-    this.vParameter = this.navParams.get('vParameter');
-    this.listarStockProductoXUbicaciones(this.sGlobal.Id_Almacen, this.vParameter.Id_SubAlmacenOrigen, this.vParameter.Id_Producto, this.vParameter.Lote);
-  }
-
-  ionViewDidLoad() {
-    
+      this.vParameter = this.navParams.get('vParameter');
   }
 
   listarStockProductoXUbicaciones(intIdAlmacen, intIdSubAlmacenOrigen, intIdProducto, strLote){
@@ -98,39 +93,11 @@ export class TransferPage_03Page {
       'Nivel' : data.Nivel,
       'Posicion' : data.Posicion
     };
-    // var row = lstDetailTx.Where(x => x.Id_Tx.Equals(strIdTx)).FirstOrDefault();
-    // cantidad = row.CantidadPedida.Value;
-    // intIdProducto = row.Id_Producto;
-    // decCantOper = row.CantidadOperacion.Value;
-    // decSaldo = row.Saldo.Value;
-
-    // cantUA = decCantOper;
-    // lblCodProduct04.Text = strCodProduct;
-    // lblProductName04.Text = producto;
-    // txtSaldo.Text = decSaldo.ToString();
-    // txtCountRecib.Text = decCantOper.ToString();
-    // txtLoteProd.Text = strLote;
-    // txtCountProd.Text = cantidad.ToString();
-
-    // string[] dataUbication = smgUbic.Cells[smgUbic.SelectedCell.RowIndex, 1].Text.Split('-');
-    // List<string> ubication = new List<string>();
-    // foreach (string item in dataUbication)
-    // {
-    //     ubication.Add(item.Split(':')[1]);
-    // }
-    // txtRow.Text = ubication[0];
-    // txtColumn.Text = ubication[1];
-    // txtLevel.Text = ubication[2];
-    // txtPosition.Text = ubication[3];
-    // intIdUbicacion = Convert.ToInt32(smgUbic.Cells[smgUbic.SelectedCell.RowIndex, 0].Text);
-    // lblIdTx.Text = intIdUbicacion.ToString();
-    // lblIdTx.Tag = smgUbic.Cells[smgUbic.SelectedCell.RowIndex, 1].Text;
-    // manejoPaneles(4);
-    // btnPickingUA.Enabled = false;
-    // setColorBasePanelVerify();
-    // txtCountUA.Text = string.Empty;
-    // txtBarCode.Text = string.Empty;
+    
     this.navCtrl.push(TransferPage_04Page, { 'vParameter': parameter });
   }
 
+  ionViewWillEnter(){
+    this.listarStockProductoXUbicaciones(this.sGlobal.Id_Almacen, this.vParameter.Id_SubAlmacenOrigen, this.vParameter.Id_Producto, this.vParameter.Lote);
+  }
 }

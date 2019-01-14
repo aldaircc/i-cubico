@@ -10,7 +10,7 @@
       <ion-title>Detalle Transferencia</ion-title>
     </ion-navbar>
     <ion-buttons start>
-      <button ion-button icon-only>
+      <button ion-button icon-only (click)="listarDetalleTransfXTx(vParameter.Id_Tx)">
         <ion-icon name="refresh"></ion-icon>
       </button>
     </ion-buttons>
@@ -19,7 +19,6 @@
 
 <ion-content>
   <ion-grid class="bgHeader">
-    <!-- Header caption -->
     <ion-row align-items-center>
       <ion-col col-4 col-sm>
         <div class="textHeader">Cuenta </div>
@@ -104,9 +103,7 @@
         </ion-row>
       </ion-col>
       <ion-col col-1 col-sm align-self-center>
-        <!-- <button ion-button icon-only> -->
-          <ion-icon name="arrow-round-forward"></ion-icon>
-        <!-- </button> -->
+        <ion-icon name="arrow-round-forward"></ion-icon>
       </ion-col>
         </ion-row>
       </ion-grid>

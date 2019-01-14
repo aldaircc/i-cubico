@@ -32,4 +32,22 @@ export class AlmacenajeServiceProvider {
       })
     });
   }
+
+  //Loque#369Dev
+  listarUbicacionXCodigoBarra(strUbi, intIdAlmacen){
+    let parameter = {
+      'strUbi': strUbi,
+      'intIdAlmacen': intIdAlmacen,
+    };
+    debugger;
+    return new Promise(result=>{
+      this.http.get(this.sGlobal.almacenajeService + 'ListarUbicacionXCodigoBarra', { params : parameter })
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-listarUbicacionXCodigoBarra', err);
+      })
+    });
+  }
 }
