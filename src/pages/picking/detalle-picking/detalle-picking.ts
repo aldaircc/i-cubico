@@ -23,12 +23,11 @@ export class DetallePickingPage {
   vRutaPickingPage: any = [];
   listDetallePicking: any = [];
   listAuxDetallePicking: any = [];
-  rowCount: any;
-
-  vDetallePickingPage: any;
-
-  idRutaPicking:number = 0; 
   listaTempRutaPicking: any = [];
+  rowCount: any;
+  vDetallePickingPage: any;
+  idRutaPicking:number = 0; 
+  
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController, 
@@ -36,6 +35,31 @@ export class DetallePickingPage {
     this.vRutaPickingPage = navParams.get('data');
     this.getDetallePickingLoad();
     //this.getDetallePicking(this.vRutaPickingPage.Id_Tx, 'Admin', 2);
+  }
+
+  filterItems(ev: any){
+    debugger;
+    const val = ev.target.value;
+    if(val && val.trim() != ''){
+      this.listAuxDetallePicking = this.listDetallePicking.filter((item)=>{
+        return (item.CodigoProducto.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.Producto.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      });
+      this.rowCount = this.listAuxDetallePicking.length;
+    }else{
+      this.rowCount = this.listDetallePicking.length;
+      return this.listAuxDetallePicking = this.listDetallePicking;
+    }
+  }
+
+  ValidarProducto(data){
+    debugger;
+    if(data.FlagTransito==true){
+      this.presentToast("No existe ruta para este producto");
+    }else{
+      //Ir a ruta picking y ubicarse en el producto seleccionado, enviar idRuta 
+      //this.goRutaPickingPage(data)
+      this.getDataRutaPicking(this.vRutaPickingPage.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen, data)  
+    }      
   }
 
   getDetallePickingLoad(){
@@ -95,18 +119,7 @@ export class DetallePickingPage {
     }, (err)=>{
       console.log('E-Detalle Picking listar', err);
     });    
-  }
-
-  ValidarProducto(data){
-    debugger;
-    if(data.FlagTransito==true){
-      this.presentToast("No existe ruta para este producto");
-    }else{
-      //Ir a ruta picking y ubicarse en el producto seleccionado, enviar idRuta 
-      //this.goRutaPickingPage(data)
-      this.getDataRutaPicking(this.vRutaPickingPage.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen, data)  
-    }      
-  }
+  }  
 
   getDataRutaPicking(strNroDoc, strUsuario, intIdAlmacen, data){
     this.sPicking.getDataRutaPicking(strNroDoc, strUsuario, intIdAlmacen).then((result)=>{
@@ -135,35 +148,7 @@ export class DetallePickingPage {
     },err=>{
       console.log('E-getDataRutaPicking',err);
     });
-  }
-
-  goRutaPickingPage(data){
-    this.vDetallePickingPage = {
-      'idRutaPicking': data.idRutaPicking,
-      'Id_Tx' : this.vRutaPickingPage.Id_Tx,
-      'NumOrden' : this.vRutaPickingPage.NumOrden,
-      'Cliente' : this.vRutaPickingPage.Cliente,
-      'Ciudad' :this.vRutaPickingPage.Ciudad,
-      'Zona' : this.vRutaPickingPage.Zona
-    };
-    this.navCtrl.push(RutaPickingPage, {
-      data: this.vDetallePickingPage
-    });
-  }
-
-  filterItems(ev: any){
-    debugger;
-    const val = ev.target.value;
-    if(val && val.trim() != ''){
-      this.listAuxDetallePicking = this.listDetallePicking.filter((item)=>{
-        return (item.CodigoProducto.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.Producto.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      });
-      this.rowCount = this.listAuxDetallePicking.length;
-    }else{
-      this.rowCount = this.listDetallePicking.length;
-      return this.listAuxDetallePicking = this.listDetallePicking;
-    }
-  }
+  }  
 
   presentToast(message) {
     let toast = this.toastCtrl.create({
@@ -181,6 +166,20 @@ export class DetallePickingPage {
     });
     popover.present({
       ev: ev
+    });
+  }
+
+  goRutaPickingPage(data){
+    this.vDetallePickingPage = {
+      'idRutaPicking': data.idRutaPicking,
+      'Id_Tx' : this.vRutaPickingPage.Id_Tx,
+      'NumOrden' : this.vRutaPickingPage.NumOrden,
+      'Cliente' : this.vRutaPickingPage.Cliente,
+      'Ciudad' :this.vRutaPickingPage.Ciudad,
+      'Zona' : this.vRutaPickingPage.Zona
+    };
+    this.navCtrl.push(RutaPickingPage, {
+      data: this.vDetallePickingPage
     });
   }
 
