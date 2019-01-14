@@ -53,7 +53,7 @@ export class DetallePorProductoPage {
 
   getDetalleXProducto(strIdTx, intIdProducto, intItem){
     debugger;
-    this.sPicking.getDetalleXProducto("A20181980018", 80, intItem).then((result)=>{
+    this.sPicking.getDetalleXProducto(strIdTx, intIdProducto, intItem).then((result)=>{
       debugger;
       this.listDetalleProducto = result;
       this.listAuxDetalleProducto = this.listDetalleProducto;
@@ -75,8 +75,8 @@ export class DetallePorProductoPage {
         // Eliminar UA
         let objUA = {          
           'UA_CodBarra' : data.UA_CodBarra, //
-          'Id_Tx' : "A20181980018",   //this.vPickingXProducto.Id_Tx,
-          'Id_Producto' : 80 ,  //this.vPickingXProducto.IdProducto
+          'Id_Tx' : this.vPickingXProducto.Id_Tx,   //this.vPickingXProducto.Id_Tx,
+          'Id_Producto' : this.vPickingXProducto.IdProducto ,  //this.vPickingXProducto.IdProducto
           'Id_UM': data.Id_UM,  //
           'Cantidad' : data.Cantidad,  //
           'FlagAnulado': true, //
