@@ -14,10 +14,11 @@ export class GlobalServiceProvider {
   Id_Impresora : number = 0;
   Id_Muelle : number = 0;
   Id_Centro : number = 0;
+  Id_TerminalRF : number = 0;
   nombreImpresora : string;
   nombreEmpresa : string;
   userName : string = "";
-  url : string = "http://172.16.32.15:8085/SGAA_WCF/";
+  url : string = "";
   urlPrint : string = "";
   usuario: string;
   produccion: string;
@@ -30,9 +31,10 @@ export class GlobalServiceProvider {
   almacenajeService:any;
 
   constructor(public http: HttpClient) {
-    this.userName = "acosetito";
+    this.userName = "acosetito";//"aromero";
     this.Id_Almacen = 2;
     this.Id_Muelle = 1;
+    this.Id_TerminalRF = 2;
     this.nombreEmpresa = "TESLA S.A";
     this.nombreImpresora = "INTERMEC";
 
