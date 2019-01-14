@@ -2,9 +2,12 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { ReciboPage } from '../recibo/recibo';
+import { PickingPage } from '../picking/picking';
 import { AlmacenajePage } from '../almacenaje/almacenaje';
 import { EtiquetadoPage_01Page } from '../etiquetado/etiquetado-page-01/etiquetado-page-01';
 import { TransferPage_01Page } from '../transferencia/transfer-page-01/transfer-page-01';
+
+
 
 /**
  * Generated class for the MainMenuPage page.
@@ -41,6 +44,11 @@ export class MainMenuPage {
 
   goReciboPage(){
     this.navCtrl.push(ReciboPage);
+
+  }
+
+  goPickingPage(){
+    this.navCtrl.push(PickingPage);
 
   }
 

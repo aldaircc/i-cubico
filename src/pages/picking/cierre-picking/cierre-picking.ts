@@ -33,16 +33,6 @@ export class CierrePickingPage {
     this.vRutaPickingPage = navParams.get('data');
   }
 
-  presentPopover(ev) {
-    let popover = this.popoverCtrl.create(PopoverRutaPickingPage, {
-      // contentEle: this.content.nativeElement,
-      // textEle: this.text.nativeElement
-    });
-    popover.present({
-      ev: ev
-    });
-  }
-
   validarCodeBar() {
     if(this.codeBar){
       if(this.codeBar.trim()!=""){
@@ -160,7 +150,6 @@ export class CierrePickingPage {
     
   }
 
-
   CerrarPicking(idTx, idEstado, usuario, idMuelle, IdAlmacen) {
     debugger;
     this.sPicking.CerrarPicking(idTx, idEstado, usuario, idMuelle, IdAlmacen).then((result) => {
@@ -175,22 +164,6 @@ export class CierrePickingPage {
       console.log('E-Muelle por almacen', err);
     });
   }
-
-  // getMuelleXAlmacen(intIdAlmacen, strCodigoBarra) {
-  //   debugger;
-  //   this.sPicking.getMuelleXAlmacen(intIdAlmacen, strCodigoBarra).then((result) => {
-  //     debugger;
-  //     this.listNombreMuelleXAlmacen = result;
-  //     if (this.listNombreMuelleXAlmacen.length > 0) {
-  //       console.log('Datos Muelle por almacen', this.listNombreMuelleXAlmacen);
-  //     } else {
-  //       console.log('No se encontrarón datos.', this.listNombreMuelleXAlmacen);
-  //     }
-  //   }, (err) => {
-  //     console.log('E-Muelle por almacen', err);
-  //   });
-  // }
-
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -246,6 +219,16 @@ export class CierrePickingPage {
       position: 'bottom'
     });  
     toast.present();
+  }
+
+  presentPopover(ev) {
+    let popover = this.popoverCtrl.create(PopoverRutaPickingPage, {
+      // contentEle: this.content.nativeElement,
+      // textEle: this.text.nativeElement
+    });
+    popover.present({
+      ev: ev
+    });
   }
 
   showModalImpresora(){

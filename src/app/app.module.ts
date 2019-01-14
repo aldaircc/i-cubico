@@ -54,6 +54,7 @@ import { InventarioPage } from '../pages/inventario/inventario';
 import { PickingServiceProvider } from '../providers/picking-service/picking-service';
 
 import { SelectAllDirective } from '../directives/select-all/select-all';
+import { AlmacenajeServiceProvider } from '../providers/almacenaje-service/almacenaje-service';
 
 @NgModule({
   declarations: [
@@ -159,7 +160,8 @@ import { SelectAllDirective } from '../directives/select-all/select-all';
     IncidenciaServiceProvider, //Loque#369Dev
     EtiquetadoServiceProvider, //Loque#369Dev
     GlobalServiceProvider, //Loque#369Dev
-    PickingServiceProvider
+    PickingServiceProvider,
+    AlmacenajeServiceProvider
   ]
 })
 export class AppModule {}

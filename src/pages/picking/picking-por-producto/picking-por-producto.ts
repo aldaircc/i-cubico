@@ -26,28 +26,24 @@ export class PickingPorProductoPage {
   listaTempPickingProducto: any = [];
   listPickingProducto: any = [];
   pickingProducto: any = [];
+  UAPicking: any = [];
+  vPickingXProducto: any = [];
+  resultRegistrar: any = [];
+  listProductoConRuta: any = [];
   posicion: number = 0;
   contador: number = 1;
   total: number = 1;
+  idRutaPicking: number = 0;
   Backisenabled: boolean = false;
   Nextisenabled: boolean = false;
   Txtcantidadisenabled: boolean = false;
-
-
-  codeBar: string;
-  Textcantidad: string = '';
-  codUbicacion: string;
-  UAPicking: any = [];
-
   isBgRed: boolean = false;
   isBgYellow: boolean = false;
   isBgGreen: boolean = false;
   isbgWhite: boolean = false;
-
-  vPickingXProducto: any = [];
-  resultRegistrar: any = [];
-  listProductoConRuta: any = [];
-  idRutaPicking: number = 0;
+  codeBar: string;
+  Textcantidad: string = '';
+  codUbicacion: string;
 
   //valorRegistrar: number = 0;
 
@@ -64,45 +60,6 @@ export class PickingPorProductoPage {
     this.Textcantidad = "";
     this.getPickingProducto(this.vRutaPickingPage.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
-
-  goDetallePickingPage() {
-
-    debugger;
-    this.vPickingXProducto = {
-      'Id_Tx': this.vRutaPickingPage.Id_Tx,
-      'NumOrden': this.vRutaPickingPage.NumOrden,
-      'Cliente': this.vRutaPickingPage.Cliente,
-      'Ciudad': this.vRutaPickingPage.Ciudad,
-      'Zona': this.vRutaPickingPage.Zona
-    };
-
-    this.navCtrl.push(DetallePickingPage, {
-      data: this.vPickingXProducto
-    });
-  }
-
-  goDetallePorProductoPage(): void {
-    debugger;
-    this.vPickingXProducto = {
-      'Id_Tx': this.vRutaPickingPage.Id_Tx,
-      'NumOrden': this.vRutaPickingPage.NumOrden,
-      'CodigoProducto': this.pickingProducto.CodigoProducto,
-      'Producto': this.pickingProducto.Producto,
-      'IdProducto': this.pickingProducto.IdProducto,
-      'Item': this.pickingProducto.Item
-    };
-
-    this.navCtrl.push(DetallePorProductoPage, {
-      data: this.vPickingXProducto
-    });
-    //this.navCtrl.push(DetallePorProductoPage);
-  }
-
-  goReabastecimientoPage(): void {
-    this.navCtrl.push(ReabastecimientoPage);
-  }
-
-
 
   getPickingProducto(strNroDoc, strUsuario, intIdAlmacen) {
     this.sPicking.getPickingProducto(strNroDoc, strUsuario, intIdAlmacen).then((result) => {
@@ -204,7 +161,6 @@ export class PickingPorProductoPage {
     });
   }
 
-
   getPickingProductoUpdate(strNroDoc, strUsuario, intIdAlmacen) {
     this.sPicking.getPickingProducto(strNroDoc, strUsuario, intIdAlmacen).then((result) => {
       debugger;
@@ -260,6 +216,52 @@ export class PickingPorProductoPage {
     });
   }
 
+  registarUA() {
+    debugger;
+    //this.valorRegistrar = 1;
+    if (parseInt(this.Textcantidad) > this.pickingProducto.Saldo) { //Cantidad de la UA es mayor al saldo
+      //Editar cantidad de la UA
+      this.presentToast("Cantidad de UA no puede ser mayor al saldo");
+    } else {
+      //Registrar cantidad de la UA
+      debugger;
+      // Registrar UA
+      let objUA = {
+        'UA_CodBarra': this.codeBar.trim(), //
+        'Id_Tx': this.vRutaPickingPage.Id_Tx,// "A20181980018",
+        'Id_Producto': this.pickingProducto.IdProducto,// 80 ,
+        'Id_UM': this.pickingProducto.IdUMBase,  //
+        'Cantidad': this.Textcantidad,  //
+        'FlagAnulado': false, //
+        'Id_TerminalRF': 1,  //
+        'Item': this.pickingProducto.Item,  //
+        'Id_Almacen': this.sGlobal.Id_Almacen,  //
+        'UsuarioRegistro': this.sGlobal.userName  //
+      };
+      this.sPicking.RegistarEliminarUA(objUA).then(result => {
+        debugger;
+        this.resultRegistrar = result;
+        if (this.resultRegistrar.errNumber == 0) {
+          this.isBgRed = false;
+          this.isBgYellow = false;
+          this.isBgGreen = true;
+          this.codeBar = "";
+          this.Textcantidad = "";
+        } else {
+          this.isBgRed = true;
+          this.isBgYellow = false;
+          this.isBgGreen = false;
+          this.codeBar = "";
+          this.Textcantidad = "";
+          this.presentToast(this.resultRegistrar.message);
+        }
+        //Actulizar los campos cant. atendida y saldo
+        this.getPickingProductoUpdate(this.vRutaPickingPage.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen);
+        
+      });
+    }
+  }
+
   validarCodeBar() {
     debugger;
     if (this.codeBar) {
@@ -313,52 +315,6 @@ export class PickingPorProductoPage {
     }
   }
 
-  registarUA() {
-    debugger;
-    //this.valorRegistrar = 1;
-    if (parseInt(this.Textcantidad) > this.pickingProducto.Saldo) { //Cantidad de la UA es mayor al saldo
-      //Editar cantidad de la UA
-      this.presentToast("Cantidad de UA no puede ser mayor al saldo");
-    } else {
-      //Registrar cantidad de la UA
-      debugger;
-      // Registrar UA
-      let objUA = {
-        'UA_CodBarra': this.codeBar.trim(), //
-        'Id_Tx': this.vRutaPickingPage.Id_Tx,// "A20181980018",
-        'Id_Producto': this.pickingProducto.IdProducto,// 80 ,
-        'Id_UM': this.pickingProducto.IdUMBase,  //
-        'Cantidad': this.Textcantidad,  //
-        'FlagAnulado': false, //
-        'Id_TerminalRF': 1,  //
-        'Item': this.pickingProducto.Item,  //
-        'Id_Almacen': this.sGlobal.Id_Almacen,  //
-        'UsuarioRegistro': this.sGlobal.userName  //
-      };
-      this.sPicking.RegistarEliminarUA(objUA).then(result => {
-        debugger;
-        this.resultRegistrar = result;
-        if (this.resultRegistrar.errNumber == 0) {
-          this.isBgRed = false;
-          this.isBgYellow = false;
-          this.isBgGreen = true;
-          this.codeBar = "";
-          this.Textcantidad = "";
-        } else {
-          this.isBgRed = true;
-          this.isBgYellow = false;
-          this.isBgGreen = false;
-          this.codeBar = "";
-          this.Textcantidad = "";
-          this.presentToast(this.resultRegistrar.message);
-        }
-        //Actulizar los campos cant. atendida y saldo
-        this.getPickingProductoUpdate(this.vRutaPickingPage.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen);
-        
-      });
-    }
-  }
-
   ValidarSiguienteProducto() {
     for (var i = 0; i < this.listaTempPickingProducto.length; i++) {
       if (this.listaTempPickingProducto[i].FlagTransito == false) {
@@ -408,52 +364,22 @@ export class PickingPorProductoPage {
     //this.valorRegistrar=0;
   }
 
-  goRutaPickingPage() {
-    this.vPickingXProducto = {
-      'idRutaPicking': this.pickingProducto.idRutaPicking,
-      'Id_Tx': this.vRutaPickingPage.Id_Tx,
-      'NumOrden': this.vRutaPickingPage.NumOrden,
-      'Cliente': this.vRutaPickingPage.Cliente,
-      'Ciudad': this.vRutaPickingPage.Ciudad,
-      'Zona': this.vRutaPickingPage.Zona
-    };
-    this.navCtrl.push(RutaPickingPage, {
-      data: this.vPickingXProducto
-    });
-  }
-
-  goRutaPickingPageUpdate() {
-    this.vPickingXProducto = {
-      'Id_Tx': this.vRutaPickingPage.Id_Tx,
-      'NumOrden': this.vRutaPickingPage.NumOrden,
-      'Cliente': this.vRutaPickingPage.Cliente,
-      'Ciudad': this.vRutaPickingPage.Ciudad,
-      'Zona': this.vRutaPickingPage.Zona
-    };
-    this.navCtrl.push(RutaPickingPage, {
-      data: this.vPickingXProducto
-    });
-  }
-
-  goCerrarPickingPage(){
-    let saldoTotalPicking = this.listaTempPickingProducto.reduce(function(prev, cur){
-      return prev + cur.Saldo;
-    }, 0);
-    debugger;  
-      this.vRutaPickingPage = {
-        'Id_Tx' : this.vRutaPickingPage.Id_Tx,
-        'NumOrden' : this.vRutaPickingPage.NumOrden,
-        'Ciudad' : this.vRutaPickingPage.Ciudad,
-        'Zona' : this.vRutaPickingPage.Zona,
-        'Saldo' : saldoTotalPicking        
-      };
-      this.navCtrl.push(CierrePickingPage, {
-        data: this.vRutaPickingPage
-      });    
-  }
-
   NextRutaPicking() {
     debugger;
+    if(this.pickingProducto.Saldo > 0){ 
+      this.presentAlertConfirm("¿Desea generar una orden de reabastecimiento?”.").then((result) => {
+        if (result) {
+          this.goReabastecimientoPage();
+        }else{
+          this.NextRuta();
+        }
+      })
+    }else{
+      this.NextRuta();
+    }    
+  }
+
+  NextRuta(){
     this.total = this.listaTempPickingProducto.length;
     this.posicion = this.posicion + 1;
     if (this.posicion < this.listaTempPickingProducto.length) {
@@ -468,6 +394,20 @@ export class PickingPorProductoPage {
 
   BackRutaPicking() {
     debugger;
+    if(this.pickingProducto.Saldo > 0){
+      this.presentAlertConfirm("¿Desea generar una orden de reabastecimiento?”.").then((result) => {
+        if (result) {
+          this.goReabastecimientoPage();
+        }else{
+          this.BackRuta();
+        }
+      });
+    }else{
+      this.BackRuta();
+    }    
+  }
+
+  BackRuta(){
     this.total = this.listaTempPickingProducto.length;
     this.posicion = this.posicion - 1;
     if (this.posicion >= 0) {
@@ -545,6 +485,100 @@ export class PickingPorProductoPage {
       });
       confirm.present();
     })
+  }
+
+  goRutaPickingPage() {
+    this.vPickingXProducto = {
+      'idRutaPicking': this.pickingProducto.idRutaPicking,
+      'Id_Tx': this.vRutaPickingPage.Id_Tx,
+      'NumOrden': this.vRutaPickingPage.NumOrden,
+      'Cliente': this.vRutaPickingPage.Cliente,
+      'Ciudad': this.vRutaPickingPage.Ciudad,
+      'Zona': this.vRutaPickingPage.Zona
+    };
+    this.navCtrl.push(RutaPickingPage, {
+      data: this.vPickingXProducto
+    });
+  }
+
+  goRutaPickingPageUpdate() {
+    this.vPickingXProducto = {
+      'Id_Tx': this.vRutaPickingPage.Id_Tx,
+      'NumOrden': this.vRutaPickingPage.NumOrden,
+      'Cliente': this.vRutaPickingPage.Cliente,
+      'Ciudad': this.vRutaPickingPage.Ciudad,
+      'Zona': this.vRutaPickingPage.Zona
+    };
+    this.navCtrl.push(RutaPickingPage, {
+      data: this.vPickingXProducto
+    });
+  }
+
+  goCerrarPickingPage(){
+    let saldoTotalPicking = this.listaTempPickingProducto.reduce(function(prev, cur){
+      return prev + cur.Saldo;
+    }, 0);
+    debugger;  
+      this.vPickingXProducto = {
+        'Id_Tx' : this.vRutaPickingPage.Id_Tx,
+        'NumOrden' : this.vRutaPickingPage.NumOrden,
+        'Ciudad' : this.vRutaPickingPage.Ciudad,
+        'Zona' : this.vRutaPickingPage.Zona,
+        'Saldo' : saldoTotalPicking        
+      };
+      this.navCtrl.push(CierrePickingPage, {
+        data: this.vPickingXProducto
+      });    
+  }
+
+  goDetallePickingPage() {
+    debugger;
+    this.vPickingXProducto = {
+      'Id_Tx': this.vRutaPickingPage.Id_Tx,
+      'NumOrden': this.vRutaPickingPage.NumOrden,
+      'Cliente': this.vRutaPickingPage.Cliente,
+      'Ciudad': this.vRutaPickingPage.Ciudad,
+      'Zona': this.vRutaPickingPage.Zona
+    };
+
+    this.navCtrl.push(DetallePickingPage, {
+      data: this.vPickingXProducto
+    });
+  }
+
+  goDetallePorProductoPage(): void {
+    debugger;
+    this.vPickingXProducto = {
+      'Id_Tx': this.vRutaPickingPage.Id_Tx,
+      'NumOrden': this.vRutaPickingPage.NumOrden,
+      'CodigoProducto': this.pickingProducto.CodigoProducto,
+      'Producto': this.pickingProducto.Producto,
+      'IdProducto': this.pickingProducto.IdProducto,
+      'Item': this.pickingProducto.Item
+    };
+
+    this.navCtrl.push(DetallePorProductoPage, {
+      data: this.vPickingXProducto
+    });
+    //this.navCtrl.push(DetallePorProductoPage);
+  }
+
+  goReabastecimientoPage(): void {
+    debugger;
+    this.vPickingXProducto = {
+      'Sector': this.pickingProducto.Sector,
+      'Pasillo': this.pickingProducto.Pasillo,
+      'Fila': this.pickingProducto.Fila,
+      'Columna': this.pickingProducto.Columna,
+      'Nivel': this.pickingProducto.Nivel,
+      'Posicion': this.pickingProducto.Posicion,
+      'IdProducto': this.pickingProducto.IdProducto,
+      'IdUbicacion': this.pickingProducto.IdUbicacion,
+      'Id_TerminalRF': 1
+    };
+    this.navCtrl.push(ReabastecimientoPage, {
+      data: this.vPickingXProducto
+    });
   }
 
   ionViewDidLoad() {

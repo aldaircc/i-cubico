@@ -32,16 +32,12 @@ export class RutaPickingPage {
   posicion:number = 0;
   contador:number = 1;  
   total:number = 1;  
-
   idRutaPicking:number = 0; 
-
   codBar:string;
   codeBar:string;
+  Fila:string;
   isBgRed:boolean = false;
   isbgWhite:boolean = false;
-  Fila:string;
-  
-
   Backisenabled:boolean=false;
   Nextisenabled:boolean=false;
   
@@ -53,66 +49,28 @@ export class RutaPickingPage {
     this.getDataRutaPicking(this.vPickingPage.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
 
-  goDetallePickingPage(){
-    debugger;  
-      this.vRutaPickingPage = {
-        'Id_Tx' : this.vPickingPage.Id_Tx,
-        'NumOrden' : this.vPickingPage.NumOrden,
-        'Cliente' : this.vPickingPage.Cliente,
-        'Ciudad' :  this.vPickingPage.Ciudad,
-        'Zona' :  this.vPickingPage.Zona
-      };
-
-      this.navCtrl.push(DetallePickingPage, {
-        data: this.vRutaPickingPage
-      });    
-  }
-
-  // goDetallePickingPage():void{
-  //   this.navCtrl.push(DetallePickingPage);
-  // }  
-
-  goCerrarPickingPage(){
-
-    let saldoTotal = this.listaRutaPicking.reduce(function(prev, cur){
-      return prev + cur.Saldo;
-    }, 0);
-
-
-    debugger;  
-      this.vRutaPickingPage = {
-        'Id_Tx' : this.vPickingPage.Id_Tx,
-        'NumOrden' : this.vPickingPage.NumOrden,
-        'Ciudad' : this.vPickingPage.Ciudad,
-        'Zona' : this.vPickingPage.Zona,
-        'Saldo' : saldoTotal
-        
-      };
-
-      this.navCtrl.push(CierrePickingPage, {
-        data: this.vRutaPickingPage
-      });    
-  }
-
-  // goPickingPorProductoPage():void{
-  //   this.navCtrl.push(PickingPorProductoPage);
-  // }
-
-  goPickingPorProductoPage(){
-
-    debugger;  
-      this.vRutaPickingPage = {
-        'idRutaPicking': this.listaRutaPicking[this.posicion].idRutaPicking,
-        'Id_Tx' : this.vPickingPage.Id_Tx,
-        'NumOrden' : this.vPickingPage.NumOrden,
-        'Cliente' : this.vPickingPage.Cliente,
-        'Ciudad' :  this.vPickingPage.Ciudad,
-        'Zona' :  this.vPickingPage.Zona
-      };
-
-      this.navCtrl.push(PickingPorProductoPage, {
-        data: this.vRutaPickingPage
-      });    
+  validarCodeBar(){
+    debugger;
+    if(this.codeBar){
+      if(this.codeBar.trim()!=""){     
+          //this.codBar = this.rutaPicking.Fila.trim() + this.rutaPicking.Columna.toString() + this.rutaPicking.Nivel.toString() + this.rutaPicking.Posicion.toString();
+          this.codBar = this.rutaPicking.CodBarraUbi.trim();
+          if(this.codeBar.trim() == this.codBar){
+            this.isbgWhite = true;
+            this.isBgRed = false;
+            this.goPickingPorProductoPage();
+          }else{
+            this.isbgWhite = false;
+            this.isBgRed = true;
+            this.codeBar = "";
+          }        
+      }
+      else{
+        this.presentToast("Ingrese código de ubicación");
+      }      
+    }else{
+      this.presentToast("Ingrese código de ubicación");
+    }    
   }
 
   getDataRutaPicking(strNroDoc, strUsuario, intIdAlmacen){
@@ -153,8 +111,7 @@ export class RutaPickingPage {
         };
         this.listaRutaPicking.push(obj);
         this.idRutaPicking = this.idRutaPicking + 1;
-      }
-      
+      }      
       //Agregar columna idRuta, para que se pueda usar al momento de volver de detalle
       //comparar idRuta para actualizar la posicion de la lista
       for(var i = 0; i< this.listaRutaPicking.length; i++){
@@ -187,7 +144,6 @@ export class RutaPickingPage {
                 this.Nextisenabled=false;
               }
             }
-
             //this.rutaPicking = result[0];
             //this.contador = 1;
             this.total = this.listaRutaPicking.length;      
@@ -230,7 +186,7 @@ export class RutaPickingPage {
     }
   }
 
-    BackRutaPicking(){
+  BackRutaPicking(){
       debugger;
       this.total = this.listaRutaPicking.length;
       this.posicion = this.posicion - 1;
@@ -242,48 +198,17 @@ export class RutaPickingPage {
       if(this.contador==1){
         this.Backisenabled=false;
       }
-    }
-  
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RutaPickingPage');
   }
-
+  
   presentPopover(ev) {
-
     let popover = this.popoverCtrl.create(PopoverRutaPickingPage, {
       // contentEle: this.content.nativeElement,
       // textEle: this.text.nativeElement
     });
-
     popover.present({
       ev: ev
     });
-  }
-
-  validarCodeBar(){
-    debugger;
-    if(this.codeBar){
-      if(this.codeBar.trim()!=""){     
-          //this.codBar = this.rutaPicking.Fila.trim() + this.rutaPicking.Columna.toString() + this.rutaPicking.Nivel.toString() + this.rutaPicking.Posicion.toString();
-          this.codBar = this.rutaPicking.CodBarraUbi.trim();
-          if(this.codeBar.trim() == this.codBar){
-            this.isbgWhite = true;
-            this.isBgRed = false;
-            this.goPickingPorProductoPage();
-          }else{
-            this.isbgWhite = false;
-            this.isBgRed = true;
-            this.codeBar = "";
-          }        
-      }
-      else{
-        this.presentToast("Ingrese código de ubicación");
-      }      
-    }else{
-      this.presentToast("Ingrese código de ubicación");
-    }    
-  }
+  }  
 
   presentToast(message) {
     let toast = this.toastCtrl.create({
@@ -294,6 +219,56 @@ export class RutaPickingPage {
     toast.present();
   }
 
+  goDetallePickingPage(){
+    debugger;  
+      this.vRutaPickingPage = {
+        'Id_Tx' : this.vPickingPage.Id_Tx,
+        'NumOrden' : this.vPickingPage.NumOrden,
+        'Cliente' : this.vPickingPage.Cliente,
+        'Ciudad' :  this.vPickingPage.Ciudad,
+        'Zona' :  this.vPickingPage.Zona
+      };
+      this.navCtrl.push(DetallePickingPage, {
+        data: this.vRutaPickingPage
+      });    
+  } 
+
+  goCerrarPickingPage(){
+    let saldoTotal = this.listaRutaPicking.reduce(function(prev, cur){
+      return prev + cur.Saldo;
+    }, 0);
+    debugger;  
+      this.vRutaPickingPage = {
+        'Id_Tx' : this.vPickingPage.Id_Tx,
+        'NumOrden' : this.vPickingPage.NumOrden,
+        'Ciudad' : this.vPickingPage.Ciudad,
+        'Zona' : this.vPickingPage.Zona,
+        'Saldo' : saldoTotal        
+      };
+      this.navCtrl.push(CierrePickingPage, {
+        data: this.vRutaPickingPage
+      });    
+  }
+
+  goPickingPorProductoPage(){
+    debugger;  
+      this.vRutaPickingPage = {
+        'idRutaPicking': this.listaRutaPicking[this.posicion].idRutaPicking,
+        'Id_Tx' : this.vPickingPage.Id_Tx,
+        'NumOrden' : this.vPickingPage.NumOrden,
+        'Cliente' : this.vPickingPage.Cliente,
+        'Ciudad' :  this.vPickingPage.Ciudad,
+        'Zona' :  this.vPickingPage.Zona
+      };
+      this.navCtrl.push(PickingPorProductoPage, {
+        data: this.vRutaPickingPage
+      });    
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad RutaPickingPage');
+  }
+  
 }
 
 

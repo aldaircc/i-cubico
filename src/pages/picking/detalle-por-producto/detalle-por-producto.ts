@@ -18,17 +18,32 @@ import { GlobalServiceProvider } from '../../../providers/global-service/global-
 export class DetallePorProductoPage {
 
   vPickingXProducto: any = [];
-  searchQuery: string='';
+  resultEliminar: any = [];
   listDetalleProducto: any;
   listAuxDetalleProducto: any;
   rowCount: any;
-  resultEliminar: any = [];
+  searchQuery: string='';  
+  
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, public alertCtrl: AlertController, 
     public popoverCtrl : PopoverController, public sGlobal: GlobalServiceProvider) {
     this.vPickingXProducto = navParams.get('data');
     this.getDetalleXProductoLoad();
+  }
+
+  filterItems(ev: any){
+    debugger;
+    const val = ev.target.value;
+    if(val && val.trim() != ''){
+      this.listAuxDetalleProducto = this.listDetalleProducto.filter((item)=>{
+        return (item.UA_CodBarra.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      });
+      this.rowCount = this.listAuxDetalleProducto.length;
+    }else{
+      this.rowCount = this.listDetalleProducto.length;
+      return this.listAuxDetalleProducto = this.listDetalleProducto;
+    }
   }
 
   getDetalleXProductoLoad(){
@@ -78,21 +93,7 @@ export class DetallePorProductoPage {
         });
       }
     })
-  }
-
-  filterItems(ev: any){
-    debugger;
-    const val = ev.target.value;
-    if(val && val.trim() != ''){
-      this.listAuxDetalleProducto = this.listDetalleProducto.filter((item)=>{
-        return (item.UA_CodBarra.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      });
-      this.rowCount = this.listAuxDetalleProducto.length;
-    }else{
-      this.rowCount = this.listDetalleProducto.length;
-      return this.listAuxDetalleProducto = this.listDetalleProducto;
-    }
-  }
+  }  
 
   presentAlertConfirm(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -155,5 +156,4 @@ export class DetallePorProductoPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad DetallePorProductoPage');
   }
-
 }

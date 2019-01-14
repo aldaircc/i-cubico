@@ -22,10 +22,10 @@ import { GlobalServiceProvider } from '../../providers/global-service/global-ser
 
 export class PickingPage {
 
-  searchQuery: string='';
-  userDetail: any;
+  searchQuery: string='';  
   listOrdenesPicking: any;
   listAuxOrdenesPicking: any;
+  userDetail: any;
   rowCount: any;
   vPickingPage: any;
 
@@ -43,8 +43,28 @@ export class PickingPage {
     this.getDataOrdenes();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PickingPage');
+  
+  filterItems(ev: any){
+    debugger;
+    const val = ev.target.value;
+    if(val && val.trim() != ''){
+      this.listAuxOrdenesPicking = this.listOrdenesPicking.filter((item)=>{
+        return (item.NumOrden.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      });
+      this.rowCount = this.listAuxOrdenesPicking.length;
+    }else{
+      this.rowCount = this.listOrdenesPicking.length;
+      return this.listAuxOrdenesPicking = this.listOrdenesPicking;
+    }
+  }
+
+  ValidarOrden(data){
+    debugger;
+    if(data.FlagPausa == true){
+      this.showModalIncidencia(data);
+    }else{
+      this.getDataRutaPicking(data.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen, data)  
+    }
   }
 
   getDataOrdenes(){
@@ -68,31 +88,7 @@ export class PickingPage {
     }, (err)=>{
       console.log('E-Ordenes Picking listar', err);
     });
-  }
-
-  filterItems(ev: any){
-    debugger;
-    const val = ev.target.value;
-    if(val && val.trim() != ''){
-      this.listAuxOrdenesPicking = this.listOrdenesPicking.filter((item)=>{
-        return (item.NumOrden.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      });
-      this.rowCount = this.listAuxOrdenesPicking.length;
-    }else{
-      this.rowCount = this.listOrdenesPicking.length;
-      return this.listAuxOrdenesPicking = this.listOrdenesPicking;
-    }
-  }
-
-  ValidarOrden(data){
-
-    debugger;
-    if(data.FlagPausa == true){
-      this.showModalIncidencia(data);
-    }else{
-      this.getDataRutaPicking(data.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen, data)  
-    }
-  }
+  }  
 
   getDataRutaPicking(strNroDoc, strUsuario, intIdAlmacen, data){
     this.sPicking.getDataRutaPicking(strNroDoc, strUsuario, intIdAlmacen).then((result)=>{
@@ -182,12 +178,13 @@ export class PickingPage {
       // contentEle: this.content.nativeElement,
       // textEle: this.text.nativeElement
     });
-
     popover.present({
       ev: ev
     });
   }
 
- 
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad PickingPage');
+  }
 
 }
