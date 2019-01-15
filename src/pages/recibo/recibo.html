@@ -59,7 +59,7 @@
 
     <ion-card-content (click)="evaluateGoReciboPage02(objRecepcion)">
         <h5><b>Nro. Orden: </b> {{objRecepcion.NumOrden}}</h5>
-        <h5><b>Fecha: </b> {{ objRecepcion.FechaDocumento|momentjs}} </h5>
+        <h5><b>Fecha: </b> {{ objRecepcion.FechaDocumento|momentjs:'DD/MM/YYYY'}} </h5>
         <h5><b>Proveedor: </b> {{objRecepcion.Proveedor}}</h5>
         <h5><b>Cuenta: </b> {{objRecepcion.Cliente}}</h5>
         <h5><b>Estado: </b> {{objRecepcion.Estado}}</h5>
