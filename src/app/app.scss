@@ -54,7 +54,7 @@
     }
 
     .bgHeader{
-        background-color: #3878be !important;        
+        background-color: /**#3878be**/ #03A9F5 !important;        
     }
 
     .bgLightBlue{
@@ -129,6 +129,42 @@
     .scroll-content {
         padding-bottom: 0 !important;
     }
+
+    .skyBlue-color{
+        background: #03A9F5;
+    }
+
+    .toolbar[primary] .toolbar-title, .toolbar[primary] .bar-button-default {
+        color: white;
+    }
+
+    $toolbar-background: #3D9BDD;
+    
+    ion-icon {
+        &[class*="custom-"] {
+          mask-size: contain;
+          mask-position: 50% 50%;
+          mask-repeat: no-repeat;
+          background: currentColor;
+          width: 1em;
+          height: 1em;
+        }
+      
+        &[class*="custom-mobile"] {
+          mask-image: url(../assets/mobile.svg);
+        }
+        &[class*="custom-qrcode"] {
+          mask-image: url(../assets/qrcode.svg);
+        }
+        &[class*="custom-spades"] {
+          mask-image: url(../assets/spades.svg);
+        }
+        &[class*="custom-save"]{
+            mask-image: url(../assets/icon/md-save.svg);
+        }
+      }
+      
+
   @import 'themes/bootstrap';
   @import 'themes/dark';
   @import 'assets/icons';

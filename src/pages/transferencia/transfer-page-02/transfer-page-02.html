@@ -40,7 +40,7 @@
         <div class="textHeader">Fecha de regist.: </div>
       </ion-col>
       <ion-col col-8 col-sm>
-        <div class="valueHeader">{{ vParameter.FechaDocumento|momentjs }}</div>
+        <div class="valueHeader">{{ vParameter.FechaDocumento|momentjs: 'DD/MM/YYYY' }}</div>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -111,7 +111,7 @@
   </ion-card>
 </ion-content>
 
-<ion-footer class="bgLightBlue">
+<ion-footer>
   <ion-grid>
     <p class="subtitleForm fieldForm" text-center>
           TOTAL ITEMS: {{ rowCount }}
@@ -121,11 +121,12 @@
         <ion-col col-2 offset-2 col-sm class="box-counter bg-process"> {{ countProcess }} </ion-col>
         <ion-col col-2 offset-2 col-sm class="box-counter bg-checked"> {{ countProcess }} </ion-col>
     </ion-row>
-
-    <ion-row justify-content-center>
-      <button ion-button icon-only (click)="cerrarTx()">
-        <ion-icon name="checkmark"></ion-icon>
-      </button>
-    </ion-row>
   </ion-grid>
+  <ion-toolbar>  
+    <ion-buttons right>
+      <button ion-button icon-only (click)="cerrarTx()">
+        <ion-icon name="custom-save" size="large"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-footer>
