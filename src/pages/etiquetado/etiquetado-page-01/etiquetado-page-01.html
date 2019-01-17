@@ -211,9 +211,14 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-buttons center>
-        <button ion-button icon-only small (click)="imprimirEtiqueta()" #iBtnSave>
-            <ion-icon name="label" name="md-barcode"></ion-icon>
+    <ion-buttons left>
+      <button ion-button icon-only small (click)="imprimirEtiqueta()" #iBtnSave>
+          <ion-icon name="label" name="md-barcode"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons right>
+        <button ion-button icon-only small (click)="goToEtqPage03()" #iBtnUbicar>
+            <ion-icon name="map"></ion-icon>
         </button>
       </ion-buttons>
   </ion-toolbar>

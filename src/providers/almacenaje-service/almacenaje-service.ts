@@ -39,7 +39,6 @@ export class AlmacenajeServiceProvider {
       'strUbi': strUbi,
       'intIdAlmacen': intIdAlmacen,
     };
-    debugger;
     return new Promise(result=>{
       this.http.get(this.sGlobal.almacenajeService + 'ListarUbicacionXCodigoBarra', { params : parameter })
       .map(res=>res.json())
@@ -50,4 +49,43 @@ export class AlmacenajeServiceProvider {
       })
     });
   }
+
+  validarExisteUA(strUA){
+    let parameter = {
+      'strUA' : strUA 
+    };
+    return new Promise(result=>{
+      this.http.get(this.sGlobal.almacenajeService + 'ValidarExisteUA', {params:parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-validarExisteUA',err);
+      })
+    });
+  }
+
+  registrarUAsUbicacion(listStrUA, intIdUbicacion, strUsuario){
+    debugger;
+    let parameter = {
+      'strUA' : listStrUA,
+      'intIdUbicacion' : intIdUbicacion,
+      'strUsuario' : strUsuario
+    };
+
+    return new Promise((result, reject)=>{
+      this.http.post(this.sGlobal.almacenajeService + 'RegistrarUAsUbicacion/strUA/intIdUbicacion/strUsuario', JSON.stringify(parameter), {headers:this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-registrarUAsUbicacion', err);
+      })
+    });
+  }
+  // [OperationContract]
+  // [WebInvoke(UriTemplate = "/RegistrarUAsUbicacion/strUA/intIdUbicacion/strUsuario", Method = "POST", ResponseFormat = WebMessageFormat.Json,
+  //     RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+  // Entidades.Mensaje RegistrarUAsUbicacion(List<string> strUA, int intIdUbicacion, string strUsuario);
+
 }

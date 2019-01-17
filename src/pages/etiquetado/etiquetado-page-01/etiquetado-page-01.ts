@@ -7,6 +7,7 @@ import moment from 'moment';
 import { EtiquetadoPage_02Page } from '../etiquetado-page-02/etiquetado-page-02';
 import { PopoverReciboComponent } from '../../../components/popover-recibo/popover-recibo';
 import { HomePage } from '../../home/home';
+import { EtiquetadoPage_03Page } from '../etiquetado-page-03/etiquetado-page-03';
 
 /**
  * Generated class for the EtiquetadoPage_01Page page.
@@ -524,5 +525,9 @@ export class EtiquetadoPage_01Page {
         **/
       }
     });
+  }
+
+  goToEtqPage03(): void{
+    this.navCtrl.push(EtiquetadoPage_03Page);
   }
 }
