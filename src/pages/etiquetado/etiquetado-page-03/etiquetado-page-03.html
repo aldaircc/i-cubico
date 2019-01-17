@@ -23,9 +23,6 @@
       <ion-label stacked>Ingresar UA</ion-label>
       <ion-input type="text" [(ngModel)]="strUA" (keyup.enter)="AddUA()"></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-icon name="ios-add-circle-outline" ></ion-icon>
-    </ion-item>
   </ion-list>
 
   <ion-card *ngFor="let obj of listUAs">
