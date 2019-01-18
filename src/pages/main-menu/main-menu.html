@@ -56,7 +56,7 @@
             <ion-icon name="paper"></ion-icon>
             Embarque
       </button>
-      <button ion-button  item-end icon-start block >
+      <button ion-button  item-end icon-start block (click)="goInventario()">
           <ion-icon name="barcode"></ion-icon>
           Inventario
       </button>
@@ -69,6 +69,87 @@
               Salir
       </button>
   </p>
+
+  <!-- <ion-grid>
+    <ion-col width-33>
+      <button ion-button class="circle-button">
+        <ion-icon name="call"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-grid> -->
+
+
+  <button ion-button class="round-button">
+    <ion-icon name="call" class="round-button img"></ion-icon>
+    
+    <!-- Call -->
+  </button>
+
+  <ion-grid>
+    
+    <ion-row text-center>
+      <ion-col col-4 col-sm align-self-center>
+        <button class="btn">
+          <ion-icon name="clipboard"></ion-icon>
+        </button>
+        <ion-label class="margin-text-circle-button">Recibo</ion-label>
+      </ion-col>
+      <ion-col col-4 col-sm align-self-center>
+        <button class="btn">
+          <ion-icon name="grid"></ion-icon>
+        </button>
+        <ion-label class="margin-text-circle-button">Almacenaje</ion-label>
+      </ion-col>
+      <ion-col col-4 col-sm align-self-center>
+        <button class="btn">
+          <ion-icon name="cart"></ion-icon>
+        </button>
+        <ion-label class="margin-text-circle-button">Picking</ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row text-center>
+      <ion-col col-4 col-sm align-self-center>
+        <button class="btn">
+          <ion-icon name="logo-dropbox"></ion-icon>
+        </button>
+        <ion-label class="margin-text-circle-button">Embalaje</ion-label>
+      </ion-col>
+      <ion-col col-4 col-sm align-self-center>
+        <button class="btn">
+          <ion-icon name="map"></ion-icon>
+        </button>
+        <ion-label class="margin-text-circle-button">Despacho</ion-label>
+      </ion-col>
+      <ion-col col-4 col-sm align-self-center>
+        <button class="btn">
+          <ion-icon name="repeat"></ion-icon>
+        </button>
+        <ion-label class="margin-text-circle-button">Transferencias</ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row text-center>
+      <ion-col col-4 col-sm align-self-center>
+        <button class="btn">
+          <ion-icon name="map"></ion-icon>
+        </button>
+        <ion-label class="margin-text-circle-button">Etiquetado</ion-label>
+      </ion-col>
+      <ion-col col-4 col-sm align-self-center>
+        <button class="btn">
+          <ion-icon name="barcode"></ion-icon>
+        </button>
+        <ion-label class="margin-text-circle-button">Inventario</ion-label>
+      </ion-col>
+      <ion-col col-4 col-sm align-self-center>
+        <button class="btn">
+          <ion-icon name="paper"></ion-icon>
+        </button>
+        <ion-label class="margin-text-circle-button">Entrega</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <ion-card >
       <ion-card-content>
