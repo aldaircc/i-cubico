@@ -15,6 +15,7 @@ export class GlobalServiceProvider {
   Id_Muelle : number = 0;
   Id_Centro : number = 0;
   Id_TerminalRF : number = 0;
+  nombreAlmacen: string = "";
   nombreImpresora : string;
   nombreEmpresa : string;
   userName : string = "";
@@ -29,6 +30,7 @@ export class GlobalServiceProvider {
   vUserData: any;
   pickingService:any;
   almacenajeService:any;
+  inventarioService: any;
 
   constructor(public http: HttpClient) {
     this.userName = "acosetito";//"aromero";
@@ -37,6 +39,7 @@ export class GlobalServiceProvider {
     this.Id_TerminalRF = 2;
     this.nombreEmpresa = "TESLA S.A";
     this.nombreImpresora = "INTERMEC";
+    this.nombreAlmacen = "Almacen 369";
 
     this.usuario = this.url + 'UsuarioService.svc/rest/';
     this.produccion = this.url + 'ProduccionService.svc/rest/';
@@ -46,5 +49,6 @@ export class GlobalServiceProvider {
     this.impresoraService = this.urlPrint + "Impresiones.svc/rest/";
     this.pickingService = this.url + "PickingService.svc/rest/";
     this.almacenajeService = this.url + "AlmacenajeService.svc/rest/";
+    this.inventarioService = this.url + "InventarioService.svc/rest/";
   }
 }

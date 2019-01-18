@@ -39,6 +39,8 @@ import { IncidenciaServiceProvider } from '../providers/incidencia-service/incid
 import { IncidenciaPage } from '../pages/incidencia/incidencia'; //Loque#369Dev
 import { EtiquetadoPage_01Page } from '../pages/etiquetado/etiquetado-page-01/etiquetado-page-01'; //Loque#369Dev
 import { EtiquetadoPage_02Page } from '../pages/etiquetado/etiquetado-page-02/etiquetado-page-02'; //Loque#369Dev
+import { EtiquetadoPage_03Page } from '../pages/etiquetado/etiquetado-page-03/etiquetado-page-03'; //Loque#369Dev
+import { EtiquetadoPage_04Page } from '../pages/etiquetado/etiquetado-page-04/etiquetado-page-04'; //Loque#369Dev
 import { PopoverReciboComponent } from '../components/popover-recibo/popover-recibo'; //Loque#369Dev
 import { EtiquetadoServiceProvider } from '../providers/etiquetado-service/etiquetado-service'; //Loque#369Dev
 import { GlobalServiceProvider } from '../providers/global-service/global-service'; //Loque#369Dev
@@ -48,13 +50,15 @@ import { TransferPage_03Page } from '../pages/transferencia/transfer-page-03/tra
 import { TransferPage_04Page } from '../pages/transferencia/transfer-page-04/transfer-page-04'; //Loque#369Dev
 import { TransferPage_05Page } from '../pages/transferencia/transfer-page-05/transfer-page-05'; //Loque#369Dev
 import { TransferPage_06Page } from '../pages/transferencia/transfer-page-06/transfer-page-06'; //Loque#369Dev
+import { InventarioPage_01Page } from '../pages/inventario/inventario-page-01/inventario-page-01'; //Loque#369Dev
+import { InventarioPage_02Page } from '../pages/inventario/inventario-page-02/inventario-page-02'; //Loque#369Dev
 import { DespachoPage } from '../pages/despacho/despacho';
 import { EmbalajePage } from '../pages/embalaje/embalaje';
-import { InventarioPage } from '../pages/inventario/inventario';
 import { PickingServiceProvider } from '../providers/picking-service/picking-service';
 
 import { SelectAllDirective } from '../directives/select-all/select-all';
 import { AlmacenajeServiceProvider } from '../providers/almacenaje-service/almacenaje-service';
+import { InventarioServiceProvider } from '../providers/inventario-service/inventario-service';
 
 @NgModule({
   declarations: [
@@ -81,6 +85,10 @@ import { AlmacenajeServiceProvider } from '../providers/almacenaje-service/almac
     IncidenciaPage, //Loque#369Dev
     EtiquetadoPage_01Page, //Loque#369Dev
     EtiquetadoPage_02Page, //Loque#369Dev
+    EtiquetadoPage_03Page, //Loque#369Dev
+    EtiquetadoPage_04Page, //Loque#369Dev
+    InventarioPage_01Page, //Loque#369Dev
+    InventarioPage_02Page, //Loque#369Dev
     PopoverReciboComponent, //Loque#369Dev
     AlmacenajePage,
     ImpresoraPage,
@@ -96,7 +104,6 @@ import { AlmacenajeServiceProvider } from '../providers/almacenaje-service/almac
     PopoverRutaPickingPage,
     DespachoPage,
     EmbalajePage,
-    InventarioPage,
     MomentjsPipe, //Loque#369Dev
     SelectAllDirective //Loque#369Dev
   ],
@@ -135,6 +142,10 @@ import { AlmacenajeServiceProvider } from '../providers/almacenaje-service/almac
     IncidenciaPage, //Loque#369Dev
     EtiquetadoPage_01Page, //Loque#369Dev
     EtiquetadoPage_02Page, //Loque#369Dev
+    EtiquetadoPage_03Page, //Loque#369Dev
+    EtiquetadoPage_04Page, //Loque#369Dev
+    InventarioPage_01Page, //Loque#369Dev
+    InventarioPage_02Page, //Loque#369Dev
     PopoverReciboComponent, //Loque#369Dev
     PickingPage,
     RutaPickingPage,
@@ -146,8 +157,7 @@ import { AlmacenajeServiceProvider } from '../providers/almacenaje-service/almac
     PopoverPickingPage,
     PopoverRutaPickingPage,
     DespachoPage,
-    EmbalajePage,
-    InventarioPage
+    EmbalajePage
 
   ],
   providers: [
@@ -161,7 +171,8 @@ import { AlmacenajeServiceProvider } from '../providers/almacenaje-service/almac
     EtiquetadoServiceProvider, //Loque#369Dev
     GlobalServiceProvider, //Loque#369Dev
     PickingServiceProvider,
-    AlmacenajeServiceProvider
+    AlmacenajeServiceProvider,
+    InventarioServiceProvider
   ]
 })
 export class AppModule {}
