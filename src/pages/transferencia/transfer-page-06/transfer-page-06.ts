@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
+import { AlmacenajeServiceProvider } from '../../../providers/almacenaje-service/almacenaje-service';
 
 /**
  * Generated class for the TransferPage_06Page page.
@@ -19,26 +20,49 @@ export class TransferPage_06Page {
   
   vParameter: any;
   strUbicacion: string = "";
+  Id_UbicacionDestino: number = 0;
   fila: string = "";
   columna: string = "";
   nivel: string = "";
   posicion: string = "";
-  isDisabledButton: boolean = false;
+  isDisabledButton: boolean = true;
+  isError:boolean = false;
+  isNormal:boolean = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public sPicking: PickingServiceProvider, public sGlobal: GlobalServiceProvider) {
+    public sPicking: PickingServiceProvider, public sAlmac: AlmacenajeServiceProvider, 
+    public sGlobal: GlobalServiceProvider) {
     this.vParameter = this.navParams.get('vParameter');
   }
-
-  ionViewDidLoad() {}
 
   validarUbicacion(){
     if(this.strUbicacion.trim() != ""){
       if(this.strUbicacion != this.vParameter.Id_Tx){
-      //             initUbicacionXBarCode(txtIdUbication, control.Global.IdAlmacen);
+      this.sAlmac.listarUbicacionXCodigoBarra(this.strUbicacion, this.sGlobal.Id_Almacen).then(result=>{
+        let res: any = result;
+        
+        if(res.length != 0){
+          this.isDisabledButton = false;
+          this.fila = res[0].Fila;
+          this.columna = res[0].Columna;
+          this.nivel = res[0].Nivel;
+          this.posicion = res[0].Posicion;
+          this.Id_UbicacionDestino = res[0].Id_Ubicacion;
+          alert('Código de ubicación, verificado correctamente.');
+          this.isError = false;
+          this.isNormal = true;
+        }else{
+          alert('Código escaneado no existe.');
+          this.isError = true;
+          this.isNormal = false;
+        }
+      });
+
         this.isDisabledButton = false;
       }else{
         alert('El código de ubicación ingresada debe ser distinta a la actual.');
+        this.isError = true;
+        this.isNormal = false;
         return;
       }
     }else{
@@ -50,17 +74,19 @@ export class TransferPage_06Page {
   }
 
   transferir(){
-    //this.reubicarUAsXSubAlmacen();
+    this.reubicarUAsXSubAlmacen(this.vParameter.Id_Tx, this.vParameter.Id_Producto, this.vParameter.Lote,
+      this.vParameter.Id_Ubicacion, this.Id_UbicacionDestino, this.sGlobal.Id_Almacen, 
+      this.vParameter.Id_SubAlmacen, this.sGlobal.userName);
   }
 
   reubicarUAsXSubAlmacen(strIdTx, intIdProducto, strLote, intIdUbicacionOrigen, intIdUbicacionDestino, intIdAlmacen, intIdSubAlmacen, strUser): void{
-    debugger;
     this.sPicking.reubicarUAsXSubAlmacen(strIdTx, intIdProducto, strLote, intIdUbicacionOrigen, intIdUbicacionDestino, intIdAlmacen, intIdSubAlmacen, strUser)
     .then(result=>{
       debugger;
       let res: any = result;
 
       if(res.errNumber == 0){
+        alert(res.message);
         this.navCtrl.pop();
       }
     });

@@ -13,7 +13,6 @@
 
 <ion-content>
   <ion-grid class="bgHeader">
-    <!-- Header caption -->
     <ion-row align-items-center>
       <ion-col col-3 col-sm>
         <div class="textHeader">Código: </div>
@@ -85,7 +84,6 @@
     </ion-row>
   </ion-grid>
 
-  <!-- [ngClass]="{bgWhite: (!isBgRed && !isBgYellow && !isBgGreen), bgRed:(isBgRed), bgYellow:(isBgYellow), bgGreen:(isBgGreen) }"  -->
   <ion-grid [ngClass]="{bgWhite: (isNormal), bgYellow: (!isError && isNormal == false), bgRed:(isError)}">
     <ion-row align-items-center>
       <ion-col col-3 col-sm>
@@ -126,7 +124,7 @@
     </ion-buttons>
 
     <ion-buttons right>
-      <button ion-button icon-only (click)="pickingUA()"> <!--[disabled]="!isEnablebtnPicking">-->
+      <button ion-button icon-only (click)="pickingUA()" [disabled]="!isEnablebtnPicking">
           <ion-icon name="label" name="md-checkbox-outline"></ion-icon>
       </button>
     </ion-buttons>

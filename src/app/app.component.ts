@@ -20,13 +20,15 @@ import { DetallePorProductoPage } from '../pages/picking/detalle-por-producto/de
 import { ReabastecimientoPage } from '../pages/picking/reabastecimiento/reabastecimiento';
 import { DespachoPage} from '../pages/despacho/despacho';
 import { EmbalajePage} from '../pages/embalaje/embalaje';
-import { InventarioPage} from '../pages/inventario/inventario';
 import { ReciboPage_05Page } from '../pages/recibo/recibo-page-05/recibo-page-05';
 import { TransferPage_06Page } from '../pages/transferencia/transfer-page-06/transfer-page-06';
 import { MainMenuPage } from '../pages/main-menu/main-menu';
 import { TransferPage_01Page } from '../pages/transferencia/transfer-page-01/transfer-page-01';
 import { EtiquetadoPage_01Page } from '../pages/etiquetado/etiquetado-page-01/etiquetado-page-01';
 import { EtiquetadoPage_02Page } from '../pages/etiquetado/etiquetado-page-02/etiquetado-page-02';
+import { EtiquetadoPage_03Page } from '../pages/etiquetado/etiquetado-page-03/etiquetado-page-03';
+import { InventarioPage_01Page } from '../pages/inventario/inventario-page-01/inventario-page-01'; //Loque#369Dev
+import { InventarioPage_02Page } from '../pages/inventario/inventario-page-02/inventario-page-02'; //Loque#369Dev
 
 @Component({
   templateUrl: 'app.html'
