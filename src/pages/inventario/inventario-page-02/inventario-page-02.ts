@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { InventarioServiceProvider } from '../../../providers/inventario-service/inventario-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
+import { InventarioPage_03Page } from '../inventario-page-03/inventario-page-03';
 
 /**
  * Generated class for the InventarioPage_02Page page.
@@ -120,43 +121,34 @@ export class InventarioPage_02Page {
   }
 
   goToInventPage03(data): void{
-    console.log('Id_Estado', data.Id_Estado);
+    debugger;
+    var parameter: any;
 
-    if(data.Id_Estado == 10){ //Estado: Pendiente
-      
-    }else{
-      
-    }
+    parameter = (this.vParameter.TipoInventario == 'GENERAL') ? 
+      {
+        'Fila': data.Fila,
+        'Id_Estado': data.Id_Estado,
+        'Id_Inventario': data.Id_Inventario,
+        'Id_Sector': data.Id_Sector,
+        'Sector': data.Sector,
+        'UsuarioAsignado': data.UsuarioAsignado,
+        'UsuarioInventariador': data.UsuarioInventariador,
+        'TipoInventario': this.vParameter.TipoInventario
+      }
+    :
+      {
+        'Id_Inventario' : data.Id_Inventario,
+        'Id_Estado' : data.Id_Estado,
+        'UsuarioInventariador' : data.UsuarioInventariador,
+        'UsuarioAsignado' : data.UsuarioAsignado,
+        'Id_Producto' : data.Id_Producto,
+        'Codigo' : data.Codigo,
+        'Producto' : data.Producto,
+        'Lote' : data.Lote,
+        'TipoInventario': this.vParameter.TipoInventario
+      }
+     ;
 
-    //estado es pendiente
-    // if (Convert.ToInt16(ListInventarioPercha.FocusedItem.SubItems[6].Text) == 10)
-    // {
-
-    //     dtpFecha.Text = DateTime.Now.ToShortDateString();
-    //     btnIniciar.Text = "Iniciar";
-    //     txtInventareador.ReadOnly = false;
-    //     dtpFecha.Enabled = false;
-    //     ManejoPaneles(2);
-    //     //estado en proceso
-    // }
-    // else
-    // {
-
-    //     btnIniciar.Text = "Continuar";
-    //     dtpFecha.Enabled = false;
-    //     if (rbtPerchas.Checked)
-    //     {
-    //         txtInventareador.Text = "";
-    //     }
-    //     ManejoPaneles(2);
-    // }
-    // lbl01.Text = "Sector: ";
-    // lbl02.Text = "Fila/Percha: ";
-    // lblInfo1.Text = ListInventarioPercha.FocusedItem.SubItems[2].Text.ToUpper();
-    // lblInfo2.Text = ListInventarioPercha.FocusedItem.SubItems[3].Text.ToUpper();
-    // lblInfo1_1.Text = " Sec: " + ListInventarioPercha.FocusedItem.SubItems[2].Text.ToUpper();
-    // lblInfo2_1.Text = " F/P: " + ListInventarioPercha.FocusedItem.SubItems[3].Text.ToUpper();
-    // lblTipoInv.Text = rbtPerchas.Text.ToUpper();
-    // txtInventareador.Text = ListInventarioPercha.FocusedItem.SubItems[4].Text.ToUpper();
+    this.navCtrl.push(InventarioPage_03Page, {'vParameter': parameter});
   }
 }

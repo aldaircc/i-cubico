@@ -19,7 +19,7 @@
           <div class="textHeader">Inventario </div>
         </ion-col>
         <ion-col col-9 col-sm>
-          <div class="valueHeader">{{ sGlobal.userName }}</div>
+          <div class="valueHeader">{{ vParameter.Id_Inventario }}</div>
         </ion-col>
       </ion-row>
       <ion-row align-items-center>
@@ -27,7 +27,7 @@
           <div class="textHeader">Fec. prog.: </div>
         </ion-col>
         <ion-col col-9 col-sm>
-          <div class="valueHeader">{{ sGlobal.nombreAlmacen }}</div>
+          <div class="valueHeader">{{ vParameter.FechaProgramacion|momentjs:'DD/MM/YYYY' }}</div>
         </ion-col>
       </ion-row>
       <ion-row align-items-center>
@@ -43,12 +43,7 @@
           <div class="textHeader">Tipo inv.: </div>
         </ion-col>
         <ion-col col-3 col-sm align-self-center>
-          <ion-label>General</ion-label>
-          <ion-radio value="cord"></ion-radio>
-        </ion-col>
-        <ion-col col-3 col-sm align-self-center>
-          <ion-label>Ciclico</ion-label>
-          <ion-radio value="cord"></ion-radio>
+          <div class="valueHeader">{{ vParameter.TipoInventario }}</div>
         </ion-col>
       </ion-row>
     </ion-grid>
