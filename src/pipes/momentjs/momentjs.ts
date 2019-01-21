@@ -13,6 +13,7 @@ export class MomentjsPipe implements PipeTransform {
    * Takes a value and makes it lowercase.
    */
   transform(value: string, ...args) {
-    return moment(value).format('DD/MM/YYYY');
+    debugger;
+    return moment(value).format(args[0]);//'DD/MM/YYYY HH:mm:ss');
   }
 }

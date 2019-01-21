@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController, ToastController } from 'ionic-angular';
+import { Component,   ViewChild } from '@angular/core';
+import { IonicPage, Navbar, NavController, NavParams, PopoverController, ToastController } from 'ionic-angular';
 import { DetallePickingPage } from '../detalle-picking/detalle-picking';
 import { PickingPorProductoPage } from '../picking-por-producto/picking-por-producto';
 import { CierrePickingPage } from '../cierre-picking/cierre-picking';
@@ -7,6 +7,7 @@ import { PickingServiceProvider } from '../../../providers/picking-service/picki
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { PopoverRutaPickingPage } from '../../picking/popover/popover-ruta-picking/popover-ruta-picking'
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
+import { PickingPage } from '../../picking/picking';
 
 
 
@@ -23,6 +24,9 @@ import { GlobalServiceProvider } from '../../../providers/global-service/global-
   templateUrl: 'ruta-picking.html',
 })
 export class RutaPickingPage {
+
+  @ViewChild(Navbar) navBar: Navbar;
+  @ViewChild('txtCodUbicacion') txtCodUbicacionRef;
 
   vPickingPage: any = [];
   vRutaPickingPage: any = [];
@@ -46,6 +50,7 @@ export class RutaPickingPage {
     public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController, 
     public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider) {
     this.vPickingPage = navParams.get('data');
+    
     this.getDataRutaPicking(this.vPickingPage.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
 
@@ -63,6 +68,7 @@ export class RutaPickingPage {
             this.isbgWhite = false;
             this.isBgRed = true;
             this.codeBar = "";
+            this.presentToast("Código de ubicación incorrecto");
           }        
       }
       else{
@@ -70,10 +76,14 @@ export class RutaPickingPage {
       }      
     }else{
       this.presentToast("Ingrese código de ubicación");
-    }    
+    } 
+    setTimeout(() => {
+      this.txtCodUbicacionRef.setFocus();
+    }, (500)); 
   }
 
   getDataRutaPicking(strNroDoc, strUsuario, intIdAlmacen){
+    
     this.sPicking.getDataRutaPicking(strNroDoc, strUsuario, intIdAlmacen).then((result)=>{
       debugger;
       this.idRutaPicking = 0;
@@ -184,6 +194,10 @@ export class RutaPickingPage {
     if(this.contador==this.listaRutaPicking.length){
       this.Nextisenabled=true;
     }
+    this.codeBar = "";
+    setTimeout(() => {
+      this.txtCodUbicacionRef.setFocus();
+    }, (500));
   }
 
   BackRutaPicking(){
@@ -198,6 +212,10 @@ export class RutaPickingPage {
       if(this.contador==1){
         this.Backisenabled=false;
       }
+      this.codeBar = "";
+      setTimeout(() => {
+        this.txtCodUbicacionRef.setFocus();
+      }, (500));
   }
   
   presentPopover(ev) {
@@ -219,9 +237,14 @@ export class RutaPickingPage {
     toast.present();
   }
 
+  goPickingPage(){
+    this.navCtrl.push(PickingPage);
+  } 
+
   goDetallePickingPage(){
     debugger;  
       this.vRutaPickingPage = {
+        'Id_Page_Anterior' : 2,
         'Id_Tx' : this.vPickingPage.Id_Tx,
         'NumOrden' : this.vPickingPage.NumOrden,
         'Cliente' : this.vPickingPage.Cliente,
@@ -266,6 +289,14 @@ export class RutaPickingPage {
   }
 
   ionViewDidLoad() {
+    setTimeout(() => {
+      this.txtCodUbicacionRef.setFocus();
+    }, (500)); 
+    
+    this.navBar.backButtonClick = (e:UIEvent)=>{
+      this.goPickingPage();        
+     }
+
     console.log('ionViewDidLoad RutaPickingPage');
   }
   

@@ -55,6 +55,7 @@ import { PickingServiceProvider } from '../providers/picking-service/picking-ser
 
 import { SelectAllDirective } from '../directives/select-all/select-all';
 import { AlmacenajeServiceProvider } from '../providers/almacenaje-service/almacenaje-service';
+import { CustomFormsModule } from 'ng2-validation';
 
 @NgModule({
   declarations: [
@@ -108,7 +109,8 @@ import { AlmacenajeServiceProvider } from '../providers/almacenaje-service/almac
     }),  //Loque#369Dev
     WarehouseSelectPageModule,
     MainMenuPageModule,
-    NgxDatatableModule //Loque#369Dev
+    NgxDatatableModule, //Loque#369Dev
+    CustomFormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
