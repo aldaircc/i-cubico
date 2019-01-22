@@ -29,6 +29,10 @@ import { EtiquetadoPage_02Page } from '../pages/etiquetado/etiquetado-page-02/et
 import { EtiquetadoPage_03Page } from '../pages/etiquetado/etiquetado-page-03/etiquetado-page-03';
 import { InventarioPage_01Page } from '../pages/inventario/inventario-page-01/inventario-page-01'; //Loque#369Dev
 import { InventarioPage_02Page } from '../pages/inventario/inventario-page-02/inventario-page-02'; //Loque#369Dev
+import { InventarioPage_03Page } from '../pages/inventario/inventario-page-03/inventario-page-03'; //Loque#369Dev
+import { InventarioPage_04Page } from '../pages/inventario/inventario-page-04/inventario-page-04'; //Loque#369Dev
+import { InventarioPage_05Page } from '../pages/inventario/inventario-page-05/inventario-page-05'; //Loque#369Dev
+import { InventarioPage_06Page } from '../pages/inventario/inventario-page-06/inventario-page-06'; //Loque#369Dev
 
 @Component({
   templateUrl: 'app.html'
