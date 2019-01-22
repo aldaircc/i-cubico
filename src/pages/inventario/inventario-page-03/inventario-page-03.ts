@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Content, IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { InventarioServiceProvider } from '../../../providers/inventario-service/inventario-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { InventarioPage_06Page } from '../inventario-page-06/inventario-page-06';
@@ -69,7 +69,7 @@ export class InventarioPage_03Page {
   }
 
   continuarInventario(): void{
-    
+    debugger;
     if(this.btnIniciar.Text == 'Iniciar'){
 
       if(this.txtInventareador.Text.trim() == ""){
@@ -220,4 +220,19 @@ export class InventarioPage_03Page {
   goToInventPage06(): void{
     this.navCtrl.push(InventarioPage_06Page);
   }
+
+  @ViewChild(Content) content: Content;
+
+  fixScroll(){
+    //if(this.device.platform == "Android"){
+      setTimeout(() => {
+      debugger;
+        let element = document.getElementById("absence-textarea");
+        let box = element.getBoundingClientRect();
+        let top = Math.round(box.top*10);
+        this.content.scrollTo(0, top, 100);
+      }, 350);
+    //}
+  }
+
 }

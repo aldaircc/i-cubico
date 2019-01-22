@@ -30,7 +30,7 @@
 
     <ion-item>
       <ion-label>Código de barras UA:</ion-label>
-      <ion-input type="text" [(ngModel)]="strCodeBarUA" [disabled]="!isEnabledCodeBar"></ion-input>
+      <ion-input type="text" [(ngModel)]="strCodeBarUA" (keyup.enter)="buscarArticuloEnLista()" [disabled]="!isEnabledCodeBar"></ion-input>
     </ion-item>
   </ion-list>
 

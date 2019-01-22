@@ -40,30 +40,11 @@ export class InventarioPage_04Page {
   }
 
   validarUbicacion(): void{
-    if(this.strCodeBarUA == 'GENERAL'){
+    debugger;
+    if(this.strTipoInventario == 'GENERAL'){
 
       this.validarUbicacionInventario(this.strUbicacion, this.sGlobal.Id_Almacen, this.vParameter.Id_Sector, this.vParameter.Fila, 1);
-
-    //                 string fila = lblInfo2.Text.ToUpper().Trim();
-    //                 int idSector = Convert.ToInt16(ListInventarioPercha.FocusedItem.SubItems[1].Text);
-    //                 var msj = method.ValidarUbicacionInventario(codbarraUbi, control.Global.IdAlmacen, idSector, fila, 1);
-    //                 if (msj.errNumber == 1)
-    //                 {
-    //                     idUbicacion = Convert.ToInt32(msj.valor1);
-    //                     valor = true;
-    //                 }
-    //                 else
-    //                 {
-    //                     MessageBox.Show(msj.message, "Inventario",
-    //                      MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
-    //                 }
     }else{
-
-      if(){
-
-      }else{
-        
-      }
 
     }
     // ID_UBICACION_INV = 0;
@@ -128,6 +109,42 @@ export class InventarioPage_04Page {
       }else{
         alert(res.message);
       }
+    });
+  }
+
+  buscarArticuloEnLista(): void{
+    debugger;
+    if(this.vParameter.TipoInventario == 'GENERAL'){
+      this.validarUAInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, 0, this.strCodeBarUA);
+    }else{
+
+    }
+
+    // string idInventario = txtTransaccion.Text;
+    // string strUA = txtCodBarra.Text;
+    // validaUA = new ProxySGAAMovil.SOAPInventario.SGAA_SP_S_validarUAInventario_Result();
+    // GestionInventario method = new GestionInventario();
+    // //DATOS DEL ARTICULO LEIDO
+    // if (rbtPerchas.Checked)
+    // {
+
+    //     validaUA = method.ValidarUAInventario(idInventario, control.Global.IdAlmacen, 0, strUA);
+    //     //DTARTICULO = null;// objConsultas.CargarListaInventarioDetallePercha(txtCodBarra.Text.Trim, txtTransaccion.Text.Trim);
+    // }
+    // else
+    // {
+    //     int producto = string.IsNullOrEmpty(lblInfo1.Tag.ToString()) ? -1 : Convert.ToInt32(lblInfo1.Tag);
+    //     validaUA = method.ValidarUAInventario(idInventario, control.Global.IdAlmacen, producto, strUA);
+    //     txtCantidad.Tag = validaUA.Saldo.ToString();
+    //     //DTARTICULO = null;//objConsultas.CargarListaInventarioDetalleArticulo(ListInventarioArticulo.FocusedItem.SubItems(9).Text, txtTransaccion.Text.Trim, txtCodBarra.Text.Trim);
+    // }
+  }
+
+  validarUAInventario(strIdInventario, intIdAlmacen, intIdProducto, strUA): void{
+    this.sInve.validarUAInventario(strIdInventario, intIdAlmacen, intIdProducto, strUA).then(result=>{
+      debugger;
+      let res: any = result;
+
     });
   }
 }

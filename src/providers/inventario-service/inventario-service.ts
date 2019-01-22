@@ -145,13 +145,32 @@ export class InventarioServiceProvider {
     };
 
     return new Promise((result, reject)=>{
-      this.http.post(this.sGlobal.inventarioService + 'CodBarraUbi/intIdAlmacen/intIdSector/strFila/intTipo', JSON.stringify(parameter), {headers: this.headers})
+      this.http.post(this.sGlobal.inventarioService + 'ValidarUbicacionInventario/CodBarraUbi/intIdAlmacen/intIdSector/strFila/intTipo', JSON.stringify(parameter), {headers: this.headers})
       .map(res=>res.json())
       .subscribe(data=>{
         result(data);
       },err=>{
         console.log('E-validarUbicacionInventario', err);
       })
+    });
+  }
+
+  validarUAInventario(strIdInventario, intIdAlmacen, intIdProducto, strUA){
+    let parameter = {
+      'strIdInventario': strIdInventario,
+      'intIdAlmacen': intIdAlmacen,
+      'intIdProducto': intIdProducto,
+      'strUA': strUA
+    };
+    
+    return new Promise(result=>{
+      this.http.get(this.sGlobal.inventarioService + 'ValidarUAInventario', {params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-validarUAInventario', err);
+      });
     });
   }
 }
