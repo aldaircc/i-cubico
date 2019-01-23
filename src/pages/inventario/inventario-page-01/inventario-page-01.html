@@ -16,7 +16,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid class="bgHeader">
+  <ion-grid class="bgHeader statico">
     <ion-row align-items-center>
       <ion-col col-3 col-sm>
         <div class="textHeader">Usuario </div>
@@ -35,52 +35,56 @@
     </ion-row>
   </ion-grid>
 
-  <ion-card *ngFor="let obj of listInvent">
-    <ion-card-content no-padding (click)="goToInventPage02(obj)">
-      <ion-grid>
-        <ion-row>
-          <ion-col col-1 col-sm
-          [ngClass]="obj.Id_Estado === 3 ? 'label-color bg-no-started' : 'label-color bg-process'">
-          </ion-col>
-          <ion-col col-10 col-sm>
-            <ion-row>
-              <ion-col class="iv01-card-col" col-4 col-sm>
-                <ion-label class="iv01-card-label fieldForm">Inventario:</ion-label>
-              </ion-col>
-              <ion-col class="iv01-card-col" col-8 col-sm>
-                <ion-label class="iv01-card-label">{{ obj.Id_Inventario }}</ion-label>
-              </ion-col>
-            </ion-row>
-        <ion-row>
-          <ion-col class="iv01-card-col" col-4 col-sm>
-            <ion-label class="iv01-card-label fieldForm">Fec. prog.:</ion-label>
-          </ion-col>
-          <ion-col class="iv01-card-col">
-            <ion-label class="iv01-card-label">{{ obj.FechaProgramacion|momentjs:'DD/MM/YYYY' }}</ion-label>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="iv01-card-col" col-4 col-sm>
-            <ion-label class="iv01-card-label fieldForm">Tipo:</ion-label>
-          </ion-col>
-          <ion-col class="iv01-card-col" col-8 col-sm>
-            <ion-label class="iv01-card-label">{{ obj.TipoInventario }}</ion-label>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="iv01-card-col" col-4 col-sm>
-            <ion-label class="iv01-card-label fieldForm">Fec. cierre:</ion-label>
-          </ion-col>
-          <ion-col class="iv01-card-col" col-8 col-sm>
-            <ion-label class="iv01-card-label">{{ obj.FechaCierre|momentjs:'DD/MM/YYYY' }}</ion-label>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-      <ion-col col-1 col-sm align-self-center>
-        <ion-icon name="arrow-round-forward"></ion-icon>
-      </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+  <ion-list [virtualScroll]="listInvent" [approxItemHeight]="'20px'" style="top: 50px;">
+    <!-- <ion-card *ngFor="let obj of listInvent"> -->
+    <ion-card *virtualItem="let obj">
+      <ion-card-content no-padding (click)="goToInventPage02(obj)">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-1 col-sm
+            [ngClass]="obj.Id_Estado === 3 ? 'label-color bg-no-started' : 'label-color bg-process'">
+            </ion-col>
+            <ion-col col-10 col-sm>
+              <ion-row>
+                <ion-col class="iv01-card-col" col-4 col-sm>
+                  <ion-label class="iv01-card-label fieldForm">Inventario:</ion-label>
+                </ion-col>
+                <ion-col class="iv01-card-col" col-8 col-sm>
+                  <ion-label class="iv01-card-label">{{ obj.Id_Inventario }}</ion-label>
+                </ion-col>
+              </ion-row>
+          <ion-row>
+            <ion-col class="iv01-card-col" col-4 col-sm>
+              <ion-label class="iv01-card-label fieldForm">Fec. prog.:</ion-label>
+            </ion-col>
+            <ion-col class="iv01-card-col">
+              <ion-label class="iv01-card-label">{{ obj.FechaProgramacion|momentjs:'DD/MM/YYYY' }}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="iv01-card-col" col-4 col-sm>
+              <ion-label class="iv01-card-label fieldForm">Tipo:</ion-label>
+            </ion-col>
+            <ion-col class="iv01-card-col" col-8 col-sm>
+              <ion-label class="iv01-card-label">{{ obj.TipoInventario }}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="iv01-card-col" col-4 col-sm>
+              <ion-label class="iv01-card-label fieldForm">Fec. cierre:</ion-label>
+            </ion-col>
+            <ion-col class="iv01-card-col" col-8 col-sm>
+              <ion-label class="iv01-card-label">{{ obj.FechaCierre|momentjs:'DD/MM/YYYY' }}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col col-1 col-sm align-self-center>
+          <ion-icon name="arrow-round-forward"></ion-icon>
+        </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+  
 </ion-content>

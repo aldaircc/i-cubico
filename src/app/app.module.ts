@@ -52,6 +52,10 @@ import { TransferPage_05Page } from '../pages/transferencia/transfer-page-05/tra
 import { TransferPage_06Page } from '../pages/transferencia/transfer-page-06/transfer-page-06'; //Loque#369Dev
 import { InventarioPage_01Page } from '../pages/inventario/inventario-page-01/inventario-page-01'; //Loque#369Dev
 import { InventarioPage_02Page } from '../pages/inventario/inventario-page-02/inventario-page-02'; //Loque#369Dev
+import { InventarioPage_03Page } from '../pages/inventario/inventario-page-03/inventario-page-03'; //Loque#369Dev
+import { InventarioPage_04Page } from '../pages/inventario/inventario-page-04/inventario-page-04'; //Loque#369Dev
+import { InventarioPage_05Page } from '../pages/inventario/inventario-page-05/inventario-page-05'; //Loque#369Dev
+import { InventarioPage_06Page } from '../pages/inventario/inventario-page-06/inventario-page-06'; //Loque#369Dev
 import { DespachoPage } from '../pages/despacho/despacho';
 import { EmbalajePage } from '../pages/embalaje/embalaje';
 import { PickingServiceProvider } from '../providers/picking-service/picking-service';
@@ -112,6 +116,10 @@ import { from } from 'rxjs/observable/from';
     EtiquetadoPage_04Page, //Loque#369Dev
     InventarioPage_01Page, //Loque#369Dev
     InventarioPage_02Page, //Loque#369Dev
+    InventarioPage_03Page, //Loque#369Dev
+    InventarioPage_04Page, //Loque#369Dev
+    InventarioPage_05Page, //Loque#369Dev
+    InventarioPage_06Page, //Loque#369Dev
     PopoverReciboComponent, //Loque#369Dev
     AlmacenajePage,
     ImpresoraPage,
@@ -189,6 +197,10 @@ import { from } from 'rxjs/observable/from';
     EtiquetadoPage_04Page, //Loque#369Dev
     InventarioPage_01Page, //Loque#369Dev
     InventarioPage_02Page, //Loque#369Dev
+    InventarioPage_03Page, //Loque#369Dev
+    InventarioPage_04Page, //Loque#369Dev
+    InventarioPage_05Page, //Loque#369Dev
+    InventarioPage_06Page, //Loque#369Dev
     PopoverReciboComponent, //Loque#369Dev
     PickingPage,
     RutaPickingPage,

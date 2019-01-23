@@ -47,5 +47,4 @@ export class InventarioPage_01Page {
     }
     this.navCtrl.push(InventarioPage_02Page, { 'vParameter' : parameter });
   }
-
 }
