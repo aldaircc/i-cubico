@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController, ToastController, AlertController } from 'ionic-angular';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { IonicPage, Navbar, NavController, NavParams, PopoverController, ToastController, AlertController } from 'ionic-angular';
 import { DetallePorProductoPage } from '../detalle-por-producto/detalle-por-producto'
 import { ReabastecimientoPage } from '../reabastecimiento/reabastecimiento'
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
@@ -47,12 +47,17 @@ export class PickingPorProductoPage {
 
   //valorRegistrar: number = 0;
 
+  @ViewChild(Navbar) navBar: Navbar;
+  @ViewChild('txtCodBarraUA') txtCodBarraUARef;
+  @ViewChild('txtCantidadUA') txtCantidadUARef;
+  @ViewChild('txtCantidadUA', { read: ElementRef }) private txtCantidadUA: ElementRef;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController,
-    public toastCtrl: ToastController, public alertCtrl: AlertController, public sGlobal: GlobalServiceProvider) {
+    public toastCtrl: ToastController, public alertCtrl: AlertController,
+    public sGlobal: GlobalServiceProvider) {
     this.vRutaPickingPage = navParams.get('data');
     this.getPickingProductoLoad();
-
   }
 
   getPickingProductoLoad() {
@@ -104,58 +109,58 @@ export class PickingPorProductoPage {
         this.idRutaPicking = this.idRutaPicking + 1;
       }
 
-      for(var i = 0; i< this.listaTempPickingProducto.length; i++){
+      for (var i = 0; i < this.listaTempPickingProducto.length; i++) {
         //if(result[i].Saldo>0){ 
-          if(result[i].FlagTransito == false){
-            var id = this.vRutaPickingPage.idRutaPicking;
-            this.contador = 1;
-            if(id>=0){
-              debugger;
-              this.contador = id + 1;
-              this.posicion = id;
-              this.pickingProducto = result[this.posicion];
-              if(this.contador==1){
-                this.Backisenabled=false;
-              }else{this.Backisenabled=true;}
-              if(this.contador==this.listaTempPickingProducto.length){
-                this.Nextisenabled=true;
-              }else{
-                this.Nextisenabled=false;
-              }
-            }
-            // else{
-            //   this.contador = i + 1;
-            //   this.posicion = i;
-            //   this.pickingProducto = result[i];
-            //   if(this.contador==1){
-            //     this.Backisenabled=false;
-            //   }else{this.Backisenabled=true;}
-            //   if(this.contador==this.listaTempPickingProducto.length){
-            //     this.Nextisenabled=true;
-            //   }else{
-            //     this.Nextisenabled=false;
-            //   }
-            // }
-            
-            this.total = this.listaTempPickingProducto.length;      
-            if(this.contador==this.listaTempPickingProducto.length){
-              this.Nextisenabled=true;
-            }
-            console.log('detalles', this.pickingProducto);
-            if(this.pickingProducto.length == 0){
-              console.log('No se encontraron detalles', this.pickingProducto);  
-            }
-
+        if (result[i].FlagTransito == false) {
+          var id = this.vRutaPickingPage.idRutaPicking;
+          this.contador = 1;
+          if (id >= 0) {
             debugger;
-            // if(this.valorRegistrar==1){
-            //   debugger;
-            //   this.ValidarSiguienteProducto();
-            // }
-            return;
-          }      
+            this.contador = id + 1;
+            this.posicion = id;
+            this.pickingProducto = result[this.posicion];
+            if (this.contador == 1) {
+              this.Backisenabled = false;
+            } else { this.Backisenabled = true; }
+            if (this.contador == this.listaTempPickingProducto.length) {
+              this.Nextisenabled = true;
+            } else {
+              this.Nextisenabled = false;
+            }
+          }
+          // else{
+          //   this.contador = i + 1;
+          //   this.posicion = i;
+          //   this.pickingProducto = result[i];
+          //   if(this.contador==1){
+          //     this.Backisenabled=false;
+          //   }else{this.Backisenabled=true;}
+          //   if(this.contador==this.listaTempPickingProducto.length){
+          //     this.Nextisenabled=true;
+          //   }else{
+          //     this.Nextisenabled=false;
+          //   }
+          // }
+
+          this.total = this.listaTempPickingProducto.length;
+          if (this.contador == this.listaTempPickingProducto.length) {
+            this.Nextisenabled = true;
+          }
+          console.log('detalles', this.pickingProducto);
+          if (this.pickingProducto.length == 0) {
+            console.log('No se encontraron detalles', this.pickingProducto);
+          }
+
+          debugger;
+          // if(this.valorRegistrar==1){
+          //   debugger;
+          //   this.ValidarSiguienteProducto();
+          // }
+          return;
+        }
         //}
-      } 
-      
+      }
+
     }, err => {
       console.log('E-getPickingProducto', err);
     });
@@ -204,21 +209,25 @@ export class PickingPorProductoPage {
         this.idRutaPicking = this.idRutaPicking + 1;
       }
 
+      debugger;
       this.pickingProducto = result[this.posicion];
 
-      
+
       this.ValidarSiguienteProducto();
-      
+
       return;
-      
+
     }, err => {
       console.log('E-getPickingProducto', err);
     });
   }
 
+
+
   registarUA() {
     debugger;
     //this.valorRegistrar = 1;
+
     if (parseInt(this.Textcantidad) > this.pickingProducto.Saldo) { //Cantidad de la UA es mayor al saldo
       //Editar cantidad de la UA
       this.presentToast("Cantidad de UA no puede ser mayor al saldo");
@@ -233,7 +242,7 @@ export class PickingPorProductoPage {
         'Id_UM': this.pickingProducto.IdUMBase,  //
         'Cantidad': this.Textcantidad,  //
         'FlagAnulado': false, //
-        'Id_TerminalRF': 1,  //
+        'Id_TerminalRF': this.sGlobal.Id_TerminalRF,  //
         'Item': this.pickingProducto.Item,  //
         'Id_Almacen': this.sGlobal.Id_Almacen,  //
         'UsuarioRegistro': this.sGlobal.userName  //
@@ -257,8 +266,34 @@ export class PickingPorProductoPage {
         }
         //Actulizar los campos cant. atendida y saldo
         this.getPickingProductoUpdate(this.vRutaPickingPage.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen);
-        
+
+        setTimeout(() => {
+          this.txtCodBarraUARef.setFocus();
+        }, (500));
+
       });
+    }
+  }
+
+  keydown(event: any) {
+    debugger;
+    const MY_REGEXP = /^\s*(\-|\+)?(\d+|(\d*(\.\d*)))([eE][+-]?\d+)?\s*$/;
+    let newValue = event.target.value;
+    let regExp = new RegExp(MY_REGEXP);
+
+    if (!regExp.test(newValue)) {
+      event.target.value = newValue.slice(0, -1);
+    }
+  }
+
+  keyup(event: any) {
+    debugger;
+    const MY_REGEXP = /^\s*(\-|\+)?(\d+|(\d*(\.\d*)))([eE][+-]?\d+)?\s*$/;
+    let newValue = event.target.value;
+    let regExp = new RegExp(MY_REGEXP);
+
+    if (!regExp.test(newValue)) {
+      event.target.value = newValue.slice(0, -1);
     }
   }
 
@@ -276,11 +311,20 @@ export class PickingPorProductoPage {
             this.isBgGreen = false;
             //Mostrar cantidad de la UA
             this.Textcantidad = this.UAPicking.valor1;
+
+            setTimeout(() => {
+              this.txtCantidadUARef.setFocus();
+              this.selectAll(this.txtCantidadUA);
+            }, (500));
+
+            // this.selectAll(this.txtCantidadUA);
+
             if (this.UAPicking.valor2 != 2) {
               //Bloquear campo cantidad
               this.Txtcantidadisenabled = false;
               if (this.UAPicking.valor2 == 1) {
                 //Registrar cantidad de la UA automaticamente
+                this.registarUA();
               }
             }
           } else {
@@ -292,6 +336,9 @@ export class PickingPorProductoPage {
             this.isBgGreen = false;
             this.codeBar = "";
             this.Textcantidad = "";
+            setTimeout(() => {
+              this.txtCodBarraUARef.setFocus();
+            }, (500));
           }
         }, (err) => {
           console.log('E-Verficar UA', err);
@@ -304,6 +351,9 @@ export class PickingPorProductoPage {
         this.isBgGreen = false;
         this.codeBar = "";
         this.Textcantidad = "";
+        setTimeout(() => {
+          this.txtCodBarraUARef.setFocus();
+        }, (500));
       }
     } else {
       this.presentToast("Ingresar código de UA");
@@ -312,74 +362,136 @@ export class PickingPorProductoPage {
       this.isBgGreen = false;
       this.codeBar = "";
       this.Textcantidad = "";
+      setTimeout(() => {
+        this.txtCodBarraUARef.setFocus();
+      }, (500));
     }
   }
 
   ValidarSiguienteProducto() {
-    for (var i = 0; i < this.listaTempPickingProducto.length; i++) {
-      if (this.listaTempPickingProducto[i].FlagTransito == false) {
-        //Hacer nueva lista temp.
-        this.listProductoConRuta.push(this.listaTempPickingProducto[i])
-      }
-    }
-    let saldoTotal = this.listProductoConRuta.reduce(function (prev, cur) {
+    // for (var i = 0; i < this.listaTempPickingProducto.length; i++) {
+    //   if (this.listaTempPickingProducto[i].FlagTransito == false) {
+    //     //Hacer nueva lista temp.
+    //     this.listProductoConRuta.push(this.listaTempPickingProducto[i])
+    //   }
+    // }
+
+    let saldoTotal = this.listaTempPickingProducto.reduce(function (prev, cur) {
       return prev + cur.Saldo;
-    }, 0); //Obtener el saldo total de los productos con ruta
-    
-    if (saldoTotal == 0)  //Si el saldo total de los productos con ruta se completa 
+    }, 0); //Obtener el saldo total de los productos.
+
+    if (this.contador == this.listaTempPickingProducto.length)  //Si el saldo total de los productos con ruta se completa 
     {
-      debugger;
-      //se sugiere cerrar picking
-      this.presentAlertConfirm("¿Desea cerrar picking?”.").then((result) => {
-        if (result) {
-          // Ir a pagina cerrar picking
-          this.goCerrarPickingPage();
-        }else{
-          this.goDetallePickingPage();
-        }
-      })
+      if (saldoTotal == 0) {
+        //se sugiere cerrar picking
+        debugger;
+        this.presentAlertConfirm("Orden de picking completa. ¿Desea cerrar picking?”.").then((result) => {
+          if (result) {
+            // Ir a pagina cerrar picking
+            this.goCerrarPickingPage();
+          } else {
+            this.goDetallePickingPage();
+          }
+        })
+      } else {
+        this.presentAlertConfirm("Orden de picking incompleta. ¿Desea cerrar picking?”.").then((result) => {
+          if (result) {
+            // Ir a pagina cerrar picking
+            this.goCerrarPickingPage();
+          } else {
+            this.goDetallePickingPage();
+          }
+        })
+      }
     } else {//Si el saldo total de los productos con ruta se No completa
       debugger;
       if (this.pickingProducto.Saldo == 0) {//Si Item completado
         //-Si el siguiente producto tiene la misma ubicacion 
-        this.presentAlert("Item completado");
-        if (this.pickingProducto.CodBarraUbi = this.listaTempPickingProducto[this.posicion + 1].CodBarraUbi) {
-          //avanzar al siguiente producto en la misma pantalla
-          this.total = this.listaTempPickingProducto.length;
-          this.posicion = this.posicion + 1;
-          if (this.posicion < this.listaTempPickingProducto.length) {
-            this.contador = this.contador + 1;
-            this.pickingProducto = this.listaTempPickingProducto[this.posicion];
-            this.Backisenabled = true;
-          }
-          if (this.contador == this.listaTempPickingProducto.length) {
-            this.Nextisenabled = true;
+        //this.presentAlert("Item completado");
+        if (this.posicion + 1 < this.listaTempPickingProducto.length) {
+          var codigo_Ubi = this.listaTempPickingProducto[this.posicion + 1].CodBarraUbi;
+
+          if (this.pickingProducto.CodBarraUbi == codigo_Ubi) {
+            //avanzar al siguiente producto en la misma pantalla
+            this.presentAlert("Item completado");
+            this.total = this.listaTempPickingProducto.length;
+            this.posicion = this.posicion + 1;
+            if (this.posicion < this.listaTempPickingProducto.length) {
+              this.contador = this.contador + 1;
+              this.pickingProducto = this.listaTempPickingProducto[this.posicion];
+              this.Backisenabled = true;
+            }
+            if (this.contador == this.listaTempPickingProducto.length) {
+              this.Nextisenabled = true;
+            }
+          } else {
+            //volver a ruta picking y ubicarse en la posicion siguiente...          
+            this.presentAlert("Item completado").then((resultAlert2) => {
+              this.goRutaPickingPage();
+            })
           }
         } else {
-          //volver a ruta picking y ubicarse en la posicion siguiente...
-          this.goRutaPickingPage();
+
         }
       }
     }
     //this.valorRegistrar=0;
   }
 
+
+
   NextRutaPicking() {
     debugger;
-    if(this.pickingProducto.Saldo > 0){ 
+    if (this.pickingProducto.Saldo > 0) {
       this.presentAlertConfirm("¿Desea generar una orden de reabastecimiento?”.").then((result) => {
         if (result) {
           this.goReabastecimientoPage();
-        }else{
-          this.NextRuta();
+        } else {
+          if (this.posicion + 1 < this.listaTempPickingProducto.length) {
+            var codigo_Ubi = this.listaTempPickingProducto[this.posicion + 1].CodBarraUbi;
+            if (this.pickingProducto.CodBarraUbi == codigo_Ubi) {
+              this.NextRuta();
+              this.isbgWhite = true;
+              this.isBgRed = false;
+              this.isBgYellow = false;
+              this.isBgGreen = false;
+              this.codeBar = "";
+              this.Textcantidad = "";
+              setTimeout(() => {
+                this.txtCodBarraUARef.setFocus();
+              }, (500));
+            } else {
+              debugger;
+              this.pickingProducto.idRutaPicking = this.listaTempPickingProducto[this.posicion].idRutaPicking + 1;
+              this.goRutaPickingPage();
+            }
+          }
         }
       })
-    }else{
-      this.NextRuta();
-    }    
+    } else {
+      if (this.posicion + 1 < this.listaTempPickingProducto.length) {
+        var codigo_Ubi = this.listaTempPickingProducto[this.posicion + 1].CodBarraUbi;
+        if (this.pickingProducto.CodBarraUbi == codigo_Ubi) {
+          this.NextRuta();
+          this.isbgWhite = true;
+          this.isBgRed = false;
+          this.isBgYellow = false;
+          this.isBgGreen = false;
+          this.codeBar = "";
+          this.Textcantidad = "";
+          setTimeout(() => {
+            this.txtCodBarraUARef.setFocus();
+          }, (500));
+        } else {
+          debugger;
+          this.pickingProducto.idRutaPicking = this.listaTempPickingProducto[this.posicion].idRutaPicking + 1;
+          this.goRutaPickingPage();
+        }
+      }
+    }
   }
 
-  NextRuta(){
+  NextRuta() {
     this.total = this.listaTempPickingProducto.length;
     this.posicion = this.posicion + 1;
     if (this.posicion < this.listaTempPickingProducto.length) {
@@ -394,20 +506,54 @@ export class PickingPorProductoPage {
 
   BackRutaPicking() {
     debugger;
-    if(this.pickingProducto.Saldo > 0){
+    if (this.pickingProducto.Saldo > 0) {
       this.presentAlertConfirm("¿Desea generar una orden de reabastecimiento?”.").then((result) => {
         if (result) {
           this.goReabastecimientoPage();
-        }else{
-          this.BackRuta();
+        } else {
+          if (this.posicion - 1 >= 0) {
+            var codigo_Ubi = this.listaTempPickingProducto[this.posicion - 1].CodBarraUbi;
+            if (this.pickingProducto.CodBarraUbi == codigo_Ubi) {
+              this.BackRuta();
+              this.isbgWhite = true;
+              this.isBgRed = false;
+              this.isBgYellow = false;
+              this.isBgGreen = false;
+              this.codeBar = "";
+              this.Textcantidad = "";
+              setTimeout(() => {
+                this.txtCodBarraUARef.setFocus();
+              }, (500));
+            } else {
+              this.pickingProducto.idRutaPicking = this.listaTempPickingProducto[this.posicion].idRutaPicking - 1;
+              this.goRutaPickingPage();
+            }
+          }
         }
       });
-    }else{
-      this.BackRuta();
-    }    
+    } else {
+      if (this.posicion - 1 >= 0) {
+        var codigo_Ubi = this.listaTempPickingProducto[this.posicion - 1].CodBarraUbi;
+        if (this.pickingProducto.CodBarraUbi == codigo_Ubi) {
+          this.BackRuta();
+          this.isbgWhite = true;
+          this.isBgRed = false;
+          this.isBgYellow = false;
+          this.isBgGreen = false;
+          this.codeBar = "";
+          this.Textcantidad = "";
+          setTimeout(() => {
+            this.txtCodBarraUARef.setFocus();
+          }, (500));
+        } else {
+          this.pickingProducto.idRutaPicking = this.listaTempPickingProducto[this.posicion].idRutaPicking - 1;
+          this.goRutaPickingPage();
+        }
+      }
+    }
   }
 
-  BackRuta(){
+  BackRuta() {
     this.total = this.listaTempPickingProducto.length;
     this.posicion = this.posicion - 1;
     if (this.posicion >= 0) {
@@ -488,7 +634,9 @@ export class PickingPorProductoPage {
   }
 
   goRutaPickingPage() {
+    debugger;
     this.vPickingXProducto = {
+      'Id_Page_Anterior': 1,
       'idRutaPicking': this.pickingProducto.idRutaPicking,
       'Id_Tx': this.vRutaPickingPage.Id_Tx,
       'NumOrden': this.vRutaPickingPage.NumOrden,
@@ -503,6 +651,7 @@ export class PickingPorProductoPage {
 
   goRutaPickingPageUpdate() {
     this.vPickingXProducto = {
+
       'Id_Tx': this.vRutaPickingPage.Id_Tx,
       'NumOrden': this.vRutaPickingPage.NumOrden,
       'Cliente': this.vRutaPickingPage.Cliente,
@@ -514,26 +663,28 @@ export class PickingPorProductoPage {
     });
   }
 
-  goCerrarPickingPage(){
-    let saldoTotalPicking = this.listaTempPickingProducto.reduce(function(prev, cur){
+  goCerrarPickingPage() {
+    let saldoTotalPicking = this.listaTempPickingProducto.reduce(function (prev, cur) {
       return prev + cur.Saldo;
     }, 0);
-    debugger;  
-      this.vPickingXProducto = {
-        'Id_Tx' : this.vRutaPickingPage.Id_Tx,
-        'NumOrden' : this.vRutaPickingPage.NumOrden,
-        'Ciudad' : this.vRutaPickingPage.Ciudad,
-        'Zona' : this.vRutaPickingPage.Zona,
-        'Saldo' : saldoTotalPicking        
-      };
-      this.navCtrl.push(CierrePickingPage, {
-        data: this.vPickingXProducto
-      });    
+    debugger;
+    this.vPickingXProducto = {
+      'Id_Tx': this.vRutaPickingPage.Id_Tx,
+      'NumOrden': this.vRutaPickingPage.NumOrden,
+      'Ciudad': this.vRutaPickingPage.Ciudad,
+      'Zona': this.vRutaPickingPage.Zona,
+      'Saldo': saldoTotalPicking
+    };
+    this.navCtrl.push(CierrePickingPage, {
+      data: this.vPickingXProducto
+    });
   }
 
   goDetallePickingPage() {
     debugger;
     this.vPickingXProducto = {
+      'Id_Page_Anterior': 5,
+      'idRutaPicking': this.listaTempPickingProducto[this.posicion].idRutaPicking,
       'Id_Tx': this.vRutaPickingPage.Id_Tx,
       'NumOrden': this.vRutaPickingPage.NumOrden,
       'Cliente': this.vRutaPickingPage.Cliente,
@@ -549,12 +700,17 @@ export class PickingPorProductoPage {
   goDetallePorProductoPage(): void {
     debugger;
     this.vPickingXProducto = {
+      'Id_Page_Anterior': 5,
       'Id_Tx': this.vRutaPickingPage.Id_Tx,
       'NumOrden': this.vRutaPickingPage.NumOrden,
       'CodigoProducto': this.pickingProducto.CodigoProducto,
       'Producto': this.pickingProducto.Producto,
       'IdProducto': this.pickingProducto.IdProducto,
-      'Item': this.pickingProducto.Item
+      'Item': this.pickingProducto.Item,
+      'Cliente': this.vRutaPickingPage.Cliente,
+      'Ciudad': this.vRutaPickingPage.Ciudad,
+      'Zona': this.vRutaPickingPage.Zona,
+      'idRutaPicking': this.listaTempPickingProducto[this.posicion].idRutaPicking,
     };
 
     this.navCtrl.push(DetallePorProductoPage, {
@@ -573,15 +729,36 @@ export class PickingPorProductoPage {
       'Nivel': this.pickingProducto.Nivel,
       'Posicion': this.pickingProducto.Posicion,
       'IdProducto': this.pickingProducto.IdProducto,
-      'IdUbicacion': this.pickingProducto.IdUbicacion,
-      'Id_TerminalRF': 1
+      'IdUbicacion': this.pickingProducto.IdUbicacion
+      //'Id_TerminalRF': this.sGlobal.Id_TerminalRF
     };
     this.navCtrl.push(ReabastecimientoPage, {
       data: this.vPickingXProducto
     });
   }
 
+  selectAll(el: ElementRef) {
+    let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
+    nativeEl.select();
+  }
+
   ionViewDidLoad() {
+
+    setTimeout(() => {
+      this.txtCodBarraUARef.setFocus();
+    }, (500));
+
+    this.navBar.backButtonClick = (e: UIEvent) => {
+      // todo something
+      debugger;
+      // if (this.vRutaPickingPage.idRutaPicking) {
+      //   this.goRutaPickingPage();
+      // } 
+      this.goRutaPickingPage();
+      // else {
+      //   this.navCtrl.pop();
+      // }
+    }
     console.log('ionViewDidLoad PickingPorProductoPage');
   }
 

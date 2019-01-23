@@ -146,6 +146,7 @@ export class PickingServiceProvider {
       this.http.post(this.sGlobal.pickingService + 'PickingUA/ua', JSON.stringify(parameter), {headers: this.headers})
       .map(res=>res.json())
       .subscribe(data=>{
+        debugger;
         resolve(data);
       },err=>{
         console.log('Error RegistarEliminarUA', err);

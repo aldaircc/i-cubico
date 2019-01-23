@@ -3,37 +3,37 @@
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
--->
+-->    
 <ion-header>
-  <ion-toolbar no-padding no-margin color="primary">      
+    <ion-toolbar no-padding no-margin color="primary">
         <ion-grid style="padding: 0px;">
-                <ion-row no-padding no-margin  > 
-                    <ion-col no-margin no-padding col-9>
-                        <ion-navbar no-padding no-margin>
-                            <ion-label style="font-size: 15px; color: white; font-weight:bold;">PICKING POR PRODUCTO</ion-label>
-                        </ion-navbar>
-                    </ion-col>
-                    <ion-col no-margin no-padding col-3>
-                      <ion-buttons start style="margin-top: 12px; text-align: center">  
-                        <button no-margin no-padding ion-button icon-only (click)="getPickingProductoLoad()">
-                          <ion-icon name="sync"></ion-icon>
-                        </button>
+            <ion-row no-padding no-margin>
+                <ion-col no-margin no-padding col-9>
+                    <ion-navbar no-padding no-margin>
+                        <ion-label style="font-size: 15px; color: white; font-weight:bold;">PICKING POR PRODUCTO</ion-label>
+                    </ion-navbar>
+                </ion-col>
+                <ion-col no-margin no-padding col-3>
+                    <ion-buttons start style="margin-top: 12px; text-align: center">
+                        <!-- <button no-margin no-padding ion-button icon-only (click)="getPickingProductoLoad()">
+                            <ion-icon name="sync"></ion-icon>
+                        </button> -->
                         <button no-margin no-padding ion-button icon-only (click)="presentPopover($event)">
-                          <ion-icon name="more"></ion-icon>
+                            <ion-icon name="more"></ion-icon>
                         </button>
-                        </ion-buttons>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-  </ion-toolbar>
+                    </ion-buttons>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
 </ion-header>
 
 
 
-<ion-content [ngClass]="{bgWhite: (!isBgRed && !isBgYellow && !isBgGreen), bgRed:(isBgRed), bgYellow:(isBgYellow), bgGreen:(isBgGreen), bgWhite:(isbgWhite)}" >
+<ion-content [ngClass]="{bgWhite: (!isBgRed && !isBgYellow && !isBgGreen), bgRed:(isBgRed), bgYellow:(isBgYellow), bgGreen:(isBgGreen), bgWhite:(isbgWhite)}">
 
     <ion-grid style="padding: 0px;">
-        <ion-row no-padding no-margin style="background: #00BFFF" > 
+        <ion-row no-padding no-margin style="background: #00BFFF">
             <ion-col col-3 style="padding-left: 2px; padding-right: 2px">
                 <ion-label style="padding-left: 10px; margin-top: 15px; margin-bottom: 1px; color: yellow; font-weight:bold ">
                     N° Ruta:
@@ -41,189 +41,197 @@
             </ion-col>
             <ion-col col-5 style="padding-left: 2px; padding-right: 2px">
                 <ion-label style="padding-left: 10px; margin-top: 15px; margin-bottom: 1px; color: white; font-weight:bold;  ">
-                    {{ contador }}  / {{ total }}
+                    {{ contador }} / {{ total }}
                 </ion-label>
             </ion-col>
             <ion-col col-4 style="padding-left: 2px; padding-right: 2px">
-                <button ion-button (click)="BackRutaPicking()" [disabled]="!Backisenabled " style="background: #2ECCFA" icon-start>
-                    <ion-icon name='arrow-dropleft'></ion-icon>              
+                <button ion-button (click)="BackRutaPicking()" [disabled]="!Backisenabled " style="background: #2ECCFA"
+                    icon-start>
+                    <ion-icon name='arrow-dropleft'></ion-icon>
                 </button>
-                
-                <button ion-button (click)="NextRutaPicking()" [disabled]="Nextisenabled" style="background: #2ECCFA" icon-end>                
+
+                <button ion-button (click)="NextRutaPicking()" [disabled]="Nextisenabled" style="background: #2ECCFA"
+                    icon-end>
                     <ion-icon name='arrow-dropright'></ion-icon>
                 </button>
             </ion-col>
         </ion-row>
-</ion-grid> 
+    </ion-grid>
 
-<ion-grid style="padding: 0px;">
-    <ion-row no-padding style="margin-top: 15px; margin-bottom: 15px; "> 
-        <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
-            <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                Cod. Producto:
-            </ion-label> 
-        </ion-col>
-        <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
-            <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                {{ pickingProducto.CodigoProducto }}
-            </ion-label> 
-        </ion-col>
-    </ion-row>
-    <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;" > 
-        <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-            <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                Descripción:
-            </ion-label> 
-        </ion-col>
-        <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-            <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                {{ pickingProducto.Producto }}  
-            </ion-label> 
-        </ion-col>
-    </ion-row>
-    <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;" > 
-        <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-            <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                Lote:
-            </ion-label> 
-        </ion-col>
-        <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-            <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                {{pickingProducto.LoteProducto}}
-            </ion-label> 
-        </ion-col>
-    </ion-row>
-    <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;" > 
-        <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-            <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                Cant. Pedida:
-            </ion-label> 
-        </ion-col>
-        <ion-col col-2 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-            <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                {{pickingProducto.CantidadPedida}}
-            </ion-label> 
-        </ion-col>
-        <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-            <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                Cant. Atendida:
-            </ion-label> 
-        </ion-col>
-        <ion-col col-2 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-            <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                {{pickingProducto.CantidadPedida - pickingProducto.Saldo}}
-            </ion-label> 
-        </ion-col>
-    </ion-row>
-    <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;" > 
-        <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-            <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                Saldo:
-            </ion-label> 
-        </ion-col>
-        <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-            <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                {{pickingProducto.Saldo}} 
-            </ion-label> 
-        </ion-col>
-    </ion-row>
-    <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;" > 
-        <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-            <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                Cajas:
-            </ion-label> 
-        </ion-col>
-        <ion-col col-2 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-            <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                {{pickingProducto.Caja}}
-            </ion-label> 
-        </ion-col>
-        <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-            <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                Saldo:
-            </ion-label> 
-        </ion-col>
-        <ion-col col-2 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-            <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                {{pickingProducto.SaldoCaja}}
-            </ion-label> 
-        </ion-col>
-    </ion-row>
-    <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;" > 
-        <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-            <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 16px; margin-bottom: 0px;">
-                Cod. Barra:
-            </ion-label> 
-        </ion-col>
-        <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
-            <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-                 <ion-input  type="text" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
-            </ion-item>                    
-         </ion-col>
-    </ion-row>
-    <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;" > 
-        <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-            <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 16px; margin-bottom: 0px;">
-                Cantidad:
-            </ion-label> 
-        </ion-col>
-        <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
-            <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-                 <ion-input  type="text" value="" [disabled]="Txtcantidadisenabled" [(ngModel)]="Textcantidad" placeholder="0.00" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
-            </ion-item>                    
-         </ion-col>
-    </ion-row>
-</ion-grid>       
+    <ion-grid style="padding: 0px;">
+        <ion-row no-padding style="margin-top: 15px; margin-bottom: 15px;">
+            <!-- <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+                    Descripción:
+                </ion-label>
+            </ion-col> -->
+            <ion-col col-12 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
+                    {{ pickingProducto.Producto }}
+                </ion-label>
+            </ion-col>
+        </ion-row>
+        <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px; ">
+            <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+                    Código:
+                </ion-label>
+            </ion-col>
+            <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
+                    {{ pickingProducto.CodigoProducto }}
+                </ion-label>
+            </ion-col>
+        </ion-row>        
+        <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;">
+            <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+                    Lote:
+                </ion-label>
+            </ion-col>
+            <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
+                    {{pickingProducto.LoteProducto}}
+                </ion-label>
+            </ion-col>
+        </ion-row>
+        <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;">
+            <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+                    Cant. Pedida:
+                </ion-label>
+            </ion-col>
+            <ion-col col-2 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
+                    {{pickingProducto.CantidadPedida | number:'1.2-2'}}
+                </ion-label>
+            </ion-col>
+            <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+                    Cant. Atendida:
+                </ion-label>
+            </ion-col>
+            <ion-col col-2 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
+                    {{pickingProducto.CantidadPedida - pickingProducto.Saldo | number:'1.2-2'}}
+                </ion-label>
+            </ion-col>
+        </ion-row>
+        <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;">
+            <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+                    Saldo:
+                </ion-label>
+            </ion-col>
+            <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
+                    {{pickingProducto.Saldo | number:'1.2-2'}}
+                </ion-label>
+            </ion-col>
+        </ion-row>
+        <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;">
+            <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+                    Cajas:
+                </ion-label>
+            </ion-col>
+            <ion-col col-2 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
+                    {{pickingProducto.Caja | number:'1.2-2'}}
+                </ion-label>
+            </ion-col>
+            <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+                    Saldo:
+                </ion-label>
+            </ion-col>
+            <ion-col col-2 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
+                    {{pickingProducto.SaldoCaja | number:'1.2-2'}}
+                </ion-label>
+            </ion-col>
+        </ion-row>
+        <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;">
+            <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 16px; margin-bottom: 0px;">
+                    Cod. Barra:
+                </ion-label>
+            </ion-col>
+            <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
+                <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
+                    <ion-input #txtCodBarraUA type="text" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;">
+            <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 16px; margin-bottom: 0px;">
+                    Cantidad:
+                </ion-label>
+            </ion-col>
+            <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
+                <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
+                    <ion-input #txtCantidadUA type="text"  value="Textcantidad" [disabled]="Txtcantidadisenabled" [(ngModel)]="Textcantidad" 
+                     (keydown)="keydown($event)" (keyup)="keyup($event)" (keyup.enter)="registarUA()"  placeholder="0.00" style="font-weight:bold; font-size: 13px; 
+                    padding: 0px; margin: 0px; color:dimgray;" ></ion-input>
+<!-- (ngModelChange)="onTextcantidadChange($event)"  -->
+                    <!-- <input type="text" [(ngModel)]="miModelo.field" name="field" #field="ngModel" number/>
+<p *ngIf="field.errors?.number">error message</p> -->
+                </ion-item>
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>
 </ion-content>
 
-<ion-footer>   
-        <ion-grid style="padding-left: 0px; padding-right: 0px; padding-top: 0px; padding-bottom: 5px;">
-            <ion-row no-padding no-margin > 
-                <ion-col col-4 style="margin: 0px; padding: 1px; ">
-                    <button ion-button large  full style="background:  #A4A4A4" (click)="goDetallePickingPage()">
-                        <div> 
-                            <ion-icon name='cube'></ion-icon> <br> 
-                            <label style="font-size: 10px">Detalle Picking</label> 
-                        </div> 
-                    </button>
-                </ion-col>
-                <ion-col col-4 style="margin: 0px; padding: 1px; ">
-                    <button ion-button (click)="goDetallePorProductoPage()" large  full style="background:  #A4A4A4" >
-                        <div> 
-                            <ion-icon name='list-box'></ion-icon> <br> 
-                            <label style="font-size: 10px">Ver UAs</label> 
-                        </div>
-                        <ion-icon name=""></ion-icon>
-                    </button>
-                </ion-col>
-                <ion-col col-4 style="margin: 0px; padding: 1px; ">
-                        <button ion-button large  full (click)="goRutaPickingPageUpdate()" style="background:  #A4A4A4" >
-                            <div> 
-                                <ion-icon name='add'></ion-icon> <br> 
-                                <label style="font-size: 10px">Ubicaciones</label> 
-                            </div>
-                            <ion-icon name=""></ion-icon>
-                        </button>
-                    </ion-col>
-            </ion-row>
-            <ion-row no-padding no-margin > 
-                    <ion-col col-6 style="margin: 0px; padding: 1px; ">
-                        <button ion-button (click)="goReabastecimientoPage()" large  full style="background:  #A4A4A4" >
-                            <div> 
-                                <ion-icon name='cube'></ion-icon> <br> 
-                                <label style="font-size: 10px">Reabastecimiento</label> 
-                            </div> 
-                        </button>
-                    </ion-col>
-                    <ion-col col-6 style="margin: 0px; padding: 1px; ">
-                        <button ion-button large  full (click)="registarUA()" style="background:  #A4A4A4" >
-                            <div> 
-                                <ion-icon name='checkbox-outline'></ion-icon> <br> 
-                                <label style="font-size: 10px">Registrar</label> 
-                            </div>
-                            <ion-icon name=""></ion-icon>
-                        </button>
-                    </ion-col>
-                </ion-row>
-        </ion-grid>
-    </ion-footer>
+<ion-footer>
+    <ion-grid style="padding-left: 0px; padding-right: 0px; padding-top: 0px; padding-bottom: 5px;">
+        <ion-row no-padding no-margin>
+            <ion-col col-4 style="margin: 0px; padding: 1px; ">
+                <button ion-button large full style="background:  #A4A4A4" (click)="goDetallePickingPage()">
+                    <div>
+                        <ion-icon name='cube'></ion-icon> <br>
+                        <label style="font-size: 10px">Detalle Picking</label>
+                    </div>
+                </button>
+            </ion-col>
+            <ion-col col-4 style="margin: 0px; padding: 1px; ">
+                <button ion-button (click)="goDetallePorProductoPage()" large full style="background:  #A4A4A4">
+                    <div>
+                        <ion-icon name='list-box'></ion-icon> <br>
+                        <label style="font-size: 10px">Ver UAs</label>
+                    </div>
+                    <ion-icon name=""></ion-icon>
+                </button>
+            </ion-col>
+            <ion-col col-4 style="margin: 0px; padding: 1px; ">
+                <button ion-button large full (click)="goRutaPickingPageUpdate()" style="background:  #A4A4A4">
+                    <div>
+                        <ion-icon name='add'></ion-icon> <br>
+                        <label style="font-size: 10px">Ubicaciones</label>
+                    </div>
+                    <ion-icon name=""></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+        <ion-row no-padding no-margin>
+            <ion-col col-6 style="margin: 0px; padding: 1px; ">
+                <button ion-button (click)="goReabastecimientoPage()" large full style="background:  #A4A4A4">
+                    <div>
+                        <ion-icon name='cube'></ion-icon> <br>
+                        <label style="font-size: 10px">Reabastecimiento</label>
+                    </div>
+                </button>
+            </ion-col>
+            <ion-col col-6 style="margin: 0px; padding: 1px; ">
+                <button ion-button large full (click)="registarUA()" style="background:  #A4A4A4">
+                    <div>
+                        <ion-icon name='checkbox-outline'></ion-icon> <br>
+                        <label style="font-size: 10px">Registrar</label>
+                    </div>
+                    <ion-icon name=""></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer>

@@ -27,7 +27,7 @@ export class ReabastecimientoPage {
   }
 
   aceptarReabastecer(){
-    this.reabastecer(this.vPickingXProducto.IdProducto, this.vPickingXProducto.IdUbicacion, this.TextObservacion, this.vPickingXProducto.Id_TerminalRF, this.sGlobal.userName, this.sGlobal.Id_Almacen);
+    this.reabastecer(this.vPickingXProducto.IdProducto, this.vPickingXProducto.IdUbicacion, this.TextObservacion, this.sGlobal.Id_TerminalRF, this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
 
   reabastecer(intIdProducto, intIdUbicacionDestino, strObservacion, intIdRF, strUsuario, IdAlmacen){

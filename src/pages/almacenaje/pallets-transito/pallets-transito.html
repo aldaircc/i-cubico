@@ -1,0 +1,118 @@
+<!--
+  Generated template for the PalletsTransitoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-toolbar no-padding no-margin color="primary">
+        <ion-grid style="padding: 0px;">
+            <ion-row no-padding no-margin>
+                <ion-col col-12 no-padding no-margin>
+                    <ion-navbar no-padding no-margin>
+                        <ion-label style="font-size: 15px; color: white; font-weight:bold;">PALLETS / UA´S EN TRÁNSITO</ion-label>
+                    </ion-navbar>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-grid style="padding: 0px;">        
+        <ion-row no-padding no-margin style="background: #00BFFF">
+            <ion-col col-12 style="padding-left: 0px; padding-right: 0px">
+                <ion-label style="padding-left: 10px; margin-top: 3px; margin-bottom: 0px; color: black; font-weight:bold ">
+                    Ingrese Pallets/UA´s
+                </ion-label>
+            </ion-col>
+        </ion-row>
+        <ion-row no-padding no-margin style="background: #00BFFF">
+            <ion-col col-9 style="padding-left: 0px; padding-right: 0px; padding-top: 0px">
+                <!-- Colocar input -->
+            </ion-col>
+            <ion-col col-3 style="padding-left: 0px; padding-right: 0px; padding-top: 0px">
+                <!-- Colocar button agregar -->
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+    <ion-row class="bgWhite">
+        <ion-card *ngFor="let objPicking of listAuxOrdenesPicking">
+            <ion-card-content style="padding: 8px 2px; font-size: 12px" (click)="ValidarOrden(objPicking)">
+                <ion-row no-padding no-margin>
+                    <div no-margin 
+                    [ngClass]="{plomo : (objPicking.Id_Estado == 2), amarillo: (objPicking.Id_Estado == 3), verde: (objPicking.Id_Estado ==5 || objPicking.Id_Estado ==6) }" style="margin-right: 2px;  width: 2%;">
+                    </div>
+                    <div no-padding no-margin style=" width: 97%;" > 
+                        <ion-row no-padding no-margin>
+                            <ion-col col-3 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold;">
+                                    Pallet/UA:
+                                </ion-label>
+                            </ion-col>
+                            <ion-col col-9 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                    {{objPicking.NumOrden}}
+                                </ion-label>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row no-padding no-margin>
+                            <ion-col col-3 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold;">
+                                    Código:
+                                </ion-label>
+                            </ion-col>
+                            <ion-col col-9 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                    {{ objPicking.Cliente}}
+                                </ion-label>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row no-padding no-margin>
+                            <ion-col col-3 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold;">
+                                    Producto:
+                                </ion-label>
+                            </ion-col>
+                            <ion-col col-3 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                    {{objPicking.FechaDocumento|momentjs: 'DD/MM/YYYY'}}
+                                </ion-label>
+                            </ion-col>                            
+                        </ion-row>
+                        <ion-row no-padding no-margin>
+                            <ion-col col-3 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold;">
+                                    Cantidad:
+                                </ion-label>
+                            </ion-col>
+                            <ion-col col-3 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                    {{objPicking.FechaDocumento|momentjs: 'DD/MM/YYYY'}}
+                                </ion-label>
+                            </ion-col>                            
+                        </ion-row>
+                    </div>
+                </ion-row>                
+            </ion-card-content>
+        </ion-card>
+    </ion-row>
+</ion-content>
+
+<ion-footer style="background: white">   
+    <ion-grid style="color: white">
+        <ion-row no-padding no-margin style="text-align: center" > 
+            <ion-col col-9 style="margin: 0px; padding: 1px; ">
+                <ion-label no-padding no-margin style="font-weight:bold; color:black">
+                    Total Ítems: {{rowCount}} 
+                </ion-label>
+            </ion-col>
+            <ion-col col-3 style="margin: 0px; padding: 1px; ">
+                <!-- Colocar button ubicar -->
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer>

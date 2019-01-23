@@ -10,7 +10,7 @@
         <ion-grid style="padding: 0px;">
             <ion-row no-padding no-margin>
                 <ion-col no-margin no-padding col-9>
-                    <ion-navbar no-padding no-margin>
+                    <ion-navbar no-padding no-margin > 
                         <ion-label style="font-size: 15px; color: white; font-weight:bold;">DETALLE POR PRODUCTO</ion-label>
                     </ion-navbar>
                 </ion-col>
@@ -60,7 +60,7 @@
         </ion-row>
         <ion-row no-padding no-margin style="background: #00BFFF">
             <ion-col col-12 style="padding-left: 0px; padding-right: 0px; padding-TOP: 0px; text-align: center">
-                <ion-label style="font-size: 16px; padding-left: 10px; margin-top: 1px; margin-bottom: 1px; color: white; font-weight:bold ">
+                <ion-label style="font-size: 12px; padding-left: 10px; margin-top: 1px; margin-bottom: 1px; color: white; font-weight:bold ">
                     {{ vPickingXProducto.Producto }}
                 </ion-label>
             </ion-col>
@@ -68,7 +68,7 @@
     </ion-grid>
 
     <ion-row class="bgLightBlue">
-        <ion-searchbar placeholder="Buscar" (ionInput)="filterItems($event)" [(ngModel)]="searchQuery"></ion-searchbar>
+        <ion-searchbar placeholder="Buscar UA" (ionInput)="filterItems($event)" [(ngModel)]="searchQuery"></ion-searchbar>
     </ion-row>
 
     <ion-row class="bgWhite">
@@ -97,7 +97,7 @@
                             </ion-col>
                             <ion-col col-9 no-padding no-margin>
                                 <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                                    {{ objDetalleProducto.FechaRegistro|momentjs}}
+                                    {{ objDetalleProducto.FechaRegistro|momentjs: 'DD/MM/YYYY HH:mm' }}
                                 </ion-label>
                             </ion-col>
                         </ion-row>
@@ -109,7 +109,7 @@
                             </ion-col>
                             <ion-col col-3 no-padding no-margin>
                                 <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                                    {{objDetalleProducto.Cantidad}}
+                                    {{objDetalleProducto.Cantidad | number:'1.2-2'}}
                                 </ion-label>
                             </ion-col>
                             <ion-col col-2 no-padding no-margin>
@@ -134,5 +134,4 @@
             </ion-card-content>
         </ion-card>
     </ion-row>
-
 </ion-content>
