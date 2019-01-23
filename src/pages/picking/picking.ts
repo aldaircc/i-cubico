@@ -27,6 +27,7 @@ export class PickingPage {
   listOrdenesPicking: any;
   //listAuxOrdenesPicking: any;
   userDetail: any;
+  nomAlmacen: any;
   rowCount: any;
   vPickingPage: any;
 
@@ -42,17 +43,15 @@ export class PickingPage {
 
   // @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
   // @ViewChild('popoverText', { read: ElementRef }) text: ElementRef;
-  @ViewChild(Navbar) navBar: Navbar;
-  
-
+  @ViewChild(Navbar) navBar: Navbar; 
   constructor(public navCtrl: NavController, public navParams: NavParams,    
     public sPicking: PickingServiceProvider, public modalCtrl: ModalController, private popoverCtrl: PopoverController,
     public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider) {
     const data = JSON.parse(localStorage.getItem('vUserData'));
-    this.userDetail = data;
+    this.userDetail = this.sGlobal.userName;
+    this.nomAlmacen = this.sGlobal.nombreAlmacen;
     this.getDataOrdenes();
   }
-
   
   filterItems(ev: any){
     debugger;
