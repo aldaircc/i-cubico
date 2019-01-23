@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { InventarioServiceProvider } from '../../../providers/inventario-service/inventario-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
+//import { isNumber } from 'ionic-angular'; // /umd/util/util';
 
 /**
  * Generated class for the InventarioPage_04Page page.
@@ -24,8 +25,16 @@ export class InventarioPage_04Page {
   intId_Ubicacion: number;
   isEnabledUbicacion: boolean = true;
   isEnabledCodeBar: boolean = false;
+  isVisibleData: boolean = false;
+  strArticulo: string = "";
+  strUM: string = "";
+  txtCantidad: any = { 'Text': '', 'Enabled': true };
+  txtAveriados: any = { 'Text': '' };
+  isBgYellow: boolean = false;
+  isBgGreen: boolean = false;
+  isBgRed: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vParameter = this.navParams.get('vParameter');
     this.strTipoInventario = this.vParameter.TipoInventario;
@@ -117,27 +126,9 @@ export class InventarioPage_04Page {
     if(this.vParameter.TipoInventario == 'GENERAL'){
       this.validarUAInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, 0, this.strCodeBarUA);
     }else{
-
+      this.validarUAInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, this.vParameter.Id_Articulo, this.strCodeBarUA);
+      //     txtCantidad.Tag = validaUA.Saldo.ToString();
     }
-
-    // string idInventario = txtTransaccion.Text;
-    // string strUA = txtCodBarra.Text;
-    // validaUA = new ProxySGAAMovil.SOAPInventario.SGAA_SP_S_validarUAInventario_Result();
-    // GestionInventario method = new GestionInventario();
-    // //DATOS DEL ARTICULO LEIDO
-    // if (rbtPerchas.Checked)
-    // {
-
-    //     validaUA = method.ValidarUAInventario(idInventario, control.Global.IdAlmacen, 0, strUA);
-    //     //DTARTICULO = null;// objConsultas.CargarListaInventarioDetallePercha(txtCodBarra.Text.Trim, txtTransaccion.Text.Trim);
-    // }
-    // else
-    // {
-    //     int producto = string.IsNullOrEmpty(lblInfo1.Tag.ToString()) ? -1 : Convert.ToInt32(lblInfo1.Tag);
-    //     validaUA = method.ValidarUAInventario(idInventario, control.Global.IdAlmacen, producto, strUA);
-    //     txtCantidad.Tag = validaUA.Saldo.ToString();
-    //     //DTARTICULO = null;//objConsultas.CargarListaInventarioDetalleArticulo(ListInventarioArticulo.FocusedItem.SubItems(9).Text, txtTransaccion.Text.Trim, txtCodBarra.Text.Trim);
-    // }
   }
 
   validarUAInventario(strIdInventario, intIdAlmacen, intIdProducto, strUA): void{
@@ -145,6 +136,210 @@ export class InventarioPage_04Page {
       debugger;
       let res: any = result;
 
+      if(res != null) {
+        if(res.FlagInventario.toUpperCase() == "INVENTARIADO"){
+          alert('Este artículo ya fue inventariado');
+          //txtAveriados.Text = validaUA.CantidadAveriado.ToString();
+          //txtCantidad.Text = validaUA.CantidadInventario.ToString();
+        }
+
+          //intIdProducto = validaUA.Id_Producto;
+          //strLote = validaUA.LoteLab;
+
+        this.isBgYellow = true;
+        this.isBgGreen = false;
+        this.txtCantidad.Enabled = false;
+        //this.isVisibleData = true;
+        this.strArticulo = res.Producto;
+        this.strUM = res.UM;
+      //               txtCodBarra.ReadOnly = true;
+      //               txtAveriados.SelectAll();
+      //               txtAveriados.Focus();
+
+        if(res.BULTO.toUpperCase() == "BULTO_CERRADO"){
+          
+          let alert = this.alertCtrl.create({
+            title: 'Confirmar',
+            message: '¿Es un bulto cerrado?',
+            buttons: [
+              {
+                text: 'No',
+                role: 'cancel',
+                handler: () => {
+                  debugger;
+                  this.isVisibleData = true;
+                }
+              },
+              {
+                text: 'Si',
+                handler: () => {
+                  this.txtAveriados.Text = res.CantidadAveriado;
+                  this.txtCantidad.Text = res.Saldo;
+                  if(this.validarDatoInv()){
+                    debugger;
+
+                    this.isVisibleData = false;
+                  }
+                  
+                        //txtAveriados.Text = validaUA.CantidadAveriado.ToString();
+                        //txtCantidad.Text = validaUA.Saldo.ToString();
+                        //if (validarDatosINV())
+                        //{
+                        //  grabarDatosInv();
+                        //}
+                }
+              }
+            ]
+          });
+          alert.present();
+
+        }
+      
+      //               if (validaUA.BULTO.ToUpper() == "BULTO_CERRADO")
+      //               {
+      //                   if (MessageBox.Show("¿Es un bulto cerrado?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
+      //                   {
+      //                       txtAveriados.Text = validaUA.CantidadAveriado.ToString();
+      //                       txtCantidad.Text = validaUA.Saldo.ToString();
+      //                       if (validarDatosINV())
+      //                       {
+      //                           grabarDatosInv();
+      //                       }
+      //                   }
+      //               }
+
+      }else{
+        this.isBgRed = true;
+        alert('Código de artículo no encontrado');
+        // txtCodBarra.SelectAll();
+        // txtCodBarra.Focus();
+      }
+
+      // if (validaUA != null)
+      //           {
+      //               if (validaUA.FlagInventario.ToUpper() == "INVENTARIADO")
+      //               {
+      //                   MessageBox.Show("Este artículo ya fue inventariado", "Inventario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+
+      //               }
+
+      //               intIdProducto = validaUA.Id_Producto;
+      //               strLote = validaUA.LoteLab;
+
+
+      //               StringBuilder sb = new StringBuilder();
+      //               string fecha = DateTime.Now.Date.ToShortDateString();
+      //               string fechaHora = Convert.ToString(DateTime.Now);
+      //               sb.Append("L|");
+      //               sb.Append(fechaHora);
+      //               sb.Append("|");
+      //               sb.Append(validaUA.UA_CodBarra.ToString());
+      //               sb.Append("|");
+      //               sb.Append(txtCodUbicacion.Text);
+      //               sb.Append("|");
+      //               sb.Append(idInventario);
+      //               sb.Append("|");
+      //               sb.Append(control.Global.Usuario);
+
+
+      //               string rutaTxt = "\\Flash File Store\\Log" + fecha.Replace("/","") + "_" + idInventario + ".txt";
+
+      //               using (StreamWriter outfile = new StreamWriter(rutaTxt, true))
+      //               {
+      //                   outfile.WriteLine(sb.ToString());
+      //               }
+
+
+      //               pnl03.BackColor = Color.Yellow;
+      //               pnlDatos.BackColor = Color.Yellow;
+      //               txtCantidad.ReadOnly = false;
+      //               pnlDatos.Visible = true;
+      //               lblArticulo.Text = validaUA.Producto.ToString();
+      //               txtUM.Text = validaUA.UM.ToString();
+      //               txtCodBarra.ReadOnly = true;
+      //               txtAveriados.SelectAll();
+      //               txtAveriados.Focus();
+
+
+      //               if (validaUA.BULTO.ToUpper() == "BULTO_CERRADO")
+      //               {
+      //                   if (MessageBox.Show("¿Es un bulto cerrado?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
+      //                   {
+      //                       txtAveriados.Text = validaUA.CantidadAveriado.ToString();
+      //                       txtCantidad.Text = validaUA.Saldo.ToString();
+      //                       if (validarDatosINV())
+      //                       {
+      //                           grabarDatosInv();
+      //                       }
+      //                   }
+      //               }
+      //           }
+      //           else
+      //           {
+      //               pnl03.BackColor = Color.Red;
+      //               pnlDatos.BackColor = Color.Red;
+      //               MessageBox.Show("Código de artículo no encontrado", "Inventario",
+      //                   MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+      //               txtCodBarra.SelectAll();
+      //               txtCodBarra.Focus();
+      //           }
+
+    });
+  }
+
+  validarDatoInv(): boolean {
+    if(this.strUbicacion.trim().length == 0 ){
+      alert('Ingrese código de ubicación');
+      return false;
+    }
+
+    if(this.strCodeBarUA.trim().length == 0){
+      alert('Ingrese código de artículo');
+      return false;
+    }
+
+    if(this.txtCantidad.Text.length == 0){
+      alert('Ingrese la cantidad');
+      return false;
+    }
+
+    // if(!isNumber(this.txtCantidad.text)){
+    //   alert('Cantidad incorrecta');
+    //   return false;
+    // }
+
+    if(parseFloat(this.txtCantidad.Text) == 0){
+      let message = this.alertCtrl.create({
+        title: 'Confirmar eliminación',
+        message: '¿La cantidad ingresada es 0.00 ¿Está seguro de registrarla?',
+        buttons: [
+          {
+            text: 'No',
+            role: 'cancel',
+            handler: () => {
+              debugger;
+              return false;
+            }
+          },
+          {
+            text: 'Si',
+            handler: () => {
+              debugger;
+              return true;
+            }
+          }
+        ]
+      });
+      message.present();
+    }
+
+    return true;
+  }
+
+  insertarUAInventario(strIdInventario, intIdSector, strFila, intIdProducto, strLote, strUA, decCantidadUA, decCantidadINV, decCantidadAVE, intIdUbicacionUA, intIdUbicacionINV, bolFlagActualiza, strUser){
+    this.sInve.insertarUAInventario(strIdInventario, intIdSector, strFila, intIdProducto, strLote, strUA, decCantidadUA, decCantidadINV, decCantidadAVE, intIdUbicacionUA, intIdUbicacionINV, bolFlagActualiza, strUser)
+    .then(result=>{
+      
     });
   }
 }
