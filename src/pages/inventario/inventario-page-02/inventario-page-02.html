@@ -48,7 +48,7 @@
       </ion-row>
     </ion-grid>
 
-    <ion-card *ngFor="let obj of lisArtic" [hidden]="!isCiclico">
+    <ion-card *ngFor="let obj of listProduct" [hidden]="!isCiclico">
       <ion-card-content no-padding (click)="goToInventPage03(obj)">
         <ion-grid>
           <ion-row>
@@ -81,19 +81,19 @@
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col class="iv02-card-col" col-4 col-sm>
+            <ion-col class="iv02-card-col" col-7 col-sm>
               <ion-label class="iv02-card-label fieldForm">Usuario inventariador:</ion-label>
             </ion-col>
-            <ion-col class="iv02-card-col" col-8 col-sm>
-              <ion-label class="iv02-card-label">{{ obj.FechaCierre|momentjs:'DD/MM/YYYY' }}</ion-label>
+            <ion-col class="iv02-card-col" col-5 col-sm>
+              <ion-label class="iv02-card-label">{{ obj.UsuarioInventariador }}</ion-label>
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col class="iv02-card-col" col-4 col-sm>
+            <ion-col class="iv02-card-col" col-7 col-sm>
               <ion-label class="iv02-card-label fieldForm">Usuario asignado:</ion-label>
             </ion-col>
-            <ion-col class="iv02-card-col" col-8 col-sm>
-              <ion-label class="iv02-card-label">{{ obj.FechaCierre|momentjs:'DD/MM/YYYY' }}</ion-label>
+            <ion-col class="iv02-card-col" col-5 col-sm>
+              <ion-label class="iv02-card-label">{{ obj.UsuarioAsignado }}</ion-label>
             </ion-col>
           </ion-row>
         </ion-col>

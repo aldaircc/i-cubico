@@ -27,85 +27,13 @@ export class InventarioPage_02Page {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
       this.vParameter = this.navParams.get('vParameter');
-      debugger;
       if(this.vParameter.TipoInventario == 'CICLICO'){
         this.isCiclico = true;
         this.listarProductosXUsuarioInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, 'ADMIN', this.vParameter.Id_Estado);
-
-        // GestionInventario method = new GestionInventario();
-        // ltInventarioProducto = new List<ProxySGAAMovil.SOAPInventario.SGAA_SP_S_ListarProductosXUsuarioInventario_Result>();
-
-        // Cursor.Current = Cursors.WaitCursor;
-        // //ListInventarioArticulo.Items.Clear();
-        // string IdInventario = listCabecera.FocusedItem.SubItems[0].Text;
-        // int IdEstado = 0;//Convert.ToInt16(listCabecera.FocusedItem.SubItems[2].Text);
-        // ltInventarioProducto = method.ListarProductosXUsuarioInventario(IdInventario, control.Global.IdAlmacen, control.Global.Usuario, IdEstado);
-
-        // if (ltInventarioProducto.Count > 0)
-        // {
-        //     ManejoPaneles(1);
-        // }
-        // else
-        // {
-        //     ManejoPaneles(0);
-        // }
-
-
-
-        // if (!rtbArticulo.Checked)
-        // {
-        //     rtbArticulo.Checked = true;
-        //     rbtPerchas.Checked = false;
-        // }
-        // else
-        // {
-        //     rtbArticulo_CheckedChanged(sender, e);
-        // }
       }else if(this.vParameter.TipoInventario == 'GENERAL'){
         this.isGeneral = true;
         this.listarPerchasXUsuarioInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, 'ADMIN', this.vParameter.Id_Estado);
-
-        // GestionInventario method = new GestionInventario();
-        // ltInventarioPercha = new List<ProxySGAAMovil.SOAPInventario.SGAA_SP_S_ListarPerchasXUsuarioInventario_Result>();
-
-
-        // Cursor.Current = Cursors.WaitCursor;
-        // //ListInventarioPercha.Items.Clear();
-        // string IdInventario = listCabecera.FocusedItem.SubItems[0].Text;
-        // int IdEstado = 0; // Convert.ToInt16(listCabecera.FocusedItem.SubItems[2].Text);
-        // ltInventarioPercha = method.ListarPerchasXUsuarioInventario(IdInventario, control.Global.IdAlmacen, control.Global.Usuario, IdEstado);
-
-        // if (ltInventarioPercha.Count > 0)
-        // {
-        //     ManejoPaneles(1);
-        // }
-        // else
-        // {
-        //     ManejoPaneles(0);
-        // }
-
-        // if (!rbtPerchas.Checked)
-        // {
-        //     rbtPerchas.Checked = true;
-        //     rtbArticulo.Checked = false;
-        // }
-        // else
-        // {
-        //     rbtPerchas_CheckedChanged(sender, e);
-        // }
       }
-
-      // let parameter = {
-      //   'Id_Inventario': data.Id_Inventario,
-      //   'FechaProgramacion': data.FechaProgramacion,
-      //   'FechaCierre': data.FechaCierre,
-      //   'Id_Estado': data.Id_Estado,
-      //   'TipoInventario': data.TipoInventario
-      // }
-
-  }
-
-  ionViewDidLoad() {
   }
 
   listarProductosXUsuarioInventario(strIdInventario, intIdAlmacen, strUsuario, intIdEstado){
@@ -121,7 +49,6 @@ export class InventarioPage_02Page {
   }
 
   goToInventPage03(data): void{
-    debugger;
     var parameter: any;
 
     parameter = (this.vParameter.TipoInventario == 'GENERAL') ? 
