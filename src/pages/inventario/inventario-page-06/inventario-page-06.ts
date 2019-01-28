@@ -15,7 +15,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class InventarioPage_06Page {
 
+  vParameter: any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    debugger;
+    this.vParameter = this.navParams.get('vParameter');
   }
 
   ionViewDidLoad() {

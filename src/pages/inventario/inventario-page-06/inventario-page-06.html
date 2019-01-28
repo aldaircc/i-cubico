@@ -5,14 +5,70 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>inventario-page-06</ion-title>
+    <ion-title>Ubicaciones</ion-title>
   </ion-navbar>
-
 </ion-header>
 
+<ion-content>
+  <ion-grid class="bgHeader">
+    <ion-row>
+      <ion-col col-3 col-sm>
+        <div class="textHeader">Inventario</div>
+      </ion-col>
+      <ion-col col-9 col-sm>
+        <div class="valueHeader">{{ vParameter.Id_Inventario }}</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-<ion-content padding>
-
+  <ion-card *ngFor="let obj of listDetail">
+      <ion-card-content no-padding>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-11 col-sm>
+              <ion-row>
+                <ion-col class="iv06-card-col" col-3 col-sm>
+                  <ion-label class="iv06-card-label fieldForm">Sector:</ion-label>
+                </ion-col>
+                <ion-col class="iv06-card-col" col-9 col-sm>
+                  <ion-label class="iv06-card-label">{{ obj.Sector }}</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="iv06-card-col" col-3 col-sm>
+                  <ion-label class="iv06-card-label fieldForm">Fila:</ion-label>
+                </ion-col>
+                <ion-col class="iv06-card-col" col-3 col-sm>
+                  <ion-label class="iv06-card-label">{{ obj.Fila }}</ion-label>
+                </ion-col>
+                <ion-col class="iv06-card-col" col-3 col-sm>
+                  <ion-label class="iv06-card-label fieldForm">Nivel:</ion-label>
+                </ion-col>
+                <ion-col class="iv06-card-col" col-3 col-sm>
+                  <ion-label class="iv06-card-label">{{ obj.Nivel }}</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="iv06-card-col" col-3 col-sm>
+                  <ion-label class="iv06-card-label fieldForm">Columna:</ion-label>
+                </ion-col>
+                <ion-col class="iv06-card-col" col-3 col-sm>
+                  <ion-label class="iv06-card-label">{{ obj.Columna }}</ion-label>
+                </ion-col>
+                <ion-col class="iv06-card-col" col-3 col-sm>
+                  <ion-label class="iv06-card-label fieldForm">Posición:</ion-label>
+                </ion-col>
+                <ion-col class="iv06-card-col" col-3 col-sm>
+                  <ion-label class="iv06-card-label">{{ obj.Posicion }}</ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+        <ion-col col-1 col-sm align-self-center>
+            <ion-icon name="play"></ion-icon>
+        </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
 </ion-content>
