@@ -201,4 +201,44 @@ export class InventarioServiceProvider {
       })
     });
   }
+
+  listarUAsXUbicacionInventario(strIdInventario, strCodBarraUbi){
+    let parameter = {
+      'strIdInventario': strIdInventario, 
+      'strCodBarraUbi': strCodBarraUbi
+    };
+
+    return new Promise(result=>{
+      this.http.get(this.sGlobal.inventarioService + 'ListarUAsXUbicacionInventario', {params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-listarUAsXUbicacionInventario', err);
+      })
+    });
+  }
+
+  eliminarUAInventario(strIdInventario, strUA){
+    let parameter = {
+      'strIdInventario': strIdInventario,
+      'strUA': strUA
+    };
+
+    return new Promise((result, reject)=>{
+      this.http.post(this.sGlobal.inventarioService + 'EliminarUAInventario?strIdInventario/strUA', JSON.stringify(parameter), {headers: this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-eliminarUAInventario', err);
+      })
+    });
+  }
+
+  // [OperationContract]
+  // [WebInvoke(UriTemplate = "/EliminarUAInventario?strIdInventario/strUA", Method = "POST",
+  //     ResponseFormat = WebMessageFormat.Json,
+  //     RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+  // Mensaje EliminarUAInventario(string strIdInventario, string strUA);
 }
