@@ -26,13 +26,12 @@ export class InventarioPage_01Page {
   }
 
   ionViewWillEnter() {
-    this.listarInventarioXUsuario('ADMIN', this.sGlobal.Id_Almacen);
+    this.listarInventarioXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
 
   
   listarInventarioXUsuario(strUsuario, intIdAlmacen): void{
     this.sInve.listarInventarioXUsuario(strUsuario, intIdAlmacen).then(result=>{
-      debugger;
       this.listInvent = result;
     });
   }

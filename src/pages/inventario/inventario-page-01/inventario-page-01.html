@@ -36,7 +36,6 @@
   </ion-grid>
 
   <ion-list [virtualScroll]="listInvent" [approxItemHeight]="'20px'" style="top: 50px;">
-    <!-- <ion-card *ngFor="let obj of listInvent"> -->
     <ion-card *virtualItem="let obj">
       <ion-card-content no-padding (click)="goToInventPage02(obj)">
         <ion-grid>
