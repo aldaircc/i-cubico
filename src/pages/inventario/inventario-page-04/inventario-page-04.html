@@ -22,7 +22,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-grid [ngClass]="{ bgYellow: (!isBgRed && isBgGreen), bgGreen:(!isBgRed && !bgYellow), bgRed:(!isBgGreen && !isBgYellow) }">
+  <ion-grid [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgGreen }">
     <ion-row>
       <ion-col>
         <ion-label></ion-label>
@@ -30,10 +30,10 @@
     </ion-row>
   </ion-grid>
 
-  <ion-list [ngClass]="{ bgYellow: (!isBgRed && isBgGreen), bgGreen:(!isBgRed && !bgYellow), bgRed:(!isBgGreen && !isBgYellow) }">
+  <ion-list [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgGreen }">
     <ion-item>
       <ion-label>Ubicación:</ion-label>
-      <ion-input type="text" [(ngModel)]="strUbicacion" (keyup.enter)="validarUbicacion()" [disabled]="!isEnabledUbicacion"></ion-input>
+      <ion-input type="text" [(ngModel)]="strUbicacion" (keyup.enter)="validarUbicacion()" [disabled]="!isEnabledUbicacion" #inputCodeBar></ion-input>
     </ion-item>
 
     <ion-item>
@@ -64,13 +64,24 @@
 <ion-footer>
   <ion-toolbar>
     <ion-buttons left>
-      <button ion-button icon-only large (click)="cambiarUbicacion()">
-        <ion-icon name="label" md=""></ion-icon>
+      <button ion-button icon-only (click)="cambiarUbicacion()">
+        <ion-icon name="checkmark"></ion-icon>
       </button>
     </ion-buttons>
+
+    <ion-buttons justify-content-center align-items-end [hidden]="!isVisibleData">
+      <button ion-button icon-only style="margin-left: 35%">
+        <ion-icon name="grid"></ion-icon>
+      </button>
+
+      <button ion-button icon-only style="margin-left: 15%" [hidden]="!isVisibleData">
+        <ion-icon name="grid"></ion-icon>
+      </button>
+    </ion-buttons>
+
     <ion-buttons right>
-      <button ion-button icon-only large>
-        <ion-icon name="label" md=""></ion-icon>
+      <button ion-button icon-only (click)="goToDetail()">
+        <ion-icon name="reorder"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>

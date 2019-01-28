@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { InventarioServiceProvider } from '../../../providers/inventario-service/inventario-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
+import { InventarioPage_05Page } from '../inventario-page-05/inventario-page-05';
 //import { isNumber } from 'ionic-angular'; // /umd/util/util';
 
 /**
@@ -34,6 +35,9 @@ export class InventarioPage_04Page {
   isBgGreen: boolean = false;
   isBgRed: boolean = false;
 
+  @ViewChild('inputCodeBar') inputCodeBar;
+  //@ViewChild('inputCodeBar', { read: ElementRef }) private inputCodeBar:ElementRef;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vParameter = this.navParams.get('vParameter');
@@ -41,11 +45,12 @@ export class InventarioPage_04Page {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad InventarioPage_04Page');
+    
   }
 
   cambiarUbicacion(): void{
-
+    debugger;
+    this.limpiarCampos();
   }
 
   validarUbicacion(): void{
@@ -148,6 +153,7 @@ export class InventarioPage_04Page {
 
         this.isBgYellow = true;
         this.isBgGreen = false;
+        this.isBgRed = false;
         this.txtCantidad.Enabled = false;
         //this.isVisibleData = true;
         this.strArticulo = res.Producto;
@@ -179,6 +185,7 @@ export class InventarioPage_04Page {
                     debugger;
 
                     this.isVisibleData = false;
+                    this.grabarDatosInvent(res);
                   }
                   
                         //txtAveriados.Text = validaUA.CantidadAveriado.ToString();
@@ -194,22 +201,10 @@ export class InventarioPage_04Page {
           alert.present();
 
         }
-      
-      //               if (validaUA.BULTO.ToUpper() == "BULTO_CERRADO")
-      //               {
-      //                   if (MessageBox.Show("¿Es un bulto cerrado?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
-      //                   {
-      //                       txtAveriados.Text = validaUA.CantidadAveriado.ToString();
-      //                       txtCantidad.Text = validaUA.Saldo.ToString();
-      //                       if (validarDatosINV())
-      //                       {
-      //                           grabarDatosInv();
-      //                       }
-      //                   }
-      //               }
-
       }else{
         this.isBgRed = true;
+        this.isBgGreen = false;
+        this.isBgYellow = false;
         alert('Código de artículo no encontrado');
         // txtCodBarra.SelectAll();
         // txtCodBarra.Focus();
@@ -336,10 +331,159 @@ export class InventarioPage_04Page {
     return true;
   }
 
+  grabarDatosInvent(checkedUA): void{
+    debugger;
+    if(this.vParameter.TipoInventario == 'CICLICO'){
+        this.insertarUAInventario(this.vParameter.Id_Inventario, 
+          0, 
+          "", 
+          this.vParameter.Id_Producto, 
+          checkedUA.LoteLab,
+          this.strCodeBarUA, 
+          checkedUA.Cantidad, 
+          this.txtCantidad.Text, 
+          this.txtAveriados.Text, 
+          checkedUA.IdUbicacion, 
+          this.intId_Ubicacion, 
+          false, 
+          this.sGlobal.userName);
+
+        // int producto = string.IsNullOrEmpty(lblInfo1.Tag.ToString()) ? -1 : Convert.ToInt32(lblInfo1.Tag);
+        // var msj = method.insertarUAInventario(txtTransaccion.Text, 0, "", producto,strLote, txtCodBarra.Text,
+        //                             Convert.ToDecimal(validaUA.Cantidad),
+        //                             Convert.ToDecimal(txtCantidad.Text),
+        //                            Convert.ToDecimal(txtAveriados.Text),
+        //                            validaUA.IdUbicacion, idUbicacion, flag_actualizado,
+        //                            control.Global.Usuario);
+        // if (msj.errNumber == 1)
+        // {
+        //     respuesta = 1;
+        //     message = msj.message;
+        // }
+    }else if(this.vParameter.TipoInventario == 'GENERAL'){
+
+      this.insertarUAInventario(this.vParameter.Id_Inventario,
+        this.vParameter.Id_Sector,
+        this.vParameter.Fila, 
+        checkedUA.Id_Producto, 
+        checkedUA.LoteLab,
+        this.strCodeBarUA, 
+        checkedUA.Cantidad, 
+        this.txtCantidad.Text, 
+        this.txtAveriados.Text,
+        checkedUA.IdUbicacion, 
+        this.intId_Ubicacion, 
+        false, 
+        this.sGlobal.userName);
+
+        // var msj = method.insertarUAInventario(txtTransaccion.Text,
+        //                             Convert.ToInt16(ListInventarioPercha.FocusedItem.SubItems[1].Text),
+        //                             lblInfo2.Text.ToUpper().Trim(), intIdProducto, strLote, txtCodBarra.Text,
+        //                             Convert.ToDecimal(validaUA.Cantidad),
+        //                             Convert.ToDecimal(txtCantidad.Text),
+        //                            Convert.ToDecimal(txtAveriados.Text),
+        //                            validaUA.IdUbicacion, idUbicacion, flag_actualizado,
+        //                            control.Global.Usuario);
+        // if (msj.errNumber == 1)
+        // {
+        //     respuesta = 1;
+        //     message = msj.message;
+        // }
+    }
+  }
+
   insertarUAInventario(strIdInventario, intIdSector, strFila, intIdProducto, strLote, strUA, decCantidadUA, decCantidadINV, decCantidadAVE, intIdUbicacionUA, intIdUbicacionINV, bolFlagActualiza, strUser){
+    debugger;
     this.sInve.insertarUAInventario(strIdInventario, intIdSector, strFila, intIdProducto, strLote, strUA, decCantidadUA, decCantidadINV, decCantidadAVE, intIdUbicacionUA, intIdUbicacionINV, bolFlagActualiza, strUser)
     .then(result=>{
-      
+      let res: any = result;
+      debugger;
+      if(res.errNumber == 1){
+        alert(res.message);
+        this.limpiarCampos();
+        this.isVisibleData = false;
+        this.isBgYellow = true;
+        this.isBgRed = false;
+        this.isBgGreen = false;
+
+        // limpiardatos();
+        // pnlDatos.Visible = false;
+        // txtCodBarra.ReadOnly = false;
+        // pnl03.BackColor = Color.GreenYellow;
+        // pnlDatos.BackColor = Color.GreenYellow;   
+      }else{
+        debugger;
+        this.isBgYellow = false;
+        this.isBgRed = true;
+        this.isBgGreen = false;
+        alert('Reintente otra vez...');
+        //this.selectAll(this.inputCodeBar);
+        this.inputCodeBar.nativeElement.Focus();
+
+        // txtCodBarra.ReadOnly = false;
+        // pnl03.BackColor = Color.Red;
+        // pnlDatos.BackColor = Color.Red;
+        // MessageBox.Show("Reintente otra vez...", "Inventario", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+        // txtCantidad.SelectAll();
+        // txtCantidad.Focus();
+      }
     });
+  }
+
+  limpiarCampos(): void{
+    this.strArticulo = '';
+    this.strUM = '';
+    this.txtCantidad.Text = '';
+    this.txtAveriados.Text = '';
+    this.strCodeBarUA = '';
+    setTimeout(()=>{
+      this.inputCodeBar.setFocus();
+    },150);
+  // txtCodBarra.Focus();
+  }
+
+  selectAll(el: ElementRef){
+    let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
+    nativeEl.select();
+  }
+
+  goToDetail(): void{
+    console.log('vParameter', this.vParameter);
+    if(this.vParameter.TipoInventario == 'CICLICO'){
+        this.goToInventPage05(); //     ManejoPaneles(4);
+        //     lblCodUbicacion.Text = txtCodUbicacion.Text;
+        //     CargarDetalle();
+        //     btnEliminar.Enabled = false;
+    }else{
+      if(this.strUbicacion.length > 0){
+        this.goToInventPage05(); //         ManejoPaneles(4);
+        //         lblCodUbicacion.Text = txtCodUbicacion.Text;
+        //         CargarDetalle();
+        //         btnEliminar.Enabled = false;
+      }else{
+        alert('Ingrese código de ubicación');
+        //         txtCodUbicacion.SelectAll();
+        //         txtCodUbicacion.Focus();
+      }
+    }
+  }
+
+  goToInventPage05(): void{
+    debugger;
+    let parameter = {
+      'Fila': this.vParameter.Fila,
+      'Id_Estado': this.vParameter.Id_Estado,
+      'Id_Inventario': this.vParameter.Id_Inventario,
+      'Id_Sector': this.vParameter.Id_Sector,
+      'Sector': this.vParameter.Sector,
+      'TipoInventario': this.vParameter.TipoInventario,
+      'UsuarioAsignado': this.vParameter.UsuarioAsignado,
+      'UsuarioInventariador': this.vParameter.UsuarioInventariador,
+      
+      'Cod_Ubicacion': this.strUbicacion,
+      'Id_Producto': (this.vParameter.Id_Producto != undefined) ? this.vParameter.Id_Producto : -1
+    };
+
+    this.navCtrl.push(InventarioPage_05Page,{ 'vParameter': parameter });
   }
 }
