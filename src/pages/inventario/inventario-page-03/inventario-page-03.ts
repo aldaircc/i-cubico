@@ -58,7 +58,7 @@ export class InventarioPage_03Page {
     }
     
     this.lblInfo01.Text = (this.strTipoInventario == 'GENERAL') ? 'Sector' : 'Código';
-    this.lblInfo01.Value = (this.strTipoInventario == 'GENERAL') ? this.vParameter.Sector : this.vParameter.Codigo;
+    this.lblInfo01.Value = (this.strTipoInventario == 'GENERAL') ? this.vParameter.Sector : this.vParameter.Id_Producto;
     this.lblInfo02.Text = (this.strTipoInventario == 'GENERAL') ? 'Fila/Percha' : 'Artículo';
     this.lblInfo02.Value = (this.strTipoInventario == 'GENERAL') ? this.vParameter.Fila : this.vParameter.Producto;
     this.txtInventareador.Text = this.vParameter.UsuarioInventariador;
