@@ -218,7 +218,21 @@ export class InventarioPage_03Page {
   }
 
   goToInventPage06(): void{
-    this.navCtrl.push(InventarioPage_06Page);
+    debugger;
+    console.log('Parameter', this.vParameter);
+    let parameter = {
+      'Codigo': this.vParameter.Codigo,
+      'Id_Estado': this.vParameter.Id_Estado,
+      'Id_Inventario': this.vParameter.Id_Inventario,
+      'Id_Producto': this.vParameter.Id_Producto,
+      'Lote': this.vParameter.Lote,
+      'Producto': this.vParameter.Producto,
+      'TipoInventario': this.vParameter.TipoInventario,
+      'UsuarioAsignado': this.vParameter.UsuarioAsignado,
+      'UsuarioInventariador': this.vParameter.UsuarioInventariador
+    };
+
+    this.navCtrl.push(InventarioPage_06Page, { 'vParameter' : parameter });
   }
 
   @ViewChild(Content) content: Content;

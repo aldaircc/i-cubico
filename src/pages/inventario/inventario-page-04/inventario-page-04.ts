@@ -42,10 +42,7 @@ export class InventarioPage_04Page {
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vParameter = this.navParams.get('vParameter');
     this.strTipoInventario = this.vParameter.TipoInventario;
-  }
-
-  ionViewDidLoad() {
-    
+    console.log('vParameter page 04', this.vParameter);
   }
 
   cambiarUbicacion(): void{
@@ -56,60 +53,36 @@ export class InventarioPage_04Page {
   validarUbicacion(): void{
     debugger;
     if(this.strTipoInventario == 'GENERAL'){
-
       this.validarUbicacionInventario(this.strUbicacion, this.sGlobal.Id_Almacen, this.vParameter.Id_Sector, this.vParameter.Fila, 1);
     }else{
+      if(this.strUbicacion.trim() == this.vParameter.CodigoBarra.trim()){
+        this.validarUbicacionInventario(this.strUbicacion, this.sGlobal.Id_Almacen, 0, "", 2);
+      }else{
+        let message = this.alertCtrl.create({
+          title: 'Inventario',
+          message: 'Ubicación no corresponde, ¿Desea inventariar?',
+          buttons: [
+            {
+              text: 'No',
+              role: 'cancel',
+              handler: () => {
+                return;
+              }
+            },
+            {
+              text: 'Si',
+              handler: () => {
+                debugger;
+                this.validarUbicacionInventario(this.strUbicacion, this.sGlobal.Id_Almacen, 0, "", 2);
+                return true;
+              }
+            }
+          ]
+        });
+        message.present();
 
+      }
     }
-    // ID_UBICACION_INV = 0;
-    //         try
-    //         {
-    //             Cursor.Current = Cursors.WaitCursor;
-    //             GestionInventario method = new GestionInventario();
-    //             bool valor = false;
-    //             string codbarraUbi = txtCodUbicacion.Text;
-    //             if (rbtPerchas.Checked)
-    //             {
-
-
-    //             }
-    //             else
-    //             {
-    //                 if (txtCodUbicacion.Text.Trim() == listUbicaciones.FocusedItem.SubItems[8].Text.Trim())
-    //                 {
-    //                     var msj = method.ValidarUbicacionInventario(codbarraUbi, control.Global.IdAlmacen, 0, "", 2);
-    //                     if (msj.errNumber == 1)
-    //                     {
-    //                         idUbicacion = Convert.ToInt32(msj.valor1);
-    //                         valor = true;
-    //                     }
-    //                     else
-    //                     {
-    //                         MessageBox.Show(msj.message, "Inventario",
-    //                          MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
-    //                     }
-
-    //                 }
-    //                 else
-    //                 {
-    //                     var msj = method.ValidarUbicacionInventario(codbarraUbi, control.Global.IdAlmacen, 0, "", 2);
-    //                     if (msj.errNumber == 1)
-    //                     {
-    //                         if (MessageBox.Show("Ubicación no corresponde, ¿Desea inventariar?", "Inventario",
-    //                        MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
-    //                         {
-    //                             idUbicacion = Convert.ToInt32(msj.valor1);
-    //                             valor = true;
-    //                         }
-    //                     }
-    //                     else
-    //                     {
-    //                         MessageBox.Show(msj.message, "Inventario",
-    //                        MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
-
-    //                     }
-    //                 }
-    //             }
   }
 
   validarUbicacionInventario(CodBarraUbi, intIdAlmacen, intIdSector, strFila, intTipo): void{
@@ -131,7 +104,7 @@ export class InventarioPage_04Page {
     if(this.vParameter.TipoInventario == 'GENERAL'){
       this.validarUAInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, 0, this.strCodeBarUA);
     }else{
-      this.validarUAInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, this.vParameter.Id_Articulo, this.strCodeBarUA);
+      this.validarUAInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, this.vParameter.Id_Producto /** Id_Articulo **/, this.strCodeBarUA);
       //     txtCantidad.Tag = validaUA.Saldo.ToString();
     }
   }
@@ -142,10 +115,11 @@ export class InventarioPage_04Page {
       let res: any = result;
 
       if(res != null) {
+
         if(res.FlagInventario.toUpperCase() == "INVENTARIADO"){
           alert('Este artículo ya fue inventariado');
-          //txtAveriados.Text = validaUA.CantidadAveriado.ToString();
-          //txtCantidad.Text = validaUA.CantidadInventario.ToString();
+          this.txtAveriados.Text = res.CantidadAveriado;
+          this.txtCantidad.Text = res.CantidadInventario;
         }
 
           //intIdProducto = validaUA.Id_Producto;
@@ -187,13 +161,6 @@ export class InventarioPage_04Page {
                     this.isVisibleData = false;
                     this.grabarDatosInvent(res);
                   }
-                  
-                        //txtAveriados.Text = validaUA.CantidadAveriado.ToString();
-                        //txtCantidad.Text = validaUA.Saldo.ToString();
-                        //if (validarDatosINV())
-                        //{
-                        //  grabarDatosInv();
-                        //}
                 }
               }
             ]
@@ -209,76 +176,6 @@ export class InventarioPage_04Page {
         // txtCodBarra.SelectAll();
         // txtCodBarra.Focus();
       }
-
-      // if (validaUA != null)
-      //           {
-      //               if (validaUA.FlagInventario.ToUpper() == "INVENTARIADO")
-      //               {
-      //                   MessageBox.Show("Este artículo ya fue inventariado", "Inventario", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-
-      //               }
-
-      //               intIdProducto = validaUA.Id_Producto;
-      //               strLote = validaUA.LoteLab;
-
-
-      //               StringBuilder sb = new StringBuilder();
-      //               string fecha = DateTime.Now.Date.ToShortDateString();
-      //               string fechaHora = Convert.ToString(DateTime.Now);
-      //               sb.Append("L|");
-      //               sb.Append(fechaHora);
-      //               sb.Append("|");
-      //               sb.Append(validaUA.UA_CodBarra.ToString());
-      //               sb.Append("|");
-      //               sb.Append(txtCodUbicacion.Text);
-      //               sb.Append("|");
-      //               sb.Append(idInventario);
-      //               sb.Append("|");
-      //               sb.Append(control.Global.Usuario);
-
-
-      //               string rutaTxt = "\\Flash File Store\\Log" + fecha.Replace("/","") + "_" + idInventario + ".txt";
-
-      //               using (StreamWriter outfile = new StreamWriter(rutaTxt, true))
-      //               {
-      //                   outfile.WriteLine(sb.ToString());
-      //               }
-
-
-      //               pnl03.BackColor = Color.Yellow;
-      //               pnlDatos.BackColor = Color.Yellow;
-      //               txtCantidad.ReadOnly = false;
-      //               pnlDatos.Visible = true;
-      //               lblArticulo.Text = validaUA.Producto.ToString();
-      //               txtUM.Text = validaUA.UM.ToString();
-      //               txtCodBarra.ReadOnly = true;
-      //               txtAveriados.SelectAll();
-      //               txtAveriados.Focus();
-
-
-      //               if (validaUA.BULTO.ToUpper() == "BULTO_CERRADO")
-      //               {
-      //                   if (MessageBox.Show("¿Es un bulto cerrado?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
-      //                   {
-      //                       txtAveriados.Text = validaUA.CantidadAveriado.ToString();
-      //                       txtCantidad.Text = validaUA.Saldo.ToString();
-      //                       if (validarDatosINV())
-      //                       {
-      //                           grabarDatosInv();
-      //                       }
-      //                   }
-      //               }
-      //           }
-      //           else
-      //           {
-      //               pnl03.BackColor = Color.Red;
-      //               pnlDatos.BackColor = Color.Red;
-      //               MessageBox.Show("Código de artículo no encontrado", "Inventario",
-      //                   MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
-      //               txtCodBarra.SelectAll();
-      //               txtCodBarra.Focus();
-      //           }
-
     });
   }
 
@@ -347,19 +244,6 @@ export class InventarioPage_04Page {
           this.intId_Ubicacion, 
           false, 
           this.sGlobal.userName);
-
-        // int producto = string.IsNullOrEmpty(lblInfo1.Tag.ToString()) ? -1 : Convert.ToInt32(lblInfo1.Tag);
-        // var msj = method.insertarUAInventario(txtTransaccion.Text, 0, "", producto,strLote, txtCodBarra.Text,
-        //                             Convert.ToDecimal(validaUA.Cantidad),
-        //                             Convert.ToDecimal(txtCantidad.Text),
-        //                            Convert.ToDecimal(txtAveriados.Text),
-        //                            validaUA.IdUbicacion, idUbicacion, flag_actualizado,
-        //                            control.Global.Usuario);
-        // if (msj.errNumber == 1)
-        // {
-        //     respuesta = 1;
-        //     message = msj.message;
-        // }
     }else if(this.vParameter.TipoInventario == 'GENERAL'){
 
       this.insertarUAInventario(this.vParameter.Id_Inventario,
@@ -375,20 +259,6 @@ export class InventarioPage_04Page {
         this.intId_Ubicacion, 
         false, 
         this.sGlobal.userName);
-
-        // var msj = method.insertarUAInventario(txtTransaccion.Text,
-        //                             Convert.ToInt16(ListInventarioPercha.FocusedItem.SubItems[1].Text),
-        //                             lblInfo2.Text.ToUpper().Trim(), intIdProducto, strLote, txtCodBarra.Text,
-        //                             Convert.ToDecimal(validaUA.Cantidad),
-        //                             Convert.ToDecimal(txtCantidad.Text),
-        //                            Convert.ToDecimal(txtAveriados.Text),
-        //                            validaUA.IdUbicacion, idUbicacion, flag_actualizado,
-        //                            control.Global.Usuario);
-        // if (msj.errNumber == 1)
-        // {
-        //     respuesta = 1;
-        //     message = msj.message;
-        // }
     }
   }
 
@@ -402,28 +272,17 @@ export class InventarioPage_04Page {
         alert(res.message);
         this.limpiarCampos();
         this.isVisibleData = false;
-        this.isBgYellow = true;
+        this.isBgYellow = false;
         this.isBgRed = false;
-        this.isBgGreen = false;
-
-        // limpiardatos();
-        // pnlDatos.Visible = false;
+        this.isBgGreen = true;
         // txtCodBarra.ReadOnly = false;
-        // pnl03.BackColor = Color.GreenYellow;
-        // pnlDatos.BackColor = Color.GreenYellow;   
       }else{
         debugger;
         this.isBgYellow = false;
         this.isBgRed = true;
         this.isBgGreen = false;
         alert('Reintente otra vez...');
-        //this.selectAll(this.inputCodeBar);
-        this.inputCodeBar.nativeElement.Focus();
-
         // txtCodBarra.ReadOnly = false;
-        // pnl03.BackColor = Color.Red;
-        // pnlDatos.BackColor = Color.Red;
-        // MessageBox.Show("Reintente otra vez...", "Inventario", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
         // txtCantidad.SelectAll();
         // txtCantidad.Focus();
       }
@@ -448,15 +307,16 @@ export class InventarioPage_04Page {
   }
 
   goToDetail(): void{
+    debugger;
     console.log('vParameter', this.vParameter);
     if(this.vParameter.TipoInventario == 'CICLICO'){
-        this.goToInventPage05(); //     ManejoPaneles(4);
+        this.goToInventPage05();
         //     lblCodUbicacion.Text = txtCodUbicacion.Text;
         //     CargarDetalle();
         //     btnEliminar.Enabled = false;
     }else{
       if(this.strUbicacion.length > 0){
-        this.goToInventPage05(); //         ManejoPaneles(4);
+        this.goToInventPage05();
         //         lblCodUbicacion.Text = txtCodUbicacion.Text;
         //         CargarDetalle();
         //         btnEliminar.Enabled = false;

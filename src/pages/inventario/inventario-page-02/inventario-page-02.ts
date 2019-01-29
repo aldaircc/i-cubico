@@ -38,6 +38,7 @@ export class InventarioPage_02Page {
 
   listarProductosXUsuarioInventario(strIdInventario, intIdAlmacen, strUsuario, intIdEstado){
     this.sInve.listarProductosXUsuarioInventario(strIdInventario, intIdAlmacen, strUsuario, intIdEstado).then(result=>{
+      debugger;
       this.listProduct = result;
     });
   }
