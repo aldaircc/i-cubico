@@ -32,7 +32,6 @@ export class WarehouseSelectPage {
     debugger;
     //const data = JSON.parse(localStorage.getItem('vUserData'));
     this.userDetails = this.sGlobal.vUserData;
-   // console.log(this.userDetails);
     this.userProfile.ApeNom=this.userDetails[0].ApeNom;
     this.userProfile.Correo=this.userDetails[0].Correo;
     this.userProfile.FlagActivo=this.userDetails[0].FlagActivo;
@@ -58,12 +57,8 @@ export class WarehouseSelectPage {
           this.navCtrl.push(WarehouseSelectPage); */
           this.listCedis=this.responseData;
      }
-     else{
-         
-         }
     }, (err) => {
         console.log(err);
-      // Error log
     });
    
   }
@@ -89,6 +84,9 @@ export class WarehouseSelectPage {
 
   selectWareHouse(data){
     let wareBodega:any =data;
+    this.sGlobal.Id_Almacen = wareBodega.Id_Almacen;
+    this.sGlobal.nombreAlmacen = wareBodega.Almacen;
+    
     this.userProfile.Id_Almacen=wareBodega.Id_Almacen;
     this.userProfile.Almacen=wareBodega.Almacen;
   }

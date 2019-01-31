@@ -164,7 +164,7 @@ export class InventarioServiceProvider {
     };
 
     return new Promise(result=>{
-      this.http.get(this.sGlobal.inventarioService + 'ValidarUAInventario', {params: parameter})
+      this.http.get(this.sGlobal.inventarioService + 'ValidarUAInventarioV2', {params: parameter})
       .map(res=>res.json())
       .subscribe(data=>{
         result(data);
