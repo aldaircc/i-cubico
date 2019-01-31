@@ -19,10 +19,12 @@ export class InventarioPage_05Page {
 
   vParameter: any;
   listDetail: any;
+  isHiddenDelete: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vParameter = this.navParams.get('vParameter');
+    this.isHiddenDelete = (this.vParameter.TipoInventario == 'CICLICO') ? true : false;
   }
 
   listarUAsXUbicacionInventario(strIdInventario, strCodBarraUbi): void{
