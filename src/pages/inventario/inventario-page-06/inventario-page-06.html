@@ -22,8 +22,8 @@
     </ion-row>
   </ion-grid>
 
-  <ion-card *ngFor="let obj of listDetail">
-      <ion-card-content no-padding>
+  <ion-card *ngFor="let obj of listUbicacion">
+      <ion-card-content no-padding (click)="goToInventPage04(obj)">
         <ion-grid>
           <ion-row>
             <ion-col col-11 col-sm>
