@@ -29,8 +29,11 @@ export class InventarioPage_04Page {
   isVisibleData: boolean = false;
   strArticulo: string = "";
   strUM: string = "";
-  txtCantidad: any = { 'Text': '', 'Enabled': true };
-  txtAveriados: any = { 'Text': '' };
+  dblSaldoUA: number = 0;
+  uaValidada: any;
+
+  txtCantidad: any = { 'Text': '0', 'Tag': '', 'Enabled': true };
+  txtAveriados: any = { 'Text': '0' };
   isBgYellow: boolean = false;
   isBgGreen: boolean = false;
   isBgRed: boolean = false;
@@ -111,17 +114,21 @@ export class InventarioPage_04Page {
 
   validarUAInventario(strIdInventario, intIdAlmacen, intIdProducto, strUA): void{
     this.sInve.validarUAInventario(strIdInventario, intIdAlmacen, intIdProducto, strUA).then(result=>{
+      this.uaValidada = null;
       debugger;
       let res: any = result;
 
-      if(res != null) {
+      if(res != null && res.length > 0) {
 
-        if(res.FlagInventario.toUpperCase() == "INVENTARIADO"){
+        this.uaValidada = res[0];
+
+        if(res[0].FlagInventario.toUpperCase() == "INVENTARIADO"){
           alert('Este artículo ya fue inventariado');
-          this.txtAveriados.Text = res.CantidadAveriado;
-          this.txtCantidad.Text = res.CantidadInventario;
+          this.txtAveriados.Text = res[0].CantidadAveriado;
+          this.txtCantidad.Text = res[0].CantidadInventario;
         }
 
+        this.dblSaldoUA = res[0].Saldo;
           //intIdProducto = validaUA.Id_Producto;
           //strLote = validaUA.LoteLab;
 
@@ -129,14 +136,14 @@ export class InventarioPage_04Page {
         this.isBgGreen = false;
         this.isBgRed = false;
         this.txtCantidad.Enabled = false;
-        //this.isVisibleData = true;
-        this.strArticulo = res.Producto;
-        this.strUM = res.UM;
+        this.isVisibleData = true; //this.isVisibleData = true;
+        this.strArticulo = res[0].Producto;
+        this.strUM = res[0].UM;
       //               txtCodBarra.ReadOnly = true;
       //               txtAveriados.SelectAll();
       //               txtAveriados.Focus();
 
-        if(res.BULTO.toUpperCase() == "BULTO_CERRADO"){
+        if(res[0].BULTO.toUpperCase() == "BULTO_CERRADO"){
           
           let alert = this.alertCtrl.create({
             title: 'Confirmar',
@@ -153,13 +160,13 @@ export class InventarioPage_04Page {
               {
                 text: 'Si',
                 handler: () => {
-                  this.txtAveriados.Text = res.CantidadAveriado;
-                  this.txtCantidad.Text = res.Saldo;
+                  this.txtAveriados.Text = res[0].CantidadAveriado;
+                  this.txtCantidad.Text = res[0].Saldo;
                   if(this.validarDatoInv()){
                     debugger;
 
                     this.isVisibleData = false;
-                    this.grabarDatosInvent(res);
+                    this.grabarDatosInvent(this.uaValidada);
                   }
                 }
               }
@@ -239,7 +246,7 @@ export class InventarioPage_04Page {
           this.strCodeBarUA, 
           checkedUA.Cantidad, 
           this.txtCantidad.Text, 
-          this.txtAveriados.Text, 
+          parseFloat(this.txtAveriados.Text), 
           checkedUA.IdUbicacion, 
           this.intId_Ubicacion, 
           false, 
@@ -287,6 +294,83 @@ export class InventarioPage_04Page {
         // txtCantidad.Focus();
       }
     });
+  }
+
+  registrar(): void{
+    
+    debugger;
+    if(this.validarDatoInv()){
+      
+      debugger;
+      let saldoActualUA = this.dblSaldoUA;
+      let conteoUA = parseFloat(this.txtCantidad.Text);
+      let isCorrect: boolean = false;
+
+      if(saldoActualUA == conteoUA){
+        isCorrect = true;
+      }
+
+      if(isCorrect == false){
+
+        let message = this.alertCtrl.create({
+          title: 'Aviso',
+          message: 'Existe diferencias en el conteo, se recomienda que revise otravez. ¿Desea registar este conteo?',
+          buttons: [
+            {
+              text: 'No',
+              role: 'cancel',
+              handler: () => {
+                debugger;
+                    //             txtCantidad.SelectAll();
+                    //             txtCantidad.Focus();
+                    return;
+              }
+            },
+            {
+              text: 'Si',
+              handler: () => {
+                debugger;
+                isCorrect = true;
+                this.grabarDatosInvent(this.uaValidada);
+              }
+            }
+          ]
+        });
+        message.present();
+      }
+
+      // if(isCorrect){
+      //   this.grabarDatosInvent(this.uaValidada);
+      // }
+
+    }
+    // if (validarDatosINV())
+    // {
+
+    //     // validamos que revisen otravez si hay diferencia
+
+    //     decimal? SaldoActualUA = decimal.Parse(txtCantidad.Tag.ToString());
+    //     decimal? ConteoUA = decimal.Parse(txtCantidad.Text);
+    //     bool isCorrect = false;
+    //     if (SaldoActualUA == ConteoUA)
+    //     {
+    //         isCorrect = true;
+    //     }
+    //     if (!isCorrect) {
+    //         if (MessageBox.Show("Existe diferencias en el conteo, se recomienda que revise otravez. ¿Desea registar este conteo?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+    //         { isCorrect = true; }
+    //         else {
+    //             txtCantidad.SelectAll();
+    //             txtCantidad.Focus();
+    //         }
+    //     }
+
+    //     if (isCorrect)
+    //     {
+    //         grabarDatosInv();
+    //         chkTransito.Checked = false;
+    //     }
+    // }
   }
 
   limpiarCampos(): void{
