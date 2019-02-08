@@ -29,6 +29,10 @@ export class InventarioPage_06Page {
   listarUbicacionesSugeridasXProducto(intIdProducto, strLote, intIdAlmacen): void{
     this.sInve.listarUbicacionesSugeridasXProducto(intIdProducto, strLote, intIdAlmacen).then(result=>{
       this.listUbicacion = result;
+      this.listUbicacion.forEach(el => {
+        debugger;
+        el.cantidadxUbicacion = this.listUbicacion.reduce((acc, cur) => cur.Id_Ubicacion === el.Id_Ubicacion ? ++acc : acc, 0);
+      });
     });
   }
   
@@ -71,7 +75,8 @@ export class InventarioPage_06Page {
         'Id_Ubicacion': obj.Id_Ubicacion,
         'Nivel': obj.Nivel,
         'Posicion': obj.Posicion,
-        'Sector': obj.Sector
+        'Sector': obj.Sector,
+        'cantidadxUbicacion': obj.cantidadxUbicacion
       };
 
     this.navCtrl.push(InventarioPage_04Page, { 'vParameter': parameter });

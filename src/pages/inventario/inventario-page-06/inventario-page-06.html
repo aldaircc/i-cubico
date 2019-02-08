@@ -8,9 +8,7 @@
   <ion-navbar>
     <ion-title>Ubicaciones</ion-title>
   </ion-navbar>
-</ion-header>
-
-<ion-content>
+  
   <ion-grid class="bgHeader">
     <ion-row>
       <ion-col col-3 col-sm>
@@ -21,7 +19,9 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+</ion-header>
 
+<ion-content>
   <ion-card *ngFor="let obj of listUbicacion">
       <ion-card-content no-padding (click)="goToInventPage04(obj)">
         <ion-grid>
