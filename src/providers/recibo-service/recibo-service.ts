@@ -203,7 +203,7 @@ export class ReciboServiceProvider {
     debugger;
     var parameter = {'ua' : ua};
     return new Promise((result,reject)=>{
-      this.http.post(this.sGlobal.recepcion + '', JSON.stringify(parameter), { headers : this.headers})
+      this.http.post(this.sGlobal.recepcion + 'RegistrarPallet/ua', JSON.stringify(parameter), { headers : this.headers})
       .map(res=>res.json())
       .subscribe(data=>{
         result(data);

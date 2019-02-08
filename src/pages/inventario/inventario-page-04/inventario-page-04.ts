@@ -101,6 +101,9 @@ export class InventarioPage_04Page {
                   this.isEnabledUbicacion = true;
                   //setTimeout(()=>{ this.inputUbicacion.setFocus(); }, 1200);
                   this.selectAll(this.inputUbicacion, 1000);
+                  this.isBgRed = false;
+                  this.isBgGreen = false;
+                  this.isBgYellow = false;
                 }
 
                     // if (continuarRev)
@@ -254,6 +257,7 @@ export class InventarioPage_04Page {
 
         }
       }else{
+        debugger;
         this.isBgRed = true;
         this.isBgGreen = false;
         this.isBgYellow = false;
@@ -505,6 +509,7 @@ export class InventarioPage_04Page {
   ionViewWillEnter(){
     this.limpiarCampos();
     this.selectAll(this.inputUbicacion, 600);
+    this.isVisibleData = false;
     this.isBgGreen = false;
     this.isBgYellow = false;
     this.isBgRed = false;
