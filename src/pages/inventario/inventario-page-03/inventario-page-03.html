@@ -21,7 +21,7 @@
     </ion-row>
     <ion-row>
       <ion-col col-5 col-sm><div class="textHeader">{{ lblInfo01.Text }}</div></ion-col>
-      <ion-col col-7 col-sm><div class="valueHeader">{{ lblInfo01.Value }}</div></ion-col>
+      <ion-col col-7 col-sm><div class="valueHeader">{{ (strTipoInventario == 'GENERAL') ? vParameter.Sector :vParameter.Codigo }}</div></ion-col>
     </ion-row>
     <ion-row>
       <ion-col col-5 col-sm><div class="textHeader">{{ lblInfo02.Text }}</div></ion-col>

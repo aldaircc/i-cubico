@@ -4,6 +4,7 @@ import { InventarioServiceProvider } from '../../../providers/inventario-service
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { InventarioPage_06Page } from '../inventario-page-06/inventario-page-06';
 import { InventarioPage_04Page } from '../inventario-page-04/inventario-page-04';
+import moment from 'moment';
 
 /**
  * Generated class for the InventarioPage_03Page page.
@@ -29,7 +30,6 @@ export class InventarioPage_03Page {
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
-    debugger;
     this.vParameter = this.navParams.get('vParameter');
     this.strTipoInventario = this.vParameter.TipoInventario;
 
@@ -37,6 +37,7 @@ export class InventarioPage_03Page {
       this.btnIniciar.Text = 'Iniciar';
       this.txtInventareador.ReadOnly = false;
       this.dtpFecha.Enabled = false;
+      this.dtpFecha = this.vParameter.FechaProgramacion;
     //     dtpFecha.Text = DateTime.Now.ToShortDateString();
     //     btnIniciar.Text = "Iniciar";
     //     txtInventareador.ReadOnly = false;
@@ -47,6 +48,7 @@ export class InventarioPage_03Page {
     }else{
       this.btnIniciar.Text = 'Continuar';
       this.dtpFecha.Enabled = false;
+      this.dtpFecha.Text = moment(this.vParameter.FechaProgramacion).toISOString();
       this.txtInventareador.Text = "";
 
     //     dtpFecha.Enabled = false;
@@ -58,8 +60,8 @@ export class InventarioPage_03Page {
     }
     
     this.lblInfo01.Text = (this.strTipoInventario == 'GENERAL') ? 'Sector' : 'Código';
-    this.lblInfo01.Value = (this.strTipoInventario == 'GENERAL') ? this.vParameter.Sector : this.vParameter.Id_Producto;
-    this.lblInfo02.Text = (this.strTipoInventario == 'GENERAL') ? 'Fila/Percha' : 'Artículo';
+    this.lblInfo01.Value = (this.strTipoInventario == 'GENERAL') ? this.vParameter.Id_Sector : this.vParameter.Codigo /**Id_Producto**/;
+    this.lblInfo02.Text = (this.strTipoInventario == 'GENERAL') ? 'Fila/Rack' : 'Artículo';
     this.lblInfo02.Value = (this.strTipoInventario == 'GENERAL') ? this.vParameter.Fila : this.vParameter.Producto;
     this.txtInventareador.Text = this.vParameter.UsuarioInventariador;
   }
@@ -69,7 +71,6 @@ export class InventarioPage_03Page {
   }
 
   continuarInventario(): void{
-    debugger;
     if(this.btnIniciar.Text == 'Iniciar'){
 
       if(this.txtInventareador.Text.trim() == ""){
@@ -83,7 +84,6 @@ export class InventarioPage_03Page {
             {
               text: 'Si',
               handler: () => {
-                debugger;
                 this.btnIniciar.Text = 'Continuar';
                 this.dtpFecha.Enabled = false;
                 this.initInventario(this.vParameter.Id_Inventario, 1);
@@ -122,7 +122,6 @@ export class InventarioPage_03Page {
   }
 
   cerrarInventario(): void{
-    debugger;
     if(this.vParameter.Id_Estado == 3){
 
       const confirm = this.alertCtrl.create({
@@ -132,7 +131,6 @@ export class InventarioPage_03Page {
           {
             text: 'Si',
             handler: () => {
-              debugger;
               this.initInventario(this.vParameter.Id_Inventario, 2);
             }
           },
@@ -161,7 +159,6 @@ export class InventarioPage_03Page {
 
   iniTerInvXProducto(strIdInventario, intIdProducto, strLote, strUsuarioInventariador, strUsuario, intIdRF, intTipo): void{
     this.sInve.iniTerInvXProducto(strIdInventario, intIdProducto, strLote, strUsuarioInventariador, strUsuario, intIdRF, intTipo).then(result=>{
-      debugger;
       let res: any = result;
       if (res.errNumber != 0)
       {
@@ -174,7 +171,6 @@ export class InventarioPage_03Page {
   
   iniTerInvXPercha(strIdInventario, intIdSector, strFila, strUsuarioInventariador, strUsuario, intIdRF, intTipo): void{
     this.sInve.iniTerInvXPercha(strIdInventario, intIdSector, strFila, strUsuarioInventariador, strUsuario, intIdRF, intTipo).then(result=>{
-      debugger;
       let res: any = result;
       if (res.errNumber != 0)
       {
@@ -186,7 +182,6 @@ export class InventarioPage_03Page {
   }
 
   goToInventPage04(): void{
-    debugger;
     var parameter: any;
 
     parameter = (this.vParameter.TipoInventario == 'GENERAL') ? 
@@ -218,8 +213,6 @@ export class InventarioPage_03Page {
   }
 
   goToInventPage06(): void{
-    debugger;
-    console.log('Parameter', this.vParameter);
     let parameter = {
       'Codigo': this.vParameter.Codigo,
       'Id_Estado': this.vParameter.Id_Estado,
@@ -240,7 +233,6 @@ export class InventarioPage_03Page {
   fixScroll(){
     //if(this.device.platform == "Android"){
       setTimeout(() => {
-      debugger;
         let element = document.getElementById("absence-textarea");
         let box = element.getBoundingClientRect();
         let top = Math.round(box.top*10);
