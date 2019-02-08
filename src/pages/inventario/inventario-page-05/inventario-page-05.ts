@@ -20,6 +20,7 @@ export class InventarioPage_05Page {
   vParameter: any;
   listDetail: any;
   isHiddenDelete: boolean = false;
+  rowCount: number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
@@ -31,6 +32,7 @@ export class InventarioPage_05Page {
     this.sInve.listarUAsXUbicacionInventario(strIdInventario, strCodBarraUbi).then(result=>{
       debugger;
       this.listDetail = result;
+      this.rowCount = this.listDetail.length;
     });
   }
 
@@ -55,8 +57,9 @@ export class InventarioPage_05Page {
         {
           text: 'Si',
           handler: () => {
+            debugger;
             if(this.vParameter.TipoInventario == 'GENERAL'){
-              this.eliminarUAInventario('A20190200001', '00000000000001');//this.vParameter.Id_Inventario, obj.UA_CodBarra);
+              this.eliminarUAInventario(this.vParameter.Id_Inventario, obj.UA_CodBarra);
             }
           }
         }

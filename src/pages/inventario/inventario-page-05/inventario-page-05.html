@@ -8,9 +8,7 @@
   <ion-navbar>
     <ion-title>Detalle de inventario</ion-title>
   </ion-navbar>
-</ion-header>
 
-<ion-content>
   <ion-grid class="bgHeader">
     <ion-row>
       <ion-col col-3 col-sm>
@@ -21,7 +19,9 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+</ion-header>
 
+<ion-content>
   <ion-card *ngFor="let obj of listDetail">
     <ion-card-content no-padding>
       <ion-grid>
@@ -99,3 +99,16 @@
     </ion-card-content>
   </ion-card>
 </ion-content>
+
+<ion-footer class="bgLightBlue">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4 col-sm>
+        <div class="fieldForm">TOTAL ITEMS:</div>
+      </ion-col>
+      <ion-col col-8 col-sm>
+        <div class="fieldForm"> {{ rowCount }} </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
