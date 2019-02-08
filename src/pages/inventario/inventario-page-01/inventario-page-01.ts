@@ -19,10 +19,10 @@ import { InventarioServiceProvider } from '../../../providers/inventario-service
 export class InventarioPage_01Page {
 
   listInvent: any;
+  rowCount: number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
-      
   }
 
   ionViewWillEnter() {
@@ -33,6 +33,7 @@ export class InventarioPage_01Page {
   listarInventarioXUsuario(strUsuario, intIdAlmacen): void{
     this.sInve.listarInventarioXUsuario(strUsuario, intIdAlmacen).then(result=>{
       this.listInvent = result;
+      this.rowCount = this.listInvent.length;
     });
   }
 
