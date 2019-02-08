@@ -235,10 +235,4 @@ export class InventarioServiceProvider {
       })
     });
   }
-
-  // [OperationContract]
-  // [WebInvoke(UriTemplate = "/EliminarUAInventario?strIdInventario/strUA", Method = "POST",
-  //     ResponseFormat = WebMessageFormat.Json,
-  //     RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-  // Mensaje EliminarUAInventario(string strIdInventario, string strUA);
 }
