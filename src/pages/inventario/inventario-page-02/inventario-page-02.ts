@@ -23,6 +23,7 @@ export class InventarioPage_02Page {
   vParameter: any;
   isCiclico: boolean = false;
   isGeneral: boolean = false;
+  rowCount: number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
@@ -38,14 +39,15 @@ export class InventarioPage_02Page {
 
   listarProductosXUsuarioInventario(strIdInventario, intIdAlmacen, strUsuario, intIdEstado){
     this.sInve.listarProductosXUsuarioInventario(strIdInventario, intIdAlmacen, strUsuario, intIdEstado).then(result=>{
-      debugger;
       this.listProduct = result;
+      this.rowCount = this.listProduct.length;
     });
   }
 
   listarPerchasXUsuarioInventario(strIdIventario, intIdAlmacen, strUsuario, intIdEstado){
     this.sInve.listarPerchasXUsuarioInventario(strIdIventario, intIdAlmacen, strUsuario, intIdEstado).then(result=>{
       this.listPercha = result;
+      this.rowCount = this.listPercha.length;
     });
   }
 
@@ -61,7 +63,8 @@ export class InventarioPage_02Page {
         'Sector': data.Sector,
         'UsuarioAsignado': data.UsuarioAsignado,
         'UsuarioInventariador': data.UsuarioInventariador,
-        'TipoInventario': this.vParameter.TipoInventario
+        'TipoInventario': this.vParameter.TipoInventario,
+        'FechaProgramacion': this.vParameter.FechaProgramacion
       }
     :
       {
@@ -73,7 +76,8 @@ export class InventarioPage_02Page {
         'Codigo' : data.Codigo,
         'Producto' : data.Producto,
         'Lote' : data.Lote,
-        'TipoInventario': this.vParameter.TipoInventario
+        'TipoInventario': this.vParameter.TipoInventario,
+        'FechaProgramacion': this.vParameter.FechaProgramacion
       }
      ;
 
