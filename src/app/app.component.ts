@@ -29,7 +29,7 @@ import { TransferPage_06Page } from '../pages/transferencia/transfer-page-06/tra
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = ReciboPage; //TransferPage_06Page;
+  rootPage:any = HomePage; //TransferPage_06Page;
   userProfile={"Almacen":"","ApeNom":"","Cliente":"","Correo":"","FlagActivo":false,"FlagPermiso":false,"FlagRestablecer":false,"Foto":null,"Id_Almacen":"","Id_Cliente":null,"Id_Perfil":"","Perfil":"","Usuario":""};
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

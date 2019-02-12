@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { ReciboPage } from '../recibo/recibo';
 import { AlmacenajePage } from '../almacenaje/almacenaje';
+import { EmbalajePage } from '../embalaje/embalaje';
 
 /**
  * Generated class for the MainMenuPage page.
@@ -44,5 +45,9 @@ export class MainMenuPage {
 
   goAlmacenajePage(){
     this.navCtrl.push(AlmacenajePage);
+  }
+
+  goEmbalajePage(){
+    this.navCtrl.push(EmbalajePage);
   }
 }

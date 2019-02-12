@@ -51,7 +51,16 @@ import { DespachoPage } from '../pages/despacho/despacho';
 import { EmbalajePage } from '../pages/embalaje/embalaje';
 import { InventarioPage } from '../pages/inventario/inventario';
 import { PickingServiceProvider } from '../providers/picking-service/picking-service';
-
+import { EmbalajePage_02Page } from '../pages/embalaje/embalaje-page-02/embalaje-page-02';
+import { EmbalajeServiceProvider } from '../providers/embalaje-service/embalaje-service'; //Yus
+import { PopoverEmbalajeComponent } from '../components/popover-embalaje/popover-embalaje'; //Yus
+import { EmbalajePage_03Page } from '../pages/embalaje/embalaje-page-03/embalaje-page-03';//YUS
+import { EmbalajePage_04Page } from '../pages/embalaje/embalaje-page-04/embalaje-page-04';//YUS
+import { EmbalajePage_05Page } from '../pages/embalaje/embalaje-page-05/embalaje-page-05';//YUS
+import { EmbalajePage_06Page } from '../pages/embalaje/embalaje-page-06/embalaje-page-06';//YUS
+import { EmbalajePage_07Page } from '../pages/embalaje/embalaje-page-07/embalaje-page-07';//YUS
+import { EmbalajePage_08Page } from '../pages/embalaje/embalaje-page-08/embalaje-page-08';//YUS
+import { EmbalajePage_09Page } from '../pages/embalaje/embalaje-page-09/embalaje-page-09';//YUS
 
 @NgModule({
   declarations: [
@@ -93,7 +102,16 @@ import { PickingServiceProvider } from '../providers/picking-service/picking-ser
     DespachoPage,
     EmbalajePage,
     InventarioPage,
-    MomentjsPipe //Loque#369Dev
+    EmbalajePage_02Page,//YUS
+    MomentjsPipe, //Loque#369Dev
+    PopoverEmbalajeComponent, //Yus
+    EmbalajePage_03Page, //YUS
+    EmbalajePage_04Page, //YUS
+    EmbalajePage_05Page, //YUS
+    EmbalajePage_06Page, //YUS
+    EmbalajePage_07Page, //YUS
+    EmbalajePage_08Page, //YUS
+    EmbalajePage_09Page //YUS
   ],
   imports: [
     BrowserModule,HttpModule,HttpClientModule,
@@ -141,7 +159,16 @@ import { PickingServiceProvider } from '../providers/picking-service/picking-ser
     PopoverRutaPickingPage,
     DespachoPage,
     EmbalajePage,
-    InventarioPage
+    InventarioPage,
+    EmbalajePage_02Page,//YUS
+    PopoverEmbalajeComponent, //Yus
+    EmbalajePage_03Page,//yus    
+    EmbalajePage_04Page, //YUS
+    EmbalajePage_05Page, //YUS
+    EmbalajePage_06Page, //YUS
+    EmbalajePage_07Page, //YUS
+    EmbalajePage_08Page, //YUS
+    EmbalajePage_09Page //YUS
 
   ],
   providers: [
@@ -154,7 +181,8 @@ import { PickingServiceProvider } from '../providers/picking-service/picking-ser
     IncidenciaServiceProvider, //Loque#369Dev
     EtqCajaServiceProvider, //Loque#369Dev
     GlobalServiceProvider, //Loque#369Dev
-    PickingServiceProvider
+    PickingServiceProvider,
+    EmbalajeServiceProvider
   ]
 })
 export class AppModule {}

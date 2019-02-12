@@ -14,10 +14,10 @@ export class GlobalServiceProvider {
   Id_Impresora : number = 0;
   Id_Centro : number = 0;
   nombreImpresora : string;
-  nombreEmpresa : string;
+  nombreEmpresa : string; 
   userName : string = "";
-  url : string = "";
-  urlPrint : string = "";
+  url : string = "http://172.16.32.15:8085/SGAA_WCF/";
+  urlPrint : string =  "http://172.16.32.15/SGAA_WCF_PRINT/";
   usuario: string;
   produccion: string;
   tablaEst : string;
@@ -26,6 +26,8 @@ export class GlobalServiceProvider {
   impresoraService : string;
   vUserData: any;
   pickingService:any;
+  despacho:any;
+  picking:any;
 
   constructor(public http: HttpClient) {
     this.userName = "acosetito";
@@ -36,8 +38,11 @@ export class GlobalServiceProvider {
     this.produccion = this.url + 'ProduccionService.svc/rest/';
     this.tablaEst = this.url + 'TablasEstaticasService.svc/rest/';
     this.recepcion = this.url + 'RecepcionService.svc/rest/';
+    this.despacho = this.url + "DespachoService.svc/rest/";
     this.UMService = this.url + 'UnidadMedidaService.svc/rest/';
+    this.picking = this.url + "PickingService.svc/rest/";
     this.impresoraService = this.urlPrint + "Impresiones.svc/rest/";
-    this.pickingService = this.urlPrint + "PickingService.svc/rest";
+    this.pickingService = this.urlPrint + "PickingService.svc/rest/";
+    
   }
 }

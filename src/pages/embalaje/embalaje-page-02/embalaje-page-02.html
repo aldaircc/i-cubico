@@ -1,0 +1,85 @@
+<!--
+  Generated template for the EmbalajePage_02Page page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header class="sgaaTitleBackcolor" no-border>
+
+    <!-- <ion-navbar >
+      <ion-title >
+          <ion-icon name="clipboard"></ion-icon>
+        Recibo<
+      </ion-title>
+    </ion-navbar> -->
+    <ion-toolbar no-border-top>
+      <ion-navbar>
+        <ion-title>         
+          Pedidos a embalar
+        </ion-title>
+      </ion-navbar>
+      <ion-buttons start>
+        <button ion-button icon-only (click)="getDataEmbalaje()">
+          <ion-icon name="refresh"></ion-icon>
+        </button>
+        <button ion-button icon-only (click)="presentPopover($event)">
+            <ion-icon name="more"></ion-icon>
+          </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  
+  <ion-content>
+  
+    
+      <ion-grid class="bgHeader">        
+          <ion-row align-items-center>
+            <ion-col col-4 col-sm>
+              <div class="textHeader">Usuario:</div>
+            </ion-col>
+            <ion-col col-8 col-sm>
+              <div class="valueHeader"></div>
+            </ion-col>
+          </ion-row>
+          <ion-row align-items-center>
+              <ion-col col-4 col-sm>
+                <div class="textHeader">Almacén:</div>
+              </ion-col>
+              <ion-col col-8 col-sm>
+                <div class="valueHeader"></div>
+              </ion-col>
+          </ion-row>         
+      </ion-grid>
+
+  <!-- Start:  data-binding list -->
+  <ion-row class="bgLightBlue">
+      <ion-searchbar (ionInput)="filterItems($event)"></ion-searchbar>
+  </ion-row>
+  
+  <ion-row class="bgWhite">
+    <ion-card *ngFor="let objEmbalaje of listAuxEmbalaje">        
+        <ion-card-content (click)="goDetEmbalajePackingPage(objEmbalaje)">
+            <h5><b>Nro. Orden: </b> {{objEmbalaje.NumOrden}}</h5>
+            <h5><b>Cliente: </b> {{objEmbalaje.Cliente}}</h5>            
+            <h5><b>Dirección: </b> {{objEmbalaje.Direccion}}</h5>
+            <h5><b>Cuenta: </b> {{objEmbalaje.Socio}}</h5>            
+            <h5><b>Fecha Documento: </b> {{ objEmbalaje.FechaDocumento|momentjs}} </h5>
+            <h5><b>Fecha Entrega: </b> {{ objEmbalaje.FechaLlegada|momentjs}} </h5>
+        </ion-card-content>
+      </ion-card>
+  </ion-row>
+  </ion-content>
+  
+  <ion-footer class="bgLightBlue">
+    <ion-grid>
+      <ion-row>
+        <ion-col col-2 col-sm>
+            <div class="fieldForm">Total</div>
+        </ion-col>
+        <ion-col col-9 col-sm>
+            <div class="fieldForm"> {{ rowCount }} fila(s) </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>

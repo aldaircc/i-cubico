@@ -1,0 +1,14 @@
+<!-- Generated template for the PopoverEmbalajeComponent component -->
+<ion-list>
+  
+  <button ion-item (tap)="itemClick(1)" [hidden]="!isDisplayIncidencia"> <ion-icon name="ios-alert-outline"></ion-icon>Registrar Incidencia</button>
+
+  <button ion-item (tap)="itemClick(2)" [hidden]="!isDisplayMasivo"> <ion-icon name="ios-alert-outline"></ion-icon> Bultos Masivos</button>
+
+  <button ion-item (tap)="itemClick(3)" [hidden]="!isDisplayEtqMaster"> <ion-icon name="ios-print-outline"></ion-icon> Etiquetas Máster</button>
+
+  <button ion-item (tap)="itemClick(4)" [hidden]="!isDisplayPrint"> <ion-icon name="ios-print-outline"></ion-icon> Seleccionar Impresora</button>
+
+  <button ion-item (tap)="itemClick(5)" [hidden]="!isDisplayCerrar"> <ion-icon name="contact"></ion-icon> Cerrar Sesión</button>
+
+</ion-list>
