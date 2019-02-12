@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler } from '@angular/core';:
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
@@ -22,8 +22,8 @@ import { CierrePickingPage } from '../pages/picking/cierre-picking/cierre-pickin
 import { PickingPorProductoPage } from '../pages/picking/picking-por-producto/picking-por-producto';
 import { DetallePorProductoPage } from '../pages/picking/detalle-por-producto/detalle-por-producto';
 import { ReabastecimientoPage } from '../pages/picking/reabastecimiento/reabastecimiento';
-import { PopoverPickingPage } from '../pages/picking/popover/popover-picking/popover-picking'
-import { PopoverRutaPickingPage } from '../pages/picking/popover/popover-ruta-picking/popover-ruta-picking'
+import { PopoverPickingPage } from '../pages/picking/popover/popover-picking/popover-picking';
+import { PopoverRutaPickingPage } from '../pages/picking/popover/popover-ruta-picking/popover-ruta-picking';
 import { ReciboServiceProvider } from '../providers/recibo-service/recibo-service'; //Loque#369Dev
 import { ReciboPage } from '../pages/recibo/recibo'; //Loque#369Dev
 import { ReciboPage_02Page } from '../pages/recibo/recibo-page-02/recibo-page-02'; //Loque#369Dev
@@ -69,26 +69,26 @@ import { EmbalajePage_06Page } from '../pages/embalaje/embalaje-page-06/embalaje
 import { EmbalajePage_07Page } from '../pages/embalaje/embalaje-page-07/embalaje-page-07';//YUS
 import { EmbalajePage_08Page } from '../pages/embalaje/embalaje-page-08/embalaje-page-08';//YUS
 import { EmbalajePage_09Page } from '../pages/embalaje/embalaje-page-09/embalaje-page-09';//YUS
-import {TransitoPage} from '../pages/almacenaje/transito/transito' //aromero
-import {PalletsTransitoPage} from '../pages/almacenaje/pallets-transito/pallets-transito' //aromero
-import {DetallePalletUaPage} from '../pages/almacenaje/detalle-pallet-ua/detalle-pallet-ua' //aromero
-import {OtraUbicacionPage} from '../pages/almacenaje/otra-ubicacion/otra-ubicacion' //aromero
-import {AlmacenajePalletUaPage} from '../pages/almacenaje/almacenaje-pallet-ua/almacenaje-pallet-ua' //aromero
-import {ReubicacionPage} from '../pages/almacenaje/reubicacion/reubicacion' //aromero
-import {ReubicacionDestinoPage} from '../pages/almacenaje/reubicacion-destino/reubicacion-destino' //aromero
-import {ReabastecimientoAlmacenajePage} from '../pages/almacenaje/reabastecimiento-almacenaje/reabastecimiento-almacenaje' //aromero
-import {ReabastecimientoPickingPage} from '../pages/almacenaje/reabastecimiento-picking/reabastecimiento-picking' //aromero
-import {ListaPalletUaPage} from '../pages/almacenaje/lista-pallet-ua/lista-pallet-ua' //aromero
-import {UbicacionDestinoPage} from '../pages/almacenaje/ubicacion-destino/ubicacion-destino' //aromero
-import {ConsultarUbicacionPage} from '../pages/almacenaje/consultar-ubicacion/consultar-ubicacion' //aromero
-import {DetalleProductoPage} from '../pages/almacenaje/detalle-producto/detalle-producto' //aromero
-import {MenuConsultarPage} from '../pages/almacenaje/menu-consultar/menu-consultar' //aromero
-import {AdministrarUaPage} from '../pages/almacenaje/menu-consultar/administrar-ua/administrar-ua' //aromero
-import {ReasignarUaPage} from '../pages/almacenaje/menu-consultar/reasignar-ua/reasignar-ua' //aromero
-import {ReubicarUaPage} from '../pages/almacenaje/menu-consultar/reubicar-ua/reubicar-ua' //aromero
-import {ParticionarUaPage} from '../pages/almacenaje/menu-consultar/particionar-ua/particionar-ua' //aromero
-import {ConsultarPalletPage} from '../pages/almacenaje/menu-consultar/consultar-pallet/consultar-pallet' //aromero
-import {ConsultarEanPage} from '../pages/almacenaje/menu-consultar/consultar-ean/consultar-ean' //aromero
+import {TransitoPage} from '../pages/almacenaje/transito/transito'; //aromero
+import {PalletsTransitoPage} from '../pages/almacenaje/pallets-transito/pallets-transito'; //aromero
+import {DetallePalletUaPage} from '../pages/almacenaje/detalle-pallet-ua/detalle-pallet-ua'; //aromero
+import {OtraUbicacionPage} from '../pages/almacenaje/otra-ubicacion/otra-ubicacion'; //aromero
+import {AlmacenajePalletUaPage} from '../pages/almacenaje/almacenaje-pallet-ua/almacenaje-pallet-ua'; //aromero
+import {ReubicacionPage} from '../pages/almacenaje/reubicacion/reubicacion'; //aromero
+import {ReubicacionDestinoPage} from '../pages/almacenaje/reubicacion-destino/reubicacion-destino'; //aromero
+import {ReabastecimientoAlmacenajePage} from '../pages/almacenaje/reabastecimiento-almacenaje/reabastecimiento-almacenaje'; //aromero
+import {ReabastecimientoPickingPage} from '../pages/almacenaje/reabastecimiento-picking/reabastecimiento-picking'; //aromero
+import {ListaPalletUaPage} from '../pages/almacenaje/lista-pallet-ua/lista-pallet-ua'; //aromero
+import {UbicacionDestinoPage} from '../pages/almacenaje/ubicacion-destino/ubicacion-destino'; //aromero
+import {ConsultarUbicacionPage} from '../pages/almacenaje/consultar-ubicacion/consultar-ubicacion'; //aromero
+import {DetalleProductoPage} from '../pages/almacenaje/detalle-producto/detalle-producto'; //aromero
+import {MenuConsultarPage} from '../pages/almacenaje/menu-consultar/menu-consultar'; //aromero
+import {AdministrarUaPage} from '../pages/almacenaje/menu-consultar/administrar-ua/administrar-ua'; //aromero
+import {ReasignarUaPage} from '../pages/almacenaje/menu-consultar/reasignar-ua/reasignar-ua'; //aromero
+import {ReubicarUaPage} from '../pages/almacenaje/menu-consultar/reubicar-ua/reubicar-ua'; //aromero
+import {ParticionarUaPage} from '../pages/almacenaje/menu-consultar/particionar-ua/particionar-ua'; //aromero
+import {ConsultarPalletPage} from '../pages/almacenaje/menu-consultar/consultar-pallet/consultar-pallet'; //aromero
+import {ConsultarEanPage} from '../pages/almacenaje/menu-consultar/consultar-ean/consultar-ean'; //aromero
 import { SelectAllDirective } from '../directives/select-all/select-all';
 import { AlmacenajeServiceProvider } from '../providers/almacenaje-service/almacenaje-service';
 import { InventarioServiceProvider } from '../providers/inventario-service/inventario-service';
@@ -142,7 +142,7 @@ import { from } from 'rxjs/observable/from';
     PopoverRutaPickingPage,
     DespachoPage,
     EmbalajePage,
-    InventarioPage,
+    InventarioPage_01Page,
     EmbalajePage_02Page,//YUS
     MomentjsPipe, //Loque#369Dev
     PopoverEmbalajeComponent, //Yus
@@ -152,8 +152,7 @@ import { from } from 'rxjs/observable/from';
     EmbalajePage_06Page, //YUS
     EmbalajePage_07Page, //YUS
     EmbalajePage_08Page, //YUS
-    EmbalajePage_09Page //YUS
-    MomentjsPipe, //Loque#369Dev
+    EmbalajePage_09Page, //YUS
     SelectAllDirective, //Loque#369Dev
     TransitoPage, //aromero
     PalletsTransitoPage, //aromero
@@ -231,7 +230,7 @@ import { from } from 'rxjs/observable/from';
     PopoverRutaPickingPage,
     DespachoPage,
     EmbalajePage,
-    InventarioPage,
+    InventarioPage_01Page,
     EmbalajePage_02Page,//YUS
     PopoverEmbalajeComponent, //Yus
     EmbalajePage_03Page,//yus    
@@ -240,7 +239,7 @@ import { from } from 'rxjs/observable/from';
     EmbalajePage_06Page, //YUS
     EmbalajePage_07Page, //YUS
     EmbalajePage_08Page, //YUS
-    EmbalajePage_09Page //YUS
+    EmbalajePage_09Page, //YUS
     TransitoPage, //aromero
     PalletsTransitoPage, //aromero
     DetallePalletUaPage, //aromero

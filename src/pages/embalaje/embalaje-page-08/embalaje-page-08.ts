@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import moment from 'moment';
 import { ImpresoraServiceProvider } from '../../../providers/impresora-service/impresora-service';
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
-import { EtqCajaServiceProvider } from '../../../providers/etq-caja-service/etq-caja-service';
+import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 
 
@@ -31,7 +31,7 @@ export class EmbalajePage_08Page {
   vNombreImpresora: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,    
-    public sImpresora: ImpresoraServiceProvider,  public sEmbalaje: EmbalajeServiceProvider, public sEtq: EtqCajaServiceProvider,
+    public sImpresora: ImpresoraServiceProvider,  public sEmbalaje: EmbalajeServiceProvider, public sEtq: EtiquetadoServiceProvider,
     public alertCtrl: AlertController,public sGlobal: GlobalServiceProvider) {       
       debugger;
       this.vEmbalajeTotalPage02 = navParams.get('dataPage02');   
