@@ -7,10 +7,10 @@
 <ion-header no-border>
   <ion-toolbar no-border-top>
     <ion-navbar>
-      <ion-title>transfer-page-02</ion-title>
+      <ion-title>Detalle Transferencia</ion-title>
     </ion-navbar>
     <ion-buttons start>
-      <button ion-button icon-only>
+      <button ion-button icon-only (click)="listarDetalleTransfXTx(vParameter.Id_Tx)">
         <ion-icon name="refresh"></ion-icon>
       </button>
     </ion-buttons>
@@ -19,13 +19,12 @@
 
 <ion-content>
   <ion-grid class="bgHeader">
-    <!-- Header caption -->
     <ion-row align-items-center>
       <ion-col col-4 col-sm>
         <div class="textHeader">Cuenta </div>
       </ion-col>
       <ion-col col-8 col-sm>
-        <div class="valueHeader">X</div>
+        <div class="valueHeader">{{ vParameter.Cuenta }}</div>
       </ion-col>
     </ion-row>
     <ion-row align-items-center>
@@ -33,7 +32,7 @@
         <div class="textHeader">N° de trans.: </div>
       </ion-col>
       <ion-col col-8 col-sm>
-        <div class="valueHeader">X</div>
+        <div class="valueHeader">{{ vParameter.Id_Tx }}</div>
       </ion-col>
     </ion-row>
     <ion-row align-items-center>
@@ -41,27 +40,93 @@
         <div class="textHeader">Fecha de regist.: </div>
       </ion-col>
       <ion-col col-8 col-sm>
-        <div class="valueHeader">X</div>
+        <div class="valueHeader">{{ vParameter.FechaDocumento|momentjs: 'DD/MM/YYYY' }}</div>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-footer class="bgLightBlue">
-    <ion-grid>
-      <ion-row>
-        <ion-col col-3 col-sm>
-          <div class="fieldForm">Total</div>
-        </ion-col>
-        <ion-col col-9 col-sm>
-            <div class="fieldForm"> {{ rowCount }} fila(s) </div>
-        </ion-col>
-      </ion-row>
-
-      <ion-row justify-content-center>
-        <button ion-button icon-start (click)="cerrarTx">
-          Cerrar Tx
-        </button>
-      </ion-row>
-    </ion-grid>
-  </ion-footer>
+  <ion-card *ngFor="let obj of listDetalle">  
+    <ion-card-content no-padding (click)="goToTransferPage03(obj)">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-1 col-sm
+          [ngClass]="obj.Id_Estado === 3 ? 'label-color bg-confirm' : 'label-color bg-process'">
+          </ion-col>
+          <ion-col col-10 col-sm>
+            <ion-row>
+              <ion-col class="tf02-card-col" col-4 col-sm>
+                <ion-label class="tf02-card-label fieldForm">Código:</ion-label>
+              </ion-col>
+              <ion-col class="tf02-card-col" col-8 col-sm>
+                <ion-label class="tf02-card-label">{{ obj.Codigo }}</ion-label>
+              </ion-col>
+            </ion-row>
+        <ion-row>
+          <ion-col class="tf02-card-col" col-4 col-sm>
+            <ion-label class="tf02-card-label fieldForm">Producto:</ion-label>
+          </ion-col>
+          <ion-col class="tf02-card-col">
+            <ion-label class="tf02-card-label">{{ obj.Producto }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="tf02-card-col" col-4 col-sm>
+            <ion-label class="tf02-card-label fieldForm">Lote:</ion-label>
+          </ion-col>
+          <ion-col class="tf02-card-col" col-8 col-sm>
+            <ion-label class="tf02-card-label">{{ obj.Lote }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="tf02-card-col" col-4 col-sm>
+            <ion-label class="tf02-card-label fieldForm">Cantidad:</ion-label>
+          </ion-col>
+          <ion-col class="tf02-card-col" col-8 col-sm>
+            <ion-label class="tf02-card-label">{{ obj.CantidadPedida }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="tf02-card-col" col-4 col-sm>
+            <ion-label class="tf02-card-label fieldForm">Saldo:</ion-label>
+          </ion-col>
+          <ion-col class="tf02-card-col" col-2 col-sm>
+            <ion-label class="tf02-card-label">{{ obj.Saldo }}</ion-label>
+          </ion-col>
+          
+          <ion-col class="tf02-card-col" col-2 col-sm off-set-1>
+            <ion-label class="tf02-card-label fieldForm">U.M:</ion-label>
+          </ion-col>
+          <ion-col class="tf02-card-col" col-3 col-sm>
+            <ion-label class="tf02-card-label">{{ obj.UM }}</ion-label>
+          </ion-col>
+          
+        </ion-row>
+      </ion-col>
+      <ion-col col-1 col-sm align-self-center>
+        <ion-icon name="arrow-round-forward"></ion-icon>
+      </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+
+<ion-footer>
+  <ion-grid>
+    <p class="subtitleForm fieldForm" text-center>
+          TOTAL ITEMS: {{ rowCount }}
+        </p>
+    <ion-row>
+        <ion-col col-2 offset-1 col-sm class="box-counter bg-pendient"> {{ countConfirm }} </ion-col>
+        <ion-col col-2 offset-2 col-sm class="box-counter bg-process"> {{ countProcess }} </ion-col>
+        <ion-col col-2 offset-2 col-sm class="box-counter bg-checked"> {{ countProcess }} </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-toolbar>  
+    <ion-buttons right>
+      <button ion-button icon-only (click)="cerrarTx()">
+        <ion-icon name="custom-save" size="large"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

@@ -7,57 +7,75 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>transfer-page-03</ion-title>
+    <ion-title>Ubicaciones lote</ion-title>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content>
   <ion-grid class="bgHeader">
-    <!-- Header caption -->
     <ion-row align-items-center>
-      <ion-col col-4 col-sm>
-        <div class="textHeader">Producto </div>
+      <ion-col col-3 col-sm>
+        <div class="textHeader">Código: </div>
       </ion-col>
-      <ion-col col-8 col-sm>
-        <div class="valueHeader">X</div>
+      <ion-col col-9 col-sm>
+        <div class="valueHeader">{{ vParameter.Cod_Producto }}</div>
       </ion-col>
     </ion-row>
     <ion-row align-items-center>
-      <ion-col col-4 col-sm>
-        <div class="textHeader">N° de trans.: </div>
-      </ion-col>
-      <ion-col col-8 col-sm>
-        <div class="valueHeader">X</div>
+      <ion-col col-12 col-sm>
+        <div class="valueHeader">{{ vParameter.Producto }}</div>
       </ion-col>
     </ion-row>
     <ion-row align-items-center>
-      <ion-col col-4 col-sm>
-        <div class="textHeader">Lote </div>
+      <ion-col col-3 col-sm>
+        <div class="textHeader">Lote: </div>
       </ion-col>
       <ion-col col-8 col-sm>
-        <div class="valueHeader">X</div>
+        <div class="valueHeader">{{ vParameter.Lote }}</div>
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <ion-card *ngFor="let obj of listUbiLote">  
+      <ion-card-content no-padding (click)="goToTransferPage04(obj)">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-11 col-sm>
+              <ion-row>
+                <ion-col class="tf03-card-col" col-4 col-sm>
+                  <ion-label class="tf03-card-label fieldForm">Ubicación:</ion-label>
+                </ion-col>
+                <ion-col class="tf03-card-col" col-sm>
+                  <ion-label class="tf03-card-label">{{ obj.Ubicacion_2 }}</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="tf03-card-col" col-5 col-sm>
+                  <ion-label class="tf03-card-label fieldForm">Cantidad UA's:</ion-label>
+                </ion-col>
+                <ion-col class="tf03-card-col" col-7 col-sm>
+                  <ion-label class="tf03-card-label">{{ obj.Cantidad }}</ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+        <ion-col col-1 col-sm align-self-center>
+            <ion-icon name="arrow-round-forward"></ion-icon>
+        </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
 </ion-content>
 
 <ion-footer class="bgLightBlue">
   <ion-grid>
     <ion-row>
-      <ion-col col-3 col-sm>
-        <div class="fieldForm">Total</div>
+      <ion-col col-4 col-sm>
+        <div class="fieldForm">TOTAL ITEMS:</div>
       </ion-col>
-      <ion-col col-9 col-sm>
-        <div class="fieldForm"> {{ rowCount }} fila(s) </div>
+      <ion-col col-8 col-sm>
+        <div class="fieldForm"> {{ rowCount }} </div>
       </ion-col>
-    </ion-row>
-    <ion-row justify-content-center>
-      <button ion-button icon-start>
-        <ion-icon name="checkmark"></ion-icon>
-        Ir a verificar
-      </button>
     </ion-row>
   </ion-grid>
 </ion-footer>

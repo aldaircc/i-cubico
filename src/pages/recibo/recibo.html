@@ -28,7 +28,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content no-scroll>
 
     <ion-grid class="bgHeader">        
         <ion-row align-items-center>
@@ -47,20 +47,25 @@
 </ion-row>
 
 <ion-row class="bgWhite">
-  <ion-card *ngFor="let objRecepcion of listAuxRecepcion">
-      <ion-card-header class="headerCard">
-          Id Tx: {{objRecepcion.Id_Tx}}
-      </ion-card-header>
 
-      <ion-card-content (click)="evaluateGoReciboPage02(objRecepcion)">
-          <h5><b>Nro. Orden: </b> {{objRecepcion.NumOrden}}</h5>
-          <h5><b>Fecha: </b> {{ objRecepcion.FechaDocumento|momentjs}} </h5>
-          <h5><b>Proveedor: </b> {{objRecepcion.Proveedor}}</h5>
-          <h5><b>Cuenta: </b> {{objRecepcion.Cliente}}</h5>
-          <h5><b>Estado: </b> {{objRecepcion.Estado}}</h5>
-      </ion-card-content>
-    </ion-card>
 </ion-row>
+
+
+<ion-scroll scrollY="true">
+  <ion-card *ngFor="let objRecepcion of listAuxRecepcion" >
+    <ion-card-header class="headerCard">
+        Id Tx: {{objRecepcion.Id_Tx}}
+    </ion-card-header>
+
+    <ion-card-content (click)="evaluateGoReciboPage02(objRecepcion)">
+        <h5><b>Nro. Orden: </b> {{objRecepcion.NumOrden}}</h5>
+        <h5><b>Fecha: </b> {{ objRecepcion.FechaDocumento|momentjs:'DD/MM/YYYY'}} </h5>
+        <h5><b>Proveedor: </b> {{objRecepcion.Proveedor}}</h5>
+        <h5><b>Cuenta: </b> {{objRecepcion.Cliente}}</h5>
+        <h5><b>Estado: </b> {{objRecepcion.Estado}}</h5>
+    </ion-card-content>
+  </ion-card>
+</ion-scroll>
 </ion-content>
 
 <ion-footer class="bgLightBlue">

@@ -20,16 +20,25 @@ import { DetallePorProductoPage } from '../pages/picking/detalle-por-producto/de
 import { ReabastecimientoPage } from '../pages/picking/reabastecimiento/reabastecimiento';
 import { DespachoPage} from '../pages/despacho/despacho';
 import { EmbalajePage} from '../pages/embalaje/embalaje';
-import { InventarioPage} from '../pages/inventario/inventario';
-import { EtiquetaCajaLpnPage } from '../pages/etiqueta-caja-lpn/etiqueta-caja-lpn';
 import { ReciboPage_05Page } from '../pages/recibo/recibo-page-05/recibo-page-05';
 import { TransferPage_06Page } from '../pages/transferencia/transfer-page-06/transfer-page-06';
+import { MainMenuPage } from '../pages/main-menu/main-menu';
+import { TransferPage_01Page } from '../pages/transferencia/transfer-page-01/transfer-page-01';
+import { EtiquetadoPage_01Page } from '../pages/etiquetado/etiquetado-page-01/etiquetado-page-01';
+import { EtiquetadoPage_02Page } from '../pages/etiquetado/etiquetado-page-02/etiquetado-page-02';
+import { EtiquetadoPage_03Page } from '../pages/etiquetado/etiquetado-page-03/etiquetado-page-03';
+import { InventarioPage_01Page } from '../pages/inventario/inventario-page-01/inventario-page-01'; //Loque#369Dev
+import { InventarioPage_02Page } from '../pages/inventario/inventario-page-02/inventario-page-02'; //Loque#369Dev
+import { InventarioPage_03Page } from '../pages/inventario/inventario-page-03/inventario-page-03'; //Loque#369Dev
+import { InventarioPage_04Page } from '../pages/inventario/inventario-page-04/inventario-page-04'; //Loque#369Dev
+import { InventarioPage_05Page } from '../pages/inventario/inventario-page-05/inventario-page-05'; //Loque#369Dev
+import { InventarioPage_06Page } from '../pages/inventario/inventario-page-06/inventario-page-06'; //Loque#369Dev
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = HomePage; //TransferPage_06Page;
+  rootPage:any = MainMenuPage;
   userProfile={"Almacen":"","ApeNom":"","Cliente":"","Correo":"","FlagActivo":false,"FlagPermiso":false,"FlagRestablecer":false,"Foto":null,"Id_Almacen":"","Id_Cliente":null,"Id_Perfil":"","Perfil":"","Usuario":""};
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

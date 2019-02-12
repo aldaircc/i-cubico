@@ -10,14 +10,17 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class GlobalServiceProvider {
 
-  Id_Almacen : number = 1;
+  Id_Almacen : number = 2;
   Id_Impresora : number = 0;
+  Id_Muelle : number = 0;
   Id_Centro : number = 0;
+  Id_TerminalRF : number = 0;
+  nombreAlmacen: string = "";
   nombreImpresora : string;
   nombreEmpresa : string; 
   userName : string = "";
-  url : string = "http://172.16.32.15:8085/SGAA_WCF/";
-  urlPrint : string =  "http://172.16.32.15/SGAA_WCF_PRINT/";
+  url : string = "";
+  urlPrint : string =  "";
   usuario: string;
   produccion: string;
   tablaEst : string;
@@ -28,11 +31,18 @@ export class GlobalServiceProvider {
   pickingService:any;
   despacho:any;
   picking:any;
+  almacenajeService:any;
+  inventarioService: any;
 
   constructor(public http: HttpClient) {
-    this.userName = "acosetito";
+    debugger;
+    this.userName = "ADMIN";//"aromero";
+    this.Id_Almacen = 2;
+    this.Id_Muelle = 1;
+    this.Id_TerminalRF = 2;
     this.nombreEmpresa = "TESLA S.A";
-    this.nombreImpresora = "Intermec";
+    this.nombreImpresora = "INTERMEC";
+    this.nombreAlmacen = "Almacen 369";
 
     this.usuario = this.url + 'UsuarioService.svc/rest/';
     this.produccion = this.url + 'ProduccionService.svc/rest/';
@@ -43,6 +53,8 @@ export class GlobalServiceProvider {
     this.picking = this.url + "PickingService.svc/rest/";
     this.impresoraService = this.urlPrint + "Impresiones.svc/rest/";
     this.pickingService = this.urlPrint + "PickingService.svc/rest/";
-    
+    this.pickingService = this.url + "PickingService.svc/rest/";
+    this.almacenajeService = this.url + "AlmacenajeService.svc/rest/";
+    this.inventarioService = this.url + "InventarioService.svc/rest/";
   }
 }

@@ -1,0 +1,30 @@
+page-inventario-page-01 {
+
+    .iv01-card-col{
+        padding: 0px !important;
+    }
+
+    .iv01-card-label{
+        margin: 0px !important;
+    }
+
+    .bg-process{
+        background: yellow;
+     }
+
+     .bg-no-started{
+        background: lightgray;
+     }
+     .label-color{
+        width: 0.1%;
+        max-width: 0.1%;
+    }
+
+    .statico{
+        position: sticky; //sticky
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+    }
+}

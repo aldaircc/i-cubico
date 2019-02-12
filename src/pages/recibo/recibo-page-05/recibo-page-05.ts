@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { ImpresoraPage } from '../../impresora/impresora';
 import { ReciboServiceProvider } from '../../../providers/recibo-service/recibo-service';
-import { EtqCajaServiceProvider } from '../../../providers/etq-caja-service/etq-caja-service';
+import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
 
 /**
  * Generated class for the ReciboPage_05Page page.
@@ -27,7 +27,7 @@ export class ReciboPage_05Page {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public modalCtrl: ModalController, public sRecibo:ReciboServiceProvider,
-    public sEtq : EtqCajaServiceProvider, public sGlobal: GlobalServiceProvider) {
+    public sEtq : EtiquetadoServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vReciboPage04 = this.navParams.get('dataPage04');
     console.log('data page 04', this.navParams.get('dataPage04'));
   }
@@ -42,8 +42,7 @@ export class ReciboPage_05Page {
     if(this.sGlobal.Id_Impresora == 0 || this.sGlobal.Id_Impresora == undefined){
       this.showModalImpresora();
     }else{
-      this.sRecibo.insertarPallet(2, "ADMIN", 1).then(result=>{
-        debugger;
+      this.sRecibo.insertarPallet(this.sGlobal.Id_Almacen, this.sGlobal.userName, 1).then(result=>{
         let res : any = result;
         var listContainerEtq = [];
         var listEtq = [];
@@ -51,25 +50,22 @@ export class ReciboPage_05Page {
         if(res.length != 0){
           this.etqPallet = res;
           
-          listEtq.push({ 'campo': '|ALMACEN|',  'valor' : '2' });
+          listEtq.push({ 'campo': '|ALMACEN|',  'valor' : this.sGlobal.Id_Almacen });
           listEtq.push({ 'campo': '|CODIGO|',  'valor' : this.vReciboPage04.Id_Articulo });
           listEtq.push({ 'campo': '|PRODUCTO|',  'valor' : this.vReciboPage04.Articulo });
-          listEtq.push({ 'campo': '|CUENTA|',  'valor' : "Loque#369Dev" });
+          listEtq.push({ 'campo': '|CUENTA|',  'valor' : "" });
           listEtq.push({ 'campo': '|CODBARRA|',  'valor' : this.etqPallet });
           listEtq.push({ 'campo': '|EMPRESA|',  'valor' : this.vReciboPage04.Cuenta });
           listContainerEtq.push({ 'etiqueta' : listEtq });
           this.sEtq.imprimirListaEtiquetas(listContainerEtq, "ETQ_PALLETS_UA.txt", this.sGlobal.nombreImpresora, true).then(result=>{
             let res : any = result;
-            debugger;
             if(res.errNumber == -1){
               alert(res.mensaje);
             }
           });
         }
       });
-      //this.sRecibo.insertarPallet(this.sGlobal.Id_Impresora, this.sGlobal.userName, this.sGlobal.Id_Centro);
     }
-  
   }
 
   showModalImpresora(){
@@ -78,16 +74,12 @@ export class ReciboPage_05Page {
   }
 
   onClickRegistrar(){
-    //presenter.validatePallet(edtEtqPallet.getText().toString(), 2); //Global.IdWarehouse);
-    this.sRecibo.validarPallet(this.etqPallet, 2 /** this.sGlobal.Id_Almacen **/).then(result=>{
+    this.sRecibo.validarPallet(this.etqPallet, this.sGlobal.Id_Almacen).then(result=>{
       var res : any = result;
-      debugger;
       if(res.valor1 >= -1){
-        //presenter.getUAsProductoTx(objReceived.getId_Tx(), objReceived.getId_Producto(), objReceived.getItem());
         this.listarUAXProductoTx(this.vReciboPage04.Id_Tx, this.vReciboPage04.Id_Articulo, this.vReciboPage04.Item);
       }else{
         alert('El pallet escaneado no existe');
-        debugger;
         this.inputEtqPallet.setFocus();
         // edtEtqPallet.selectAll();
       }
@@ -103,11 +95,11 @@ export class ReciboPage_05Page {
         'TipoUbicacion' : 1,
         'Id_Producto' : this.vReciboPage04.Id_Articulo,
         'Id_Ubicacion_Origen' : 0,
-        'Id_Almacen' : 2, //this.sGlobal.Id_Almacen
+        'Id_Almacen' : this.sGlobal.Id_Almacen,
         'Id_Tx' : this.vReciboPage04.Id_Tx,
         'Prioridad' : 10,
         'Observacion' : '',
-        'UsuarioModificacion' : 'ADMIN', //this.sGlobal.userName
+        'UsuarioModificacion' : this.sGlobal.userName
       }
 
       this.registrarUATransito(objTxUbi);
@@ -117,7 +109,6 @@ export class ReciboPage_05Page {
 
   registrarUATransito(TxUbi){
     this.sRecibo.registrarUATransito(TxUbi).then(result=>{
-      debugger;
       var lstUbi = [];
       
       this.listBulto.forEach(el => {
@@ -126,16 +117,15 @@ export class ReciboPage_05Page {
         let objUA = {
           'UA_CodBarra' : el.UA_CodBarra,
           'PalletCodBarra' : this.etqPallet,
-          'UsuarioRegistro' : 'ADMIN', //this.sGlobal.userName,
+          'UsuarioRegistro' : this.sGlobal.userName,
           'Id_Tx_Ubi' : result,
-          'Id_Almacen' : 2 //this.sGlobal.Id_Almacen,
+          'Id_Almacen' : this.sGlobal.Id_Almacen,
         };
         lstUbi.push(objUA);
         this.contPrintUA++;
       });
 
       this.sRecibo.registrarPallet(lstUbi).then(result=>{
-        debugger;
         let res : any = result;
         if(res.errNumber == 0){
           alert("UA's registradas: "+ this.contPrintUA + " de " + this.listBulto.length);
@@ -148,5 +138,4 @@ export class ReciboPage_05Page {
       });
     });
   }
-
 }

@@ -27,7 +27,7 @@
 
 
     ion-content{
-      font-size: 90%;
+      //font-size: 90%;
     }
     
     .subtitleForm {
@@ -54,28 +54,28 @@
     }
 
     .bgHeader{
-        background-color: #3878be !important;        
+        background-color: /**#3878be**/ #03A9F5 !important;        
     }
 
     .bgLightBlue{
-        background-color: #d8e2f4;
+        background-color: #d8e2f4 !important;
     }
 
     .bgWhite{
-        background-color: whitesmoke;
+        background-color: whitesmoke !important;
     }
 
     .bgRed{
-        background-color: red;
+        background-color: red !important;
     }
 
     .bgYellow{
-        background-color: #ffff00;
+        background-color: #ffff00 !important;
     }
 
 
     .bgGreen{
-        background-color: #04B404;
+        background-color: #04B404 !important;
     }
 
     .borderSolid{
@@ -94,7 +94,8 @@
         opacity: 1 !important;
         visibility: visible !important;
     }
-    .item-md{
+
+    ion-col> .item-md{
         padding-left: 0px !important;
     }
     
@@ -113,10 +114,56 @@
     .boxUbicacion{
         width: 100%;
         height: 100%;
-        background: yellow;
+        background: #03A9F5;
         padding: 20%;
     }
+
+    .font-x-large{
+        font-size: x-large;
+    }
+
+    .text-color-white{
+        color: white;
+    }
+
+    .scroll-content {
+        padding-bottom: 0 !important;
+    }
+
+    .skyBlue-color{
+        background: #03A9F5;
+    }
+
+    .toolbar[primary] .toolbar-title, .toolbar[primary] .bar-button-default {
+        color: white;
+    }
+
+    $toolbar-background: #3D9BDD;
     
+    ion-icon {
+        &[class*="custom-"] {
+          mask-size: contain;
+          mask-position: 50% 50%;
+          mask-repeat: no-repeat;
+          background: currentColor;
+          width: 1em;
+          height: 1em;
+        }
+      
+        &[class*="custom-mobile"] {
+          mask-image: url(../assets/mobile.svg);
+        }
+        &[class*="custom-qrcode"] {
+          mask-image: url(../assets/qrcode.svg);
+        }
+        &[class*="custom-spades"] {
+          mask-image: url(../assets/spades.svg);
+        }
+        &[class*="custom-save"]{
+            mask-image: url(../assets/icon/md-save.svg);
+        }
+      }
+      
   @import 'themes/bootstrap';
   @import 'themes/dark';
   @import 'assets/icons';
