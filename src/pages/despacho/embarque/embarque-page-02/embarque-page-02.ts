@@ -19,10 +19,28 @@ import { EmbarquePage_03Page } from '../embarque-page-03/embarque-page-03';
 export class EmbarquePage_02Page {
 
   vParameter :any;
+  totalSubBultos: number = 0;
+  totalSubBultosLeido: number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider,
     public sDesp: DespachoServiceProvider) {
     this.vParameter = this.navParams.get('vParameter');
+    this.listarSubBultosLeidos(this.vParameter.Id_Tra, 2);
+  }
+
+  listarSubBultosLeidos(strTransaccion, tipo){
+    this.sDesp.listarSubBultosLeidos(strTransaccion, tipo).then(result=>{
+      debugger;
+      let res: any = result;
+
+      this.totalSubBultos = res.length;
+      this.totalSubBultosLeido = res.reduce((acc, cur) => (cur.FlagLeido == true) ? ++acc : acc, 0);
+    /**
+      var lista = method.ListarSubBultosLeidos(tx, 2);
+      totSubBultos = lista.Count();
+      totSubBultosLeido = lista.Where(x => x.FlagLeido == true).Count(); 
+    **/
+    });
   }
 
   goToEmbarPage03(obj):void{
@@ -32,9 +50,14 @@ export class EmbarquePage_02Page {
       'Conductor': obj.Conductor,
       'Documento': obj.Documento,
       'Id_Vehiculo': obj.Id_Vehiculo,
-      'Placa': obj.Placa
+      'Placa': obj.Placa,
+      'totalSubBultos': this.totalSubBultos,
+      'totSubBultosLeido': this.totalSubBultosLeido
    };
-   
    this.navCtrl.push(EmbarquePage_03Page, { 'vParameter': parameter });
+  }
+
+  closeEmbarPage03(): void{
+    this.navCtrl.pop();
   }
 }
