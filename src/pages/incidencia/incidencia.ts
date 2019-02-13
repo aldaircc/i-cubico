@@ -32,11 +32,10 @@ export class IncidenciaPage {
     this.vParameters = navParams.get('pIncidencia');
     this.listarCausalesXModulo(0, 1);
     
-    debugger;
     if(this.tipo == 1){
       this.buscarControlUsuario(this.vParameters.Id_Tx, "ADMIN");
     }else{
-      this.buscarControlPendiente(this.vParameters.Id_Tx, "ADMIN");
+      this.buscarControlPendiente( (this.vParameters == undefined) ? '': this.vParameters.Id_Tx, "ADMIN");
     }
   }
 
@@ -97,14 +96,12 @@ export class IncidenciaPage {
   }
 
   listarCausalesXModulo(id_Cliente, id_Modulo){
-    this.sIncidencia.listarCausalesXModulo(id_Cliente, id_Modulo).then(result=>{
-      debugger;
+    this.sIncidencia.listarCausalesXModulo(id_Cliente, id_Modulo).then(result=>{      
       this.listCausal = result;
     });
   }
 
   btnProcesar(){
-    debugger;
     if(this.tipo == 1){
       this.registrarControlOP(this.vParameters.Id_Tx, this.id_LineaMAQ, this.id_Causal, "ADMIN", this.observacion, this.flagPausa);
     }else{
@@ -123,7 +120,6 @@ export class IncidenciaPage {
 
   registrarControlOP(strIdOP, intIdLineaMaq, intId_Causal, strUsuario, strObservacion, bolFlagPausa){
     this.sIncidencia.registrarControlOP(strIdOP, intIdLineaMaq, intId_Causal, strUsuario, strObservacion, bolFlagPausa).then(result=>{
-      debugger;
       let res : any = result;
       if(res.errNumber == 0){
         let content = (this.flagPausa == true) ? "Continuar transacción":"Transacción detenida";
@@ -137,7 +133,6 @@ export class IncidenciaPage {
 
   registrarControl(id_Tx, id_Causal, usuario, id_TerminalRF, observacion, flagPausa){
     this.sIncidencia.registrarControl(id_Tx, id_Causal, usuario, id_TerminalRF, observacion, flagPausa).then(result=>{
-    debugger;
     let res : any = result;
     if(res.errNumber == 0){
       let content = (this.flagPausa == true) ? "Continuar transacción":"Transacción detenida";
