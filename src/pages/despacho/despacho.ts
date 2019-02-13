@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { EmbarquePage_01Page } from './embarque/embarque-page-01/embarque-page-01';
 
 /**
  * Generated class for the DespachoPage page.
@@ -18,8 +19,7 @@ export class DespachoPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad DespachoPage');
+  goToEmbarPage01(){
+    this.navCtrl.push(EmbarquePage_01Page);
   }
-
 }
