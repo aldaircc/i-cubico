@@ -52,4 +52,92 @@ export class DespachoServiceProvider {
       })
     });
   }
+
+  listarDetalleXTransporte(strIdTransporte){
+    var parameter = {
+      'strIdTransporte': strIdTransporte
+    };
+
+    return new Promise(result=>{
+      this.http.get(this.sGlobal.despachoService + 'ListarDetalleXTransporte', {params:parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-listarDetalleXTransporte', err);
+      })
+    });
+  }
+
+  cargaBultoTransporte(strBulto, strIdTran, intIdAlmacen, strUser){
+    var parameter = {
+      'strBulto': strBulto,
+      'strIdTran': strIdTran,
+      'intIdAlmacen': intIdAlmacen,
+      'strUser': strUser
+    };
+
+    return new Promise(result=>{
+      this.http.get(this.sGlobal.despachoService + 'CargaBultoTransporte', {params: parameter})
+      .map(res => res.json())
+      .subscribe(data=>{
+        result(data);
+      }, err=>{
+        console.log('E-CargaBultoTransporte', err);
+      })
+    });
+  }
+
+  eliminarBultoEmbarque(strBulto, strIdTran, intIdAlmacen, strUser){
+    let parameter = {
+      'strBulto': strBulto,
+      'strIdTran': strIdTran,
+      'intIdAlmacen': intIdAlmacen,
+      'strUser': strUser
+    };
+
+    return new Promise((result, reject)=>{
+      this.http.post(this.sGlobal.despachoService + 'EliminarBultoEmbarque/strBulto/strIdTran/intIdAlmacen/strUser', JSON.stringify(parameter), {headers: this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-eliminarBultoEmbarque', err);
+      });
+    });
+  }
+
+  cerrarEmbarque(strIdTran, intIdEstado, strUser){
+    let parameter = {
+      'strIdTran': strIdTran,
+      'intIdEstado': intIdEstado,
+      'strUser': strUser
+    };
+
+    return new Promise(result=>{
+      this.http.get(this.sGlobal.despachoService + 'CerrarEmbarque', {params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-cerrarEmbarque', err);
+      })
+    });
+  }
+
+  listarBultosXCargarTransporte(strIdTransporte){
+    let parameter = {
+      'strIdTransporte': strIdTransporte
+    };
+
+    return new Promise(result=>{
+      this.http.get(this.sGlobal.despachoService + 'ListarBultosXCargarTransporte', {params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-listarBultosXCargarTransporte', err);
+      })
+    });
+  }
 }
