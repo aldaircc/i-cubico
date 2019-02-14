@@ -20,6 +20,9 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="loadUrlTimeoutValue" value="700000" />
+    <preference name="KeyboardResizeMode" value="native" />
+    <preference name="KeyboardResize" value="false" />
+    <preference name="keyboardDisplayRequiresUserAction" value="true" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
