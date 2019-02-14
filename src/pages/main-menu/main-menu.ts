@@ -4,12 +4,11 @@ import { HomePage } from '../home/home';
 import { ReciboPage } from '../recibo/recibo';
 import { PickingPage } from '../picking/picking';
 import { AlmacenajePage } from '../almacenaje/almacenaje';
+import { EmbalajePage } from '../embalaje/embalaje';
 import { EtiquetadoPage_01Page } from '../etiquetado/etiquetado-page-01/etiquetado-page-01';
 import { TransferPage_01Page } from '../transferencia/transfer-page-01/transfer-page-01';
 import { InventarioPage_01Page } from '../inventario/inventario-page-01/inventario-page-01';
 import { DespachoPage } from '../despacho/despacho';
-
-
 
 /**
  * Generated class for the MainMenuPage page.
@@ -58,6 +57,9 @@ export class MainMenuPage {
     this.navCtrl.push(AlmacenajePage);
   }
 
+  goEmbalajePage(){
+    this.navCtrl.push(EmbalajePage);
+    }
   goEtiquetado(){
     this.navCtrl.push(EtiquetadoPage_01Page, { codePage: 7 });
   }

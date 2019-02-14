@@ -45,7 +45,6 @@ import { EmbarquePage_05Page } from '../pages/despacho/embarque/embarque-page-05
 })
 export class MyApp {
   rootPage:any = MainMenuPage;
-
   userProfile={"Almacen":"","ApeNom":"","Cliente":"","Correo":"","FlagActivo":false,"FlagPermiso":false,"FlagRestablecer":false,"Foto":null,"Id_Almacen":"","Id_Cliente":null,"Id_Perfil":"","Perfil":"","Usuario":""};
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
