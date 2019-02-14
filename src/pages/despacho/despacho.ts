@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EmbarquePage_01Page } from './embarque/embarque-page-01/embarque-page-01';
+import { ReciboBultoPage_01PageModule } from './recibo/recibo-bulto-page-01/recibo-bulto-page-01.module';
 
 /**
  * Generated class for the DespachoPage page.
@@ -21,5 +22,9 @@ export class DespachoPage {
 
   goToEmbarPage01(){
     this.navCtrl.push(EmbarquePage_01Page);
+  }
+
+  gotToReciboBultoPage01(){
+    this.navCtrl.push(ReciboBultoPage_01PageModule);
   }
 }
