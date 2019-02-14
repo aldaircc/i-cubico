@@ -41,6 +41,7 @@ export class GlobalServiceProvider {
     this.Id_Almacen = 2;
     this.Id_Muelle = 1;
     this.Id_TerminalRF = 2;
+    this.Id_Centro = 1;
     this.nombreEmpresa = "TESLA S.A";
     this.nombreImpresora = "INTERMEC";
     this.nombreAlmacen = "Almacen 369";

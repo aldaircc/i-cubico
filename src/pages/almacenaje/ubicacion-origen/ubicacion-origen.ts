@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { ReabastecimientoPickingPage } from '../reabastecimiento-picking/reabastecimiento-picking'
 
 /**
  * Generated class for the UbicacionOrigenPage page.
@@ -15,7 +16,29 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class UbicacionOrigenPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController ) {
+  }
+
+  goReabastecimientoPickingPage() {
+    this.navCtrl.push(ReabastecimientoPickingPage);
+}
+
+  presentAlert(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            resolve(true);
+            console.log('Agree clicked');
+          }
+        }]
+      });
+      confirm.present();
+    })
   }
 
   ionViewDidLoad() {

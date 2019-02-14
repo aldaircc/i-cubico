@@ -23,27 +23,27 @@
   <ion-content>
   
     <ion-grid style="padding: 0px;">
-      <ion-row no-padding style="margin-top: 15px; margin-bottom: 15px; ">
-        <ion-col col-5 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-          <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-            Ubicación destino:
+      <ion-row no-padding style="margin-top: 15px; margin-bottom: 5px; ">
+        <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+          <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
+            Ubicación:
           </ion-label>
         </ion-col>
-        <ion-col col-7 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
           <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
             <ion-input #txtCodUbicacion [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row no-padding style="margin-top: 15px; margin-bottom: 15px; ">
-        <ion-col col-5 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+      <ion-row no-padding style="margin-top: 5px; margin-bottom: 15px; ">
+        <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
           <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
             Sector:
           </ion-label>
         </ion-col>
-        <ion-col col-7 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
           <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-  
+            {{ Sector }}
           </ion-label>
         </ion-col>
       </ion-row>
@@ -80,28 +80,28 @@
         <ion-col col-3 no-padding>
           <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
             <ion-label style="font-weight:bold; color: white; text-align: center">
-              <!-- {{ rutaPicking.Fila }} -->A
+              {{ Fila }}
             </ion-label>
           </ion-row>
         </ion-col>
         <ion-col col-3 no-padding>
           <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
             <ion-label style="font-weight:bold; color: white; text-align: center">
-              <!-- {{ rutaPicking.Columna }} -->B
+              {{ Columna }}
             </ion-label>
           </ion-row>
         </ion-col>
         <ion-col col-3 no-padding>
           <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
             <ion-label style="font-weight:bold; color: white; text-align: center">
-              <!-- {{ rutaPicking.Nivel }} -->C
+              {{ Nivel }}
             </ion-label>
           </ion-row>
         </ion-col>
         <ion-col col-3 no-padding>
           <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
             <ion-label style="font-weight:bold; color: white; text-align: center">
-              <!-- {{ rutaPicking.Posicion }} -->D
+              {{ Posicion }}
             </ion-label>
           </ion-row>
         </ion-col>
@@ -112,7 +112,7 @@
   
     <ion-row no-padding style="margin-top: 15px; margin-bottom: 15px; text-align: center">
       <ion-col col-12 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <button ion-button icon-start (click)="goAlmacenajePage()">
+        <button ion-button icon-start (click)="reubicarUA()">
           <ion-icon name="checkmark"></ion-icon>
           ACEPTAR
         </button>

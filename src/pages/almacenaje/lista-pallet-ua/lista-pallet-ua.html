@@ -26,19 +26,17 @@
     </ion-toolbar>
 </ion-header>
 
-
-
 <ion-content>
     <ion-grid style="padding: 0px;">
         <ion-row no-padding no-margin style="background: #00BFFF">
-            <ion-col col-3 style="padding-left: 0px; padding-right: 0px">
+            <ion-col col-6 style="padding-left: 0px; padding-right: 0px">
                 <ion-label style="padding-left: 10px; margin-top: 5px; margin-bottom: 1px; color: yellow; font-weight:bold ">
                     N° Reabastecimiento:
                 </ion-label>
             </ion-col>
             <ion-col col-9 style="padding-left: 0px; padding-right: 0px">
                 <ion-label style="padding-left: 10px; margin-top: 5px; margin-bottom: 1px; color: white; font-weight:bold ">
-                    {{ vPickingXProducto.NumOrden }}
+                    <!-- {{ vPickingXProducto.NumOrden }} -->
                 </ion-label>
             </ion-col>
         </ion-row>
@@ -50,14 +48,14 @@
             </ion-col>
             <ion-col col-9 style="padding-left: 0px; padding-right: 0px; padding-TOP: 0px">
                 <ion-label style="padding-left: 10px; margin-top: 1px; margin-bottom: 1px; color: white; font-weight:bold ">
-                    {{ vPickingXProducto.CodigoProducto }}
+                    <!-- {{ vPickingXProducto.NumOrden }} -->
                 </ion-label>
             </ion-col>
         </ion-row>
         <ion-row no-padding no-margin style="background: #00BFFF">
             <ion-col col-12 style="padding-left: 0px; padding-right: 0px; padding-TOP: 0px; text-align: center">
                 <ion-label style="font-size: 12px; padding-left: 10px; margin-top: 1px; margin-bottom: 1px; color: white; font-weight:bold ">
-                    {{ vPickingXProducto.Producto }}
+                    <!-- {{ vPickingXProducto.NumOrden }} -->
                 </ion-label>
             </ion-col>
         </ion-row>
@@ -69,7 +67,7 @@
             </ion-col>
             <ion-col col-9 style="padding-left: 0px; padding-right: 0px; padding-TOP: 0px">
                 <ion-label style="padding-left: 10px; margin-top: 1px; margin-bottom: 1px; color: white; font-weight:bold ">
-                    {{ vPickingXProducto.CodigoProducto }}
+                    <!-- {{ vPickingXProducto.NumOrden }} -->
                 </ion-label>
             </ion-col>
         </ion-row>
@@ -129,19 +127,19 @@
     </ion-row>
 </ion-content>
 
-<ion-footer style="background: white">   
+<ion-footer style="background: #054B77">
     <ion-grid style="color: white">
-        <ion-row no-padding no-margin style="text-align: center" > 
-            <ion-col col-6 style="margin: 0px; padding: 1px; ">
-                <ion-label no-padding no-margin style="font-weight:bold; color:black">
-                    Total Ítems: {{rowCount}} 
-                </ion-label>
-            </ion-col>
-            <ion-col col-6 style="margin: 0px; padding: 1px; ">
-                <ion-label no-padding no-margin style="font-weight:bold; color:black">
-                    Cant. Total: {{rowCount}} 
-                </ion-label>
-            </ion-col>
-        </ion-row>
+      <ion-row no-padding no-margin>
+        <ion-col col-6 style="margin: 0px; padding-top: 0.9%; padding-bottom: 0.5%">
+          <ion-label no-padding no-margin style="font-weight:bold; color:white; margin: 0px; padding: 0px">
+            Cant. Ítems: {{rowCount}}
+          </ion-label>
+        </ion-col>
+        <ion-col col-6 style="margin: 0px; padding-top: 0.9%; padding-bottom: 0.5%">
+            <ion-label no-padding no-margin style="font-weight:bold; color:white; margin: 0px; padding: 0px">
+              Cant. Total: {{rowCount}}
+            </ion-label>
+          </ion-col>
+      </ion-row>
     </ion-grid>
-</ion-footer>
+  </ion-footer>

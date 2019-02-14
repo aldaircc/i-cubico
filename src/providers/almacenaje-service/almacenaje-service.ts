@@ -83,9 +83,261 @@ export class AlmacenajeServiceProvider {
       })
     });
   }
-  // [OperationContract]
-  // [WebInvoke(UriTemplate = "/RegistrarUAsUbicacion/strUA/intIdUbicacion/strUsuario", Method = "POST", ResponseFormat = WebMessageFormat.Json,
-  //     RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-  // Entidades.Mensaje RegistrarUAsUbicacion(List<string> strUA, int intIdUbicacion, string strUsuario);
+
+  //aromero
+  getUbicacionTransito(intIdAlmacen){
+    var parameter : any;
+    parameter = {"IDALMACEN": intIdAlmacen};
+
+    return new Promise(resolve=>{
+      this.http.get(this.sGlobal.almacenajeService + 'Total_Items_UbicacionTransito', { params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error getUbicacionTransito', err);
+      })
+    });
+  }
+
+  //aromero
+  getValidarUATransito(strUA, intIdUbicacion){
+    var parameter : any;
+    parameter = {'strUA' : strUA, 'intIdUbicacion' : intIdUbicacion};
+
+    return new Promise(resolve=>{
+      this.http.get(this.sGlobal.almacenajeService + 'ValidarUATransito', { params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error getValidarUATransito', err);
+      })
+    });
+  }
+
+  //aromero
+  getListarUbicacionLibreXMarcaSugerida(intIdMarca, intIdAlmacen, intIdCondicion, CodBarraUA){
+    var parameter : any;
+    parameter = {'INTIDMARCA' : intIdMarca, 'INTIDALMACEN' : intIdAlmacen, 'INTIDCONDICION' : intIdCondicion, 'CODBARRAUA' : CodBarraUA};
+
+    return new Promise(resolve=>{
+      this.http.get(this.sGlobal.almacenajeService + 'ListarUbicacionLibreXMarcaSugerida', { params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error getListarUbicacionLibreXMarcaSugerida', err);
+      })
+    });
+  }
+
+  //aromero
+  getListarSectoresXAlmacen(intIdAlmacen){
+    var parameter : any;
+    parameter = {'INTIDALMACEN' : intIdAlmacen};
+
+    return new Promise(resolve=>{
+      this.http.get(this.sGlobal.almacenajeService + 'ListarSectoresXAlmacen', { params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error getListarSectoresXAlmacen', err);
+      })
+    });
+  }
+
+  //aromero  
+  getListarUbicacionesDisponibles(intIdAlmacen, intIdMarca, intCondicion, intIdSector){
+    var parameter : any;
+    parameter = {'INTIDALMACEN' : intIdAlmacen, 'INTIDMARCA' : intIdMarca, 'INTIDCONDICION' : intCondicion, 'INTIDSECTOR' : intIdSector};
+    return new Promise(resolve=>{
+      this.http.get(this.sGlobal.almacenajeService + 'ListarMasUbicacionesDisponibles', { params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error getListarUbicacionesDisponibles', err);
+      })
+    });
+  }
+
+  //aromero  
+  postRegistrarUAUbicacion(strUA, intIdUbicacion, strUsuario){
+    let parameter = {
+      'strUA' : strUA,
+      'intIdUbicacion' : intIdUbicacion,
+      'strUsuario' : strUsuario
+    };
+    return new Promise((result, reject)=>{
+      this.http.post(this.sGlobal.almacenajeService + 'RegistrarUAUbicacion/strUA/intIdUbicacion/strUsuario', JSON.stringify(parameter), {headers:this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-postRegistrarUAUbicacion', err);
+      })
+    });
+  }
+
+  //aromero
+  getListarUbicacionXCodigoBarra(strUbi, intIdAlmacen){
+    var parameter : any;
+    parameter = {'STRUBI' : strUbi, 'INTIDALMACEN' : intIdAlmacen};
+    return new Promise(resolve=>{
+      this.http.get(this.sGlobal.almacenajeService + 'ListarUbicacionXCodigoBarra', { params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error getListarUbicacionXCodigoBarra', err);
+      })
+    });
+  }
+
+  //aromero
+  getListarUAsXUbicacion(strUbi, intIdAlmacen){
+    var parameter : any;
+    parameter = {'STRBARRAUBICACION' : strUbi, 'INTIDALMACEN' : intIdAlmacen};
+    return new Promise(resolve=>{
+      this.http.get(this.sGlobal.almacenajeService + 'ListarUAsXUbicacion', { params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error getListarUAsXUbicacion', err);
+      })
+    });
+  }
+
+  //aromero
+  getValidarExisteUAUbicada(strUA, strLote, intIdUbicacion){
+    var parameter : any;
+    parameter = {'STRUA' : strUA, 'STRLOTE' : strLote, 'INTIDUBICACION': intIdUbicacion};
+    return new Promise(resolve=>{
+      this.http.get(this.sGlobal.almacenajeService + 'ValidarExisteUAUbicada', { params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error getValidarExisteUAUbicada', err);
+      })
+    });
+  }
+
+  //aromero
+  postReubicacionMasiva(IdCentro, IdProducto, IdAlmacen, Cantidad, IdUbicacionDestino, strUsuario, strUA){
+    debugger;
+    let parameter = {
+      'IdCentro' : IdCentro,
+      'IdProducto' : IdProducto,
+      'IdAlmacen' : IdAlmacen,
+      'Cantidad' : Cantidad,
+      'IdUbicacionDestino' : IdUbicacionDestino,
+      'strUsuario' : strUsuario,
+      'strUA' : strUA
+    };
+
+    return new Promise((result, reject)=>{
+      this.http.post(this.sGlobal.almacenajeService + 'ReubicacionMasiva/IdCentro/IdProducto/IdAlmacen/Cantidad/IdUbicacionDestino/strUsuario/strUA', JSON.stringify(parameter), {headers:this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-postReubicacionMasiva', err);
+      })
+    });
+  }
+
+  //aromero
+  postRegistrarUAStandBy(ua, Accion, IdAlmacen){
+    debugger;
+    let parameter = {
+      'ua' : ua,
+      'Accion' : Accion,
+      'IdAlmacen' : IdAlmacen
+    };
+
+    return new Promise((result, reject)=>{
+      this.http.post(this.sGlobal.almacenajeService + 'RegistrarUAStandBy/ua/Accion/IdAlmacen', JSON.stringify(parameter), {headers:this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-postRegistrarUAStandBy', err);
+      })
+    });
+  }
+
+  //aromero
+  getListarUAUbicada(strUA, intIdAlmacen){
+    var parameter : any;
+    parameter = {'STRUA' : strUA, 'INTIDALMACEN' : intIdAlmacen};
+    return new Promise(resolve=>{
+      this.http.get(this.sGlobal.almacenajeService + 'ListarUAUbicada', { params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error getListarUAUbicada', err);
+      })
+    });
+  }
+
+  //aromero  
+  postReAsignarUA(strUA, strUADestino, intIdUbicacionDestino, Cantidad, strUsuario){
+    let parameter = {
+      'strUA' : strUA,
+      'strUADestino' : strUADestino,
+      'intIdUbicacionDestino' : intIdUbicacionDestino,
+      'Cantidad' : Cantidad,
+      'strUsuario' : strUsuario
+    };
+    return new Promise((result, reject)=>{
+      this.http.post(this.sGlobal.almacenajeService + 'ReasignarUA/strUA/strUADestino/intIdUbicacionDestino/Cantidad/strUsuario', JSON.stringify(parameter), {headers:this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-postReAsignarUA', err);
+      })
+    });
+  }
+
+  //aromero
+  postReUbicarUA(strUA, intIdUbicacion, strUsuario){
+    debugger;
+    let parameter = {
+      'strUA' : strUA,
+      'intIdUbicacion' : intIdUbicacion,
+      'strUsuario' : strUsuario
+    };
+
+    return new Promise((result, reject)=>{
+      this.http.post(this.sGlobal.almacenajeService + 'ReUbicarUA/strUA/intIdUbicacion/strUsuario', JSON.stringify(parameter), {headers:this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-postReUbicarUA', err);
+      })
+    });
+  }
+
+  //aromero
+  getListarUbicacionesXEAN(strBuscar, intIdAlmacen){
+    var parameter : any;
+    parameter = {'STRBUSCAR' : strBuscar, 'INTIDALMACEN' : intIdAlmacen};
+    return new Promise(resolve=>{
+      this.http.get(this.sGlobal.almacenajeService + 'ListarUbicacionesXEAN', { params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error getListarUbicacionesXEAN', err);
+      })
+    });
+  }
 
 }

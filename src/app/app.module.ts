@@ -59,6 +59,27 @@ import { InventarioPage_06Page } from '../pages/inventario/inventario-page-06/in
 import { DespachoPage } from '../pages/despacho/despacho';
 import { EmbalajePage } from '../pages/embalaje/embalaje';
 import { PickingServiceProvider } from '../providers/picking-service/picking-service';
+import {TransitoPage} from '../pages/almacenaje/transito/transito' //aromero
+import {PalletsTransitoPage} from '../pages/almacenaje/pallets-transito/pallets-transito' //aromero
+import {DetallePalletUaPage} from '../pages/almacenaje/detalle-pallet-ua/detalle-pallet-ua' //aromero
+import {OtraUbicacionPage} from '../pages/almacenaje/otra-ubicacion/otra-ubicacion' //aromero
+import {AlmacenajePalletUaPage} from '../pages/almacenaje/almacenaje-pallet-ua/almacenaje-pallet-ua' //aromero
+import {ReubicacionPage} from '../pages/almacenaje/reubicacion/reubicacion' //aromero
+import {ReubicacionDestinoPage} from '../pages/almacenaje/reubicacion-destino/reubicacion-destino' //aromero
+import {ReabastecimientoAlmacenajePage} from '../pages/almacenaje/reabastecimiento-almacenaje/reabastecimiento-almacenaje' //aromero
+import {ReabastecimientoPickingPage} from '../pages/almacenaje/reabastecimiento-picking/reabastecimiento-picking' //aromero
+import {ListaPalletUaPage} from '../pages/almacenaje/lista-pallet-ua/lista-pallet-ua' //aromero
+import {UbicacionDestinoPage} from '../pages/almacenaje/ubicacion-destino/ubicacion-destino' //aromero
+import {ConsultarUbicacionPage} from '../pages/almacenaje/consultar-ubicacion/consultar-ubicacion' //aromero
+import {DetalleProductoPage} from '../pages/almacenaje/detalle-producto/detalle-producto' //aromero
+import {MenuConsultarPage} from '../pages/almacenaje/menu-consultar/menu-consultar' //aromero
+import {AdministrarUaPage} from '../pages/almacenaje/menu-consultar/administrar-ua/administrar-ua' //aromero
+import {ReasignarUaPage} from '../pages/almacenaje/menu-consultar/reasignar-ua/reasignar-ua' //aromero
+import {ReubicarUaPage} from '../pages/almacenaje/menu-consultar/reubicar-ua/reubicar-ua' //aromero
+import {ParticionarUaPage} from '../pages/almacenaje/menu-consultar/particionar-ua/particionar-ua' //aromero
+import {ConsultarPalletPage} from '../pages/almacenaje/menu-consultar/consultar-pallet/consultar-pallet' //aromero
+import {ConsultarEanPage} from '../pages/almacenaje/menu-consultar/consultar-ean/consultar-ean' //aromero
+import {UbicacionOrigenPage} from '../pages/almacenaje/ubicacion-origen/ubicacion-origen' //aromero
 import { EmbarquePage_01Page } from '../pages/despacho/embarque/embarque-page-01/embarque-page-01'; //Loque#369Dev
 import { EmbarquePage_02Page } from '../pages/despacho/embarque/embarque-page-02/embarque-page-02'; //Loque#369Dev
 import { EmbarquePage_03Page } from '../pages/despacho/embarque/embarque-page-03/embarque-page-03'; //Loque#369Dev
@@ -99,7 +120,6 @@ import { SelectAllDirective } from '../directives/select-all/select-all';
 import { AlmacenajeServiceProvider } from '../providers/almacenaje-service/almacenaje-service';
 import { InventarioServiceProvider } from '../providers/inventario-service/inventario-service';
 import { DespachoServiceProvider } from '../providers/despacho-service/despacho-service';
-
 import { from } from 'rxjs/observable/from';
 
 @NgModule({
@@ -187,7 +207,8 @@ import { from } from 'rxjs/observable/from';
     ReubicarUaPage, //aromero
     ParticionarUaPage, //aromero
     ConsultarPalletPage, //aromero
-    ConsultarEanPage //aromero
+    ConsultarEanPage, //aromero
+    UbicacionOrigenPage //aromero
   ],
   imports: [
     BrowserModule,HttpModule,HttpClientModule,
@@ -279,7 +300,8 @@ import { from } from 'rxjs/observable/from';
     ReubicarUaPage, //aromero
     ParticionarUaPage, //aromero
     ConsultarPalletPage, //aromero
-    ConsultarEanPage //aromero
+    ConsultarEanPage, //aromero
+    UbicacionOrigenPage //aromero
   ],
   providers: [
     StatusBar,
