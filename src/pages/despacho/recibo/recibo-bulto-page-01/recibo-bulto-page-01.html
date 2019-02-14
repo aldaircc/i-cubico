@@ -14,16 +14,25 @@
 
 
 <ion-content no-padding>
-  <ion-label>Código de muelle</ion-label>
-  <ion-item>
-    <ion-input></ion-input>
-  </ion-item>
-
+  <ion-grid>
+    <ion-row>
+      <ion-label class="fieldForm">Código de muelle</ion-label>
+      <ion-item>
+        <ion-input [(ngModel)]="strCodigoBarra" (keyup.enter)="validarMuelle()" #inputCodigoMuelle></ion-input>
+      </ion-item>
+    </ion-row>
+    <ion-label class="fieldForm">Descripción:</ion-label>
+    <ion-item>
+      <ion-label>
+        {{ strDescripcionMuelle }}
+      </ion-label>
+    </ion-item>
+  </ion-grid>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
-    <ion-buttons left>
+    <ion-buttons right>
       <button ion-button small only-icon>
         <ion-icon name="play"></ion-icon>
       </button>
