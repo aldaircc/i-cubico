@@ -39,6 +39,7 @@ import { EmbarquePage_02Page } from '../pages/despacho/embarque/embarque-page-02
 import { EmbarquePage_03Page } from '../pages/despacho/embarque/embarque-page-03/embarque-page-03'; //Loque#369Dev
 import { EmbarquePage_04Page } from '../pages/despacho/embarque/embarque-page-04/embarque-page-04'; //Loque#369Dev
 import { EmbarquePage_05Page } from '../pages/despacho/embarque/embarque-page-05/embarque-page-05'; //Loque#369Dev
+import { ReciboBultoPage_01Page } from '../pages/despacho/recibo/recibo-bulto-page-01/recibo-bulto-page-01'; //Loque#369Dev
 
 @Component({
   templateUrl: 'app.html'
