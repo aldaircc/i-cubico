@@ -12,7 +12,7 @@ import { GlobalServiceProvider } from '../../providers/global-service/global-ser
 export class HomePage {
 
   responseData : any;
-  userData = {"Usuario": "acosetito","Clave": "123456", "idterminal": "1"};
+  userData = {"Usuario": "admin","Clave": "cipsa2018", "idterminal": "1"};
   
   constructor(public navCtrl: NavController,public auth:AuthService, public sGlobal: GlobalServiceProvider) { }
 
@@ -20,8 +20,8 @@ iniciarSesion(){
   this.auth.getUsers(this.userData).then((result) => {
     this.responseData = result;
     if(this.responseData.length>0){
-        //localStorage.setItem('vUserData', JSON.stringify(this.responseData));
         this.sGlobal.vUserData = result;
+        this.sGlobal.userName = result[0].Usuario;
         this.navCtrl.push(WarehouseSelectPage);
    }
    else{

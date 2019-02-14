@@ -1,0 +1,27 @@
+page-embalaje-page-04 {
+    // .centroIzquierda{
+      
+    //     top: 17px;
+    //     left: 70px;
+    // }    
+    // .centroIzquierda{
+    //     position: relative;
+    //     top: 17px;
+    //     left: 70px;
+    // }
+    // .centroDerecha{               
+    //     position: relative;
+    //     top: -16px;
+    //     left: 200px;
+    // }
+    .centroIzquierda{
+        position: absolute;
+        top: 11px;
+        left: 120px;
+    }
+    .centroDerecha{               
+        position: absolute;
+        top: 12px;
+        left: 220px;
+    }
+}

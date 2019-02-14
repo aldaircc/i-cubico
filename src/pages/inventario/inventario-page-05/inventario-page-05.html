@@ -5,14 +5,110 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>inventario-page-05</ion-title>
+    <ion-title>Detalle de inventario</ion-title>
   </ion-navbar>
 
+  <ion-grid class="bgHeader">
+    <ion-row>
+      <ion-col col-3 col-sm>
+        <div class="textHeader">Inventario:</div>
+      </ion-col>
+      <ion-col col-9 col-sm>
+        <div class="valueHeader">{{ vParameter.Id_Inventario }}</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-header>
 
-
-<ion-content padding>
-
+<ion-content>
+  <ion-card *ngFor="let obj of listDetail">
+    <ion-card-content no-padding>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-11 col-sm>
+            <ion-row>
+              <ion-col class="iv05-card-col" col-3 col-sm>
+                <ion-label class="iv05-card-label fieldForm">Sector:</ion-label>
+              </ion-col>
+              <ion-col class="iv05-card-col" col-5 col-sm>
+                <ion-label class="iv05-card-label">{{ obj.Sector }}</ion-label>
+              </ion-col>
+              <ion-col class="iv05-card-col" col-2 col-sm>
+                <ion-label class="iv05-card-label fieldForm">Fila:</ion-label>
+              </ion-col>
+              <ion-col class="iv05-card-col" col-2 col-sm>
+                <ion-label class="iv05-card-label">{{ obj.Fila }}</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="iv05-card-col" col-3 col-sm>
+                <ion-label class="iv05-card-label fieldForm">Código:</ion-label>
+              </ion-col>
+              <ion-col class="iv05-card-col" col-7 col-sm>
+                <ion-label class="iv05-card-label">{{ obj.Codigo }}</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="iv05-card-col" col-12 col-sm>
+                <ion-label class="iv05-card-label">{{ obj.Producto }}</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="iv05-card-col" col-5 col-sm>
+                <ion-label class="iv05-card-label fieldForm">UA CodBarra:</ion-label>
+              </ion-col>
+              <ion-col class="iv05-card-col" col-7 col-sm>
+                <ion-label class="iv05-card-label">{{ obj.UA_CodBarra }}</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="iv05-card-col" col-3 col-sm>
+                <ion-label class="iv05-card-label fieldForm">UM:</ion-label>
+              </ion-col>
+              <ion-col class="iv05-card-col" col-3 col-sm>
+                <ion-label class="iv05-card-label">{{ obj.UM }}</ion-label>
+              </ion-col>
+              <ion-col class="iv05-card-col" col-4 col-sm>
+                <ion-label class="iv05-card-label fieldForm">Cant. Invent.:</ion-label>
+              </ion-col>
+              <ion-col class="iv05-card-col" col-2 col-sm>
+                <ion-label class="iv05-card-label">{{ obj.CantidadInv | number:'1.2-2' }}</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="iv05-card-col" col-3 col-sm>
+                <ion-label class="iv05-card-label fieldForm">Cant. UA:</ion-label>
+              </ion-col>
+              <ion-col class="iv05-card-col" col-3 col-sm>
+                <ion-label class="iv05-card-label">{{ obj.CantidadUA | number:'1.2-2'}}</ion-label>
+              </ion-col>
+              <ion-col class="iv05-card-col" col-4 col-sm>
+                <ion-label class="iv05-card-label fieldForm">Cant. Averiada:</ion-label>
+              </ion-col>
+              <ion-col class="iv05-card-col" col-2 col-sm>
+                <ion-label class="iv05-card-label">{{ obj.CantidadAveriada | number:'1.2-2'}}</ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+      <ion-col col-1 col-sm align-self-center>
+          <ion-icon name="trash" (click)="deleterItem(obj)" [hidden]="isHiddenDelete"></ion-icon>
+      </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+
+<ion-footer class="bgLightBlue">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4 col-sm>
+        <div class="fieldForm">TOTAL ITEMS:</div>
+      </ion-col>
+      <ion-col col-8 col-sm>
+        <div class="fieldForm"> {{ rowCount }} </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

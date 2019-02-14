@@ -13,9 +13,7 @@
       </button>
     </ion-buttons>
   </ion-navbar>
-</ion-header>
 
-<ion-content>
   <ion-grid class="bgHeader statico">
     <ion-row align-items-center>
       <ion-col col-3 col-sm>
@@ -34,15 +32,16 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+</ion-header>
 
-  <ion-list [virtualScroll]="listInvent" [approxItemHeight]="'20px'" style="top: 50px;">
-    <!-- <ion-card *ngFor="let obj of listInvent"> -->
+<ion-content>
+  <ion-list [virtualScroll]="listInvent" [approxItemHeight]="'20px'">
     <ion-card *virtualItem="let obj">
       <ion-card-content no-padding (click)="goToInventPage02(obj)">
         <ion-grid>
           <ion-row>
             <ion-col col-1 col-sm
-            [ngClass]="obj.Id_Estado === 3 ? 'label-color bg-no-started' : 'label-color bg-process'">
+            [ngClass]="obj.Id_Estado === 10 ? 'label-color bg-no-started' : 'label-color bg-process'">
             </ion-col>
             <ion-col col-10 col-sm>
               <ion-row>
@@ -88,3 +87,16 @@
   </ion-list>
   
 </ion-content>
+
+<ion-footer class="bgLightBlue">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4 col-sm>
+        <div class="fieldForm">TOTAL ITEMS:</div>
+      </ion-col>
+      <ion-col col-8 col-sm>
+        <div class="fieldForm"> {{ rowCount }} </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

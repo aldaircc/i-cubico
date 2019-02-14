@@ -34,12 +34,18 @@ import { InventarioPage_04Page } from '../pages/inventario/inventario-page-04/in
 import { InventarioPage_05Page } from '../pages/inventario/inventario-page-05/inventario-page-05'; //Loque#369Dev
 import { InventarioPage_06Page } from '../pages/inventario/inventario-page-06/inventario-page-06'; //Loque#369Dev
 
+import { EmbarquePage_01Page } from '../pages/despacho/embarque/embarque-page-01/embarque-page-01'; //Loque#369Dev
+import { EmbarquePage_02Page } from '../pages/despacho/embarque/embarque-page-02/embarque-page-02'; //Loque#369Dev
+import { EmbarquePage_03Page } from '../pages/despacho/embarque/embarque-page-03/embarque-page-03'; //Loque#369Dev
+import { EmbarquePage_04Page } from '../pages/despacho/embarque/embarque-page-04/embarque-page-04'; //Loque#369Dev
+import { EmbarquePage_05Page } from '../pages/despacho/embarque/embarque-page-05/embarque-page-05'; //Loque#369Dev
+import { ReciboBultoPage_01Page } from '../pages/despacho/recibo/recibo-bulto-page-01/recibo-bulto-page-01'; //Loque#369Dev
+
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   rootPage:any = MainMenuPage;
-
   userProfile={"Almacen":"","ApeNom":"","Cliente":"","Correo":"","FlagActivo":false,"FlagPermiso":false,"FlagRestablecer":false,"Foto":null,"Id_Almacen":"","Id_Cliente":null,"Id_Perfil":"","Perfil":"","Usuario":""};
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

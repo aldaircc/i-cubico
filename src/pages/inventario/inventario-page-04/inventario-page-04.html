@@ -10,41 +10,73 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgRed }">
   <ion-grid class="bgHeader">
     <ion-row>
-      <ion-col col-4 col-sm><div class="textHeader">SECTOR:</div></ion-col>
-      <ion-col col-8 col-sm><div class="valueHeader">{{ vParameter.Sector}}</div></ion-col>
+      <ion-col col-3 col-sm><div class="textHeader">{{ lblInfo01.Text }}</div></ion-col>
+      <!-- <ion-col col-9 col-sm><div class="valueHeader">{{ lblInfo01.Value }}</div></ion-col> -->
+      <ion-col col-7 col-sm><div class="valueHeader">{{ (strTipoInventario == 'GENERAL') ? vParameter.Sector :vParameter.Codigo }}</div></ion-col>
     </ion-row>
     <ion-row>
-      <ion-col col-4 col-sm><div class="textHeader">FILA/PERCHA:</div></ion-col>
-      <ion-col col-8 col-sm><div class="valueHeader">{{ vParameter.Fila }}</div></ion-col>
+      <ion-col col-3 col-sm><div class="textHeader">{{ lblInfo02.Text }} </div></ion-col>
+      <ion-col col-9 col-sm><div class="valueHeader">{{ lblInfo02.Value }}</div></ion-col>
     </ion-row>
   </ion-grid>
 
   <ion-list>
-    <ion-item>
+    <ion-item class="input-has-focus" [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgRed }">
       <ion-label>Ubicación:</ion-label>
-      <ion-input type="text" [(ngModel)]="strUbicacion" (keyup.enter)="validarUbicacion()" [disabled]="!isEnabledUbicacion"></ion-input>
+      <ion-input type="text" [(ngModel)]="strUbicacion" (keyup.enter)="validarUbicacion()" [disabled]="!isEnabledUbicacion" #inputUbicacion></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgRed }">
       <ion-label>Código de barras UA:</ion-label>
-      <ion-input type="text" [(ngModel)]="strCodeBarUA" (keyup.enter)="buscarArticuloEnLista()" [disabled]="!isEnabledCodeBar"></ion-input>
+      <ion-input type="text" [(ngModel)]="strCodeBarUA" (keyup.enter)="buscarArticuloEnLista()" [disabled]="!isEnabledCodeBar" #inputCodeBarUA></ion-input>
     </ion-item>
+
+    <ion-item [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgRed }" [hidden]="!isVisibleData">
+      <ion-label> {{ strArticulo }} </ion-label>
+    </ion-item>
+
+    <ion-item [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgRed }" [hidden]="!isVisibleData">
+      <ion-label>UM:</ion-label>
+      <ion-input type="text" [(ngModel)]="strUM"></ion-input>
+    </ion-item>
+    <ion-item [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgRed }" [hidden]="!isVisibleData">
+      <ion-label>Averiado:</ion-label>
+      <ion-input type="text" [(ngModel)]="txtAveriados.Text" type="number" pattern="[0-9]*" (keyup.enter)="pressEnterAveriado()" #inputAveriado></ion-input>
+    </ion-item>
+    <ion-item [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgRed }" [hidden]="!isVisibleData">
+      <ion-label>Cantidad:</ion-label>
+      <ion-input type="text" [(ngModel)]="txtCantidad.Text" type="number" pattern="[0-9]*" (keyup.enter)="registrar()" #inputCantidad></ion-input>
+    </ion-item>
+
   </ion-list>
 
 </ion-content>
 <ion-footer>
   <ion-toolbar>
     <ion-buttons left>
-      <button ion-button icon-only large (click)="cambiarUbicacion()">
-        <ion-icon name="label" md=""></ion-icon>
+      <button ion-button icon-only (click)="cambiarUbicacion()">
+        <ion-icon name="checkmark"></ion-icon>
       </button>
     </ion-buttons>
+
+    <ion-buttons justify-content-center align-items-end (click)="cambiarArticulo()" [hidden]="!isVisibleData">
+      <button ion-button icon-only style="margin-left: 35%">
+        <ion-icon name="grid"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-buttons justify-content-center align-items-end>
+      <button ion-button icon-only style="margin-left: 15%" (click)="registrar()" [hidden]="!isVisibleData">
+        <ion-icon name="alarm"></ion-icon>
+      </button>
+    </ion-buttons>
+
     <ion-buttons right>
-      <button ion-button icon-only large>
-        <ion-icon name="label" md=""></ion-icon>
+      <button ion-button icon-only (click)="goToDetail()">
+        <ion-icon name="reorder"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>

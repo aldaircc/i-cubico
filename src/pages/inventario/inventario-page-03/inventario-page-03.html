@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Inventario tipo x</ion-title>
+    <ion-title>Inventario tipo</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -21,7 +21,7 @@
     </ion-row>
     <ion-row>
       <ion-col col-5 col-sm><div class="textHeader">{{ lblInfo01.Text }}</div></ion-col>
-      <ion-col col-7 col-sm><div class="valueHeader">{{ lblInfo01.Value }}</div></ion-col>
+      <ion-col col-7 col-sm><div class="valueHeader">{{ (strTipoInventario == 'GENERAL') ? vParameter.Sector :vParameter.Codigo }}</div></ion-col>
     </ion-row>
     <ion-row>
       <ion-col col-5 col-sm><div class="textHeader">{{ lblInfo02.Text }}</div></ion-col>
@@ -31,19 +31,16 @@
 
   <ion-grid>
     <ion-row align-items-center>
-      <ion-col col-3 col-sm><div class="">Fecha:</div></ion-col>
+      <ion-col col-3 col-sm><div class="fielForm">Fecha:</div></ion-col>
       <ion-col col-9 col-sm>
           <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="MMM DD YYYY" [(ngModel)]="dtpFecha.Text" [disabled]="!dtpFecha.Enable"></ion-datetime>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-label>Inventariador:</ion-label>
-      </ion-col>
-    </ion-row>
+    
     <ion-row>
       <ion-col>
         <ion-item>
+            <ion-label stacked>Inventariador:</ion-label>
           <ion-input [(ngModel)]="txtInventareador.Text" (ionFocus)="fixScroll()" id="absence-textarea"></ion-input>
         </ion-item>
       </ion-col>

@@ -19,21 +19,21 @@ import { InventarioServiceProvider } from '../../../providers/inventario-service
 export class InventarioPage_01Page {
 
   listInvent: any;
+  rowCount: number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
-      
   }
 
   ionViewWillEnter() {
-    this.listarInventarioXUsuario('ADMIN', this.sGlobal.Id_Almacen);
+    this.listarInventarioXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
 
   
   listarInventarioXUsuario(strUsuario, intIdAlmacen): void{
     this.sInve.listarInventarioXUsuario(strUsuario, intIdAlmacen).then(result=>{
-      debugger;
       this.listInvent = result;
+      this.rowCount = this.listInvent.length;
     });
   }
 

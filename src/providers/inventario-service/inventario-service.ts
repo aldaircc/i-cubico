@@ -162,15 +162,77 @@ export class InventarioServiceProvider {
       'intIdProducto': intIdProducto,
       'strUA': strUA
     };
-    
+
     return new Promise(result=>{
-      this.http.get(this.sGlobal.inventarioService + 'ValidarUAInventario', {params: parameter})
+      this.http.get(this.sGlobal.inventarioService + 'ValidarUAInventarioV2', {params: parameter})
       .map(res=>res.json())
       .subscribe(data=>{
         result(data);
       },err=>{
         console.log('E-validarUAInventario', err);
       });
+    });
+  }
+
+  insertarUAInventario(strIdInventario, intIdSector, strFila, intIdProducto, strLote, strUA, decCantidadUA, decCantidadINV, decCantidadAVE, intIdUbicacionUA, intIdUbicacionINV, bolFlagActualiza, strUser){
+    let parameter = {
+      'strIdInventario': strIdInventario,
+      'intIdSector': intIdSector,
+      'strFila': strFila,
+      'intIdProducto': intIdProducto,
+      'strLote': strLote,
+      'strUA': strUA,
+      'decCantidadUA': decCantidadUA,
+      'decCantidadINV': decCantidadINV,
+      'decCantidadAVE': decCantidadAVE,
+      'intIdUbicacionUA': intIdUbicacionUA,
+      'intIdUbicacionINV': intIdUbicacionINV,
+      'bolFlagActualiza': bolFlagActualiza,
+      'strUser': strUser
+    };
+
+    return new Promise((result, reject)=>{
+      this.http.post(this.sGlobal.inventarioService + 'insertarUAInventario/strIdInventario/intIdSector/strFila/intIdProducto/strLote/strUA/decCantidadUA/decCantidadINV/decCantidadAVE/intIdUbicacionUA/intIdUbicacionINV/bolFlagActualiza/strUser', JSON.stringify(parameter), {headers: this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-insertarUAInventario', err);
+      })
+    });
+  }
+
+  listarUAsXUbicacionInventario(strIdInventario, strCodBarraUbi){
+    let parameter = {
+      'strIdInventario': strIdInventario, 
+      'strCodBarraUbi': strCodBarraUbi
+    };
+
+    return new Promise(result=>{
+      this.http.get(this.sGlobal.inventarioService + 'ListarUAsXUbicacionInventario', {params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-listarUAsXUbicacionInventario', err);
+      })
+    });
+  }
+
+  eliminarUAInventario(strIdInventario, strUA){
+    let parameter = {
+      'strIdInventario': strIdInventario,
+      'strUA': strUA
+    };
+
+    return new Promise((result, reject)=>{
+      this.http.post(this.sGlobal.inventarioService + 'EliminarUAInventario?strIdInventario/strUA', JSON.stringify(parameter), {headers: this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('E-eliminarUAInventario', err);
+      })
     });
   }
 }

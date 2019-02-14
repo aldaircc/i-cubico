@@ -17,10 +17,10 @@ export class GlobalServiceProvider {
   Id_TerminalRF : number = 0;
   nombreAlmacen: string = "";
   nombreImpresora : string;
-  nombreEmpresa : string;
+  nombreEmpresa : string; 
   userName : string = "";
-  url : string = "http://172.16.32.15:8085/SGAA_WCF/";
-  urlPrint : string = "";
+  url : string = "";
+  urlPrint : string =  "";
   usuario: string;
   produccion: string;
   tablaEst : string;
@@ -29,11 +29,14 @@ export class GlobalServiceProvider {
   impresoraService : string;
   vUserData: any;
   pickingService:any;
+  despacho:any;
+  picking:any;
   almacenajeService:any;
   inventarioService: any;
+  despachoService: any;
 
   constructor(public http: HttpClient) {
-    this.userName = "aromero";//"aromero";
+    this.userName = "ADMIN";//"aromero";
     this.Id_Almacen = 2;
     this.Id_Muelle = 1;
     this.Id_TerminalRF = 2;
@@ -46,10 +49,14 @@ export class GlobalServiceProvider {
     this.produccion = this.url + 'ProduccionService.svc/rest/';
     this.tablaEst = this.url + 'TablasEstaticasService.svc/rest/';
     this.recepcion = this.url + 'RecepcionService.svc/rest/';
+    this.despacho = this.url + "DespachoService.svc/rest/";
     this.UMService = this.url + 'UnidadMedidaService.svc/rest/';
+    this.picking = this.url + "PickingService.svc/rest/";
     this.impresoraService = this.urlPrint + "Impresiones.svc/rest/";
+    this.pickingService = this.urlPrint + "PickingService.svc/rest/";
     this.pickingService = this.url + "PickingService.svc/rest/";
     this.almacenajeService = this.url + "AlmacenajeService.svc/rest/";
     this.inventarioService = this.url + "InventarioService.svc/rest/";
+    this.despachoService = this.url + "DespachoService.svc/rest/";
   }
 }
