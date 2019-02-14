@@ -29,36 +29,36 @@
 
 <ion-content>
   <ion-grid style="padding: 0px;">
-    <ion-row no-padding style="margin-top: 15px; margin-bottom: 5px; ">
+    <ion-row no-padding style="margin-top: 15px; margin-bottom: 10px; ">
       <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
           Código:
         </ion-label>
       </ion-col>
-      <ion-col col-7 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtCodUbicacion [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
-        </ion-item>
+      <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
+          {{ vDatosRecibidos.CodBar_UA }}
+        </ion-label>
       </ion-col>
     </ion-row>
-    <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
-      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; ">
+      <ion-col col-2 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
           U.M.:
         </ion-label>
       </ion-col>
-      <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-
+      <ion-col col-10 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
+          {{ vDatosRecibidos.UM }}
         </ion-label>
       </ion-col>
     </ion-row>
 
-    <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; margin-left: 10px; height: 50px; margin-right: 10px; background: #F2F5A9 ">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; margin-left: 10px; height: 50px; margin-right: 10px; background: #F2F5A9 ">
       <ion-col col-12 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="text-align: center; padding-left: 0px; font-weight:bold; margin-top: 0px; margin-bottom: 0px;">
           <h5>
-            <!-- {{ resultMuelleXAlmacen.Muelle }} -->
+            {{ vDatosRecibidos.DescProducto }}
           </h5>
         </ion-label>
       </ion-col>
@@ -69,77 +69,78 @@
 
 
   <ion-grid style="padding: 0px;">
-    <ion-row no-padding style="margin-top: 5px; margin-bottom: 15px; ">
-      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; ">
+      <ion-col col-2 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
           Lote:
         </ion-label>
       </ion-col>
-      <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-
+      <ion-col col-10 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
+          {{ vDatosRecibidos.Lote }}
         </ion-label>
       </ion-col>
     </ion-row>
-    <ion-row no-padding style="margin-top: 10px; margin-bottom: 5px; ">
-      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; ">
+      <ion-col col-2 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
           F.E:
         </ion-label>
       </ion-col>
-      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtCodUbicacion [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
-        </ion-item>
+      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
+          {{ vDatosRecibidos.FechaEmision }}
+        </ion-label>
       </ion-col>
-      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
+      <ion-col col-2 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
           F.V:
         </ion-label>
       </ion-col>
-      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtCodUbicacion [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
-        </ion-item>
+      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
+          {{ vDatosRecibidos.FechaVencimiento }}
+        </ion-label>
       </ion-col>
     </ion-row>
-    <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; ">
       <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
           Cant. UA:
         </ion-label>
       </ion-col>
-      <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtCodUbicacion [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
-        </ion-item>
+      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
+         0.00
+        </ion-label>
       </ion-col>
       <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
           Saldo:
         </ion-label>
       </ion-col>
-      <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtCodUbicacion [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
-        </ion-item>
+      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
+         0.00
+        </ion-label>
       </ion-col>
     </ion-row>
-    <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
-      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 12px; margin-bottom: 0px;">
+
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; ">
+      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
           Cantidad Total:
         </ion-label>
       </ion-col>
-      <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtCodUbicacion [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
-        </ion-item>
+      <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
+          {{ vDatosRecibidos.CantidadTotal }}
+         </ion-label>
       </ion-col>
     </ion-row>
-    <ion-row no-padding style="margin-top: 5px; margin-bottom: 15px; ">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; ">
       <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 12px; margin-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
           Impresora:
         </ion-label>
       </ion-col>
@@ -149,9 +150,9 @@
         </ion-item>
       </ion-col>
     </ion-row>
-    <ion-row no-padding style="margin-top: 5px; margin-bottom: 15px; ">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom:10px; ">
       <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 12px; margin-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
           Nueva UA:
         </ion-label>
       </ion-col>

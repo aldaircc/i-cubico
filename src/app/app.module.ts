@@ -79,7 +79,7 @@ import {ReubicarUaPage} from '../pages/almacenaje/menu-consultar/reubicar-ua/reu
 import {ParticionarUaPage} from '../pages/almacenaje/menu-consultar/particionar-ua/particionar-ua' //aromero
 import {ConsultarPalletPage} from '../pages/almacenaje/menu-consultar/consultar-pallet/consultar-pallet' //aromero
 import {ConsultarEanPage} from '../pages/almacenaje/menu-consultar/consultar-ean/consultar-ean' //aromero
-
+import {UbicacionOrigenPage} from '../pages/almacenaje/ubicacion-origen/ubicacion-origen' //aromero
 
 
 import { SelectAllDirective } from '../directives/select-all/select-all';
@@ -156,7 +156,8 @@ import { from } from 'rxjs/observable/from';
     ReubicarUaPage, //aromero
     ParticionarUaPage, //aromero
     ConsultarPalletPage, //aromero
-    ConsultarEanPage //aromero
+    ConsultarEanPage, //aromero
+    UbicacionOrigenPage //aromero
   ],
   imports: [
     BrowserModule,HttpModule,HttpClientModule,
@@ -232,7 +233,8 @@ import { from } from 'rxjs/observable/from';
     ReubicarUaPage, //aromero
     ParticionarUaPage, //aromero
     ConsultarPalletPage, //aromero
-    ConsultarEanPage //aromero
+    ConsultarEanPage, //aromero
+    UbicacionOrigenPage //aromero
   ],
   providers: [
     StatusBar,

@@ -19,7 +19,7 @@ export class GlobalServiceProvider {
   nombreImpresora : string;
   nombreEmpresa : string;
   userName : string = "";
-  url : string = "";
+  url : string = "http://172.16.32.15:8085/SGAA_WCF/";
   urlPrint : string = "";
   usuario: string;
   produccion: string;
@@ -37,6 +37,7 @@ export class GlobalServiceProvider {
     this.Id_Almacen = 2;
     this.Id_Muelle = 1;
     this.Id_TerminalRF = 2;
+    this.Id_Centro = 1;
     this.nombreEmpresa = "TESLA S.A";
     this.nombreImpresora = "INTERMEC";
     this.nombreAlmacen = "Almacen 369";

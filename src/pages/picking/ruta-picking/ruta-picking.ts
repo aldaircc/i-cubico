@@ -1,4 +1,5 @@
 import { Component,   ViewChild } from '@angular/core';
+
 import { IonicPage, Navbar, NavController, NavParams, PopoverController, ToastController } from 'ionic-angular';
 import { DetallePickingPage } from '../detalle-picking/detalle-picking';
 import { PickingPorProductoPage } from '../picking-por-producto/picking-por-producto';
@@ -9,7 +10,7 @@ import { PopoverRutaPickingPage } from '../../picking/popover/popover-ruta-picki
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { PickingPage } from '../../picking/picking';
 
-
+// import { Keyboard } from '@ionic-native/keyboard';
 
 /**
  * Generated class for the RutaPickingPage page.
@@ -49,8 +50,7 @@ export class RutaPickingPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController, 
     public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider) {
-    this.vPickingPage = navParams.get('data');
-    
+    this.vPickingPage = navParams.get('data');    
     this.getDataRutaPicking(this.vPickingPage.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
 
@@ -82,8 +82,7 @@ export class RutaPickingPage {
     }, (500)); 
   }
 
-  getDataRutaPicking(strNroDoc, strUsuario, intIdAlmacen){
-    
+  getDataRutaPicking(strNroDoc, strUsuario, intIdAlmacen){    
     this.sPicking.getDataRutaPicking(strNroDoc, strUsuario, intIdAlmacen).then((result)=>{
       debugger;
       this.idRutaPicking = 0;

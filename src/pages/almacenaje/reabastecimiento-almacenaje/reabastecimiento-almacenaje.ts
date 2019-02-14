@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
+import { UbicacionOrigenPage} from '../ubicacion-origen/ubicacion-origen'
+
 
 /**
  * Generated class for the ReabastecimientoAlmacenajePage page.
@@ -27,6 +29,10 @@ export class ReabastecimientoAlmacenajePage {
     this.userDetail = this.sGlobal.userName;
     
   }
+
+  goUbicacionOrigenPage() {
+    this.navCtrl.push(UbicacionOrigenPage);
+}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ReabastecimientoAlmacenajePage');
