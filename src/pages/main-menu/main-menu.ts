@@ -7,6 +7,7 @@ import { AlmacenajePage } from '../almacenaje/almacenaje';
 import { EtiquetadoPage_01Page } from '../etiquetado/etiquetado-page-01/etiquetado-page-01';
 import { TransferPage_01Page } from '../transferencia/transfer-page-01/transfer-page-01';
 import { InventarioPage_01Page } from '../inventario/inventario-page-01/inventario-page-01';
+import { DespachoPage } from '../despacho/despacho';
 
 
 
@@ -67,5 +68,9 @@ export class MainMenuPage {
 
   goInventario(){
     this.navCtrl.push(InventarioPage_01Page);
+  }
+
+  goDespacho(){
+    this.navCtrl.push(DespachoPage);
   }
 }

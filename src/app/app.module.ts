@@ -80,11 +80,18 @@ import {ParticionarUaPage} from '../pages/almacenaje/menu-consultar/particionar-
 import {ConsultarPalletPage} from '../pages/almacenaje/menu-consultar/consultar-pallet/consultar-pallet' //aromero
 import {ConsultarEanPage} from '../pages/almacenaje/menu-consultar/consultar-ean/consultar-ean' //aromero
 
+import { EmbarquePage_01Page } from '../pages/despacho/embarque/embarque-page-01/embarque-page-01'; //Loque#369Dev
+import { EmbarquePage_02Page } from '../pages/despacho/embarque/embarque-page-02/embarque-page-02'; //Loque#369Dev
+import { EmbarquePage_03Page } from '../pages/despacho/embarque/embarque-page-03/embarque-page-03'; //Loque#369Dev
+import { EmbarquePage_04Page } from '../pages/despacho/embarque/embarque-page-04/embarque-page-04'; //Loque#369Dev
+import { EmbarquePage_05Page } from '../pages/despacho/embarque/embarque-page-05/embarque-page-05'; //Loque#369Dev
 
 
 import { SelectAllDirective } from '../directives/select-all/select-all';
 import { AlmacenajeServiceProvider } from '../providers/almacenaje-service/almacenaje-service';
 import { InventarioServiceProvider } from '../providers/inventario-service/inventario-service';
+import { DespachoServiceProvider } from '../providers/despacho-service/despacho-service';
+
 import { from } from 'rxjs/observable/from';
 
 @NgModule({
@@ -121,6 +128,11 @@ import { from } from 'rxjs/observable/from';
     InventarioPage_05Page, //Loque#369Dev
     InventarioPage_06Page, //Loque#369Dev
     PopoverReciboComponent, //Loque#369Dev
+    EmbarquePage_01Page, //Loque#369Dev
+    EmbarquePage_02Page, //Loque#369Dev
+    EmbarquePage_03Page, //Loque#369Dev
+    EmbarquePage_04Page, //Loque#369Dev
+    EmbarquePage_05Page, //Loque#369Dev
     AlmacenajePage,
     ImpresoraPage,
     IncidenciaPage,
@@ -202,6 +214,11 @@ import { from } from 'rxjs/observable/from';
     InventarioPage_05Page, //Loque#369Dev
     InventarioPage_06Page, //Loque#369Dev
     PopoverReciboComponent, //Loque#369Dev
+    EmbarquePage_01Page, //Loque#369Dev
+    EmbarquePage_02Page, //Loque#369Dev
+    EmbarquePage_03Page, //Loque#369Dev
+    EmbarquePage_04Page, //Loque#369Dev
+    EmbarquePage_05Page, //Loque#369Dev
     PickingPage,
     RutaPickingPage,
     DetallePickingPage,
@@ -246,7 +263,8 @@ import { from } from 'rxjs/observable/from';
     GlobalServiceProvider, //Loque#369Dev
     PickingServiceProvider,
     AlmacenajeServiceProvider,
-    InventarioServiceProvider
+    InventarioServiceProvider,
+    DespachoServiceProvider //Loque#369Dev
   ]
 })
 export class AppModule {}
