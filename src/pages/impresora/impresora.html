@@ -21,9 +21,6 @@
 
 <ion-content padding>
 <ion-card *ngFor="let objPrint of listImpresora">
-  <ion-card-header>
-    {{ objPrint.Nombre }}
-  </ion-card-header>
   <ion-card-content (click)="selectImpresora(objPrint)">
       <!-- <ion-row>
           <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
@@ -34,19 +31,31 @@
         </ion-row> -->
 
     <ion-row>
-        <ion-col col-2 col-sm-2 col-md-12>
-          IP:
+      <ion-col class="imp-card-col" col-sm>
+        <ion-label class="imp-card-label">{{ objPrint.Nombre }}</ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-col col-11 col-sm>
+          <ion-row>
+            <ion-col class="imp-card-col" col-3 col-sm>
+              <ion-label class="imp-card-label">IP:</ion-label>
+            </ion-col>
+            <ion-col class="imp-card-col" col-sm>
+              <ion-label class="imp-card-label">{{ objPrint.IpImpresora }}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="imp-card-col" col-3 col-sm>
+              <ion-label class="imp-card-label">Puerto:</ion-label>
+            </ion-col>
+            <ion-col class="imp-card-col" col-sm>
+              <ion-label class="imp-card-label">{{ objPrint.PuertoImpresora }}</ion-label>
+            </ion-col>
+          </ion-row>
         </ion-col>
-        <ion-col col-5 col-sm-12>
-          {{ objPrint.IpImpresora }}
-        </ion-col>
-        <ion-col col-2 col-sm-2>
-          Puerto:
-        </ion-col>
-        <ion-col col-3 col-sm-5>
-          {{ objPrint.PuertoImpresora }}
-        </ion-col>
-        <ion-col col-2 col-sm-2>
+        <ion-col col-1 col-sm>
           <ion-icon name='md-checkmark'></ion-icon>
         </ion-col>
     </ion-row>
