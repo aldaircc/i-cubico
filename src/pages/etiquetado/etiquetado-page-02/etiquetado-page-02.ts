@@ -29,10 +29,6 @@ export class EtiquetadoPage_02Page {
       this.listarCuentasXAlmacenUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen, 0);
   }
 
-  ionViewDidLoad() {
-    
-  }
-
   filtrarProducto(): void{
     let message = this.validarCampos();
     if(message.length > 0){

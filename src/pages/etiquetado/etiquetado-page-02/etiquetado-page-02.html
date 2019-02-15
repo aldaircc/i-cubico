@@ -10,73 +10,86 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content> 
+<ion-content>
   <!-- Original -->
-  <ion-list>
-   <ion-grid>
+  <ion-grid class="bgHeader">
     <ion-row>
-      <ion-col>
-        <ion-list>
-          <ion-item>
-            <ion-label>
-              Cuenta:
-            </ion-label>
-            <ion-select [(ngModel)]="IdCuenta">
-              <ion-option *ngFor="let cuenta of listCuentaAlmac" value="{{ cuenta.Id_Cuenta}}">{{ cuenta.NombreCuenta }}</ion-option>
-            </ion-select>
-          </ion-item>
-        </ion-list>
+      <ion-col class="no-padding-bottom-top" col-3 col-sm>
+        <ion-label class="fieldForm valueHeader">Cuenta:</ion-label>
       </ion-col>
-    </ion-row> 
-    <ion-row radio-group [(ngModel)]="tipoFiltro">
-      <ion-col>
+      <ion-col class="no-padding-bottom-top" col-9 col-sm>
         <ion-item>
-          <ion-label>Código</ion-label>
+          <ion-label style="visibility: hidden;">
+            Cuenta:
+          </ion-label>
+          <ion-select [(ngModel)]="IdCuenta">
+            <ion-option *ngFor="let cuenta of listCuentaAlmac" value="{{ cuenta.Id_Cuenta}}">{{ cuenta.NombreCuenta }}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="no-padding-bottom-top">
+        <ion-label class="fieldForm valueHeader">Buscar:</ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row radio-group [(ngModel)]="tipoFiltro">
+      <ion-col class="no-padding-bottom-top">
+        <ion-item class="transparent">
+          <ion-label class="valueHeader">Código</ion-label>
           <ion-radio mode="md" item-left value="1"></ion-radio>
         </ion-item>
       </ion-col>
   
-      <ion-col>
-        <ion-item>
-          <ion-label>Descripción</ion-label>
+      <ion-col class="no-padding-bottom-top">
+        <ion-item class="transparent">
+          <ion-label class="valueHeader">Descripción</ion-label>
           <ion-radio mode="md" item-left value="2"></ion-radio>
         </ion-item>
       </ion-col>
   
-      <ion-col>
-        <ion-item>
-          <ion-label>EAN13</ion-label>
+      <ion-col class="no-padding-bottom-top">
+        <ion-item class="transparent">
+          <ion-label class="valueHeader">EAN13</ion-label>
           <ion-radio mode="md" item-left value="3"></ion-radio>
         </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
-      <ion-col col-10 col-sm>
+      <ion-col class="no-padding-bottom-top" col-10 col-sm>
         <ion-list>
-          <ion-item>
-            <ion-input placeholder="Ingrese texto" [(ngModel)]="filterText" clearInput></ion-input>
+          <ion-item class="transparent no-padding-left">
+            <ion-input placeholder="Ingrese texto" [(ngModel)]="filterText" clearInput class="valueHeader"></ion-input>
           </ion-item>
         </ion-list>
       </ion-col>
-      <ion-col col-2 col-sm>
+      <!-- <ion-col col-2 col-sm>
         <button ion-button only-icon small (click)="filtrarProducto()">
           <ion-icon name="search"></ion-icon>
+        </button>
+      </ion-col> -->
+
+      <ion-col class="no-padding-bottom-top" col-2 col-sm>
+        <button ion-button block outline only-icon (click)="filtrarProducto()">
+          <ion-icon name="search" class="lupa"></ion-icon>
         </button>
       </ion-col>
     </ion-row>
   </ion-grid>
-</ion-list>
+
   <!-- Fin original -->
 
   <ion-card *ngFor="let obj of listFilter">  
     <ion-card-content no-padding (click)="selectCard(obj)">
       <ion-grid>
         <ion-row>
-          <ion-col col-10 col-sm>
+          <ion-col col-11 col-sm>
             <ion-row>
               <ion-col class="etq-card-col" col-5 col-sm>
-                <ion-label class="etq-card-label">Código:</ion-label>
+                <ion-label class="etq-card-label fieldForm">Código:</ion-label>
               </ion-col>
               <ion-col class="etq-card-col" col-7 col-sm>
                 <ion-label class="etq-card-label">{{ obj.Codigo }}</ion-label>
@@ -84,7 +97,7 @@
             </ion-row>
             <ion-row>
               <ion-col class="etq-card-col" col-5 col-sm>
-                <ion-label class="etq-card-label">Descripción:</ion-label>
+                <ion-label class="etq-card-label fieldForm">Descripción:</ion-label>
               </ion-col>
               <ion-col class="etq-card-col">
                 <ion-label class="etq-card-label">{{ obj.Descripcion }}</ion-label>
@@ -92,14 +105,14 @@
             </ion-row>
             <ion-row>
               <ion-col class="etq-card-col" col-5 col-sm>
-                <ion-label class="etq-card-label">Und. Medida:</ion-label>
+                <ion-label class="etq-card-label fieldForm">Und. Medida:</ion-label>
               </ion-col>
               <ion-col class="etq-card-col" col-7 col-sm>
                 <ion-label class="etq-card-label">{{ obj.UM }}</ion-label>
               </ion-col>
             </ion-row>
           </ion-col>
-          <ion-col col-2 col-sm align-self-center>
+          <ion-col col-1 col-sm align-self-center>
             <!-- <button ion-button icon-only> -->
               <ion-icon name="checkmark"></ion-icon>
             <!-- </button> -->
