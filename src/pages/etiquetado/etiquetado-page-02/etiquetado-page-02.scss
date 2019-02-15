@@ -12,4 +12,44 @@ page-etiquetado-page-02 {
     .etq-card-label{
         margin: 0px !important;
     }
+
+
+
+    ion-select{
+        max-width: 100% !important;
+    }
+
+    .item-inner{
+        border-bottom: none !important;
+    }
+
+    .transparent{
+        background: transparent !important;
+    }
+
+    .no-padding-left{
+        padding-left: 0% !important;
+    }
+
+    .radio-md .radio-inner{
+        background: white !important;
+    }
+
+    .radio-icon{
+        border-color: white !important;
+    }
+
+    .button-outline-md{
+        border-color: transparent !important;
+    }
+    
+    .lupa{
+        font-size: 180%;
+        color: white;
+    }
+
+    .no-padding-bottom-top{
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+    }
 }
