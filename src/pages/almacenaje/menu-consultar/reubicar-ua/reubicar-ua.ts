@@ -1,7 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController, Navbar } from 'ionic-angular';
 import { AlmacenajeServiceProvider } from '../../../../providers/almacenaje-service/almacenaje-service';
 import { GlobalServiceProvider } from '../../../../providers/global-service/global-service';
+import { AdministrarUaPage } from '../../menu-consultar/administrar-ua/administrar-ua'
 
 /**
  * Generated class for the ReubicarUaPage page.
@@ -17,6 +18,7 @@ import { GlobalServiceProvider } from '../../../../providers/global-service/glob
 })
 export class ReubicarUaPage {
 
+  @ViewChild(Navbar) navBar: Navbar;
   @ViewChild('txtCodUbicacion') txtCodUbicacionRef;
   @ViewChild('txtCodUbicacion', { read: ElementRef }) private txtCodUbicacion: ElementRef;
   codeBar: string;
@@ -28,6 +30,7 @@ export class ReubicarUaPage {
   Nivel: any;
   Posicion: any;
   vDatosRecibidos: any = [];
+  vReubicarUAPage: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider, public toastCtrl: ToastController) {
@@ -175,7 +178,21 @@ export class ReubicarUaPage {
     })
   }
 
+  goAdministrarUaPage() {
+    this.vReubicarUAPage = {
+      'page': 2
+    };
+    this.navCtrl.push(AdministrarUaPage, {
+      data: this.vReubicarUAPage
+    });
+  }
+
   ionViewDidLoad() {
+    //Enviar page 2 a administrar ua
+    this.navBar.backButtonClick = (e: UIEvent) => {
+      this.goAdministrarUaPage();       
+  }
+
     setTimeout(() => {
       this.txtCodUbicacionRef.setFocus();
     }, (500));

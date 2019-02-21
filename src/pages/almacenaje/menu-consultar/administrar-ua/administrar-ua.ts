@@ -1,10 +1,12 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController, ModalController, Navbar } from 'ionic-angular';
 import { ReasignarUaPage } from '../reasignar-ua/reasignar-ua'
 import { ReubicarUaPage } from '../reubicar-ua/reubicar-ua'
 import { ParticionarUaPage } from '../particionar-ua/particionar-ua'
 import { AlmacenajeServiceProvider } from '../../../../providers/almacenaje-service/almacenaje-service';
 import { GlobalServiceProvider } from '../../../../providers/global-service/global-service';
+import { ImpresoraPage } from '../../../impresora/impresora'
+import { MenuConsultarPage } from '../../../almacenaje/menu-consultar/menu-consultar'
 import moment from 'moment';
 
 
@@ -23,11 +25,12 @@ import moment from 'moment';
 })
 export class AdministrarUaPage {
 
+  @ViewChild(Navbar) navBar: Navbar;
   @ViewChild('txtCodUA') txtCodUARef;
   @ViewChild('txtCodUA', { read: ElementRef }) private txtCodUA: ElementRef;
   @ViewChild('txtCantidad') txtCantidadRef;
   @ViewChild('txtCantidad', { read: ElementRef }) private txtCantidad: ElementRef;
-  
+
 
   codeBarUA: string;
   ResultUA: any
@@ -43,16 +46,27 @@ export class AdministrarUaPage {
   LoteBk: any;
   CantidadBk: any;
 
+  btnReimprimirisenabled: boolean = false;
   btnEliminarisenabled: boolean = false;
   btnActualizarisenabled: boolean = false;
   btnReasignarisenabled: boolean = false;
   btnReubicarisenabled: boolean = false;
   btnParticionarisenabled: boolean = false;
 
+  NombreImpresora: any;
+
   vAdministrarUAPage: any;
 
+  vDatosRecibidos: any = [];
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
-    public toastCtrl: ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
+    public toastCtrl: ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider,
+    public modalCtrl: ModalController) {
+      this.vDatosRecibidos = navParams.get('data');
+      if(this.vDatosRecibidos.page == 3){
+        this.codeBarUA = this.vDatosRecibidos.CodBar_UA;
+        this.validarCodeBarUA();
+      }
   }
 
   validarCodeBarUA() {
@@ -64,8 +78,10 @@ export class AdministrarUaPage {
           this.ResultUA = result;
 
           if (this.ResultUA.length == 0) {
+            this.NombreImpresora = "NINGUNA";
             this.presentAlert("UA' no registrada").then((resultAlert) => {
               if (resultAlert) {
+                this.limpiar();
                 setTimeout(() => {
                   this.txtCodUARef.setFocus();
                   this.selectAll(this.txtCodUA);
@@ -73,7 +89,6 @@ export class AdministrarUaPage {
               }
             })
           } else {
-
             this.ResultUA_Aux = this.ResultUA[0];
             this.FechaEmision = result[0].FechaEmision;
             this.FechaVencimiento = result[0].FechaVencimiento;
@@ -85,13 +100,18 @@ export class AdministrarUaPage {
             this.LoteBk = result[0].Lote;
             this.CantidadBk = result[0].Cantidad;
 
+            this.btnReimprimirisenabled = true;
             this.btnEliminarisenabled = true;
             this.btnActualizarisenabled = true;
             this.btnReasignarisenabled = true;
             this.btnReubicarisenabled = true;
             this.btnParticionarisenabled = true;
 
-
+            if (this.sGlobal.Id_Impresora == 0) {
+              this.NombreImpresora = "NINGUNA";
+            } else {
+              this.NombreImpresora = this.sGlobal.nombreImpresora;
+            }
           }
         }, err => {
           console.log('E-getDataRutaPicking', err);
@@ -210,9 +230,44 @@ export class AdministrarUaPage {
   }
 
   reImprimirUA() {
+    var reimprimir = true;
+    if (this.Lote.trim() != this.LoteBk.trim()) {
+      reimprimir = false;
+    } else if (this.Cantidad != this.CantidadBk) {
+      reimprimir = false;
+    }
 
+    if (reimprimir == true) {
+      debugger;
+      if (this.sGlobal.Id_Impresora == 0) {
+        this.presentAlert("Impresora no existe. Seleccionar otra impresora").then((resultAlert) => {
+          //Mostrar lista de impresoras.   
+          this.showModalImpresora(); 
+        })
+      } else {
+        this.presentAlertConfirm("¿Está seguro de imprimir la etiqueta?”.").then((resultAlert3) => {
+          if (resultAlert3) {
+            //Imprimir
+          }
+        })
+      }
+    } else {
+      this.presentAlert("No es posible reimprimir, existen campos modificados. Volver a ingresar la UA").then((resultAlert) => {
+        setTimeout(() => {
+          this.txtCodUARef.setFocus();
+          this.selectAll(this.txtCodUA);
+        }, (500));
+      })
+    }
   }
 
+  showModalImpresora() {
+    let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
+    modalIncidencia.present();
+    modalIncidencia.onDidDismiss(data =>{
+      this.NombreImpresora = this.sGlobal.nombreImpresora;
+    });    
+  }
 
   limpiar() {
     this.ResultUA_Aux = [];
@@ -225,11 +280,17 @@ export class AdministrarUaPage {
     this.FechaVencimientoBk = "";
     this.LoteBk = "";
     this.CantidadBk = "";
+    this.NombreImpresora = "";
+    this.btnReimprimirisenabled = false;
+    this.btnEliminarisenabled = false;
+    this.btnActualizarisenabled = false;
+    this.btnReasignarisenabled = false;
+    this.btnReubicarisenabled = false;
+    this.btnParticionarisenabled = false;
     setTimeout(() => {
       this.txtCodUARef.setFocus();
     }, (500));
   }
-
 
   selectAll(el: ElementRef) {
     let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
@@ -285,13 +346,18 @@ export class AdministrarUaPage {
         'FechaVencimiento': this.FechaVencimiento,
         //'CantidadUA' : sdfsdfsf,
         //'Saldo' : dfsdfsdf,
-        'CantidadTotal': this.Cantidad
+        'CantidadTotal': parseFloat(this.Cantidad)
       };
       this.navCtrl.push(ParticionarUaPage, {
         data: this.vAdministrarUAPage
       });
     }
   }
+
+  goMenuConsultarPage() {
+    this.navCtrl.push(MenuConsultarPage);
+}
+
 
   presentToast(message) {
     let toast = this.toastCtrl.create({
@@ -350,6 +416,9 @@ export class AdministrarUaPage {
 
 
   ionViewDidLoad() {
+    this.navBar.backButtonClick = (e: UIEvent) => {
+      this.goMenuConsultarPage();       
+  }
     setTimeout(() => {
       this.txtCodUARef.setFocus();
     }, (500));

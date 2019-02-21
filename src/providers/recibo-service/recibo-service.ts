@@ -201,4 +201,20 @@ export class ReciboServiceProvider {
       })
     });
   }
+
+  //aromero
+  postinsertarUAParticionada(strUA, Cant, user, idCentro){
+    var parameter = { 'strUA' : strUA, 'Cant' : Cant, 'user' : user, 'idCentro' : idCentro };
+    return new Promise((result,reject)=>{
+      this.http.post(this.sGlobal.recepcion + 'insertarUAParticionada/strUA/Cant/user/idCentro', JSON.stringify(parameter), {headers:this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('Error - postinsertarUAParticionada');
+      })
+    });
+  }
+
+
 }

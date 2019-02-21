@@ -81,6 +81,8 @@ export class ConsultarEanPage {
     }, (500));
   }
 
+  
+
   selectAll(el: ElementRef) {
     let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
     nativeEl.select();
