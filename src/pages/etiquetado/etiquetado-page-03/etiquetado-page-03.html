@@ -17,13 +17,24 @@
 
 </ion-header>
 
-<ion-content>
-  <ion-list>
+<ion-content no-padding>
+  <!-- <ion-list>
     <ion-item>
-      <ion-label stacked>Ingresar UA</ion-label>
+      <ion-label stacked></ion-label>
       <ion-input type="text" [(ngModel)]="strUA" (keyup.enter)="AddUA()"></ion-input>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
+  
+  <ion-grid  class="bgHeader">
+    <ion-row>
+      <ion-label class="fieldForm">Ingresar UA</ion-label>
+    </ion-row>
+    <ion-row>
+      <ion-item class="no-padding-left">
+        <ion-input type="text" [(ngModel)]="strUA" (keyup.enter)="AddUA()"></ion-input>
+      </ion-item>
+    </ion-row>
+  </ion-grid>
 
   <ion-card *ngFor="let obj of listUAs">
     <ion-card-content no-padding>

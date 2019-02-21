@@ -28,21 +28,15 @@ export class EtiquetadoPage_04Page {
   id_Sector: number = 0;
   codigoBarra: string = "";
   strUbicacion: string = "";
-  @ViewChild('inputUbi', { read: ElementRef }) private inputUbi:ElementRef;
   vParameter: any;
+  @ViewChild('inputUbi', { read: ElementRef }) private inputUbi:ElementRef;
   
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sAlmac: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
       this.vParameter = this.navParams.get('listUA');
   }
   
-  ngAfterViewInit() {
-    debugger;
-    console.log('inputUbi (afterviewinit)', this.inputUbi.nativeElement);
-  }
-
   verificarUbicacion(): void{
-    debugger;
     if(this.strUbicacion.trim() != ""){
       this.sAlmac.listarUbicacionXCodigoBarra(this.strUbicacion, this.sGlobal.Id_Almacen).then(result=>{
         let res: any = result;
@@ -58,47 +52,45 @@ export class EtiquetadoPage_04Page {
           this.id_Sector = res[0].Id_Sector;
           this.sector = res[0].Sector;
           alert('Código de ubicación, verificado correctamente.');
+          this.strUbicacion = "";
+          this.selectAll(this.inputUbi, 600);
   
         }else{
           alert('La ubicación no es correcta');
+          this.selectAll(this.inputUbi, 600);
         }
       });
     }else{
       alert('Ingrese ubicación');
+      this.selectAll(this.inputUbi, 600);
     }
   }
 
   registrarUbic(): void{
-    debugger;
     if(this.strUbicacion.trim() != "") {
       this.registrarUAsUbicacion(this.vParameter, this.id_Ubicacion, this.sGlobal.userName);
     }else{
       alert('Ingresar ubicación');
-      this.selectAll(this.inputUbi);
+      this.selectAll(this.inputUbi, 600);
     }
   }
 
-  selectAll(el: ElementRef){
+  selectAll(el: ElementRef, time){
     let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
-    nativeEl.select();
+    setTimeout(()=>{
+      nativeEl.select();
+    }, time);
   }
 
   registrarUAsUbicacion(listStrUA, intId_Ubicacion, strUsuario): void{
-    debugger;
     this.sAlmac.registrarUAsUbicacion(listStrUA, intId_Ubicacion, strUsuario).then(result=>{
-      debugger;
       let res:any = result;
       if(res.errNumber == 0){
         alert('Se ubicó correctamente');
       }else{
         alert(res.message);
+        this.selectAll(this.inputUbi, 600);
       }
     });
   }
-
-  // [OperationContract]
-  // [WebInvoke(UriTemplate = "/RegistrarUAsUbicacion/strUA/intIdUbicacion/strUsuario", Method = "POST", ResponseFormat = WebMessageFormat.Json,
-  //     RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-  // Entidades.Mensaje RegistrarUAsUbicacion(List<string> strUA, int intIdUbicacion, string strUsuario);
-
 }

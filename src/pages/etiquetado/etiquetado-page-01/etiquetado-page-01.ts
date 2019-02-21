@@ -107,8 +107,6 @@ export class EtiquetadoPage_01Page {
 
   initPage(): void{
     debugger;
-    console.log('fecha emi', this.fecEmi);
-    console.log('fecha ven', this.fecVen);
     if(this.vEtq.Codigo != null){
       
       this.lote = this.vEtq.LoteLab;
@@ -145,10 +143,6 @@ export class EtiquetadoPage_01Page {
       this.lote = (this.vEtq.FlagLote == true) ? this.vEtq.LoteLab : "";
       this.id_SubAlm = this.vEtq.Id_SubAlmacen;
     }
-  }
-
-  ionViewDidLoad() {
-
   }
 
   listarUMxProducto(intIdProducto){

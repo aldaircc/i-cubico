@@ -17,7 +17,8 @@ export class GlobalServiceProvider {
   Id_TerminalRF : number = 0;
   nombreAlmacen: string = "";
   nombreImpresora : string;
-  nombreEmpresa : string; 
+  nombreEmpresa : string;
+  nombreCentro: string;
   userName : string = "";
   url : string = "http://172.16.32.15:8085/SGAA_WCF/";
   urlPrint : string =  "";
@@ -44,7 +45,7 @@ export class GlobalServiceProvider {
     this.nombreEmpresa = "TESLA S.A";
     this.nombreImpresora = "INTERMEC";
     this.nombreAlmacen = "Almacen 369";
-
+    this.nombreCentro = "Centro 01";
     this.usuario = this.url + 'UsuarioService.svc/rest/';
     this.produccion = this.url + 'ProduccionService.svc/rest/';
     this.tablaEst = this.url + 'TablasEstaticasService.svc/rest/';

@@ -1,3 +1,10 @@
 page-etiquetado-page-04 {
-
+    //No espacios a la derecha ni borde inferior - IonInput
+    .item-md.item-block .item-inner {
+        padding-right: 0px !important;
+        border-bottom: none !important;
+    }
+    .no-padding-left {
+        padding-left: 0px !important;
+    }
 }
