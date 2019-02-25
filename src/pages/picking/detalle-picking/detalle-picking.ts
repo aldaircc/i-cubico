@@ -340,11 +340,11 @@ export class DetallePickingPage {
 
   goDetallePorProductoPage(data): void {
     debugger;
-        
+
     var idPageAnterior2 = 0;
-    if(this.vRutaPickingPage.Id_Page_Anterior){
+    if (this.vRutaPickingPage.Id_Page_Anterior) {
       idPageAnterior2 = this.vRutaPickingPage.Id_Page_Anterior;
-    }else{
+    } else {
       idPageAnterior2 = this.vRutaPickingPage.Id_Page_Anterior2;
     }
 

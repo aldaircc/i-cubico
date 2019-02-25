@@ -118,8 +118,7 @@ export class ReubicarUaPage {
       }
     })
   }
-
-
+  
   selectAll(el: ElementRef) {
     let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
     nativeEl.select();
@@ -192,11 +191,9 @@ export class ReubicarUaPage {
     this.navBar.backButtonClick = (e: UIEvent) => {
       this.goAdministrarUaPage();       
   }
-
     setTimeout(() => {
       this.txtCodUbicacionRef.setFocus();
     }, (500));
     console.log('ionViewDidLoad ReubicarUaPage');
   }
-
 }

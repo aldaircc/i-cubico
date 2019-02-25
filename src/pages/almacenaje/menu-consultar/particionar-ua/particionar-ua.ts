@@ -18,13 +18,11 @@ import { AdministrarUaPage } from '../../menu-consultar/administrar-ua/administr
   templateUrl: 'particionar-ua.html',
 })
 export class ParticionarUaPage {
-
   @ViewChild(Navbar) navBar: Navbar;
-
   vDatosRecibidos: any = [];
+  vParticionarPage: any = [];
   NombreImpresora: any;
   NuevaUA : any;
-  vParticionarPage: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sGlobal: GlobalServiceProvider, public modalCtrl: ModalController, public sRecibo: ReciboServiceProvider) {
@@ -44,7 +42,6 @@ export class ParticionarUaPage {
         if (resultAlert3) {
           //Imprimir y Particionar
           this.particionarUA();
-
         }
       })
     }
@@ -68,7 +65,6 @@ export class ParticionarUaPage {
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
-
       const confirm = this.alertCtrl.create({
         title: 'Mensaje',
         message: message,
@@ -125,8 +121,6 @@ export class ParticionarUaPage {
     this.navBar.backButtonClick = (e: UIEvent) => {
       this.goAdministrarUaPage();       
   }
-
     console.log('ionViewDidLoad ParticionarUaPage');
-  }
-    
+  }    
 }

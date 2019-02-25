@@ -127,6 +127,20 @@ export class OtraUbicacionPage {
   SeleccionarUbicacion(data){
     this.goAlmacenajePalletPage(data)
   }
+  
+  selectAll(el: ElementRef) {
+    let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
+    nativeEl.select();
+  }
+
+  presentToast(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 2000,
+      position: 'bottom'
+    });  
+    toast.present();
+  }
 
   goAlmacenajePalletPage(data){
     this.vOtraUbiacionPage = {
@@ -144,24 +158,7 @@ export class OtraUbicacionPage {
     });
   }
 
-  
-
-  selectAll(el: ElementRef) {
-    let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
-    nativeEl.select();
-  }
-
-  presentToast(message) {
-    let toast = this.toastCtrl.create({
-      message: message,
-      duration: 2000,
-      position: 'bottom'
-    });  
-    toast.present();
-  }
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad OtraUbicacionPage');
   }
-
 }

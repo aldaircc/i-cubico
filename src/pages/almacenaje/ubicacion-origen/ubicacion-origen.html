@@ -18,11 +18,9 @@
   </ion-toolbar>
 </ion-header>
 
-
-
 <ion-content>
   <ion-grid class="bgLightBlue" style="padding: 0px;">
-    <ion-row  no-padding style="margin-top: 15px; margin-bottom: 5px; ">
+    <ion-row no-padding style="margin-top: 15px; margin-bottom: 5px; ">
       <ion-col col-5 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
           Código:
@@ -35,7 +33,7 @@
     <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
       <ion-col col-12 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-          Sector:
+          PRINOR SUSPENSION X 50 ML M.M.
         </ion-label>
       </ion-col>
     </ion-row>
@@ -50,7 +48,6 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
 
   <ion-grid class="bgLightBlue">
     <ion-row no-padding no-margin>
@@ -110,7 +107,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px; margin-left: 10px">
+  <ion-row no-padding style="margin-top: 10px; margin-bottom: 15px; margin-left: 10px">
     <ion-col col-12 no-padding no-margin>
       <ion-label no-padding no-margin style="font-weight:bold;">
         Cod. ubicación:
@@ -120,8 +117,7 @@
 
   <ion-row>
     <ion-item>
-      <ion-input #txtCodMuelle (keydown)="keydown($event)" (keyup)="keyup($event)" (ngModelChange)="ontxtCodMuelleChange()"
-        type="text" maxlength="6" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()"></ion-input>
+      <ion-input #txtCodUbicacion type="text" maxlength="6" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()"></ion-input>
     </ion-item>
   </ion-row>
 </ion-content>
@@ -130,10 +126,10 @@
   <ion-grid style="margin: 0px; padding: 0px">
     <ion-row>
       <ion-col col-12 style="margin: 0px; padding: 0px; text-align: right">
-          <button ion-button icon-start (click)="goReabastecimientoPickingPage()">
-              <ion-icon name="checkbox-outline"></ion-icon>              
-            </button>
-      </ion-col>      
+        <button ion-button icon-start (click)="goReabastecimientoPickingPage()">
+          <ion-icon name="checkbox-outline"></ion-icon>
+        </button>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-footer>

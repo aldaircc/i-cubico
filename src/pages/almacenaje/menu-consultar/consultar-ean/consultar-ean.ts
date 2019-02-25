@@ -59,12 +59,10 @@ export class ConsultarEanPage {
             this.codigo = this.ResultEan[0].Codigo;
             this.producto = this.ResultEan[0].Producto;
             this.sector = this.ResultEan[0].Nombre;
-
             let CantidadTotal = this.listAuxResultEan.reduce(function (prev, cur) {
               return prev + cur.Cantidad;
             }, 0); //Obtener el cantidad total.
             this.rowCountTotal = CantidadTotal;
-
           }
         }, err => {
           console.log('E-getListarUAUbicada', err);
@@ -81,13 +79,10 @@ export class ConsultarEanPage {
     }, (500));
   }
 
-  
-
   selectAll(el: ElementRef) {
     let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
     nativeEl.select();
   }
-
 
   presentToast(message) {
     let toast = this.toastCtrl.create({
@@ -100,7 +95,6 @@ export class ConsultarEanPage {
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
-
       const confirm = this.alertCtrl.create({
         title: 'Mensaje',
         message: message,

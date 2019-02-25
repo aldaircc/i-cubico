@@ -6,7 +6,7 @@ import { ReubicacionPage } from '../almacenaje/reubicacion/reubicacion'
 import { ReabastecimientoAlmacenajePage } from '../almacenaje/reabastecimiento-almacenaje/reabastecimiento-almacenaje'
 import { ConsultarUbicacionPage } from '../almacenaje/consultar-ubicacion/consultar-ubicacion'
 import { MenuConsultarPage } from '../almacenaje/menu-consultar/menu-consultar'
-import {MainMenuPage} from '../main-menu/main-menu'
+import { MainMenuPage } from '../main-menu/main-menu'
 
 @IonicPage()
 @Component({
@@ -15,11 +15,9 @@ import {MainMenuPage} from '../main-menu/main-menu'
 })
 
 export class AlmacenajePage {
+    @ViewChild(Navbar) navBar: Navbar;
 
-    @ViewChild(Navbar) navBar: Navbar; 
-
-    constructor(public navCtrl: NavController, public auth: AuthService, public toastCtrl: ToastController) {
-        debugger;
+    constructor(public navCtrl: NavController, public auth: AuthService, public toastCtrl: ToastController) {        
     }
 
     goTransitoPage() {
@@ -43,9 +41,9 @@ export class AlmacenajePage {
     }
 
     ionViewDidLoad() {
-        this.navBar.backButtonClick = (e:UIEvent)=>{
-          this.navCtrl.push(MainMenuPage);       
-         }
+        this.navBar.backButtonClick = (e: UIEvent) => {
+            this.navCtrl.push(MainMenuPage);
+        }
         console.log('ionViewDidLoad PickingPage');
-      }
+    }
 }

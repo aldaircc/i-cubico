@@ -35,38 +35,32 @@ export class AdministrarUaPage {
   codeBarUA: string;
   ResultUA: any
   ResultUA_Aux: any = [];
-
   FechaEmision: any;
   FechaVencimiento: any;
   Lote: any;
   Cantidad: any;
-
   FechaEmisionBk: any;
   FechaVencimientoBk: any;
   LoteBk: any;
   CantidadBk: any;
-
   btnReimprimirisenabled: boolean = false;
   btnEliminarisenabled: boolean = false;
   btnActualizarisenabled: boolean = false;
   btnReasignarisenabled: boolean = false;
   btnReubicarisenabled: boolean = false;
   btnParticionarisenabled: boolean = false;
-
   NombreImpresora: any;
-
   vAdministrarUAPage: any;
-
   vDatosRecibidos: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider,
     public modalCtrl: ModalController) {
-      this.vDatosRecibidos = navParams.get('data');
-      if(this.vDatosRecibidos.page == 3){
-        this.codeBarUA = this.vDatosRecibidos.CodBar_UA;
-        this.validarCodeBarUA();
-      }
+    this.vDatosRecibidos = navParams.get('data');
+    if (this.vDatosRecibidos.page == 3) {
+      this.codeBarUA = this.vDatosRecibidos.CodBar_UA;
+      this.validarCodeBarUA();
+    }
   }
 
   validarCodeBarUA() {
@@ -76,7 +70,6 @@ export class AdministrarUaPage {
         this.sAlmacenaje.getListarUAUbicada(this.codeBarUA, this.sGlobal.Id_Almacen).then((result) => {
           debugger;
           this.ResultUA = result;
-
           if (this.ResultUA.length == 0) {
             this.NombreImpresora = "NINGUNA";
             this.presentAlert("UA' no registrada").then((resultAlert) => {
@@ -132,7 +125,6 @@ export class AdministrarUaPage {
     }
   }
 
-
   eliminartUA() {
     debugger;
     this.presentAlertConfirm("¿Está seguro de eliminar la UA?”.").then((result) => {
@@ -167,7 +159,6 @@ export class AdministrarUaPage {
             console.log(res.message);
           }
         });
-
       }
     })
   }
@@ -242,7 +233,7 @@ export class AdministrarUaPage {
       if (this.sGlobal.Id_Impresora == 0) {
         this.presentAlert("Impresora no existe. Seleccionar otra impresora").then((resultAlert) => {
           //Mostrar lista de impresoras.   
-          this.showModalImpresora(); 
+          this.showModalImpresora();
         })
       } else {
         this.presentAlertConfirm("¿Está seguro de imprimir la etiqueta?”.").then((resultAlert3) => {
@@ -264,9 +255,9 @@ export class AdministrarUaPage {
   showModalImpresora() {
     let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
     modalIncidencia.present();
-    modalIncidencia.onDidDismiss(data =>{
+    modalIncidencia.onDidDismiss(data => {
       this.NombreImpresora = this.sGlobal.nombreImpresora;
-    });    
+    });
   }
 
   limpiar() {
@@ -298,65 +289,7 @@ export class AdministrarUaPage {
   }
 
 
-  goReasignarUaPage() {
-    this.vAdministrarUAPage = {
-      'CodBar_UA': this.codeBarUA
-    };
-    this.navCtrl.push(ReasignarUaPage, {
-      data: this.vAdministrarUAPage
-    });
-  }
-
-  goReubicarUaPage() {
-    this.vAdministrarUAPage = {
-      'CodBar_UA': this.codeBarUA
-    };
-    this.navCtrl.push(ReubicarUaPage, {
-      data: this.vAdministrarUAPage
-    });
-  }
-
-
-
-  goParticionarUaPage() {
-    debugger;
-
-    if (this.Cantidad > this.CantidadBk) {
-      this.presentAlert("La cantidad no debe ser mayor o igual al de la UA").then((resultAlert) => {
-        setTimeout(() => {
-          this.txtCantidadRef.setFocus();
-          this.selectAll(this.txtCantidad);
-        }, (500));
-      })
-
-    } else if (this.Cantidad == this.CantidadBk) {
-      this.presentAlert("La cantidad no debe ser mayor o igual al de la UA").then((resultAlert) => {
-        setTimeout(() => {
-          this.txtCantidadRef.setFocus();
-          this.selectAll(this.txtCantidad);
-        }, (500));
-      })
-    } else {
-      this.vAdministrarUAPage = {
-        'CodBar_UA': this.codeBarUA,
-        'UM': this.ResultUA_Aux.UM,
-        'DescProducto': this.ResultUA_Aux.Descripcion,
-        'Lote': this.Lote,
-        'FechaEmision': this.FechaEmision,
-        'FechaVencimiento': this.FechaVencimiento,
-        //'CantidadUA' : sdfsdfsf,
-        //'Saldo' : dfsdfsdf,
-        'CantidadTotal': parseFloat(this.Cantidad)
-      };
-      this.navCtrl.push(ParticionarUaPage, {
-        data: this.vAdministrarUAPage
-      });
-    }
-  }
-
-  goMenuConsultarPage() {
-    this.navCtrl.push(MenuConsultarPage);
-}
+  
 
 
   presentToast(message) {
@@ -413,12 +346,68 @@ export class AdministrarUaPage {
     })
   }
 
+  goReasignarUaPage() {
+    this.vAdministrarUAPage = {
+      'CodBar_UA': this.codeBarUA
+    };
+    this.navCtrl.push(ReasignarUaPage, {
+      data: this.vAdministrarUAPage
+    });
+  }
 
+  goReubicarUaPage() {
+    this.vAdministrarUAPage = {
+      'CodBar_UA': this.codeBarUA
+    };
+    this.navCtrl.push(ReubicarUaPage, {
+      data: this.vAdministrarUAPage
+    });
+  }
+
+  goParticionarUaPage() {
+    debugger;
+
+    if (this.Cantidad > this.CantidadBk) {
+      this.presentAlert("La cantidad no debe ser mayor o igual al de la UA").then((resultAlert) => {
+        setTimeout(() => {
+          this.txtCantidadRef.setFocus();
+          this.selectAll(this.txtCantidad);
+        }, (500));
+      })
+
+    } else if (this.Cantidad == this.CantidadBk) {
+      this.presentAlert("La cantidad no debe ser mayor o igual al de la UA").then((resultAlert) => {
+        setTimeout(() => {
+          this.txtCantidadRef.setFocus();
+          this.selectAll(this.txtCantidad);
+        }, (500));
+      })
+    } else {
+      this.vAdministrarUAPage = {
+        'CodBar_UA': this.codeBarUA,
+        'UM': this.ResultUA_Aux.UM,
+        'DescProducto': this.ResultUA_Aux.Descripcion,
+        'Lote': this.Lote,
+        'FechaEmision': this.FechaEmision,
+        'FechaVencimiento': this.FechaVencimiento,
+        //'CantidadUA' : sdfsdfsf,
+        //'Saldo' : dfsdfsdf,
+        'CantidadTotal': parseFloat(this.Cantidad)
+      };
+      this.navCtrl.push(ParticionarUaPage, {
+        data: this.vAdministrarUAPage
+      });
+    }
+  }
+
+  goMenuConsultarPage() {
+    this.navCtrl.push(MenuConsultarPage);
+  }
 
   ionViewDidLoad() {
     this.navBar.backButtonClick = (e: UIEvent) => {
-      this.goMenuConsultarPage();       
-  }
+      this.goMenuConsultarPage();
+    }
     setTimeout(() => {
       this.txtCodUARef.setFocus();
     }, (500));

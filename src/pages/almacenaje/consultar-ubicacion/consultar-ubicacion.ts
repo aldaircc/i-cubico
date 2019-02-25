@@ -17,15 +17,12 @@ import { DetalleProductoPage } from '../detalle-producto/detalle-producto'
   templateUrl: 'consultar-ubicacion.html',
 })
 export class ConsultarUbicacionPage {
-
   @ViewChild(Navbar) navBar: Navbar;
   codeBar: string;
   codeBarBK: string;
-  //listUas: any;
   listUas: any = [];
   vConsultarUbicacionPage: any = [];
   rowCount: any = 0;
-
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
@@ -60,9 +57,7 @@ export class ConsultarUbicacionPage {
     this.sAlmacenaje.getListarUAsXUbicacion(this.codeBarBK, this.sGlobal.Id_Almacen).then((result) => {
       debugger;
       this.listUas = result;
-
       this.rowCount = this.listUas.length;
-
       if (this.listUas.length == 0) {
         this.presentAlert("No se encontraron registros").then((resultAlert) => {
           if (resultAlert) {
@@ -78,7 +73,6 @@ export class ConsultarUbicacionPage {
           this.selectAll(this.txtBuscar);
         }, (500));
       }
-
     }, err => {
       console.log('E-getDataRutaPicking', err);
     });
@@ -94,7 +88,6 @@ export class ConsultarUbicacionPage {
     });
   }
 
-
   eliminarUA(data) {
     this.presentAlertConfirm("¿Está seguro de eliminar la UA: " + data.UA_CodBarra + " en la ubicación?”.").then((result) => {
       if (result) {
@@ -109,7 +102,6 @@ export class ConsultarUbicacionPage {
           'Cantidad': data.Cantidad,
           'UsuarioRegistro': this.sGlobal.userName
         };
-
         this.sAlmacenaje.postRegistrarUAStandBy(objUA, 2, this.sGlobal.Id_Almacen).then(result => {
           debugger;
           let res: any = result;
@@ -179,8 +171,6 @@ export class ConsultarUbicacionPage {
     this.navCtrl.push(DetalleProductoPage, {
       data: this.vConsultarUbicacionPage
     });
-
-    //this.navCtrl.push(DetallePalletUaPage);
   }
 
   selectAll(el: ElementRef) {
@@ -199,7 +189,6 @@ export class ConsultarUbicacionPage {
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
-
       const confirm = this.alertCtrl.create({
         title: 'Mensaje',
         message: message,
@@ -242,7 +231,6 @@ export class ConsultarUbicacionPage {
   }
 
   ionViewDidLoad() {
-
     this.navBar.backButtonClick = (e: UIEvent) => {
       this.presentAlertConfirm("¿Está seguro de salir?").then((result) => {
         if (result) {
@@ -255,5 +243,4 @@ export class ConsultarUbicacionPage {
     }, (500));
     console.log('ionViewDidLoad ConsultarUbicacionPage');
   }
-
 }

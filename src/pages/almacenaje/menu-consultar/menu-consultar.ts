@@ -20,7 +20,6 @@ import { AlmacenajePage } from '../almacenaje';
   templateUrl: 'menu-consultar.html',
 })
 export class MenuConsultarPage {
-
   @ViewChild(Navbar) navBar: Navbar;
   vMenuConsultarPage: any = [];
 
@@ -43,12 +42,10 @@ export class MenuConsultarPage {
   goConsultarEanPage() {
     this.navCtrl.push(ConsultarEanPage);
   }
-
   
   goMenuAlmacenajePage(){
     this.navCtrl.push(AlmacenajePage);
   }
-
 
   ionViewDidLoad() {
     this.navBar.backButtonClick = (e: UIEvent) => {

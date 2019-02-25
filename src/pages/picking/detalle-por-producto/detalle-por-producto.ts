@@ -118,21 +118,21 @@ export class DetallePorProductoPage {
     });
   }
 
-  goDetallePickingPage(){
-    debugger;  
-      this.vDetalleXProducto = {
-        'Id_Page_Anterior2' : this.vPickingXProducto.Id_Page_Anterior2,
-        'Id_Tx' : this.vPickingXProducto.Id_Tx,
-        'NumOrden' : this.vPickingXProducto.NumOrden,
-        'Cliente' : this.vPickingXProducto.Cliente,
-        'Ciudad' :  this.vPickingXProducto.Ciudad,
-        'Zona' :  this.vPickingXProducto.Zona,
-        'idRutaPicking': this.vPickingXProducto.idRutaPicking,
-      };
-      this.navCtrl.push(DetallePickingPage, {
-        data: this.vDetalleXProducto
-      });    
-  } 
+  goDetallePickingPage() {
+    debugger;
+    this.vDetalleXProducto = {
+      'Id_Page_Anterior2': this.vPickingXProducto.Id_Page_Anterior2,
+      'Id_Tx': this.vPickingXProducto.Id_Tx,
+      'NumOrden': this.vPickingXProducto.NumOrden,
+      'Cliente': this.vPickingXProducto.Cliente,
+      'Ciudad': this.vPickingXProducto.Ciudad,
+      'Zona': this.vPickingXProducto.Zona,
+      'idRutaPicking': this.vPickingXProducto.idRutaPicking,
+    };
+    this.navCtrl.push(DetallePickingPage, {
+      data: this.vDetalleXProducto
+    });
+  }
 
 
   presentAlertConfirm(message): Promise<boolean> {

@@ -25,7 +25,6 @@ export class TransitoPage {
   listUbicacionTransito: any;
   listAuxUbicacionTransito: any;
   vTransitoPage: any;
-  
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider,
     public sAlmacenaje: AlmacenajeServiceProvider) {
@@ -44,7 +43,6 @@ export class TransitoPage {
       this.listUbicacionTransito = result;
       this.listAuxUbicacionTransito = this.listUbicacionTransito;
       this.rowCount = this.listAuxUbicacionTransito.length;
-
       if(this.listUbicacionTransito.length > 0){
         console.log('Datos ubicacion transito', this.listUbicacionTransito);
       }else{
@@ -66,9 +64,7 @@ export class TransitoPage {
   }
 
   ionViewDidLoad() {
-
     this.navBar.backButtonClick = (e:UIEvent)=>{
-      // todo something
       this.navCtrl.push(AlmacenajePage);       
      }
     console.log('ionViewDidLoad TransitoPage');

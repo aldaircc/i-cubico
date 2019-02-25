@@ -17,7 +17,6 @@ import { AdministrarUaPage } from '../../menu-consultar/administrar-ua/administr
   templateUrl: 'reasignar-ua.html',
 })
 export class ReasignarUaPage {
-
   @ViewChild(Navbar) navBar: Navbar;
   @ViewChild('txtCodUbicacion') txtCodUbicacionRef;
   @ViewChild('txtPalletUa') txtPalletUaRef;
@@ -36,15 +35,14 @@ export class ReasignarUaPage {
   txtPalletUaisenabled: boolean = false;
   isBgGreen: boolean = false;
   isbgWhite: boolean = false;
-  vDatosRecibidos: any = [];
   valorPalletUa: boolean = false;
+  vDatosRecibidos: any = [];  
   vReasignarUAPage: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vDatosRecibidos = navParams.get('data');
   }
-
 
   validarCodeBar() {
     debugger;
@@ -111,7 +109,6 @@ export class ReasignarUaPage {
               this.txtPalletUaRef.setFocus();
               this.selectAll(this.txtPalletUa);
             }, (500));
-
           } else {
             this.isbgWhite = true;
             this.isBgGreen = false;
@@ -148,8 +145,7 @@ export class ReasignarUaPage {
         if (result) {
           this.sAlmacenaje.postReAsignarUA(this.vDatosRecibidos.CodBar_UA, this.codePalletUA, this.resultUbicacion[0].Id_Ubicacion, this.resultPalletUA[0].Cantidad, this.sGlobal.userName).then((result) => {
             debugger;
-            this.resultReasignar = result;
-  
+            this.resultReasignar = result;  
             let res: any = result;
             if (res.errNumber == 0) {
               console.log(res.message);
@@ -205,7 +201,6 @@ export class ReasignarUaPage {
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
-
       const confirm = this.alertCtrl.create({
         title: 'Mensaje',
         message: message,
@@ -266,5 +261,4 @@ export class ReasignarUaPage {
     }, (500));
     console.log('ionViewDidLoad ReasignarUaPage');
   }
-
 }

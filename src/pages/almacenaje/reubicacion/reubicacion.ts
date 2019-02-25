@@ -18,8 +18,7 @@ import { AlmacenajePage } from '../../almacenaje/almacenaje';
   templateUrl: 'reubicacion.html',
 })
 export class ReubicacionPage {
-
-  @ViewChild(Navbar) navBar: Navbar; 
+  @ViewChild(Navbar) navBar: Navbar;
   @ViewChild('txtCodUbicacion') txtCodUbicacionRef;
   @ViewChild('txtPalletUa') txtPalletUaRef;
   @ViewChild('txtCodUbicacion', { read: ElementRef }) private txtCodUbicacion: ElementRef;
@@ -37,7 +36,6 @@ export class ReubicacionPage {
   txtPalletUaisenabled: boolean = false;
   rowCount: any = 0;
   vReubicacionDestinoPage: any = [];
-
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider, public sAlmacenaje: AlmacenajeServiceProvider) {
@@ -68,12 +66,12 @@ export class ReubicacionPage {
               setTimeout(() => {
                 this.txtCodUbicacionRef.setFocus();
               }, (500));
-              this.codeBar_Bk = this.codeBar.trim();  
+              this.codeBar_Bk = this.codeBar.trim();
               this.ListarUbicacionXCodigoBarra();
-            } 
+            }
           })
         } else {
-          this.codeBar_Bk = this.codeBar.trim();  
+          this.codeBar_Bk = this.codeBar.trim();
           this.ListarUbicacionXCodigoBarra();
         }
       }
@@ -88,7 +86,7 @@ export class ReubicacionPage {
     }, (500));
   }
 
-  ListarUbicacionXCodigoBarra(){
+  ListarUbicacionXCodigoBarra() {
     this.sAlmacenaje.getListarUbicacionXCodigoBarra(this.codeBar, this.sGlobal.Id_Almacen).then((result) => {
       debugger;
       this.resultUbicacion = result;
@@ -119,7 +117,6 @@ export class ReubicacionPage {
     });
   }
 
-
   validarPalletUA() {
     debugger;
     if (this.codeBar) {
@@ -131,7 +128,6 @@ export class ReubicacionPage {
               this.resultPalletUA = result;
               //this.rowCount = this.resultPalletUA.length;
               if (this.resultPalletUA.length > 0) {
-
                 if (this.listAuxResultPalletUA.length == 0) {
                   for (var i = 0; i < this.resultPalletUA.length; i++) {
                     var obj = {
@@ -229,15 +225,15 @@ export class ReubicacionPage {
     }
   }
 
-  eliminarPalletUA(data){
+  eliminarPalletUA(data) {
     debugger;
     this.presentAlertConfirm("¿Está seguro de eliminar el Pallet/UA?”.").then((result) => {
       if (result) {
         for (var j = 0; j < this.listAuxResultPalletUA.length; j++) {
-          if(data.UA_CodBarra == this.listAuxResultPalletUA[j].UA_CodBarra){ 
-            this.listAuxResultPalletUA.splice(j,1);
+          if (data.UA_CodBarra == this.listAuxResultPalletUA[j].UA_CodBarra) {
+            this.listAuxResultPalletUA.splice(j, 1);
             this.rowCount = this.listAuxResultPalletUA.length;
-          }                  
+          }
         }
       }
     })
@@ -258,38 +254,6 @@ export class ReubicacionPage {
     setTimeout(() => {
       this.txtCodUbicacionRef.setFocus();
     }, (500));
-  }
-
-  goReubicacionDestinoPage() {
-    debugger;
-    if (this.listAuxResultPalletUA.length > 0) {
-
-      var listUA = [];
-      this.listAuxResultPalletUA.forEach(el => {
-        listUA.push(el.UA_CodBarra);
-      });
-
-      let cantidadTotal = this.listAuxResultPalletUA.reduce(function (prev, cur) {
-        return prev + cur.Cantidad;
-      }, 0);
-
-      this.vReubicacionDestinoPage = {
-        'Codigo_Origen': this.codeBar_Bk,
-        'Total_Pallet': this.rowCount,
-        'Id_Producto': this.listAuxResultPalletUA[0].Id_Producto,
-        'cantidadTotal': cantidadTotal,
-        'listUA': listUA
-      };
-      this.navCtrl.push(ReubicacionDestinoPage, {
-        data: this.vReubicacionDestinoPage
-      });
-    } else {
-      this.presentToast("No se encontraron registros.");
-      setTimeout(() => {
-        this.txtCodUbicacionRef.setFocus();
-        this.selectAll(this.txtCodUbicacion);
-      }, (500));
-    }
   }
 
   selectAll(el: ElementRef) {
@@ -350,16 +314,47 @@ export class ReubicacionPage {
     })
   }
 
+  goReubicacionDestinoPage() {
+    debugger;
+    if (this.listAuxResultPalletUA.length > 0) {
+
+      var listUA = [];
+      this.listAuxResultPalletUA.forEach(el => {
+        listUA.push(el.UA_CodBarra);
+      });
+
+      let cantidadTotal = this.listAuxResultPalletUA.reduce(function (prev, cur) {
+        return prev + cur.Cantidad;
+      }, 0);
+
+      this.vReubicacionDestinoPage = {
+        'Codigo_Origen': this.codeBar_Bk,
+        'Total_Pallet': this.rowCount,
+        'Id_Producto': this.listAuxResultPalletUA[0].Id_Producto,
+        'cantidadTotal': cantidadTotal,
+        'listUA': listUA
+      };
+      this.navCtrl.push(ReubicacionDestinoPage, {
+        data: this.vReubicacionDestinoPage
+      });
+    } else {
+      this.presentToast("No se encontraron registros.");
+      setTimeout(() => {
+        this.txtCodUbicacionRef.setFocus();
+        this.selectAll(this.txtCodUbicacion);
+      }, (500));
+    }
+  }
+
   ionViewDidLoad() {
-    this.navBar.backButtonClick = (e:UIEvent)=>{
+    this.navBar.backButtonClick = (e: UIEvent) => {
       // todo something
-      this.navCtrl.push(AlmacenajePage);       
-     }
+      this.navCtrl.push(AlmacenajePage);
+    }
 
     setTimeout(() => {
       this.txtCodUbicacionRef.setFocus();
     }, (500));
     console.log('ionViewDidLoad ReubicacionPage');
   }
-
 }

@@ -16,15 +16,13 @@ import moment from 'moment';
   templateUrl: 'consultar-pallet.html',
 })
 export class ConsultarPalletPage {
-
   @ViewChild('txtPallet') txtPalletRef;
   @ViewChild('txtPallet', { read: ElementRef }) private txtPallet: ElementRef;
   codeBarPallet: string;
-  ResultPallet: any
+  ResultPallet: any = [];
   ResultPallet_Aux: any = [];
   rowCount: any = 0;
-  rowCountTotal: any = 0;
-  
+  rowCountTotal: any = 0;  
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
@@ -50,7 +48,6 @@ export class ConsultarPalletPage {
               }
             })
           } else {
-
             this.ResultPallet_Aux = this.ResultPallet[0];
             let CantidadTotal = this.ResultPallet.reduce(function (prev, cur) {
               return prev + cur.Cantidad;
@@ -84,7 +81,6 @@ export class ConsultarPalletPage {
             let fechaEmisionString = fechaEmision.toISOString();
             let fechaVencimiento = moment(this.ResultPallet[i].FechaVencimiento, "DD-MM-YYYY").toDate();
             let fechaVencimientoString = fechaVencimiento.toISOString();
-
             let objUA = {
               'UA_CodBarra': this.ResultPallet[i].UA_CodBarra,
               'FechaRegistro': "/Date(" + Date.parse(fecha) + ")/",
@@ -94,7 +90,6 @@ export class ConsultarPalletPage {
               'Cantidad': this.ResultPallet[i].Cantidad,
               'UsuarioRegistro': this.sGlobal.userName
             };
-
             this.sAlmacenaje.postRegistrarUAStandBy(objUA, 2, this.sGlobal.Id_Almacen).then(result => {
               debugger;
               count = count + 1;
@@ -143,7 +138,6 @@ export class ConsultarPalletPage {
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
-
       const confirm = this.alertCtrl.create({
         title: 'Mensaje',
         message: message,

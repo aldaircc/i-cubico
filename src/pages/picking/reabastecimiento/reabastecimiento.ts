@@ -20,30 +20,30 @@ export class ReabastecimientoPage {
   vPickingXProducto: any = [];
   TextObservacion: string = '';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public navCtrl: NavController, public navParams: NavParams,
     public popoverCtrl: PopoverController, public sAlmacenaje: AlmacenajeServiceProvider,
     public sGlobal: GlobalServiceProvider, public alertCtrl: AlertController) {
-      this.vPickingXProducto = navParams.get('data'); 
+    this.vPickingXProducto = navParams.get('data');
   }
 
-  aceptarReabastecer(){
+  aceptarReabastecer() {
     this.reabastecer(this.vPickingXProducto.IdProducto, this.vPickingXProducto.IdUbicacion, this.TextObservacion, this.sGlobal.Id_TerminalRF, this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
 
-  reabastecer(intIdProducto, intIdUbicacionDestino, strObservacion, intIdRF, strUsuario, IdAlmacen){
-    this.sAlmacenaje.Reabastecer(intIdProducto, intIdUbicacionDestino, strObservacion, intIdRF, strUsuario, IdAlmacen).then(result=>{
+  reabastecer(intIdProducto, intIdUbicacionDestino, strObservacion, intIdRF, strUsuario, IdAlmacen) {
+    this.sAlmacenaje.Reabastecer(intIdProducto, intIdUbicacionDestino, strObservacion, intIdRF, strUsuario, IdAlmacen).then(result => {
       debugger;
-      var message : any = result;
-      if (message.errNumber == 0){
+      var message: any = result;
+      if (message.errNumber == 0) {
         this.presentAlert("Se realizó correctamente el registro de solicitud de reabastecimiento");
         this.goBackRutaPicking();
-      }else{
+      } else {
         this.presentAlert("No se realizó la solicitud de reabastecimiento");
-      }      
+      }
     });
   }
 
-  goBackRutaPicking(){
+  goBackRutaPicking() {
     this.navCtrl.pop();
   }
 
