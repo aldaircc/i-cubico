@@ -16,18 +16,15 @@ import { UbicacionOrigenPage} from '../ubicacion-origen/ubicacion-origen'
   selector: 'page-reabastecimiento-almacenaje',
   templateUrl: 'reabastecimiento-almacenaje.html',
 })
-export class ReabastecimientoAlmacenajePage {
-  
+export class ReabastecimientoAlmacenajePage {  
   fecha: any;
   nomAlmacen: any;
-  userDetail: any;
-  
+  userDetail: any; 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider) {
     this.fecha = new Date().toISOString();
     this.nomAlmacen = this.sGlobal.nombreAlmacen;
-    this.userDetail = this.sGlobal.userName;
-    
+    this.userDetail = this.sGlobal.userName;    
   }
 
   goUbicacionOrigenPage() {
@@ -37,5 +34,4 @@ export class ReabastecimientoAlmacenajePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ReabastecimientoAlmacenajePage');
   }
-
 }

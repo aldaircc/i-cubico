@@ -1,7 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController, Navbar } from 'ionic-angular';
 import { AlmacenajeServiceProvider } from '../../../../providers/almacenaje-service/almacenaje-service';
 import { GlobalServiceProvider } from '../../../../providers/global-service/global-service';
+import { AdministrarUaPage } from '../../menu-consultar/administrar-ua/administrar-ua'
 
 /**
  * Generated class for the ReasignarUaPage page.
@@ -16,7 +17,7 @@ import { GlobalServiceProvider } from '../../../../providers/global-service/glob
   templateUrl: 'reasignar-ua.html',
 })
 export class ReasignarUaPage {
-
+  @ViewChild(Navbar) navBar: Navbar;
   @ViewChild('txtCodUbicacion') txtCodUbicacionRef;
   @ViewChild('txtPalletUa') txtPalletUaRef;
   @ViewChild('txtCodUbicacion', { read: ElementRef }) private txtCodUbicacion: ElementRef;
@@ -34,13 +35,14 @@ export class ReasignarUaPage {
   txtPalletUaisenabled: boolean = false;
   isBgGreen: boolean = false;
   isbgWhite: boolean = false;
-  vDatosRecibidos: any = [];
+  valorPalletUa: boolean = false;
+  vDatosRecibidos: any = [];  
+  vReasignarUAPage: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vDatosRecibidos = navParams.get('data');
   }
-
 
   validarCodeBar() {
     debugger;
@@ -102,14 +104,15 @@ export class ReasignarUaPage {
             //validar si lote y producto son iguales a la ubicacion anterior
             this.isbgWhite = false;
             this.isBgGreen = true;
+            this.valorPalletUa = true;
             setTimeout(() => {
               this.txtPalletUaRef.setFocus();
               this.selectAll(this.txtPalletUa);
             }, (500));
-
           } else {
             this.isbgWhite = true;
             this.isBgGreen = false;
+            this.valorPalletUa = false;
             this.presentAlert("UA/Pallet no registrada.").then((resultAlert) => {
               if (resultAlert) {
                 setTimeout(() => {
@@ -137,46 +140,49 @@ export class ReasignarUaPage {
   }
 
   reasignarPalletUA() {
-    this.presentAlertConfirm("¿Está seguro de reasignar la UA?”.").then((result) => {
-      if (result) {
-        this.sAlmacenaje.postReAsignarUA(this.vDatosRecibidos.CodBar_UA, this.codePalletUA, this.resultUbicacion[0].Id_Ubicacion, this.resultPalletUA[0].Cantidad, this.sGlobal.userName).then((result) => {
-          debugger;
-          this.resultReasignar = result;
-
-          let res: any = result;
-          if (res.errNumber == 0) {
-            console.log(res.message);
-            this.presentAlert("Reasignación exitosa.").then((resultAlert2) => {
-              this.Sector = "";
-              this.Fila = "";
-              this.Columna = "";
-              this.Nivel = "";
-              this.Posicion = "";
-              this.codePalletUA = "";
-              this.codeBar = "";
-              this.txtPalletUaisenabled = false;
-              this.isbgWhite = true;
-              this.isBgGreen = false;
-              setTimeout(() => {
-                this.txtCodUbicacionRef.setFocus();
-                this.selectAll(this.txtCodUbicacion);
-              }, (500));
-            })
-          } else {
-            //this.presentAlert("Error. No se pudo realizar la reasignación.").then((resultAlert2) => {
-            this.presentAlert(res.message).then((resultAlert2) => {
-              setTimeout(() => {
-                this.txtPalletUaRef.setFocus();
-                this.selectAll(this.txtPalletUa);
-              }, (500));
-            })
-            console.log(res.message);
-          }
-        }, err => {
-          console.log('E-postReAsignarUA', err);
-        });
-      }
-    })
+    if (this.valorPalletUa == true){
+      this.presentAlertConfirm("¿Está seguro de reasignar la UA?”.").then((result) => {
+        if (result) {
+          this.sAlmacenaje.postReAsignarUA(this.vDatosRecibidos.CodBar_UA, this.codePalletUA, this.resultUbicacion[0].Id_Ubicacion, this.resultPalletUA[0].Cantidad, this.sGlobal.userName).then((result) => {
+            debugger;
+            this.resultReasignar = result;  
+            let res: any = result;
+            if (res.errNumber == 0) {
+              console.log(res.message);
+              this.presentAlert("Reasignación exitosa.").then((resultAlert2) => {
+                this.Sector = "";
+                this.Fila = "";
+                this.Columna = "";
+                this.Nivel = "";
+                this.Posicion = "";
+                this.codePalletUA = "";
+                this.codeBar = "";
+                this.txtPalletUaisenabled = false;
+                this.isbgWhite = true;
+                this.isBgGreen = false;
+                setTimeout(() => {
+                  this.txtCodUbicacionRef.setFocus();
+                  this.selectAll(this.txtCodUbicacion);
+                }, (500));
+              })
+            } else {
+              //this.presentAlert("Error. No se pudo realizar la reasignación.").then((resultAlert2) => {
+              this.presentAlert(res.message).then((resultAlert2) => {
+                setTimeout(() => {
+                  this.txtPalletUaRef.setFocus();
+                  this.selectAll(this.txtPalletUa);
+                }, (500));
+              })
+              console.log(res.message);
+            }
+          }, err => {
+            console.log('E-postReAsignarUA', err);
+          });
+        }
+      })
+    }else{
+      this.presentToast("No se encontraron registros.");
+    }    
   }
 
   selectAll(el: ElementRef) {
@@ -195,7 +201,6 @@ export class ReasignarUaPage {
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
-
       const confirm = this.alertCtrl.create({
         title: 'Mensaje',
         message: message,
@@ -237,11 +242,23 @@ export class ReasignarUaPage {
     })
   }
 
+  goAdministrarUaPage() {
+    this.vReasignarUAPage = {
+      'page': 1
+    };
+    this.navCtrl.push(AdministrarUaPage, {
+      data: this.vReasignarUAPage
+    });
+  }
+
   ionViewDidLoad() {
+    //Enviar page 1 a administrar ua
+    this.navBar.backButtonClick = (e: UIEvent) => {
+        this.goAdministrarUaPage();       
+    }
     setTimeout(() => {
       this.txtCodUbicacionRef.setFocus();
     }, (500));
     console.log('ionViewDidLoad ReasignarUaPage');
   }
-
 }

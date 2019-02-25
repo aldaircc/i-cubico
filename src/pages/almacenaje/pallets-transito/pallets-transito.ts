@@ -7,11 +7,6 @@ import { GlobalServiceProvider } from '../../../providers/global-service/global-
 import { OtraUbicacionPage } from '../otra-ubicacion/otra-ubicacion'
 import {TransitoPage} from '../transito/transito';
 
-
-
-
-
-
 /**
  * Generated class for the PalletsTransitoPage page.
  *
@@ -254,10 +249,6 @@ export class PalletsTransitoPage {
     nativeEl.select();
   }
 
-  // goAlmacenajePalletUaPage() {
-  //   this.navCtrl.push(AlmacenajePalletUaPage);
-  // }
-
   goAlmacenajePalletUaPage(){
 
     var listUA = [];
@@ -297,22 +288,16 @@ export class PalletsTransitoPage {
     this.navCtrl.push(DetallePalletUaPage, {
       data: this.vPalletTransitoPage
     });
-
-    //this.navCtrl.push(DetallePalletUaPage);
   }
 
   goOtraUbicacionPage() {
     this.navCtrl.push(OtraUbicacionPage);
   }
 
-
-  
-
   ionViewDidLoad() {
     setTimeout(() => {
       this.txtCodPalletUaRef.setFocus();
     }, (500));
-
     this.navBar.backButtonClick = (e:UIEvent)=>{
       if(this.listAuxPalletTransito.length>0){
         this.presentAlertConfirm("Quedan " + this.rowCount + " registros por ubicar. ¿Está seguro de salir?").then((result) => {
@@ -324,8 +309,6 @@ export class PalletsTransitoPage {
         this.navCtrl.push(TransitoPage);
       }             
      }
-
     console.log('ionViewDidLoad PalletsTransitoPage');
   }
-
 }

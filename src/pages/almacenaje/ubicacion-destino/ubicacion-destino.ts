@@ -20,7 +20,6 @@ export class UbicacionDestinoPage {
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
-
       const confirm = this.alertCtrl.create({
         title: 'Mensaje',
         message: message,
@@ -39,5 +38,4 @@ export class UbicacionDestinoPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad UbicacionDestinoPage');
   }
-
 }

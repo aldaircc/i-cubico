@@ -18,8 +18,6 @@ import { PalletsTransitoPage } from '../pallets-transito/pallets-transito';
   templateUrl: 'almacenaje-pallet-ua.html',
 })
 export class AlmacenajePalletUaPage {
-
-
   @ViewChild('txtCodUbicacion') txtCodUbicacionRef;
   vDatosUbicacion: any = [];
   vAlmacenajePalletUaPage: any = [];
@@ -30,9 +28,7 @@ export class AlmacenajePalletUaPage {
   isbgWhite: boolean = false;
   isBgYellow: boolean = false;
   rowCount: any = 0;
-  rowCountTotal: any = 0;
-
-  
+  rowCountTotal: any = 0;  
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
@@ -80,10 +76,6 @@ export class AlmacenajePalletUaPage {
     if (this.codeBar) {
       if (this.codeBar.trim() != ""){
         debugger;
-
-        // this.registroUas();
-        // this.resultaRegistro();
-
         for (var i = 0; i < this.vDatosUbicacion.lst_UA.length; i++){
           var count = 0;
           var codUA = this.vDatosUbicacion.lst_UA[i];
@@ -123,7 +115,6 @@ export class AlmacenajePalletUaPage {
       this.presentToast("Ingrese código de ubicación");
     }    
   }
-
 
   presentToast(message) {
     let toast = this.toastCtrl.create({
@@ -175,8 +166,6 @@ export class AlmacenajePalletUaPage {
     setTimeout(() => {
       this.txtCodUbicacionRef.setFocus();
     }, (500));
-
     console.log('ionViewDidLoad AlmacenajePalletUaPage');
   }
-
 }

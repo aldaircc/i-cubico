@@ -17,7 +17,6 @@ import { ReubicacionPage } from '../../almacenaje/reubicacion/reubicacion'
   templateUrl: 'reubicacion-destino.html',
 })
 export class ReubicacionDestinoPage {
-
   codeBarDestino: string;
   resultUbicacion: any;
   Sector: any;
@@ -103,25 +102,30 @@ export class ReubicacionDestinoPage {
 
   reubicarDestino(): void {
     debugger;
-    if (this.codeBarDestino.trim() != "") {
-      if (this.resultUbicacion.length > 0) {
-        if(this.rowCountUAS > 0){
-          this.presentAlertConfirm("Ubicación destino no se encuentra vacia. ¿Esta seguro de continuar?”.").then((resultAlert3) => {
-            if (resultAlert3) {
-              this.registrarReubicacionDestino(this.sGlobal.Id_Centro, this.vDatosRecibidos.Id_Producto, this.sGlobal.Id_Almacen, this.vDatosRecibidos.cantidadTotal, this.resultUbicacion[0].Id_Ubicacion, this.sGlobal.userName, this.vDatosRecibidos.listUA);
-            } 
-          })
-        }else{
-          this.registrarReubicacionDestino(this.sGlobal.Id_Centro, this.vDatosRecibidos.Id_Producto, this.sGlobal.Id_Almacen, this.vDatosRecibidos.cantidadTotal, this.resultUbicacion[0].Id_Ubicacion, this.sGlobal.userName, this.vDatosRecibidos.listUA);
-        }        
+    if (this.codeBarDestino) {
+      if (this.codeBarDestino.trim() != "") {
+        if (this.resultUbicacion.length > 0) {
+          if (this.rowCountUAS > 0) {
+            this.presentAlertConfirm("Ubicación destino no se encuentra vacia. ¿Esta seguro de continuar?”.").then((resultAlert3) => {
+              if (resultAlert3) {
+                this.registrarReubicacionDestino(this.sGlobal.Id_Centro, this.vDatosRecibidos.Id_Producto, this.sGlobal.Id_Almacen, this.vDatosRecibidos.cantidadTotal, this.resultUbicacion[0].Id_Ubicacion, this.sGlobal.userName, this.vDatosRecibidos.listUA);
+              }
+            })
+          } else {
+            this.registrarReubicacionDestino(this.sGlobal.Id_Centro, this.vDatosRecibidos.Id_Producto, this.sGlobal.Id_Almacen, this.vDatosRecibidos.cantidadTotal, this.resultUbicacion[0].Id_Ubicacion, this.sGlobal.userName, this.vDatosRecibidos.listUA);
+          }
+        } else {
+          this.presentToast('No se encontraron registros');
+          this.selectAll(this.txtCodDestino);
+        }
       } else {
-        this.presentToast('No se encontraron registros');
+        this.presentToast('Ingrese código de ubicación');
         this.selectAll(this.txtCodDestino);
       }
-    } else {
+    }else{
       this.presentToast('Ingrese código de ubicación');
-      this.selectAll(this.txtCodDestino);
-    }
+        this.selectAll(this.txtCodDestino);
+    }    
   }
 
   registrarReubicacionDestino(IdCentro, IdProducto, IdAlmacen, Cantidad, IdUbicacionDestino, strUsuario, strUA): void {
@@ -129,14 +133,14 @@ export class ReubicacionDestinoPage {
     this.sAlmacenaje.postReubicacionMasiva(IdCentro, IdProducto, IdAlmacen, Cantidad, IdUbicacionDestino, strUsuario, strUA).then(result => {
       debugger;
       let res: any = result;
-      if(res.errNumber == 0){
+      if (res.errNumber == 0) {
         console.log(res.message);
         this.presentAlert("UA´s o Pallets reubicadas correctamente.").then((resultAlert) => {
           if (resultAlert) {
             this.goBackReubicacionMasiva()
           }
         })
-      }else{
+      } else {
         this.presentAlert("Error. No se puedo registrar el valor.");
         console.log(res.message);
       }
@@ -162,14 +166,8 @@ export class ReubicacionDestinoPage {
     }, (500));
   }
 
-  goBackReubicacionMasiva() {
-    this.navCtrl.push(ReubicacionPage);
-  }
-
-
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
-
       const confirm = this.alertCtrl.create({
         title: 'Mensaje',
         message: message,
@@ -220,23 +218,26 @@ export class ReubicacionDestinoPage {
     toast.present();
   }
 
+  goBackReubicacionMasiva() {
+    this.navCtrl.push(ReubicacionPage);
+  }
+
   ionViewDidLoad() {
-    this.navBar.backButtonClick = (e:UIEvent)=>{
-      if(this.vDatosRecibidos.Total_Pallet >0){
+    this.navBar.backButtonClick = (e: UIEvent) => {
+      if (this.vDatosRecibidos.Total_Pallet > 0) {
         this.presentAlertConfirm("Quedan " + this.vDatosRecibidos.Total_Pallet + " Pallet/Ua por reubicar. ¿Está seguro de salir?").then((result) => {
           if (result) {
             this.navCtrl.push(ReubicacionPage);
           }
         })
-      }else{
+      } else {
         this.navCtrl.push(ReubicacionPage);
-      }             
-     }
+      }
+    }
 
     setTimeout(() => {
       this.txtCodDestinoRef.setFocus();
     }, (500));
     console.log('ionViewDidLoad ReubicacionDestinoPage');
   }
-
 }

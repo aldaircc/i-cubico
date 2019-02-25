@@ -8,18 +8,18 @@
     <ion-toolbar no-padding no-margin color="primary">
         <ion-grid style="padding: 0px;">
             <ion-row no-padding no-margin>
-                <ion-col col-10 no-padding no-margin>
+                <ion-col col-12 no-padding no-margin>
                     <ion-navbar no-padding no-margin>
                         <ion-label style="font-size: 15px; color: white; font-weight:bold;">CONSULTAR UBICACIÓN</ion-label>
                     </ion-navbar>
                 </ion-col>
-                <ion-col no-margin no-padding col-2>
+                <!-- <ion-col no-margin no-padding col-2>
                     <ion-buttons start style="margin-top: 12px; text-align: center">
                         <button no-margin no-padding ion-button icon-only (click)="eliminarUAS()">
                             <ion-icon name="md-trash"></ion-icon>
                         </button>
                     </ion-buttons>
-                </ion-col>
+                </ion-col> -->
             </ion-row>
         </ion-grid>
     </ion-toolbar>
@@ -115,11 +115,17 @@
 <ion-footer style="background: #054B77">
     <ion-grid style="color: white">
         <ion-row no-padding no-margin>
-            <ion-col col-12 style="margin: 0px; padding: 1px; ">
+            <ion-col col-10 style="margin: 0px; padding: 1px; ">
                 <ion-label no-padding no-margin style="font-weight:bold; color:white">
                     Total: {{rowCount}}
                 </ion-label>
             </ion-col>
+            <ion-col col-2 style="margin: 0px; padding: 0%; text-align: center">
+                <button no-margin no-padding ion-button icon-only clear (click)="eliminarUAS()" style="
+                    position: absolute;	top: 0;	bottom: 0; right: 0;  margin: auto; background:none;">
+                  <ion-icon name="trash" color="light"></ion-icon>
+                </button>
+              </ion-col>
         </ion-row>
     </ion-grid>
 </ion-footer>

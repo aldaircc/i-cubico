@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class GlobalServiceProvider {
 
-  Id_Almacen : number = 2;
+  Id_Almacen : number = 1006;
   Id_Impresora : number = 0;
   Id_Muelle : number = 0;
   Id_Centro : number = 0;
@@ -37,8 +37,8 @@ export class GlobalServiceProvider {
   despachoService: any;
 
   constructor(public http: HttpClient) {
-    this.userName = "ADMIN";//"aromero";
-    this.Id_Almacen = 2;
+    this.userName = "administrador";//"aromero";
+    this.Id_Almacen = 1006;
     this.Id_Muelle = 1;
     this.Id_TerminalRF = 2;
     this.Id_Centro = 1;
