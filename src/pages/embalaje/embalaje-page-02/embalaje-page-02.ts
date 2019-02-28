@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController, ModalController, 
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
 import { PopoverEmbalajeComponent } from '../../../components/popover-embalaje/popover-embalaje';
 import { EmbalajePage_03Page } from '../embalaje-page-03/embalaje-page-03';
+import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 
 /**
  * Generated class for the EmbalajePage_02Page page.
@@ -24,7 +25,8 @@ export class EmbalajePage_02Page {
   rowCount: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public sEmbalaje: EmbalajeServiceProvider, public popoverCtrl: PopoverController) {
+    public sEmbalaje: EmbalajeServiceProvider, public popoverCtrl: PopoverController,
+    public sGlobal: GlobalServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -32,7 +34,7 @@ export class EmbalajePage_02Page {
   }
 
   getDataEmbalaje() {
-    this.ListarDespachoXUsuario("ADMIN", 2);
+    this.ListarDespachoXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
 
   ListarDespachoXUsuario(strUsuario, intIdAlmacen) {
