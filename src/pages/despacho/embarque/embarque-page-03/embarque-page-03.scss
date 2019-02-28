@@ -1,3 +1,26 @@
 page-embarque-page-03 {
+    .emb03-card-col{
+        padding: 0px !important;
+    }
 
+    .emb03-card-label{
+        margin: 0px !important;
+    }
+
+    .bg-process{
+        background: yellow;
+     }
+
+     .bg-no-started{
+        background: lightgray;
+     }
+
+     .bg-saldo-complete{
+         background: green;
+     }
+
+     .label-color{
+        width: 0.1%;
+        max-width: 0.1%;
+    }
 }

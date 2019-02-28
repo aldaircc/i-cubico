@@ -10,14 +10,15 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class GlobalServiceProvider {
 
-  Id_Almacen : number = 2;
+  Id_Almacen : number = 1006;
   Id_Impresora : number = 0;
   Id_Muelle : number = 0;
   Id_Centro : number = 0;
   Id_TerminalRF : number = 0;
   nombreAlmacen: string = "";
   nombreImpresora : string;
-  nombreEmpresa : string; 
+  nombreEmpresa : string;
+  nombreCentro: string;
   userName : string = "";
   url : string = "http://172.16.32.15:8085/SGAA_WCF/";
   urlPrint : string =  "";
@@ -36,15 +37,15 @@ export class GlobalServiceProvider {
   despachoService: any;
 
   constructor(public http: HttpClient) {
-    debugger;
-    this.userName = "ADMIN";//"aromero";
-    this.Id_Almacen = 2;
+    this.userName = "administrador";//"aromero";
+    this.Id_Almacen = 1006;
     this.Id_Muelle = 1;
     this.Id_TerminalRF = 2;
+    this.Id_Centro = 1;
     this.nombreEmpresa = "TESLA S.A";
     this.nombreImpresora = "INTERMEC";
     this.nombreAlmacen = "Almacen 369";
-
+    this.nombreCentro = "Centro 01";
     this.usuario = this.url + 'UsuarioService.svc/rest/';
     this.produccion = this.url + 'ProduccionService.svc/rest/';
     this.tablaEst = this.url + 'TablasEstaticasService.svc/rest/';
@@ -57,6 +58,6 @@ export class GlobalServiceProvider {
     this.pickingService = this.url + "PickingService.svc/rest/";
     this.almacenajeService = this.url + "AlmacenajeService.svc/rest/";
     this.inventarioService = this.url + "InventarioService.svc/rest/";
-    this.despachoService = this.url + "DespachoService.svc/rest";
+    this.despachoService = this.url + "DespachoService.svc/rest/";
   }
 }

@@ -12,21 +12,32 @@
 
 </ion-header>
 
-
-<ion-content>
-  <ion-list>
+<ion-content no-padding>
+  <!-- <ion-list>
     <ion-item>
-      <ion-label stacked>Ingresar Ubicación</ion-label>
+      <ion-label stacked></ion-label>
       <ion-input #inputUbi type="text" [(ngModel)]="strUbicacion" (keyup.enter)="verificarUbicacion()" ></ion-input>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
+
+  <ion-grid  class="bgHeader">
+    <ion-row>
+      <ion-label class="fieldForm">Ingresar Ubicación</ion-label>
+    </ion-row>
+    <ion-row>
+      <ion-item class="no-padding-left">
+      <ion-input #inputUbi type="text" [(ngModel)]="strUbicacion" (keyup.enter)="verificarUbicacion()" ></ion-input>
+      </ion-item>
+    </ion-row>
+  </ion-grid>
+
   <ion-grid class="bgCustomSkyBlue">
     <ion-row>
-      <ion-col col-3 col-sm><ion-label>Sector:</ion-label></ion-col>
+      <ion-col col-3 col-sm><ion-label class="textBold">Sector:</ion-label></ion-col>
       <ion-col col-9 col-sm><ion-label>{{ sector }}</ion-label></ion-col>
     </ion-row>
     <ion-row>
-      <ion-col col-3 col-sm><ion-label>Pasillo:</ion-label></ion-col>
+      <ion-col col-3 col-sm><ion-label class="textBold">Pasillo:</ion-label></ion-col>
       <ion-col col-9 col-sm><ion-label>{{ pasillo }}</ion-label></ion-col>
     </ion-row>
     <ion-row align-items-center class="textColorNavy textBold">
@@ -49,10 +60,10 @@
     <ion-grid>
       <ion-row>
         <ion-col col-3 col-sm>
-          <div class="fieldForm">Total UA's a ubicar:</div>
+          <div class="textBold">Total UA's a ubicar:</div>
         </ion-col>
         <ion-col col-5 col-sm>
-          <div class="fieldForm"> {{ rowCount }} </div>
+          <div class="textBold"> {{ rowCount }} </div>
         </ion-col>
       </ion-row>
     </ion-grid>

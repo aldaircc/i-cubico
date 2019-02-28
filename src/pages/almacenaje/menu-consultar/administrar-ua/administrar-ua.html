@@ -15,7 +15,7 @@
         </ion-col>
         <ion-col no-margin no-padding col-2>
           <ion-buttons start style="margin-top: 12px; text-align: center">
-            <button no-margin no-padding ion-button icon-only (click)="presentPopover($event)">
+            <button no-margin no-padding ion-button icon-only (click)="limpiar()">
               <ion-icon name="document"></ion-icon>
             </button>
           </ion-buttons>
@@ -37,12 +37,12 @@
       </ion-col>
       <ion-col col-7 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtCodUbicacion [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+          <ion-input #txtCodUA [(ngModel)]="codeBarUA" (keyup.enter)="validarCodeBarUA()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col col-2 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <button no-margin no-padding ion-button icon-only clear (click)="eliminarUA(objDetalleProducto)" style="
-                        position: absolute;	top: 0;	bottom: 0; left: 0; right: 0; width: 80%; margin: auto; background:none;">
+        <button no-margin no-padding ion-button icon-only clear (click)="reImprimirUA()" [disabled]="!btnReimprimirisenabled"
+          style="position: absolute;	top: 0;	bottom: 0; left: 0; right: 0; width: 80%; margin: auto; background:none;">
           <ion-icon name="barcode" color="dark"></ion-icon>
         </button>
       </ion-col>
@@ -54,17 +54,17 @@
         </ion-label>
       </ion-col>
       <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-          <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-            
-          </ion-label>
-        </ion-col>
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          {{ ResultUA_Aux.Codigo }}
+        </ion-label>
+      </ion-col>
     </ion-row>
 
     <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; margin-left: 10px; height: 50px; margin-right: 10px; background: #F2F5A9 ">
       <ion-col col-12 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="text-align: center; padding-left: 0px; font-weight:bold; margin-top: 0px; margin-bottom: 0px;">
           <h5>
-            <!-- {{ resultMuelleXAlmacen.Muelle }} -->
+            {{ ResultUA_Aux.Descripcion }}
           </h5>
         </ion-label>
       </ion-col>
@@ -77,10 +77,10 @@
         </ion-label>
       </ion-col>
       <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-          <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-            
-          </ion-label>
-        </ion-col>
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          {{ ResultUA_Aux.Sector }}
+        </ion-label>
+      </ion-col>
     </ion-row>
   </ion-grid>
 
@@ -115,28 +115,28 @@
       <ion-col col-3 no-padding>
         <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
           <ion-label style="font-weight:bold; color: white; text-align: center">
-            <!-- {{ rutaPicking.Fila }} -->A
+            {{ ResultUA_Aux.Fila }}
           </ion-label>
         </ion-row>
       </ion-col>
       <ion-col col-3 no-padding>
         <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
           <ion-label style="font-weight:bold; color: white; text-align: center">
-            <!-- {{ rutaPicking.Columna }} -->B
+            {{ ResultUA_Aux.Columna }}
           </ion-label>
         </ion-row>
       </ion-col>
       <ion-col col-3 no-padding>
         <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
           <ion-label style="font-weight:bold; color: white; text-align: center">
-            <!-- {{ rutaPicking.Nivel }} -->C
+            {{ ResultUA_Aux.Nivel }}
           </ion-label>
         </ion-row>
       </ion-col>
       <ion-col col-3 no-padding>
         <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
           <ion-label style="font-weight:bold; color: white; text-align: center">
-            <!-- {{ rutaPicking.Posicion }} -->D
+            {{ ResultUA_Aux.Posicion }}
           </ion-label>
         </ion-row>
       </ion-col>
@@ -145,24 +145,26 @@
 
   <ion-grid style="padding: 0px;">
     <ion-row no-padding style="margin-top: 10px; margin-bottom: 5px; ">
-      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+      <ion-col col-2 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
           F.E:
         </ion-label>
       </ion-col>
-      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtCodUbicacion [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+          <ion-input #txtFechaEmision [(ngModel)]="FechaEmision" (keyup.enter)="validarCodeBar()" type="text" value=""
+            style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px;"></ion-input>
         </ion-item>
       </ion-col>
-      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+      <ion-col col-2 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
           F.V:
         </ion-label>
       </ion-col>
-      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtCodUbicacion [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+          <ion-input #txtFechaVencimiento [(ngModel)]="FechaVencimiento" (keyup.enter)="validarCodeBar()" type="text"
+            value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px;"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -174,7 +176,7 @@
       </ion-col>
       <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtCodUbicacion [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+          <ion-input #txtLote [(ngModel)]="Lote" (keyup.enter)="validarCodeBar()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px;"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -186,7 +188,7 @@
       </ion-col>
       <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtCodUbicacion [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+          <ion-input #txtCantidad [(ngModel)]="Cantidad" (keyup.enter)="validarCodeBar()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px;"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
@@ -202,9 +204,9 @@
         </ion-label>
       </ion-col>
       <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtCodUbicacion [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
-        </ion-item>
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 12px; margin-bottom: 0px;">
+          {{ NombreImpresora }}
+        </ion-label>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -212,47 +214,47 @@
 
 <ion-footer style="background:#054B77">
   <ion-grid style="margin: 0px; padding: 0px">
-    <ion-row >     
+    <ion-row>
       <ion-col style="margin: 0px; padding: 0px; width: 20%;">
-                <button ion-button style=" margin: 0px; padding: 0px" (click)="goDetallePickingPage()"
-                    medium full>
-                    <div>
-                        <ion-icon name='trash'></ion-icon> <br>
-                    </div>
-                </button>
-            </ion-col>
-            <ion-col  style="margin: 0px; padding: 0px; width: 20%;">
-                <button ion-button style=" margin: 0px; padding: 0px" (click)="goCerrarPickingPage()"
-                medium full>
-                    <div>
-                        <ion-icon name='refresh'></ion-icon> <br>
-                    </div>
-                </button>
-            </ion-col>
-            <ion-col style="margin: 0px; padding: 0px; width: 20%;">
-                <button ion-button style="margin: 0px; padding: 0px" (click)="goReasignarUaPage()"
-                medium full>
-                    <div>
-                        <ion-icon name='checkbox-outline'></ion-icon> <br>
-                    </div>
-                </button>
-            </ion-col>
-            <ion-col style="margin: 0px; padding: 0px; width: 20%;">
-                <button ion-button style=" margin: 0px; padding: 0px" (click)="goReubicarUaPage()"
-                medium full>
-                    <div>
-                        <ion-icon name='checkbox-outline'></ion-icon> <br>
-                    </div>
-                </button>
-            </ion-col>
-            <ion-col style="margin: 0px; padding: 0px; width: 20%;">
-                <button ion-button style=" margin: 0px; padding: 0px" (click)="goParticionarUaPage()"
-                medium full>
-                    <div>
-                        <ion-icon name='checkbox-outline'></ion-icon> <br>
-                    </div>
-                </button>
-            </ion-col>
+        <button ion-button style=" margin: 0px; padding: 0px" (click)="eliminartUA()" [disabled]="!btnEliminarisenabled"
+          medium full>
+          <div>
+            <ion-icon name='trash'></ion-icon> <br>
+          </div>
+        </button>
+      </ion-col>
+      <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+        <button ion-button style=" margin: 0px; padding: 0px" (click)="actualizarUA()" [disabled]="!btnActualizarisenabled"
+          medium full>
+          <div>
+            <ion-icon name='refresh'></ion-icon> <br>
+          </div>
+        </button>
+      </ion-col>
+      <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+        <button ion-button style="margin: 0px; padding: 0px" (click)="goReasignarUaPage()" [disabled]="!btnReasignarisenabled"
+          medium full>
+          <div>
+            <ion-icon name='checkbox-outline'></ion-icon> <br>
+          </div>
+        </button>
+      </ion-col>
+      <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+        <button ion-button style=" margin: 0px; padding: 0px" (click)="goReubicarUaPage()" [disabled]="!btnReubicarisenabled"
+          medium full>
+          <div>
+            <ion-icon name='checkbox-outline'></ion-icon> <br>
+          </div>
+        </button>
+      </ion-col>
+      <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+        <button ion-button style=" margin: 0px; padding: 0px" (click)="goParticionarUaPage()" [disabled]="!btnParticionarisenabled"
+          medium full>
+          <div>
+            <ion-icon name='checkbox-outline'></ion-icon> <br>
+          </div>
+        </button>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-footer>

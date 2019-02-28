@@ -18,99 +18,123 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [ngClass]="{bgWhite: (!isBgRed && !isBgYellow && !isBgGreen), bgRed:(isBgRed), bgYellow:(isBgYellow), bgGreen:(isBgGreen), bgWhite:(isbgWhite)}">
 
-    <ion-grid style="padding: 0px;">
+    <ion-grid style="padding: 0px;" class="bgLightBlue">
         <ion-row no-padding style="margin-top: 15px; margin-bottom: 15px;">
-            <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
+            <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
                 <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
                     Sector:
                 </ion-label>
             </ion-col>
-            <ion-col col-12 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
+            <ion-col col-9 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
                 <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                    {{ pickingProducto.Producto }}
+                    {{ vDatosUbicacion.Sector }}
                 </ion-label>
             </ion-col>
         </ion-row>
-        <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px; ">
-            <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
-                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                    Fila:
+    </ion-grid>
+
+    <ion-grid class="bgLightBlue">
+        <ion-row no-padding no-margin>
+            <ion-col col-3 no-padding>
+                <ion-label style="margin: 0px; padding: 0px; font-weight:bold; text-align: center">
+                    RACK/FILA
                 </ion-label>
             </ion-col>
-            <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
-                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                    {{ pickingProducto.CodigoProducto }}
+            <ion-col col-3 no-padding>
+                <ion-label style="margin: 0px; padding: 0px; font-weight:bold; text-align: center">
+                    COLUMNA
                 </ion-label>
             </ion-col>
-            <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
-                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                    Columna:
+            <ion-col col-3 no-padding>
+                <ion-label style="margin: 0px; padding: 0px; font-weight:bold; text-align: center">
+                    NIVEL
                 </ion-label>
             </ion-col>
-            <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
-                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                    {{ pickingProducto.CodigoProducto }}
+            <ion-col col-3 no-padding>
+                <ion-label style="margin: 0px; padding: 0px; font-weight:bold; text-align: center">
+                    POSICIÓN
                 </ion-label>
             </ion-col>
-        </ion-row>  
-        <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px; ">
-            <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
-                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                    Nivel:
-                </ion-label>
+        </ion-row>
+    </ion-grid>
+
+    <ion-grid class="bgLightBlue">
+        <ion-row no-padding no-margin style="margin-bottom: 10px">
+            <ion-col col-3 no-padding>
+                <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
+                    <ion-label style="font-weight:bold; color: white; text-align: center">
+                        {{ vDatosUbicacion.Fila }}
+                    </ion-label>
+                </ion-row>
             </ion-col>
-            <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
-                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                    {{ pickingProducto.CodigoProducto }}
-                </ion-label>
+            <ion-col col-3 no-padding>
+                <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
+                    <ion-label style="font-weight:bold; color: white; text-align: center">
+                        {{ vDatosUbicacion.Columna }}
+                    </ion-label>
+                </ion-row>
             </ion-col>
-            <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
-                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                    Posición:
-                </ion-label>
+            <ion-col col-3 no-padding>
+                <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
+                    <ion-label style="font-weight:bold; color: white; text-align: center">
+                        {{ vDatosUbicacion.Nivel }}
+                    </ion-label>
+                </ion-row>
             </ion-col>
-            <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
-                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
-                    {{ pickingProducto.CodigoProducto }}
-                </ion-label>
+            <ion-col col-3 no-padding>
+                <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
+                    <ion-label style="font-weight:bold; color: white; text-align: center">
+                        {{ vDatosUbicacion.Posicion }}
+                    </ion-label>
+                </ion-row>
             </ion-col>
-        </ion-row>          
-        <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px; margin-left: 10px">
+        </ion-row>
+    </ion-grid>
+
+    <ion-grid style="padding: 0px;">
+        <ion-row no-padding style="margin-top: 15px; margin-bottom: 0px; margin-left: 10px">
             <ion-col col-12 no-padding no-margin>
                 <ion-label no-padding no-margin style="font-weight:bold;">
                     Ingrese ubicación:
                 </ion-label>
             </ion-col>
-        </ion-row>  
+        </ion-row>
     </ion-grid>
 
-    <ion-row>
-        <ion-item>
-            <ion-input #txtCodMuelle (keydown)="keydown($event)" (keyup)="keyup($event)" (ngModelChange)="ontxtCodMuelleChange()"
-                type="text" maxlength="6" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()"></ion-input>
-        </ion-item>
+    <ion-row no-padding style="margin-top: 15px; margin-bottom: 15px; text-align: center">
+        <ion-col col-12 style="padding-left: 20%; padding-right: 20%;  padding-top: 0px;  padding-bottom: 0px;">
+            <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
+                <ion-input #txtCodUbicacion [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" type="text" value=""
+                    style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray; text-align: center"></ion-input>
+            </ion-item>
+        </ion-col>
     </ion-row>
 
-    <ion-row>
-        <ion-item>
-        <!-- agregar boton    -->
-        </ion-item>
+    <ion-row no-padding style="margin-top: 15px; margin-bottom: 15px; text-align: center">
+        <ion-col col-12 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+            <button ion-button icon-start (click)="goOtraUbicacionPage()">
+                <ion-icon name="add"></ion-icon>
+                UBICACIONES
+            </button>
+        </ion-col>
     </ion-row>
-
 </ion-content>
 
-<ion-footer style="background: white">   
+<ion-footer style="background: #054B77">
     <ion-grid style="color: white">
-        <ion-row no-padding no-margin style="text-align: center" > 
-            <ion-col col-9 style="margin: 0px; padding: 1px; ">
-                <ion-label no-padding no-margin style="font-weight:bold; color:black">
-                    Total Ítems: {{rowCount}} 
+        <ion-row no-padding no-margin>
+            <ion-col col-10 style="margin: 0px; padding-top: 0.9%; padding-bottom: 0.5%">
+                <ion-label no-padding no-margin style="font-weight:bold; color:white; margin: 0px; padding: 0px">
+                    Total Pallets/UAS: {{rowCount}} - {{rowCountTotal}} 
                 </ion-label>
             </ion-col>
-            <ion-col col-3 style="margin: 0px; padding: 1px; ">
-                <!-- agrega boton -->
+            <ion-col col-2 style="margin: 0px; padding: 0%; text-align: center">
+                <button no-margin no-padding ion-button icon-only clear (click)="registrarUAUbicacion()" style="
+                position: absolute;	top: 0;	bottom: 0; left: 0; right: 0;  margin: auto; background:none;">
+                    <ion-icon name="checkbox-outline" color="light"></ion-icon>
+                </button>
             </ion-col>
         </ion-row>
     </ion-grid>

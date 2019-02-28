@@ -1,3 +1,43 @@
 page-despacho {
 
+    .btn {
+        background-color: red;
+        border: none;
+        color: white;
+        padding: 20px 24px;
+        font-size: 100%;//16px;
+        cursor: pointer;
+        border-radius: 50%;
+      }
+      
+      /* Darker background on mouse-over */
+      .btn:hover {
+        background-color: RoyalBlue;
+      }
+      
+      .text {
+        padding-top: 0.5%;
+        font-family: "Helvetica Neue", Helvetica, 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        padding-left: 1.3333%;
+      }
+      .text:hover
+      {
+        cursor: pointer;
+        color: #1565C0;
+      }
+
+      .margin-text-circle-button{
+        margin: 5px 0px 15px 0px;
+      }
+
+      .grid-menu{
+        height: 100%;
+        display: grid;
+        vertical-align: middle;
+      }
+
+      .xl-icon{
+        font-size: 280%;
+      }
+      
 }

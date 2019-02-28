@@ -17,11 +17,9 @@
         <ion-icon name="bulb"></ion-icon>
       </button>
     </ion-buttons> -->
-
     <ion-title>
-      recibo-page-02
+      CÚBICO-RECIBO
     </ion-title>
-
     <ion-buttons end>
       <button ion-button icon-only (click)="presentPopover($event)">
         <ion-icon name="more"></ion-icon>
@@ -63,7 +61,7 @@
       <ion-searchbar (ionInput)="filterItems($event)"></ion-searchbar>
     </ion-row>
 
-    <ion-row class="bgWhite">
+    <!-- <ion-row class="bgWhite">
         <ion-card *ngFor="let objDetail of listAuxDetailTx">
             <ion-card-header>
               <ion-item class="header" no-lines no-padding>
@@ -84,7 +82,84 @@
                 <h5><b>Saldo: </b> {{objDetail.Saldo}}</h5>
             </ion-card-content>
           </ion-card>
-      </ion-row>
+      </ion-row> -->
+
+      <ion-list [virtualScroll]="listAuxDetailTx" [approxItemHeight]="'20px'">
+        <ion-card *virtualItem="let objDetail">
+          <ion-grid>
+            <ion-row>
+              <ion-col col-1 col-sm
+              [ngClass]="objDetail.Id_Estado == 3 ? 'label-color bg-process' : 'label-color bg-confirm'">
+              <!-- [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgRed }" -->
+              </ion-col>
+              <ion-col col-10 col-sm>
+                <ion-row>
+                  <ion-col class="rec02-card-col" col-12 col-sm>
+                    <ion-label class="rec02-card-label fieldForm">{{ objDetail.Descripcion }}</ion-label>
+                  </ion-col>            
+                </ion-row>
+                <ion-row>
+                  <ion-col class="rec02-card-col" col-4 col-sm>
+                    <ion-label class="rec02-card-label fieldForm">Código:</ion-label>
+                  </ion-col>
+                  <ion-col class="rec02-card-col" col-8 col-sm>
+                    <ion-label class="rec02-card-label">{{ objDetail.Codigo }}</ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="rec02-card-col" col-4 col-sm>
+                    <ion-label class="rec02-card-label fieldForm">Lote:</ion-label>
+                  </ion-col>
+                  <ion-col class="rec02-card-col">
+                    <ion-label class="rec02-card-label">{{ objDetail.Lote}}</ion-label>
+                  </ion-col>
+                </ion-row>
+      
+                <ion-row>
+                  <ion-col class="rec02-card-col" col-4 col-sm>
+                    <ion-label class="rec02-card-label fieldForm">SubAlmacén:</ion-label>
+                  </ion-col>
+                  <ion-col class="rec02-card-col" col-8 col-sm>
+                    <ion-label class="rec02-card-label">{{ objDetail.NombreSubAlmacen }}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col class="rec02-card-col" col-3 col-sm>
+                    <ion-label class="rec02-card-label fieldForm">C. Ped.:</ion-label>
+                  </ion-col>
+                  <ion-col class="rec02-card-col" col-3 col-sm>
+                    <ion-label class="rec02-card-label">{{ objDetail.CantidadPedida }}</ion-label>
+                  </ion-col>
+                  <ion-col class="rec02-card-col" col-3 col-sm>
+                    <ion-label class="rec02-card-label fieldForm">C. Ope.:</ion-label>
+                  </ion-col>
+                  <ion-col class="rec02-card-col" col-3 col-sm>
+                    <ion-label class="rec02-card-label">{{ objDetail.CantidadOperacion }}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col class="rec02-card-col" col-3 col-sm>
+                    <ion-label class="rec02-card-label fieldForm">Saldo:</ion-label>
+                  </ion-col>
+                  <ion-col class="rec02-card-col" col-9 col-sm>
+                    <ion-label class="rec02-card-label">{{ objDetail.Saldo }}</ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+              <ion-col col-1 col-sm align-self-center>
+                <button ion-button icon-only out-line class="button-outline-md" (click)="goToReciboPage03(objDetail)">
+                  <ion-icon name="arrow-round-forward"></ion-icon>
+                </button>                
+                <button ion-button icon-only out-line class="button-outline-md" (click)="navigateToEtqCajaLpn(objDetail)">
+                  <ion-icon name="barcode"></ion-icon>
+                </button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-list>
 
   <!--<ngx-datatable class="fullscreen" [ngClass]="tablestyle" [rows]="rows" [columnMode]="'force'" [sortType]="'multi'" [reorderable]="false">
     <ngx-datatable-column name="name"></ngx-datatable-column>

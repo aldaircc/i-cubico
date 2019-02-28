@@ -8,4 +8,25 @@ page-recibo {
     ion-scroll {
         height: 290px;
      }
+     
+     .label-color{
+        width: 0.1%;
+        max-width: 0.1%;
+     }
+
+     .bg-confirm{
+        background-color: gray;
+     }
+
+     .bg-process{
+        background: yellow;
+     }
+
+     .rec01-card-col{
+        padding: 0px !important;
+     }
+
+     .rec01-card-label{
+        margin: 0px !important;
+     }
 }

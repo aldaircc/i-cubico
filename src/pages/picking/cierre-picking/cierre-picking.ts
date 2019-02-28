@@ -328,12 +328,10 @@ export class CierrePickingPage {
       });
       confirm.present();
     })
-
   }
 
   presentAlertConfirm(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
-
       const confirm = this.alertCtrl.create({
         title: 'Mensaje',
         message: message,
@@ -356,7 +354,6 @@ export class CierrePickingPage {
       });
       confirm.present();
     })
-
   }
 
   presentToast(message) {

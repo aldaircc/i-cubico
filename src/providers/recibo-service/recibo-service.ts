@@ -58,14 +58,12 @@ export class ReciboServiceProvider {
   }
 
   registrarUATransito(txUbi){
-    debugger;
     var parameter = {'TxUbi': txUbi};
     return new Promise((resolve, reject)=>{
       this.http.post(this.sGlobal.recepcion + 'RegistrarUATransito/TxUbi', JSON.stringify(parameter), {headers: this.headers})
       .map(res=>res.json())
       .subscribe(data=>{
         resolve(data);
-        console.log('registrarUATransito', data);
       },err=>{
         console.log('Error registrarUATransito', err);
       })
@@ -106,7 +104,6 @@ export class ReciboServiceProvider {
           .map(res=>res.json())
           .subscribe(data=>{
             resolve(data);
-            console.log('validarUAReciboTransferencia', data);
           },err=>{
             console.log('Error validarUAReciboTransferencia', err);
           })
@@ -120,7 +117,6 @@ export class ReciboServiceProvider {
         this.http.post(this.sGlobal.recepcion + 'ValidarUARecibo/ua', JSON.stringify(parameter), {headers:this.headers})
           .map(res=>res.json())
           .subscribe(data=>{
-            console.log('validarUARecibo', data);
             resolve(data);
           },err=>{
             console.log('Error validarUARecibo', err);
@@ -142,23 +138,19 @@ export class ReciboServiceProvider {
   }
 
   registrarUA(ua){
-    debugger;
     let parameter = { 'ua': ua };
     return new Promise((resolve, reject)=>{
       this.http.post(this.sGlobal.recepcion + 'RecepcionUA/ua', JSON.stringify(parameter),{headers:this.headers})
       .map(res=>res.json())
       .subscribe(data=>{
-        debugger;
         resolve(data);
       },err=>{
-        debugger;
         console.log('Erro registrarUA', err);
       })
     });
   }
 
   listarUAXProductoTx(strIdTx, intIdProducto, intItem){
-    debugger;
     let parameter = { 'strIdTx' : strIdTx, 'intIdProducto' : intIdProducto, 'intItem' : intItem };
     return new Promise(result=>{
       this.http.get(this.sGlobal.recepcion + 'ListarUAXProductoTx', {params : parameter})
@@ -172,7 +164,6 @@ export class ReciboServiceProvider {
   }
 
   insertarPallet(idAlmacen, user, idCentro){
-    debugger;
     var parameter = { 'idAlmacen' : idAlmacen, 'user' : user, 'idCentro' : idCentro };
     return new Promise((result,reject)=>{
       this.http.post(this.sGlobal.recepcion + 'InsertarPallet/idAlmacen/user/idCentro', JSON.stringify(parameter), {headers:this.headers})
@@ -186,7 +177,6 @@ export class ReciboServiceProvider {
   }
 
   validarPallet(strPallet, IdAlmacen){
-    debugger;
     var parameter = { 'strPallet' : strPallet, 'IdAlmacen' : IdAlmacen };
     return new Promise((result, reject)=>{
       this.http.post(this.sGlobal.recepcion + 'ValidarPallet/strPallet/IdAlmacen', JSON.stringify(parameter), {headers:this.headers})
@@ -200,7 +190,6 @@ export class ReciboServiceProvider {
   }
 
   registrarPallet(ua){
-    debugger;
     var parameter = {'ua' : ua};
     return new Promise((result,reject)=>{
       this.http.post(this.sGlobal.recepcion + 'RegistrarPallet/ua', JSON.stringify(parameter), { headers : this.headers})
@@ -212,4 +201,20 @@ export class ReciboServiceProvider {
       })
     });
   }
+
+  //aromero
+  postinsertarUAParticionada(strUA, Cant, user, idCentro){
+    var parameter = { 'strUA' : strUA, 'Cant' : Cant, 'user' : user, 'idCentro' : idCentro };
+    return new Promise((result,reject)=>{
+      this.http.post(this.sGlobal.recepcion + 'insertarUAParticionada/strUA/Cant/user/idCentro', JSON.stringify(parameter), {headers:this.headers})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        result(data);
+      },err=>{
+        console.log('Error - postinsertarUAParticionada');
+      })
+    });
+  }
+
+
 }

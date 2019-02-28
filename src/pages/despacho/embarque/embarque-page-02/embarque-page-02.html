@@ -12,10 +12,10 @@
 
   <ion-grid class="bgHeader statico">
     <ion-row align-items-center>
-      <ion-col col-3 col-sm>
+      <ion-col col-4 col-sm>
         <div class="textHeader">N° Planificación: </div>
       </ion-col>
-      <ion-col col-9 col-sm>
+      <ion-col col-8 col-sm>
         <div class="valueHeader">{{ vParameter.Id_Tra }}</div>
       </ion-col>
     </ion-row>
@@ -25,17 +25,23 @@
 
 <ion-content no-padding>
   <ion-grid>
-    <ion-row>
-      <ion-col col-3 col-sm>Placa:</ion-col>
-      <ion-col col-9 col-sm>{{ vParameter.Placa }}</ion-col>
+    <ion-row align-items-center>
+      <ion-col col-4 col-sm>
+        <ion-label class="fieldForm">Placa:</ion-label>
+      </ion-col>
+      <ion-col col-8 col-sm>{{ vParameter.Placa }}</ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col col-3 col-sm>Conductor:</ion-col>
-      <ion-col col-9 col-sm>{{ vParameter.Conductor }}</ion-col>
+    <ion-row align-items-center>
+      <ion-col col-4 col-sm>
+        <ion-label class="fieldForm">Conductor:</ion-label>
+      </ion-col>
+      <ion-col col-8 col-sm>{{ vParameter.Conductor }}</ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col col-3 col-sm>N° Documento:</ion-col>
-      <ion-col col-9 col-sm>{{ vParameter.Documento }}</ion-col>
+    <ion-row align-items-center>
+      <ion-col col-4 col-sm>
+        <ion-label class="fieldForm">N° Documento:</ion-label>
+      </ion-col>
+      <ion-col col-8 col-sm>{{ vParameter.Documento }}</ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
@@ -43,13 +49,13 @@
 <ion-footer>
   <ion-toolbar>
     <ion-buttons left>
-      <button ion-button icon-only>
+      <button ion-button icon-only (click)="closeEmbarPage03()">
           <ion-icon name="label" name="close-circle"></ion-icon>
       </button>
     </ion-buttons>
 
     <ion-buttons right>
-      <button ion-button icon-only (click)="goToEmbarPage03()">
+      <button ion-button icon-only (click)="goToEmbarPage03(vParameter)">
           <ion-icon name="label" name="play"></ion-icon>
       </button>
     </ion-buttons>

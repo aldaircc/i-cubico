@@ -19,6 +19,8 @@ export class PopoverReciboComponent {
   isDisplayEtq : boolean = false;
   isDisplayIncidencia : boolean = false;
   isDisplayPrint : boolean = false;
+  isDisplaySesion: boolean = false;
+  isDisplayUA: boolean = false;
 
   constructor(public viewCtrl: ViewController) {
     let page = viewCtrl.data.page;
@@ -28,9 +30,10 @@ export class PopoverReciboComponent {
   evaluateDisplayOptions(value){
     switch (value) {
       case 11:
-      this.isDisplayPrint = false;
+      this.isDisplayPrint = true;
       this.isDisplayIncidencia = false;
       this.isDisplayEtq = false;
+      this.isDisplaySesion = true;
         break;
       case 12:
         this.isDisplayPrint = true;
@@ -38,9 +41,11 @@ export class PopoverReciboComponent {
         this.isDisplayEtq = false;
         break;
       case 13:
-        this.isDisplayPrint = false;
-        this.isDisplayIncidencia = false;
+        this.isDisplayPrint = true;
+        this.isDisplayIncidencia = true;
         this.isDisplayEtq = true;
+        this.isDisplayUA = true;
+        this.isDisplaySesion = true;
         break;
       case 14:
         this.isDisplayPrint = true;
@@ -51,6 +56,13 @@ export class PopoverReciboComponent {
         this.isDisplayPrint = true;
         this.isDisplayIncidencia = false;
         this.isDisplayEtq = false;
+        break;
+
+      case 51:
+        this.isDisplayPrint = false;
+        this.isDisplayIncidencia = true;
+        this.isDisplayEtq = false;
+        this.isDisplaySesion = true;
         break;
       default:
         break;

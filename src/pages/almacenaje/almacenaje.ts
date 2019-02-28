@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
-import { NavController, IonicPage, ToastController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, Navbar, IonicPage, ToastController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { TransitoPage } from '../almacenaje/transito/transito'
 import { ReubicacionPage } from '../almacenaje/reubicacion/reubicacion'
 import { ReabastecimientoAlmacenajePage } from '../almacenaje/reabastecimiento-almacenaje/reabastecimiento-almacenaje'
 import { ConsultarUbicacionPage } from '../almacenaje/consultar-ubicacion/consultar-ubicacion'
 import { MenuConsultarPage } from '../almacenaje/menu-consultar/menu-consultar'
+import { MainMenuPage } from '../main-menu/main-menu'
 
 @IonicPage()
 @Component({
@@ -14,9 +15,9 @@ import { MenuConsultarPage } from '../almacenaje/menu-consultar/menu-consultar'
 })
 
 export class AlmacenajePage {
+    @ViewChild(Navbar) navBar: Navbar;
 
-    constructor(public navCtrl: NavController, public auth: AuthService, public toastCtrl: ToastController) {
-        debugger;
+    constructor(public navCtrl: NavController, public auth: AuthService, public toastCtrl: ToastController) {        
     }
 
     goTransitoPage() {
@@ -39,12 +40,10 @@ export class AlmacenajePage {
         this.navCtrl.push(MenuConsultarPage);
     }
 
-    // presentToast(){
-    //   const toast = this.toastCtrl.create({
-    //     message: 'Just do it',
-    //     duration: 2000
-    //   });
-    //   toast.present();
-    // }
-
+    ionViewDidLoad() {
+        this.navBar.backButtonClick = (e: UIEvent) => {
+            this.navCtrl.push(MainMenuPage);
+        }
+        console.log('ionViewDidLoad PickingPage');
+    }
 }

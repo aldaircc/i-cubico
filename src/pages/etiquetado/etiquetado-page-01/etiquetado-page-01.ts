@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ModalController, AlertController, PopoverController, App } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, ViewController, ModalController, AlertController, PopoverController, App, Select } from 'ionic-angular';
 import { ImpresoraPage } from '../../impresora/impresora';
 import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
@@ -88,6 +88,9 @@ export class EtiquetadoPage_01Page {
   numCopia : number = 1;
   cantEtqSaldo : number;
   totalSuma : number;
+
+  @ViewChild('selectUA_Alt') selectUA_Alt: Select;
+  @ViewChild('selectFormat') selectFormat: Select;
   
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, 
     public viewCtrl: ViewController, public sEtq: EtiquetadoServiceProvider, 
@@ -107,8 +110,6 @@ export class EtiquetadoPage_01Page {
 
   initPage(): void{
     debugger;
-    console.log('fecha emi', this.fecEmi);
-    console.log('fecha ven', this.fecVen);
     if(this.vEtq.Codigo != null){
       
       this.lote = this.vEtq.LoteLab;
@@ -147,10 +148,6 @@ export class EtiquetadoPage_01Page {
     }
   }
 
-  ionViewDidLoad() {
-
-  }
-
   listarUMxProducto(intIdProducto){
     this.sEtq.listarUMxProducto(intIdProducto).then(result=>{
       this.listUM = result;
@@ -178,6 +175,10 @@ export class EtiquetadoPage_01Page {
 
     if(this.id_UAlt == 0 || this.id_UAlt == undefined){
       message = "Seleccione una presentación";
+      debugger;
+      setTimeout(()=>{
+        this.selectUA_Alt.open();
+      }, 500);
       return message;
     }
 
@@ -201,6 +202,14 @@ export class EtiquetadoPage_01Page {
         message = "La fecha de emisión debe ser menor a la fecha de vencimiento";
         return message;
       }
+    }
+
+    if(this.id_FormatLabel == 0 || this.id_FormatLabel == undefined){
+      message = "Seleccione formato de etiqueta";
+      setTimeout(() => {
+        this.selectFormat.open();
+      }, 500);
+      return message;
     }
 
    return message;
@@ -418,10 +427,11 @@ export class EtiquetadoPage_01Page {
   }
 
   calcularTotalSuma(){
+    debugger;
     var cantXCaja, numEtqTem, etqSaldoCant;
     cantXCaja = (this.cantxEtq <= 0) ? 0 : this.cantxEtq;
     numEtqTem = (this.numEtq <= 0) ? 0 : this.numEtq;
-    etqSaldoCant = (this.cantEtqSaldo <= 0) ? 0 : this.cantEtqSaldo;
+    etqSaldoCant = (this.cantEtqSaldo <= 0 || this.cantEtqSaldo == undefined) ? 0 : this.cantEtqSaldo;
     this.totalSuma = (cantXCaja * numEtqTem) +  etqSaldoCant;
   }
 
@@ -432,16 +442,6 @@ export class EtiquetadoPage_01Page {
     }else{
       this.totalSuma = 0;
     }
-    /**
-    if(!charSequence.toString().equals("") ) {
-                //do your work here
-                Double cantXCaja, numEtqTem, etqSaldoCant;
-                cantXCaja = Double.parseDouble((edtCantxEtq.getText().toString().equals("")) ? "0": edtCantxEtq.getText().toString());
-                numEtqTem = Double.parseDouble((edtNumEtq.getText().toString().equals("")) ? "0": edtNumEtq.getText().toString());
-                etqSaldoCant = Double.parseDouble(edtCantEtqSaldo.getText().toString().equals("") ? "0": edtCantEtqSaldo.getText().toString());
-                tvTotalSuma.setText( String.format("%.2f", ((cantXCaja * numEtqTem) + etqSaldoCant)));
-            } 
-    **/
   }
 
   dismiss(){

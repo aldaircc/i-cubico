@@ -13,6 +13,33 @@
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content no-padding>
+  <ion-grid class="grid-menu">
+    <ion-row text-center>
+      <ion-col col-sm align-self-center>
+        <button class="btn" (click)="goToEmbarPage01()">
+          <ion-icon class="xl-icon" name="map"></ion-icon>
+        </button>
+        <ion-label class="margin-text-circle-button">Embarque de pedidos</ion-label>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row text-center>
+      <ion-col col-sm align-self-center>
+        <button class="btn" (click)="gotToReciboBultoPage01()">
+          <ion-icon class="xl-icon" name="barcode"></ion-icon>
+        </button>
+        <ion-label class="margin-text-circle-button">Recibir bultos</ion-label>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row text-center>
+      <ion-col col-sm align-self-center>
+        <button class="btn">
+          <ion-icon class="xl-icon" name="paper"></ion-icon>
+        </button>
+        <ion-label class="margin-text-circle-button">Bulto máster</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
