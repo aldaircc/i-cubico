@@ -4,6 +4,7 @@ import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/emb
 import { EmbalajePage_05Page } from '../embalaje-page-05/embalaje-page-05';
 import { EmbalajePage_09Page } from '../embalaje-page-09/embalaje-page-09';
 import { RenderDebugInfo } from '@angular/core/src/render/api';
+import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 /**
  * Generated class for the EmbalajePage_04Page page.
  *
@@ -33,8 +34,8 @@ export class EmbalajePage_04Page {
   
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private alertCtrl: AlertController,
-    public sEmbalaje: EmbalajeServiceProvider) {        
+    private alertCtrl: AlertController,public sEmbalaje: EmbalajeServiceProvider,
+    public sGlobal: GlobalServiceProvider) {        
     this.vEmbalajePage03 = navParams.get('dataPageFiltro');           
     this.vEmbalajePage02 = navParams.get('dataPage02');   
     this.vEmbalajeTotalPage03 = navParams.get('dataTotalPage03');   
@@ -187,7 +188,7 @@ export class EmbalajePage_04Page {
       'Id_RF': 1,
       'Item': this.vEmbalajePage03[0].Item,
       'Id_Almacen': 2,
-      'UsuarioRegistro': 'ADMIN',
+      'UsuarioRegistro': this.sGlobal.userName,
       'Id_UMP': 0,
       'Lote': this.vEmbalajePage03[0].Lote 
     };

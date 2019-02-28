@@ -40,7 +40,7 @@ export class EmbalajePage_08Page {
   }
 
   getDataAccesosImpresoraXUsuario() {
-    this.ListarAccesosImpresoraXUsuario('admin');
+    this.ListarAccesosImpresoraXUsuario(this.sGlobal.userName);
   }
 
   filterImpresora(ev: any) {
