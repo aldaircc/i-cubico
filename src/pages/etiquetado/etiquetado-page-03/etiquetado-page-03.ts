@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { AlmacenajeServiceProvider } from '../../../providers/almacenaje-service/almacenaje-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
@@ -21,6 +21,7 @@ export class EtiquetadoPage_03Page {
   rowCount: number = 0;
   strUA: string = "";
   listUAs: any = [];
+  @ViewChild('inputUA', { read: ElementRef }) private inputUA:ElementRef;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sAlm: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
@@ -30,11 +31,13 @@ export class EtiquetadoPage_03Page {
     debugger;
     if(this.strUA.trim() == ""){
       alert('Ingresar UA');
+      this.selectAll(this.inputUA, 500);
       return;
     }
 
     if(this.existInList()){
       alert('La UA ya se encuentra en la lista');
+      this.selectAll(this.inputUA, 500);
       return;
     }
 
@@ -44,7 +47,7 @@ export class EtiquetadoPage_03Page {
   existInList(): boolean{
     debugger;
     var value: boolean = false;
-    let filter =  this.listUAs.filter(obj => obj.UA_CodBarra === this.strUA);
+    let filter =  this.listUAs.filter(obj => obj.UA_CodBarra.trim() === this.strUA.trim());
     if(filter.length != 0){
       value = true;
     }
@@ -57,21 +60,26 @@ export class EtiquetadoPage_03Page {
       debugger;
       let res:any = result;
       if(res.length != 0){
-        this.listUAs.push({
-          'UA_CodBarra' : res[0].UA_CodBarra,
-          'Id_Producto' : res[0].Id_Producto,
-          'CodigoProducto' : res[0].CodigoProducto,
-          'NombreProducto' : res[0].NombreProducto,
-          'Id_UM' : res[0].Id_UM,
-          'UM' : res[0].UM,
-          'Cantidad' : res[0].Cantidad,
-          'LoteLab' : res[0].LoteLab,
-          'LotePT' : res[0].LotePT,
-          'FlagDisponible' : res[0].FlagDisponible,
-          'FlagAveriado' : res[0].FlagAveriado,
-          'Id_Marca' : res[0].Id_Marca
-        });
-        this.rowCount = this.listUAs.length;
+
+        if(this.existInList()){
+          return;
+        }else{
+          this.listUAs.push({
+            'UA_CodBarra' : res[0].UA_CodBarra,
+            'Id_Producto' : res[0].Id_Producto,
+            'CodigoProducto' : res[0].CodigoProducto,
+            'NombreProducto' : res[0].NombreProducto,
+            'Id_UM' : res[0].Id_UM,
+            'UM' : res[0].UM,
+            'Cantidad' : res[0].Cantidad,
+            'LoteLab' : res[0].LoteLab,
+            'LotePT' : res[0].LotePT,
+            'FlagDisponible' : res[0].FlagDisponible,
+            'FlagAveriado' : res[0].FlagAveriado,
+            'Id_Marca' : res[0].Id_Marca
+          });
+          this.rowCount = this.listUAs.length;
+        }
       }else{
         alert('UA no registrada');
       }
@@ -128,5 +136,13 @@ export class EtiquetadoPage_03Page {
     this.listUAs = [];
     this.strUA = "";
     this.rowCount = 0;
+    this.selectAll(this.inputUA, 500);
+  }
+
+  selectAll(el: ElementRef, time){
+    let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
+    setTimeout(()=>{
+      nativeEl.select();
+    }, time);
   }
 }
