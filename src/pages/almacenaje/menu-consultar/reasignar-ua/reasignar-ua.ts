@@ -36,7 +36,7 @@ export class ReasignarUaPage {
   isBgGreen: boolean = false;
   isbgWhite: boolean = false;
   valorPalletUa: boolean = false;
-  vDatosRecibidos: any = [];  
+  vDatosRecibidos: any = [];
   vReasignarUAPage: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
@@ -97,34 +97,62 @@ export class ReasignarUaPage {
     debugger;
     if (this.codePalletUA) {
       if (this.codePalletUA.trim() != "") {
-        this.sAlmacenaje.getValidarExisteUAUbicada(this.codePalletUA, "", this.resultUbicacion[0].Id_Ubicacion).then((result) => {
-          debugger;
-          this.resultPalletUA = result;
-          if (this.resultPalletUA.length > 0) {
-            //validar si lote y producto son iguales a la ubicacion anterior
-            this.isbgWhite = false;
-            this.isBgGreen = true;
-            this.valorPalletUa = true;
-            setTimeout(() => {
-              this.txtPalletUaRef.setFocus();
-              this.selectAll(this.txtPalletUa);
-            }, (500));
-          } else {
-            this.isbgWhite = true;
-            this.isBgGreen = false;
-            this.valorPalletUa = false;
-            this.presentAlert("UA/Pallet no registrada.").then((resultAlert) => {
-              if (resultAlert) {
+        if (this.codePalletUA.trim() != this.vDatosRecibidos.CodBar_UA) {
+          this.sAlmacenaje.getValidarExisteUAUbicada(this.codePalletUA, "", this.resultUbicacion[0].Id_Ubicacion).then((result) => {
+            debugger;
+            this.resultPalletUA = result;
+            if (this.resultPalletUA.length > 0) {
+              //validar si lote y producto son iguales a la ubicacion anterior
+              if (this.vDatosRecibidos.Lote == this.resultPalletUA[0].LoteLab && this.vDatosRecibidos.Id_Producto == this.resultPalletUA[0].Id_Producto){
+                this.isbgWhite = false;
+                this.isBgGreen = true;
+                this.valorPalletUa = true;
                 setTimeout(() => {
                   this.txtPalletUaRef.setFocus();
                   this.selectAll(this.txtPalletUa);
                 }, (500));
-              }
-            })
-          }
-        }, err => {
-          console.log('E-getValidarExisteUAUbicada', err);
-        });
+              }else{
+                this.isbgWhite = true;
+                this.isBgGreen = false;
+                this.valorPalletUa = false;
+                this.presentAlert("Diferente lote y/o producto.").then((resultAlert) => {
+                  if (resultAlert) {
+                    setTimeout(() => {
+                      this.txtPalletUaRef.setFocus();
+                      this.selectAll(this.txtPalletUa);
+                    }, (500));
+                  }
+                })
+              }                
+            } else {
+              this.isbgWhite = true;
+              this.isBgGreen = false;
+              this.valorPalletUa = false;
+              this.presentAlert("UA/Pallet no registrada.").then((resultAlert) => {
+                if (resultAlert) {
+                  setTimeout(() => {
+                    this.txtPalletUaRef.setFocus();
+                    this.selectAll(this.txtPalletUa);
+                  }, (500));
+                }
+              })
+            }
+          }, err => {
+            console.log('E-getValidarExisteUAUbicada', err);
+          });
+        } else {
+          this.isbgWhite = true;
+          this.isBgGreen = false;
+          this.valorPalletUa = false;
+          this.presentAlert("El código de UA ingresado debe ser diferente a la UA de origen.").then((resultAlert) => {
+            if (resultAlert) {
+              setTimeout(() => {
+                this.txtPalletUaRef.setFocus();
+                this.selectAll(this.txtPalletUa);
+              }, (500));
+            }
+          })
+        }
       } else {
         this.presentToast("Ingrese código de Pallet/UA");
         setTimeout(() => {
@@ -140,12 +168,12 @@ export class ReasignarUaPage {
   }
 
   reasignarPalletUA() {
-    if (this.valorPalletUa == true){
+    if (this.valorPalletUa == true) {
       this.presentAlertConfirm("¿Está seguro de reasignar la UA?”.").then((result) => {
         if (result) {
           this.sAlmacenaje.postReAsignarUA(this.vDatosRecibidos.CodBar_UA, this.codePalletUA, this.resultUbicacion[0].Id_Ubicacion, this.resultPalletUA[0].Cantidad, this.sGlobal.userName).then((result) => {
             debugger;
-            this.resultReasignar = result;  
+            this.resultReasignar = result;
             let res: any = result;
             if (res.errNumber == 0) {
               console.log(res.message);
@@ -164,6 +192,7 @@ export class ReasignarUaPage {
                   this.txtCodUbicacionRef.setFocus();
                   this.selectAll(this.txtCodUbicacion);
                 }, (500));
+                  this.goAdministrarUaPage();
               })
             } else {
               //this.presentAlert("Error. No se pudo realizar la reasignación.").then((resultAlert2) => {
@@ -180,9 +209,9 @@ export class ReasignarUaPage {
           });
         }
       })
-    }else{
+    } else {
       this.presentToast("No se encontraron registros.");
-    }    
+    }
   }
 
   selectAll(el: ElementRef) {
@@ -254,7 +283,7 @@ export class ReasignarUaPage {
   ionViewDidLoad() {
     //Enviar page 1 a administrar ua
     this.navBar.backButtonClick = (e: UIEvent) => {
-        this.goAdministrarUaPage();       
+      this.goAdministrarUaPage();
     }
     setTimeout(() => {
       this.txtCodUbicacionRef.setFocus();

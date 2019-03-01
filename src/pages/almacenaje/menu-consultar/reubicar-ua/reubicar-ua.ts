@@ -37,6 +37,8 @@ export class ReubicarUaPage {
       this.vDatosRecibidos = navParams.get('data');
   }
 
+  //Id_Ubicacion
+
   validarCodeBar() {
     debugger;
     if (this.codeBar) {
@@ -45,12 +47,23 @@ export class ReubicarUaPage {
           debugger;
           this.resultUbicacion = result;
           if (this.resultUbicacion.length > 0) {
-            this.Sector = this.resultUbicacion[0].Sector;
-            this.Fila = this.resultUbicacion[0].Fila;
-            this.Columna = this.resultUbicacion[0].Columna;
-            this.Nivel = this.resultUbicacion[0].Nivel;
-            this.Posicion = this.resultUbicacion[0].Posicion;
-            
+
+            if(this.vDatosRecibidos.Id_Ubicacion != this.resultUbicacion[0].Id_Ubicacion){
+              this.Sector = this.resultUbicacion[0].Sector;
+              this.Fila = this.resultUbicacion[0].Fila;
+              this.Columna = this.resultUbicacion[0].Columna;
+              this.Nivel = this.resultUbicacion[0].Nivel;
+              this.Posicion = this.resultUbicacion[0].Posicion;
+            }else{
+              this.presentAlert("La Ubicación debe ser diferente a la ubicación origen.").then((resultAlert) => {
+                if (resultAlert) {
+                  setTimeout(() => {
+                    this.txtCodUbicacionRef.setFocus();
+                    this.selectAll(this.txtCodUbicacion);
+                  }, (500));
+                }
+              })
+            } 
           } else {
             this.Sector = "";
             this.Fila = "";
@@ -97,10 +110,7 @@ export class ReubicarUaPage {
               this.Nivel = "";
               this.Posicion = "";
               this.codeBar = "";
-              setTimeout(() => {
-                this.txtCodUbicacionRef.setFocus();
-                this.selectAll(this.txtCodUbicacion);
-              }, (500));
+              this.goAdministrarUaPage();
             })
           } else {
             //this.presentAlert("Error. No se pudo realizar la reasignación.").then((resultAlert2) => {
@@ -109,12 +119,17 @@ export class ReubicarUaPage {
                 this.txtCodUbicacionRef.setFocus();
                 this.selectAll(this.txtCodUbicacion);
               }, (500));
-            })
+            })            
             console.log(res.message);
           }
         }, err => {
           console.log('E-postReAsignarUA', err);
         });
+      }else{
+        setTimeout(() => {
+          this.txtCodUbicacionRef.setFocus();
+          this.selectAll(this.txtCodUbicacion);
+        }, (500));
       }
     })
   }

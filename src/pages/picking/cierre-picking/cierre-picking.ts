@@ -1,10 +1,16 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController, ToastController, AlertController, ModalController } from 'ionic-angular';
+import { IonicPage, App, NavController, NavParams, PopoverController, ToastController, AlertController, ModalController } from 'ionic-angular';
 import { PopoverRutaPickingPage } from '../../picking/popover/popover-ruta-picking/popover-ruta-picking'
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 import { ImpresoraPage } from '../../impresora/impresora'
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { PickingPage } from '../../picking/picking';
+
+import { IncidenciaPage } from '../../incidencia/incidencia';
+import { AdministrarUaPage } from '../../almacenaje/menu-consultar/administrar-ua/administrar-ua'
+import { ConsultarUbicacionPage } from '../../almacenaje/consultar-ubicacion/consultar-ubicacion'
+import { MainMenuPage } from '../../main-menu/main-menu'
+import { HomePage } from '../../home/home';
 
 /**
  * Generated class for the CierrePickingPage page.
@@ -32,7 +38,7 @@ export class CierrePickingPage {
 
   Aceptarisenabled: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController,
     public toastCtrl: ToastController, public alertCtrl: AlertController,
     public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider) {
@@ -365,6 +371,35 @@ export class CierrePickingPage {
     toast.present();
   }
 
+  showModalIncidencia2(){ //data
+    debugger;
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage); //{ 'pIncidencia' : obj});
+    modalIncidencia.onDidDismiss(data =>{
+      if(data.response == 200){
+        this.navCtrl.pop();
+      }
+    });
+    modalIncidencia.present();
+  }
+
+  goAdministrarUaPage() {
+    this.vRutaPickingPage = {
+      'page': 7
+    };
+    this.navCtrl.push(AdministrarUaPage, {
+      data: this.vRutaPickingPage
+    });
+  }
+
+  goConsultarUbicacionPage() {
+    this.navCtrl.push(ConsultarUbicacionPage);
+  }
+
+  goMenu() {
+    debugger;
+    this.navCtrl.push(MainMenuPage);
+  }
+
   presentPopover(ev) {
     let popover = this.popoverCtrl.create(PopoverRutaPickingPage, {
       // contentEle: this.content.nativeElement,
@@ -372,6 +407,26 @@ export class CierrePickingPage {
     });
     popover.present({
       ev: ev
+    });
+
+    popover.onDidDismiss(popoverData => {
+      if (popoverData == 1) {
+        this.showModalIncidencia2();
+      } else if (popoverData == 2) {
+        debugger;
+        this.goAdministrarUaPage();
+      } else if (popoverData == 3) {
+        debugger;
+        this.goConsultarUbicacionPage();
+      } else if (popoverData == 4) {
+        debugger;
+        this.goMenu();
+      } else if (popoverData == 5) {
+        debugger;
+        this.navCtrl.pop();
+        var nav = this.app.getRootNav();
+        nav.setRoot(HomePage);
+      }
     });
   }
 

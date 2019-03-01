@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, Navbar, NavController, NavParams, PopoverController, ToastController, AlertController } from 'ionic-angular';
+import { IonicPage, App, ModalController, Navbar, NavController, NavParams, PopoverController, ToastController, AlertController } from 'ionic-angular';
 import { DetallePorProductoPage } from '../detalle-por-producto/detalle-por-producto'
 import { ReabastecimientoPage } from '../reabastecimiento/reabastecimiento'
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
@@ -8,6 +8,11 @@ import { DetallePickingPage } from '../detalle-picking/detalle-picking';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { RutaPickingPage } from '../ruta-picking/ruta-picking';
 import { CierrePickingPage } from '../cierre-picking/cierre-picking';
+import { IncidenciaPage } from '../../incidencia/incidencia';
+import { AdministrarUaPage } from '../../almacenaje/menu-consultar/administrar-ua/administrar-ua'
+import { ConsultarUbicacionPage } from '../../almacenaje/consultar-ubicacion/consultar-ubicacion'
+import { MainMenuPage } from '../../main-menu/main-menu'
+import { HomePage } from '../../home/home';
 /**
  * Generated class for the PickingPorProductoPage page.
  *
@@ -52,7 +57,7 @@ export class PickingPorProductoPage {
   @ViewChild('txtCantidadUA') txtCantidadUARef;
   @ViewChild('txtCantidadUA', { read: ElementRef }) private txtCantidadUA: ElementRef;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public app: App, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController,
     public toastCtrl: ToastController, public alertCtrl: AlertController,
     public sGlobal: GlobalServiceProvider) {
@@ -221,6 +226,7 @@ export class PickingPorProductoPage {
       console.log('E-getPickingProducto', err);
     });
   }
+
 
 
 
@@ -566,6 +572,35 @@ export class PickingPorProductoPage {
     }
   }
 
+  showModalIncidencia2(){ //data
+    debugger;
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage); //{ 'pIncidencia' : obj});
+    modalIncidencia.onDidDismiss(data =>{
+      if(data.response == 200){
+        this.navCtrl.pop();
+      }
+    });
+    modalIncidencia.present();
+  }
+
+  goAdministrarUaPage() {
+    this.vRutaPickingPage = {
+      'page': 8
+    };
+    this.navCtrl.push(AdministrarUaPage, {
+      data: this.vRutaPickingPage
+    });
+  }
+
+  goConsultarUbicacionPage() {
+    this.navCtrl.push(ConsultarUbicacionPage);
+  }
+
+  goMenu() {
+    debugger;
+    this.navCtrl.push(MainMenuPage);
+  }
+
   presentPopover(ev) {
 
     let popover = this.popoverCtrl.create(PopoverRutaPickingPage, {
@@ -575,6 +610,26 @@ export class PickingPorProductoPage {
 
     popover.present({
       ev: ev
+    });
+
+    popover.onDidDismiss(popoverData => {
+      if (popoverData == 1) {
+        this.showModalIncidencia2();
+      } else if (popoverData == 2) {
+        debugger;
+        this.goAdministrarUaPage();
+      } else if (popoverData == 3) {
+        debugger;
+        this.goConsultarUbicacionPage();
+      } else if (popoverData == 4) {
+        debugger;
+        this.goMenu();
+      } else if (popoverData == 5) {
+        debugger;
+        this.navCtrl.pop();
+        var nav = this.app.getRootNav();
+        nav.setRoot(HomePage);
+      }
     });
   }
 
