@@ -34,6 +34,7 @@ export class EtiquetadoPage_04Page {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sAlmac: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
       this.vParameter = this.navParams.get('listUA');
+      this.rowCount = this.vParameter.length;
   }
   
   verificarUbicacion(): void{
@@ -52,11 +53,21 @@ export class EtiquetadoPage_04Page {
           this.id_Sector = res[0].Id_Sector;
           this.sector = res[0].Sector;
           alert('Código de ubicación, verificado correctamente.');
-          this.strUbicacion = "";
+          //this.strUbicacion = "";
           this.selectAll(this.inputUbi, 600);
   
         }else{
           alert('La ubicación no es correcta');
+          this.fila = "";
+          this.columna = "";
+          this.nivel = "";
+          this.posicion = "";
+          this.pasillo = "";
+          this.sector = "";
+          this.id_Ubicacion = 0;
+          this.codigoBarra = "";
+          this.id_Sector = 0;
+          this.strUbicacion = "";
           this.selectAll(this.inputUbi, 600);
         }
       });
@@ -67,6 +78,7 @@ export class EtiquetadoPage_04Page {
   }
 
   registrarUbic(): void{
+    debugger;
     if(this.strUbicacion.trim() != "") {
       this.registrarUAsUbicacion(this.vParameter, this.id_Ubicacion, this.sGlobal.userName);
     }else{
@@ -87,10 +99,25 @@ export class EtiquetadoPage_04Page {
       let res:any = result;
       if(res.errNumber == 0){
         alert('Se ubicó correctamente');
+        this.fila = "";
+        this.columna = "";
+        this.nivel = "";
+        this.posicion = "";
+        this.pasillo = "";
+        this.sector = "";
+        this.id_Ubicacion = 0;
+        this.codigoBarra = "";
+        this.id_Sector = 0;
+        this.strUbicacion = "";
+        this.selectAll(this.inputUbi, 500);
       }else{
         alert(res.message);
         this.selectAll(this.inputUbi, 600);
       }
     });
+  }
+
+  ionViewWillEnter(){
+    this.selectAll(this.inputUbi, 500);
   }
 }

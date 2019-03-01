@@ -7,7 +7,7 @@
 <ion-header no-border>
   <ion-toolbar>
     <ion-navbar>
-      <ion-title>etiquetado-page-01</ion-title>
+      <ion-title>CÚBICO -ETIQUETADO</ion-title>
       <ion-buttons end>
         <button ion-button icon-only (click)="presentPopover($event)">
           <ion-icon name="more"></ion-icon>
@@ -25,15 +25,15 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid class="bgHeader borderSolid">
+  <ion-grid class="bgHeader">
     <ion-row>
       <ion-col col-sm>
         <!-- Fila 01 -->
         <ion-row align-items-center>
-          <ion-col col-6 col-sm>
+          <ion-col col-4 col-sm>
             <div class="textHeader">Producto:</div> <!--Código-->
           </ion-col>
-          <ion-col col-6 col-sm class="valueHeader">
+          <ion-col col-8 col-sm class="valueHeader">
             {{ vEtq.Codigo }}
           </ion-col>
         </ion-row>
@@ -80,7 +80,7 @@
           <ion-checkbox [(ngModel)]="fecEmiChecked" [disabled]="!isEnabledLote"></ion-checkbox>
       </ion-col>
       <ion-col col-8 col-sm>
-        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="MMM DD YYYY" [(ngModel)]="this.fecEmi" [disabled]="!fecEmiChecked"></ion-datetime>
+        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="MMM DD YYYY" max="2999-12-31" [(ngModel)]="this.fecEmi" [disabled]="!fecEmiChecked"></ion-datetime>
       </ion-col>
       <ion-col col-3 col-sm>
         F.V
@@ -89,7 +89,7 @@
           <ion-checkbox [(ngModel)]="fecVenChecked" [disabled]="!isEnabledLote"></ion-checkbox>
       </ion-col>
       <ion-col col-8 col-sm col-md-12>
-        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="MMM DD YYYY" [(ngModel)]="this.fecVen" [disabled]="!fecVenChecked"></ion-datetime>
+        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="MMM DD YYYY" max="2999-12-31" [(ngModel)]="this.fecVen" [disabled]="!fecVenChecked"></ion-datetime>
       </ion-col>
     </ion-row>
 
@@ -106,7 +106,7 @@
             <ion-option value="mute_inf">Until I turn it back on</ion-option>
         </ion-select>-->
 
-        <ion-select [(ngModel)]="id_UAlt" interface="action-sheet" (ionChange)="onChange($event)">
+        <ion-select [(ngModel)]="id_UAlt" interface="action-sheet" (ionChange)="onChange($event)" #selectUA_Alt>
           <ion-option *ngFor="let ua of listUM" value="{{ ua.Id_UM }}" >{{ ua.Nombre }} </ion-option>
         </ion-select>
 
@@ -120,7 +120,7 @@
       </ion-col>
       <ion-col col-3 col-sm>
         <ion-item>
-            <ion-input type="Text" placeholder="0" [(ngModel)]="cantxEtq"></ion-input>
+            <ion-input type="number" placeholder="0" [(ngModel)]="cantxEtq"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -133,7 +133,7 @@
 
       <ion-col col-3 col-sm>
         <ion-item>
-            <ion-input type="Text" placeholder="0" [(ngModel)]="numEtq" (input)="numEtqTextChange($event)"></ion-input>
+            <ion-input type="number" placeholder="0" [(ngModel)]="numEtq" (input)="numEtqTextChange($event)"></ion-input>
         </ion-item>
       </ion-col>
 
@@ -143,7 +143,7 @@
 
       <ion-col col-3 col-sm>
         <ion-item>
-            <ion-input type="Text" placeholder="0" [(ngModel)]="cantEtqSaldo"></ion-input>
+            <ion-input type="number" placeholder="0" [(ngModel)]="cantEtqSaldo"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -154,7 +154,7 @@
           Formato
         </ion-col>
         <ion-col col-7 col-sm>
-          <ion-select [(ngModel)]="id_FormatLabel" interface="action-sheet">
+          <ion-select [(ngModel)]="id_FormatLabel" interface="action-sheet" #selectFormat>
               <ion-option *ngFor="let f of formatLabels" value="{{ f.Id_Format }}">{{ f.Label }}</ion-option>
           </ion-select>
         </ion-col>
@@ -179,7 +179,7 @@
       </ion-col>
       <ion-col col-3 col-sm>
         <ion-item>
-            <ion-input type="Text" placeholder="0" [(ngModel)]="numCopia"></ion-input>
+            <ion-input type="number" placeholder="0" [(ngModel)]="numCopia"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col col-6 col-sm>
@@ -197,7 +197,7 @@
       </button>
     </ion-buttons>
     <ion-buttons right>
-        <button ion-button icon-only small (click)="goToEtqPage03()" #iBtnUbicar>
+        <button ion-button icon-only small (click)="goToEtqPage03()" [hidden]="!isVisibleSearchButton" #iBtnUbicar>
             <ion-icon name="map"></ion-icon>
         </button>
       </ion-buttons>

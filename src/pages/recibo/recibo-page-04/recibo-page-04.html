@@ -11,13 +11,13 @@
           <ion-icon name="grid"></ion-icon>
         </button>
       </ion-buttons>
-      <ion-buttons end>
+      <!-- <ion-buttons end>
         <button ion-button icon-only (click)="presentPopover($event)">
           <ion-icon name="more"></ion-icon>
         </button>
-      </ion-buttons>
+      </ion-buttons> -->
       <ion-navbar>
-          <ion-title>Recibo page 04</ion-title>
+          <ion-title>Listado  de UA’s</ion-title>
       </ion-navbar>
   </ion-toolbar>
 </ion-header>
@@ -47,7 +47,7 @@
       </ion-row>
     </ion-grid>
 
-    <ion-card *ngFor="let obj of listBulto">
+    <!-- <ion-card *ngFor="let obj of listBulto">
       <ion-card-content>
           <h5><b>Contenedor: </b> {{ obj.Contenedor }}</h5>
           <h5><b>UA: </b> {{ obj.UA }}</h5>
@@ -59,7 +59,59 @@
               <ion-icon name="trash"></ion-icon>
           </button>
       </ion-card-content>
-    </ion-card>
+    </ion-card> -->
+
+    <!-- XD -->
+    <ion-list [virtualScroll]="listBulto" [approxItemHeight]="'20px'">
+      <ion-card *virtualItem="let obj">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-10 col-sm>
+              <ion-row>
+                <ion-col class="rec04-card-col" col-4 col-sm>
+                  <ion-label class="rec04-card-label fieldForm">UA:</ion-label>
+                </ion-col>
+                <ion-col class="rec04-card-col" col-8 col-sm>
+                  <ion-label class="rec04-card-label">{{ obj.UA }}</ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col class="rec04-card-col" col-4 col-sm>
+                  <ion-label class="rec04-card-label fieldForm">Cantidad:</ion-label>
+                </ion-col>
+                <ion-col class="rec04-card-col" col-8 col-sm>
+                  <ion-label class="rec04-card-label">{{ obj.Cantidad }}</ion-label>
+                </ion-col>
+              </ion-row>
+    
+              <ion-row>
+                <ion-col class="rec04-card-col" col-4 col-sm>
+                  <ion-label class="rec04-card-label fieldForm">Fecha:</ion-label>
+                </ion-col>
+                <ion-col class="rec04-card-col" col-8 col-sm>
+                  <ion-label class="rec04-card-label">{{ obj.FechaIngreso | momentjs : 'DD/MM/YYYY' }}</ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col class="rec04-card-col" col-4 col-sm>
+                  <ion-label class="rec04-card-label fieldForm">Pallet:</ion-label>
+                </ion-col>
+                <ion-col class="rec04-card-col" col-8 col-sm>
+                  <ion-label class="rec04-card-label">{{ obj.Contenedor }}</ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col col-2 col-sm align-self-center>
+              <button ion-button icon-only out-line class="button-outline-md" (click)="deleteItem(obj)">
+                <ion-icon name="trash"></ion-icon>
+              </button> 
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </ion-list>
 </ion-content>
 
 <ion-footer class="bgLightBlue">

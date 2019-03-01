@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, PopoverController, App } from 'ionic-angular';
 import { ReciboServiceProvider } from '../../providers/recibo-service/recibo-service';
 import { ReciboPage_02Page } from './recibo-page-02/recibo-page-02';
 import { IncidenciaPage } from '../incidencia/incidencia';
 import { GlobalServiceProvider } from '../../providers/global-service/global-service';
+import { PopoverReciboComponent } from '../../components/popover-recibo/popover-recibo';
+import { ImpresoraPage } from '../impresora/impresora';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the ReciboPage page.
@@ -25,14 +28,39 @@ export class ReciboPage {
   vReciboPage01: any;
   rowCount: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController,
     public sRecibo: ReciboServiceProvider, public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider) { }
+
+  presentPopover(myEvent){
+    debugger;
+    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 11});
+    popover.present({
+      ev: myEvent
+    });
+
+    popover.onDidDismiss(popoverData =>{
+      /**if(popoverData == 2){
+        this.showModalIncidencia(this.vReciboPage01);
+      }else **/if(popoverData == 3){
+        this.showModalImpresora();
+      }else if(popoverData == 4){
+        this.navCtrl.pop();
+        var nav = this.app.getRootNav();
+        nav.setRoot(HomePage);
+      }
+    });
+  }
+
+  showModalImpresora(){
+    let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
+    modalIncidencia.present();
+  }
 
   filterItems(ev: any) {
     const val = ev.target.value;
     if (val && val.trim() != '') {
       this.listAuxRecepcion = this.listRecepcion.filter((item) => {
-        return (item.Id_Tx.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        return (item.NumOrden.toLowerCase().indexOf(val.toLowerCase()) > -1);
       });
       this.rowCount = this.listAuxRecepcion.length;
     } else {

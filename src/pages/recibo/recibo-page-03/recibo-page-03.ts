@@ -1,11 +1,14 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, IonicFormInput, Button, PopoverController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, IonicFormInput, Button, PopoverController, ModalController, App } from 'ionic-angular';
 import { ReciboServiceProvider } from '../../../providers/recibo-service/recibo-service';
 import { isNullOrUndefined } from '../../../../node_modules/@swimlane/ngx-datatable/release/utils';
 import { ReciboPage_04Page } from '../recibo-page-04/recibo-page-04';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { PopoverReciboComponent } from '../../../components/popover-recibo/popover-recibo';
 import { EtiquetadoPage_01Page } from '../../etiquetado/etiquetado-page-01/etiquetado-page-01';
+import { ImpresoraPage } from '../../impresora/impresora';
+import { IncidenciaPage } from '../../incidencia/incidencia';
+import { HomePage } from '../../home/home';
 
 /**
  * Generated class for the ReciboPage_03Page page.
@@ -22,7 +25,6 @@ import { EtiquetadoPage_01Page } from '../../etiquetado/etiquetado-page-01/etiqu
 export class ReciboPage_03Page {
 
   vReciboPage02:any;
-  //codeBar:string;
   codeBar:any = { 'Text' : '', 'Tag' : '' };
   cantidadRec:number = 0;
   cantidadAve:number = 0;
@@ -30,25 +32,31 @@ export class ReciboPage_03Page {
 
   cantidad:number = 0;
   isDisabledSave:boolean = true;
+  bolUaValida: boolean = false;
 
-  //For changing background of section
   isBgRed:boolean = false;
   isBgYellow:boolean = false;
   isBgGreen:boolean = false;
 
-  @ViewChild('iCodeBar') iCodeBar;
-  @ViewChild('iCantidadRecibida') iCantidadRecibida;
   @ViewChild('iBtnSave') iBtnSave : Button;
+  @ViewChild('iCodeBar', { read: ElementRef }) private iCodeBar:ElementRef;
+  @ViewChild('iCantidadRecibida', { read: ElementRef }) private iCantidadRecibida:ElementRef;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, 
     public toastCtrl: ToastController , public sRecibo: ReciboServiceProvider,
     public popoverCtrl: PopoverController, public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider) {
     this.vReciboPage02 = navParams.get('dataPage02');
-    console.log('data received', this.vReciboPage02);
   }
 
-  ionViewDidLoad() {
-    
+  ionViewWillEnter(){
+    this.selectAll(this.iCodeBar, 500);
+  }
+
+  selectAll(el: ElementRef, time){
+    let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
+    setTimeout(()=>{
+      nativeEl.select();
+    }, time);
   }
 
   presentToast(message) {
@@ -57,12 +65,6 @@ export class ReciboPage_03Page {
       duration: 2000,
       position: 'bottom'
     });
-  
-    /**toast.onDidDismiss(() => {
-      debugger;
-      console.log('Dismissed toast');
-      this.iCodeBar.setFocus();
-    });**/
   
     toast.present();
   }
@@ -88,11 +90,14 @@ export class ReciboPage_03Page {
               if(rpta.errNumber != 0){
                 this.isBgRed = true;
                 this.isBgYellow = false;
-                this.isDisabledSave = false; //Deshabilitar el boton de guardar
-                this.cantidadRec = 0;//edtCantRecibida.setText("");
-                this.codeBar.Text = ""; //edtCodBar.setText("");
-                this.iCodeBar.setFocus(); //edtCodBar.requestFocus();
+                this.isDisabledSave = false; 
+                this.bolUaValida = true;
+                this.cantidadRec = 0;
+                this.codeBar.Text = "";
+                this.selectAll(this.iCodeBar, 500);
                 this.presentToast(rpta.message);
+              }else{
+                this.bolUaValida = false;
               }
             }, (err)=>{
               console.log('E-validarReciboTransferenciaSerie', err);
@@ -103,19 +108,22 @@ export class ReciboPage_03Page {
               if(res.errNumber != 0){
                 this.codeBar.Text = "";
                 this.cantidadRec = 0;
-                this.iCodeBar.setFocus();
+                this.bolUaValida = true;
+                this.selectAll(this.iCodeBar, 500);
                 this.presentToast(res.message);
+              }else{
+                this.bolUaValida = false;
               }
           });
         }
 
-        this.codeBar.Tag = this.codeBar.Text; // edtCodBar.setTag(edtCodBar.getText());
-        this.codeBar.Text = this.codeBar.Tag; // edtCodBar.setText(edtCodBar.getTag().toString());
+        this.codeBar.Tag = this.codeBar.Text;
+        this.codeBar.Text = this.codeBar.Tag;
         this.isBgRed = false;
         this.isBgYellow = true;
         this.cantidad = 1;
         this.cantidadRec = this.cantidad;
-        this.iCantidadRecibida.setFocus();
+        this.selectAll(this.iCantidadRecibida, 500);
 
         if(this.vReciboPage02.bolAutomatic === true){
           this.saveTransaction();
@@ -134,7 +142,7 @@ export class ReciboPage_03Page {
           this.vReciboPage02.Id_TipoMovimiento == 14){
             ua = {
               'Id_Tx': this.vReciboPage02.Id_Tx,
-              'UA_CodBarra': this.codeBar.Text, //edtCodBar.setText("");//this.codeBar,
+              'UA_CodBarra': this.codeBar.Text,
               'Id_Producto': this.vReciboPage02.Id_Producto,
               'Item': this.vReciboPage02.Item,
               'Id_Almacen': this.sGlobal.Id_Almacen
@@ -151,44 +159,47 @@ export class ReciboPage_03Page {
                 }
 
                   this.cantidadRec = rpta.valor1;
-                  this.codeBar.Tag = this.codeBar.Text; //edtCodBar.setTag(edtCodBar.getText());
-                  this.iCantidadRecibida.setFocus();
+                  this.codeBar.Tag = this.codeBar.Text;
+                  this.selectAll(this.iCantidadRecibida, 500);
                   this.isBgYellow = true;
                   this.isBgRed = false;
+                  this.isBgGreen = false;
                   if(this.vReciboPage02.bolAutomatic === true){
                     this.saveTransaction();
                   }
 
               }else if(rpta.errNumber === 1){
                   this.isBgRed = true;
-                this.isBgYellow = false;
-                  this.iCodeBar.setFocus();
+                  this.isBgYellow = false;
+                  this.isBgGreen = false;
+                  this.selectAll(this.iCodeBar, 500);
                   this.presentToast(rpta.message);
               }else if(rpta.errNumber === -1){
                   this.isBgRed = true;
-                this.isBgYellow = false;
+                  this.isBgYellow = false;
+                  this.isBgGreen = false;
                   this.presentToast(rpta.message);
-                  this.iCodeBar.setFocus();
+                  this.selectAll(this.iCodeBar, 500);
               }else{
-                this.isBgRed = true;
-                this.isBgYellow = false;
+                  this.isBgRed = true;
+                  this.isBgYellow = false;
+                  this.isBgGreen = false;
                   this.presentToast(rpta.message);
-                  this.iCodeBar.setFocus();
+                  this.selectAll(this.iCodeBar, 500);
               }
             });
 
           }else{
 
             ua = {
-              'UA_CodBarra': this.codeBar.Text, //this.codeBar,
+              'UA_CodBarra': this.codeBar.Text,
               'Id_Producto': this.vReciboPage02.Id_Producto,
               'Item': this.vReciboPage02.Item
             }
             this.sRecibo.validarUARecibo(ua).then((result)=>{
-              
               debugger;
               this.cantidad = 0;
-              this.iCodeBar.setFocus();
+              this.selectAll(this.iCodeBar, 500);
               let rpta:any = result;
 
               if(rpta.errNumber === 0){
@@ -199,10 +210,11 @@ export class ReciboPage_03Page {
 
                 this.isBgRed = false;
                 this.isBgYellow = true;
+                this.isBgGreen = false;
+                this.bolUaValida = true;
                 this.cantidadRec = rpta.valor1;
-                this.codeBar.Tag = this.codeBar.Text; //this.iCodeBar.setTag(this.codeBar);
-                this.iCantidadRecibida.setFocus();
-                //this.iCantidadRecibida.selectAll();
+                this.codeBar.Tag = this.codeBar.Text;
+                this.selectAll(this.iCantidadRecibida, 500);
 
                 if(this.vReciboPage02.bolAutomatic == true){
                   this.saveTransaction();
@@ -211,32 +223,57 @@ export class ReciboPage_03Page {
               }else if(rpta.errNumber === 1){
                 this.isBgRed = true;
                 this.isBgYellow = false;
-                this.codeBar.Tag = ''; //this.iCodeBar.setTag("");
+                this.isBgGreen = false;
+                this.codeBar.Tag = '';
                 this.presentToast(rpta.message);
-                this.iCodeBar.setFocus();
-                //this.iCodeBar.selectAll();
+                this.bolUaValida = false;
+                this.cantidadAve = 0;
+                this.cantidadRec = 0;
+                this.selectAll(this.iCodeBar, 500);
               }else if(rpta.errNumber === -1){
-                this.codeBar.Tag = '';//this.iCodeBar.setTag("");
+                this.codeBar.Tag = '';
                 this.isBgRed = true;
                 this.isBgYellow = false;
+                this.isBgGreen = false;
                 this.presentToast(rpta.message);
-                this.iCodeBar.setFocus();
+                this.bolUaValida = false;
+                this.cantidadAve = 0;
+                this.cantidadRec = 0;
+                this.selectAll(this.iCodeBar, 500);
               }else{
                 this.isBgRed = true;
                 this.isBgYellow = false;
+                this.isBgGreen = false;
                 this.presentToast(rpta.message);
-                this.iCodeBar.setFocus();
+                this.bolUaValida = false;
+                this.cantidadAve = 0;
+                this.cantidadRec = 0;
+                this.selectAll(this.iCodeBar, 500);
               }
             });
           }
       }
     }else{
       this.presentToast("Ingrese codigo de barras correcto");
+      this.isBgRed = true;
+      this.isBgYellow = false;
+      this.bolUaValida = false;
+      this.cantidadAve = 0;
+      this.cantidadRec = 0;
+      this.selectAll(this.iCodeBar, 500);
     }
   }
 
   validarCamposIngreso(){
     var result:boolean = true;
+
+    if(this.bolUaValida == false){
+      alert('Debe ingresar una UA correcta');
+      result = false;
+      this.selectAll(this.iCodeBar, 500);
+      return result;
+    }
+
     if(this.isDisabledSave === false){
         result = false;
         return result;
@@ -244,14 +281,14 @@ export class ReciboPage_03Page {
 
     if(isNullOrUndefined(this.codeBar.Text) || this.codeBar.Text.trim() == ""){
       this.presentToast('Ingrese el código de barras');
-      this.iCodeBar.setFocus();
+      this.selectAll(this.iCodeBar, 500);
       result = false;
       return result;
     }
 
     if(isNullOrUndefined(this.cantidadRec) || this.cantidadRec === 0){
       this.presentToast("Ingrese el cantidad");
-      this.iCantidadRecibida.setFocus();
+      this.selectAll(this.iCantidadRecibida, 500);
       result = false;
       return result;
     }
@@ -259,8 +296,7 @@ export class ReciboPage_03Page {
     if(!this.vReciboPage02.FlagSeriePT){
       if(!(this.codeBar.Text.trim() == this.codeBar.Tag.trim())){
         this.presentToast('La UA no es correcta');
-        this.iCantidadRecibida.setFocus();
-      //   edtCantRecibida.selectAll();
+        this.selectAll(this.iCantidadRecibida, 500);
         result = false;
         return result;
       }
@@ -276,7 +312,7 @@ export class ReciboPage_03Page {
     if(this.vReciboPage02.Id_TipoMovimiento != 3){
         if(this.codeBar.Text.trim() == ""){
           this.presentToast('Ingrese código de barras UA.');
-          this.iCodeBar.setFocus();
+          this.selectAll(this.iCodeBar, 500);
           result = false;
           return result;
         }
@@ -293,14 +329,7 @@ export class ReciboPage_03Page {
       console.log('hay campos pendientes de llenar');
       return;
     }
-    /**
-    TxUbicacion objTxUbi = new TxUbicacion();
-        String result = "";
-        objReceived.setTipoAlmacenaje((objReceived.getTipoAlmacenaje() == null) ? "0" : objReceived.getTipoAlmacenaje() );
-        if (Integer.parseInt(objReceived.getTipoAlmacenaje()) != 3){
-            presenter.registerUATransito(objTxUbi);
-        } 
-    **/
+    
       var objTxUbi = {
         'TipoUbicacion': 1,
         'Id_Producto': this.vReciboPage02.Id_Producto,
@@ -313,7 +342,6 @@ export class ReciboPage_03Page {
       };
 
       this.vReciboPage02.TipoAlmacenaje = (this.vReciboPage02.TipoAlmacenaje == undefined) ? 0 : this.vReciboPage02.TipoAlmacenaje;
-      
       debugger;
       this.sRecibo.registrarUATransito(objTxUbi).then((result)=>{
         let rpta : any = result;
@@ -323,30 +351,31 @@ export class ReciboPage_03Page {
         if(this.cantidad != 0){
           if(this.cantidad != this.cantidadRec){
             this.presentToast('Esta cantidad no corresponde');
+            this.selectAll(this.iCantidadRecibida, 500);
             return;
           }
         }
 
         let objUA = {
-          'UA_CodBarra' : this.codeBar.Text, //objUA.setUA_CodBarra(edtCodBar.getText().toString());
-          'Id_Tx' : this.vReciboPage02.Id_Tx,  //objUA.setId_Tx(objReceived.getId_Tx());
-          'Id_Producto' : this.vReciboPage02.Id_Producto,  //objUA.setId_Producto(objReceived.getId_Producto());
-          'LoteLab' : this.vReciboPage02.LoteLab,  //objUA.setLoteLab(objReceived.getLote());
-          'Serie' : (this.vReciboPage02.FlagSeriePT === true) ? this.codeBar.Text : null,  //objUA.setSerie( (objReceived.getFlagSeriePT()) ? edtCodBar.getText().toString(): null);
-          'FechaEmision' : this.vReciboPage02.FechaEmision, //objUA.setFechaEmision(fEmision);
-          'FechaVencimiento' : this.vReciboPage02.FechaVencimiento,  //objUA.setFechaVencimiento(fVencimiento);
-          'Cantidad' : this.cantidadRec,  //objUA.setCantidad(Double.parseDouble(edtCantRecibida.getText().toString()));
-          'Saldo' : this.cantidadRec,  //objUA.setSaldo(Double.parseDouble(edtCantRecibida.getText().toString()));
-          'CantidadAveriada' : this.cantidadAve,  //objUA.setCantidadAveriada(Double.parseDouble(edtAveriado.getText().toString()));
-          'Id_TerminalRF' : 1,  //objUA.setId_TerminalRF(1); //control.ParametrosLogeo.RF_ID
-          'Item' : this.vReciboPage02.Item,  //objUA.setItem(objReceived.getItem());
-          'Id_Ubicacion' : 0,  //objUA.setId_Ubicacion(0);
-          'Id_Tx_Ubi' : (result === "") ? null: result,  //objUA.setId_Tx_Ubi((result == "") ? null: result);
-          'Observacion' : '',  //objUA.setObservacion(edtObserv.getText().toString());
-          'UsuarioRegistro' : this.sGlobal.userName,  //objUA.setUsuarioRegistro("ADMIN"); //Global.userName
-          'Id_Almacen' : this.sGlobal.Id_Almacen,  //objUA.setId_Almacen(1); //Global.IdWarehouse
-          'Id_UM': this.vReciboPage02.Id_UM,  //objUA.setId_UM(objReceived.getId_UMB());
-          'FlagAnulado': false //?this.vReciboPage02.FlagAnulado //objUA.setFlagAnulado(false); 
+          'UA_CodBarra' : this.codeBar.Text,
+          'Id_Tx' : this.vReciboPage02.Id_Tx,
+          'Id_Producto' : this.vReciboPage02.Id_Producto,
+          'LoteLab' : this.vReciboPage02.LoteLab,
+          'Serie' : (this.vReciboPage02.FlagSeriePT === true) ? this.codeBar.Text : null,
+          'FechaEmision' : this.vReciboPage02.FechaEmision,
+          'FechaVencimiento' : this.vReciboPage02.FechaVencimiento,
+          'Cantidad' : this.cantidadRec,
+          'Saldo' : this.cantidadRec,
+          'CantidadAveriada' : this.cantidadAve,
+          'Id_TerminalRF' : 1,
+          'Item' : this.vReciboPage02.Item,
+          'Id_Ubicacion' : 0,
+          'Id_Tx_Ubi' : (result === "") ? null: result,
+          'Observacion' : '',
+          'UsuarioRegistro' : this.sGlobal.userName,
+          'Id_Almacen' : this.sGlobal.Id_Almacen,
+          'Id_UM': this.vReciboPage02.Id_UM,
+          'FlagAnulado': false
         };
 
         if(this.vReciboPage02.Id_TipoMovimiento == 0){
@@ -367,48 +396,61 @@ export class ReciboPage_03Page {
             });
         }
       });
-
   }
 
   evaluarResultado(message){
     debugger;
     if(message.errNumber === 0){
       let valor1 = parseFloat(message.valor1);
-      let saldo = this.vReciboPage02.Saldo;
       let bultos = this.cantidadBulto + 1;
       this.vReciboPage02.Saldo = this.vReciboPage02.Saldo - valor1;
+      let saldo = this.vReciboPage02.Saldo;
       this.vReciboPage02.CantidadOperacion = bultos * valor1;
       this.isBgRed = false;
       this.isBgYellow = false;
       this.isBgGreen = true;
-      this.iCodeBar.setFocus();
+      this.selectAll(this.iCodeBar, 500);
+      this.bolUaValida = false;
       this.cantidadAve = 0;
       this.cantidadRec = 0;
       
       if(saldo == 0){
         this.presentToast('Item completo');
+        this.selectAll(this.iCodeBar, 500);
       }
     }else if(message.errNumber == 1){
       this.isBgRed = true;
       this.isBgYellow = false;
       this.isBgGreen = false;
       this.presentToast(message.message);
-      this.iCodeBar.setFocus();
+      this.selectAll(this.iCodeBar, 500);
     }else if(message.errNumber == -1){
       this.isBgRed = true;
       this.isBgYellow = false;
       this.isBgGreen = false;
       this.presentToast(message.message);
-      this.iCodeBar.setFocus();
+      this.selectAll(this.iCodeBar, 500);
     }else{
       this.isBgRed = true;
       this.isBgYellow = false;
       this.isBgGreen = false;
       this.presentToast('Operación fallida, intente otra vez');
-      this.iCodeBar.setFocus();
+      this.selectAll(this.iCodeBar, 500);
     }
   }
 
+  callBackReciboPage04 = (values) => {
+    return new Promise((resolve, reject) => {
+      debugger;
+      //this.cantidadRec = values;
+      this.vReciboPage02.Saldo = values;
+      this.vReciboPage02.CantidadOperacion -= values; 
+      resolve();
+    });
+    //console.log('datos de pagina 04', values);
+    //this.cantidadRec = values;
+   }
+   
   goToReciboPage04(){
 
     let obj = {
@@ -431,29 +473,71 @@ export class ReciboPage_03Page {
       "Id_TipoMovimiento" : this.vReciboPage02.Id_TipoMovimiento,
       "bolAutomatic" : this.vReciboPage02.bolAutomatic,
       "currentSaldo" : this.vReciboPage02.Saldo,
-      "Cuenta" : this.vReciboPage02.Cuenta //Nuevo campo
+      "Cuenta" : this.vReciboPage02.Cuenta
     };
 
-    this.navCtrl.push(ReciboPage_04Page, {
-      dataPage03: obj
+    // this.navCtrl.push(ReciboPage_04Page, {
+    //   dataPage03: obj
+    // });
+
+    this.navCtrl.push(ReciboPage_04Page,{
+      dataPage03: obj,
+      callBackReciboPage04: this.callBackReciboPage04
     });
+
+  //   this.navController.push(OtherPageComponent, {
+  //     callback: this.myCallbackFunction;
+  // });
   }
 
   presentReciboPopover(myEvent){
-    debugger;
     let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 13});
     popover.present({
       ev: myEvent
     });
 
     popover.onDidDismiss(popoverData =>{
-      debugger;
       if(popoverData == 1){
         //this.showModalIncidencia(this.vReciboPage01);
         console.log('data para imprimir', this.vReciboPage02);
         this.navigateToEtqCajaLpn(this.vReciboPage02);
+      }else if(popoverData == 2){
+        this.showModalIncidencia(this.vReciboPage02);
+      }else if(popoverData == 3){
+        this.showModalImpresora();
+      }else if(popoverData == 4){
+        this.navCtrl.pop();
+        var nav = this.app.getRootNav();
+        nav.setRoot(HomePage);
+      }else if(popoverData == 5){
+        this.goToReciboPage04();
       }
     });
+  }
+
+  showModalImpresora(){
+    let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
+    modalIncidencia.present();
+  }
+
+  showModalIncidencia(data){
+    let obj = { 
+        'Id_Tx' : data.Id_Tx,
+        'FlagPausa' : data.FlagPausa,
+        'Cliente' : data.Cliente,
+        'Id_Cliente' : data.Id_Cliente,
+        'Proveedor' : data.Proveedor,
+        'Id_TipoMovimiento' : data.Id_TipoMovimiento,
+        'Origen' : 'RP02'
+      };
+
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia' : obj});
+    modalIncidencia.onDidDismiss(data =>{
+      if(data.response == 200){
+        this.navCtrl.pop();
+      }
+    });
+    modalIncidencia.present();
   }
 
   navigateToEtqCajaLpn(data){
@@ -465,12 +549,12 @@ export class ReciboPage_03Page {
     "Codigo": data.Codigo,
     "Articulo": data.Articulo, //Articulo
     "UM": data.UM,
-    "Cliente": data.Cliente, //this.vReciboPage01.Cuenta,//data.Cuenta,
+    "Cliente": data.Cliente,
     "UM_Base": data.UM_Base,
     "TipoAlmacenaje": data.TipoAlmacenaje,
     "Item": data.Item,
     "Acceso": 0,
-    "NroDoc": data.NroDoc,//this.vReciboPage01.NumOrden,
+    "NroDoc": data.NroDoc,
     "FecEmi": data.FecEmi,
     "FecVen": data.FecVen,
     "FlagSerie": data.FlagSerie,
@@ -478,9 +562,9 @@ export class ReciboPage_03Page {
     "CondicionAlmac": data.CondicionAlmac,
     "Condicion": data.Condicion,
     "Id_Condicion": data.Id_Condicion,
-    "Id_Cliente": data.Id_Cliente,//this.vReciboPage01.Id_Cliente,
-    "idTipoMovimiento": data.idTipoMovimiento, //this.vReciboPage01.Id_TipoMovimiento,
-    "IdCuentaLPN": data.IdCuentaLPN,//this.vReciboPage01.Id_Cliente,
+    "Id_Cliente": data.Id_Cliente,
+    "idTipoMovimiento": data.idTipoMovimiento,
+    "IdCuentaLPN": data.IdCuentaLPN,
     "Id_SubAlmacen": data.Id_SubAlmacen
   }
 

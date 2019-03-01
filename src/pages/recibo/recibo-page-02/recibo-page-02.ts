@@ -107,10 +107,10 @@ export class ReciboPage_02Page {
   }
 
   filterItems(ev: any){
-    const val = ev.target.value;
+    const val = ev.target.value.trim();
     if(val && val.trim() != ''){
       this.listAuxDetailTx = this.listDetailTx.filter((item)=>{
-        return (item.Codigo.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        return (item.Codigo.toLowerCase().indexOf(val.toLowerCase()) > -1) || (item.Descripcion.toLowerCase().indexOf(val.toLowerCase()) > -1);
       });
       this.rowCount = this.listAuxDetailTx.length;
     }else{
@@ -163,7 +163,8 @@ export class ReciboPage_02Page {
     "Id_Condicion": data.Id_Condicion,
     "idTipoMovimiento": this.vReciboPage01.Id_TipoMovimiento,
 	  "IdCuentaLPN": this.vReciboPage01.Id_Cliente,
-	  "Id_SubAlmacen": data.Id_SubAlmacen
+    "Id_SubAlmacen": data.Id_SubAlmacen,
+    "NombreSubAlmacen": data.NombreSubAlmacen
   };
 
     this.navCtrl.push(ReciboPage_03Page, {
@@ -189,7 +190,7 @@ export class ReciboPage_02Page {
       }
 
       let alerta = this.alertCtrl.create({
-        title: 'Confirm purchase',
+        title: 'Advertencia',
         message: message,
         buttons: [
           {

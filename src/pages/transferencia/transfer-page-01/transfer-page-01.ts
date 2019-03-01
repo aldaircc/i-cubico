@@ -30,8 +30,8 @@ export class TransferPage_01Page {
   listarTransferenciaSubAlmacenXUsuario(strUsuario, intIdAlmacen){
     this.sPicking.listarTransferenciaSubAlmacenXUsuario(strUsuario, intIdAlmacen).then(result=>{
       this.listTransf = result;
-      this.countConfirm = this.listTransf.reduce((acc, cur) => cur.Id_Estado === 3 ? ++acc : acc, 0);
-      this.countProcess = this.listTransf.reduce((acc, cur) => cur.Id_Estado === 1 ? ++acc : acc, 0);
+      this.countConfirm = this.listTransf.reduce((acc, cur) => cur.Id_Estado === 2 ? ++acc : acc, 0);
+      this.countProcess = this.listTransf.reduce((acc, cur) => cur.Id_Estado === 3 ? ++acc : acc, 0);
       this.rowCount = this.listTransf.length;
     });
   }

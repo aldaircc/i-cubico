@@ -23,13 +23,16 @@ export class ReciboPage_04Page {
   vReciboPage03 : any;
   listBulto : any = [];
   rowCount : number = 0;
+  callBackReciboPage04: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController , public sRecibo: ReciboServiceProvider,
     public sGlobal: GlobalServiceProvider, public popoverCtrl: PopoverController,
     public modalCtrl: ModalController) {
+    debugger;
     this.vReciboPage03 = navParams.get('dataPage03');
-    console.log('data received - Page 03', this.vReciboPage03);
+    console.log('datos de pagina 03', this.vReciboPage03);
+    this.callBackReciboPage04 = navParams.get('callBackReciboPage04');
     this.listarUAXProductoTx(this.vReciboPage03.Id_Tx, this.vReciboPage03.Id_Articulo, this.vReciboPage03.Item);
   }
 
@@ -37,9 +40,18 @@ export class ReciboPage_04Page {
     
   }
 
+  ionViewWillLeave(){
+    debugger;
+    let param = this.vReciboPage03.Saldo;
+    this.callBackReciboPage04(param).then(()=>{
+      //this.navCtrl.pop();
+    });
+  }
+
   listarUAXProductoTx(strIdTx, intIdProducto, intItem){
     this.sRecibo.listarUAXProductoTx(strIdTx, intIdProducto, intItem).then(result=>{
       this.listBulto = result;
+      debugger;
       this.rowCount = this.listBulto.length;
     });
   }
@@ -60,18 +72,18 @@ export class ReciboPage_04Page {
         {
           text: 'Si',
           handler: () => {
-            //eliminar
+            debugger;
             let currentDate = new Date().toISOString();
             let objUA = {
               'UA_CodBarra': data.UA_CodBarra,
-              'Id_Tx': 'A201899999999', //data.Id_Tx,
+              'Id_Tx': data.Id_Tx,
               'Id_Producto': data.Id_Producto,
               'LoteLab': data.LoteLab,
               'FechaEmision' : "/Date("+ Date.parse(currentDate) +")/",
               'FechaVencimiento' : "/Date("+ Date.parse(currentDate) +")/",
               'FechaIngreso' : "/Date("+ Date.parse(currentDate) +")/",
               'Cantidad' : data.Cantidad,
-              'Saldo' : data.SaldoTotal,
+              'Saldo' : data.Cantidad,
               'CantidadAveriada' : data.CantidadAveriada,
               'Id_TerminalRF' : 1,
               'Item' : this.vReciboPage03.Item,
@@ -80,7 +92,7 @@ export class ReciboPage_04Page {
               'FlagAnulado' : true,
               'Observacion' : ''
             };
-
+            
             this.evaluateDelete(objUA);
           }
         }
@@ -90,6 +102,7 @@ export class ReciboPage_04Page {
   }
 
   evaluateDelete(objUA){
+    debugger;
     if(this.vReciboPage03.Id_TipoMovimiento == 0){
       alert('Esta transacción no tiene tipo de movimiento');
       return;
@@ -99,11 +112,13 @@ export class ReciboPage_04Page {
       this.sRecibo.registrarUATransferencia(objUA).then(result=>{
         let res : any = result;
         alert(res.message);
+        this.vReciboPage03.Saldo += objUA.Cantidad;
       });
     }else{
       this.sRecibo.registrarUA(objUA).then(result=>{
         let res : any = result;
         alert(res.message);
+        this.vReciboPage03.Saldo += objUA.Cantidad;
       });
     }
     this.listarUAXProductoTx(this.vReciboPage03.Id_Tx, this.vReciboPage03.Id_Articulo, this.vReciboPage03.Item);
@@ -133,7 +148,6 @@ export class ReciboPage_04Page {
       });
       alert.present();
     }else{
-      //presenter.navigateToReciboTab05(objReceived, strNumOrden, intId_TipoMovimiento, bolAutomatic, currentSaldo);
       this.goToReciboPage05(this.vReciboPage03);
     }
   }
