@@ -50,7 +50,7 @@ export class TransferPage_06Page {
           this.Id_UbicacionDestino = res[0].Id_Ubicacion;
           alert('Código de ubicación, verificado correctamente.');
           this.isError = false;
-          this.isNormal = true;
+          this.isNormal = false;
         }else{
           alert('Código escaneado no existe.');
           this.isError = true;

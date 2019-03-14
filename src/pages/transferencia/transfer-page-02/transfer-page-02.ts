@@ -46,7 +46,7 @@ export class TransferPage_02Page {
     let message = (saldoTotal > 0) ? "Existe saldo. ¿Desea cerrar la transacción?" : "¿Estas seguro de cerrar la transacción?";
 
     let alert = this.alertCtrl.create({
-      title: 'Confirmar eliminación',
+      title: 'Confirmar cierre',
       message: message,
       buttons: [
         {
@@ -76,6 +76,7 @@ export class TransferPage_02Page {
     let parameter = {
       'Id_Almacen' : this.sGlobal.Id_Almacen,
       'Id_SubAlmacenOrigen': this.vParameter.Id_SubAlmacenOrigen,
+      'Id_SubAlmacenDestino': this.vParameter.Id_SubAlmacenDestino,
       'Id_Tx' : data.Id_Tx,
       'Item' : data.Item,
       'Cod_Producto' : data.Codigo,
