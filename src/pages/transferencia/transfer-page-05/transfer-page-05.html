@@ -25,7 +25,7 @@
       <ion-col col-7 col-sm class="valueHeader">{{ vParameter.Id_Tx }}</ion-col>
     </ion-row>
     <ion-row align-items-center>
-      <ion-col col-5 col-sm class="textHeader"> Producto </ion-col>
+      <ion-col col-5 col-sm class="textHeader"> Código </ion-col>
       <ion-col col-7 col-sm class="valueHeader"> {{ vParameter.Cod_Producto }} </ion-col>
     </ion-row>
     <ion-row align-items-center>
@@ -62,7 +62,7 @@
                 <ion-label class="tf05-card-label fieldForm">Cantidad:</ion-label>
               </ion-col>
               <ion-col class="tf05-card-col" col-7 col-sm>
-                <ion-label class="tf05-card-label">{{ obj.Cantidad }}</ion-label>
+                <ion-label class="tf05-card-label">{{ obj.Cantidad | number:'1.2-2'}}</ion-label>
               </ion-col>
             </ion-row>
             <ion-row>

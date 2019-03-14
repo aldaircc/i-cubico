@@ -26,7 +26,7 @@
     </ion-row>
     <ion-row>
       <ion-item>
-        <ion-input type="text" placeholder="0" [(ngModel)]="strUbicacion" (keyup.enter)="validarUbicacion()"></ion-input>
+        <ion-input type="text" placeholder="0" [(ngModel)]="strUbicacion" (keyup.enter)="validarUbicacion()" #iUbicacion></ion-input>
       </ion-item>
     </ion-row>
   </ion-grid>
@@ -52,7 +52,7 @@
   <ion-grid>
     <ion-row>
       <ion-col col-5 col-sm>
-        <div class="fieldForm">Total Pallets/UAs</div>
+        <div class="fieldForm">Total Pallets/UAs: </div>
       </ion-col>
       <ion-col col-6 col-sm>
         <div class="fieldForm"> {{ vParameter.CantidadPallet }} </div>
