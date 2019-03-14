@@ -27,29 +27,31 @@ export class ReciboPage {
   listRecepcion: any;
   vReciboPage01: any;
   rowCount: any;
+  rowReciboSelect: any;
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController,
     public sRecibo: ReciboServiceProvider, public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider) { }
 
   presentPopover(myEvent){
-    debugger;
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 11});
+    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 11, 'has_Id_Tx': (this.rowReciboSelect != undefined) ? true : false });
     popover.present({
       ev: myEvent
     });
 
     popover.onDidDismiss(popoverData =>{
-      /**if(popoverData == 2){
-        this.showModalIncidencia(this.vReciboPage01);
-      }else **/if(popoverData == 3){
+      if(popoverData == 2){
+        this.showModalIncidencia(this.rowReciboSelect);
+      }else if(popoverData == 3){
         this.showModalImpresora();
       }else if(popoverData == 4){
         this.navCtrl.pop();
         var nav = this.app.getRootNav();
         nav.setRoot(HomePage);
       }
+      this.rowReciboSelect = null;
     });
   }
+
 
   showModalImpresora(){
     let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
@@ -108,6 +110,10 @@ export class ReciboPage {
 
   getDataRecepcion() {
     this.getRecepcionesXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen, this.sGlobal.Id_Muelle);
+  }
+
+  getReciboRow(obj):void{
+    this.rowReciboSelect = obj;
   }
 
   showModalIncidencia(data) {
