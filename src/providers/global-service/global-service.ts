@@ -20,7 +20,8 @@ export class GlobalServiceProvider {
   nombreEmpresa : string;
   nombreCentro: string;
   userName : string = "";
-  url : string = "http://172.16.32.15:8085/SGAA_WCF/";
+  apeNom: string = "";
+  url : string = "";
   urlPrint : string =  "";
   usuario: string;
   produccion: string;
@@ -37,7 +38,8 @@ export class GlobalServiceProvider {
   despachoService: any;
 
   constructor(public http: HttpClient) {
-    this.userName = "admin";//"aromero";
+    this.userName = "ADMIN";
+    this.apeNom = "Administrador";
     this.Id_Almacen = 1006;
     this.Id_Muelle = 1;
     this.Id_TerminalRF = 2;

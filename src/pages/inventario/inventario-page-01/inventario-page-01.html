@@ -20,7 +20,7 @@
         <div class="textHeader">Usuario </div>
       </ion-col>
       <ion-col col-9 col-sm>
-        <div class="valueHeader">{{ sGlobal.userName }}</div>
+        <div class="valueHeader">{{ sGlobal.apeNom }}</div>
       </ion-col>
     </ion-row>
     <ion-row align-items-center>
@@ -90,13 +90,12 @@
 
 <ion-footer class="bgLightBlue">
   <ion-grid>
+    <p class="subtitleForm fieldForm" text-center>
+      TOTAL ITEMS: {{ rowCount }}
+    </p>
     <ion-row>
-      <ion-col col-4 col-sm>
-        <div class="fieldForm">TOTAL ITEMS:</div>
-      </ion-col>
-      <ion-col col-8 col-sm>
-        <div class="fieldForm"> {{ rowCount }} </div>
-      </ion-col>
+      <ion-col col-2 offset-3 col-sm class="box-counter bg-confirm"> {{ countConfirm }} </ion-col>
+      <ion-col col-2 offset-2 col-sm class="box-counter bg-process"> {{ countProcess }} </ion-col>
     </ion-row>
   </ion-grid>
 </ion-footer>

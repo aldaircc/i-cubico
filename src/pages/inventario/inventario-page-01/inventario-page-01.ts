@@ -20,6 +20,8 @@ export class InventarioPage_01Page {
 
   listInvent: any;
   rowCount: number = 0;
+  countConfirm: number = 0;
+  countProcess: number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
@@ -33,6 +35,8 @@ export class InventarioPage_01Page {
   listarInventarioXUsuario(strUsuario, intIdAlmacen): void{
     this.sInve.listarInventarioXUsuario(strUsuario, intIdAlmacen).then(result=>{
       this.listInvent = result;
+      this.countConfirm = this.listInvent.reduce((acc, cur) => cur.Id_Estado === 10 ? ++acc : acc, 0);
+      this.countProcess = this.listInvent.reduce((acc, cur) => cur.Id_Estado === 3 ? ++acc : acc, 0);
       this.rowCount = this.listInvent.length;
     });
   }

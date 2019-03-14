@@ -4,6 +4,7 @@ import { PickingServiceProvider } from '../../../providers/picking-service/picki
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { TransferPage_05Page } from '../transfer-page-05/transfer-page-05';
 import { MainMenuPage } from '../../main-menu/main-menu';
+import { AdministrarUaPage } from '../../almacenaje/menu-consultar/administrar-ua/administrar-ua';
 
 /**
  * Generated class for the TransferPage_04Page page.
@@ -37,12 +38,12 @@ export class TransferPage_04Page {
     this.sPicking.validarUATransfSubAlmacen(strIdTx, strUA, strLote, intIdSubAlmacen, intIdUbicacion, intItem).then(result=>{
       let res:any = result;
       this.lstUATransf = res;
-
       if(res.length != 0){
         if(res[0].ERROR == 0){
           this.isEnablebtnPicking = true;
           this.cantUA = res[0].Cantidad;
           this.isError = false;
+          this.isNormal = false;
         }else{
           this.codeBar.Text = "";
           this.cantUA = 0;
@@ -55,7 +56,7 @@ export class TransferPage_04Page {
 
   validarUA(){
     if(this.codeBar.Text.trim() != ""){
-      this.validarUATransfSubAlmacen(this.vParameter.Id_Tx, this.codeBar.Text, this.vParameter.Lote, this.vParameter.Id_SubAlmacen, this.vParameter.Id_Ubicacion, this.vParameter.Item);
+      this.validarUATransfSubAlmacen(this.vParameter.Id_Tx, this.codeBar.Text, this.vParameter.Lote, this.vParameter.Id_SubAlmacenDestino, this.vParameter.Id_Ubicacion, this.vParameter.Item);
       this.isEnablebtnPicking = true;
       this.isError = false;
     }else{
@@ -149,7 +150,8 @@ export class TransferPage_04Page {
       'Columna' : this.vParameter.Columna,​
       'Fila' : this.vParameter.Fila,​
       'Id_Producto' : this.vParameter.Id_Producto,​
-      'Id_SubAlmacen' : this.vParameter.Id_SubAlmacen,​
+      'Id_SubAlmacen' : this.vParameter.Id_SubAlmacenOrigen,​
+      'Id_SubAlmacenDestino' : this.vParameter.Id_SubAlmacenDestino,​
       'Id_Tx' : this.vParameter.Id_Tx,
       'Id_UM' : this.vParameter.Id_UM,
       'Id_Ubicacion' : this.vParameter.Id_Ubicacion,
@@ -166,5 +168,10 @@ export class TransferPage_04Page {
     };
     
     this.navCtrl.push(TransferPage_05Page, { 'vParameter' : parameter });
+  }
+
+  goToParticionarUA(): void{
+    let obj = { page: '1' };
+    this.navCtrl.push(AdministrarUaPage, { 'data': obj });
   }
 }

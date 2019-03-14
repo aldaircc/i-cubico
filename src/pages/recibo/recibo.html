@@ -29,7 +29,7 @@
     <ion-grid class="bgHeader">        
         <ion-row align-items-center>
           <ion-col col-12 col-sm>
-            <div class="textHeader">{{ sGlobal.userName }}</div>
+            <div class="textHeader">{{ sGlobal.apeNom }}</div>
           </ion-col>
           <ion-col col-12 col-sm>
             <div class="valueHeader">{{ sGlobal.nombreAlmacen }}</div>
@@ -47,7 +47,7 @@
 </ion-row>
 
 <ion-list [virtualScroll]="listAuxRecepcion" [approxItemHeight]="'20px'">
-  <ion-card *virtualItem="let objRecepcion" (click)="goToReciboPage02(objRecepcion)">
+  <ion-card *virtualItem="let objRecepcion" (press)="getReciboRow(objRecepcion)">
     <ion-grid>
       <ion-row>
         <ion-col col-1 col-sm
@@ -104,7 +104,7 @@
             </ion-col>
           </ion-row>
         </ion-col>
-        <ion-col col-1 col-sm align-self-center>
+        <ion-col col-1 col-sm align-self-center (click)="goToReciboPage02(objRecepcion)">
           <!-- <button ion-button icon-only> -->
             <ion-icon name="arrow-round-forward"></ion-icon>
           <!-- </button> -->

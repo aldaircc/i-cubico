@@ -44,7 +44,7 @@
       </ion-col>
       <ion-col col-3 col-sm>
         <ion-item>
-          <ion-input type="text" placeholder="0" [(ngModel)]="vParameter.CantidadPedida"></ion-input>
+          <ion-input type="text" placeholder="0" [(ngModel)]="vParameter.CantidadPedida" [disabled]="true"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col col-3 col-sm>
@@ -52,7 +52,7 @@
       </ion-col>
       <ion-col col-3 col-sm>
         <ion-item>
-          <ion-input type="text" placeholder="0" [(ngModel)]="vParameter.CantidadOperacion"></ion-input>
+          <ion-input type="text" placeholder="0" [(ngModel)]="vParameter.CantidadOperacion" [disabled]="true"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -63,7 +63,7 @@
       </ion-col>
       <ion-col col-3 col-sm>
         <ion-item>
-          <ion-input type="text" placeholder="0" [(ngModel)]="vParameter.Saldo"></ion-input>
+          <ion-input type="text" placeholder="0" [(ngModel)]="vParameter.Saldo" [disabled]="true"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -84,7 +84,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-grid [ngClass]="{bgWhite: (isNormal), bgYellow: (!isError && isNormal == false), bgRed:(isError)}">
+  <ion-grid [ngClass]="{bgWhite: (isNormal), bgYellow: (!isError && (isNormal == false)), bgRed:(isError)}">
     <ion-row align-items-center>
       <ion-col col-3 col-sm>
         <ion-label class="fieldForm">Cod. barra:</ion-label>
@@ -112,7 +112,7 @@
 <ion-footer>
   <ion-toolbar>
     <ion-buttons left>
-      <button ion-button icon-only>
+      <button ion-button icon-only (click)="goToParticionarUA()">
           <ion-icon name="label" name="md-cube"></ion-icon>
       </button>
     </ion-buttons>

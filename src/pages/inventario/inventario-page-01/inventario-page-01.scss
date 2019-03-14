@@ -7,6 +7,17 @@ page-inventario-page-01 {
     .iv01-card-label{
         margin: 0px !important;
     }
+    
+    .box-counter{
+         border-radius: 5px;
+         border: 1px solid #e6e9ee;
+         padding: 5px;
+         text-align: center;
+      }
+
+    .bg-confirm{
+        background-color: gray;
+    }
 
     .bg-process{
         background: yellow;

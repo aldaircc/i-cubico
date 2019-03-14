@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController, AlertController, PopoverController, App, Select } from 'ionic-angular';
 import { ImpresoraPage } from '../../impresora/impresora';
 import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
@@ -91,6 +91,13 @@ export class EtiquetadoPage_01Page {
 
   @ViewChild('selectUA_Alt') selectUA_Alt: Select;
   @ViewChild('selectFormat') selectFormat: Select;
+  @ViewChild('iLote', { read: ElementRef }) private inputUbi:ElementRef;
+  
+  @ViewChild('iCantidad', { read: ElementRef }) private iCantidad:ElementRef;
+  @ViewChild('iLote', { read: ElementRef }) private iLote:ElementRef;
+  @ViewChild('iNumEtq', { read: ElementRef }) private iNumEtq:ElementRef;
+  @ViewChild('iSaldoEtq', { read: ElementRef }) private iSaldoEtq:ElementRef;
+  @ViewChild('iNumCopia', { read: ElementRef }) private iNumCopia:ElementRef;
   
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, 
     public viewCtrl: ViewController, public sEtq: EtiquetadoServiceProvider, 
@@ -170,6 +177,7 @@ export class EtiquetadoPage_01Page {
 
     if(this.lote == "" && this.vEtq.FlagLote){
       message = "Indique el lote";
+      this.selectAll(this.iLote, 500);
       return message;
     }
 
@@ -184,16 +192,19 @@ export class EtiquetadoPage_01Page {
 
     if(this.cantxEtq == 0 || this.cantxEtq == undefined){
       message = "Indique cantidad";
+      this.selectAll(this.iCantidad, 500);
       return message;
     }
 
     if(this.numEtq == 0 || this.numEtq == undefined){
       message = "Indique el número de etiquetas";
+      this.selectAll(this.iNumEtq, 500);
       return message;
     }
 
     if(this.numCopia <= 0 || this.numCopia == undefined){
       message = "El número de copias no valido";
+      this.selectAll(this.iNumCopia, 500);
       return message;
     }
 
@@ -529,5 +540,12 @@ export class EtiquetadoPage_01Page {
 
   goToEtqPage03(): void{
     this.navCtrl.push(EtiquetadoPage_03Page);
+  }
+
+  selectAll(el: ElementRef, time){
+    let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
+    setTimeout(()=>{
+      nativeEl.select();
+    }, time);
   }
 }
