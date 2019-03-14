@@ -22,6 +22,7 @@ iniciarSesion(){
     if(this.responseData.length>0){
         this.sGlobal.vUserData = result;
         this.sGlobal.userName = result[0].Usuario;
+        this.sGlobal.apeNom = result[0].ApeNom;
         this.navCtrl.push(WarehouseSelectPage);
    }
    else{
