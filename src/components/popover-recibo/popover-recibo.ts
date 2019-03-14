@@ -23,15 +23,16 @@ export class PopoverReciboComponent {
   isDisplayUA: boolean = false;
 
   constructor(public viewCtrl: ViewController) {
-    let page = viewCtrl.data.page;
+    let page = viewCtrl.data;//.page;
     this.evaluateDisplayOptions(page);
   }
 
   evaluateDisplayOptions(value){
-    switch (value) {
+    debugger;
+    switch (value.page) {
       case 11:
       this.isDisplayPrint = true;
-      this.isDisplayIncidencia = false;
+      this.isDisplayIncidencia = value.has_Id_Tx;
       this.isDisplayEtq = false;
       this.isDisplaySesion = true;
         break;

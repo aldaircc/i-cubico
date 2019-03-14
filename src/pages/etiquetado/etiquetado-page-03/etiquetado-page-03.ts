@@ -37,6 +37,7 @@ export class EtiquetadoPage_03Page {
 
     if(this.existInList()){
       alert('La UA ya se encuentra en la lista');
+      this.strUA = "";
       this.selectAll(this.inputUA, 500);
       return;
     }
@@ -56,12 +57,13 @@ export class EtiquetadoPage_03Page {
 
   validarExisteUA(strUA){
     this.sAlm.validarExisteUA(strUA).then(result=>{
-      //agregar a lista
       debugger;
       let res:any = result;
       if(res.length != 0){
 
         if(this.existInList()){
+          this.strUA = "";
+          this.selectAll(this.inputUA, 500);
           return;
         }else{
           this.listUAs.push({
@@ -79,16 +81,16 @@ export class EtiquetadoPage_03Page {
             'Id_Marca' : res[0].Id_Marca
           });
           this.rowCount = this.listUAs.length;
+          this.strUA = "";
+          this.selectAll(this.inputUA, 500);
         }
       }else{
         alert('UA no registrada');
+        this.strUA = "";
+        this.selectAll(this.inputUA, 500);
       }
     });
   }
-  // -UA no registrada en el sistema: Mostrar mensaje: “UA no registrada” (Ver Figura 2 )
-  // -Campo UA vació: “Ingresar UA”” (Ver Figura 9 )
-  // -UA ya existente en el listado: Mostrar mensaje: “La UA ya se encuentra en la lista” (Ver Figura 10)
-
 
   deleteUA(obj): void{
     let msgAlert = this.alertCtrl.create({
@@ -111,6 +113,7 @@ export class EtiquetadoPage_03Page {
               this.rowCount = this.listUAs.length;
             }  
             alert('Operación exitosa');
+            this.selectAll(this.inputUA, 500);
           }
         }
       ]
@@ -129,6 +132,7 @@ export class EtiquetadoPage_03Page {
       this.navCtrl.push(EtiquetadoPage_04Page, { 'listUA' : listUA });
     }else{
       alert('No existen UAs registradas');
+      this.selectAll(this.inputUA, 500);
     }
   }
 

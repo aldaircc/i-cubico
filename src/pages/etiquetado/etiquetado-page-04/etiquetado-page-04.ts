@@ -79,10 +79,10 @@ export class EtiquetadoPage_04Page {
 
   registrarUbic(): void{
     debugger;
-    if(this.strUbicacion.trim() != "") {
+    if(this.strUbicacion.trim() != "" && this.id_Ubicacion != 0) {
       this.registrarUAsUbicacion(this.vParameter, this.id_Ubicacion, this.sGlobal.userName);
     }else{
-      alert('Ingresar ubicación');
+      alert('Ingresar y/o validar ubicación');
       this.selectAll(this.inputUbi, 600);
     }
   }
