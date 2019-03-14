@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Content, IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { InventarioServiceProvider } from '../../../providers/inventario-service/inventario-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
@@ -27,17 +27,18 @@ export class InventarioPage_03Page {
   lblInfo01: any = { 'Text': '', 'Value': '' };
   lblInfo02: any = { 'Text': '', 'Value': '' };
   strTipoInventario: string = "";
+  @ViewChild('inputInventariador', { read: ElementRef }) private inputInventariador:ElementRef;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vParameter = this.navParams.get('vParameter');
     this.strTipoInventario = this.vParameter.TipoInventario;
-
+    debugger;
     if(this.vParameter.Id_Estado == 10){
       this.btnIniciar.Text = 'Iniciar';
       this.txtInventareador.ReadOnly = false;
       this.dtpFecha.Enabled = false;
-      this.dtpFecha = this.vParameter.FechaProgramacion;
+      this.dtpFecha.Text = this.vParameter.FechaProgramacion;
     //     dtpFecha.Text = DateTime.Now.ToShortDateString();
     //     btnIniciar.Text = "Iniciar";
     //     txtInventareador.ReadOnly = false;
@@ -66,15 +67,12 @@ export class InventarioPage_03Page {
     this.txtInventareador.Text = this.vParameter.UsuarioInventariador;
   }
 
-  ionViewDidLoad() {
-    
-  }
-
   continuarInventario(): void{
     if(this.btnIniciar.Text == 'Iniciar'){
 
       if(this.txtInventareador.Text.trim() == ""){
         alert('Ingrese Inventareador');
+        this.selectAll(this.inputInventariador, 500);
         return;
       }else{
         const confirm = this.alertCtrl.create({
@@ -239,6 +237,13 @@ export class InventarioPage_03Page {
         this.content.scrollTo(0, top, 100);
       }, 350);
     //}
+  }
+
+    selectAll(el: ElementRef, time){
+      let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
+      setTimeout(()=>{
+        nativeEl.select();
+      }, time);
   }
 
 }

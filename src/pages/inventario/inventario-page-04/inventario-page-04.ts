@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Navbar } from 'ionic-angular';
 import { InventarioServiceProvider } from '../../../providers/inventario-service/inventario-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { InventarioPage_05Page } from '../inventario-page-05/inventario-page-05';
@@ -44,6 +44,7 @@ export class InventarioPage_04Page {
   lblInfo01: any = { 'Text' : '', 'Value': '' };
   lblInfo02: any = { 'Text' : '', 'Value': '' };
 
+  @ViewChild(Navbar) navBar: Navbar;
   @ViewChild('inputCodeBarUA') inputCodeBarUA;
   @ViewChild('inputAveriado') inputAveriado;
   
@@ -65,71 +66,55 @@ export class InventarioPage_04Page {
     this.lblInfo02.Value = (this.strTipoInventario == 'GENERAL') ? this.vParameter.Fila : this.vParameter.Producto;
   }
 
-  cambiarUbicacion(): void{
-    this.listarUAsXUbicacionInventario(this.vParameter.Id_Inventario, this.strUbicacion);
+  presentAlert(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [{
+          text: 'Si',
+          handler: () => {
+            resolve(true);
+          }
+        },{
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            resolve(false);
+          }
+        },]
+      });
+      confirm.present();
+    })
+  }
+
+  cambiarUbicacion(intId_Inventario, strId_Ubicacion): void{
+    this.listarUAsXUbicacionInventario(intId_Inventario, strId_Ubicacion);//this.vParameter.Id_Inventario, this.strUbicacion);
   }
 
   listarUAsXUbicacionInventario(strIdInventario, strCodBarraUbi):void{
     this.sInve.listarUAsXUbicacionInventario(strIdInventario, strCodBarraUbi).then(result=>{
       this.listUAsxUbi = result;
       this.intCountUAs = this.listUAsxUbi.length;
-
+      debugger;
       if(this.intCountUAs != this.vParameter.cantidadxUbicacion){
         
-        let message = this.alertCtrl.create({
-          title: 'Aviso',
-          message: 'No se ha inventariado todas UAs de esta ubicación,\r ¿Está seguro de continuar?',
-          buttons: [
-            {
-              text: 'No',
-              role: 'cancel',
-              handler: () => {
-                return;
-              }
-            },
-            {
-              text: 'Si',
-              handler: () => {
-                //this.limpiarCampos();
-                this.isVisibleData = false;
-                
-                if(this.vParameter.TipoInventario == 'CICLICO'){
-                  this.navCtrl.pop();
-                }else{
-                  this.strUbicacion = "";
-                  //this.inputUbicacion.setFocus();
-                  this.isEnabledUbicacion = true;
-                  //setTimeout(()=>{ this.inputUbicacion.setFocus(); }, 1200);
-                  this.selectAll(this.inputUbicacion, 1000);
-                  this.isBgRed = false;
-                  this.isBgGreen = false;
-                  this.isBgYellow = false;
-                }
-
-                    // if (continuarRev)
-                  // {
-                  //     limpiardatos();
-                  //     pnlDatos.Visible = false;
-                  //     txtCodBarra.ReadOnly = true;
-                  //     txtCodUbicacion.ReadOnly = false;
-                  //     txtCodUbicacion.Focus();
-                  //     txtCodUbicacion.SelectAll();
-                  //     if (rtbArticulo.Checked)
-                  //     {
-                  //         txtCodUbicacion.Text = "";
-                  //         ManejoPaneles(5);
-                  //     }
-
-                  //     pnl03.BackColor = Color.FromArgb(216, 226, 244);
-                  //     pnlDatos.BackColor = Color.FromArgb(216, 226, 244);
-                  // }
-              }
+        this.presentAlert("No se ha inventariado todas UAs de esta ubicación,\r ¿Está seguro de continuar?").then((resultAlert) => {
+          if (resultAlert) {
+            this.isVisibleData = false;
+            if(this.vParameter.TipoInventario == 'CICLICO'){
+              this.navCtrl.pop();
+            }else{
+              this.strUbicacion = "";
+              this.isEnabledUbicacion = true;
+              this.selectAll(this.inputUbicacion, 1000);
+              this.isBgRed = false;
+              this.isBgGreen = false;
+              this.isBgYellow = false;
             }
-          ]
+          }
         });
-        message.present();
       }
-
     });
   }
 
@@ -513,5 +498,39 @@ export class InventarioPage_04Page {
     this.isBgGreen = false;
     this.isBgYellow = false;
     this.isBgRed = false;
+  }
+
+  //Debes validar si cuenta con uas pendientes !!!
+  ionViewDidLoad() {
+    this.navBar.backButtonClick = (e: UIEvent) => {
+      debugger;
+      this.cambiarUbicacion(this.vParameter.Id_Inventario, ( (this.vParameter.TipoInventario == 'GENERAL') ? this.strUbicacion: this.vParameter.CodigoBarra) );
+    }
+  }
+
+  presentAlertConfirm(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+              resolve(false);
+              console.log('Disagree clicked');
+            }
+          },
+          {
+            text: 'Aceptar',
+            handler: () => {
+              resolve(true);
+              console.log('Agree clicked');
+            }
+          }
+        ]
+      });
+      confirm.present();
+    })
   }
 }
