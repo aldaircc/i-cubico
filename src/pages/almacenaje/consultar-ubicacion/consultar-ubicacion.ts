@@ -34,9 +34,20 @@ export class ConsultarUbicacionPage {
   validarCodigo() {
     if (this.codeBar) {
       if (this.codeBar.trim() != "") {
-        this.codeBarBK = this.codeBar.trim();
-        debugger;
-        this.ListarUAsXUbicacion();
+        if(this.codeBar.length == 14){
+          this.codeBarBK = this.codeBar.trim();
+          debugger;
+          this.ListarUAsXUbicacion();
+        }else{
+          this.presentAlert("Debe ingresar una ubicación valida").then((resultAlert) => {
+            if (resultAlert) {
+              setTimeout(() => {
+                this.txtBuscarRef.setFocus();
+                this.selectAll(this.txtBuscar);
+              }, (500));
+            }
+          })
+        }        
       } else {
         this.presentToast("Ingrese código de ubicación");
         setTimeout(() => {

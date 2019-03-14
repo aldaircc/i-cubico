@@ -1,12 +1,15 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { PickingServiceProvider } from '../../providers/picking-service/picking-service';
-import { IonicPage, Navbar, NavController, NavParams, ModalController, PopoverController, ToastController } from 'ionic-angular';
+import { IonicPage, App, Navbar, NavController, NavParams, ModalController, PopoverController, ToastController } from 'ionic-angular';
 import { RutaPickingPage } from '../picking/ruta-picking/ruta-picking'
 import { IncidenciaPage } from '../incidencia/incidencia';
 import { PopoverPickingPage } from '../picking/popover/popover-picking/popover-picking'
 import { DetallePickingPage } from '../picking/detalle-picking/detalle-picking'
 import { GlobalServiceProvider } from '../../providers/global-service/global-service';
 import { MainMenuPage } from '../main-menu/main-menu';
+import { AdministrarUaPage } from '../almacenaje/menu-consultar/administrar-ua/administrar-ua'
+import { ConsultarUbicacionPage } from '../almacenaje/consultar-ubicacion/consultar-ubicacion'
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the PickingPage page.
@@ -44,7 +47,7 @@ export class PickingPage {
   // @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
   // @ViewChild('popoverText', { read: ElementRef }) text: ElementRef;
   @ViewChild(Navbar) navBar: Navbar;
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, public modalCtrl: ModalController, private popoverCtrl: PopoverController,
     public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider) {
     const data = JSON.parse(localStorage.getItem('vUserData'));
@@ -160,7 +163,7 @@ export class PickingPage {
       if (this.listOrdenesPicking.length > 0) {
         console.log('Datos ordenes picking', this.listOrdenesPicking);
       } else {
-        alert('No se encontrarón datos.');
+        this.presentToast('No tiene ordenes asignadas.');
       }
     }, (err) => {
       console.log('E-Ordenes Picking listar', err);
@@ -231,6 +234,19 @@ export class PickingPage {
     this.navCtrl.push(MainMenuPage);
   }
 
+  goAdministrarUaPage() {
+    this.vPickingPage = {
+      'page': 4
+    };
+    this.navCtrl.push(AdministrarUaPage, {
+      data: this.vPickingPage
+    });
+  }
+
+  goConsultarUbicacionPage() {
+    this.navCtrl.push(ConsultarUbicacionPage);
+  }
+
   showModalIncidencia(data) {
     let obj = {
       'Id_Tx': data.Id_Tx,
@@ -244,6 +260,27 @@ export class PickingPage {
     modalIncidencia.onDidDismiss(data => {
       debugger;
       console.log("datos", data);
+    });
+    modalIncidencia.present();
+  }
+
+  showModalIncidencia2(){ //data
+    debugger;
+    // let obj = { 
+    //     'Id_Tx' : data.Id_Tx,
+    //     'FlagPausa' : data.FlagPausa,
+    //     'Cliente' : data.Cliente,
+    //     'Id_Cliente' : data.Id_Cliente,
+    //     'Proveedor' : data.Proveedor,
+    //     'Id_TipoMovimiento' : data.Id_TipoMovimiento,
+    //     'Origen' : 'RP02'
+    //   };
+
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage); //{ 'pIncidencia' : obj});
+    modalIncidencia.onDidDismiss(data =>{
+      if(data.response == 200){
+        this.navCtrl.pop();
+      }
     });
     modalIncidencia.present();
   }
@@ -264,6 +301,23 @@ export class PickingPage {
     });
     popover.present({
       ev: ev
+    });
+
+    popover.onDidDismiss(popoverData => {
+      if (popoverData == 1) {
+        this.showModalIncidencia2();
+      } else if (popoverData == 2) {
+        debugger;
+        this.goAdministrarUaPage();
+      } else if (popoverData == 3) {
+        debugger;
+        this.goConsultarUbicacionPage();
+      } else if (popoverData == 4) {
+        debugger;
+        this.navCtrl.pop();
+        var nav = this.app.getRootNav();
+        nav.setRoot(HomePage);
+      }
     });
   }
 

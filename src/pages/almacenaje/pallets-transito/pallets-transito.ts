@@ -255,8 +255,9 @@ export class PalletsTransitoPage {
       this.listAuxPalletTransito.forEach(el => {
         listUA.push(el.UA_CodBarra);
       });
-
+      debugger;
     this.vPalletTransitoPage = {
+      
       'Sector' : this.listUbicacion[0].Sector,
       'Fila' : this.listUbicacion[0].Fila,
       'Columna' : this.listUbicacion[0].Columna,
@@ -266,6 +267,7 @@ export class PalletsTransitoPage {
       'Id_Ubicacion' : this.listUbicacion[0].Id_Ubicacion,
       'Id_Ubicacion_Transito' : this.vTransitoPage.Id_Ubicacion_Transito,
       'CantidadPallets' : this.rowCount,
+      'Id_Marca' : this.listAuxPalletTransito[0].Id_Marca,
       'lst_UA' : listUA
     };
     this.navCtrl.push(AlmacenajePalletUaPage, {
@@ -291,7 +293,16 @@ export class PalletsTransitoPage {
   }
 
   goOtraUbicacionPage() {
-    this.navCtrl.push(OtraUbicacionPage);
+
+    
+    this.vPalletTransitoPage = {
+      'Id_Marca' : this.listAuxPalletTransito[0].Id_Marca
+    };
+    this.navCtrl.push(OtraUbicacionPage, {
+      data: this.vPalletTransitoPage
+    });
+
+    //this.navCtrl.push(OtraUbicacionPage);
   }
 
   ionViewDidLoad() {

@@ -4,6 +4,7 @@ import { GlobalServiceProvider } from '../../../../providers/global-service/glob
 import { ImpresoraPage } from '../../../impresora/impresora'
 import { ReciboServiceProvider } from '../../../../providers/recibo-service/recibo-service';
 import { AdministrarUaPage } from '../../menu-consultar/administrar-ua/administrar-ua'
+import { AlmacenajeServiceProvider } from '../../../../providers/almacenaje-service/almacenaje-service';
 
 /**
  * Generated class for the ParticionarUaPage page.
@@ -21,14 +22,33 @@ export class ParticionarUaPage {
   @ViewChild(Navbar) navBar: Navbar;
   vDatosRecibidos: any = [];
   vParticionarPage: any = [];
+  ResultUA: any
   NombreImpresora: any;
   NuevaUA : any;
+  CantUA : any;
+  SaldoUA : any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
-    public sGlobal: GlobalServiceProvider, public modalCtrl: ModalController, public sRecibo: ReciboServiceProvider) {
+    public sGlobal: GlobalServiceProvider, public modalCtrl: ModalController, public sRecibo: ReciboServiceProvider,
+    public sAlmacenaje: AlmacenajeServiceProvider) {
     debugger;
     this.vDatosRecibidos = navParams.get('data');
     this.NombreImpresora = this.sGlobal.Id_Impresora ==  0 ? "NINGUNA"  : this.sGlobal.nombreImpresora;    
+    this.nuevaCantidad();
+  }
+
+  nuevaCantidad(){
+    this.sAlmacenaje.getListarUAConNuevaCantidad(this.vDatosRecibidos.CodBar_UA, this.vDatosRecibidos.CantidadTotal).then((result) => {
+      debugger;
+      this.ResultUA = result;
+      debugger;
+      if (this.ResultUA.length != 0) {
+        this.CantUA = this.ResultUA[0].NroCajas;
+        this.SaldoUA = this.ResultUA[0].SaldoTotal;
+      } 
+    }, err => {
+      console.log('E-getListarUAConNuevaCantidad', err);
+    });
   }
 
   validarImprimir(){

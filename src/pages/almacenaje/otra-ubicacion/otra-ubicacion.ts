@@ -37,6 +37,7 @@ export class OtraUbicacionPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider,
     public sAlmacenaje: AlmacenajeServiceProvider, public toastCtrl:ToastController) {
       this.vDatosUbicacion = navParams.get('data');
+      debugger;
     this.listarSectoresXAlmacen();
   }
 
@@ -50,7 +51,7 @@ export class OtraUbicacionPage {
   onChange() {
     let obj = this.listSector.filter(x => x.Id_Sector == this.id_Sectorlt)[0];
     debugger;    
-    var idMarca = 0;
+    var idMarca = this.vDatosUbicacion.Id_Marca;
     var idCondicion = 1;
     this.ListarUbicacionesDisponibles(this.sGlobal.Id_Almacen, idMarca, idCondicion, obj.Id_Sector)
   }
@@ -64,6 +65,10 @@ export class OtraUbicacionPage {
         return (item.Marca != "Sin Marca");
       });
       this.rowCount = this.listAuxUbicaciones.length;
+
+      if(this.rowCount==0){
+        this.presentToast("No se encontraron registros");
+      }
     }
     if (this.tipoFiltro == 2) {
       this.txtCodUbicacionisenabled = false;
@@ -71,6 +76,9 @@ export class OtraUbicacionPage {
         return (item.Marca == "Sin Marca");
       });
       this.rowCount = this.listAuxUbicaciones.length;
+      if(this.rowCount==0){
+        this.presentToast("No se encontraron registros");
+      }
     }
     if (this.tipoFiltro == 3) {
       this.listAuxUbicaciones = [];
@@ -89,10 +97,14 @@ export class OtraUbicacionPage {
           return (item.CodigoBarra.trim() == this.codeBar.trim());      
         }); 
         this.rowCount = this.listAuxUbicaciones.length;   
+        if(this.rowCount==0){
+          this.presentToast("No se encontraron registros");
+        }
         setTimeout(() => {
           this.txtCodUbicacionRef.setFocus();
           this.selectAll(this.txtCodUbicacion);
         }, (500));
+
       }else{
         this.presentToast("Ingrese código de ubicación");
         setTimeout(() => {
@@ -143,6 +155,7 @@ export class OtraUbicacionPage {
   }
 
   goAlmacenajePalletPage(data){
+    debugger;
     this.vOtraUbiacionPage = {
       'Sector' : data.Sector,
       'Fila' : data.Fila,
@@ -151,7 +164,9 @@ export class OtraUbicacionPage {
       'Posicion' : data.Posicion,
       'CodigoBarraUbi' : data.CodigoBarra,
       'Id_Ubicacion' : data.Id_Ubicacion,
-      'Id_Ubicacion_Transito' : this.vDatosUbicacion.Id_Ubicacion_Transito
+      'Id_Ubicacion_Transito' : this.vDatosUbicacion.Id_Ubicacion_Transito,
+      'CantidadPallets' : this.vDatosUbicacion.CantidadPallets,
+      'lst_UA' : this.vDatosUbicacion.lst_UA
     };
     this.navCtrl.push(AlmacenajePalletUaPage, {
       data: this.vOtraUbiacionPage

@@ -340,4 +340,19 @@ export class AlmacenajeServiceProvider {
     });
   }
 
+  //aromero
+  getListarUAConNuevaCantidad(strUA, decCantidad){
+    var parameter : any;
+    parameter = {'STRUA' : strUA, 'DECCANTIDAD' : decCantidad};
+    return new Promise(resolve=>{
+      this.http.get(this.sGlobal.almacenajeService + 'ListarUAConNuevaCantidad', { params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error getListarUAConNuevaCantidad', err);
+      })
+    });
+  }
+
 }

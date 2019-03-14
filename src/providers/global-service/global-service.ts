@@ -38,7 +38,7 @@ export class GlobalServiceProvider {
   despachoService: any;
 
   constructor(public http: HttpClient) {
-    this.userName = "ADMIN";//"aromero";
+    this.userName = "ADMIN";
     this.apeNom = "Administrador";
     this.Id_Almacen = 1006;
     this.Id_Muelle = 1;

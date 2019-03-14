@@ -7,6 +7,7 @@ import { AlmacenajeServiceProvider } from '../../../../providers/almacenaje-serv
 import { GlobalServiceProvider } from '../../../../providers/global-service/global-service';
 import { ImpresoraPage } from '../../../impresora/impresora'
 import { MenuConsultarPage } from '../../../almacenaje/menu-consultar/menu-consultar'
+import { PickingPage } from '../../../picking/picking'
 import moment from 'moment';
 
 
@@ -288,10 +289,6 @@ export class AdministrarUaPage {
     nativeEl.select();
   }
 
-
-  
-
-
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
@@ -348,7 +345,10 @@ export class AdministrarUaPage {
 
   goReasignarUaPage() {
     this.vAdministrarUAPage = {
-      'CodBar_UA': this.codeBarUA
+      'CodBar_UA': this.codeBarUA,
+      'Lote': this.Lote,
+      'Id_Producto': this.ResultUA[0].Id_Producto
+      
     };
     this.navCtrl.push(ReasignarUaPage, {
       data: this.vAdministrarUAPage
@@ -357,7 +357,8 @@ export class AdministrarUaPage {
 
   goReubicarUaPage() {
     this.vAdministrarUAPage = {
-      'CodBar_UA': this.codeBarUA
+      'CodBar_UA': this.codeBarUA,
+      'Id_Ubicacion': this.ResultUA[0].Id_Ubicacion
     };
     this.navCtrl.push(ReubicarUaPage, {
       data: this.vAdministrarUAPage
@@ -390,8 +391,6 @@ export class AdministrarUaPage {
         'Lote': this.Lote,
         'FechaEmision': this.FechaEmision,
         'FechaVencimiento': this.FechaVencimiento,
-        //'CantidadUA' : sdfsdfsf,
-        //'Saldo' : dfsdfsdf,
         'CantidadTotal': parseFloat(this.Cantidad)
       };
       this.navCtrl.push(ParticionarUaPage, {
@@ -404,9 +403,27 @@ export class AdministrarUaPage {
     this.navCtrl.push(MenuConsultarPage);
   }
 
+  goPickingPage(){
+    this.navCtrl.push(PickingPage);
+
+  }
+
   ionViewDidLoad() {
     this.navBar.backButtonClick = (e: UIEvent) => {
-      this.goMenuConsultarPage();
+      if(this.vDatosRecibidos.page == 4){
+        this.goPickingPage();
+      }else if(this.vDatosRecibidos.page == 5){
+        //Ir a ruta picking
+      }
+      else if(this.vDatosRecibidos.page == 6){
+        //Ir a detalle pocking
+      }
+      else if(this.vDatosRecibidos.page == 7){
+        //Ir a Cerrar pocking
+      }
+      else{
+        this.goMenuConsultarPage();
+      }
     }
     setTimeout(() => {
       this.txtCodUARef.setFocus();
