@@ -52,7 +52,6 @@ export class ReciboPage {
     });
   }
 
-
   showModalImpresora(){
     let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
     modalIncidencia.present();
@@ -134,7 +133,6 @@ export class ReciboPage {
         data.FlagPausa = !data.FlagPausa;
         this.goToReciboPage02(data);
       }
-
     });
     modalIncidencia.present();
   }
