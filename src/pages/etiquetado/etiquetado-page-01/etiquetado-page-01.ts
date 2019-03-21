@@ -396,19 +396,20 @@ export class EtiquetadoPage_01Page {
 
   onChange(){
     //alert(this.id_UAlt);
+    debugger;
     let obj = this.listUM.filter(x=>x.Id_UM == this.id_UAlt)[0];
     //cantidad por bulto 
-    this.cantXBulto = obj.CantXBulto;
+    this.cantXBulto = parseInt(obj.CantXBulto);
     if(this.findArticulo == false){
-      let factor = obj.Factor;
-      let numEtqPrint = this.vEtq.CantidadPedida/factor;
-      let saldoEtq = this.vEtq.CantidadPedida - (numEtqPrint * factor);
+      let factor: number = parseInt(obj.Factor);
+      let numEtqPrint: number = parseInt(this.vEtq.CantidadPedida)/factor;
+      let saldoEtq: number = parseInt(this.vEtq.CantidadPedida) - (numEtqPrint * factor);
       
       this.cantxEtq = factor;
       this.numEtq = numEtqPrint;
       this.cantEtqSaldo = saldoEtq;
     }else{
-      this.cantxEtq = obj.CantXBulto;
+      this.cantxEtq = parseInt(obj.CantXBulto);
       this.numEtq = 0;
       this.cantEtqSaldo = 0;
     }
@@ -439,7 +440,7 @@ export class EtiquetadoPage_01Page {
 
   calcularTotalSuma(){
     debugger;
-    var cantXCaja, numEtqTem, etqSaldoCant;
+    var cantXCaja: number, numEtqTem: number, etqSaldoCant: number;
     cantXCaja = (this.cantxEtq <= 0) ? 0 : this.cantxEtq;
     numEtqTem = (this.numEtq <= 0) ? 0 : this.numEtq;
     etqSaldoCant = (this.cantEtqSaldo <= 0 || this.cantEtqSaldo == undefined) ? 0 : this.cantEtqSaldo;
