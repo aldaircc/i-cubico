@@ -8,7 +8,19 @@
   <ion-toolbar no-padding no-margin color="primary">
     <ion-grid style="padding: 0px;">
       <ion-row no-padding no-margin>
-        <ion-col no-margin no-padding col-10>
+        <ion-col no-margin no-padding col-2 [hidden]="!botonisDisplay">
+          <ion-buttons start style="margin-top: 12px; text-align: center">
+            <button no-margin no-padding ion-button icon-only (click)="dismiss()" >
+              <ion-icon name="arrow-back"></ion-icon>
+            </button>
+          </ion-buttons>
+        </ion-col>
+        <ion-col no-margin no-padding col-10 [hidden]="!titutlo1isDisplay"> 
+          <ion-navbar no-padding no-margin>
+            <ion-label style="font-size: 15px; color: white; font-weight:bold;">ADMINISTRAR UA</ion-label>
+          </ion-navbar>
+        </ion-col>
+        <ion-col no-margin no-padding col-8 [hidden]="!titutlo2isDisplay">
           <ion-navbar no-padding no-margin>
             <ion-label style="font-size: 15px; color: white; font-weight:bold;">ADMINISTRAR UA</ion-label>
           </ion-navbar>
@@ -152,8 +164,7 @@
       </ion-col>
       <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtFechaEmision [(ngModel)]="FechaEmision" type="text" value=""
-            style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px;"></ion-input>
+          <ion-input #txtFechaEmision [(ngModel)]="FechaEmision" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px;"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col col-2 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
@@ -163,8 +174,7 @@
       </ion-col>
       <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtFechaVencimiento [(ngModel)]="FechaVencimiento" type="text"
-            value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px;"></ion-input>
+          <ion-input #txtFechaVencimiento [(ngModel)]="FechaVencimiento" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px;"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>

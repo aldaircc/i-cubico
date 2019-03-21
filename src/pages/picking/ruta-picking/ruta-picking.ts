@@ -239,7 +239,7 @@ export class RutaPickingPage {
         this.showModalIncidencia2();
       } else if (popoverData == 2) {
         debugger;
-        this.goAdministrarUaPage();
+        this.showModalAdministrarUaPage();
       } else if (popoverData == 3) {
         debugger;
         this.goConsultarUbicacionPage();
@@ -275,13 +275,20 @@ export class RutaPickingPage {
     modalIncidencia.present();
   }
 
-  goAdministrarUaPage() {
-    this.vPickingPage = {
-      'page': 5
+   showModalAdministrarUaPage(){
+    debugger;
+    let obj = {
+      'page': "modal",
     };
-    this.navCtrl.push(AdministrarUaPage, {
-      data: this.vPickingPage
+    let modalIncidencia = this.modalCtrl.create(AdministrarUaPage, { 'data': obj });
+    modalIncidencia.onDidDismiss(data => {
+      debugger;
+        if(data.response == 200){
+        this.navCtrl.pop();
+      }
+      console.log("datos", data);
     });
+    modalIncidencia.present();
   }
 
   goPickingPage() {
@@ -311,6 +318,7 @@ export class RutaPickingPage {
     this.vRutaPickingPage = {
       'Id_Tx': this.vPickingPage.Id_Tx,
       'NumOrden': this.vPickingPage.NumOrden,
+      'Cliente': this.vPickingPage.Cliente,
       'Ciudad': this.vPickingPage.Ciudad,
       'Zona': this.vPickingPage.Zona,
       'Saldo': saldoTotal

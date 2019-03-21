@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController, ModalController, Navbar } from 'ionic-angular';
+import { IonicPage, ViewController, NavController, NavParams, AlertController, ToastController, ModalController, Navbar } from 'ionic-angular';
 import { ReasignarUaPage } from '../reasignar-ua/reasignar-ua'
 import { ReubicarUaPage } from '../reubicar-ua/reubicar-ua'
 import { ParticionarUaPage } from '../particionar-ua/particionar-ua'
@@ -8,6 +8,9 @@ import { GlobalServiceProvider } from '../../../../providers/global-service/glob
 import { ImpresoraPage } from '../../../impresora/impresora'
 import { MenuConsultarPage } from '../../../almacenaje/menu-consultar/menu-consultar'
 import { PickingPage } from '../../../picking/picking'
+import { RutaPickingPage } from '../../../picking/ruta-picking/ruta-picking';
+import { DetallePickingPage } from '../../../picking/detalle-picking/detalle-picking'
+import { CierrePickingPage } from '../../../picking/cierre-picking/cierre-picking';
 import moment from 'moment';
 
 
@@ -54,13 +57,22 @@ export class AdministrarUaPage {
   vAdministrarUAPage: any;
   vDatosRecibidos: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
+  botonisDisplay: boolean = false;
+  titutlo1isDisplay: boolean = true;
+  titutlo2isDisplay: boolean = false;
+
+  constructor(public viewCtrl:ViewController, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider,
     public modalCtrl: ModalController) {
     this.vDatosRecibidos = navParams.get('data');
     if (this.vDatosRecibidos.page == 3) {
       this.codeBarUA = this.vDatosRecibidos.CodBar_UA;
       this.validarCodeBarUA();
+    }
+    if (this.vDatosRecibidos.page == 'modal') {
+      this.botonisDisplay = true;
+      this.titutlo1isDisplay = false;
+      this.titutlo2isDisplay = true;
     }
   }
 
@@ -405,25 +417,79 @@ export class AdministrarUaPage {
 
   goPickingPage(){
     this.navCtrl.push(PickingPage);
+  }
 
+  goRutaPickingPage() {
+    this.vAdministrarUAPage = {
+      'idRutaPicking': this.vDatosRecibidos.idRutaPicking,
+      'Id_Tx': this.vDatosRecibidos.Id_Tx,
+      'NumOrden': this.vDatosRecibidos.NumOrden,
+      'Cliente': this.vDatosRecibidos.Cliente,
+      'Ciudad': this.vDatosRecibidos.Ciudad,
+      'Zona': this.vDatosRecibidos.Zona
+    };
+    this.navCtrl.push(RutaPickingPage, {
+      data: this.vAdministrarUAPage
+    });
+  }
+
+  goDetallePickingPage() {
+    debugger;
+    this.vAdministrarUAPage = {
+      'Id_Page_Anterior' : this.vDatosRecibidos.Id_Page_Anterior,
+      'Id_Tx': this.vDatosRecibidos.Id_Tx,
+      'NumOrden': this.vDatosRecibidos.NumOrden,
+      'Cliente': this.vDatosRecibidos.Cliente
+    };
+    this.navCtrl.push(DetallePickingPage, {
+      data: this.vAdministrarUAPage
+    });
+  }
+
+  goCerrarPickingPage() {    
+    debugger;
+    this.vAdministrarUAPage = {
+      'Id_Tx': this.vDatosRecibidos.Id_Tx,
+      'NumOrden': this.vDatosRecibidos.NumOrden,
+      'Ciudad': this.vDatosRecibidos.Ciudad,
+      'Zona': this.vDatosRecibidos.Zona,
+      'Saldo': this.vDatosRecibidos.Saldo
+    };
+    this.navCtrl.push(CierrePickingPage, {
+      data: this.vAdministrarUAPage
+    });
+  }
+
+  dismiss(data = { 'response' : 400 }){
+    this.viewCtrl.dismiss(data);
   }
 
   ionViewDidLoad() {
     this.navBar.backButtonClick = (e: UIEvent) => {
-      if(this.vDatosRecibidos.page == 4){
-        this.goPickingPage();
-      }else if(this.vDatosRecibidos.page == 5){
-        //Ir a ruta picking
-      }
-      else if(this.vDatosRecibidos.page == 6){
-        //Ir a detalle pocking
-      }
-      else if(this.vDatosRecibidos.page == 7){
-        //Ir a Cerrar pocking
-      }
-      else{
-        this.goMenuConsultarPage();
-      }
+      // if(this.vDatosRecibidos.page == 4){
+      //   this.goPickingPage();
+      // }else if(this.vDatosRecibidos.page == 5){
+      //   this.goRutaPickingPage();
+      // }
+      // else if(this.vDatosRecibidos.page == 6){
+      //   this.goDetallePickingPage();
+      // }
+      // else if(this.vDatosRecibidos.page == 7){
+      //   this.goCerrarPickingPage();
+      // }
+      // else if(this.vDatosRecibidos.page == 8){
+      //   this.dismiss();
+      // }
+      // else if(this.vDatosRecibidos.page == 9){
+      //   //Ir a detalle por producto/ver uas
+      // }
+      // else if(this.vDatosRecibidos.page == 10){
+      //   //Ir a reabastecimiento
+      // }
+      // else{
+      //   this.goMenuConsultarPage();
+      // }
+      this.goMenuConsultarPage();
     }
     setTimeout(() => {
       this.txtCodUARef.setFocus();

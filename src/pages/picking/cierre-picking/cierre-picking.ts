@@ -12,6 +12,8 @@ import { ConsultarUbicacionPage } from '../../almacenaje/consultar-ubicacion/con
 import { MainMenuPage } from '../../main-menu/main-menu'
 import { HomePage } from '../../home/home';
 
+import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
+
 /**
  * Generated class for the CierrePickingPage page.
  *
@@ -25,7 +27,6 @@ import { HomePage } from '../../home/home';
   templateUrl: 'cierre-picking.html',
 })
 export class CierrePickingPage {
-
   @ViewChild('txtCodMuelle') txtCodMuelleRef;
 
   vRutaPickingPage: any = [];
@@ -41,7 +42,7 @@ export class CierrePickingPage {
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController,
     public toastCtrl: ToastController, public alertCtrl: AlertController,
-    public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider) {
+    public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider, public sEtq: EtiquetadoServiceProvider) {
     this.vRutaPickingPage = navParams.get('data');
   }
 
@@ -170,7 +171,10 @@ export class CierrePickingPage {
                     if (result) {
                       // Mostrar lista de impresoras
                       this.showModalImpresora();
+                      this.imprimir();
                     }
+                    //Ir a detalle ordenes
+                    this.goPickingPage();
                   })
                 }
               })
@@ -185,6 +189,28 @@ export class CierrePickingPage {
         }
       })
     }
+  }
+
+  imprimir() {
+    debugger;
+    var listContainer = [];
+    var listEtq = [];
+
+    listEtq = [];
+    listEtq.push({ "campo": "|NROPICKING|", "valor": this.vRutaPickingPage.NumOrden });
+    listEtq.push({ "campo": "|CLIENTE|", "valor": this.vRutaPickingPage.Cliente });
+    listEtq.push({ "campo": "|COPIAS|", "valor": 1 });
+    listEtq.push({ "campo": "|ALMACEN|", "valor": this.sGlobal.nombreAlmacen });
+    listEtq.push({ "campo": "|USUARIO|", "valor": this.sGlobal.apeNom });
+    listContainer.push({ 'etiqueta': listEtq });
+
+    this.sEtq.imprimirListaEtiquetas(listContainer, 'ETQ_Pickingv2.txt', this.sGlobal.nombreImpresora, true).then(result => {
+      debugger;
+      var message: any = result;
+      if (message.errNumber == -1) {
+        alert(message.mensaje);
+      }
+    });
   }
 
   validarCodeBar_old() {
@@ -371,24 +397,32 @@ export class CierrePickingPage {
     toast.present();
   }
 
-  showModalIncidencia2(){ //data
+  showModalIncidencia2() { //data
     debugger;
     let modalIncidencia = this.modalCtrl.create(IncidenciaPage); //{ 'pIncidencia' : obj});
-    modalIncidencia.onDidDismiss(data =>{
-      if(data.response == 200){
+    modalIncidencia.onDidDismiss(data => {
+      if (data.response == 200) {
         this.navCtrl.pop();
       }
     });
     modalIncidencia.present();
   }
 
-  goAdministrarUaPage() {
-    this.vRutaPickingPage = {
-      'page': 7
+
+  showModalAdministrarUaPage() {
+    debugger;
+    let obj = {
+      'page': "modal",
     };
-    this.navCtrl.push(AdministrarUaPage, {
-      data: this.vRutaPickingPage
+    let modalIncidencia = this.modalCtrl.create(AdministrarUaPage, { 'data': obj });
+    modalIncidencia.onDidDismiss(data => {
+      debugger;
+      if (data.response == 200) {
+        this.navCtrl.pop();
+      }
+      console.log("datos", data);
     });
+    modalIncidencia.present();
   }
 
   goConsultarUbicacionPage() {
@@ -414,7 +448,7 @@ export class CierrePickingPage {
         this.showModalIncidencia2();
       } else if (popoverData == 2) {
         debugger;
-        this.goAdministrarUaPage();
+        this.showModalAdministrarUaPage();
       } else if (popoverData == 3) {
         debugger;
         this.goConsultarUbicacionPage();
@@ -439,9 +473,9 @@ export class CierrePickingPage {
     this.navCtrl.pop();
   }
 
-  goPickingPage(){
+  goPickingPage() {
     this.navCtrl.push(PickingPage);
-  } 
+  }
 
   ionViewDidLoad() {
     setTimeout(() => {

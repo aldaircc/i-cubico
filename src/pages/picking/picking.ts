@@ -51,7 +51,7 @@ export class PickingPage {
     public sPicking: PickingServiceProvider, public modalCtrl: ModalController, private popoverCtrl: PopoverController,
     public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider) {
     const data = JSON.parse(localStorage.getItem('vUserData'));
-    this.userDetail = this.sGlobal.userName;
+    this.userDetail = this.sGlobal.apeNom;
     this.nomAlmacen = this.sGlobal.nombreAlmacen;
     this.getDataOrdenes();
   }
@@ -234,13 +234,20 @@ export class PickingPage {
     this.navCtrl.push(MainMenuPage);
   }
 
-  goAdministrarUaPage() {
-    this.vPickingPage = {
-      'page': 4
+  showModalAdministrarUaPage(){
+    debugger;
+    let obj = {
+      'page': "modal",
     };
-    this.navCtrl.push(AdministrarUaPage, {
-      data: this.vPickingPage
+    let modalIncidencia = this.modalCtrl.create(AdministrarUaPage, { 'data': obj });
+    modalIncidencia.onDidDismiss(data => {
+      debugger;
+        if(data.response == 200){
+        this.navCtrl.pop();
+      }
+      console.log("datos", data);
     });
+    modalIncidencia.present();
   }
 
   goConsultarUbicacionPage() {
@@ -308,7 +315,7 @@ export class PickingPage {
         this.showModalIncidencia2();
       } else if (popoverData == 2) {
         debugger;
-        this.goAdministrarUaPage();
+        this.showModalAdministrarUaPage();
       } else if (popoverData == 3) {
         debugger;
         this.goConsultarUbicacionPage();
