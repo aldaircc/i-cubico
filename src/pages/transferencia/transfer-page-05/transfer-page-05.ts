@@ -27,10 +27,7 @@ export class TransferPage_05Page {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vParameter = this.navParams.get('vParameter');
-    this.listarUAsTransferidasXSubAlmacen(this.vParameter.Id_Tx, this.vParameter.Id_Producto, this.vParameter.Lote, this.vParameter.Id_Ubicacion);
   }
-
-  ionViewDidLoad() {}
 
   listarUAsTransferidasXSubAlmacen(strIdTx,intId_Producto, strLote, intId_Ubicacion): void{
     this.sPicking.listarUAsTransferidasXSubAlmacen(strIdTx, intId_Producto, strLote, intId_Ubicacion).then(result=>{
