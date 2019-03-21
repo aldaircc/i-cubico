@@ -405,7 +405,8 @@ export class ReciboPage_03Page {
       let bultos = this.cantidadBulto + 1;
       this.vReciboPage02.Saldo = this.vReciboPage02.Saldo - valor1;
       let saldo = this.vReciboPage02.Saldo;
-      this.vReciboPage02.CantidadOperacion = bultos * valor1;
+      //this.vReciboPage02.CantidadOperacion = bultos * valor1;
+      this.vReciboPage02.CantidadOperacion += valor1;
       this.isBgRed = false;
       this.isBgYellow = false;
       this.isBgGreen = true;
@@ -443,8 +444,12 @@ export class ReciboPage_03Page {
     return new Promise((resolve, reject) => {
       debugger;
       //this.cantidadRec = values;
-      this.vReciboPage02.Saldo = values;
-      this.vReciboPage02.CantidadOperacion -= values; 
+      
+      if(values.wasDeleted == true){
+        this.vReciboPage02.Saldo = values.saldo;
+        this.vReciboPage02.CantidadOperacion = this.vReciboPage02.CantPedida - values.saldo;
+      }
+
       resolve();
     });
     //console.log('datos de pagina 04', values);
