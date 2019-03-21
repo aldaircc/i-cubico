@@ -29,7 +29,7 @@
           <div class="textHeader">Transacción</div>
         </ion-col>
         <ion-col col-8 col-sm>
-          <div class="valueHeader">{{ vReciboPage03.Id_Tx }}</div>
+          <div class="valueHeader">{{ vReciboPage03.NumOrden }}</div>
         </ion-col>
       </ion-row>
       <ion-row align-items-center>
@@ -62,7 +62,7 @@
     </ion-card> -->
 
     <!-- XD -->
-    <ion-list [virtualScroll]="listBulto" [approxItemHeight]="'20px'">
+    <ion-list [virtualScroll]="listBulto" [approxItemHeight]="'70px'" #virtualScroll>
       <ion-card *virtualItem="let obj">
         <ion-grid>
           <ion-row>
@@ -90,7 +90,7 @@
                   <ion-label class="rec04-card-label fieldForm">Fecha:</ion-label>
                 </ion-col>
                 <ion-col class="rec04-card-col" col-8 col-sm>
-                  <ion-label class="rec04-card-label">{{ obj.FechaIngreso | momentjs : 'DD/MM/YYYY' }}</ion-label>
+                  <ion-label class="rec04-card-label">{{ obj.FechaIngreso | momentjs : 'DD/MM/YYYY HH:mm' }}</ion-label>
                 </ion-col>
               </ion-row>
 
