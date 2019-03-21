@@ -27,7 +27,6 @@ export class EmbarquePage_01Page {
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public modalCtrl: ModalController,
     public sGlobal: GlobalServiceProvider, public sDesp: DespachoServiceProvider) {
-      this.listarPlanificacionXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
 
   presentPopover(event){
@@ -104,4 +103,7 @@ export class EmbarquePage_01Page {
     this.navCtrl.push(EmbarquePage_02Page, { 'vParameter': parameter });
   }
 
+  ionViewWillEnter(){
+    this.listarPlanificacionXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen);
+  }
 }
