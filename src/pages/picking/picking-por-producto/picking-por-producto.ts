@@ -50,7 +50,7 @@ export class PickingPorProductoPage {
   Textcantidad: string = '';
   codUbicacion: string;
 
-  //valorRegistrar: number = 0;
+  valor: number = 0;
 
   @ViewChild(Navbar) navBar: Navbar;
   @ViewChild('txtCodBarraUA') txtCodBarraUARef;
@@ -388,6 +388,7 @@ export class PickingPorProductoPage {
 
     if (this.contador == this.listaTempPickingProducto.length)  //Si el saldo total de los productos con ruta se completa 
     {
+      this.valor = 1;
       if (saldoTotal == 0) {
         //se sugiere cerrar picking
         debugger;
@@ -396,7 +397,7 @@ export class PickingPorProductoPage {
             // Ir a pagina cerrar picking
             this.goCerrarPickingPage();
           } else {
-            this.goDetallePickingPage();
+            this.goDetallePickingPage2();
           }
         })
       } else {
@@ -405,7 +406,7 @@ export class PickingPorProductoPage {
             // Ir a pagina cerrar picking
             this.goCerrarPickingPage();
           } else {
-            this.goDetallePickingPage();
+            this.goDetallePickingPage2();
           }
         })
       }
@@ -415,7 +416,9 @@ export class PickingPorProductoPage {
         //-Si el siguiente producto tiene la misma ubicacion 
         //this.presentAlert("Item completado");
         if (this.posicion + 1 < this.listaTempPickingProducto.length) {
+          debugger;
           var codigo_Ubi = this.listaTempPickingProducto[this.posicion + 1].CodBarraUbi;
+          var transito = this.listaTempPickingProducto[this.posicion + 1].FlagTransito;
 
           if (this.pickingProducto.CodBarraUbi == codigo_Ubi) {
             //avanzar al siguiente producto en la misma pantalla
@@ -433,7 +436,12 @@ export class PickingPorProductoPage {
           } else {
             //volver a ruta picking y ubicarse en la posicion siguiente...          
             this.presentAlert("Item completado").then((resultAlert2) => {
-              this.goRutaPickingPage();
+
+              if(transito==false){
+                this.goRutaPickingPage();
+              }else{
+                this.goDetallePickingPage2();
+              }              
             })
           }
         } else {
@@ -583,13 +591,20 @@ export class PickingPorProductoPage {
     modalIncidencia.present();
   }
 
-  goAdministrarUaPage() {
-    this.vRutaPickingPage = {
-      'page': 8
+  showModalAdministrarUaPage(){
+    debugger;
+    let obj = {
+      'page': "modal",
     };
-    this.navCtrl.push(AdministrarUaPage, {
-      data: this.vRutaPickingPage
+    let modalIncidencia = this.modalCtrl.create(AdministrarUaPage, { 'data': obj });
+    modalIncidencia.onDidDismiss(data => {
+      debugger;
+        if(data.response == 200){
+        this.navCtrl.pop();
+      }
+      console.log("datos", data);
     });
+    modalIncidencia.present();
   }
 
   goConsultarUbicacionPage() {
@@ -617,7 +632,7 @@ export class PickingPorProductoPage {
         this.showModalIncidencia2();
       } else if (popoverData == 2) {
         debugger;
-        this.goAdministrarUaPage();
+        this.showModalAdministrarUaPage();
       } else if (popoverData == 3) {
         debugger;
         this.goConsultarUbicacionPage();
@@ -726,6 +741,7 @@ export class PickingPorProductoPage {
     this.vPickingXProducto = {
       'Id_Tx': this.vRutaPickingPage.Id_Tx,
       'NumOrden': this.vRutaPickingPage.NumOrden,
+      'Cliente': this.vRutaPickingPage.Cliente,
       'Ciudad': this.vRutaPickingPage.Ciudad,
       'Zona': this.vRutaPickingPage.Zona,
       'Saldo': saldoTotalPicking
@@ -739,6 +755,23 @@ export class PickingPorProductoPage {
     debugger;
     this.vPickingXProducto = {
       'Id_Page_Anterior': 5,
+      'idRutaPicking': this.listaTempPickingProducto[this.posicion].idRutaPicking,
+      'Id_Tx': this.vRutaPickingPage.Id_Tx,
+      'NumOrden': this.vRutaPickingPage.NumOrden,
+      'Cliente': this.vRutaPickingPage.Cliente,
+      'Ciudad': this.vRutaPickingPage.Ciudad,
+      'Zona': this.vRutaPickingPage.Zona
+    };
+
+    this.navCtrl.push(DetallePickingPage, {
+      data: this.vPickingXProducto
+    });
+  }
+
+  goDetallePickingPage2() {
+    debugger;
+    this.vPickingXProducto = {
+      'Id_Page_Anterior': 1,
       'idRutaPicking': this.listaTempPickingProducto[this.posicion].idRutaPicking,
       'Id_Tx': this.vRutaPickingPage.Id_Tx,
       'NumOrden': this.vRutaPickingPage.NumOrden,
@@ -806,13 +839,19 @@ export class PickingPorProductoPage {
     this.navBar.backButtonClick = (e: UIEvent) => {
       // todo something
       debugger;
-      // if (this.vRutaPickingPage.idRutaPicking) {
-      //   this.goRutaPickingPage();
-      // } 
-      this.goRutaPickingPage();
-      // else {
-      //   this.navCtrl.pop();
-      // }
+      // // if (this.vRutaPickingPage.idRutaPicking) {
+      // //   this.goRutaPickingPage();
+      // // } 
+      // this.goRutaPickingPage();
+      // // else {
+      // //   this.navCtrl.pop();
+      // // }
+
+      if(this.valor == 0){
+        this.goRutaPickingPage();
+      }else{
+        this.goDetallePickingPage2();
+      }
     }
     console.log('ionViewDidLoad PickingPorProductoPage');
   }

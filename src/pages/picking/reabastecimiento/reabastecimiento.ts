@@ -63,13 +63,20 @@ export class ReabastecimientoPage {
     modalIncidencia.present();
   }
 
-  goAdministrarUaPage() {
-    this.vPickingXProducto = {
-      'page': 6
+  showModalAdministrarUaPage(){
+    debugger;
+    let obj = {
+      'page': "modal",
     };
-    this.navCtrl.push(AdministrarUaPage, {
-      data: this.vPickingXProducto
+    let modalIncidencia = this.modalCtrl.create(AdministrarUaPage, { 'data': obj });
+    modalIncidencia.onDidDismiss(data => {
+      debugger;
+        if(data.response == 200){
+        this.navCtrl.pop();
+      }
+      console.log("datos", data);
     });
+    modalIncidencia.present();
   }
 
   goConsultarUbicacionPage() {
@@ -95,7 +102,7 @@ export class ReabastecimientoPage {
         this.showModalIncidencia2();
       } else if (popoverData == 2) {
         debugger;
-        this.goAdministrarUaPage();
+        this.showModalAdministrarUaPage();
       } else if (popoverData == 3) {
         debugger;
         this.goConsultarUbicacionPage();
