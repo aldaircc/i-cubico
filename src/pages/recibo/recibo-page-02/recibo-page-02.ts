@@ -39,7 +39,6 @@ export class ReciboPage_02Page {
       this.vReciboPage01 = navParams.get('data');
       const data = JSON.parse(localStorage.getItem('vUserData'));
       this.userDetail = data;
-      this.getDetailXTx(this.vReciboPage01.Id_Tx);      
   }
 
   presentPopover(myEvent){
@@ -251,5 +250,8 @@ export class ReciboPage_02Page {
     });
     etqModal.present();
   }
-  
+
+  ionViewWillEnter(){
+    this.getDetailXTx(this.vReciboPage01.Id_Tx);
+  }
 }
