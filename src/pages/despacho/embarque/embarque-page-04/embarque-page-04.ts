@@ -27,7 +27,34 @@ export class EmbarquePage_04Page {
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sGlobal: GlobalServiceProvider, public sDesp: DespachoServiceProvider) {
+    debugger;
     this.vParameter = this.navParams.get('vParameter');
+    this.bultoLeido = (this.vParameter.OperacionBultos != undefined) ? this.vParameter.OperacionBultos : 0;
+  }
+
+  presentConfirmDialog(title, message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+
+      const confirm = this.alertCtrl.create({
+        title: title,
+        message: message,
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            resolve(true);
+          },
+        },
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            resolve(false);
+          }
+        }
+      ]
+      });
+      confirm.present();
+    })
   }
 
   cargarBulto(){
@@ -36,82 +63,132 @@ export class EmbarquePage_04Page {
       alert('Debe ingresar el código de bulto');
       return;
     }else{
-      this.sDesp.cargaBultoTransporte(this.strCodeBarBulto, this.vParameter.Id_Tra, this.sGlobal.Id_Almacen, this.sGlobal.userName).then(result=>{
-        debugger;
-        let res:any = result;
+      debugger;
+      /** Inicio **/
+      if(this.bolEliminar == true){
+        
+        this.presentConfirmDialog('Eliminar', '¿Desea quitar el (sub) bulto del embarque?').then(result=>{
+          debugger;
+          if(result == true){
+            this.sDesp.eliminarBultoEmbarque(this.strCodeBarBulto, this.vParameter.Id_Tra, this.sGlobal.Id_Almacen, this.sGlobal.userName).then(result=>{
+              debugger;
+              let res: any = result;
+
+              if(res.errNumber == 0){
+                alert(res.message);
+                this.bultoLeido = parseFloat(res.valor1);
+                this.subBultoLeido = parseFloat(res.valor2);
+                this.bolEliminar = false;
+                this.selectAll(this.inputCodeBarBulto, 600);
+              }else if(res.errNumber == -1){
+                alert(res.message);
+                this.strCodeBarBulto = "";
+                // chkEliminar.checked = false;
+                this.selectAll(this.inputCodeBarBulto, 600);
+              }
+            });
+          }
+        });
+      }else{
+        this.sDesp.cargaBultoTransporte(this.strCodeBarBulto, this.vParameter.Id_Tra, this.sGlobal.Id_Almacen, this.sGlobal.userName).then(result=>{
+          debugger;
+          let res:any = result;
+    
+          if(res.errNumber == 0){
+            alert('Registro exitoso');
+            this.selectAll(this.inputCodeBarBulto, 600);
+            this.bultoLeido = parseFloat(res.valor1);
+            this.subBultoLeido = parseFloat(res.valor2);
+          }else{
+            alert(res.message);
+            this.strCodeBarBulto = "";
+            this.selectAll(this.inputCodeBarBulto, 600);
+          }
+    
+        });
+      }
+      /** Fin **/
+
+
+
+      // this.sDesp.cargaBultoTransporte(this.strCodeBarBulto, this.vParameter.Id_Tra, this.sGlobal.Id_Almacen, this.sGlobal.userName).then(result=>{
+      //   debugger;
+      //   let res:any = result;
   
-        if(res.errNumber == 0){
-          alert('Registro exitoso');
-          // txtcodBarraBulto.Focus();
-          // txtcodBarraBulto.SelectAll();
-          this.selectAll(this.inputCodeBarBulto, 600);
-          this.bultoLeido = parseFloat(res.valor1);
-          this.subBultoLeido = parseFloat(res.valor2);
-        }else{
-          alert(res.message);
-          // txtcodBarraBulto.Text = string.Empty;
-          // txtcodBarraBulto.Focus();
-          this.strCodeBarBulto = "";
-          this.selectAll(this.inputCodeBarBulto, 600);
-        }
+      //   if(res.errNumber == 0){
+      //     alert('Registro exitoso');
+      //     // txtcodBarraBulto.Focus();
+      //     // txtcodBarraBulto.SelectAll();
+      //     this.selectAll(this.inputCodeBarBulto, 600);
+      //     this.bultoLeido = parseFloat(res.valor1);
+      //     this.subBultoLeido = parseFloat(res.valor2);
+      //   }else{
+      //     alert(res.message);
+      //     // txtcodBarraBulto.Text = string.Empty;
+      //     // txtcodBarraBulto.Focus();
+      //     this.strCodeBarBulto = "";
+      //     this.selectAll(this.inputCodeBarBulto, 600);
+      //   }
   
-      });
+      // });
     }    
   }
 
   checkboxClicked(chkEliminar: Checkbox) {
+    this.bolEliminar = chkEliminar.checked;
+
     //this.filterUATransfer(this.bolEliminar);
-    debugger;
-    if(chkEliminar.checked){
-      if(this.strCodeBarBulto.length == 0 || this.strCodeBarBulto.trim() == ""){
-        alert('Debe ingresar el código de bulto');
-        this.selectAll(this.inputCodeBarBulto, 600);
-        chkEliminar.checked = false;
-      }
+    // debugger;
+    // if(chkEliminar.checked){
+    //   if(this.strCodeBarBulto.length == 0 || this.strCodeBarBulto.trim() == ""){
+    //     alert('Debe ingresar el código de bulto');
+    //     this.selectAll(this.inputCodeBarBulto, 600);
+    //     chkEliminar.checked = false;
+    //   }
   
-      if(this.bolEliminar == true){
+    //   if(this.bolEliminar == true){
         
-        const confirm = this.alertCtrl.create({
-          title: 'Eliminar',
-          message: '¿Desea quitar el (sub) bulto del embarque?',
-          buttons: [
-            {
-              text: 'Si',
-              handler: () => {
-                this.sDesp.eliminarBultoEmbarque(this.strCodeBarBulto, this.vParameter.Id_Tra, this.sGlobal.Id_Almacen, this.sGlobal.userName).then(result=>{
-                  debugger;
-                  let res: any = result;
+    //     const confirm = this.alertCtrl.create({
+    //       title: 'Eliminar',
+    //       message: '¿Desea quitar el (sub) bulto del embarque?',
+    //       buttons: [
+    //         {
+    //           text: 'Si',
+    //           handler: () => {
+    //             this.sDesp.eliminarBultoEmbarque(this.strCodeBarBulto, this.vParameter.Id_Tra, this.sGlobal.Id_Almacen, this.sGlobal.userName).then(result=>{
+    //               debugger;
+    //               let res: any = result;
   
-                  if(res.errNumber == 0){
-                    alert(res.message);
-                    this.bultoLeido = parseFloat(res.valor1);
-                    this.subBultoLeido = parseFloat(res.valor2);
-                    this.bolEliminar = false;
-                  //     txtcodBarraBulto.Focus();
-                  //     txtcodBarraBulto.SelectAll();
-                    this.selectAll(this.inputCodeBarBulto, 600);
-                  }else if(res.errNumber == -1){
-                    alert(res.message);
-                    this.strCodeBarBulto = "";
-                    chkEliminar.checked = false;
-                  //     txtcodBarraBulto.Focus();
-                    this.selectAll(this.inputCodeBarBulto, 600);
-                  }
-                });
-              }
-            },
-            {
-              text: 'No',
-              handler: () => {
-                this.bolEliminar = false;
-                return;
-              }
-            }
-          ]
-        });
-        confirm.present();
-      }
-    }    
+    //               if(res.errNumber == 0){
+    //                 alert(res.message);
+    //                 this.bultoLeido = parseFloat(res.valor1);
+    //                 this.subBultoLeido = parseFloat(res.valor2);
+    //                 this.bolEliminar = false;
+    //               //     txtcodBarraBulto.Focus();
+    //               //     txtcodBarraBulto.SelectAll();
+    //                 this.selectAll(this.inputCodeBarBulto, 600);
+    //               }else if(res.errNumber == -1){
+    //                 alert(res.message);
+    //                 this.strCodeBarBulto = "";
+    //                 chkEliminar.checked = false;
+    //               //     txtcodBarraBulto.Focus();
+    //                 this.selectAll(this.inputCodeBarBulto, 600);
+    //               }
+    //             });
+    //           }
+    //         },
+    //         {
+    //           text: 'No',
+    //           handler: () => {
+    //             this.bolEliminar = false;
+    //             return;
+    //           }
+    //         }
+    //       ]
+    //     });
+    //     confirm.present();
+    //   }
+    // }    
   }
 
   goToEmbarPage05(obj): void{
@@ -126,7 +203,8 @@ export class EmbarquePage_04Page {
       'totalSubBultos': obj.totalSubBultos,
       'totSubBultosLeido': obj.totSubBultosLeido,
       'totalBultos': obj.totalBultos,
-      'totalSaldo': obj.totalSaldo
+      'totalSaldo': obj.totalSaldo,
+      'OperacionBultos': obj.OperacionBultos
     };
     this.navCtrl.push(EmbarquePage_05Page, { 'vParameter': parameter});
   }
@@ -136,5 +214,9 @@ export class EmbarquePage_04Page {
     setTimeout(()=>{
       nativeEl.select();
     }, time);
+  }
+
+  ionViewWillEnter() {
+    this.selectAll(this.inputCodeBarBulto, 500);
   }
 }
