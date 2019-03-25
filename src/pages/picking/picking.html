@@ -64,7 +64,7 @@
 
     <ion-row class="bgWhite">
         <ion-card *ngFor="let objPicking of listAuxOrdenesPicking">
-            <ion-card-content style="padding: 8px 2px; font-size: 12px">
+            <ion-card-content style="padding: 8px 2px; font-size: 12px" (press)="habilitaIncidencia(objPicking)">
                 <ion-row no-padding no-margin>
                     <div no-margin [ngClass]="{plomo : (objPicking.Id_Estado == 2), amarillo: (objPicking.Id_Estado == 3), verde: (objPicking.Id_Estado ==5 || objPicking.Id_Estado ==6) }"
                         style="margin-right: 2px;  width: 2%;">
@@ -139,41 +139,7 @@
                                     {{objPicking.Cuenta}}
                                 </ion-label>
                             </ion-col>
-                        </ion-row>
-                        <!-- <ion-row>
-                            <div style="width: 90%">
-                                <ion-row no-padding no-margin>
-                                    <ion-col col-3 no-padding no-margin>
-                                        <ion-label no-padding no-margin style="font-weight:bold;">
-                                            Tipo Mov.:
-                                        </ion-label>
-                                    </ion-col>
-                                    <ion-col col-9 no-padding no-margin>
-                                        <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                                            {{objPicking.TipoMovimiento}}
-                                        </ion-label>
-                                    </ion-col>
-                                </ion-row>
-                                <ion-row no-padding no-margin>
-                                    <ion-col col-3 no-padding no-margin>
-                                        <ion-label no-padding no-margin style="font-weight:bold;">
-                                            Cuenta:
-                                        </ion-label>
-                                    </ion-col>
-                                    <ion-col col-9 no-padding no-margin>
-                                        <ion-label no-padding no-margin style="font-weight:bold;">
-                                            {{objPicking.Cuenta}}
-                                        </ion-label>
-                                    </ion-col>
-                                </ion-row>
-                            </div>
-                            <div no-margin style="position: relative; text-align: center; float:none; padding-top: 3%; margin-right: 2px;  width: 8%;">
-                                <button no-margin no-padding ion-button icon-only clear (click)="ValidarOrden(objPicking)"
-                                    style="position: absolute;	top: 0;	bottom: 0; left: 0; right: 0; width: 80%; margin: auto; background:none;">
-                                    <ion-icon name="md-play" color="dark"></ion-icon>
-                                </button>
-                            </div>
-                        </ion-row> -->
+                        </ion-row>                        
                     </div>
                     <div no-margin style="position: relative; text-align: center; float:none; padding-top: 3%; margin-right: 2px;  width: 6%;">
                         <button no-margin no-padding ion-button icon-only clear (click)="ValidarOrden(objPicking)"

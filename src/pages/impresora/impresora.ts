@@ -51,7 +51,8 @@ export class ImpresoraPage {
           handler: () => {
             this.sGlobal.Id_Impresora = print.Id_Impresora;
             this.sGlobal.nombreImpresora = print.Nombre;
-            this.dismiss();
+            let printSel = {'printSel': print.Nombre };
+            this.dismiss(printSel);
           }
         },
         {
@@ -65,8 +66,8 @@ export class ImpresoraPage {
     confirm.present();
   }
 
-  dismiss(){
+  dismiss(dataSel){
     //let data = { 'foo': 'bar' };
-    this.viewCtrl.dismiss();//data);
+    this.viewCtrl.dismiss(dataSel);//data);
   }
 }

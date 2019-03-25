@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, App, ModalController, NavController, NavParams, PopoverController, AlertController } from 'ionic-angular';
-import { PopoverRutaPickingPage } from '../../picking/popover/popover-ruta-picking/popover-ruta-picking'
 import { AlmacenajeServiceProvider } from '../../../providers/almacenaje-service/almacenaje-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { IncidenciaPage } from '../../incidencia/incidencia';
@@ -8,6 +7,7 @@ import { AdministrarUaPage } from '../../almacenaje/menu-consultar/administrar-u
 import { ConsultarUbicacionPage } from '../../almacenaje/consultar-ubicacion/consultar-ubicacion'
 import { MainMenuPage } from '../../main-menu/main-menu'
 import { HomePage } from '../../home/home';
+import { PopoverPickingPage } from '../../picking/popover/popover-picking/popover-picking'
 /**
  * Generated class for the ReabastecimientoPage page.
  *
@@ -52,13 +52,20 @@ export class ReabastecimientoPage {
     this.navCtrl.pop();
   }
 
-  showModalIncidencia2(){ //data
+  showModalIncidencia(data) {
     debugger;
-    let modalIncidencia = this.modalCtrl.create(IncidenciaPage); //{ 'pIncidencia' : obj});
-    modalIncidencia.onDidDismiss(data =>{
-      if(data.response == 200){
-        this.navCtrl.pop();
-      }
+    let obj = {
+      'Id_Tx': data.Id_Tx,
+      'FlagPausa' : data.FlagPausa,
+      'NumOrden': data.NumOrden,
+      'id_Cliente': data.Id_Cuenta,
+      'id_Modulo': 5
+    };
+
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia': obj });
+    modalIncidencia.onDidDismiss(data => {
+      debugger;
+      console.log("datos", data);
     });
     modalIncidencia.present();
   }
@@ -89,17 +96,15 @@ export class ReabastecimientoPage {
   }
 
   presentPopover(ev) {
-    let popover = this.popoverCtrl.create(PopoverRutaPickingPage, {
-      // contentEle: this.content.nativeElement,
-      // textEle: this.text.nativeElement
-    });
+
+    let popover = this.popoverCtrl.create(PopoverPickingPage, {'page' : 1});
     popover.present({
       ev: ev
     });
 
     popover.onDidDismiss(popoverData => {
       if (popoverData == 1) {
-        this.showModalIncidencia2();
+        this.showModalIncidencia(this.vPickingXProducto);
       } else if (popoverData == 2) {
         debugger;
         this.showModalAdministrarUaPage();

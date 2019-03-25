@@ -35,14 +35,13 @@ export class PickingPage {
   vPickingPage: any;
 
   listAuxOrdenesPicking: any = [];
-
   listaTempRutaPicking: any = [];
-
   listDetalleSinTrabajar: any = [];
   listDetalleProceso: any = [];
-
   rowCountSinTrabajar: any;
   rowCountProceso: any;
+
+  rowPickingSelect: any;
 
   // @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
   // @ViewChild('popoverText', { read: ElementRef }) text: ElementRef;
@@ -103,6 +102,12 @@ export class PickingPage {
     } else {
       this.getDataRutaPicking(data.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen, data)
     }
+  }
+
+
+  habilitaIncidencia(obj):void{
+    this.rowPickingSelect = obj;
+    this.presentToast('Se habilito la opción Registrar incidencias');
   }
 
   getDataOrdenes() {
@@ -208,8 +213,10 @@ export class PickingPage {
       'Id_Tx': data.Id_Tx,
       'NumOrden': data.NumOrden,
       'Cliente': data.Cliente,
+      'Id_Cuenta': data.Id_Cuenta,
       'Ciudad': data.Ciudad,
-      'Zona': data.Zona
+      'Zona': data.Zona,
+      'FlagPausa': data.FlagPausa
     };
     this.navCtrl.push(RutaPickingPage, {
       data: this.vPickingPage
@@ -222,7 +229,9 @@ export class PickingPage {
       'Id_Page_Anterior': 1,
       'Id_Tx': data.Id_Tx,
       'NumOrden': data.NumOrden,
-      'Cliente': data.Cliente
+      'Id_Cuenta': data.Id_Cuenta,
+      'Cliente': data.Cliente,
+      'FlagPausa': data.FlagPausa
     };
     this.navCtrl.push(DetallePickingPage, {
       data: this.vPickingPage
@@ -255,12 +264,13 @@ export class PickingPage {
   }
 
   showModalIncidencia(data) {
+    debugger;
     let obj = {
       'Id_Tx': data.Id_Tx,
+      'FlagPausa' : data.FlagPausa,
       'NumOrden': data.NumOrden,
-      'Cliente': data.Cliente,
-      'Ciudad': data.Ciudad,
-      'Zona': data.Zona
+      'id_Cliente': data.Id_Cuenta,
+      'id_Modulo': 5
     };
 
     let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia': obj });
@@ -269,28 +279,7 @@ export class PickingPage {
       console.log("datos", data);
     });
     modalIncidencia.present();
-  }
-
-  showModalIncidencia2(){ //data
-    debugger;
-    // let obj = { 
-    //     'Id_Tx' : data.Id_Tx,
-    //     'FlagPausa' : data.FlagPausa,
-    //     'Cliente' : data.Cliente,
-    //     'Id_Cliente' : data.Id_Cliente,
-    //     'Proveedor' : data.Proveedor,
-    //     'Id_TipoMovimiento' : data.Id_TipoMovimiento,
-    //     'Origen' : 'RP02'
-    //   };
-
-    let modalIncidencia = this.modalCtrl.create(IncidenciaPage); //{ 'pIncidencia' : obj});
-    modalIncidencia.onDidDismiss(data =>{
-      if(data.response == 200){
-        this.navCtrl.pop();
-      }
-    });
-    modalIncidencia.present();
-  }
+  } 
 
   presentToast(message) {
     let toast = this.toastCtrl.create({
@@ -302,17 +291,22 @@ export class PickingPage {
   }
 
   presentPopover(ev) {
-    let popover = this.popoverCtrl.create(PopoverPickingPage, {
-      // contentEle: this.content.nativeElement,
-      // textEle: this.text.nativeElement
-    });
+    // let popover = this.popoverCtrl.create(PopoverPickingPage, {
+    //   // contentEle: this.content.nativeElement,
+    //   // textEle: this.text.nativeElement
+    // });
+    // popover.present({
+    //   ev: ev
+    // });
+
+    let popover = this.popoverCtrl.create(PopoverPickingPage, {'page' : 0, 'has_Id_Tx': (this.rowPickingSelect != undefined) ? true : false });
     popover.present({
       ev: ev
     });
 
     popover.onDidDismiss(popoverData => {
       if (popoverData == 1) {
-        this.showModalIncidencia2();
+        this.showModalIncidencia(this.rowPickingSelect);
       } else if (popoverData == 2) {
         debugger;
         this.showModalAdministrarUaPage();
@@ -320,6 +314,9 @@ export class PickingPage {
         debugger;
         this.goConsultarUbicacionPage();
       } else if (popoverData == 4) {
+        debugger;
+        this.goMenu();
+      }else if (popoverData == 5) {
         debugger;
         this.navCtrl.pop();
         var nav = this.app.getRootNav();
