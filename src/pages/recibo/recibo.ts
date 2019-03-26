@@ -84,6 +84,7 @@ export class ReciboPage {
   }
 
   evaluateGoReciboPage02(data) {
+    debugger;
     if (data.FlagPausa == true) {
       this.showModalIncidencia(data);
     } else {

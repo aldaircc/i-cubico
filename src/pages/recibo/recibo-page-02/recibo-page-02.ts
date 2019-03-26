@@ -112,6 +112,11 @@ export class ReciboPage_02Page {
         return (item.Codigo.toLowerCase().indexOf(val.toLowerCase()) > -1) || (item.Descripcion.toLowerCase().indexOf(val.toLowerCase()) > -1);
       });
       this.rowCount = this.listAuxDetailTx.length;
+      
+      if(this.rowCount <= 0){
+        alert('Orden no existe');
+      }
+      
     }else{
       this.rowCount = this.listDetailTx.length;
       return this.listAuxDetailTx = this.listDetailTx;

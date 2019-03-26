@@ -49,7 +49,16 @@ export class ReciboPage_03Page {
   }
 
   ionViewWillEnter(){
+    debugger;
     this.selectAll(this.iCodeBar, 500);
+    this.getUAsProducto(this.vReciboPage02.Id_Tx, this.vReciboPage02.Id_Producto, this.vReciboPage02.Item);
+  }
+
+  getUAsProducto(strId_Tx, intId_Producto, intItem):void{
+    this.sRecibo.listarUAXProductoTx(strId_Tx, intId_Producto, intItem).then(result=>{
+      let res: any = result;
+      this.cantidadBulto = res.length;
+    });
   }
 
   selectAll(el: ElementRef, time){
@@ -402,7 +411,7 @@ export class ReciboPage_03Page {
     debugger;
     if(message.errNumber === 0){
       let valor1 = parseFloat(message.valor1);
-      let bultos = this.cantidadBulto + 1;
+      this.cantidadBulto++;
       this.vReciboPage02.Saldo = this.vReciboPage02.Saldo - valor1;
       let saldo = this.vReciboPage02.Saldo;
       //this.vReciboPage02.CantidadOperacion = bultos * valor1;
@@ -414,9 +423,14 @@ export class ReciboPage_03Page {
       this.bolUaValida = false;
       this.cantidadAve = 0;
       this.cantidadRec = 0;
-      
+      this.codeBar.Text = "";
+      this.codeBar.Tag = "";
+
       if(saldo == 0){
-        this.presentToast('Item completo');
+        this.presentToast('Producto completo');
+        this.selectAll(this.iCodeBar, 500);
+      }else{
+        this.presentToast('Registro exitoso');
         this.selectAll(this.iCodeBar, 500);
       }
     }else if(message.errNumber == 1){
@@ -546,11 +560,13 @@ export class ReciboPage_03Page {
   }
 
   navigateToEtqCajaLpn(data){
+    debugger;
     let objEtq = {
     "LoteLab": data.Lote,
     "Id_Producto": data.Id_Producto,
-    "Id_UM": data.UM,
+    "Id_UM": data.Id_UM,
     "CantidadPedida": data.CantidadPedida,
+    "CantidadOperacion": data.CantidadOperacion,
     "Codigo": data.Codigo,
     "Articulo": data.Articulo, //Articulo
     "UM": data.UM,
