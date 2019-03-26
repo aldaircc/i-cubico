@@ -31,7 +31,7 @@ export class IncidenciaPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl:ViewController,
     public sIncidencia: IncidenciaServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vParameters = navParams.get('pIncidencia');
-    this.listarCausalesXModulo(0, 1);
+    this.listarCausalesXModulo(this.vParameters.id_Cliente, this.vParameters.id_Modulo);
     
     if(this.tipo == 1){
       this.buscarControlUsuario(this.vParameters.Id_Tx, this.sGlobal.userName);

@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, App, ModalController, NavController, NavParams, AlertController, PopoverController, Navbar } from 'ionic-angular';
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
-import { PopoverRutaPickingPage } from '../../picking/popover/popover-ruta-picking/popover-ruta-picking'
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { PickingPorProductoPage } from '../picking-por-producto/picking-por-producto';
 import { DetallePickingPage } from '../detalle-picking/detalle-picking';
@@ -10,6 +9,7 @@ import { AdministrarUaPage } from '../../almacenaje/menu-consultar/administrar-u
 import { ConsultarUbicacionPage } from '../../almacenaje/consultar-ubicacion/consultar-ubicacion'
 import { MainMenuPage } from '../../main-menu/main-menu'
 import { HomePage } from '../../home/home';
+import { PopoverPickingPage } from '../../picking/popover/popover-picking/popover-picking'
 /**
  * Generated class for the DetallePorProductoPage page.
  *
@@ -116,7 +116,9 @@ export class DetallePorProductoPage {
       'NumOrden': this.vPickingXProducto.NumOrden,
       'Cliente': this.vPickingXProducto.Cliente,
       'Ciudad': this.vPickingXProducto.Ciudad,
-      'Zona': this.vPickingXProducto.Zona
+      'Zona': this.vPickingXProducto.Zona,
+      'FlagPausa': this.vPickingXProducto.FlagPausa,
+      'Id_Cuenta': this.vPickingXProducto.Id_Cuenta
     };
     this.navCtrl.push(PickingPorProductoPage, {
       data: this.vDetalleXProducto
@@ -133,6 +135,8 @@ export class DetallePorProductoPage {
       'Ciudad': this.vPickingXProducto.Ciudad,
       'Zona': this.vPickingXProducto.Zona,
       'idRutaPicking': this.vPickingXProducto.idRutaPicking,
+      'FlagPausa': this.vPickingXProducto.FlagPausa,
+      'Id_Cuenta': this.vPickingXProducto.Id_Cuenta
     };
     this.navCtrl.push(DetallePickingPage, {
       data: this.vDetalleXProducto
@@ -186,13 +190,20 @@ export class DetallePorProductoPage {
 
   }
 
-  showModalIncidencia2(){ //data
+  showModalIncidencia(data) {
     debugger;
-    let modalIncidencia = this.modalCtrl.create(IncidenciaPage); //{ 'pIncidencia' : obj});
-    modalIncidencia.onDidDismiss(data =>{
-      if(data.response == 200){
-        this.navCtrl.pop();
-      }
+    let obj = {
+      'Id_Tx': data.Id_Tx,
+      'FlagPausa' : data.FlagPausa,
+      'NumOrden': data.NumOrden,
+      'id_Cliente': data.Id_Cuenta,
+      'id_Modulo': 5
+    };
+
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia': obj });
+    modalIncidencia.onDidDismiss(data => {
+      debugger;
+      console.log("datos", data);
     });
     modalIncidencia.present();
   }
@@ -222,18 +233,14 @@ export class DetallePorProductoPage {
     this.navCtrl.push(MainMenuPage);
   }
 
-  presentPopover(ev) {
-    let popover = this.popoverCtrl.create(PopoverRutaPickingPage, {
-      // contentEle: this.content.nativeElement,
-      // textEle: this.text.nativeElement
-    });
+  presentPopover(ev) {    let popover = this.popoverCtrl.create(PopoverPickingPage, {'page' : 1});
     popover.present({
       ev: ev
     });
 
     popover.onDidDismiss(popoverData => {
       if (popoverData == 1) {
-        this.showModalIncidencia2();
+        this.showModalIncidencia(this.vPickingXProducto);
       } else if (popoverData == 2) {
         debugger;
         this.showModalAdministrarUaPage();
@@ -261,15 +268,7 @@ export class DetallePorProductoPage {
       }
       if (this.vPickingXProducto.Id_Page_Anterior == 3) {
         this.goDetallePickingPage(); //ir a detalle picking
-      }
-
-
-
-      // if(this.vPickingXProducto.idRutaPicking){
-      //   this.goPickingPorProductoPage();
-      // }else{
-      //   this.navCtrl.pop();
-      // }        
+      }      
     }
     console.log('ionViewDidLoad DetallePorProductoPage');
   }

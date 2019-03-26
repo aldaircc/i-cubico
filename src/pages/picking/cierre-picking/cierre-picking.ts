@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, App, NavController, NavParams, PopoverController, ToastController, AlertController, ModalController } from 'ionic-angular';
-import { PopoverRutaPickingPage } from '../../picking/popover/popover-ruta-picking/popover-ruta-picking'
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 import { ImpresoraPage } from '../../impresora/impresora'
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
@@ -13,6 +12,8 @@ import { MainMenuPage } from '../../main-menu/main-menu'
 import { HomePage } from '../../home/home';
 
 import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
+
+import { PopoverPickingPage } from '../../picking/popover/popover-picking/popover-picking'
 
 /**
  * Generated class for the CierrePickingPage page.
@@ -171,7 +172,7 @@ export class CierrePickingPage {
                     if (result) {
                       // Mostrar lista de impresoras
                       this.showModalImpresora();
-                      this.imprimir();
+                      
                     }
                     //Ir a detalle ordenes
                     this.goPickingPage();
@@ -329,6 +330,7 @@ export class CierrePickingPage {
     }
 
   }
+  
   CerrarPicking_old(idTx, idEstado, usuario, idMuelle, IdAlmacen) {
     debugger;
     this.sPicking.CerrarPicking(idTx, idEstado, usuario, idMuelle, IdAlmacen).then((result) => {
@@ -397,17 +399,23 @@ export class CierrePickingPage {
     toast.present();
   }
 
-  showModalIncidencia2() { //data
+  showModalIncidencia(data) {
     debugger;
-    let modalIncidencia = this.modalCtrl.create(IncidenciaPage); //{ 'pIncidencia' : obj});
+    let obj = {
+      'Id_Tx': data.Id_Tx,
+      'FlagPausa' : data.FlagPausa,
+      'NumOrden': data.NumOrden,
+      'id_Cliente': data.Id_Cuenta,
+      'id_Modulo': 5
+    };
+
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia': obj });
     modalIncidencia.onDidDismiss(data => {
-      if (data.response == 200) {
-        this.navCtrl.pop();
-      }
+      debugger;
+      console.log("datos", data);
     });
     modalIncidencia.present();
   }
-
 
   showModalAdministrarUaPage() {
     debugger;
@@ -435,17 +443,14 @@ export class CierrePickingPage {
   }
 
   presentPopover(ev) {
-    let popover = this.popoverCtrl.create(PopoverRutaPickingPage, {
-      // contentEle: this.content.nativeElement,
-      // textEle: this.text.nativeElement
-    });
+    let popover = this.popoverCtrl.create(PopoverPickingPage, {'page' : 1});
     popover.present({
       ev: ev
     });
 
     popover.onDidDismiss(popoverData => {
       if (popoverData == 1) {
-        this.showModalIncidencia2();
+        this.showModalIncidencia(this.vRutaPickingPage);
       } else if (popoverData == 2) {
         debugger;
         this.showModalAdministrarUaPage();
@@ -467,6 +472,11 @@ export class CierrePickingPage {
   showModalImpresora() {
     let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
     modalIncidencia.present();
+    modalIncidencia.onDidDismiss(printSel =>{
+     if(printSel != ""){
+      this.imprimir();
+     }
+    });
   }
 
   goBackRutaPicking() {
