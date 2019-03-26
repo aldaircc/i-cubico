@@ -124,7 +124,8 @@ export class ReciboPage {
       'Id_Cliente': data.Id_Cliente,
       'Proveedor': data.Proveedor,
       'Id_TipoMovimiento': data.Id_TipoMovimiento,
-      'Origen': 'RP01'
+      'Origen': 'RP01',
+      'id_Modulo': 1
     };
 
     let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia': obj });
