@@ -45,7 +45,7 @@ export class InventarioPage_04Page {
   lblInfo02: any = { 'Text' : '', 'Value': '' };
 
   @ViewChild(Navbar) navBar: Navbar;
-  @ViewChild('inputCodeBarUA') inputCodeBarUA;
+  //@ViewChild('inputCodeBarUA') inputCodeBarUA;
   @ViewChild('inputAveriado') inputAveriado;
   
   //@ViewChild('inputUbicacion') inputUbicacion;
@@ -53,6 +53,8 @@ export class InventarioPage_04Page {
 
   @ViewChild('inputCantidad', { read: ElementRef }) private inputCantidad:ElementRef;
   //@ViewChild('inputCodeBar', { read: ElementRef }) private inputCodeBar:ElementRef;
+
+  @ViewChild('inputCodeBarUA', { read: ElementRef }) private inputCodeBarUA: ElementRef;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
@@ -96,23 +98,16 @@ export class InventarioPage_04Page {
     this.sInve.listarUAsXUbicacionInventario(strIdInventario, strCodBarraUbi).then(result=>{
       this.listUAsxUbi = result;
       this.intCountUAs = this.listUAsxUbi.length;
-      debugger;
       if(this.intCountUAs != this.vParameter.cantidadxUbicacion){
-        
         this.presentAlert("No se ha inventariado todas UAs de esta ubicación,\r ¿Está seguro de continuar?").then((resultAlert) => {
           if (resultAlert) {
-            this.navCtrl.pop();
-            //this.isVisibleData = false;
-            // if(this.vParameter.TipoInventario == 'CICLICO'){
-            //   this.navCtrl.pop();
-            // }else{
-            //   this.strUbicacion = "";
-            //   this.isEnabledUbicacion = true;
-            //   this.selectAll(this.inputUbicacion, 1000);
-            //   this.isBgRed = false;
-            //   this.isBgGreen = false;
-            //   this.isBgYellow = false;
-            // }
+            if(this.vParameter.TipoInventario == 'CICLICO'){
+              this.navCtrl.remove(this.navCtrl.getViews().length - 2, 2);
+            }else{
+              this.navCtrl.pop();
+            }
+          }else{
+            this.selectAll( (this.intId_Ubicacion != 0 && this.intId_Ubicacion != undefined) ? this.inputCodeBarUA : this.inputUbicacion, 500);
           }
         });
       }
@@ -159,13 +154,10 @@ export class InventarioPage_04Page {
         this.intId_Ubicacion = parseInt(res.valor1);
         this.isEnabledCodeBar = true;
         this.isEnabledUbicacion = false;
-        this.inputCodeBarUA
-        setTimeout(() => {
-        this.inputCodeBarUA.setFocus();
-        }, 800);
+        this.selectAll(this.inputCodeBarUA, 700);
       }else{
         alert(res.message);
-        this.selectAll(this.inputUbicacion, 600);
+        this.selectAll(this.inputUbicacion, 500);
       }
     });
   }
@@ -183,7 +175,7 @@ export class InventarioPage_04Page {
     this.sInve.validarUAInventario(strIdInventario, intIdAlmacen, intIdProducto, strUA).then(result=>{
       this.uaValidada = null;
       let res: any = result;
-      if(res != null && res.length > 0) {
+      if(res != null && res.length > 0){
 
         this.uaValidada = res[0];
 
@@ -227,12 +219,9 @@ export class InventarioPage_04Page {
               {
                 text: 'Si',
                 handler: () => {
-                  debugger;
                   this.txtAveriados.Text = res[0].CantidadAveriado;
                   this.txtCantidad.Text = res[0].Saldo;
                   if(!this.validarDatoInv()){
-                    debugger;
-
                     this.isVisibleData = false;
                     this.grabarDatosInvent(this.uaValidada);
                   }
@@ -244,47 +233,42 @@ export class InventarioPage_04Page {
 
         }
       }else{
-        debugger;
         this.isBgRed = true;
         this.isBgGreen = false;
         this.isBgYellow = false;
+        this.isVisibleData = false;
         alert('Código de artículo no encontrado');
         this.strCodeBarUA = "";
-        // txtCodBarra.SelectAll();
-        // txtCodBarra.Focus();
+        this.selectAll(this.inputCodeBarUA, 500);
       }
     });
   }
 
   
-  validarDatoInv(): boolean {
-    var rpta: boolean = false; //true ;
-    
+  validarDatoInv(): boolean {    
     if(this.strUbicacion.trim().length == 0 ){
       alert('Ingrese código de ubicación');
-      return rpta;
+      return true;
     }
 
     if(this.strCodeBarUA.trim().length == 0){
       alert('Ingrese código de artículo');
-      return rpta;
+      return true;
     }
 
     if(this.txtCantidad.Text.length == 0){
       alert('Ingrese la cantidad');
-      return rpta;
+      return true;
     }
-
     // if(!isNumber(this.txtCantidad.text)){
     //   alert('Cantidad incorrecta');
     //   return false;
     // }
     if(parseFloat(this.txtCantidad.Text) <= 0){
       alert('Cantidad Incorrecta');
-      return rpta;
+      return true;
     }
-
-    return rpta;
+    return false;
   }  
 
   grabarDatosInvent(checkedUA): void{
@@ -298,7 +282,7 @@ export class InventarioPage_04Page {
           this.strCodeBarUA, 
           checkedUA.Cantidad, 
           this.txtCantidad.Text, 
-          parseFloat(this.txtAveriados.Text), 
+          parseFloat((this.txtAveriados.Text.length <= 0) ? 0 : this.txtAveriados.Text), 
           checkedUA.IdUbicacion, 
           this.intId_Ubicacion, 
           flagActualizado, 
@@ -313,7 +297,7 @@ export class InventarioPage_04Page {
         this.strCodeBarUA, 
         checkedUA.Cantidad, 
         this.txtCantidad.Text, 
-        this.txtAveriados.Text,
+        parseFloat((this.txtAveriados.Text.length <= 0) ? 0 : this.txtAveriados.Text), 
         checkedUA.IdUbicacion, 
         this.intId_Ubicacion, 
         flagActualizado, 
@@ -346,7 +330,6 @@ export class InventarioPage_04Page {
   }
 
   registrar(): void{
-    debugger;
     if(!this.validarDatoInv()){
         if(parseFloat(this.txtCantidad.Text) == 0){
           let message = this.alertCtrl.create({
@@ -384,7 +367,6 @@ export class InventarioPage_04Page {
       isCorrect = true;
     }
 
-    debugger;
     if(isCorrect == false){
 
       let message = this.alertCtrl.create({
@@ -406,7 +388,6 @@ export class InventarioPage_04Page {
           {
             text: 'Si',
             handler: () => {
-              debugger;
               isCorrect = true;
               this.grabarDatosInvent(this.uaValidada);
             }
@@ -425,7 +406,7 @@ export class InventarioPage_04Page {
     this.txtCantidad.Text = "0";
     this.txtAveriados.Text = "0";
     this.uaValidada = null;
-    setTimeout(()=>{ this.inputCodeBarUA.setFocus(); }, 150);
+    this.selectAll(this.inputCodeBarUA, 500);
   }
 
   limpiarCampos(): void{
@@ -456,14 +437,15 @@ export class InventarioPage_04Page {
         //     CargarDetalle();
         //     btnEliminar.Enabled = false;
     }else{
-      if(this.strUbicacion.length > 0){
+      //if(this.strUbicacion.length > 0){
+      if(this.intId_Ubicacion != 0 && this.intId_Ubicacion != undefined){
         this.goToInventPage05();
         //         lblCodUbicacion.Text = txtCodUbicacion.Text;
         //         CargarDetalle();
         //         btnEliminar.Enabled = false;
       }else{
-        alert('Ingrese código de ubicación');
-        this.selectAll(this.inputUbicacion, 1000);
+        alert('Ingrese y verifique un código de ubicación');
+        this.selectAll(this.inputUbicacion, 500);
         //         txtCodUbicacion.SelectAll();
         //         txtCodUbicacion.Focus();
       }
@@ -495,7 +477,7 @@ export class InventarioPage_04Page {
 
   ionViewWillEnter(){
     this.limpiarCampos();
-    this.selectAll(this.inputUbicacion, 600);
+    this.selectAll( (this.intId_Ubicacion != 0 && this.intId_Ubicacion != undefined) ? this.inputCodeBarUA : this.inputUbicacion, 600);
     this.isVisibleData = false;
     this.isBgGreen = false;
     this.isBgYellow = false;
@@ -505,7 +487,6 @@ export class InventarioPage_04Page {
   //Debes validar si cuenta con uas pendientes !!!
   ionViewDidLoad() {
     this.navBar.backButtonClick = (e: UIEvent) => {
-      debugger;
       this.cambiarUbicacion(this.vParameter.Id_Inventario, ( (this.vParameter.TipoInventario == 'GENERAL') ? this.strUbicacion: this.vParameter.CodigoBarra) );
     }
   }

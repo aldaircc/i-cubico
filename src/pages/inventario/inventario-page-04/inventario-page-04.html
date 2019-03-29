@@ -24,12 +24,12 @@
   </ion-grid>
 
   <ion-list>
-    <ion-item class="input-has-focus" [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgRed }">
+    <ion-item class="input-has-focus">
       <ion-label>Ubicación:</ion-label>
       <ion-input type="text" [(ngModel)]="strUbicacion" (keyup.enter)="validarUbicacion()" [disabled]="!isEnabledUbicacion" #inputUbicacion></ion-input>
     </ion-item>
 
-    <ion-item [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgRed }">
+    <ion-item>
       <ion-label>Código de barras UA:</ion-label>
       <ion-input type="text" [(ngModel)]="strCodeBarUA" (keyup.enter)="buscarArticuloEnLista()" [disabled]="!isEnabledCodeBar" #inputCodeBarUA></ion-input>
     </ion-item>

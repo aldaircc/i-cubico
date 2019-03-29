@@ -30,7 +30,6 @@ export class InventarioPage_06Page {
     this.sInve.listarUbicacionesSugeridasXProducto(intIdProducto, strLote, intIdAlmacen).then(result=>{
       this.listUbicacion = result;
       this.listUbicacion.forEach(el => {
-        debugger;
         el.cantidadxUbicacion = this.listUbicacion.reduce((acc, cur) => cur.Id_Ubicacion === el.Id_Ubicacion ? ++acc : acc, 0);
       });
     });
@@ -41,7 +40,6 @@ export class InventarioPage_06Page {
   }
 
   goToInventPage04(obj): void{
-    debugger;
     var parameter: any;
 
     parameter = (this.vParameter.TipoInventario == 'GENERAL') ? 

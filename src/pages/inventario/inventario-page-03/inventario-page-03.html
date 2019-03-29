@@ -41,7 +41,7 @@
       <ion-col>
         <ion-item>
             <ion-label stacked>Inventariador:</ion-label>
-          <ion-input [(ngModel)]="txtInventareador.Text" (ionFocus)="fixScroll()" id="absence-textarea" #inputInventariador></ion-input>
+          <ion-input [(ngModel)]="txtInventareador.Text" (ionFocus)="fixScroll()" id="absence-textarea" [disabled]="isInit" #inputInventariador></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>

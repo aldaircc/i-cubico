@@ -21,6 +21,7 @@ import moment from 'moment';
 export class InventarioPage_03Page {
 
   vParameter: any;
+  isInit: boolean = false;
   btnIniciar: any = { 'Text': ''};
   txtInventareador: any = { 'Text': '', 'ReadOnly': false };
   dtpFecha: any = { 'Text': new Date().toISOString(), 'Enabled': true};
@@ -33,31 +34,17 @@ export class InventarioPage_03Page {
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vParameter = this.navParams.get('vParameter');
     this.strTipoInventario = this.vParameter.TipoInventario;
-    debugger;
     if(this.vParameter.Id_Estado == 10){
       this.btnIniciar.Text = 'Iniciar';
       this.txtInventareador.ReadOnly = false;
       this.dtpFecha.Enabled = false;
-    //this.dtpFecha.Text = moment(this.vParameter.FechaProgramacion).toISOString();
-    //     dtpFecha.Text = DateTime.Now.ToShortDateString();
-    //     btnIniciar.Text = "Iniciar";
-    //     txtInventareador.ReadOnly = false;
-    //     dtpFecha.Enabled = false;
-    //     ManejoPaneles(2);
-    //     //estado en proceso
+      this.isInit = false;
 
     }else{
       this.btnIniciar.Text = 'Continuar';
       this.dtpFecha.Enabled = false;
-      //this.dtpFecha.Text = moment(this.vParameter.FechaProgramacion).toISOString();
+      this.isInit = true;
       this.txtInventareador.Text = "";
-
-    //     dtpFecha.Enabled = false;
-    //     if (rbtPerchas.Checked)
-    //     {
-    //         txtInventareador.Text = "";
-    //     }
-    //     ManejoPaneles(2);
     }
     this.dtpFecha.Text = moment(this.vParameter.FechaProgramacion).toISOString();
     this.lblInfo01.Text = (this.strTipoInventario == 'GENERAL') ? 'Sector' : 'Código';
@@ -88,11 +75,8 @@ export class InventarioPage_03Page {
 
                 if(this.strTipoInventario == 'GENERAL'){
                   this.goToInventPage04();
-//                     ManejoPaneles(3);
                 }else if(this.strTipoInventario == 'CICLICO'){
                   this.goToInventPage06();
-                  //                     CargarListaInventarioUbicacionesSugeridas();
-                  //                     ManejoPaneles(5);
                 }
               }
             },
@@ -110,11 +94,8 @@ export class InventarioPage_03Page {
     }else{
       if(this.strTipoInventario == 'CICLICO'){
         this.goToInventPage06();
-    //                 ManejoPaneles(5);
-    //                 CargarListaInventarioUbicacionesSugeridas();
       }else{
         this.goToInventPage04();
-    //                 ManejoPaneles(3);
       }
     }
   }
@@ -247,4 +228,7 @@ export class InventarioPage_03Page {
       }, time);
   }
 
+  ionViewWillEnter(){
+    this.selectAll(this.inputInventariador, 500);
+  }
 }
