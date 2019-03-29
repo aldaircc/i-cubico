@@ -42,8 +42,6 @@ export class IncidenciaPage {
 
   buscarControlUsuario(strId_OP, strUsuario){
     this.sIncidencia.buscarControlUsuario(strId_OP, strUsuario).then(result=>{
-      debugger;
-      console.log('resultado control usuario', result);
       let res : any = result;
       if(res.length != 0){
         this.observacion = result[0].Observacion;
@@ -56,7 +54,6 @@ export class IncidenciaPage {
 
   buscarControlPendiente(strIdTx, strUsuario){
     this.sIncidencia.buscarControlPendiente(strIdTx, strUsuario).then(result=>{
-      debugger;
       let res : any = result;
       if(res.length != 0){
         this.observacion = result[0].Observacion;
@@ -64,20 +61,10 @@ export class IncidenciaPage {
         this.fechaInicio = result[0].FechaHoraInicio;
         this.id_Causal = result[0].Id_Causal;
       }
-      /**
-      if (list.size() != 0){
-            ControlPendiente obj = list.get(0);
-            edtObser.setText(obj.getObservacion());
-            bolR_FlagPausa = obj.getFlagPausa();
-            dtFechaIni = obj.getFechaHoraInicio();
-            spnCausal.setSelection(getPositionOfCausal(obj.getId_Causal()));
-            btnParar.setText("Continuar");
-        } 
-      **/
     });
   }
 
-  dismiss(data = { 'response' : 400 }){
+  dismiss(data = { 'response' : 400, 'isChangePage': false }){
     this.viewCtrl.dismiss(data);
   }
 
@@ -106,10 +93,8 @@ export class IncidenciaPage {
       let res : any = result;
       if(res.errNumber == 0){
         let content = (this.flagPausa == true) ? "Continuar transacción":"Transacción detenida";
-        //toast -> content
         alert(content);
       }else{
-        //toast -> message.message
         alert(res.message);
       }
     });
@@ -121,13 +106,10 @@ export class IncidenciaPage {
     if(res.errNumber == 0){
       let content = (this.flagPausa == true) ? "Continuar transacción":"Transacción detenida";
       alert(content);
-      //toast -> content
-      //cerrar ventana de incidencia -> this.dismiss();
-      let data = { 'response': 200 };
+      let data = { 'response': 200, 'isChangePage': this.flagPausa };
       this.dismiss(data);
 
     }else{
-      //toast -> message.message
       alert(res.message);
     }
     });

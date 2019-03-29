@@ -147,7 +147,6 @@ export class EmbalajePage_03Page {
 
     var message = "";
     let saldo = this.listAuxDetEmbalaje.reduce(function(prev, cur){
-      debugger;
       return prev + cur.Saldo;
     }, 0);
 
