@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, PopoverController, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, PopoverController, App, ToastController } from 'ionic-angular';
 import { ReciboServiceProvider } from '../../providers/recibo-service/recibo-service';
 import { ReciboPage_02Page } from './recibo-page-02/recibo-page-02';
 import { IncidenciaPage } from '../incidencia/incidencia';
@@ -27,27 +27,41 @@ export class ReciboPage {
   listRecepcion: any;
   vReciboPage01: any;
   rowCount: any;
+  rowReciboSelect: any;
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController,
-    public sRecibo: ReciboServiceProvider, public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider) { }
+    public toastCtrl: ToastController, public sRecibo: ReciboServiceProvider, public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider) { }
+
+  showToast(message, duration, position, showClose, closeText, dismissChange){
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: duration,
+      position: position,
+      showCloseButton: showClose,
+      closeButtonText: closeText,
+      dismissOnPageChange: dismissChange
+    });
+
+    toast.present();
+  }
 
   presentPopover(myEvent){
-    debugger;
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 11});
+    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 11, 'has_Id_Tx': (this.rowReciboSelect != undefined) ? true : false });
     popover.present({
       ev: myEvent
     });
 
     popover.onDidDismiss(popoverData =>{
-      /**if(popoverData == 2){
-        this.showModalIncidencia(this.vReciboPage01);
-      }else **/if(popoverData == 3){
+      if(popoverData == 2){
+        this.showModalIncidencia(this.rowReciboSelect);
+      }else if(popoverData == 3){
         this.showModalImpresora();
       }else if(popoverData == 4){
         this.navCtrl.pop();
         var nav = this.app.getRootNav();
         nav.setRoot(HomePage);
       }
+      this.rowReciboSelect = null;
     });
   }
 
@@ -110,6 +124,11 @@ export class ReciboPage {
     this.getRecepcionesXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen, this.sGlobal.Id_Muelle);
   }
 
+  getReciboRow(obj):void{
+    this.rowReciboSelect = obj;
+    this.showToast('Recibo: '+ obj.Id_Tx + ' seleccionado', 2000, 'bottom', true, 'x', true);
+  }
+
   showModalIncidencia(data) {
     let obj = {
       'Id_Tx': data.Id_Tx,
@@ -118,17 +137,19 @@ export class ReciboPage {
       'Id_Cliente': data.Id_Cliente,
       'Proveedor': data.Proveedor,
       'Id_TipoMovimiento': data.Id_TipoMovimiento,
-      'Origen': 'RP01'
+      'Origen': 'RP01',
+      'id_Modulo': 1
     };
 
     let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia': obj });
 
     modalIncidencia.onDidDismiss(result => {
-      if (result.response == 200) {
+      if (result.response == 200 && result.isChangePage == true) {
         data.FlagPausa = !data.FlagPausa;
         this.goToReciboPage02(data);
+      }else{
+        this.getDataRecepcion();
       }
-
     });
     modalIncidencia.present();
   }

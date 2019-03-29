@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController, ModalController, Navbar } from 'ionic-angular';
+import { IonicPage, ViewController, NavController, NavParams, AlertController, ToastController, ModalController, Navbar } from 'ionic-angular';
 import { ReasignarUaPage } from '../reasignar-ua/reasignar-ua'
 import { ReubicarUaPage } from '../reubicar-ua/reubicar-ua'
 import { ParticionarUaPage } from '../particionar-ua/particionar-ua'
@@ -7,7 +7,12 @@ import { AlmacenajeServiceProvider } from '../../../../providers/almacenaje-serv
 import { GlobalServiceProvider } from '../../../../providers/global-service/global-service';
 import { ImpresoraPage } from '../../../impresora/impresora'
 import { MenuConsultarPage } from '../../../almacenaje/menu-consultar/menu-consultar'
+import { PickingPage } from '../../../picking/picking'
+import { RutaPickingPage } from '../../../picking/ruta-picking/ruta-picking';
+import { DetallePickingPage } from '../../../picking/detalle-picking/detalle-picking'
+import { CierrePickingPage } from '../../../picking/cierre-picking/cierre-picking';
 import moment from 'moment';
+import { EtiquetadoServiceProvider } from '../../../../providers/etiquetado-service/etiquetado-service';
 
 
 
@@ -32,6 +37,7 @@ export class AdministrarUaPage {
   @ViewChild('txtCantidad', { read: ElementRef }) private txtCantidad: ElementRef;
 
 
+  fecha: any;
   codeBarUA: string;
   ResultUA: any
   ResultUA_Aux: any = [];
@@ -53,13 +59,22 @@ export class AdministrarUaPage {
   vAdministrarUAPage: any;
   vDatosRecibidos: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
+  botonisDisplay: boolean = false;
+  titutlo1isDisplay: boolean = true;
+  titutlo2isDisplay: boolean = false;
+
+  constructor(public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController, public sEtq: EtiquetadoServiceProvider) {
     this.vDatosRecibidos = navParams.get('data');
     if (this.vDatosRecibidos.page == 3) {
       this.codeBarUA = this.vDatosRecibidos.CodBar_UA;
       this.validarCodeBarUA();
+    }
+    if (this.vDatosRecibidos.page == 'modal') {
+      this.botonisDisplay = true;
+      this.titutlo1isDisplay = false;
+      this.titutlo2isDisplay = true;
     }
   }
 
@@ -239,6 +254,7 @@ export class AdministrarUaPage {
         this.presentAlertConfirm("¿Está seguro de imprimir la etiqueta?”.").then((resultAlert3) => {
           if (resultAlert3) {
             //Imprimir
+            this.imprimir();
           }
         })
       }
@@ -250,6 +266,50 @@ export class AdministrarUaPage {
         }, (500));
       })
     }
+  }
+
+  imprimir() {
+    debugger;
+    var listContainer = [];
+    var listEtq = [];
+
+    this.fecha = new Date().toISOString()
+    let fechaVencimientoPrint = moment(this.FechaVencimiento, "DD-MM-YYYY").toDate();
+    //let fechaVencimientoStringPrint = fechaVencimientoPrint.toISOString();
+
+    listEtq = [];
+    listEtq.push({ "campo": "|MES|", "valor": moment(this.fecha).format("MMMM") });
+    listEtq.push({ "campo": "|ANIO|", "valor": moment(this.fecha).format("YYYY") });
+    listEtq.push({ "campo": "|LOTE|", "valor": this.Lote.trim() });
+    listEtq.push({ "campo": "|CODIGO|", "valor": this.ResultUA_Aux.Codigo });
+    listEtq.push({ "campo": "|CANTBULTO|", "valor": this.Cantidad });
+    listEtq.push({ "campo": "|CANTXBULTO|", "valor": 0 });
+    listEtq.push({ "campo": "|SALDO|", "valor": 0 });
+    listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": "" });
+    listEtq.push({ "campo": "|ORDEN|", "valor": "" });
+    listEtq.push({ "campo": "|USUARIO|", "valor": this.sGlobal.apeNom });
+    listEtq.push({ "campo": "|COMPOSICION|", "valor": "" });
+    listEtq.push({ "campo": "|UM|", "valor": this.ResultUA_Aux.UM });
+    listEtq.push({ "campo": "|CANTIDAD|", "valor": parseFloat(this.Cantidad).toFixed(2) });
+    listEtq.push({ "campo": "|COPIAS|", "valor": "1" });
+    listEtq.push({ "campo": "|CODBARRA|", "valor": this.codeBarUA });
+    listEtq.push({ "campo": "|PRODUCTO|", "valor": this.ResultUA_Aux.Descripcion });
+    listEtq.push({ "campo": "|EAN14|", "valor": "" });
+    listEtq.push({ "campo": "|EAN|", "valor": "" });
+    listEtq.push({ "campo": "|VENCIMIENTO|", "valor": moment(fechaVencimientoPrint).format("MMM-YYYY") });
+    listEtq.push({ "campo": "|CUENTA|", "valor": this.ResultUA_Aux.Pasillo });
+    listEtq.push({ "campo": "|TXTSALDO|", "valor": "" });
+    listContainer.push({ 'etiqueta': listEtq });
+
+    debugger;
+
+    this.sEtq.imprimirListaEtiquetas(listContainer, 'ETQ_UA.txt', this.sGlobal.nombreImpresora, true).then(result => {
+      debugger;
+      var message: any = result;
+      if (message.errNumber == -1) {
+        alert(message.mensaje);
+      }
+    });
   }
 
   showModalImpresora() {
@@ -287,10 +347,6 @@ export class AdministrarUaPage {
     let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
     nativeEl.select();
   }
-
-
-  
-
 
   presentToast(message) {
     let toast = this.toastCtrl.create({
@@ -348,7 +404,10 @@ export class AdministrarUaPage {
 
   goReasignarUaPage() {
     this.vAdministrarUAPage = {
-      'CodBar_UA': this.codeBarUA
+      'CodBar_UA': this.codeBarUA,
+      'Lote': this.Lote,
+      'Id_Producto': this.ResultUA[0].Id_Producto
+
     };
     this.navCtrl.push(ReasignarUaPage, {
       data: this.vAdministrarUAPage
@@ -357,7 +416,8 @@ export class AdministrarUaPage {
 
   goReubicarUaPage() {
     this.vAdministrarUAPage = {
-      'CodBar_UA': this.codeBarUA
+      'CodBar_UA': this.codeBarUA,
+      'Id_Ubicacion': this.ResultUA[0].Id_Ubicacion
     };
     this.navCtrl.push(ReubicarUaPage, {
       data: this.vAdministrarUAPage
@@ -386,12 +446,12 @@ export class AdministrarUaPage {
       this.vAdministrarUAPage = {
         'CodBar_UA': this.codeBarUA,
         'UM': this.ResultUA_Aux.UM,
+        'Codigo': this.ResultUA_Aux.Codigo,
         'DescProducto': this.ResultUA_Aux.Descripcion,
         'Lote': this.Lote,
         'FechaEmision': this.FechaEmision,
         'FechaVencimiento': this.FechaVencimiento,
-        //'CantidadUA' : sdfsdfsf,
-        //'Saldo' : dfsdfsdf,
+        'Pasillo': this.ResultUA_Aux.Pasillo,
         'CantidadTotal': parseFloat(this.Cantidad)
       };
       this.navCtrl.push(ParticionarUaPage, {
@@ -404,8 +464,80 @@ export class AdministrarUaPage {
     this.navCtrl.push(MenuConsultarPage);
   }
 
+  goPickingPage() {
+    this.navCtrl.push(PickingPage);
+  }
+
+  goRutaPickingPage() {
+    this.vAdministrarUAPage = {
+      'idRutaPicking': this.vDatosRecibidos.idRutaPicking,
+      'Id_Tx': this.vDatosRecibidos.Id_Tx,
+      'NumOrden': this.vDatosRecibidos.NumOrden,
+      'Cliente': this.vDatosRecibidos.Cliente,
+      'Ciudad': this.vDatosRecibidos.Ciudad,
+      'Zona': this.vDatosRecibidos.Zona
+    };
+    this.navCtrl.push(RutaPickingPage, {
+      data: this.vAdministrarUAPage
+    });
+  }
+
+  goDetallePickingPage() {
+    debugger;
+    this.vAdministrarUAPage = {
+      'Id_Page_Anterior': this.vDatosRecibidos.Id_Page_Anterior,
+      'Id_Tx': this.vDatosRecibidos.Id_Tx,
+      'NumOrden': this.vDatosRecibidos.NumOrden,
+      'Cliente': this.vDatosRecibidos.Cliente
+    };
+    this.navCtrl.push(DetallePickingPage, {
+      data: this.vAdministrarUAPage
+    });
+  }
+
+  goCerrarPickingPage() {
+    debugger;
+    this.vAdministrarUAPage = {
+      'Id_Tx': this.vDatosRecibidos.Id_Tx,
+      'NumOrden': this.vDatosRecibidos.NumOrden,
+      'Ciudad': this.vDatosRecibidos.Ciudad,
+      'Zona': this.vDatosRecibidos.Zona,
+      'Saldo': this.vDatosRecibidos.Saldo
+    };
+    this.navCtrl.push(CierrePickingPage, {
+      data: this.vAdministrarUAPage
+    });
+  }
+
+  dismiss(data = { 'response': 400 }) {
+    this.viewCtrl.dismiss(data);
+  }
+
   ionViewDidLoad() {
     this.navBar.backButtonClick = (e: UIEvent) => {
+      // if(this.vDatosRecibidos.page == 4){
+      //   this.goPickingPage();
+      // }else if(this.vDatosRecibidos.page == 5){
+      //   this.goRutaPickingPage();
+      // }
+      // else if(this.vDatosRecibidos.page == 6){
+      //   this.goDetallePickingPage();
+      // }
+      // else if(this.vDatosRecibidos.page == 7){
+      //   this.goCerrarPickingPage();
+      // }
+      // else if(this.vDatosRecibidos.page == 8){
+      //   this.dismiss();
+      // }
+      // else if(this.vDatosRecibidos.page == 9){
+      //   //Ir a detalle por producto/ver uas
+      // }
+      // else if(this.vDatosRecibidos.page == 10){
+      //   //Ir a reabastecimiento
+      // }
+      // else{
+      //   this.goMenuConsultarPage();
+      // }
       this.goMenuConsultarPage();
     }
     setTimeout(() => {

@@ -43,42 +43,53 @@
 
     <ion-row class="bgWhite">
         <ion-card *ngFor="let objAlmacenaje of listAuxUbicacionTransito">
-            <ion-card-content style="padding: 8px 2px; font-size: 12px" (click)="goPalletsUasTransito(objAlmacenaje)">
+            <ion-card-content style="padding: 8px 2px; font-size: 12px">
                 <ion-row no-padding no-margin>
-                    <ion-col col-3 no-padding no-margin>
-                        <ion-label no-padding no-margin style="font-weight:bold;">
-                            Sector:
-                        </ion-label>
-                    </ion-col>
-                    <ion-col col-9 no-padding no-margin>
-                        <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                            {{objAlmacenaje.sector}}
-                        </ion-label>
-                    </ion-col>
-                </ion-row>
-                <ion-row no-padding no-margin>
-                    <ion-col col-3 no-padding no-margin>
-                        <ion-label no-padding no-margin style="font-weight:bold;">
-                            Ubicación:
-                        </ion-label>
-                    </ion-col>
-                    <ion-col col-9 no-padding no-margin>
-                        <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                            {{ objAlmacenaje.ubicacion}}
-                        </ion-label>
-                    </ion-col>
-                </ion-row>
-                <ion-row no-padding no-margin>
-                    <ion-col col-3 no-padding no-margin>
-                        <ion-label no-padding no-margin style="font-weight:bold;">
-                            Total UA's:
-                        </ion-label>
-                    </ion-col>
-                    <ion-col col-3 no-padding no-margin>
-                        <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                            {{objAlmacenaje.total| number:'1.2-2'}}
-                        </ion-label>
-                    </ion-col>
+                    <div no-padding no-margin style="width: 90%">
+                        <ion-row no-padding no-margin>
+                            <ion-col col-3 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold;">
+                                    Sector:
+                                </ion-label>
+                            </ion-col>
+                            <ion-col col-9 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                    {{objAlmacenaje.sector}}
+                                </ion-label>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row no-padding no-margin>
+                            <ion-col col-3 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold;">
+                                    Ubicación:
+                                </ion-label>
+                            </ion-col>
+                            <ion-col col-9 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                    {{ objAlmacenaje.ubicacion}}
+                                </ion-label>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row no-padding no-margin>
+                            <ion-col col-3 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold;">
+                                    Total UA's:
+                                </ion-label>
+                            </ion-col>
+                            <ion-col col-3 no-padding no-margin>
+                                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                                    {{objAlmacenaje.total| number:'1.2-2'}}
+                                </ion-label>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                    <div no-margin style="position: relative; text-align: center; float:none; padding-top: 3%; margin-right: 2px;  width: 8%;">
+                        <button no-margin no-padding ion-button icon-only clear (click)="goPalletsUasTransito(objAlmacenaje)"
+                            style="position: absolute;	top: 0;	bottom: 0; left: 0; right: 0; width: 80%; margin: auto; background:none;">
+                            <!-- <ion-icon name="md-arrow-dropright" color="dark"></ion-icon> -->
+                            <ion-icon name="md-play" color="dark"></ion-icon>
+                        </button>
+                    </div>
                 </ion-row>
             </ion-card-content>
         </ion-card>

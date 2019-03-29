@@ -39,11 +39,9 @@ export class ReciboPage_02Page {
       this.vReciboPage01 = navParams.get('data');
       const data = JSON.parse(localStorage.getItem('vUserData'));
       this.userDetail = data;
-      this.getDetailXTx(this.vReciboPage01.Id_Tx);      
   }
 
   presentPopover(myEvent){
-    debugger;
     let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 12});
     popover.present({
       ev: myEvent
@@ -71,7 +69,8 @@ export class ReciboPage_02Page {
         'Id_Cliente' : data.Id_Cliente,
         'Proveedor' : data.Proveedor,
         'Id_TipoMovimiento' : data.Id_TipoMovimiento,
-        'Origen' : 'RP02'
+        'Origen' : 'RP02',
+        'id_Modulo': 1
       };
 
     let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia' : obj});
@@ -113,6 +112,11 @@ export class ReciboPage_02Page {
         return (item.Codigo.toLowerCase().indexOf(val.toLowerCase()) > -1) || (item.Descripcion.toLowerCase().indexOf(val.toLowerCase()) > -1);
       });
       this.rowCount = this.listAuxDetailTx.length;
+      
+      if(this.rowCount <= 0){
+        alert('Orden no existe');
+      }
+      
     }else{
       this.rowCount = this.listDetailTx.length;
       return this.listAuxDetailTx = this.listDetailTx;
@@ -120,8 +124,6 @@ export class ReciboPage_02Page {
   }
 
   goToReciboPage03(data){
-  debugger;
-
   this.vReciboPage02 = {
     "Id_Tx":this.vReciboPage01.Id_Tx,
     "NumOrden":this.vReciboPage01.NumOrden,
@@ -197,15 +199,13 @@ export class ReciboPage_02Page {
             text: 'Cancelar',
             role: 'cancel',
             handler: () => {
-              console.log('Cancel clicked');
+              return;
             }
           },
           {
             text: 'Aceptar',
             handler: () => {
-              console.log('Buy clicked');
-              debugger;
-              this.sRecibo.cerrarRecepcion('99999'/**this.vReciboPage01.Id_Tx**/, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result=>{
+              this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result=>{
                 let res: any = result; 
                 this.getDetailXTx(this.vReciboPage01.Id_Tx);
               });
@@ -251,5 +251,8 @@ export class ReciboPage_02Page {
     });
     etqModal.present();
   }
-  
+
+  ionViewWillEnter(){
+    this.getDetailXTx(this.vReciboPage01.Id_Tx);
+  }
 }

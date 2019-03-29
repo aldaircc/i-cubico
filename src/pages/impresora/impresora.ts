@@ -23,11 +23,7 @@ export class ImpresoraPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sImpresora:ImpresoraServiceProvider, public alertCtrl: AlertController,
     public viewCtrl:ViewController, public sGlobal:GlobalServiceProvider) {
-      // const data = JSON.parse(localStorage.getItem('vUserData'));
-      // this.userDetail = data;
-      debugger;
-      console.log('Id_Impresora', navParams.get('Id_Impresora'));
-      this.listarAccesosImpresoraXUsuario(this.sGlobal.userName);//'ADMIN');
+      this.listarAccesosImpresoraXUsuario(this.sGlobal.userName);
   }
 
   ionViewDidLoad() {
@@ -36,7 +32,6 @@ export class ImpresoraPage {
 
   listarAccesosImpresoraXUsuario(usuario){
     this.sImpresora.listarAccesosImpresoraXUsuario(usuario).then(result=>{
-      console.log('Result impresora', result);
       this.listImpresora = result;
     });    
   }
@@ -51,13 +46,14 @@ export class ImpresoraPage {
           handler: () => {
             this.sGlobal.Id_Impresora = print.Id_Impresora;
             this.sGlobal.nombreImpresora = print.Nombre;
-            this.dismiss();
+            let printSel = {'printSel': print.Nombre };
+            this.dismiss(printSel);
           }
         },
         {
           text: 'No',
           handler: () => {
-            console.log('Agree clicked');
+            return;
           }
         }
       ]
@@ -65,8 +61,7 @@ export class ImpresoraPage {
     confirm.present();
   }
 
-  dismiss(){
-    //let data = { 'foo': 'bar' };
-    this.viewCtrl.dismiss();//data);
+  dismiss(dataSel){
+    this.viewCtrl.dismiss(dataSel);
   }
 }

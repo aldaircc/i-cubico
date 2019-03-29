@@ -23,6 +23,8 @@ export class InventarioPage_02Page {
   vParameter: any;
   isCiclico: boolean = false;
   isGeneral: boolean = false;
+  countConfirm: number = 0;
+  countProcess: number = 0;
   rowCount: number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -40,6 +42,8 @@ export class InventarioPage_02Page {
   listarProductosXUsuarioInventario(strIdInventario, intIdAlmacen, strUsuario, intIdEstado){
     this.sInve.listarProductosXUsuarioInventario(strIdInventario, intIdAlmacen, strUsuario, intIdEstado).then(result=>{
       this.listProduct = result;
+      this.countConfirm = this.listProduct.reduce((acc, cur) => cur.Id_Estado === 10 ? ++acc : acc, 0);
+      this.countProcess = this.listProduct.reduce((acc, cur) => cur.Id_Estado === 3 ? ++acc : acc, 0);
       this.rowCount = this.listProduct.length;
     });
   }
@@ -47,6 +51,8 @@ export class InventarioPage_02Page {
   listarPerchasXUsuarioInventario(strIdIventario, intIdAlmacen, strUsuario, intIdEstado){
     this.sInve.listarPerchasXUsuarioInventario(strIdIventario, intIdAlmacen, strUsuario, intIdEstado).then(result=>{
       this.listPercha = result;
+      this.countConfirm = this.listPercha.reduce((acc, cur) => cur.Id_Estado === 10 ? ++acc : acc, 0);
+      this.countProcess = this.listPercha.reduce((acc, cur) => cur.Id_Estado === 3 ? ++acc : acc, 0);
       this.rowCount = this.listPercha.length;
     });
   }

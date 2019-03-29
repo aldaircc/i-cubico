@@ -5,44 +5,19 @@
   Ionic pages and navigation.
 -->
 <ion-grid no-padding no-margin style="background: #BDBDBD"   >
-    <ion-row no-padding no-margin  > 
-        <ion-col col-2 style="padding: 15px">
-          <ion-icon name="md-create" style="color:white"></ion-icon>                
-        </ion-col>
-        <ion-col col-10 style="padding-left: 0px; padding-right: 0px">
-            <ion-label style="font-size: 15px; color: white; font-weight:bold">Registrar Incidencias</ion-label>
-        </ion-col>
-    </ion-row>
-    <ion-row no-padding no-margin  > 
-        <ion-col col-2 style="padding: 15px">
-            <ion-icon name="md-cube" style="color:white"></ion-icon>
-        </ion-col>
-        <ion-col col-10 style="padding-left: 0px; padding-right: 0px; ">
-            <ion-label style="font-size: 15px; color: white; font-weight:bold">Administrar UA</ion-label>
-        </ion-col>
-    </ion-row>
-    <ion-row no-padding no-margin  > 
-        <ion-col col-2 style="padding: 15px;">
-            <ion-icon name="md-search" style="color:white"></ion-icon>
-        </ion-col>
-        <ion-col col-10 style="padding-left: 0px; padding-right: 0px">
-            <ion-label style="font-size: 15px; color: white; font-weight:bold">Consultar Ubicación</ion-label>
-        </ion-col>
-    </ion-row>
-    <ion-row no-padding no-margin  > 
-        <ion-col col-2 style="padding: 15px;">
-            <ion-icon name="md-menu" style="color:white"></ion-icon>
-        </ion-col>
-        <ion-col col-10 style="padding-left: 0px; padding-right: 0px">
-            <ion-label style="font-size: 15px; color: white; font-weight:bold">Ir a menú</ion-label>
-        </ion-col>
-    </ion-row>
-    <ion-row no-padding no-margin  > 
-        <ion-col col-2 style="padding: 15px">
-            <ion-icon name="md-contact" style="color:white"></ion-icon>
-        </ion-col>
-        <ion-col col-10 style="padding-left: 0px; padding-right: 0px">
-            <ion-label style="font-size: 15px; color: white; font-weight:bold">Cerrar Sesión</ion-label>
-        </ion-col>
-    </ion-row>
+    <button ion-item (tap)="itemClick(1)" style="background: #BDBDBD; color:white">
+        <ion-icon name="md-create" style="color:white"></ion-icon> Registrar Incidencias
+    </button>
+    <button ion-item (tap)="itemClick(2)" style="background: #BDBDBD; color:white">
+        <ion-icon name="md-cube" style="color:white"></ion-icon> Administrar UA
+    </button>
+    <button ion-item (tap)="itemClick(3)" style="background: #BDBDBD; color:white">
+        <ion-icon name="md-search" style="color:white"></ion-icon> Consultar Ubicación
+    </button>
+    <button ion-item (tap)="itemClick(4)" style="background: #BDBDBD; color:white">
+        <ion-icon name="md-menu" style="color:white"></ion-icon> Ir a menú
+    </button>
+    <button ion-item (tap)="itemClick(5)" style="background: #BDBDBD; color:white">
+        <ion-icon name="md-contact" style="color:white"></ion-icon> Cerrar Sesión
+    </button> 
 </ion-grid>

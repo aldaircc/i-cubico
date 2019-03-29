@@ -1,11 +1,14 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, IonicFormInput, Button, PopoverController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, IonicFormInput, Button, PopoverController, ModalController, App } from 'ionic-angular';
 import { ReciboServiceProvider } from '../../../providers/recibo-service/recibo-service';
 import { isNullOrUndefined } from '../../../../node_modules/@swimlane/ngx-datatable/release/utils';
 import { ReciboPage_04Page } from '../recibo-page-04/recibo-page-04';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { PopoverReciboComponent } from '../../../components/popover-recibo/popover-recibo';
 import { EtiquetadoPage_01Page } from '../../etiquetado/etiquetado-page-01/etiquetado-page-01';
+import { ImpresoraPage } from '../../impresora/impresora';
+import { IncidenciaPage } from '../../incidencia/incidencia';
+import { HomePage } from '../../home/home';
 
 /**
  * Generated class for the ReciboPage_03Page page.
@@ -39,7 +42,7 @@ export class ReciboPage_03Page {
   @ViewChild('iCodeBar', { read: ElementRef }) private iCodeBar:ElementRef;
   @ViewChild('iCantidadRecibida', { read: ElementRef }) private iCantidadRecibida:ElementRef;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, 
     public toastCtrl: ToastController , public sRecibo: ReciboServiceProvider,
     public popoverCtrl: PopoverController, public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider) {
     this.vReciboPage02 = navParams.get('dataPage02');
@@ -47,6 +50,14 @@ export class ReciboPage_03Page {
 
   ionViewWillEnter(){
     this.selectAll(this.iCodeBar, 500);
+    this.getUAsProducto(this.vReciboPage02.Id_Tx, this.vReciboPage02.Id_Producto, this.vReciboPage02.Item);
+  }
+
+  getUAsProducto(strId_Tx, intId_Producto, intItem):void{
+    this.sRecibo.listarUAXProductoTx(strId_Tx, intId_Producto, intItem).then(result=>{
+      let res: any = result;
+      this.cantidadBulto = res.length;
+    });
   }
 
   selectAll(el: ElementRef, time){
@@ -82,7 +93,6 @@ export class ReciboPage_03Page {
           this.vReciboPage02.Id_TipoMovimiento === 14){
             this.sRecibo.validarReciboTransferenciaSerie(this.vReciboPage02.NumOrden, this.codeBar.Text, 
               this.vReciboPage02.Item).then((result)=>{
-              debugger;
               let rpta :any = result;
               if(rpta.errNumber != 0){
                 this.isBgRed = true;
@@ -146,7 +156,6 @@ export class ReciboPage_03Page {
             };
             
             this.sRecibo.validarUAReciboTransferencia(ua).then((result)=>{
-              debugger;
               this.cantidad = 0;
               let rpta:any = result;
               if(rpta.errNumber === 0){                
@@ -160,6 +169,7 @@ export class ReciboPage_03Page {
                   this.selectAll(this.iCantidadRecibida, 500);
                   this.isBgYellow = true;
                   this.isBgRed = false;
+                  this.isBgGreen = false;
                   if(this.vReciboPage02.bolAutomatic === true){
                     this.saveTransaction();
                   }
@@ -167,16 +177,19 @@ export class ReciboPage_03Page {
               }else if(rpta.errNumber === 1){
                   this.isBgRed = true;
                   this.isBgYellow = false;
+                  this.isBgGreen = false;
                   this.selectAll(this.iCodeBar, 500);
                   this.presentToast(rpta.message);
               }else if(rpta.errNumber === -1){
                   this.isBgRed = true;
                   this.isBgYellow = false;
+                  this.isBgGreen = false;
                   this.presentToast(rpta.message);
                   this.selectAll(this.iCodeBar, 500);
               }else{
-                this.isBgRed = true;
-                this.isBgYellow = false;
+                  this.isBgRed = true;
+                  this.isBgYellow = false;
+                  this.isBgGreen = false;
                   this.presentToast(rpta.message);
                   this.selectAll(this.iCodeBar, 500);
               }
@@ -190,7 +203,6 @@ export class ReciboPage_03Page {
               'Item': this.vReciboPage02.Item
             }
             this.sRecibo.validarUARecibo(ua).then((result)=>{
-              debugger;
               this.cantidad = 0;
               this.selectAll(this.iCodeBar, 500);
               let rpta:any = result;
@@ -203,6 +215,7 @@ export class ReciboPage_03Page {
 
                 this.isBgRed = false;
                 this.isBgYellow = true;
+                this.isBgGreen = false;
                 this.bolUaValida = true;
                 this.cantidadRec = rpta.valor1;
                 this.codeBar.Tag = this.codeBar.Text;
@@ -215,22 +228,31 @@ export class ReciboPage_03Page {
               }else if(rpta.errNumber === 1){
                 this.isBgRed = true;
                 this.isBgYellow = false;
+                this.isBgGreen = false;
                 this.codeBar.Tag = '';
                 this.presentToast(rpta.message);
                 this.bolUaValida = false;
+                this.cantidadAve = 0;
+                this.cantidadRec = 0;
                 this.selectAll(this.iCodeBar, 500);
               }else if(rpta.errNumber === -1){
                 this.codeBar.Tag = '';
                 this.isBgRed = true;
                 this.isBgYellow = false;
+                this.isBgGreen = false;
                 this.presentToast(rpta.message);
                 this.bolUaValida = false;
+                this.cantidadAve = 0;
+                this.cantidadRec = 0;
                 this.selectAll(this.iCodeBar, 500);
               }else{
                 this.isBgRed = true;
                 this.isBgYellow = false;
+                this.isBgGreen = false;
                 this.presentToast(rpta.message);
                 this.bolUaValida = false;
+                this.cantidadAve = 0;
+                this.cantidadRec = 0;
                 this.selectAll(this.iCodeBar, 500);
               }
             });
@@ -241,12 +263,22 @@ export class ReciboPage_03Page {
       this.isBgRed = true;
       this.isBgYellow = false;
       this.bolUaValida = false;
+      this.cantidadAve = 0;
+      this.cantidadRec = 0;
       this.selectAll(this.iCodeBar, 500);
     }
   }
 
   validarCamposIngreso(){
     var result:boolean = true;
+
+    if(this.bolUaValida == false){
+      alert('Debe ingresar una UA correcta');
+      result = false;
+      this.selectAll(this.iCodeBar, 500);
+      return result;
+    }
+
     if(this.isDisabledSave === false){
         result = false;
         return result;
@@ -315,10 +347,8 @@ export class ReciboPage_03Page {
       };
 
       this.vReciboPage02.TipoAlmacenaje = (this.vReciboPage02.TipoAlmacenaje == undefined) ? 0 : this.vReciboPage02.TipoAlmacenaje;
-      debugger;
       this.sRecibo.registrarUATransito(objTxUbi).then((result)=>{
         let rpta : any = result;
-        debugger;
         var sumCantidad = this.cantidadRec +  this.vReciboPage02.CantidadOperacion;
 
         if(this.cantidad != 0){
@@ -363,7 +393,6 @@ export class ReciboPage_03Page {
               this.evaluarResultado(result);
             });
         }else{
-          debugger;
             this.sRecibo.registrarUA(objUA).then(result=>{
               this.evaluarResultado(result);
             });
@@ -372,22 +401,28 @@ export class ReciboPage_03Page {
   }
 
   evaluarResultado(message){
-    debugger;
     if(message.errNumber === 0){
       let valor1 = parseFloat(message.valor1);
-      let saldo = this.vReciboPage02.Saldo;
-      let bultos = this.cantidadBulto + 1;
+      this.cantidadBulto++;
       this.vReciboPage02.Saldo = this.vReciboPage02.Saldo - valor1;
-      this.vReciboPage02.CantidadOperacion = bultos * valor1;
+      let saldo = this.vReciboPage02.Saldo;
+      //this.vReciboPage02.CantidadOperacion = bultos * valor1;
+      this.vReciboPage02.CantidadOperacion += valor1;
       this.isBgRed = false;
       this.isBgYellow = false;
       this.isBgGreen = true;
       this.selectAll(this.iCodeBar, 500);
+      this.bolUaValida = false;
       this.cantidadAve = 0;
       this.cantidadRec = 0;
-      
+      this.codeBar.Text = "";
+      this.codeBar.Tag = "";
+
       if(saldo == 0){
-        this.presentToast('Item completo');
+        this.presentToast('Producto completo');
+        this.selectAll(this.iCodeBar, 500);
+      }else{
+        this.presentToast('Registro exitoso');
         this.selectAll(this.iCodeBar, 500);
       }
     }else if(message.errNumber == 1){
@@ -411,6 +446,17 @@ export class ReciboPage_03Page {
     }
   }
 
+  callBackReciboPage04 = (values) => {
+    return new Promise((resolve, reject) => {
+      if(values.wasDeleted == true){
+        this.vReciboPage02.Saldo = values.saldo;
+        this.vReciboPage02.CantidadOperacion = this.vReciboPage02.CantPedida - values.saldo;
+      }
+
+      resolve();
+    });
+   }
+   
   goToReciboPage04(){
 
     let obj = {
@@ -436,34 +482,78 @@ export class ReciboPage_03Page {
       "Cuenta" : this.vReciboPage02.Cuenta
     };
 
-    this.navCtrl.push(ReciboPage_04Page, {
-      dataPage03: obj
+    // this.navCtrl.push(ReciboPage_04Page, {
+    //   dataPage03: obj
+    // });
+
+    this.navCtrl.push(ReciboPage_04Page,{
+      dataPage03: obj,
+      callBackReciboPage04: this.callBackReciboPage04
     });
+
+  //   this.navController.push(OtherPageComponent, {
+  //     callback: this.myCallbackFunction;
+  // });
   }
 
   presentReciboPopover(myEvent){
-    debugger;
     let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 13});
     popover.present({
       ev: myEvent
     });
 
     popover.onDidDismiss(popoverData =>{
-      debugger;
       if(popoverData == 1){
         //this.showModalIncidencia(this.vReciboPage01);
         console.log('data para imprimir', this.vReciboPage02);
         this.navigateToEtqCajaLpn(this.vReciboPage02);
+      }else if(popoverData == 2){
+        this.showModalIncidencia(this.vReciboPage02);
+      }else if(popoverData == 3){
+        this.showModalImpresora();
+      }else if(popoverData == 4){
+        this.navCtrl.pop();
+        var nav = this.app.getRootNav();
+        nav.setRoot(HomePage);
+      }else if(popoverData == 5){
+        this.goToReciboPage04();
       }
     });
+  }
+
+  showModalImpresora(){
+    let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
+    modalIncidencia.present();
+  }
+
+  showModalIncidencia(data){
+    let obj = { 
+        'Id_Tx' : data.Id_Tx,
+        'FlagPausa' : data.FlagPausa,
+        'Cliente' : data.Cliente,
+        'Id_Cliente' : data.Id_Cliente,
+        'Proveedor' : data.Proveedor,
+        'Id_TipoMovimiento' : data.Id_TipoMovimiento,
+        'Origen' : 'RP02',
+        'id_Modulo': 1
+      };
+
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia' : obj});
+    modalIncidencia.onDidDismiss(data =>{
+      if(data.response == 200){
+        this.navCtrl.pop();
+      }
+    });
+    modalIncidencia.present();
   }
 
   navigateToEtqCajaLpn(data){
     let objEtq = {
     "LoteLab": data.Lote,
     "Id_Producto": data.Id_Producto,
-    "Id_UM": data.UM,
+    "Id_UM": data.Id_UM,
     "CantidadPedida": data.CantidadPedida,
+    "CantidadOperacion": data.CantidadOperacion,
     "Codigo": data.Codigo,
     "Articulo": data.Articulo, //Articulo
     "UM": data.UM,

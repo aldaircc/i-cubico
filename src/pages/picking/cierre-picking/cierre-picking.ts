@@ -1,10 +1,19 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController, ToastController, AlertController, ModalController } from 'ionic-angular';
-import { PopoverRutaPickingPage } from '../../picking/popover/popover-ruta-picking/popover-ruta-picking'
+import { IonicPage, App, NavController, NavParams, PopoverController, ToastController, AlertController, ModalController } from 'ionic-angular';
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 import { ImpresoraPage } from '../../impresora/impresora'
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { PickingPage } from '../../picking/picking';
+
+import { IncidenciaPage } from '../../incidencia/incidencia';
+import { AdministrarUaPage } from '../../almacenaje/menu-consultar/administrar-ua/administrar-ua'
+import { ConsultarUbicacionPage } from '../../almacenaje/consultar-ubicacion/consultar-ubicacion'
+import { MainMenuPage } from '../../main-menu/main-menu'
+import { HomePage } from '../../home/home';
+
+import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
+
+import { PopoverPickingPage } from '../../picking/popover/popover-picking/popover-picking'
 
 /**
  * Generated class for the CierrePickingPage page.
@@ -19,7 +28,6 @@ import { PickingPage } from '../../picking/picking';
   templateUrl: 'cierre-picking.html',
 })
 export class CierrePickingPage {
-
   @ViewChild('txtCodMuelle') txtCodMuelleRef;
 
   vRutaPickingPage: any = [];
@@ -32,10 +40,10 @@ export class CierrePickingPage {
 
   Aceptarisenabled: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController,
     public toastCtrl: ToastController, public alertCtrl: AlertController,
-    public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider) {
+    public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider, public sEtq: EtiquetadoServiceProvider) {
     this.vRutaPickingPage = navParams.get('data');
   }
 
@@ -164,7 +172,10 @@ export class CierrePickingPage {
                     if (result) {
                       // Mostrar lista de impresoras
                       this.showModalImpresora();
+                      
                     }
+                    //Ir a detalle ordenes
+                    this.goPickingPage();
                   })
                 }
               })
@@ -179,6 +190,28 @@ export class CierrePickingPage {
         }
       })
     }
+  }
+
+  imprimir() {
+    debugger;
+    var listContainer = [];
+    var listEtq = [];
+
+    listEtq = [];
+    listEtq.push({ "campo": "|NROPICKING|", "valor": this.vRutaPickingPage.NumOrden });
+    listEtq.push({ "campo": "|CLIENTE|", "valor": this.vRutaPickingPage.Cliente });
+    listEtq.push({ "campo": "|COPIAS|", "valor": 1 });
+    listEtq.push({ "campo": "|ALMACEN|", "valor": this.sGlobal.nombreAlmacen });
+    listEtq.push({ "campo": "|USUARIO|", "valor": this.sGlobal.apeNom });
+    listContainer.push({ 'etiqueta': listEtq });
+
+    this.sEtq.imprimirListaEtiquetas(listContainer, 'ETQ_Pickingv2.txt', this.sGlobal.nombreImpresora, true).then(result => {
+      debugger;
+      var message: any = result;
+      if (message.errNumber == -1) {
+        alert(message.mensaje);
+      }
+    });
   }
 
   validarCodeBar_old() {
@@ -297,6 +330,7 @@ export class CierrePickingPage {
     }
 
   }
+  
   CerrarPicking_old(idTx, idEstado, usuario, idMuelle, IdAlmacen) {
     debugger;
     this.sPicking.CerrarPicking(idTx, idEstado, usuario, idMuelle, IdAlmacen).then((result) => {
@@ -365,28 +399,93 @@ export class CierrePickingPage {
     toast.present();
   }
 
-  presentPopover(ev) {
-    let popover = this.popoverCtrl.create(PopoverRutaPickingPage, {
-      // contentEle: this.content.nativeElement,
-      // textEle: this.text.nativeElement
+  showModalIncidencia(data) {
+    debugger;
+    let obj = {
+      'Id_Tx': data.Id_Tx,
+      'FlagPausa' : data.FlagPausa,
+      'NumOrden': data.NumOrden,
+      'id_Cliente': data.Id_Cuenta,
+      'id_Modulo': 5
+    };
+
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia': obj });
+    modalIncidencia.onDidDismiss(data => {
+      debugger;
+      console.log("datos", data);
     });
+    modalIncidencia.present();
+  }
+
+  showModalAdministrarUaPage() {
+    debugger;
+    let obj = {
+      'page': "modal",
+    };
+    let modalIncidencia = this.modalCtrl.create(AdministrarUaPage, { 'data': obj });
+    modalIncidencia.onDidDismiss(data => {
+      debugger;
+      if (data.response == 200) {
+        this.navCtrl.pop();
+      }
+      console.log("datos", data);
+    });
+    modalIncidencia.present();
+  }
+
+  goConsultarUbicacionPage() {
+    this.navCtrl.push(ConsultarUbicacionPage);
+  }
+
+  goMenu() {
+    debugger;
+    this.navCtrl.push(MainMenuPage);
+  }
+
+  presentPopover(ev) {
+    let popover = this.popoverCtrl.create(PopoverPickingPage, {'page' : 1});
     popover.present({
       ev: ev
+    });
+
+    popover.onDidDismiss(popoverData => {
+      if (popoverData == 1) {
+        this.showModalIncidencia(this.vRutaPickingPage);
+      } else if (popoverData == 2) {
+        debugger;
+        this.showModalAdministrarUaPage();
+      } else if (popoverData == 3) {
+        debugger;
+        this.goConsultarUbicacionPage();
+      } else if (popoverData == 4) {
+        debugger;
+        this.goMenu();
+      } else if (popoverData == 5) {
+        debugger;
+        this.navCtrl.pop();
+        var nav = this.app.getRootNav();
+        nav.setRoot(HomePage);
+      }
     });
   }
 
   showModalImpresora() {
     let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
     modalIncidencia.present();
+    modalIncidencia.onDidDismiss(printSel =>{
+     if(printSel != ""){
+      this.imprimir();
+     }
+    });
   }
 
   goBackRutaPicking() {
     this.navCtrl.pop();
   }
 
-  goPickingPage(){
+  goPickingPage() {
     this.navCtrl.push(PickingPage);
-  } 
+  }
 
   ionViewDidLoad() {
     setTimeout(() => {

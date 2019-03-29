@@ -1,13 +1,19 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, Navbar, NavController, NavParams, PopoverController, ToastController, AlertController } from 'ionic-angular';
+import { IonicPage, App, ModalController, Navbar, NavController, NavParams, PopoverController, ToastController, AlertController } from 'ionic-angular';
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
-import { PopoverRutaPickingPage } from '../../picking/popover/popover-ruta-picking/popover-ruta-picking'
 import { RutaPickingPage } from '../ruta-picking/ruta-picking';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { CierrePickingPage } from '../cierre-picking/cierre-picking';
 import { DetallePorProductoPage } from '../detalle-por-producto/detalle-por-producto'
 import { PickingPage } from '../../picking/picking';
 import { PickingPorProductoPage } from '../picking-por-producto/picking-por-producto';
+import { IncidenciaPage } from '../../incidencia/incidencia';
+import { AdministrarUaPage } from '../../almacenaje/menu-consultar/administrar-ua/administrar-ua'
+import { ConsultarUbicacionPage } from '../../almacenaje/consultar-ubicacion/consultar-ubicacion'
+import { MainMenuPage } from '../../main-menu/main-menu'
+import { HomePage } from '../../home/home';
+
+import { PopoverPickingPage } from '../../picking/popover/popover-picking/popover-picking'
 
 /**
  * Generated class for the DetallePickingPage page.
@@ -45,7 +51,7 @@ export class DetallePickingPage {
   idRutaPicking: number = 0;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public app: App,  public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController,
     public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider, public alertCtrl: AlertController) {
     this.vRutaPickingPage = navParams.get('data');
@@ -67,10 +73,12 @@ export class DetallePickingPage {
           return (item.CantidadPedida == item.Saldo);
         });
         this.listDetalleProceso = this.listAuxDetallePicking.filter((item) => {
-          return (item.Saldo == 0);
+          //return (item.CantidadPedida - item.Saldo > 0);
+          return (item.Saldo > 0 && item.Saldo < item.CantidadPedida);
+
         });
-        this.listDetalleFinalizado = this.listAuxDetallePicking.filter((item) => {
-          return (item.CantidadPedida - item.Saldo > 0);
+        this.listDetalleFinalizado = this.listAuxDetallePicking.filter((item) => {          
+          return (item.Saldo == 0);
         });
 
         this.rowCountSinTrabajar = this.listDetalleSinTrabajar.length;
@@ -93,10 +101,11 @@ export class DetallePickingPage {
         return (item.CantidadPedida == item.Saldo);
       });
       this.listDetalleProceso = this.listDetallePicking.filter((item) => {
-        return (item.Saldo == 0);
+        //return (item.CantidadPedida - item.Saldo > 0);
+        return (item.Saldo > 0 && item.Saldo < item.CantidadPedida);
       });
       this.listDetalleFinalizado = this.listDetallePicking.filter((item) => {
-        return (item.CantidadPedida - item.Saldo > 0);
+        return (item.Saldo == 0);        
       });
 
       this.rowCountSinTrabajar = this.listDetalleSinTrabajar.length;
@@ -254,13 +263,73 @@ export class DetallePickingPage {
     toast.present();
   }
 
-  presentPopover(ev) {
-    let popover = this.popoverCtrl.create(PopoverRutaPickingPage, {
-      // contentEle: this.content.nativeElement,
-      // textEle: this.text.nativeElement
+  showModalIncidencia(data) {
+    debugger;
+    let obj = {
+      'Id_Tx': data.Id_Tx,
+      'FlagPausa' : data.FlagPausa,
+      'NumOrden': data.NumOrden,
+      'id_Cliente': data.Id_Cuenta,
+      'id_Modulo': 5
+    };
+
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia': obj });
+    modalIncidencia.onDidDismiss(data => {
+      debugger;
+      console.log("datos", data);
     });
+    modalIncidencia.present();
+  }
+
+  showModalAdministrarUaPage(){
+    debugger;
+    let obj = {
+      'page': "modal",
+    };
+    let modalIncidencia = this.modalCtrl.create(AdministrarUaPage, { 'data': obj });
+    modalIncidencia.onDidDismiss(data => {
+      debugger;
+        if(data.response == 200){
+        this.navCtrl.pop();
+      }
+      console.log("datos", data);
+    });
+    modalIncidencia.present();
+  }
+
+  goConsultarUbicacionPage() {
+    this.navCtrl.push(ConsultarUbicacionPage);
+  }
+
+  goMenu() {
+    debugger;
+    this.navCtrl.push(MainMenuPage);
+  }
+
+  presentPopover(ev) {
+    let popover = this.popoverCtrl.create(PopoverPickingPage, {'page' : 1});
     popover.present({
       ev: ev
+    });
+
+    popover.onDidDismiss(popoverData => {
+      if (popoverData == 1) {
+        this.showModalIncidencia(this.vRutaPickingPage);
+      } else if (popoverData == 2) {
+        debugger;
+        this.showModalAdministrarUaPage();
+      } else if (popoverData == 3) {
+        debugger;
+        this.goConsultarUbicacionPage();
+      } else if (popoverData == 4) {
+        debugger;
+        this.goMenu();
+      } else if (popoverData == 5) {
+        debugger;
+        this.navCtrl.pop();
+        var nav = this.app.getRootNav();
+        nav.setRoot(HomePage);
+      }
     });
   }
 
@@ -299,7 +368,9 @@ export class DetallePickingPage {
       'NumOrden': this.vRutaPickingPage.NumOrden,
       'Cliente': this.vRutaPickingPage.Cliente,
       'Ciudad': this.vRutaPickingPage.Ciudad,
-      'Zona': this.vRutaPickingPage.Zona
+      'Zona': this.vRutaPickingPage.Zona,
+      'FlagPausa': this.vRutaPickingPage.FlagPausa,
+      'Id_Cuenta': this.vRutaPickingPage.Id_Cuenta
     };
     this.navCtrl.push(RutaPickingPage, {
       data: this.vDetallePickingPage
@@ -314,7 +385,9 @@ export class DetallePickingPage {
       'NumOrden': this.vRutaPickingPage.NumOrden,
       'Cliente': this.vRutaPickingPage.Cliente,
       'Ciudad': this.vRutaPickingPage.Ciudad,
-      'Zona': this.vRutaPickingPage.Zona
+      'Zona': this.vRutaPickingPage.Zona,
+      'FlagPausa': this.vRutaPickingPage.FlagPausa,
+      'Id_Cuenta': this.vRutaPickingPage.Id_Cuenta
     };
     this.navCtrl.push(RutaPickingPage, {
       data: this.vDetallePickingPage
@@ -329,9 +402,12 @@ export class DetallePickingPage {
     this.vDetallePickingPage = {
       'Id_Tx': this.vRutaPickingPage.Id_Tx,
       'NumOrden': this.vRutaPickingPage.NumOrden,
+      'Cliente': this.vRutaPickingPage.Cliente,
       'Ciudad': this.vRutaPickingPage.Ciudad,
       'Zona': this.vRutaPickingPage.Zona,
-      'Saldo': saldoTotalPicking
+      'Saldo': saldoTotalPicking,
+      'FlagPausa': this.vRutaPickingPage.FlagPausa,
+      'Id_Cuenta': this.vRutaPickingPage.Id_Cuenta
     };
     this.navCtrl.push(CierrePickingPage, {
       data: this.vDetallePickingPage
@@ -361,12 +437,13 @@ export class DetallePickingPage {
       'IdProducto': data.IdProducto,
       'Item': data.Item,
       'idRutaPicking': this.vRutaPickingPage.idRutaPicking,
+      'FlagPausa': this.vRutaPickingPage.FlagPausa,
+      'Id_Cuenta': this.vRutaPickingPage.Id_Cuenta
     };
 
     this.navCtrl.push(DetallePorProductoPage, {
       data: this.vDetallePickingPage
     });
-    //this.navCtrl.push(DetallePorProductoPage);
   }
 
   goPickingPage() {
@@ -389,28 +466,32 @@ export class DetallePickingPage {
     });
   }
 
-
-
   ionViewDidLoad() {
     debugger;
     this.navBar.backButtonClick = (e: UIEvent) => {
+      debugger;
       if (this.vRutaPickingPage.Id_Page_Anterior == 1) {
         this.goPickingPage(); //ir a ordenes picking
       }
       if (this.vRutaPickingPage.Id_Page_Anterior == 2) {
+        debugger;
         this.goBackRutaPickingPage(0); //ir a ruta picking
       }
       if (this.vRutaPickingPage.Id_Page_Anterior == 5) {
+        debugger;
         this.goPickingPorProductoPage(); //ir a picking por producto
       }
       if (this.vRutaPickingPage.Id_Page_Anterior2 == 1) {
+        debugger;
         this.goPickingPage(); //ir a ordenes picking
       }
       if (this.vRutaPickingPage.Id_Page_Anterior2 == 2) {
+        debugger;
         this.goBackRutaPickingPage(0); //ir a ruta picking
       }
       if (this.vRutaPickingPage.Id_Page_Anterior2 == 5) {
-        this.goPickingPorProductoPage(); //ir a ruta picking
+        debugger;
+        this.goPickingPorProductoPage(); //ir a picking por producto
       }
 
     }

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController, App } from 'ionic-angular';
 import { DespachoServiceProvider } from '../../../../providers/despacho-service/despacho-service';
 import { GlobalServiceProvider } from '../../../../providers/global-service/global-service';
+import { HomePage } from '../../../home/home';
+import { PopoverReciboComponent } from '../../../../components/popover-recibo/popover-recibo';
 
 /**
  * Generated class for the EmbarquePage_05Page page.
@@ -24,7 +26,7 @@ export class EmbarquePage_05Page {
   bolSubBulto: boolean = false;
   rowCount: number = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public sDesp: DespachoServiceProvider,
+  constructor(public app: App, public popoverCtrl: PopoverController,public navCtrl: NavController, public navParams: NavParams, public sDesp: DespachoServiceProvider,
     public sGlobal: GlobalServiceProvider) {
     this.bolBulto = true;
     this.bolSubBulto = false;
@@ -32,6 +34,21 @@ export class EmbarquePage_05Page {
     this.listarBultosXCargarTransporte(this.vParameter.Id_Tra);
   }
 
+  presentPopover(myEvent){
+    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 1});
+    popover.present({
+      ev: myEvent
+    });
+
+    popover.onDidDismiss(popoverData =>{
+      if(popoverData == 4){
+        this.navCtrl.pop();
+        var nav = this.app.getRootNav();
+        nav.setRoot(HomePage);
+      }
+    });
+  }
+  
   mostrarBultos(): void{
     this.bolSubBulto = false;
     if(this.bolSubBulto == false){
@@ -50,7 +67,6 @@ export class EmbarquePage_05Page {
 
   listarBultosXCargarTransporte(strIdTransporte): void{
     this.sDesp.listarBultosXCargarTransporte(strIdTransporte).then(result=>{
-      debugger;
       this.listBulto = result;
       this.rowCount = this.listBulto.length;
     });
@@ -58,7 +74,6 @@ export class EmbarquePage_05Page {
 
   listarSubBultosLeidos(strTransaccion, tipo): void{
     this.sDesp.listarSubBultosLeidos(strTransaccion, tipo).then(result=>{
-      debugger;
       this.listSubBulto = result;
       this.rowCount = this.listSubBulto.length;
     });

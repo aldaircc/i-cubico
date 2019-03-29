@@ -8,12 +8,17 @@
 
   <ion-navbar>
     <ion-title>Detalle</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
   <ion-toolbar>
     <ion-buttons class="inline-block-button">
       <button small ion-button [ngClass]="(bolBulto == true) ? 'selected-tab': 'unselected-tab'" (click)="mostrarBultos()">
-        Bulto
+        Bultos
       </button>
     </ion-buttons>
 

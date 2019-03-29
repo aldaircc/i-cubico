@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
@@ -28,6 +28,7 @@ export class TransferPage_06Page {
   isDisabledButton: boolean = true;
   isError:boolean = false;
   isNormal:boolean = true;
+  @ViewChild('iUbicacion', { read: ElementRef }) private inputUbicacion: ElementRef;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, public sAlmac: AlmacenajeServiceProvider, 
@@ -50,11 +51,15 @@ export class TransferPage_06Page {
           this.Id_UbicacionDestino = res[0].Id_Ubicacion;
           alert('Código de ubicación, verificado correctamente.');
           this.isError = false;
-          this.isNormal = true;
+          this.isNormal = false;
+          this.strUbicacion = "";
+          this.selectAll(this.inputUbicacion, 500);
         }else{
-          alert('Código escaneado no existe.');
+          alert('No hay datos para mostrar, código de ubicación no existe.');
           this.isError = true;
           this.isNormal = false;
+          this.strUbicacion = "";
+          this.selectAll(this.inputUbicacion, 500);
         }
       });
 
@@ -63,12 +68,14 @@ export class TransferPage_06Page {
         alert('El código de ubicación ingresada debe ser distinta a la actual.');
         this.isError = true;
         this.isNormal = false;
+        this.selectAll(this.inputUbicacion, 500);
         return;
       }
     }else{
       alert('Ingrese código de ubicación');
       this.strUbicacion = "";
       this.isDisabledButton = true;
+      this.selectAll(this.inputUbicacion, 500);
       return;
     }
   }
@@ -82,13 +89,18 @@ export class TransferPage_06Page {
   reubicarUAsXSubAlmacen(strIdTx, intIdProducto, strLote, intIdUbicacionOrigen, intIdUbicacionDestino, intIdAlmacen, intIdSubAlmacen, strUser): void{
     this.sPicking.reubicarUAsXSubAlmacen(strIdTx, intIdProducto, strLote, intIdUbicacionOrigen, intIdUbicacionDestino, intIdAlmacen, intIdSubAlmacen, strUser)
     .then(result=>{
-      debugger;
       let res: any = result;
-
       if(res.errNumber == 0){
         alert(res.message);
         this.navCtrl.pop();
       }
     });
+  }
+  
+  selectAll(el: ElementRef, time){
+    let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
+    setTimeout(()=>{
+      nativeEl.select();
+    }, time);
   }
 }

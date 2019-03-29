@@ -27,12 +27,14 @@ export class AlmacenajePalletUaPage {
   isBgGreen: boolean = false;
   isbgWhite: boolean = false;
   isBgYellow: boolean = false;
+  valorCodBarra: boolean = false;
   rowCount: any = 0;
-  rowCountTotal: any = 0;  
+  rowCountTotal: any = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vDatosUbicacion = navParams.get('data');
+    debugger;
     this.rowCountTotal = this.vDatosUbicacion.CantidadPallets;
   }
 
@@ -46,12 +48,14 @@ export class AlmacenajePalletUaPage {
           this.isBgRed = false;
           this.isBgYellow = true;
           this.isBgGreen = false;
+          this.valorCodBarra = true;
         } else {
           this.isbgWhite = false;
           this.isBgRed = true;
           this.isBgYellow = false;
           this.isBgGreen = false;
           this.codeBar = "";
+          this.valorCodBarra = false;
           this.presentAlert("Ubicación no es correcta.").then((resultAlert) => {
             if (resultAlert) {
               setTimeout(() => {
@@ -74,46 +78,56 @@ export class AlmacenajePalletUaPage {
 
   registrarUAUbicacion() {
     if (this.codeBar) {
-      if (this.codeBar.trim() != ""){
-        debugger;
-        for (var i = 0; i < this.vDatosUbicacion.lst_UA.length; i++){
-          var count = 0;
-          var codUA = this.vDatosUbicacion.lst_UA[i];
-          this.sAlmacenaje.postRegistrarUAUbicacion(codUA, this.vDatosUbicacion.Id_Ubicacion, this.sGlobal.userName).then(result => {
-            debugger;
-            count = count + 1;
-            var message: any = result;
-            if (message.errNumber == 0) {
-              this.rowCount = this.rowCount + 1;  
-            }
-            if(count == this.vDatosUbicacion.lst_UA.length){
-              if(this.rowCount == this.rowCountTotal){
-                this.isbgWhite = false;
-                this.isBgRed = false;
-                this.isBgYellow = false;
-                this.isBgGreen = true;
-                this.presentAlert("Proceso de almacenaje de Pallets/UA´s finalizado.").then((resultAlert) => {
-                  if (resultAlert) {
-                    this.goPalletsUasTransito();
-                  }
-                })
-              }else{
-                this.isbgWhite = false;
-                this.isBgRed = true;
-                this.isBgYellow = false;
-                this.isBgGreen = false;
-                var saldo = this.rowCountTotal - this.rowCount;
-                this.presentAlert("No se almacenaron " + saldo + " Pallets/UA´s. Intente otra vez.");
+      if (this.codeBar.trim() != "") {
+        if (this.valorCodBarra) {
+          debugger;
+          for (var i = 0; i < this.vDatosUbicacion.lst_UA.length; i++) {
+            var count = 0;
+            var codUA = this.vDatosUbicacion.lst_UA[i];
+            this.sAlmacenaje.postRegistrarUAUbicacion(codUA, this.vDatosUbicacion.Id_Ubicacion, this.sGlobal.userName).then(result => {
+              debugger;
+              count = count + 1;
+              var message: any = result;
+              if (message.errNumber == 0) {
+                this.rowCount = this.rowCount + 1;
               }
+              if (count == this.vDatosUbicacion.lst_UA.length) {
+                if (this.rowCount == this.rowCountTotal) {
+                  this.isbgWhite = false;
+                  this.isBgRed = false;
+                  this.isBgYellow = false;
+                  this.isBgGreen = true;
+                  this.presentAlert("Proceso de almacenaje de Pallets/UA´s finalizado.").then((resultAlert) => {
+                    if (resultAlert) {
+                      this.goPalletsUasTransito();
+                    }
+                  })
+                } else {
+                  this.isbgWhite = false;
+                  this.isBgRed = true;
+                  this.isBgYellow = false;
+                  this.isBgGreen = false;
+                  var saldo = this.rowCountTotal - this.rowCount;
+                  this.presentAlert("No se almacenaron " + saldo + " Pallets/UA´s. Intente otra vez.");
+                }
+              }
+            });
+          }
+        } else {
+          this.presentAlert("Ubicación no es correcta.").then((resultAlert) => {
+            if (resultAlert) {
+              setTimeout(() => {
+                this.txtCodUbicacionRef.setFocus();
+              }, (500));
             }
-          });
+          })
         }
-      }else{
+      } else {
         this.presentToast("Ingrese código de ubicación");
-      }      
+      }
     } else {
       this.presentToast("Ingrese código de ubicación");
-    }    
+    }
   }
 
   presentToast(message) {
@@ -143,19 +157,22 @@ export class AlmacenajePalletUaPage {
   }
 
   goOtraUbicacionPage() {
+    debugger;
     this.vAlmacenajePalletUaPage = {
-      'Id_Ubicacion_Transito' : this.vDatosUbicacion.Id_Ubicacion_Transito
+      'Id_Ubicacion_Transito': this.vDatosUbicacion.Id_Ubicacion_Transito,
+      'Id_Marca': this.vDatosUbicacion.Id_Marca,
+      'CantidadPallets': this.vDatosUbicacion.CantidadPallets,
+      'lst_UA': this.vDatosUbicacion.lst_UA
     };
     this.navCtrl.push(OtraUbicacionPage, {
       data: this.vAlmacenajePalletUaPage
     });
-
   }
 
-  goPalletsUasTransito(){
+  goPalletsUasTransito() {
     debugger;
     this.vAlmacenajePalletUaPage = {
-      'Id_Ubicacion_Transito' : this.vDatosUbicacion.Id_Ubicacion_Transito
+      'Id_Ubicacion_Transito': this.vDatosUbicacion.Id_Ubicacion_Transito
     };
     this.navCtrl.push(PalletsTransitoPage, {
       data: this.vAlmacenajePalletUaPage

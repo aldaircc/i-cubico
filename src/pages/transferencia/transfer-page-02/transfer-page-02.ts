@@ -34,9 +34,9 @@ export class TransferPage_02Page {
     this.sPicking.listarDetalleTransfXTx(strIdTx).then(result=>{
       this.listDetalle = result;
       this.rowCount = this.listDetalle.length;
-      this.countPendient = this.listDetalle.reduce((acc, cur) => cur.Id_Estado === 1 ? ++acc : acc, 0);
-      this.countConfirm = this.listDetalle.reduce((acc, cur) => cur.Id_Estado === 2 ? ++acc : acc, 0);
-      this.countProcess = this.listDetalle.reduce((acc, cur) => cur.Id_Estado === 3 ? ++acc : acc, 0);
+      this.countPendient = this.listDetalle.reduce((acc, cur) => (cur.Saldo == cur.CantidadPedida) ? ++acc : acc, 0);
+      this.countProcess = this.listDetalle.reduce((acc, cur) => ((cur.Saldo != cur.CantidadPedida) && cur.Saldo > 0) ? ++acc : acc, 0);
+      this.countConfirm = this.listDetalle.reduce((acc, cur) => (cur.Saldo == 0) ? ++acc : acc, 0);
     });
   }
 
@@ -45,7 +45,7 @@ export class TransferPage_02Page {
     let message = (saldoTotal > 0) ? "Existe saldo. ¿Desea cerrar la transacción?" : "¿Estas seguro de cerrar la transacción?";
 
     let alert = this.alertCtrl.create({
-      title: 'Confirmar eliminación',
+      title: 'Confirmar cierre',
       message: message,
       buttons: [
         {
@@ -75,6 +75,7 @@ export class TransferPage_02Page {
     let parameter = {
       'Id_Almacen' : this.sGlobal.Id_Almacen,
       'Id_SubAlmacenOrigen': this.vParameter.Id_SubAlmacenOrigen,
+      'Id_SubAlmacenDestino': this.vParameter.Id_SubAlmacenDestino,
       'Id_Tx' : data.Id_Tx,
       'Item' : data.Item,
       'Cod_Producto' : data.Codigo,

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController, AlertController, PopoverController, App, Select } from 'ionic-angular';
 import { ImpresoraPage } from '../../impresora/impresora';
 import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
@@ -34,7 +34,6 @@ export class EtiquetadoPage_01Page {
     timeEnds: '1990-02-20'
   }
 
-  selectOptions : any;
   vEtq : any ={
     'Acceso' : 0,
     'Articulo' : "",
@@ -91,17 +90,18 @@ export class EtiquetadoPage_01Page {
 
   @ViewChild('selectUA_Alt') selectUA_Alt: Select;
   @ViewChild('selectFormat') selectFormat: Select;
+  @ViewChild('iLote', { read: ElementRef }) private inputUbi:ElementRef;
+  
+  @ViewChild('iCantidad', { read: ElementRef }) private iCantidad:ElementRef;
+  @ViewChild('iLote', { read: ElementRef }) private iLote:ElementRef;
+  @ViewChild('iNumEtq', { read: ElementRef }) private iNumEtq:ElementRef;
+  @ViewChild('iSaldoEtq', { read: ElementRef }) private iSaldoEtq:ElementRef;
+  @ViewChild('iNumCopia', { read: ElementRef }) private iNumCopia:ElementRef;
   
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, 
     public viewCtrl: ViewController, public sEtq: EtiquetadoServiceProvider, 
     public modalCtrl: ModalController, public alertCtrl: AlertController,
     public sGlobal: GlobalServiceProvider, public popoverCtrl: PopoverController) {
-
-    this.selectOptions = {
-      title: 'Pizza Toppings',
-      subTitle: 'Select your toppings',
-      mode: 'md'
-    };
 
     this.isVisibleSearchButton = (navParams.get('codePage') != null) ? true : false;
     this.vEtq = (navParams.get('vEtq') != null) ? navParams.get('vEtq') : this.vEtq;
@@ -109,7 +109,6 @@ export class EtiquetadoPage_01Page {
   }
 
   initPage(): void{
-    debugger;
     if(this.vEtq.Codigo != null){
       
       this.lote = this.vEtq.LoteLab;
@@ -137,14 +136,14 @@ export class EtiquetadoPage_01Page {
        this.listarUMxProducto(this.vEtq.Id_Producto);
       }
   
-      debugger;
       this.listarSubAlmacenesXCuenta(this.vEtq.IdCuentaLPN, this.sGlobal.Id_Almacen);
-  
       this.isEnabledLote = this.vEtq.FlagLote;
       this.fecEmiChecked = this.vEtq.FlagLote;
       this.fecVenChecked = this.vEtq.FlagLote;
       this.lote = (this.vEtq.FlagLote == true) ? this.vEtq.LoteLab : "";
       this.id_SubAlm = this.vEtq.Id_SubAlmacen;
+      this.numEtq = this.vEtq.CantidadPedida - this.vEtq.CantidadOperacion;
+      this.id_UAlt = this.vEtq.Id_UM;
     }
   }
 
@@ -170,12 +169,12 @@ export class EtiquetadoPage_01Page {
 
     if(this.lote == "" && this.vEtq.FlagLote){
       message = "Indique el lote";
+      this.selectAll(this.iLote, 500);
       return message;
     }
 
     if(this.id_UAlt == 0 || this.id_UAlt == undefined){
       message = "Seleccione una presentación";
-      debugger;
       setTimeout(()=>{
         this.selectUA_Alt.open();
       }, 500);
@@ -184,16 +183,19 @@ export class EtiquetadoPage_01Page {
 
     if(this.cantxEtq == 0 || this.cantxEtq == undefined){
       message = "Indique cantidad";
+      this.selectAll(this.iCantidad, 500);
       return message;
     }
 
     if(this.numEtq == 0 || this.numEtq == undefined){
       message = "Indique el número de etiquetas";
+      this.selectAll(this.iNumEtq, 500);
       return message;
     }
 
     if(this.numCopia <= 0 || this.numCopia == undefined){
       message = "El número de copias no valido";
+      this.selectAll(this.iNumCopia, 500);
       return message;
     }
 
@@ -235,7 +237,6 @@ export class EtiquetadoPage_01Page {
             handler: () => {
               
               //Imprimir etiquetas
-              debugger;
               if(this.cantEtqSaldo < 0 || this.cantEtqSaldo == undefined){
                 this.cantEtqSaldo = 0;
               }
@@ -245,7 +246,6 @@ export class EtiquetadoPage_01Page {
               cantEtqSaldo = this.cantEtqSaldo;
               cantxEtq = this.cantxEtq;
 
-              debugger;
               var objImp = 
               {
                 'CantidadEtiqueta' : parseInt(numEtq) + ((cantEtqSaldo) > 0 ? 1 : 0),
@@ -285,26 +285,18 @@ export class EtiquetadoPage_01Page {
   }
 
   registrarUAMasivo(objImp){
-    debugger;
     this.sEtq.registrarUAMasivo(objImp, 1).then(result=>{
       var res : any = result;
       if(res.length <= 0){
         return;
       }
 
-      /**
-      ArrayList<ListaEtiqueta> lstListEtq = new ArrayList<>();
-        UMxProducto selUAlter= (UMxProducto) spnUAlter.getSelectedItem();
-        ListaEtiqueta objLE = new ListaEtiqueta();
-        ArrayList<Etiqueta> lstEtq = new ArrayList<>(); 
-      **/
       var listContainer = [];
       var listEtq = [];
       let currentDate = moment(new Date());
       let obj = this.listUM.filter(x=>x.Id_UM == this.id_UAlt)[0];
 
       if(this.findArticulo == true){
-        debugger;
         for(let i = 0; i < res.length; i++){
           listEtq = [];
           listEtq.push({ "campo": "|MES|", "valor" :  currentDate.format("MM") });
@@ -334,7 +326,6 @@ export class EtiquetadoPage_01Page {
         }
 
       }else{
-        debugger;
         for(let i = 0; i < res.length; i++){  
           listEtq = [];
           listEtq.push({ "campo": "|MES|", "valor": currentDate.format('MMMM') });
@@ -364,10 +355,8 @@ export class EtiquetadoPage_01Page {
 
       let format = this.formatLabels.filter(x=>x.Id_Format == this.id_FormatLabel)[0];
       this.sEtq.imprimirListaEtiquetas(listContainer, format.Label, this.sGlobal.nombreImpresora, true).then(result=>{
-        debugger;
         var message : any = result;
         if (message.errNumber == -1){
-          //Toast.makeText(this, "Print"+ message.message, Toast.LENGTH_SHORT).show();
           alert(message.mensaje);
         }
       });
@@ -384,20 +373,19 @@ export class EtiquetadoPage_01Page {
   }
 
   onChange(){
-    //alert(this.id_UAlt);
     let obj = this.listUM.filter(x=>x.Id_UM == this.id_UAlt)[0];
     //cantidad por bulto 
-    this.cantXBulto = obj.CantXBulto;
+    this.cantXBulto = parseInt(obj.CantXBulto);
     if(this.findArticulo == false){
-      let factor = obj.Factor;
-      let numEtqPrint = this.vEtq.CantidadPedida/factor;
-      let saldoEtq = this.vEtq.CantidadPedida - (numEtqPrint * factor);
+      let factor: number = parseInt(obj.Factor);
+      let numEtqPrint: number = parseInt(this.vEtq.CantidadPedida)/factor;
+      let saldoEtq: number = parseInt(this.vEtq.CantidadPedida) - (numEtqPrint * factor);
       
       this.cantxEtq = factor;
       this.numEtq = numEtqPrint;
       this.cantEtqSaldo = saldoEtq;
     }else{
-      this.cantxEtq = obj.CantXBulto;
+      this.cantxEtq = parseInt(obj.CantXBulto);
       this.numEtq = 0;
       this.cantEtqSaldo = 0;
     }
@@ -427,8 +415,7 @@ export class EtiquetadoPage_01Page {
   }
 
   calcularTotalSuma(){
-    debugger;
-    var cantXCaja, numEtqTem, etqSaldoCant;
+    var cantXCaja: number, numEtqTem: number, etqSaldoCant: number;
     cantXCaja = (this.cantxEtq <= 0) ? 0 : this.cantxEtq;
     numEtqTem = (this.numEtq <= 0) ? 0 : this.numEtq;
     etqSaldoCant = (this.cantEtqSaldo <= 0 || this.cantEtqSaldo == undefined) ? 0 : this.cantEtqSaldo;
@@ -449,7 +436,6 @@ export class EtiquetadoPage_01Page {
   }
 
   goToEtqPage02(){
-    debugger;
     this.navCtrl.push(EtiquetadoPage_02Page, {
       producto: this.productSelectedcallback
     });
@@ -457,7 +443,6 @@ export class EtiquetadoPage_01Page {
 
   dataFromEtqPage02 : any;
   productSelectedcallback = data => {
-    debugger;
     this.dataFromEtqPage02 = data;
     console.log('data received from other page', this.dataFromEtqPage02);
     
@@ -475,31 +460,10 @@ export class EtiquetadoPage_01Page {
     this.vEtq.CondicionAlmac = this.dataFromEtqPage02.Composicion; //Composicion
     this.vEtq.IdCuentaLPN = this.dataFromEtqPage02.IdCuentaLPN;
     this.isEnabledLote = this.vEtq.FlagLote;
-    // Alias: "Und"
-    // Codigo: "101904A1802001"                 OK
-    // Composicion: ""                          OK
-    // Condicion: "Cuarentena"                  OK
-    // CondicionAlmacenamiento: null            OK
-    // Descripcion: "ALERGIS 0,75% GEL x 20 g"  OK
-    // EAN13: "2018110700008       "
-    // FlagLotePT: true                         OK
-    // FlagSeriePT: false                       OK
-    // Id_Condicion: 3                          OK
-    // Id_Producto: 1                           OK
-    // Id_UM: 13                                OK
-    // TipoAlmacenaje: null                     OK
-    // UM: "UNIDAD"                             OK
-
     this.initPage();
-    // this.listarUMxProducto(this.vEtq.Id_Producto);
-    // this.listarSubAlmacenesXCuenta(this.vEtq.IdCuentaLPN, this.sGlobal.Id_Almacen);
-    // this.fecEmiChecked = this.vEtq.FlagLote;
-    // this.fecVenChecked = this.vEtq.FlagLote;
-
   };
 
   presentPopover(myEvent){
-    debugger;
     let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 21});
     popover.present({
       ev: myEvent
@@ -509,25 +473,21 @@ export class EtiquetadoPage_01Page {
       if(popoverData == 3){
         this.showModalImpresora();
       }else if(popoverData == 4){
-        //cerrarSesion
-        debugger;
-        //this.app.getRootNavs()[0].setRoot(HomePage);
         this.navCtrl.pop();
         var nav = this.app.getRootNav();
         nav.setRoot(HomePage);
-
-        /**
-            console.log("Logout");
-            //this.authService.logout();
-            this.menuCtrl.close();
-            var nav = this.app.getRootNav();
-            //nav.setRoot(LoginPage); 
-        **/
       }
     });
   }
 
   goToEtqPage03(): void{
     this.navCtrl.push(EtiquetadoPage_03Page);
+  }
+
+  selectAll(el: ElementRef, time){
+    let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
+    setTimeout(()=>{
+      nativeEl.select();
+    }, time);
   }
 }

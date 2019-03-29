@@ -340,4 +340,51 @@ export class AlmacenajeServiceProvider {
     });
   }
 
+  //aromero
+  getListarUAConNuevaCantidad(strUA, decCantidad){
+    var parameter : any;
+    parameter = {'STRUA' : strUA, 'DECCANTIDAD' : decCantidad};
+    return new Promise(resolve=>{
+      this.http.get(this.sGlobal.almacenajeService + 'ListarUAConNuevaCantidad', { params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error getListarUAConNuevaCantidad', err);
+      })
+    });
+  }
+
+  //aromero
+  getListarReabastecimientoXUsuario(intIdAlmacen, strUsuario){
+    var parameter : any;
+    parameter = {'INTIDALMACEN' : intIdAlmacen, 'STRUSUARIO' : strUsuario};
+    return new Promise(resolve=>{
+      this.http.get(this.sGlobal.almacenajeService + 'ListarReabastecimientoXUsuario', { params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error getListarReabastecimientoXUsuario', err);
+      })
+    });
+  }
+
+  
+  //aromero
+  getRutaReabastecimientoXTx(strIdTx, intIdProducto, intIdAlmacen){
+    var parameter : any;
+    parameter = {'STRIDTX' : strIdTx, 'INTIDPRODUCTO' : intIdProducto, 'INTIDALMACEN' : intIdAlmacen};
+    return new Promise(resolve=>{
+      this.http.get(this.sGlobal.almacenajeService + 'RutaReabastecimientoXTx', { params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error getRutaReabastecimientoXTx', err);
+      })
+    });
+  }
+  
+
 }

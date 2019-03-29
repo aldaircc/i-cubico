@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, PopoverController, ModalController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController, PopoverController, ModalController, LoadingController, VirtualScroll } from 'ionic-angular';
 import { ReciboServiceProvider } from '../../../providers/recibo-service/recibo-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { ReciboPage_05Page } from '../recibo-page-05/recibo-page-05';
@@ -23,73 +23,114 @@ export class ReciboPage_04Page {
   vReciboPage03 : any;
   listBulto : any = [];
   rowCount : number = 0;
-
+  callBackReciboPage04: any;
+  wasDeleted: boolean = false;
+  @ViewChild('virtualScroll', { read: VirtualScroll }) virtualScroll: VirtualScroll;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController , public sRecibo: ReciboServiceProvider,
     public sGlobal: GlobalServiceProvider, public popoverCtrl: PopoverController,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController, public loadingCtrl: LoadingController) {
     this.vReciboPage03 = navParams.get('dataPage03');
-    console.log('data received - Page 03', this.vReciboPage03);
+    this.callBackReciboPage04 = navParams.get('callBackReciboPage04');
+  }
+
+  ionViewWillEnter() {
     this.listarUAXProductoTx(this.vReciboPage03.Id_Tx, this.vReciboPage03.Id_Articulo, this.vReciboPage03.Item);
   }
 
-  ionViewDidLoad() {
-    
-  }
-
-  listarUAXProductoTx(strIdTx, intIdProducto, intItem){
-    this.sRecibo.listarUAXProductoTx(strIdTx, intIdProducto, intItem).then(result=>{
-      this.listBulto = result;
-      this.rowCount = this.listBulto.length;
+  ionViewWillLeave(){
+    debugger;
+    let param = { 'saldo': this.vReciboPage03.Saldo, 'wasDeleted': this.wasDeleted };
+    this.callBackReciboPage04(param).then(()=>{
+      //this.navCtrl.pop();
     });
   }
 
-  deleteItem(data){
+  loading: any;
 
-    let alert = this.alertCtrl.create({
-      title: 'Confirmar eliminación',
-      message: '¿Esta seguro de eliminar el registro?',
-      buttons: [
+  presentLoadingDefault() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    this.loading.present();
+  }
+
+  listarUAXProductoTx(strIdTx, intIdProducto, intItem){
+    this.listBulto = [];
+    this.presentLoadingDefault();
+    this.virtualScroll.renderVirtual(true);
+
+    this.sRecibo.listarUAXProductoTx(strIdTx, intIdProducto, intItem).then(result=>{
+      let res: any = []; 
+      res = result;
+      this.listBulto = res;
+      this.rowCount = this.listBulto.length;
+      this.virtualScroll.renderVirtual(true);
+      this.loading.dismiss();
+    });
+  }
+
+  presentConfirmDialog(title, message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+
+      const confirm = this.alertCtrl.create({
+        title: title,
+        message: message,
+        buttons: [{
+          text: 'Si',
+          handler: () => {
+            resolve(true);
+          },
+        },
         {
           text: 'No',
           role: 'cancel',
           handler: () => {
-            
-          }
-        },
-        {
-          text: 'Si',
-          handler: () => {
-            //eliminar
-            let currentDate = new Date().toISOString();
-            let objUA = {
-              'UA_CodBarra': data.UA_CodBarra,
-              'Id_Tx': 'A201899999999', //data.Id_Tx,
-              'Id_Producto': data.Id_Producto,
-              'LoteLab': data.LoteLab,
-              'FechaEmision' : "/Date("+ Date.parse(currentDate) +")/",
-              'FechaVencimiento' : "/Date("+ Date.parse(currentDate) +")/",
-              'FechaIngreso' : "/Date("+ Date.parse(currentDate) +")/",
-              'Cantidad' : data.Cantidad,
-              'Saldo' : data.SaldoTotal,
-              'CantidadAveriada' : data.CantidadAveriada,
-              'Id_TerminalRF' : 1,
-              'Item' : this.vReciboPage03.Item,
-              'UsuarioRegistro' : this.sGlobal.userName,
-              'Id_Almacen' : this.sGlobal.Id_Almacen,
-              'FlagAnulado' : true,
-              'Observacion' : ''
-            };
-
-            this.evaluateDelete(objUA);
+            resolve(false);
           }
         }
       ]
+      });
+      confirm.present();
+    })
+  }
+
+  deleteItem(data){
+
+    this.presentConfirmDialog('Confirmar eliminación', '¿Esta seguro de eliminar el registro?').then(rpta=>{
+
+      if(rpta == true){
+        let currentDate = new Date().toISOString();
+        let objUA = {
+          'UA_CodBarra': data.UA_CodBarra,
+          'Id_Tx': data.Id_Tx,
+          'Id_Producto': data.Id_Producto,
+          'LoteLab': data.LoteLab,
+          'FechaEmision' : "/Date("+ Date.parse(currentDate) +")/",
+          'FechaVencimiento' : "/Date("+ Date.parse(currentDate) +")/",
+          'FechaIngreso' : "/Date("+ Date.parse(currentDate) +")/",
+          'Cantidad' : data.Cantidad,
+          'Saldo' : data.Cantidad,
+          'CantidadAveriada' : data.CantidadAveriada,
+          'Id_TerminalRF' : 1,
+          'Item' : this.vReciboPage03.Item,
+          'UsuarioRegistro' : this.sGlobal.userName,
+          'Id_Almacen' : this.sGlobal.Id_Almacen,
+          'FlagAnulado' : true,
+          'Observacion' : ''
+        };
+        
+        this.evaluateDelete(objUA);
+      }else{
+        return;
+      }
+
     });
-    alert.present();
   }
 
   evaluateDelete(objUA){
+    this.wasDeleted = true;
     if(this.vReciboPage03.Id_TipoMovimiento == 0){
       alert('Esta transacción no tiene tipo de movimiento');
       return;
@@ -99,11 +140,13 @@ export class ReciboPage_04Page {
       this.sRecibo.registrarUATransferencia(objUA).then(result=>{
         let res : any = result;
         alert(res.message);
+        this.vReciboPage03.Saldo += objUA.Cantidad;
       });
     }else{
       this.sRecibo.registrarUA(objUA).then(result=>{
         let res : any = result;
         alert(res.message);
+        this.vReciboPage03.Saldo += objUA.Cantidad;
       });
     }
     this.listarUAXProductoTx(this.vReciboPage03.Id_Tx, this.vReciboPage03.Id_Articulo, this.vReciboPage03.Item);
@@ -125,7 +168,6 @@ export class ReciboPage_04Page {
           {
             text: 'Si',
             handler: () => {
-            //presenter.navigateToReciboTab05(objReceived, strNumOrden, intId_TipoMovimiento, bolAutomatic, currentSaldo);  
             this.goToReciboPage05(this.vReciboPage03);
             }
           }
@@ -133,13 +175,11 @@ export class ReciboPage_04Page {
       });
       alert.present();
     }else{
-      //presenter.navigateToReciboTab05(objReceived, strNumOrden, intId_TipoMovimiento, bolAutomatic, currentSaldo);
       this.goToReciboPage05(this.vReciboPage03);
     }
   }
 
   goToReciboPage05(data){
-    debugger;
     let obj = {
         'Id_Tx' : data.Id_Tx,
         'NumOrden' : data.NumOrden,
@@ -160,7 +200,7 @@ export class ReciboPage_04Page {
         'Id_TipoMovimiento' : data.Id_TipoMovimiento,
         'bolAutomatic' : data.bolAutomatic,
         'currentSaldo' : data.Saldo,
-        "Cuenta" : this.vReciboPage03.Cuenta //Nuevo campo
+        "Cuenta" : this.vReciboPage03.Cuenta
     };
 
     this.navCtrl.push(ReciboPage_05Page, {

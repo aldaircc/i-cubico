@@ -19,18 +19,17 @@ export class InventarioPage_05Page {
 
   vParameter: any;
   listDetail: any;
-  isHiddenDelete: boolean = false;
+  //isHiddenDelete: boolean = false;
   rowCount: number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vParameter = this.navParams.get('vParameter');
-    this.isHiddenDelete = (this.vParameter.TipoInventario == 'CICLICO') ? true : false;
+    //this.isHiddenDelete = (this.vParameter.TipoInventario == 'CICLICO') ? true : false;
   }
 
   listarUAsXUbicacionInventario(strIdInventario, strCodBarraUbi): void{
     this.sInve.listarUAsXUbicacionInventario(strIdInventario, strCodBarraUbi).then(result=>{
-      debugger;
       this.listDetail = result;
       this.rowCount = this.listDetail.length;
     });
@@ -57,10 +56,7 @@ export class InventarioPage_05Page {
         {
           text: 'Si',
           handler: () => {
-            debugger;
-            if(this.vParameter.TipoInventario == 'GENERAL'){
               this.eliminarUAInventario(this.vParameter.Id_Inventario, obj.UA_CodBarra);
-            }
           }
         }
       ]
@@ -71,7 +67,6 @@ export class InventarioPage_05Page {
   eliminarUAInventario(strIdInventario, strUA): void{
     this.sInve.eliminarUAInventario(strIdInventario, strUA).then(result=>{
       let res: any = result;
-      debugger;
       if(res.errNumber == 0){
         alert(res.message);
         this.listarUAsXUbicacionInventario(this.vParameter.Id_Inventario, 

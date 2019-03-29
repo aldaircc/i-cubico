@@ -24,12 +24,12 @@
   </ion-grid>
 
   <ion-list>
-    <ion-item class="input-has-focus" [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgRed }">
+    <ion-item class="input-has-focus">
       <ion-label>Ubicación:</ion-label>
       <ion-input type="text" [(ngModel)]="strUbicacion" (keyup.enter)="validarUbicacion()" [disabled]="!isEnabledUbicacion" #inputUbicacion></ion-input>
     </ion-item>
 
-    <ion-item [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgRed }">
+    <ion-item>
       <ion-label>Código de barras UA:</ion-label>
       <ion-input type="text" [(ngModel)]="strCodeBarUA" (keyup.enter)="buscarArticuloEnLista()" [disabled]="!isEnabledCodeBar" #inputCodeBarUA></ion-input>
     </ion-item>
@@ -56,28 +56,35 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <ion-buttons left>
-      <button ion-button icon-only (click)="cambiarUbicacion()">
-        <ion-icon name="checkmark"></ion-icon>
-      </button>
-    </ion-buttons>
-
-    <ion-buttons justify-content-center align-items-end (click)="cambiarArticulo()" [hidden]="!isVisibleData">
-      <button ion-button icon-only style="margin-left: 35%">
-        <ion-icon name="grid"></ion-icon>
-      </button>
-    </ion-buttons>
-
-    <ion-buttons justify-content-center align-items-end>
-      <button ion-button icon-only style="margin-left: 15%" (click)="registrar()" [hidden]="!isVisibleData">
-        <ion-icon name="alarm"></ion-icon>
-      </button>
-    </ion-buttons>
-
-    <ion-buttons right>
-      <button ion-button icon-only (click)="goToDetail()">
-        <ion-icon name="reorder"></ion-icon>
-      </button>
-    </ion-buttons>
+    <ion-row>
+      <ion-col>
+        <ion-buttons left>
+          <button ion-button icon-only (click)="cambiarUbicacion()">
+            <ion-icon name="checkmark"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col>
+        <ion-buttons justify-content-center align-items-end (click)="cambiarArticulo()" [hidden]="!isVisibleData">
+          <button ion-button icon-only>
+            <ion-icon name="grid"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col>
+        <ion-buttons justify-content-center align-items-end right>
+          <button ion-button icon-only (click)="registrar()" [hidden]="!isVisibleData">
+            <ion-icon name="alarm"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col>
+        <ion-buttons right>
+          <button ion-button icon-only (click)="goToDetail()">
+            <ion-icon name="reorder"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
   </ion-toolbar>
 </ion-footer>

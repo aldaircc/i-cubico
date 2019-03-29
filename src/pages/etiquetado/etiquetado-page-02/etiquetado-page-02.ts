@@ -75,6 +75,9 @@ export class EtiquetadoPage_02Page {
     this.sEtq.listarProductoXFiltro(intTipo, strFiltro, intIdCuenta).then(result=>{
       this.listFilter = result;
       this.rowCount = this.listFilter.length;
+      if(this.listFilter.length == 0){
+        alert('No se encontraron resultados');
+      }
     });
   }  
 }

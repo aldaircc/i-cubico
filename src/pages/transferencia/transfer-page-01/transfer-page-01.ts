@@ -30,8 +30,8 @@ export class TransferPage_01Page {
   listarTransferenciaSubAlmacenXUsuario(strUsuario, intIdAlmacen){
     this.sPicking.listarTransferenciaSubAlmacenXUsuario(strUsuario, intIdAlmacen).then(result=>{
       this.listTransf = result;
-      this.countConfirm = this.listTransf.reduce((acc, cur) => cur.Id_Estado === 3 ? ++acc : acc, 0);
-      this.countProcess = this.listTransf.reduce((acc, cur) => cur.Id_Estado === 1 ? ++acc : acc, 0);
+      this.countConfirm = this.listTransf.reduce((acc, cur) => cur.Id_Estado === 2 ? ++acc : acc, 0);
+      this.countProcess = this.listTransf.reduce((acc, cur) => cur.Id_Estado === 3 ? ++acc : acc, 0);
       this.rowCount = this.listTransf.length;
     });
   }
@@ -46,27 +46,7 @@ export class TransferPage_01Page {
     };
     this.navCtrl.push(TransferPage_02Page, { 'vParameter': parameter });
   }
-
-   selected = [];
   
-   open(row) {
-  //   debugger;
-  //   let alert = this.alertCtrl.create({
-  //     title: 'Row',
-  //     message: `${row.name} is ${row.age} years old!`,
-  //     buttons: ['OK']
-  //   });
-  //   alert.present();
-   }
-
-   onSelect({ selected }) {
-  //   console.log('Select Event', selected, this.selected);
-   }
-
-   onActivate(event) {
-  //   console.log('Activate Event', event);
-   }
-
    ionViewWillEnter(){
       this.listarTransferenciaSubAlmacenXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen);
    }

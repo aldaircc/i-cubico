@@ -42,8 +42,11 @@
         <ion-card-content no-padding (click)="goToEmbarPage04(obj)">
           <ion-grid>
             <ion-row>
-              <ion-col col-1 col-sm
-              [ngClass]="(obj.OperacionBultos > 0 && (obj.SaldoBultos == 0)) ? 'bg-saldo-complete' : 'label-color bg-process'">
+              <ion-col col-1 col-sm class="label-color"
+              [ngClass]="{ 'bg-saldo-complete': (obj.OperacionBultos > 0 && (obj.SaldoBultos == 0)),
+                           'bg-process': (obj.OperacionBultos > 0 && (obj.SaldoBultos == 0)),
+                           'bg-no-started': (obj.CantidadBultos == obj.SaldoBultos)
+                         }">
               </ion-col>
               <ion-col col-10 col-sm>
                 <ion-row>

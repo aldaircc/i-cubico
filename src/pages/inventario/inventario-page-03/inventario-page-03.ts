@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Content, IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { InventarioServiceProvider } from '../../../providers/inventario-service/inventario-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
@@ -21,44 +21,32 @@ import moment from 'moment';
 export class InventarioPage_03Page {
 
   vParameter: any;
+  isInit: boolean = false;
   btnIniciar: any = { 'Text': ''};
   txtInventareador: any = { 'Text': '', 'ReadOnly': false };
   dtpFecha: any = { 'Text': new Date().toISOString(), 'Enabled': true};
   lblInfo01: any = { 'Text': '', 'Value': '' };
   lblInfo02: any = { 'Text': '', 'Value': '' };
   strTipoInventario: string = "";
+  @ViewChild('inputInventariador', { read: ElementRef }) private inputInventariador:ElementRef;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vParameter = this.navParams.get('vParameter');
     this.strTipoInventario = this.vParameter.TipoInventario;
-
     if(this.vParameter.Id_Estado == 10){
       this.btnIniciar.Text = 'Iniciar';
       this.txtInventareador.ReadOnly = false;
       this.dtpFecha.Enabled = false;
-      this.dtpFecha = this.vParameter.FechaProgramacion;
-    //     dtpFecha.Text = DateTime.Now.ToShortDateString();
-    //     btnIniciar.Text = "Iniciar";
-    //     txtInventareador.ReadOnly = false;
-    //     dtpFecha.Enabled = false;
-    //     ManejoPaneles(2);
-    //     //estado en proceso
+      this.isInit = false;
 
     }else{
       this.btnIniciar.Text = 'Continuar';
       this.dtpFecha.Enabled = false;
-      this.dtpFecha.Text = moment(this.vParameter.FechaProgramacion).toISOString();
+      this.isInit = true;
       this.txtInventareador.Text = "";
-
-    //     dtpFecha.Enabled = false;
-    //     if (rbtPerchas.Checked)
-    //     {
-    //         txtInventareador.Text = "";
-    //     }
-    //     ManejoPaneles(2);
     }
-    
+    this.dtpFecha.Text = moment(this.vParameter.FechaProgramacion).toISOString();
     this.lblInfo01.Text = (this.strTipoInventario == 'GENERAL') ? 'Sector' : 'Código';
     this.lblInfo01.Value = (this.strTipoInventario == 'GENERAL') ? this.vParameter.Id_Sector : this.vParameter.Codigo /**Id_Producto**/;
     this.lblInfo02.Text = (this.strTipoInventario == 'GENERAL') ? 'Fila/Rack' : 'Artículo';
@@ -66,15 +54,12 @@ export class InventarioPage_03Page {
     this.txtInventareador.Text = this.vParameter.UsuarioInventariador;
   }
 
-  ionViewDidLoad() {
-    
-  }
-
   continuarInventario(): void{
     if(this.btnIniciar.Text == 'Iniciar'){
 
       if(this.txtInventareador.Text.trim() == ""){
         alert('Ingrese Inventareador');
+        this.selectAll(this.inputInventariador, 500);
         return;
       }else{
         const confirm = this.alertCtrl.create({
@@ -90,11 +75,8 @@ export class InventarioPage_03Page {
 
                 if(this.strTipoInventario == 'GENERAL'){
                   this.goToInventPage04();
-//                     ManejoPaneles(3);
                 }else if(this.strTipoInventario == 'CICLICO'){
                   this.goToInventPage06();
-                  //                     CargarListaInventarioUbicacionesSugeridas();
-                  //                     ManejoPaneles(5);
                 }
               }
             },
@@ -112,11 +94,8 @@ export class InventarioPage_03Page {
     }else{
       if(this.strTipoInventario == 'CICLICO'){
         this.goToInventPage06();
-    //                 ManejoPaneles(5);
-    //                 CargarListaInventarioUbicacionesSugeridas();
       }else{
         this.goToInventPage04();
-    //                 ManejoPaneles(3);
       }
     }
   }
@@ -145,6 +124,7 @@ export class InventarioPage_03Page {
       confirm.present();
     }else{
       alert('No puede cerrar un inventario que no se ha iniciado');
+      this.selectAll(this.inputInventariador, 500);
       return;
     }
   }
@@ -241,4 +221,14 @@ export class InventarioPage_03Page {
     //}
   }
 
+    selectAll(el: ElementRef, time){
+      let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
+      setTimeout(()=>{
+        nativeEl.select();
+      }, time);
+  }
+
+  ionViewWillEnter(){
+    this.selectAll(this.inputInventariador, 500);
+  }
 }

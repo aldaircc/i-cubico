@@ -49,8 +49,10 @@
     <ion-card-content no-padding (click)="goToTransferPage03(obj)">
       <ion-grid>
         <ion-row>
-          <ion-col col-1 col-sm
-          [ngClass]="obj.Id_Estado === 3 ? 'label-color bg-confirm' : 'label-color bg-process'">
+          <ion-col col-1 col-sm  class="label-color"
+          [ngClass]="{'bg-confirm': (obj.Saldo === obj.CantidadPedida), 
+                      'bg-process': ((obj.Saldo != obj.CantidadPedida) && obj.Saldo > 0),
+                      'bg-checked': (obj.Saldo === 0)}">
           </ion-col>
           <ion-col col-10 col-sm>
             <ion-row>
@@ -117,9 +119,9 @@
           TOTAL ITEMS: {{ rowCount }}
         </p>
     <ion-row>
-        <ion-col col-2 offset-1 col-sm class="box-counter bg-pendient"> {{ countConfirm }} </ion-col>
+        <ion-col col-2 offset-1 col-sm class="box-counter bg-pendient"> {{ countPendient }} </ion-col>
         <ion-col col-2 offset-2 col-sm class="box-counter bg-process"> {{ countProcess }} </ion-col>
-        <ion-col col-2 offset-2 col-sm class="box-counter bg-checked"> {{ countProcess }} </ion-col>
+        <ion-col col-2 offset-2 col-sm class="box-counter bg-checked"> {{ countConfirm }} </ion-col>
     </ion-row>
   </ion-grid>
   <ion-toolbar>  
