@@ -58,8 +58,20 @@
   </ion-row>
   
   <ion-row class="bgWhite">
-    <ion-card *ngFor="let objDetEmbalaje of listAuxDetEmbalaje">        
-        <ion-card-content>
+    <ion-card *ngFor="let objDetEmbalaje of listAuxDetEmbalaje">  
+      <ion-grid>
+        <ion-row>          
+          <ion-col col-1 col-sm 
+          [ngClass]=filterItemsEstado2(objDetEmbalaje)>
+          </ion-col>           
+          <!-- <ion-col *ngIf = "objDetEmbalaje.Saldo==0;else activo" col-1 col-sm class='label-color verde'></ion-col>           
+          <ng-template #activo>
+            <ion-col col-1 col-sm class='filterItemsEstado2()'></ion-col>
+          </ng-template>                                      -->
+
+                 
+          <ion-col col-10 col-sm>                        
+          <ion-card-content no-padding>
             <h5>{{objDetEmbalaje.Producto}}</h5>
             <h5><b>Codigo: </b> {{objDetEmbalaje.Codigo}}</h5>            
             <h5><b>Lote: </b> {{objDetEmbalaje.Lote}}</h5>
@@ -67,11 +79,12 @@
             <h5><b>C.Picking: </b> {{objDetEmbalaje.CantidadOperacion|number : '1.2-2' }}</h5>                        
             <h5><b>C.Despachada: </b> {{objDetEmbalaje.CantidadDespacho|number : '1.2-2' }}</h5>                        
             <h5><b>Saldo: </b> {{objDetEmbalaje.Saldo|number : '1.2-2' }}</h5>                        
-        </ion-card-content>
-      </ion-card>
+          </ion-card-content>
+          </ion-col>
+        </ion-row>
+      </ion-grid>      
+    </ion-card>
   </ion-row>
-
-
   </ion-content>
   
   <ion-footer class="bgLightBlue">
@@ -84,15 +97,15 @@
                 <div class="fieldForm"> {{ rowCount }} fila(s) </div>
             </ion-col>
         </ion-row>
-        <ion-row>
+        <ion-row class="center">
             <ion-col col-4 col-sm>
-                <button ion-button class="gris negro"> {{ rowCountPendiente }} fila(s) </button>
+                <button ion-button class="gris negro"> {{ rowCountPendiente }} </button>
             </ion-col>
             <ion-col col-4 col-sm>
-                <button ion-button class="amarillo negro"> {{ rowCountEnProceso }} fila(s) </button>
+                <button ion-button class="amarillo negro"> {{ rowCountEnProceso }} </button>
             </ion-col>
             <ion-col col-4 col-sm>
-                <button ion-button class="verde negro"> {{ rowCountCompleto }} fila(s) </button>
+                <button ion-button class="verde negro"> {{ rowCountCompleto }} </button>
             </ion-col>
         </ion-row>
     </ion-grid>

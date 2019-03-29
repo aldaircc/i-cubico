@@ -40,6 +40,8 @@ export class PopoverEmbalajeComponent {
       this.isDisplayCerrar = true;     
         break;
       case 13:
+      this.isDisplayPrint = true;
+      this.isDisplayCerrar = true;   
         break;
       case 14:
         this.isDisplayPrint = true;

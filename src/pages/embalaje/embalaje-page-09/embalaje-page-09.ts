@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
 import { EmbalajePage_04Page } from '../embalaje-page-04/embalaje-page-04';
 
@@ -27,7 +27,7 @@ export class EmbalajePage_09Page {
   vNroBulto2: any;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController,
     public sEmbalaje: EmbalajeServiceProvider) {
       this.vNroBulto = navParams.get('dataNroBulto'); 
       this.vNroBultoCeros = navParams.get('dataNroBultoCeros'); 
@@ -57,6 +57,66 @@ export class EmbalajePage_09Page {
     }, (err) => {
       console.log('E-Embalaje listar', err);
     });
+  }
+
+  EliminarItems(objDetBultoXBulto){
+    objDetBultoXBulto.Anulado = 1;
+    objDetBultoXBulto.Lote = objDetBultoXBulto.LoteLab;    
+    this.mostrarAlerta(objDetBultoXBulto);
+  }
+
+
+  mostrarAlerta(objDetBultoXBulto){
+
+    var message = "";
+    message = "¿Desea eliminar bulto?";
+
+    let alert = this.alertCtrl.create({
+      title: 'Eliminar Bulto',
+      message: message,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            console.log('Buy clicked');  
+                    
+            
+            this.sEmbalaje.RegistrarProductoBulto(objDetBultoXBulto).then((result)=>{ 
+              debugger;
+              console.log(result);
+              var respuesta : any = result;
+
+              this.mostrarConfirmacion("Confirmación",respuesta.message);            
+              this.getDataDetalleBultoXBulto();         
+            });
+            
+          }
+        }
+      ]
+    });
+    alert.present();
+
+  }
+
+  mostrarConfirmacion(title,message){
+  
+    let alertConfirmacion = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: [
+        {
+          text: 'Aceptar'
+        }
+      ]
+    });
+    alertConfirmacion.present();
   }
 
   goToEmbalajePage04(){

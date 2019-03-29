@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ModalController, PopoverController } from 'ionic-angular';
+import { HomePage } from '../../home/home';
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
 import { PopoverEmbalajeComponent } from '../../../components/popover-embalaje/popover-embalaje';
 import { EmbalajePage_04Page } from '../embalaje-page-04/embalaje-page-04';
 import { EmbalajePage_08Page } from '../embalaje-page-08/embalaje-page-08';
+import { EmbalajePage_02Page } from '../embalaje-page-02/embalaje-page-02';
+import { ImpresoraPage } from '../../impresora/impresora';
 
 /**
  * Generated class for the EmbalajePage_03Page page.
@@ -33,7 +36,7 @@ export class EmbalajePage_03Page {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private alertCtrl: AlertController,
-    public sEmbalaje: EmbalajeServiceProvider, public popoverCtrl: PopoverController) {
+    public sEmbalaje: EmbalajeServiceProvider, public popoverCtrl: PopoverController,public modalCtrl: ModalController) {
       this.vEmbalajePage02 = navParams.get('dataPage02');
   }
 
@@ -52,7 +55,7 @@ export class EmbalajePage_03Page {
       this.listAuxDetEmbalaje = this.listDetEmbalaje;
       
       this.rowCount = this.listAuxDetEmbalaje.length;
-      this.filterItemsEstado();
+      this.filterItemsEstado();           
       if (this.listDetEmbalaje.length > 0) {
 
       } else {
@@ -66,11 +69,11 @@ export class EmbalajePage_03Page {
   filterItems(ev: any) {
     const val = ev.target.value;
     if (val && val.trim() != '') {
-      this.listAuxDetEmbalaje = this.listDetEmbalaje.filter((item) => {
-        return (item.Codigo.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      this.listAuxDetEmbalaje = this.listDetEmbalaje.filter((item) => {     
+        return ((item.Codigo.toLowerCase().indexOf(val.toLowerCase()) > -1) || (item.Producto.toLowerCase().indexOf(val.toLowerCase()) > -1) || (item.EAN13.toLowerCase().indexOf(val.toLowerCase()) > -1) || (item.EAN14.toLowerCase().indexOf(val.toLowerCase()) > -1));
       });
       this.rowCount = this.listAuxDetEmbalaje.length;
-    } else {
+    } else {      
       this.rowCount = this.listDetEmbalaje.length;
       return this.listAuxDetEmbalaje = this.listDetEmbalaje;
     }
@@ -91,13 +94,30 @@ export class EmbalajePage_03Page {
     this.rowCountPendiente = 0;
     this.rowCountEnProceso = 0;
     for(let data of this.listDetEmbalaje){
-      if(data.Saldo == 0)
-        this.rowCountCompleto++;
-      else if (data.Saldo == data.CantidadOperacion)
-        this.rowCountPendiente++;
-      else
-        this.rowCountEnProceso++;
+      if(data.Saldo == 0){
+        this.rowCountCompleto++;                
+      }
+      else if (data.Saldo == data.CantidadOperacion){
+        this.rowCountPendiente++;            
+      }
+      else{
+        this.rowCountEnProceso++;               
+      }
     }  
+  }
+
+  filterItemsEstado2(data)  {        
+    if(data!= undefined){
+      if(data.Saldo == 0){        
+        return "label-color verde";
+      }
+      else if (data.Saldo == data.CantidadOperacion){        
+        return "label-color gris";
+      }
+      else{        
+        return "label-color amarillo";
+      }   
+    }
   }
   
    presentPopover(myEvent){
@@ -105,6 +125,38 @@ export class EmbalajePage_03Page {
     popover.present({
       ev: myEvent
     });
+
+    popover.onDidDismiss(popoverData =>{
+      debugger;
+      if(popoverData == 4){
+        this.showModalImpresora();
+      }else if(popoverData == 5){
+        this.goBackLoginPage();
+      }
+    });   
+  }
+
+  
+  showModalImpresora(){
+    let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
+    modalIncidencia.present();
+  }
+  goBackLoginPage():void{
+    this.navCtrl.push(HomePage);
+  }
+
+  mostrarConfirmacion(title,message){
+  
+    let alertConfirmacion = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: [
+        {
+          text: 'Aceptar'
+        }
+      ]
+    });
+    alertConfirmacion.present();
   }
 
   getDataDetBultosEmbalaje() {        
@@ -143,8 +195,12 @@ export class EmbalajePage_03Page {
     });
   }
 
-  cerrarDespacho(){
+  goToEmbalajePage02(){    
+    this.navCtrl.push(EmbalajePage_02Page);
+  }
 
+  cerrarDespacho(){
+   
     var message = "";
     let saldo = this.listAuxDetEmbalaje.reduce(function(prev, cur){
       debugger;
@@ -177,6 +233,8 @@ export class EmbalajePage_03Page {
             console.log(this.vTipoCierre);
             this.sEmbalaje.CerrarDespacho(this.vEmbalajePage02.Id_Tx,this.vTipoCierre,"admin",2).then((result)=>{      
               console.log(result);
+              this.mostrarConfirmacion("Confirmación","Cierre correcto");
+              this.goToEmbalajePage02();
             });
           }
         }

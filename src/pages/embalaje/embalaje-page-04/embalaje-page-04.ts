@@ -1,10 +1,15 @@
 import { Component, DebugElement } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, PopoverController,ModalController } from 'ionic-angular';
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
 import { EmbalajePage_05Page } from '../embalaje-page-05/embalaje-page-05';
+import { EmbalajePage_07Page } from '../embalaje-page-07/embalaje-page-07';
+import { EmbalajePage_08Page } from '../embalaje-page-08/embalaje-page-08';
 import { EmbalajePage_09Page } from '../embalaje-page-09/embalaje-page-09';
+import { PopoverEmbalajeComponent } from '../../../components/popover-embalaje/popover-embalaje';
+import { HomePage } from '../../home/home';
 import { RenderDebugInfo } from '@angular/core/src/render/api';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
+import { ImpresoraPage } from '../../impresora/impresora';
 /**
  * Generated class for the EmbalajePage_04Page page.
  *
@@ -33,8 +38,8 @@ export class EmbalajePage_04Page {
   rowCount: any;
   
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-    private alertCtrl: AlertController,public sEmbalaje: EmbalajeServiceProvider,
+  constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController,
+    private alertCtrl: AlertController,public sEmbalaje: EmbalajeServiceProvider,public modalCtrl: ModalController,
     public sGlobal: GlobalServiceProvider) {        
     this.vEmbalajePage03 = navParams.get('dataPageFiltro');           
     this.vEmbalajePage02 = navParams.get('dataPage02');   
@@ -90,6 +95,21 @@ export class EmbalajePage_04Page {
       dataTotalPage03: this.vEmbalajeTotalPage03,
       dataNroBulto: this.vNroBulto,
       dataNroBulto2: this.vNroBulto,      
+      dataPage02: this.vEmbalajePage02 
+    });
+  }
+
+  goToEmbalajePage08(){               
+    this.navCtrl.push(EmbalajePage_08Page,{
+      dataPage02: this.vEmbalajePage02,
+      totalBultos: this.rowCount
+    });
+  }
+
+  goToEmbalajePage07(){           
+    this.navCtrl.push(EmbalajePage_07Page,{      
+      dataNroBulto: this.vNroBulto,
+      dataNroBultoCeros: this.vNroBultoCeros, 
       dataPage02: this.vEmbalajePage02 
     });
   }
@@ -204,6 +224,31 @@ export class EmbalajePage_04Page {
                   
     });
   }
+
+  presentPopover(myEvent){
+    let popover = this.popoverCtrl.create(PopoverEmbalajeComponent, {'page' : 12});
+    popover.present({
+      ev: myEvent
+    });
+
+    popover.onDidDismiss(popoverData =>{
+      debugger;
+      if(popoverData == 4){
+        this.showModalImpresora();
+      }else if(popoverData == 5){
+        this.goBackLoginPage();
+      }
+    });   
+  }
+
+  showModalImpresora(){
+    let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
+    modalIncidencia.present();
+  }
+  goBackLoginPage():void{
+    this.navCtrl.push(HomePage);
+  }
+
 
   ionViewWillEnter() {   
     debugger; 
