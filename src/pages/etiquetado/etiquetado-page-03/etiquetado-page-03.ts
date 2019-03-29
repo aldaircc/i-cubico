@@ -28,7 +28,6 @@ export class EtiquetadoPage_03Page {
   }
 
   AddUA(): void{
-    debugger;
     if(this.strUA.trim() == ""){
       alert('Ingresar UA');
       this.selectAll(this.inputUA, 500);
@@ -46,7 +45,6 @@ export class EtiquetadoPage_03Page {
   }
 
   existInList(): boolean{
-    debugger;
     var value: boolean = false;
     let filter =  this.listUAs.filter(obj => obj.UA_CodBarra.trim() === this.strUA.trim());
     if(filter.length != 0){
@@ -57,7 +55,6 @@ export class EtiquetadoPage_03Page {
 
   validarExisteUA(strUA){
     this.sAlm.validarExisteUA(strUA).then(result=>{
-      debugger;
       let res:any = result;
       if(res.length != 0){
 

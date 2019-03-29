@@ -41,7 +41,6 @@ export class EtiquetadoPage_04Page {
     if(this.strUbicacion.trim() != ""){
       this.sAlmac.listarUbicacionXCodigoBarra(this.strUbicacion, this.sGlobal.Id_Almacen).then(result=>{
         let res: any = result;
-        debugger;
         if(res.length != 0){
           this.fila = res[0].Fila;
           this.columna = res[0].Columna;
@@ -78,7 +77,6 @@ export class EtiquetadoPage_04Page {
   }
 
   registrarUbic(): void{
-    debugger;
     if(this.strUbicacion.trim() != "" && this.id_Ubicacion != 0) {
       this.registrarUAsUbicacion(this.vParameter, this.id_Ubicacion, this.sGlobal.userName);
     }else{
