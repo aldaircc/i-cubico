@@ -49,7 +49,6 @@ export class ReciboPage_03Page {
   }
 
   ionViewWillEnter(){
-    debugger;
     this.selectAll(this.iCodeBar, 500);
     this.getUAsProducto(this.vReciboPage02.Id_Tx, this.vReciboPage02.Id_Producto, this.vReciboPage02.Item);
   }
@@ -94,7 +93,6 @@ export class ReciboPage_03Page {
           this.vReciboPage02.Id_TipoMovimiento === 14){
             this.sRecibo.validarReciboTransferenciaSerie(this.vReciboPage02.NumOrden, this.codeBar.Text, 
               this.vReciboPage02.Item).then((result)=>{
-              debugger;
               let rpta :any = result;
               if(rpta.errNumber != 0){
                 this.isBgRed = true;
@@ -158,7 +156,6 @@ export class ReciboPage_03Page {
             };
             
             this.sRecibo.validarUAReciboTransferencia(ua).then((result)=>{
-              debugger;
               this.cantidad = 0;
               let rpta:any = result;
               if(rpta.errNumber === 0){                
@@ -206,7 +203,6 @@ export class ReciboPage_03Page {
               'Item': this.vReciboPage02.Item
             }
             this.sRecibo.validarUARecibo(ua).then((result)=>{
-              debugger;
               this.cantidad = 0;
               this.selectAll(this.iCodeBar, 500);
               let rpta:any = result;
@@ -351,10 +347,8 @@ export class ReciboPage_03Page {
       };
 
       this.vReciboPage02.TipoAlmacenaje = (this.vReciboPage02.TipoAlmacenaje == undefined) ? 0 : this.vReciboPage02.TipoAlmacenaje;
-      debugger;
       this.sRecibo.registrarUATransito(objTxUbi).then((result)=>{
         let rpta : any = result;
-        debugger;
         var sumCantidad = this.cantidadRec +  this.vReciboPage02.CantidadOperacion;
 
         if(this.cantidad != 0){
@@ -399,7 +393,6 @@ export class ReciboPage_03Page {
               this.evaluarResultado(result);
             });
         }else{
-          debugger;
             this.sRecibo.registrarUA(objUA).then(result=>{
               this.evaluarResultado(result);
             });
@@ -408,7 +401,6 @@ export class ReciboPage_03Page {
   }
 
   evaluarResultado(message){
-    debugger;
     if(message.errNumber === 0){
       let valor1 = parseFloat(message.valor1);
       this.cantidadBulto++;
@@ -456,9 +448,6 @@ export class ReciboPage_03Page {
 
   callBackReciboPage04 = (values) => {
     return new Promise((resolve, reject) => {
-      debugger;
-      //this.cantidadRec = values;
-      
       if(values.wasDeleted == true){
         this.vReciboPage02.Saldo = values.saldo;
         this.vReciboPage02.CantidadOperacion = this.vReciboPage02.CantPedida - values.saldo;
@@ -466,8 +455,6 @@ export class ReciboPage_03Page {
 
       resolve();
     });
-    //console.log('datos de pagina 04', values);
-    //this.cantidadRec = values;
    }
    
   goToReciboPage04(){
@@ -561,7 +548,6 @@ export class ReciboPage_03Page {
   }
 
   navigateToEtqCajaLpn(data){
-    debugger;
     let objEtq = {
     "LoteLab": data.Lote,
     "Id_Producto": data.Id_Producto,

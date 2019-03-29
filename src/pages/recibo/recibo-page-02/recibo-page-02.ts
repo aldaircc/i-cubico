@@ -42,7 +42,6 @@ export class ReciboPage_02Page {
   }
 
   presentPopover(myEvent){
-    debugger;
     let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 12});
     popover.present({
       ev: myEvent
@@ -125,8 +124,6 @@ export class ReciboPage_02Page {
   }
 
   goToReciboPage03(data){
-  debugger;
-
   this.vReciboPage02 = {
     "Id_Tx":this.vReciboPage01.Id_Tx,
     "NumOrden":this.vReciboPage01.NumOrden,
@@ -202,15 +199,13 @@ export class ReciboPage_02Page {
             text: 'Cancelar',
             role: 'cancel',
             handler: () => {
-              console.log('Cancel clicked');
+              return;
             }
           },
           {
             text: 'Aceptar',
             handler: () => {
-              console.log('Buy clicked');
-              debugger;
-              this.sRecibo.cerrarRecepcion('99999'/**this.vReciboPage01.Id_Tx**/, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result=>{
+              this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result=>{
                 let res: any = result; 
                 this.getDetailXTx(this.vReciboPage01.Id_Tx);
               });

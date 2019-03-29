@@ -137,11 +137,8 @@ export class ReciboPage_05Page {
   }
 
   registrarUATransito(TxUbi){
-    debugger;
     this.sRecibo.registrarUATransito(TxUbi).then(result=>{
-      debugger;
       var lstUbi = [];
-      
       this.listBulto.forEach(el => {
         if(el.Contenedor != null) {  return; }
         

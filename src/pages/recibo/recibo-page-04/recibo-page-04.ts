@@ -31,11 +31,8 @@ export class ReciboPage_04Page {
     public alertCtrl: AlertController , public sRecibo: ReciboServiceProvider,
     public sGlobal: GlobalServiceProvider, public popoverCtrl: PopoverController,
     public modalCtrl: ModalController, public loadingCtrl: LoadingController) {
-    debugger;
     this.vReciboPage03 = navParams.get('dataPage03');
-    console.log('datos de pagina 03', this.vReciboPage03);
     this.callBackReciboPage04 = navParams.get('callBackReciboPage04');
-    //this.listarUAXProductoTx(this.vReciboPage03.Id_Tx, this.vReciboPage03.Id_Articulo, this.vReciboPage03.Item);
   }
 
   ionViewWillEnter() {
@@ -53,16 +50,10 @@ export class ReciboPage_04Page {
   loading: any;
 
   presentLoadingDefault() {
-    debugger;
     this.loading = this.loadingCtrl.create({
       content: 'Please wait...'
     });
-  
     this.loading.present();
-  
-    // setTimeout(() => {
-    //   this.loading.dismiss();
-    // }, 5000);
   }
 
   listarUAXProductoTx(strIdTx, intIdProducto, intItem){
@@ -74,7 +65,6 @@ export class ReciboPage_04Page {
       let res: any = []; 
       res = result;
       this.listBulto = res;
-      debugger;
       this.rowCount = this.listBulto.length;
       this.virtualScroll.renderVirtual(true);
       this.loading.dismiss();
@@ -111,7 +101,6 @@ export class ReciboPage_04Page {
     this.presentConfirmDialog('Confirmar eliminación', '¿Esta seguro de eliminar el registro?').then(rpta=>{
 
       if(rpta == true){
-        debugger;
         let currentDate = new Date().toISOString();
         let objUA = {
           'UA_CodBarra': data.UA_CodBarra,
@@ -141,7 +130,6 @@ export class ReciboPage_04Page {
   }
 
   evaluateDelete(objUA){
-    debugger;
     this.wasDeleted = true;
     if(this.vReciboPage03.Id_TipoMovimiento == 0){
       alert('Esta transacción no tiene tipo de movimiento');
@@ -180,7 +168,6 @@ export class ReciboPage_04Page {
           {
             text: 'Si',
             handler: () => {
-            //presenter.navigateToReciboTab05(objReceived, strNumOrden, intId_TipoMovimiento, bolAutomatic, currentSaldo);  
             this.goToReciboPage05(this.vReciboPage03);
             }
           }
@@ -193,7 +180,6 @@ export class ReciboPage_04Page {
   }
 
   goToReciboPage05(data){
-    debugger;
     let obj = {
         'Id_Tx' : data.Id_Tx,
         'NumOrden' : data.NumOrden,
@@ -214,7 +200,7 @@ export class ReciboPage_04Page {
         'Id_TipoMovimiento' : data.Id_TipoMovimiento,
         'bolAutomatic' : data.bolAutomatic,
         'currentSaldo' : data.Saldo,
-        "Cuenta" : this.vReciboPage03.Cuenta //Nuevo campo
+        "Cuenta" : this.vReciboPage03.Cuenta
     };
 
     this.navCtrl.push(ReciboPage_05Page, {
