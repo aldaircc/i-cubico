@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { IncidenciaServiceProvider } from '../../providers/incidencia-service/incidencia-service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { GlobalServiceProvider } from '../../providers/global-service/global-service';
 
 /**
  * Generated class for the IncidenciaPage page.
@@ -28,14 +29,14 @@ export class IncidenciaPage {
   id_LineaMAQ : number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl:ViewController,
-    public sIncidencia: IncidenciaServiceProvider) {
+    public sIncidencia: IncidenciaServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vParameters = navParams.get('pIncidencia');
     this.listarCausalesXModulo(this.vParameters.id_Cliente, this.vParameters.id_Modulo);
     
     if(this.tipo == 1){
-      this.buscarControlUsuario(this.vParameters.Id_Tx, "ADMIN");
+      this.buscarControlUsuario(this.vParameters.Id_Tx, this.sGlobal.userName);
     }else{
-      this.buscarControlPendiente( (this.vParameters == undefined) ? '': this.vParameters.Id_Tx, "ADMIN");
+      this.buscarControlPendiente( (this.vParameters == undefined) ? '': this.vParameters.Id_Tx, this.sGlobal.userName);
     }
   }
 
@@ -50,23 +51,12 @@ export class IncidenciaPage {
         this.fechaInicio = result[0].FechaHoraInicio;
         this.id_Causal = result[0].Id_Causal;
       }
-      /**
-      if (list.size() != 0){
-            ControlUsuarioPendiente obj = list.get(0);
-            edtObser.setText(obj.getObservacion());
-            bolR_FlagPausa = obj.getFlagPausa();
-            dtFechaIni = obj.getFechaHoraInicio();
-            spnCausal.setSelection(getPositionOfCausal(obj.getId_Causal()));
-            btnParar.setText("Continuar");
-        } 
-      **/
     });
   }
 
   buscarControlPendiente(strIdTx, strUsuario){
     this.sIncidencia.buscarControlPendiente(strIdTx, strUsuario).then(result=>{
       debugger;
-      console.log('resultado pendiente', result);
       let res : any = result;
       if(res.length != 0){
         this.observacion = result[0].Observacion;
@@ -87,10 +77,6 @@ export class IncidenciaPage {
     });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad IncidenciaPage');
-  }
-
   dismiss(data = { 'response' : 400 }){
     this.viewCtrl.dismiss(data);
   }
@@ -102,20 +88,17 @@ export class IncidenciaPage {
   }
 
   btnProcesar(){
-    if(this.tipo == 1){
-      this.registrarControlOP(this.vParameters.Id_Tx, this.id_LineaMAQ, this.id_Causal, "ADMIN", this.observacion, this.flagPausa);
-    }else{
-      this.registrarControl(this.vParameters.Id_Tx, this.id_Causal, "ADMIN", 1, this.observacion, this.flagPausa);
+
+    if(this.id_Causal <= 0 || this.id_Causal == undefined){
+      alert('Seleccione causal');
+      return;
     }
-    /**
-    if (intTipo == 1){
-                presenter.registerControlOP(strR_Id_Tx, intId_LineaMAQ, intId_Causal, "ADMIN" //Global.userName,
-                edtObser.getText().toString(), bolR_FlagPausa);//bolFlagPausa);
-              }else{
-                  presenter.registerControl(strR_Id_Tx, intId_Causal, "ADMIN"//Global.userName,
-                          1, edtObser.getText().toString(), bolR_FlagPausa);//bolFlagPausa);
-              } 
-    **/
+
+    if(this.tipo == 1){
+      this.registrarControlOP(this.vParameters.Id_Tx, this.id_LineaMAQ, this.id_Causal, this.sGlobal.userName, this.observacion, this.flagPausa);
+    }else{
+      this.registrarControl(this.vParameters.Id_Tx, this.id_Causal, this.sGlobal.userName, 1, this.observacion, this.flagPausa);
+    }
   }
 
   registrarControlOP(strIdOP, intIdLineaMaq, intId_Causal, strUsuario, strObservacion, bolFlagPausa){
@@ -124,10 +107,11 @@ export class IncidenciaPage {
       if(res.errNumber == 0){
         let content = (this.flagPausa == true) ? "Continuar transacción":"Transacción detenida";
         //toast -> content
+        alert(content);
       }else{
         //toast -> message.message
+        alert(res.message);
       }
-      console.log('registrarControlOP', result);
     });
   }
 
@@ -136,6 +120,7 @@ export class IncidenciaPage {
     let res : any = result;
     if(res.errNumber == 0){
       let content = (this.flagPausa == true) ? "Continuar transacción":"Transacción detenida";
+      alert(content);
       //toast -> content
       //cerrar ventana de incidencia -> this.dismiss();
       let data = { 'response': 200 };
@@ -143,8 +128,8 @@ export class IncidenciaPage {
 
     }else{
       //toast -> message.message
+      alert(res.message);
     }
-      console.log('registrarControl', result);
     });
   }
 }

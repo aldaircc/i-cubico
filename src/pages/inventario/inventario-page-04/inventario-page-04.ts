@@ -101,17 +101,18 @@ export class InventarioPage_04Page {
         
         this.presentAlert("No se ha inventariado todas UAs de esta ubicación,\r ¿Está seguro de continuar?").then((resultAlert) => {
           if (resultAlert) {
-            this.isVisibleData = false;
-            if(this.vParameter.TipoInventario == 'CICLICO'){
-              this.navCtrl.pop();
-            }else{
-              this.strUbicacion = "";
-              this.isEnabledUbicacion = true;
-              this.selectAll(this.inputUbicacion, 1000);
-              this.isBgRed = false;
-              this.isBgGreen = false;
-              this.isBgYellow = false;
-            }
+            this.navCtrl.pop();
+            //this.isVisibleData = false;
+            // if(this.vParameter.TipoInventario == 'CICLICO'){
+            //   this.navCtrl.pop();
+            // }else{
+            //   this.strUbicacion = "";
+            //   this.isEnabledUbicacion = true;
+            //   this.selectAll(this.inputUbicacion, 1000);
+            //   this.isBgRed = false;
+            //   this.isBgGreen = false;
+            //   this.isBgYellow = false;
+            // }
           }
         });
       }
@@ -226,9 +227,10 @@ export class InventarioPage_04Page {
               {
                 text: 'Si',
                 handler: () => {
+                  debugger;
                   this.txtAveriados.Text = res[0].CantidadAveriado;
                   this.txtCantidad.Text = res[0].Saldo;
-                  if(this.validarDatoInv()){
+                  if(!this.validarDatoInv()){
                     debugger;
 
                     this.isVisibleData = false;
@@ -344,8 +346,8 @@ export class InventarioPage_04Page {
   }
 
   registrar(): void{
-    
-    if(this.validarDatoInv()){
+    debugger;
+    if(!this.validarDatoInv()){
         if(parseFloat(this.txtCantidad.Text) == 0){
           let message = this.alertCtrl.create({
             title: 'Confirmar eliminación',
@@ -518,14 +520,12 @@ export class InventarioPage_04Page {
             text: 'Cancelar',
             handler: () => {
               resolve(false);
-              console.log('Disagree clicked');
             }
           },
           {
             text: 'Aceptar',
             handler: () => {
               resolve(true);
-              console.log('Agree clicked');
             }
           }
         ]

@@ -99,17 +99,9 @@
         UA alternativa
       </ion-col>
       <ion-col col-7 col-sm>
-        <!--<ion-select  interface="action-sheet">
-            <ion-option value="mute_15">For 15 Minutes</ion-option>
-            <ion-option value="mute_1">For 1 Hour</ion-option>
-            <ion-option value="mute_23">For 24 Hours</ion-option>
-            <ion-option value="mute_inf">Until I turn it back on</ion-option>
-        </ion-select>-->
-
-        <ion-select [(ngModel)]="id_UAlt" interface="action-sheet" (ionChange)="onChange($event)" #selectUA_Alt>
+        <ion-select [(ngModel)]="id_UAlt" interface="action-sheet"  #selectUA_Alt> <!-- (ionChange)="onChange($event)" -->
           <ion-option *ngFor="let ua of listUM" value="{{ ua.Id_UM }}" >{{ ua.Nombre }} </ion-option>
         </ion-select>
-
       </ion-col>
     </ion-row>
 

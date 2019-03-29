@@ -34,7 +34,6 @@ export class EtiquetadoPage_01Page {
     timeEnds: '1990-02-20'
   }
 
-  selectOptions : any;
   vEtq : any ={
     'Acceso' : 0,
     'Articulo' : "",
@@ -104,12 +103,6 @@ export class EtiquetadoPage_01Page {
     public modalCtrl: ModalController, public alertCtrl: AlertController,
     public sGlobal: GlobalServiceProvider, public popoverCtrl: PopoverController) {
 
-    this.selectOptions = {
-      title: 'Pizza Toppings',
-      subTitle: 'Select your toppings',
-      mode: 'md'
-    };
-
     this.isVisibleSearchButton = (navParams.get('codePage') != null) ? true : false;
     this.vEtq = (navParams.get('vEtq') != null) ? navParams.get('vEtq') : this.vEtq;
     this.initPage();
@@ -152,6 +145,9 @@ export class EtiquetadoPage_01Page {
       this.fecVenChecked = this.vEtq.FlagLote;
       this.lote = (this.vEtq.FlagLote == true) ? this.vEtq.LoteLab : "";
       this.id_SubAlm = this.vEtq.Id_SubAlmacen;
+      
+      this.numEtq = this.vEtq.CantidadPedida - this.vEtq.CantidadOperacion;
+      this.id_UAlt = this.vEtq.Id_UM;
     }
   }
 
@@ -395,7 +391,6 @@ export class EtiquetadoPage_01Page {
   }
 
   onChange(){
-    //alert(this.id_UAlt);
     debugger;
     let obj = this.listUM.filter(x=>x.Id_UM == this.id_UAlt)[0];
     //cantidad por bulto 

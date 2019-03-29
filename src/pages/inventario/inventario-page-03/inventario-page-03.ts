@@ -38,7 +38,7 @@ export class InventarioPage_03Page {
       this.btnIniciar.Text = 'Iniciar';
       this.txtInventareador.ReadOnly = false;
       this.dtpFecha.Enabled = false;
-      this.dtpFecha.Text = this.vParameter.FechaProgramacion;
+    //this.dtpFecha.Text = moment(this.vParameter.FechaProgramacion).toISOString();
     //     dtpFecha.Text = DateTime.Now.ToShortDateString();
     //     btnIniciar.Text = "Iniciar";
     //     txtInventareador.ReadOnly = false;
@@ -49,7 +49,7 @@ export class InventarioPage_03Page {
     }else{
       this.btnIniciar.Text = 'Continuar';
       this.dtpFecha.Enabled = false;
-      this.dtpFecha.Text = moment(this.vParameter.FechaProgramacion).toISOString();
+      //this.dtpFecha.Text = moment(this.vParameter.FechaProgramacion).toISOString();
       this.txtInventareador.Text = "";
 
     //     dtpFecha.Enabled = false;
@@ -59,7 +59,7 @@ export class InventarioPage_03Page {
     //     }
     //     ManejoPaneles(2);
     }
-    
+    this.dtpFecha.Text = moment(this.vParameter.FechaProgramacion).toISOString();
     this.lblInfo01.Text = (this.strTipoInventario == 'GENERAL') ? 'Sector' : 'Código';
     this.lblInfo01.Value = (this.strTipoInventario == 'GENERAL') ? this.vParameter.Id_Sector : this.vParameter.Codigo /**Id_Producto**/;
     this.lblInfo02.Text = (this.strTipoInventario == 'GENERAL') ? 'Fila/Rack' : 'Artículo';
@@ -143,6 +143,7 @@ export class InventarioPage_03Page {
       confirm.present();
     }else{
       alert('No puede cerrar un inventario que no se ha iniciado');
+      this.selectAll(this.inputInventariador, 500);
       return;
     }
   }
