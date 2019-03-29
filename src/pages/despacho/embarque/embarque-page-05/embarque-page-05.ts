@@ -67,7 +67,6 @@ export class EmbarquePage_05Page {
 
   listarBultosXCargarTransporte(strIdTransporte): void{
     this.sDesp.listarBultosXCargarTransporte(strIdTransporte).then(result=>{
-      debugger;
       this.listBulto = result;
       this.rowCount = this.listBulto.length;
     });
@@ -75,7 +74,6 @@ export class EmbarquePage_05Page {
 
   listarSubBultosLeidos(strTransaccion, tipo): void{
     this.sDesp.listarSubBultosLeidos(strTransaccion, tipo).then(result=>{
-      debugger;
       this.listSubBulto = result;
       this.rowCount = this.listSubBulto.length;
     });

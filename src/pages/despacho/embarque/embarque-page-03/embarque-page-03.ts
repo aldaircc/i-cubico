@@ -53,7 +53,6 @@ export class EmbarquePage_03Page {
 
   listarDetalleXTransporte(strIdTransporte): void{
     this.sDesp.listarDetalleXTransporte(strIdTransporte).then(result=>{
-      debugger;
       this.listDetalle = result;
       this.rowCount = this.listDetalle.length;
       this.totalBultos = this.listDetalle.reduce((sum, c) => sum + c.CantidadBultos, 0);
@@ -108,7 +107,6 @@ export class EmbarquePage_03Page {
   }
 
   goToEmbarPage04(obj): void{
-    debugger;
     let parameter = {
       'Id_Tra': obj.Id_Tra,
       'Id_Conductor': obj.Id_Conductor,
@@ -127,7 +125,6 @@ export class EmbarquePage_03Page {
   }
 
   goToEmbarPage05(obj): void{
-    debugger;
     let parameter = {
       'Id_Tra': obj.Id_Tra,
       'Id_Conductor': obj.Id_Conductor,

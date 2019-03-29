@@ -27,7 +27,6 @@ export class EmbarquePage_04Page {
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sGlobal: GlobalServiceProvider, public sDesp: DespachoServiceProvider) {
-    debugger;
     this.vParameter = this.navParams.get('vParameter');
     this.bultoLeido = (this.vParameter.OperacionBultos != undefined) ? this.vParameter.OperacionBultos : 0;
   }
@@ -63,15 +62,12 @@ export class EmbarquePage_04Page {
       alert('Debe ingresar el código de bulto');
       return;
     }else{
-      debugger;
       /** Inicio **/
       if(this.bolEliminar == true){
         
         this.presentConfirmDialog('Eliminar', '¿Desea quitar el (sub) bulto del embarque?').then(result=>{
-          debugger;
           if(result == true){
             this.sDesp.eliminarBultoEmbarque(this.strCodeBarBulto, this.vParameter.Id_Tra, this.sGlobal.Id_Almacen, this.sGlobal.userName).then(result=>{
-              debugger;
               let res: any = result;
 
               if(res.errNumber == 0){
@@ -91,7 +87,6 @@ export class EmbarquePage_04Page {
         });
       }else{
         this.sDesp.cargaBultoTransporte(this.strCodeBarBulto, this.vParameter.Id_Tra, this.sGlobal.Id_Almacen, this.sGlobal.userName).then(result=>{
-          debugger;
           let res:any = result;
     
           if(res.errNumber == 0){
@@ -108,91 +103,14 @@ export class EmbarquePage_04Page {
         });
       }
       /** Fin **/
-
-
-
-      // this.sDesp.cargaBultoTransporte(this.strCodeBarBulto, this.vParameter.Id_Tra, this.sGlobal.Id_Almacen, this.sGlobal.userName).then(result=>{
-      //   debugger;
-      //   let res:any = result;
-  
-      //   if(res.errNumber == 0){
-      //     alert('Registro exitoso');
-      //     // txtcodBarraBulto.Focus();
-      //     // txtcodBarraBulto.SelectAll();
-      //     this.selectAll(this.inputCodeBarBulto, 600);
-      //     this.bultoLeido = parseFloat(res.valor1);
-      //     this.subBultoLeido = parseFloat(res.valor2);
-      //   }else{
-      //     alert(res.message);
-      //     // txtcodBarraBulto.Text = string.Empty;
-      //     // txtcodBarraBulto.Focus();
-      //     this.strCodeBarBulto = "";
-      //     this.selectAll(this.inputCodeBarBulto, 600);
-      //   }
-  
-      // });
     }    
   }
 
   checkboxClicked(chkEliminar: Checkbox) {
     this.bolEliminar = chkEliminar.checked;
-
-    //this.filterUATransfer(this.bolEliminar);
-    // debugger;
-    // if(chkEliminar.checked){
-    //   if(this.strCodeBarBulto.length == 0 || this.strCodeBarBulto.trim() == ""){
-    //     alert('Debe ingresar el código de bulto');
-    //     this.selectAll(this.inputCodeBarBulto, 600);
-    //     chkEliminar.checked = false;
-    //   }
-  
-    //   if(this.bolEliminar == true){
-        
-    //     const confirm = this.alertCtrl.create({
-    //       title: 'Eliminar',
-    //       message: '¿Desea quitar el (sub) bulto del embarque?',
-    //       buttons: [
-    //         {
-    //           text: 'Si',
-    //           handler: () => {
-    //             this.sDesp.eliminarBultoEmbarque(this.strCodeBarBulto, this.vParameter.Id_Tra, this.sGlobal.Id_Almacen, this.sGlobal.userName).then(result=>{
-    //               debugger;
-    //               let res: any = result;
-  
-    //               if(res.errNumber == 0){
-    //                 alert(res.message);
-    //                 this.bultoLeido = parseFloat(res.valor1);
-    //                 this.subBultoLeido = parseFloat(res.valor2);
-    //                 this.bolEliminar = false;
-    //               //     txtcodBarraBulto.Focus();
-    //               //     txtcodBarraBulto.SelectAll();
-    //                 this.selectAll(this.inputCodeBarBulto, 600);
-    //               }else if(res.errNumber == -1){
-    //                 alert(res.message);
-    //                 this.strCodeBarBulto = "";
-    //                 chkEliminar.checked = false;
-    //               //     txtcodBarraBulto.Focus();
-    //                 this.selectAll(this.inputCodeBarBulto, 600);
-    //               }
-    //             });
-    //           }
-    //         },
-    //         {
-    //           text: 'No',
-    //           handler: () => {
-    //             this.bolEliminar = false;
-    //             return;
-    //           }
-    //         }
-    //       ]
-    //     });
-    //     confirm.present();
-    //   }
-    // }    
   }
 
   goToEmbarPage05(obj): void{
-    debugger;
     let parameter = {
       'Id_Tra': obj.Id_Tra,
       'Id_Conductor': obj.Id_Conductor,

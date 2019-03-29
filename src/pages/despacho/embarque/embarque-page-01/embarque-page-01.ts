@@ -39,7 +39,6 @@ export class EmbarquePage_01Page {
       if(popoverData == 2){
         this.showModalIncidencia();
       }else if(popoverData == 4){
-        debugger;
         this.navCtrl.pop();
         var nav = this.app.getRootNav();
         nav.setRoot(HomePage);
@@ -47,19 +46,9 @@ export class EmbarquePage_01Page {
     });
   }
 
-  showModalIncidencia(){ //data
+  showModalIncidencia(){
     debugger;
-    // let obj = { 
-    //     'Id_Tx' : data.Id_Tx,
-    //     'FlagPausa' : data.FlagPausa,
-    //     'Cliente' : data.Cliente,
-    //     'Id_Cliente' : data.Id_Cliente,
-    //     'Proveedor' : data.Proveedor,
-    //     'Id_TipoMovimiento' : data.Id_TipoMovimiento,
-    //     'Origen' : 'RP02'
-    //   };
-
-    let modalIncidencia = this.modalCtrl.create(IncidenciaPage); //{ 'pIncidencia' : obj});
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage);
     modalIncidencia.onDidDismiss(data =>{
       if(data.response == 200){
         this.navCtrl.pop();

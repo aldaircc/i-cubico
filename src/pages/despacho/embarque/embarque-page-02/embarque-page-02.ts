@@ -46,16 +46,9 @@ presentPopover(myEvent){
 
   listarSubBultosLeidos(strTransaccion, tipo){
     this.sDesp.listarSubBultosLeidos(strTransaccion, tipo).then(result=>{
-      debugger;
       let res: any = result;
-
       this.totalSubBultos = res.length;
       this.totalSubBultosLeido = res.reduce((acc, cur) => (cur.FlagLeido == true) ? ++acc : acc, 0);
-    /**
-      var lista = method.ListarSubBultosLeidos(tx, 2);
-      totSubBultos = lista.Count();
-      totSubBultosLeido = lista.Where(x => x.FlagLeido == true).Count(); 
-    **/
     });
   }
 
