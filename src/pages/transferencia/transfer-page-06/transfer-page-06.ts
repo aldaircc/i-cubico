@@ -89,9 +89,7 @@ export class TransferPage_06Page {
   reubicarUAsXSubAlmacen(strIdTx, intIdProducto, strLote, intIdUbicacionOrigen, intIdUbicacionDestino, intIdAlmacen, intIdSubAlmacen, strUser): void{
     this.sPicking.reubicarUAsXSubAlmacen(strIdTx, intIdProducto, strLote, intIdUbicacionOrigen, intIdUbicacionDestino, intIdAlmacen, intIdSubAlmacen, strUser)
     .then(result=>{
-      debugger;
       let res: any = result;
-
       if(res.errNumber == 0){
         alert(res.message);
         this.navCtrl.pop();

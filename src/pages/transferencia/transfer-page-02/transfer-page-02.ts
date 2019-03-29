@@ -33,7 +33,6 @@ export class TransferPage_02Page {
   listarDetalleTransfXTx(strIdTx){
     this.sPicking.listarDetalleTransfXTx(strIdTx).then(result=>{
       this.listDetalle = result;
-      debugger;
       this.rowCount = this.listDetalle.length;
       this.countPendient = this.listDetalle.reduce((acc, cur) => (cur.Saldo == cur.CantidadPedida) ? ++acc : acc, 0);
       this.countProcess = this.listDetalle.reduce((acc, cur) => ((cur.Saldo != cur.CantidadPedida) && cur.Saldo > 0) ? ++acc : acc, 0);

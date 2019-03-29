@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { TransferPage_05Page } from '../transfer-page-05/transfer-page-05';
@@ -29,7 +29,7 @@ export class TransferPage_04Page {
   isError:boolean = false;
   isNormal:boolean = true;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController,
     public sPicking: PickingServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vParameter = this.navParams.get('vParameter');
   }
@@ -113,11 +113,9 @@ export class TransferPage_04Page {
   pickingUASubAlmacen(saldo, cantCurrentUA, strUA, strIdTx, intIdProducto, strLote, decCantidad, bolAnular, intIdRF, intItem, intIdAlmacen, intIdSubAlmacen, strUser): void{
     let message;
     this.sPicking.pickingUASubAlmacen(strUA, strIdTx, intIdProducto, strLote, decCantidad, bolAnular, intIdRF, intItem, intIdAlmacen, intIdSubAlmacen, strUser).then(result=>{
-      debugger;
       message = result;
 
       if(message.errNumber == 0){
-        debugger;
         this.vParameter.Saldo -= cantCurrentUA;
         this.tCantidadUA += cantCurrentUA;
         this.vParameter.CantidadOperacion = this.tCantidadUA;
@@ -131,7 +129,6 @@ export class TransferPage_04Page {
           alert('Cantidad Completa');
           this.navCtrl.remove(3, 2);
         }
-
       }else{
         this.codeBar.Text = "";
         this.cantUA = 0;
@@ -141,7 +138,6 @@ export class TransferPage_04Page {
   }
 
   listarUAs(): void{
-    console.log('data from page 04', this.vParameter);
     let parameter = {
       'Cantidad' : this.vParameter.Cantidad,​
       'CantidadOperacion' : this.vParameter.CantidadOperacion,​
@@ -166,12 +162,27 @@ export class TransferPage_04Page {
       'Ubicacion' : this.vParameter.Ubicacion,
       'Ubicacion_2' : this.vParameter.Ubicacion_2
     };
-    
     this.navCtrl.push(TransferPage_05Page, { 'vParameter' : parameter });
   }
 
   goToParticionarUA(): void{
-    let obj = { page: '1' };
-    this.navCtrl.push(AdministrarUaPage, { 'data': obj });
+    // let obj = { page: '1' };
+    // this.navCtrl.push(AdministrarUaPage, { 'data': obj });
+    this.showModalAdministrarUaPage();
+  }
+
+  showModalAdministrarUaPage(){
+    debugger;
+    let obj = {
+      'page': "modal",
+    };
+    let modalIncidencia = this.modalCtrl.create(AdministrarUaPage, { 'data': obj });
+    modalIncidencia.onDidDismiss(data => {
+      debugger;
+      if(data.response == 200){
+        this.navCtrl.pop();
+      }
+    });
+    modalIncidencia.present();
   }
 }
