@@ -39,7 +39,7 @@
               <div class="textHeader">Usuario:</div>
             </ion-col>
             <ion-col col-8 col-sm>
-              <div class="valueHeader"></div>
+              <div class="valueHeader">{{NombreUsuario}}</div>
             </ion-col>
           </ion-row>
           <ion-row align-items-center>
@@ -47,7 +47,7 @@
                 <div class="textHeader">Almacén:</div>
               </ion-col>
               <ion-col col-8 col-sm>
-                <div class="valueHeader"></div>
+                <div class="valueHeader">{{NombreAlmacen}}</div>
               </ion-col>
           </ion-row>         
       </ion-grid>
@@ -58,16 +58,28 @@
   </ion-row>
   
   <ion-row class="bgWhite">
-    <ion-card *ngFor="let objEmbalaje of listAuxEmbalaje">        
-        <ion-card-content (click)="goDetEmbalajePackingPage(objEmbalaje)">
-            <h5><b>Nro. Orden: </b> {{objEmbalaje.NumOrden}}</h5>
-            <h5><b>Cliente: </b> {{objEmbalaje.Cliente}}</h5>            
-            <h5><b>Dirección: </b> {{objEmbalaje.Direccion}}</h5>
-            <h5><b>Cuenta: </b> {{objEmbalaje.Socio}}</h5>            
-            <h5><b>Fecha Documento: </b> {{ objEmbalaje.FechaDocumento|momentjs}} </h5>
-            <h5><b>Fecha Entrega: </b> {{ objEmbalaje.FechaLlegada|momentjs}} </h5>
-        </ion-card-content>
-      </ion-card>
+    <ion-card *ngFor="let objEmbalaje of listAuxEmbalaje">            
+      <ion-card-content no-padding  (click)="goDetEmbalajePackingPage(objEmbalaje)">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-1 col-sm
+              [ngClass]="objEmbalaje.Id_Estado == 3 ? 'label-color bg-process' : 'label-color bg-confirm'">
+            </ion-col>  
+            <ion-col col-10 col-sm>
+                <h5><b>Nro. Orden: </b> {{objEmbalaje.NumOrden}}</h5>
+                <h5><b>Cliente: </b> {{objEmbalaje.Cliente}}</h5>            
+                <h5><b>Dirección: </b> {{objEmbalaje.Direccion}}</h5>
+                <h5><b>Cuenta: </b> {{objEmbalaje.Socio}}</h5>            
+                <h5><b>Fecha Documento: </b> {{ objEmbalaje.FechaDocumento|momentjs: 'DD/MM/YYYY'}} </h5>
+                <h5><b>Fecha Entrega: </b> {{ objEmbalaje.FechaLlegada|momentjs: 'DD/MM/YYYY'}} </h5>
+            </ion-col>
+            <ion-col col-1 col-sm align-self-center>              
+                  <ion-icon name="play"></ion-icon>                              
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>      
+    </ion-card>
   </ion-row>
   </ion-content>
   

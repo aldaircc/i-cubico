@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ModalController, PopoverController } from 'ionic-angular';
+import { HomePage } from '../../home/home';
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
 import { PopoverEmbalajeComponent } from '../../../components/popover-embalaje/popover-embalaje';
 import { EmbalajePage_03Page } from '../embalaje-page-03/embalaje-page-03';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
+import { ImpresoraPage } from '../../impresora/impresora';
 
 /**
  * Generated class for the EmbalajePage_02Page page.
@@ -19,14 +21,18 @@ import { GlobalServiceProvider } from '../../../providers/global-service/global-
 })
 export class EmbalajePage_02Page {
 
+  NombreUsuario: any;
+  NombreAlmacen: any;
   listEmbalaje: any;
   listAuxEmbalaje: any;
   vEmbalajePage02:any = [];
   rowCount: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public sEmbalaje: EmbalajeServiceProvider, public popoverCtrl: PopoverController,
-    public sGlobal: GlobalServiceProvider) {
+    private alertCtrl: AlertController,public sEmbalaje: EmbalajeServiceProvider, 
+    public popoverCtrl: PopoverController,public sGlobal: GlobalServiceProvider,public modalCtrl: ModalController) {
+      this.NombreUsuario = this.sGlobal.userName;
+      this.NombreAlmacen = this.sGlobal.nombreAlmacen;
   }
 
   ionViewDidLoad() {
@@ -59,6 +65,10 @@ export class EmbalajePage_02Page {
         return (item.NumOrden.toLowerCase().indexOf(val.toLowerCase()) > -1);
       });
       this.rowCount = this.listAuxEmbalaje.length;
+      debugger;
+      if(this.rowCount == 0)
+        this.mostrarConfirmacion("Advertencia","No se encontró la orden");
+
     } else {
       this.rowCount = this.listEmbalaje.length;
       return this.listAuxEmbalaje = this.listEmbalaje;
@@ -70,6 +80,37 @@ export class EmbalajePage_02Page {
     popover.present({
       ev: myEvent
     });
+
+    popover.onDidDismiss(popoverData =>{
+      debugger;
+      if(popoverData == 4){
+        this.showModalImpresora();
+      }else if(popoverData == 5){
+        this.goBackLoginPage();
+      }
+    });   
+  }
+
+  showModalImpresora(){
+    let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
+    modalIncidencia.present();
+  }
+  goBackLoginPage():void{
+    this.navCtrl.push(HomePage);
+  }
+
+  mostrarConfirmacion(title,message){
+  
+    let alertConfirmacion = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: [
+        {
+          text: 'Aceptar'
+        }
+      ]
+    });
+    alertConfirmacion.present();
   }
 
   goDetEmbalajePackingPage(data){    
@@ -90,7 +131,7 @@ export class EmbalajePage_02Page {
 
   }
 
-  ionViewWillEnter() {
+  ionViewWillEnter() {    
     this.getDataEmbalaje();
   }
 
