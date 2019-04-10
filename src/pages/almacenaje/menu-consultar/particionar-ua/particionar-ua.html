@@ -8,7 +8,19 @@
   <ion-toolbar no-padding no-margin color="primary">
     <ion-grid style="padding: 0px;">
       <ion-row no-padding no-margin>
-        <ion-col no-margin no-padding col-10>
+        <ion-col no-margin no-padding col-2 [hidden]="!botonisDisplay">
+          <ion-buttons start style="margin-top: 12px; text-align: center">
+            <button no-margin no-padding ion-button icon-only (click)="dismiss()">
+              <ion-icon name="arrow-back"></ion-icon>
+            </button>
+          </ion-buttons>
+        </ion-col>
+        <ion-col no-margin no-padding col-10 [hidden]="!titutlo1isDisplay">
+          <ion-navbar no-padding no-margin>
+            <ion-label style="font-size: 15px; color: white; font-weight:bold;">PARTICIONAR UA</ion-label>
+          </ion-navbar>
+        </ion-col>
+        <ion-col no-margin no-padding col-8 [hidden]="!titutlo2isDisplay">
           <ion-navbar no-padding no-margin>
             <ion-label style="font-size: 15px; color: white; font-weight:bold;">PARTICIONAR UA</ion-label>
           </ion-navbar>
@@ -130,7 +142,7 @@
       <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
           {{ vDatosRecibidos.CantidadTotal }}
-         </ion-label>
+        </ion-label>
       </ion-col>
     </ion-row>
     <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; ">
@@ -164,10 +176,10 @@
   <ion-grid style="margin: 0px; padding: 0px">
     <ion-row>
       <ion-col col-12 style="margin: 0px; padding: 0px; text-align: right">
-          <button ion-button icon-start (click)="validarImprimir()">
-              <ion-icon name="barcode"></ion-icon>              
-            </button>
-      </ion-col>      
+        <button ion-button icon-start (click)="validarImprimir()">
+          <ion-icon name="barcode"></ion-icon>
+        </button>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-footer>

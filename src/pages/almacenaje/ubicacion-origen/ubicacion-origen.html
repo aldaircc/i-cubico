@@ -21,30 +21,30 @@
 <ion-content>
   <ion-grid class="bgLightBlue" style="padding: 0px;">
     <ion-row no-padding style="margin-top: 15px; margin-bottom: 5px; ">
-      <ion-col col-5 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
           Código:
         </ion-label>
       </ion-col>
-      <ion-col col-7 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <!-- agregar label -->
+      <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        {{ vDatosRecibidos.Codigo }} 
       </ion-col>
     </ion-row>
     <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
       <ion-col col-12 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-          PRINOR SUSPENSION X 50 ML M.M.
+          {{ vDatosRecibidos.Producto }} 
         </ion-label>
       </ion-col>
     </ion-row>
-    <ion-row no-padding style="margin-top: 5px; margin-bottom: 15px; ">
-      <ion-col col-5 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; ">
+      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
           Sector:
         </ion-label>
       </ion-col>
-      <ion-col col-7 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <!-- colocar label -->
+      <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        {{ listAuxUbicacionDestino.Sector }} 
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -79,28 +79,28 @@
       <ion-col col-3 no-padding>
         <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
           <ion-label style="font-weight:bold; color: white; text-align: center">
-            <!-- {{ rutaPicking.Fila }} -->A
+            {{ listAuxUbicacionDestino.Rack }} 
           </ion-label>
         </ion-row>
       </ion-col>
       <ion-col col-3 no-padding>
         <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
           <ion-label style="font-weight:bold; color: white; text-align: center">
-            <!-- {{ rutaPicking.Columna }} -->B
+            {{ listAuxUbicacionDestino.Columna }} 
           </ion-label>
         </ion-row>
       </ion-col>
       <ion-col col-3 no-padding>
         <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
           <ion-label style="font-weight:bold; color: white; text-align: center">
-            <!-- {{ rutaPicking.Nivel }} -->C
+            {{ listAuxUbicacionDestino.Nivel }} 
           </ion-label>
         </ion-row>
       </ion-col>
       <ion-col col-3 no-padding>
         <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
           <ion-label style="font-weight:bold; color: white; text-align: center">
-            <!-- {{ rutaPicking.Posicion }} -->D
+            {{ listAuxUbicacionDestino.Posicion }} 
           </ion-label>
         </ion-row>
       </ion-col>
@@ -117,7 +117,7 @@
 
   <ion-row>
     <ion-item>
-      <ion-input #txtCodUbicacion type="text" maxlength="6" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()"></ion-input>
+      <ion-input #txtCodUbicacion type="text" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()"></ion-input>
     </ion-item>
   </ion-row>
 </ion-content>
@@ -126,7 +126,7 @@
   <ion-grid style="margin: 0px; padding: 0px">
     <ion-row>
       <ion-col col-12 style="margin: 0px; padding: 0px; text-align: right">
-        <button ion-button icon-start (click)="goReabastecimientoPickingPage()">
+        <button ion-button icon-start (click)="validarCodeBar()">
           <ion-icon name="checkbox-outline"></ion-icon>
         </button>
       </ion-col>

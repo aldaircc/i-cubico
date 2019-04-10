@@ -22,9 +22,13 @@ export class UbicacionOrigenPage {
   @ViewChild('txtCodUbicacion', { read: ElementRef }) private txtCodUbicacion: ElementRef;
   codeBar:string;
   vDatosRecibidos: any = [];
+  vUbicacionOrigenPage: any;
 
   listUbicacionDestino: any;
+  listUbicacionOrigen: any;
   //listAuxUbicacionDestino: any = [];
+
+  listAuxUbicacionDestino: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider, public sAlmacenaje: AlmacenajeServiceProvider) {
@@ -36,49 +40,10 @@ export class UbicacionOrigenPage {
     debugger;
     this.sAlmacenaje.getRutaReabastecimientoXTx(Id_Tx, Id_Producto, Id_Almacen).then((result) => {
       debugger;
-      //this.listAuxUbicacionDestino = [];
-      this.listUbicacionDestino = result;
-
-      // for (var i = 0; i < this.listReabastecimiento.length; i++) {
-      //   var obj = {
-      //     'Codigo': result[i].Codigo,
-      //     'ColumnaD': result[i].ColumnaD,
-      //     'ColumnaO': result[i].ColumnaO,
-      //     'Estado': result[i].Estado,
-      //     'FilaD': result[i].FilaD,
-      //     'FilaO': result[i].FilaO,
-      //     'Id_Estado': result[i].Id_Estado,
-      //     'Id_PasilloD': result[i].Id_PasilloD,
-      //     'Id_PasilloO': result[i].Id_PasilloO,
-      //     'Id_Producto': result[i].Id_Producto,
-      //     'Id_SectorD': result[i].Id_SectorD,
-      //     'Id_SectorO': result[i].Id_SectorO,
-      //     'Id_Tx': result[i].Id_Tx,
-      //     'Id_Ubicacion_Destino': result[i].Id_Ubicacion_Destino,
-      //     'Id_Ubicacion_Origen': result[i].Id_Ubicacion_Origen,
-      //     'Movimiento': result[i].Movimiento,
-      //     'NivelD': result[i].NivelD,
-      //     'NivelO': result[i].NivelO,
-      //     'Observacion': result[i].Observacion,
-      //     'PasilloD': result[i].PasilloD,
-      //     'PasilloO': result[i].PasilloO,
-      //     'PosicionD': result[i].PosicionD,
-      //     'PosicionO': result[i].PosicionO,
-      //     'Prioridad': result[i].Prioridad,
-      //     'Producto': result[i].Producto,
-      //     'SectorD': result[i].SectorD,
-      //     'SectorO': result[i].SectorO,
-      //     'Ubicacion_Destino': result[i].Ubicacion_Destino,
-      //     'Ubicacion_Origen': result[i].Ubicacion_Origen
-      //   };
-      //   this.listAuxReabastecimiento.push(obj);
-      //   //this.idRutaPicking = this.idRutaPicking + 1;
-
-        
-      // }
-
-
+      this.listUbicacionDestino = result;      
       if (this.listUbicacionDestino.length > 0) {
+        this.listAuxUbicacionDestino = result[0];
+        this.getListarUbicacionUASugeridaXReabastecer(this.sGlobal.Id_Almacen, this.vDatosRecibidos.Id_Producto, this.listAuxUbicacionDestino.ubiDestino, this.vDatosRecibidos.Movimiento);
         console.log('Datos reabastecimiento', this.listUbicacionDestino);
       } else {
         this.presentToast('No se encontraron registros.');
@@ -87,6 +52,24 @@ export class UbicacionOrigenPage {
       console.log('E-Ordenes Picking listar', err);
     });
   }
+
+
+  getListarUbicacionUASugeridaXReabastecer(intIdAlmacen, intIdProducto, intIdUbiDestino, strMovimiento){
+    debugger;
+    this.sAlmacenaje.getListarUbicacionUASugeridaXReabastecer(intIdAlmacen, intIdProducto, intIdUbiDestino, strMovimiento).then((result) => {
+      debugger;
+      this.listUbicacionOrigen = result;
+
+      if (this.listUbicacionOrigen.length > 0) {
+        console.log('Datos reabastecimiento', this.listUbicacionOrigen);
+      } else {
+        this.presentToast('No se encontraron registros.');
+      }
+    }, (err) => {
+      console.log('E-Ordenes Picking listar', err);
+    });
+  }
+
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -109,7 +92,17 @@ export class UbicacionOrigenPage {
   validarCodeBar(){
     if(this.codeBar){
       if(this.codeBar.trim()!=""){
-
+        debugger;
+        if(this.codeBar.trim() == this.listUbicacionOrigen[0].CodigoBarra.trim()){
+          this.goReabastecimientoPickingPage();
+        }else{
+          this.presentAlert("¿Ubicación de origen ingresada no existe?").then((result) => {
+            setTimeout(() => {
+              this.txtCodUbicacionRef.setFocus();
+              this.selectAll(this.txtCodUbicacion);
+            }, (500));
+          })
+        }
       }else{
         this.presentToast("Ingrese código de ubicación");
         setTimeout(() => {
@@ -140,8 +133,56 @@ export class UbicacionOrigenPage {
     toast.present();
   }
 
+  presentAlertConfirm(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+              resolve(false);
+              console.log('Disagree clicked');
+            }
+          },
+          {
+            text: 'Aceptar',
+            handler: () => {
+              resolve(true);
+              console.log('Agree clicked');
+            }
+          }
+        ]
+      });
+      confirm.present();
+    })
+  }
+
   goReabastecimientoPickingPage() {
-    this.navCtrl.push(ReabastecimientoPickingPage);
+    debugger;
+    this.vUbicacionOrigenPage = {
+      
+      'Id_Tx': this.vDatosRecibidos.Id_Tx,
+      'Codigo': this.vDatosRecibidos.Codigo,
+      'Id_Producto': this.vDatosRecibidos.Id_Producto,
+      'Producto': this.vDatosRecibidos.Producto,
+      'LoteLab': this.listAuxUbicacionDestino.LoteLab,
+      'stockXReabastecer': this.listAuxUbicacionDestino.stockXReabastecer,
+      'Sector': this.listAuxUbicacionDestino.Sector,
+      'Rack': this.listAuxUbicacionDestino.Rack,
+      'Columna': this.listAuxUbicacionDestino.Columna,
+      'Nivel': this.listAuxUbicacionDestino.Nivel,
+      'Posicion': this.listAuxUbicacionDestino.Posicion,
+      'CodigoBarra': this.listAuxUbicacionDestino.CodigoBarra,
+      'Id_Ubicacion': this.listUbicacionOrigen[0].Id_Ubicacion,
+      'FechaEmision': this.listUbicacionOrigen[0].FechaEmision,
+      'FechaVencimiento': this.listUbicacionOrigen[0].FechaVencimiento,
+      'SectorD': this.vDatosRecibidos.SectorD,
+    };
+    this.navCtrl.push(ReabastecimientoPickingPage, {
+      data: this.vUbicacionOrigenPage      
+    });
   }
 
   ionViewDidLoad() {

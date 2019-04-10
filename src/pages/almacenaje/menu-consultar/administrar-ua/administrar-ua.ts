@@ -444,6 +444,7 @@ export class AdministrarUaPage {
       })
     } else {
       this.vAdministrarUAPage = {
+        'page': 0,
         'CodBar_UA': this.codeBarUA,
         'UM': this.ResultUA_Aux.UM,
         'Codigo': this.ResultUA_Aux.Codigo,

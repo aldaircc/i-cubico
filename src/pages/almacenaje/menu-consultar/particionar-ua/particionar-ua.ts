@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController, Navbar } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController, Navbar, ViewController } from 'ionic-angular';
 import { GlobalServiceProvider } from '../../../../providers/global-service/global-service';
 import { ImpresoraPage } from '../../../impresora/impresora'
 import { ReciboServiceProvider } from '../../../../providers/recibo-service/recibo-service';
@@ -33,13 +33,23 @@ export class ParticionarUaPage {
   FechaIngreso: any;
   fecha: any;
 
+  botonisDisplay: boolean = false;
+  titutlo1isDisplay: boolean = true;
+  titutlo2isDisplay: boolean = false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sGlobal: GlobalServiceProvider, public modalCtrl: ModalController, public sRecibo: ReciboServiceProvider,
-    public sAlmacenaje: AlmacenajeServiceProvider, public sEtq: EtiquetadoServiceProvider) {
+    public sAlmacenaje: AlmacenajeServiceProvider, public sEtq: EtiquetadoServiceProvider, public viewCtrl: ViewController) {
     debugger;
     this.vDatosRecibidos = navParams.get('data');
     this.NombreImpresora = this.sGlobal.Id_Impresora == 0 ? "NINGUNA" : this.sGlobal.nombreImpresora;
     this.nuevaCantidad();
+
+    if (this.vDatosRecibidos.page == 'modal') {
+      this.botonisDisplay = true;
+      this.titutlo1isDisplay = false;
+      this.titutlo2isDisplay = true;
+    }
   }
 
   nuevaCantidad() {
@@ -133,6 +143,13 @@ export class ParticionarUaPage {
       this.NombreImpresora = this.sGlobal.nombreImpresora;
     });
   }
+
+  dismiss(data = { 'response': 400, 'limpiar' : 1 }) {
+    this.viewCtrl.dismiss(data);
+  }
+
+  // let printSel = {'printSel': print.Nombre };
+  //           this.dismiss(printSel);
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
