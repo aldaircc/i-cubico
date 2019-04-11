@@ -385,6 +385,38 @@ export class AlmacenajeServiceProvider {
       })
     });
   }
+
+  
+  //aromero
+  getListarUbicacionUASugeridaXReabastecer(intIdAlmacen, intIdProducto, intIdUbiDestino, strMovimiento){
+    var parameter : any;
+    parameter = {'INTIDALMACEN' : intIdAlmacen, 'INTIDPRODUCTO' : intIdProducto, 'INTIDUBIDESTINO' : intIdUbiDestino, 'STRMOVIMIENTO' : strMovimiento};
+    return new Promise(resolve=>{
+      this.http.get(this.sGlobal.almacenajeService + 'ListarUbicacionUASugeridaXReabastecer', { params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error getListarUbicacionUASugeridaXReabastecer', err);
+      })
+    });
+  }
+
+  //aromero
+  getValidarUAUbicacion(strUA, intIdUbicacion){
+    var parameter : any;
+    parameter = {'STRUA' : strUA, 'INTIDUBICACION' : intIdUbicacion};
+
+    return new Promise(resolve=>{
+      this.http.get(this.sGlobal.almacenajeService + 'ValidarUAUbicacion', { params: parameter})
+      .map(res=>res.json())
+      .subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log('Error getValidarUAUbicacion', err);
+      })
+    });
+  }
   
 
 }

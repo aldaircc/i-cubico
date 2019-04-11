@@ -21,33 +21,33 @@
 <ion-content>
   <ion-grid class="bgLightBlue" style="padding: 0px;">
     <ion-row no-padding style="margin-top: 15px; margin-bottom: 5px; ">
-      <ion-col col-5 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
           Código:
         </ion-label>
       </ion-col>
-      <ion-col col-7 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-          {{CODIGO}}
+      <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px;  margin-top: 3px; margin-bottom: 0px;">
+          {{vDatosRecibidos.Codigo}}
         </ion-label>
       </ion-col>
     </ion-row>
     <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
       <ion-col col-12 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-          PURINOR SUSPENSION X 50 ML M.M.
+          {{vDatosRecibidos.Producto}}
         </ion-label>
       </ion-col>
     </ion-row>
     <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
-      <ion-col col-5 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
           Sector:
         </ion-label>
       </ion-col>
-      <ion-col col-7 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-          {{Sector}}
+      <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; margin-top: 3px; margin-bottom: 0px;">
+          {{vDatosRecibidos.Sector}}
         </ion-label>
       </ion-col>
     </ion-row>
@@ -83,28 +83,28 @@
       <ion-col col-3 no-padding>
         <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
           <ion-label style="font-weight:bold; color: white; text-align: center">
-            <!-- {{ rutaPicking.Fila }} -->A
+            {{vDatosRecibidos.Rack}}
           </ion-label>
         </ion-row>
       </ion-col>
       <ion-col col-3 no-padding>
         <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
           <ion-label style="font-weight:bold; color: white; text-align: center">
-            <!-- {{ rutaPicking.Columna }} -->B
+            {{vDatosRecibidos.Columna}}
           </ion-label>
         </ion-row>
       </ion-col>
       <ion-col col-3 no-padding>
         <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
           <ion-label style="font-weight:bold; color: white; text-align: center">
-            <!-- {{ rutaPicking.Nivel }} -->C
+            {{vDatosRecibidos.Nivel}}
           </ion-label>
         </ion-row>
       </ion-col>
       <ion-col col-3 no-padding>
         <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
           <ion-label style="font-weight:bold; color: white; text-align: center">
-            <!-- {{ rutaPicking.Posicion }} -->D
+            {{vDatosRecibidos.Posicion}}
           </ion-label>
         </ion-row>
       </ion-col>
@@ -121,10 +121,12 @@
 
   <ion-row>
     <ion-item>
-      <ion-input #txtCodMuelle (keydown)="keydown($event)" (keyup)="keyup($event)" (ngModelChange)="ontxtCodMuelleChange()"
-        type="text" maxlength="6" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()"></ion-input>
+      <ion-input #txtCodUbicacion 
+        type="text" value="" [(ngModel)]="codeBarUbicacion" (keyup.enter)="validarCodeBar()" (ngModelChange)="ontxtUbicacionChange()"></ion-input>
     </ion-item>
   </ion-row>
+
+  <!-- (keydown)="keydown($event)" (keyup)="keyup($event)" (ngModelChange)="ontxtCodMuelleChange()" maxlength="6" -->
 
   <ion-row no-padding style="margin-top: 20px; margin-bottom: 2px; margin-left: 10px">
     <ion-col col-12 no-padding no-margin>
@@ -136,8 +138,8 @@
 
   <ion-row>
     <ion-item>
-      <ion-input #txtCodMuelle (keydown)="keydown($event)" (keyup)="keyup($event)" (ngModelChange)="ontxtCodMuelleChange()"
-        type="text" maxlength="6" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()"></ion-input>
+      <ion-input #txtCodPalletUa
+        type="text" value="" [(ngModel)]="codeBarPalletUA" (keyup.enter)="validarCodeBarPallet()"></ion-input>
     </ion-item>
   </ion-row>
 </ion-content>
@@ -153,7 +155,7 @@
         </button>
       </ion-col>
       <ion-col style="margin: 0px; padding: 0px;">
-        <button ion-button style=" margin: 0px; padding: 0px" (click)="goListaPalletUaPage()" medium full>
+        <button ion-button style=" margin: 0px; padding: 0px" (click)="validarCodeBarPallet()" medium full>
           <div>
             <ion-icon name='checkbox-outline'></ion-icon> <br>
           </div>

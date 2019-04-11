@@ -21,67 +21,57 @@
   <ion-content>
     <ion-grid class="bgLightBlue" style="padding: 0px;">
       <ion-row no-padding style="margin-top: 15px; margin-bottom: 5px; ">
-        <ion-col col-5 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
           <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
             Código:
           </ion-label>
         </ion-col>
-        <ion-col col-7 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
             <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                <!-- {{Código}} -->
+                {{vDatosRecibidos.Codigo}}
               </ion-label>
         </ion-col>
       </ion-row>
       <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
         <ion-col col-12 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
           <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-             PURINOR SUSPENSION X 50 ML M.M.
+            {{vDatosRecibidos.Producto}}
           </ion-label>
         </ion-col>
       </ion-row>
       <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
-        <ion-col col-5 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
           <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
             Lote:
           </ion-label>
         </ion-col>
-        <ion-col col-7 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
             <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                <!-- {{Lote}} -->
+              {{vDatosRecibidos.LoteLab}}
               </ion-label>
         </ion-col>
       </ion-row>
       <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
-          <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+          <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
             <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-              Cant. sugerida:
+              Cant. <br>sugerida:
             </ion-label>
           </ion-col>
-          <ion-col col-2 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+          <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
               <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                  <!-- {{Cant. sugeridas}} -->
+                {{cantSugerida}}
                 </ion-label>
           </ion-col>
-          <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-              <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                Cant. Operada:
-              </ion-label>
-            </ion-col>
-            <ion-col col-2 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                    <!-- {{Cant. Operada}} -->
-                  </ion-label>
-            </ion-col>
         </ion-row>
         <ion-row no-padding style="margin-top: 5px; margin-bottom: 15px; ">
-            <ion-col col-5 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+            <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
               <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
                 Saldo:
               </ion-label>
             </ion-col>
-            <ion-col col-7 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+            <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
                 <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                    <!-- {{Saldo}} -->
+                  {{saldo}}
                   </ion-label>
             </ion-col>
           </ion-row>
@@ -95,7 +85,8 @@
         </ion-col>
         <ion-col col-9 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
             <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-                <ion-input #txtCodBarraUA type="text" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+                <ion-input #txtCodBarraUA type="text" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" (ngModelChange)="ontxtPalletChange()"
+                style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
             </ion-item>
         </ion-col>
     </ion-row>
@@ -108,12 +99,13 @@
         <ion-col col-6 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
             <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
                 <ion-input #txtCantidadUA type="text"  value="" [disabled]="Txtcantidadisenabled" [(ngModel)]="Textcantidad" 
-                 (keydown)="keydown($event)" (keyup)="keyup($event)" (keyup.enter)="registarUA()"  placeholder="0.00" style="font-weight:bold; font-size: 13px; 
+                (keyup.enter)="agregar()" placeholder="0.00" style="font-weight:bold; font-size: 13px; 
                 padding: 0px; margin: 0px; color:dimgray;" ></ion-input>
             </ion-item>
+            <!-- (keydown)="keydown($event)" (keyup)="keyup($event)" (keyup.enter)="registarUA()" -->
         </ion-col>
         <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
-            <button no-margin no-padding ion-button icon-only clear (click)="eliminarUA(objDetalleProducto)" style="
+            <button no-margin no-padding ion-button icon-only clear (click)="agregar()" [disabled]="!Agregarisenabled" style="
                         position: absolute;	top: 0;	bottom: 0; left: 0; right: 0; width: 80%; margin: auto; background:none;">
           <ion-icon name="add-circle" color="dark"></ion-icon>
         </button>
@@ -125,7 +117,7 @@
     <ion-grid style="margin: 0px; padding: 0px">
       <ion-row>
         <ion-col style="margin: 0px; padding: 0px;">
-          <button ion-button style=" margin: 0px; padding: 0px" (click)="goParticionarUaPage()" medium full>
+          <button ion-button style=" margin: 0px; padding: 0px" (click)="showModalParticionarUaPage()" medium full>
             <div>
               <ion-icon name='cube'></ion-icon> <br>
             </div>

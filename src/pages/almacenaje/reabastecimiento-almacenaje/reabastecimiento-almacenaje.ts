@@ -151,7 +151,11 @@ export class ReabastecimientoAlmacenajePage {
     debugger;
     this.vReabastecerPage = {
       'Id_Tx': data.Id_Tx,
-      'Id_Producto': data.Id_Producto
+      'Codigo': data.Codigo,
+      'Id_Producto': data.Id_Producto,
+      'Producto': data.Producto,
+      'Movimiento': data.Movimiento,
+      'SectorD': data.SectorD
     };
     this.navCtrl.push(UbicacionOrigenPage, {
       data: this.vReabastecerPage
