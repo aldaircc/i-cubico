@@ -1,0 +1,79 @@
+<!--
+  Generated template for the ParametrosPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Parámetros</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-grid>   
+        <ion-row>
+            <ion-col>            
+              <div>
+                <h6><b>Ruta servicio BD:</b></h6>  
+              </div>   
+            </ion-col>       
+        </ion-row>
+        <ion-row>
+            <ion-col>        
+                <ion-item>
+                    <ion-input type="Text" [(ngModel)]="rutaServicioBD"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>  
+        <ion-row>
+            <ion-col>            
+              <div>
+                <h6><b>Ruta servicio Impresión:</b></h6>  
+              </div>   
+            </ion-col>       
+        </ion-row>
+        <ion-row>
+            <ion-col>        
+                <ion-item>
+                    <ion-input type="Text" [(ngModel)]="rutaServicioImpresion"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>  
+        <ion-row>
+            <ion-col>            
+              <div>
+                <h6><b>Id RF:</b></h6>  
+              </div>   
+            </ion-col>       
+        </ion-row>
+        <ion-row>
+            <ion-col>        
+                <ion-item>
+                    <ion-input type="Text" [(ngModel)]="idRF"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>  
+        <ion-row>
+            <ion-col>            
+              <div>
+                <h6><b>Contraseña:</b></h6>  
+              </div>   
+            </ion-col>       
+        </ion-row>
+        <ion-row>
+            <ion-col>        
+                <ion-item>
+                    <ion-input type="Text" [(ngModel)]="clave"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>  
+    </ion-grid>
+    <div padding>
+        <button ion-button block round (click)="ingresarParametros()" >Grabar</button>
+        <button ion-button block round color="danger" (click)="goBackLoginPage()" >Cancelar</button>
+    </div>   
+</ion-content>

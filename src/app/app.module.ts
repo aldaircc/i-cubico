@@ -101,6 +101,8 @@ import { AlmacenajeServiceProvider } from '../providers/almacenaje-service/almac
 import { InventarioServiceProvider } from '../providers/inventario-service/inventario-service';
 import { DespachoServiceProvider } from '../providers/despacho-service/despacho-service';
 import { from } from 'rxjs/observable/from';
+import { ConfigurarPage } from '../pages/configurar/configurar';//YUS
+import { ParametrosPage } from '../pages/configurar/parametros/parametros';//YUS
 
 @NgModule({
   declarations: [
@@ -188,7 +190,9 @@ import { from } from 'rxjs/observable/from';
     ParticionarUaPage, //aromero
     ConsultarPalletPage, //aromero
     ConsultarEanPage, //aromero
-    UbicacionOrigenPage //aromero
+    UbicacionOrigenPage, //aromero
+    ConfigurarPage, //YUS    
+    ParametrosPage //YUS    
   ],
   imports: [
     BrowserModule,HttpModule,HttpClientModule,
@@ -281,7 +285,9 @@ import { from } from 'rxjs/observable/from';
     ParticionarUaPage, //aromero
     ConsultarPalletPage, //aromero
     ConsultarEanPage, //aromero
-    UbicacionOrigenPage //aromero
+    UbicacionOrigenPage, //aromero
+    ConfigurarPage, //YUS    
+    ParametrosPage //YUS    
   ],
   providers: [
     StatusBar,
