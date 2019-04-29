@@ -45,7 +45,7 @@ import { ReciboBultoPage_01Page } from '../pages/despacho/recibo/recibo-bulto-pa
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = MainMenuPage;
+  rootPage:any = HomePage;
   userProfile={"Almacen":"","ApeNom":"","Cliente":"","Correo":"","FlagActivo":false,"FlagPermiso":false,"FlagRestablecer":false,"Foto":null,"Id_Almacen":"","Id_Cliente":null,"Id_Perfil":"","Perfil":"","Usuario":""};
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

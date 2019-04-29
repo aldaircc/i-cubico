@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, PopoverController, App, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, PopoverController, App, ToastController, AlertController } from 'ionic-angular';
 import { ReciboServiceProvider } from '../../providers/recibo-service/recibo-service';
 import { ReciboPage_02Page } from './recibo-page-02/recibo-page-02';
 import { IncidenciaPage } from '../incidencia/incidencia';
@@ -29,8 +29,15 @@ export class ReciboPage {
   rowCount: any;
   rowReciboSelect: any;
 
+  listConfirm: any = [];
+  listProcess: any = [];
+
+  countConfirm: number = 0;
+  countProcess: number = 0;
+
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController,
-    public toastCtrl: ToastController, public sRecibo: ReciboServiceProvider, public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider) { }
+    public toastCtrl: ToastController, public sRecibo: ReciboServiceProvider, public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider,
+    public alertCtrl: AlertController) { }
 
   showToast(message, duration, position, showClose, closeText, dismissChange){
     let toast = this.toastCtrl.create({
@@ -57,12 +64,43 @@ export class ReciboPage {
       }else if(popoverData == 3){
         this.showModalImpresora();
       }else if(popoverData == 4){
-        this.navCtrl.pop();
-        var nav = this.app.getRootNav();
-        nav.setRoot(HomePage);
+        this.presentAlertConfirm("¿Estás seguro que deseas cerrar sesión?").then((result) => {
+          if (result) {
+            this.navCtrl.pop();
+            var nav = this.app.getRootNav();
+            nav.setRoot(HomePage);
+          }
+        })
+        
       }
       this.rowReciboSelect = null;
     });
+  }
+
+  presentAlertConfirm(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+              resolve(false);
+              console.log('Disagree clicked');
+            }
+          },
+          {
+            text: 'Aceptar',
+            handler: () => {
+              resolve(true);
+              console.log('Agree clicked');
+            }
+          }
+        ]
+      });
+      confirm.present();
+    })
   }
 
   showModalImpresora(){
@@ -77,17 +115,86 @@ export class ReciboPage {
         return (item.NumOrden.toLowerCase().indexOf(val.toLowerCase()) > -1);
       });
       this.rowCount = this.listAuxRecepcion.length;
+      if (this.rowCount > 0) {
+        this.listConfirm = this.listAuxRecepcion.filter((item) => {
+          return (item.Id_Estado == 2);
+        });
+        this.listProcess = this.listAuxRecepcion.filter((item) => {
+          return (item.Id_Estado == 3);
+        });
+        this.countConfirm = this.listConfirm.length;
+        this.countProcess = this.listProcess.length;
+      } else {
+        this.countConfirm = this.rowCount;
+        this.countProcess = this.rowCount;
+      }
     } else {
       this.rowCount = this.listRecepcion.length;
+
+      this.listConfirm = this.listRecepcion.filter((item) => {
+        return (item.Id_Estado == 2);
+      });
+      this.listProcess = this.listRecepcion.filter((item) => {
+        return (item.Id_Estado == 3);
+      });
+
+      this.countConfirm = this.listConfirm.length;
+      this.countProcess = this.listProcess.length;
+
       return this.listAuxRecepcion = this.listRecepcion;
+
+
     }
   }
 
   getRecepcionesXUsuario(strUsuario, intIdAlmacen, intIdMuelle) {
     this.sRecibo.getRecepcionesXUsuario(strUsuario, intIdAlmacen, intIdMuelle).then((result) => {
+
+      this.listConfirm = [];
+      this.listProcess = [];
+      this.listAuxRecepcion = [];
+
+      debugger;
       this.listRecepcion = result;
-      this.listAuxRecepcion = this.listRecepcion;
+      //this.listAuxRecepcion = this.listRecepcion;
+
+      for (var i = 0; i < this.listRecepcion.length; i++) {
+        var obj = {
+          'Cliente': result[i].Cliente,
+          'CodBarraMuelle': result[i].CodBarraMuelle,
+          'Estado': result[i].Estado,
+          'FechaDocumento': result[i].FechaDocumento,
+          'FechaLlegada': result[i].FechaLlegada,
+          'FlagDetalle': result[i].FlagDetalle,
+          'FlagPausa': result[i].FlagPausa,
+          'Id_Cliente': result[i].Id_Cliente,
+          'Id_Estado': result[i].Id_Estado,
+          'Id_Muelle': result[i].Id_Muelle,
+          'Id_Proveedor': result[i].Id_Proveedor,
+          'Id_TipoDocumento': result[i].Id_TipoDocumento,
+          'Id_TipoMovimiento': result[i].Id_TipoMovimiento,
+          'Id_Tx': result[i].Id_Tx,
+          'Muelle': result[i].Muelle,
+          'NumOrden': result[i].NumOrden,
+          'Observacion': result[i].Observacion,
+          'Proveedor': result[i].Proveedor,
+          'TipoDocumento': result[i].TipoDocumento,
+          'TipoMovimiento': result[i].TipoMovimiento
+        };
+        this.listAuxRecepcion.push(obj);
+
+        if (result[i].Id_Estado == 2) {
+          this.listConfirm.push(obj);
+        }
+        if (result[i].Id_Estado == 3) {
+          this.listProcess.push(obj);
+        }
+      }
+
       this.rowCount = this.listAuxRecepcion.length;
+      this.countConfirm = this.listConfirm.length;
+      this.countProcess = this.listProcess.length;
+
       if (this.listRecepcion.length > 0) {
 
       } else {
@@ -97,6 +204,7 @@ export class ReciboPage {
   }
 
   evaluateGoReciboPage02(data) {
+    this.sGlobal.nombreEmpresa = data.Cliente;
     if (data.FlagPausa == true) {
       this.showModalIncidencia(data);
     } else {

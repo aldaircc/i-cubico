@@ -97,6 +97,7 @@ export class EtiquetadoPage_01Page {
   @ViewChild('iNumEtq', { read: ElementRef }) private iNumEtq:ElementRef;
   @ViewChild('iSaldoEtq', { read: ElementRef }) private iSaldoEtq:ElementRef;
   @ViewChild('iNumCopia', { read: ElementRef }) private iNumCopia:ElementRef;
+
   
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, 
     public viewCtrl: ViewController, public sEtq: EtiquetadoServiceProvider, 
@@ -109,6 +110,7 @@ export class EtiquetadoPage_01Page {
   }
 
   initPage(): void{
+    debugger;
     if(this.vEtq.Codigo != null){
       
       this.lote = this.vEtq.LoteLab;
@@ -116,25 +118,27 @@ export class EtiquetadoPage_01Page {
       this.fecVen = (this.vEtq.FecVen != null) ? moment(this.vEtq.FecVen).toISOString() : this.fecVen;//format('YYYY-MM-DD');
 
 
-      if(this.findArticulo == false){
-        /**
-          presenter = new EtqPresenterImpl(this);
-          presenter.listUMxProducto(intR_IdProducto);
-          prepareFormatLabel();
+      // if(this.findArticulo == false){
+      //   /**
+      //     presenter = new EtqPresenterImpl(this);
+      //     presenter.listUMxProducto(intR_IdProducto);
+      //     prepareFormatLabel();
   
-          if (strR_TipoAlmacenaje == "1"){
-              strEtq = "ETQ_UA.txt";
-          }else if (strR_TipoAlmacenaje == "2"){
-              strEtq = "ETQ_Pallet.txt";
-          }else if (strR_TipoAlmacenaje == "3"){
-              strEtq = "ETQ_UA.txt";
-          }else{
-              strEtq = "";
-          }
-          spnSubAlmacen.setEnabled(false); 
-        **/
-       this.listarUMxProducto(this.vEtq.Id_Producto);
-      }
+      //     if (strR_TipoAlmacenaje == "1"){
+      //         strEtq = "ETQ_UA.txt";
+      //     }else if (strR_TipoAlmacenaje == "2"){
+      //         strEtq = "ETQ_Pallet.txt";
+      //     }else if (strR_TipoAlmacenaje == "3"){
+      //         strEtq = "ETQ_UA.txt";
+      //     }else{
+      //         strEtq = "";
+      //     }
+      //     spnSubAlmacen.setEnabled(false); 
+      //   **/
+      //  this.listarUMxProducto(this.vEtq.Id_Producto);
+      // }
+
+      this.listarUMxProducto(this.vEtq.Id_Producto);
   
       this.listarSubAlmacenesXCuenta(this.vEtq.IdCuentaLPN, this.sGlobal.Id_Almacen);
       this.isEnabledLote = this.vEtq.FlagLote;
@@ -148,6 +152,7 @@ export class EtiquetadoPage_01Page {
   }
 
   listarUMxProducto(intIdProducto){
+    debugger;
     this.sEtq.listarUMxProducto(intIdProducto).then(result=>{
       this.listUM = result;
     });
@@ -160,17 +165,35 @@ export class EtiquetadoPage_01Page {
     });
   }
 
+  
+
   validarCampos(){
+    debugger;
     var message = "";
-    if(this.id_SubAlm < 0 || this.id_SubAlm == undefined){
-      message = "Seleccione Sub Almacén"  
+
+    if(this.vEtq.Codigo == null || this.vEtq.Articulo == null){
+      message = "Debe buscar producto";
+      
       return message;
-    }
+    } 
+
+    if(this.vEtq.Codigo == "" || this.vEtq.Articulo == ""){
+      message = "Debe buscar producto";
+      
+      return message;
+    } 
 
     if(this.lote == "" && this.vEtq.FlagLote){
       message = "Indique el lote";
       this.selectAll(this.iLote, 500);
       return message;
+    }
+
+    if(this.fecEmiChecked == true && this.fecVenChecked == true){
+      if((Date.parse(this.fecEmi) > Date.parse(this.fecVen))){
+        message = "La fecha de emisión debe ser menor a la fecha de vencimiento";
+        return message;
+      }
     }
 
     if(this.id_UAlt == 0 || this.id_UAlt == undefined){
@@ -193,24 +216,22 @@ export class EtiquetadoPage_01Page {
       return message;
     }
 
-    if(this.numCopia <= 0 || this.numCopia == undefined){
-      message = "El número de copias no valido";
-      this.selectAll(this.iNumCopia, 500);
-      return message;
-    }
-
-    if(this.fecEmiChecked == true && this.fecVenChecked == true){
-      if((Date.parse(this.fecEmi) > Date.parse(this.fecVen))){
-        message = "La fecha de emisión debe ser menor a la fecha de vencimiento";
-        return message;
-      }
-    }
-
     if(this.id_FormatLabel == 0 || this.id_FormatLabel == undefined){
       message = "Seleccione formato de etiqueta";
       setTimeout(() => {
         this.selectFormat.open();
       }, 500);
+      return message;
+    }
+
+    if(this.id_SubAlm < 0 || this.id_SubAlm == undefined){
+      message = "Seleccione Sub Almacén"  
+      return message;
+    }
+
+    if(this.numCopia <= 0 || this.numCopia == undefined){
+      message = "El número de copias no valido";
+      this.selectAll(this.iNumCopia, 500);
       return message;
     }
 
@@ -285,6 +306,7 @@ export class EtiquetadoPage_01Page {
   }
 
   registrarUAMasivo(objImp){
+    debugger;
     this.sEtq.registrarUAMasivo(objImp, 1).then(result=>{
       var res : any = result;
       if(res.length <= 0){
@@ -297,6 +319,7 @@ export class EtiquetadoPage_01Page {
       let obj = this.listUM.filter(x=>x.Id_UM == this.id_UAlt)[0];
 
       if(this.findArticulo == true){
+        debugger;
         for(let i = 0; i < res.length; i++){
           listEtq = [];
           listEtq.push({ "campo": "|MES|", "valor" :  currentDate.format("MM") });
@@ -345,6 +368,7 @@ export class EtiquetadoPage_01Page {
           listEtq.push({ "campo": "|TXTSALDO|", "valor" : (i == 0 && this.cantEtqSaldo > 0) ? "SALDO" : "" });
           listEtq.push({ "campo": "|COPIAS|", "valor" : this.numCopia });
           listEtq.push({ "campo": "|CODBARRA|", "valor" : res[i].UA_CodBarra });
+          listEtq.push({ "campo": "|CUENTA|", "valor" : this.sGlobal.nombreEmpresa });
           listEtq.push({ "campo": "|PRODUCTO|", "valor" : this.vEtq.Articulo });
           listEtq.push({ "campo": "|EAN14|" , "valor" : obj.EAN14 });
           listEtq.push({ "campo": "|EAN|", "valor" : (obj.Nombre.toUpperCase() == this.vEtq.UM) ? "13": "14" });
@@ -416,10 +440,12 @@ export class EtiquetadoPage_01Page {
 
   calcularTotalSuma(){
     var cantXCaja: number, numEtqTem: number, etqSaldoCant: number;
-    cantXCaja = (this.cantxEtq <= 0) ? 0 : this.cantxEtq;
-    numEtqTem = (this.numEtq <= 0) ? 0 : this.numEtq;
+    debugger;
+
+    cantXCaja = (this.cantxEtq <= 0 || this.cantxEtq == undefined) ? 0 : this.cantxEtq;
+    numEtqTem = (this.numEtq <= 0 || this.numEtq == undefined) ? 0 : this.numEtq;
     etqSaldoCant = (this.cantEtqSaldo <= 0 || this.cantEtqSaldo == undefined) ? 0 : this.cantEtqSaldo;
-    this.totalSuma = (cantXCaja * numEtqTem) +  etqSaldoCant;
+    this.totalSuma = (Number(cantXCaja) * Number(numEtqTem)) +  Number(etqSaldoCant);
   }
 
   numEtqTextChange(ev:any){
@@ -436,6 +462,8 @@ export class EtiquetadoPage_01Page {
   }
 
   goToEtqPage02(){
+    debugger;
+    this.findArticulo = true;
     this.navCtrl.push(EtiquetadoPage_02Page, {
       producto: this.productSelectedcallback
     });

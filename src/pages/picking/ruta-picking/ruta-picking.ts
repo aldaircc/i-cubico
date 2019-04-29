@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, App, Navbar, NavController, NavParams, PopoverController, ModalController, ToastController } from 'ionic-angular';
+import { IonicPage, App, Navbar, NavController, NavParams, PopoverController, ModalController, ToastController, AlertController } from 'ionic-angular';
 import { DetallePickingPage } from '../detalle-picking/detalle-picking';
 import { PickingPorProductoPage } from '../picking-por-producto/picking-por-producto';
 import { CierrePickingPage } from '../cierre-picking/cierre-picking';
@@ -54,7 +54,8 @@ export class RutaPickingPage {
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController,
-    public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider, public modalCtrl: ModalController) {
+    public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider, public modalCtrl: ModalController,
+    public alertCtrl: AlertController) {
     this.vPickingPage = navParams.get('data');
     this.getDataRutaPicking(this.vPickingPage.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
@@ -241,16 +242,48 @@ export class RutaPickingPage {
       } else if (popoverData == 3) {
         debugger;
         this.goConsultarUbicacionPage();
-      } else if (popoverData == 4) {
+      } 
+      // else if (popoverData == 4) {
+      //   debugger;
+      //   this.goMenu();
+      // } 
+      else if (popoverData == 4) {
         debugger;
-        this.goMenu();
-      } else if (popoverData == 5) {
-        debugger;
-        this.navCtrl.pop();
-        var nav = this.app.getRootNav();
-        nav.setRoot(HomePage);
+        this.presentAlertConfirm("¿Estás seguro que deseas cerrar sesión?").then((result) => {
+          if (result) {
+            this.navCtrl.pop();
+            var nav = this.app.getRootNav();
+            nav.setRoot(HomePage);
+          }
+        })
       }
     });
+  }
+
+  presentAlertConfirm(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+              resolve(false);
+              console.log('Disagree clicked');
+            }
+          },
+          {
+            text: 'Aceptar',
+            handler: () => {
+              resolve(true);
+              console.log('Agree clicked');
+            }
+          }
+        ]
+      });
+      confirm.present();
+    })
   }
 
   presentToast(message) {

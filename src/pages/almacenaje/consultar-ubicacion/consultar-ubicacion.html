@@ -23,12 +23,15 @@
             </ion-row>
         </ion-grid>
     </ion-toolbar>
+
+    <ion-row class="bgHeader statico" class="bgLightBlue">
+        <ion-searchbar #txtBuscar placeholder="Cod. Barra ubicación" (keyup.enter)="validarCodigo()" [(ngModel)]="codeBar"></ion-searchbar>
+    </ion-row>
+
 </ion-header>
 
 <ion-content>
-    <ion-row class="bgLightBlue">
-        <ion-searchbar #txtBuscar placeholder="Cod. Barra ubicación" (keyup.enter)="validarCodigo()" [(ngModel)]="codeBar"></ion-searchbar>
-    </ion-row>
+    
     <!-- <ion-row>
         <ion-item class="bgLightBlue">
             <ion-label>Todos</ion-label>

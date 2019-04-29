@@ -111,16 +111,48 @@ export class ReabastecimientoPage {
       } else if (popoverData == 3) {
         debugger;
         this.goConsultarUbicacionPage();
-      } else if (popoverData == 4) {
+      } 
+      // else if (popoverData == 4) {
+      //   debugger;
+      //   this.goMenu();
+      // } 
+      else if (popoverData == 4) {
         debugger;
-        this.goMenu();
-      } else if (popoverData == 5) {
-        debugger;
-        this.navCtrl.pop();
-        var nav = this.app.getRootNav();
-        nav.setRoot(HomePage);
+        this.presentAlertConfirm("¿Estás seguro que deseas cerrar sesión?").then((result) => {
+          if (result) {
+            this.navCtrl.pop();
+            var nav = this.app.getRootNav();
+            nav.setRoot(HomePage);
+          }
+        })
       }
     });
+  }
+
+  presentAlertConfirm(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+              resolve(false);
+              console.log('Disagree clicked');
+            }
+          },
+          {
+            text: 'Aceptar',
+            handler: () => {
+              resolve(true);
+              console.log('Agree clicked');
+            }
+          }
+        ]
+      });
+      confirm.present();
+    })
   }
 
   presentAlert(message): Promise<boolean> {

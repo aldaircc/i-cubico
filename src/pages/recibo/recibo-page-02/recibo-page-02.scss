@@ -12,6 +12,10 @@ page-recibo-page-02 {
       background: yellow;
    }
 
+   .bg-finalizado{
+      background-color: #04B404;
+   }
+
    .rec02-card-col{
       padding: 0px !important;
    }
@@ -23,6 +27,14 @@ page-recibo-page-02 {
    .button-outline-md{
       border-color: transparent !important;
   }
+
+  .statico{
+   position: sticky; //sticky
+   top: 0;
+   left: 0;
+   right: 0;
+   z-index: 9999;
+}
 
    //  .headerCard{
    //      color: blue;

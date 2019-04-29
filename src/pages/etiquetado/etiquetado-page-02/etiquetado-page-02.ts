@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
@@ -17,12 +17,16 @@ import { GlobalServiceProvider } from '../../../providers/global-service/global-
 })
 export class EtiquetadoPage_02Page {
 
+  @ViewChild('txtFiltro') txtFiltroRef;
+  @ViewChild('txtFiltro', { read: ElementRef }) private txtFiltro: ElementRef;
+
   listCuentaAlmac: any;
   listFilter: any;
   tipoFiltro: number = 0;
   IdCuenta: number = 0;
   filterText: string = "";
-  rowCount: number = 0;
+  rowCount: string = "";
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public sEtq: EtiquetadoServiceProvider, public sGlobal: GlobalServiceProvider) {
@@ -53,6 +57,10 @@ export class EtiquetadoPage_02Page {
 
     if(this.filterText.trim() == ""){
       message = "Ingrese filtro";
+      setTimeout(() => {
+        this.txtFiltroRef.setFocus();
+        this.selectAll(this.txtFiltro);
+      }, (500));
       return message;
     }
     return message;
@@ -65,19 +73,45 @@ export class EtiquetadoPage_02Page {
       });
   }
 
+  onChangeRadio() {
+    if (this.tipoFiltro == 1 || this.tipoFiltro == 2 || this.tipoFiltro == 3){
+      setTimeout(() => {
+        this.txtFiltroRef.setFocus();
+      }, (500));
+    }
+  }
+
   listarCuentasXAlmacenUsuario(strUsuario, intIdAlmacen, intIdCuenta): void{
     this.sEtq.listarCuentasXAlmacenUsuario(strUsuario, intIdAlmacen, intIdCuenta).then(result=>{
+      debugger;
       this.listCuentaAlmac = result;
     });
   }
 
+  onChange() {     
+    debugger
+    let obj = this.listCuentaAlmac.filter(x => x.Id_Cuenta == this.IdCuenta)[0];  
+    this.sGlobal.nombreEmpresa = obj.NombreCuenta;
+  }
+
   listarProductoXFiltro(intTipo, strFiltro, intIdCuenta): void{
     this.sEtq.listarProductoXFiltro(intTipo, strFiltro, intIdCuenta).then(result=>{
+      debugger;
       this.listFilter = result;
+      debugger;
       this.rowCount = this.listFilter.length;
       if(this.listFilter.length == 0){
         alert('No se encontraron resultados');
       }
+      setTimeout(() => {
+        this.txtFiltroRef.setFocus();
+        this.selectAll(this.txtFiltro);
+      }, (500));
     });
   }  
+
+  selectAll(el: ElementRef) {
+    let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
+    nativeEl.select();
+  }
 }

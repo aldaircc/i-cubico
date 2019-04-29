@@ -22,38 +22,39 @@
       </button>
     </ion-buttons>
   </ion-toolbar>
+
+  <ion-grid class="bgHeader statico">
+      <ion-row>
+        <ion-col col-sm>
+          <!-- Fila 01 -->
+          <ion-row align-items-center>
+            <ion-col col-4 col-sm>
+              <div class="textHeader">Producto:</div> <!--Código-->
+            </ion-col>
+            <ion-col col-8 col-sm class="valueHeader">
+              {{ vEtq.Codigo }}
+            </ion-col>
+          </ion-row>
+          <!-- Fila 02 -->
+          <ion-row align-items-center class="valueHeader">
+            <ion-col col-12 col-sm>
+              <div>{{ vEtq.Articulo }}</div>
+            </ion-col>
+          </ion-row>
+  
+        </ion-col>
+        <ion-col col-2 col-sm [hidden]="!isVisibleSearchButton">
+          <button ion-button block outline only-icon (click)="goToEtqPage02()">
+            <ion-icon name="search"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>    
+    </ion-grid>
 </ion-header>
 
 <ion-content>
-  <ion-grid class="bgHeader">
-    <ion-row>
-      <ion-col col-sm>
-        <!-- Fila 01 -->
-        <ion-row align-items-center>
-          <ion-col col-4 col-sm>
-            <div class="textHeader">Producto:</div> <!--Código-->
-          </ion-col>
-          <ion-col col-8 col-sm class="valueHeader">
-            {{ vEtq.Codigo }}
-          </ion-col>
-        </ion-row>
-        <!-- Fila 02 -->
-        <ion-row align-items-center class="valueHeader">
-          <ion-col col-12 col-sm>
-            <div>{{ vEtq.Articulo }}</div>
-          </ion-col>
-        </ion-row>
 
-      </ion-col>
-      <ion-col col-2 col-sm [hidden]="!isVisibleSearchButton">
-        <button ion-button block outline only-icon (click)="goToEtqPage02()">
-          <ion-icon name="search"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row>    
-  </ion-grid>
-
-  <ion-grid class="bgWhite borderSolid">
+  <ion-grid >
     <!-- Fila 01 -->
     <ion-row  align-items-center>
       <ion-col col-3 col-sm>
@@ -112,7 +113,7 @@
       </ion-col>
       <ion-col col-3 col-sm>
         <ion-item>
-            <ion-input type="number" placeholder="0" [(ngModel)]="cantxEtq" #iCantidad></ion-input>
+            <ion-input type="number" placeholder="0" [(ngModel)]="cantxEtq" (input)="numEtqTextChange($event)" #iCantidad></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -135,7 +136,7 @@
 
       <ion-col col-3 col-sm>
         <ion-item>
-            <ion-input type="number" placeholder="0" [(ngModel)]="cantEtqSaldo" #iSaldoEtq></ion-input>
+            <ion-input type="number" placeholder="0" [(ngModel)]="cantEtqSaldo" (input)="numEtqTextChange($event)" #iSaldoEtq></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
