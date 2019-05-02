@@ -33,6 +33,15 @@ export class ReciboPage_02Page {
   userDetail: any;
   bolAutomatic: boolean = false;
 
+
+  listConfirm: any = [];
+  listProcess: any = [];
+  listFinalizado: any = [];
+
+  countConfirm: number = 0;
+  countProcess: number = 0;
+  countFinalizado: number = 0;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private alertCtrl: AlertController, public sRecibo: ReciboServiceProvider,
     public modalCtrl: ModalController, public popoverCtrl: PopoverController, public sGlobal: GlobalServiceProvider) {
@@ -96,9 +105,79 @@ export class ReciboPage_02Page {
 
   getDetailXTx(strIdTx){
     this.sRecibo.getDetalleXTx(strIdTx).then((result)=>{
+      debugger;
+
+      this.listConfirm = [];
+      this.listProcess = [];
+      this.listFinalizado = [];
+      this.listAuxDetailTx = [];
+
       this.listDetailTx = result;
-      this.listAuxDetailTx = this.listDetailTx;
+      //this.listAuxDetailTx = this.listDetailTx;
+
+      for (var i = 0; i < this.listDetailTx.length; i++) {
+        var obj = {
+          'Alias': result[i].Alias,
+          'CantidadBulto': result[i].CantidadBulto,
+          'CantidadOperacion': result[i].CantidadOperacion,
+          'CantidadPedida': result[i].CantidadPedida,
+          'CantidadXBulto': result[i].CantidadXBulto,
+          'Codigo': result[i].Codigo,
+          'Columna': result[i].Columna,
+          'Composicion': result[i].Composicion,
+          'Condicion': result[i].Condicion,
+          'CondicionAlmacenamiento': result[i].CondicionAlmacenamiento,
+          'CondicionSAP': result[i].CondicionSAP,
+          'Descripcion': result[i].Descripcion,
+          'EAN13': result[i].EAN13,
+          'EAN14': result[i].EAN14,
+          'Factor': result[i].Factor,
+          'FechaEmision': result[i].FechaEmision,
+          'FechaVencimiento': result[i].FechaVencimiento,
+          'Fila': result[i].Fila,
+          'FlagLotePT': result[i].FlagLotePT,
+          'FlagSeriePT': result[i].FlagSeriePT,
+          'Id_Composicion': result[i].Id_Composicion,
+          'Id_Condicion': result[i].Id_Condicion,
+          'Id_Pasillo': result[i].Id_Pasillo,
+          'Id_Producto': result[i].Id_Producto,
+          'Id_SubAlmacen': result[i].Id_SubAlmacen,
+          'Id_Tx': result[i].Id_Tx,
+          'Id_UM': result[i].Id_UM,
+          'Id_UMB': result[i].Id_UMB,
+          'Id_Ubicacion': result[i].Id_Ubicacion,
+          'Inspeccion': result[i].Inspeccion,
+          'Item': result[i].Item,
+          'ItemSAP': result[i].ItemSAP,
+          'Lote': result[i].Lote,
+          'Nivel': result[i].Nivel,
+          'NombreSubAlmacen': result[i].NombreSubAlmacen,
+          'Posicion': result[i].Posicion,
+          'PosicionReferencia': result[i].PosicionReferencia,
+          'Position': result[i].Position,
+          'Saldo': result[i].Saldo,
+          'TipoAlmacenaje': result[i].TipoAlmacenaje,
+          'UM': result[i].UM,
+          'UMBase': result[i].UMBase
+        };
+        this.listAuxDetailTx.push(obj);
+
+        if (result[i].CantidadPedida == result[i].Saldo) {
+          this.listConfirm.push(obj);
+        }
+        if (result[i].Saldo > 0 && result[i].CantidadOperacion > 0) {
+          this.listProcess.push(obj);
+        }
+        if (result[i].CantidadPedida == result[i].CantidadOperacion) {
+          this.listFinalizado.push(obj);
+        }
+      }
+
       this.rowCount = this.listAuxDetailTx.length;
+      this.countConfirm = this.listConfirm.length;
+      this.countProcess = this.listProcess.length;
+      this.countFinalizado = this.listFinalizado.length;
+
       if(this.listDetailTx.length == 0){
         alert('No se encontraron detalles');
       }
@@ -112,13 +191,48 @@ export class ReciboPage_02Page {
         return (item.Codigo.toLowerCase().indexOf(val.toLowerCase()) > -1) || (item.Descripcion.toLowerCase().indexOf(val.toLowerCase()) > -1);
       });
       this.rowCount = this.listAuxDetailTx.length;
-      
-      if(this.rowCount <= 0){
+      if (this.rowCount > 0) {
+        this.listConfirm = this.listAuxDetailTx.filter((item) => {
+          return (item.CantidadPedida == item.Saldo);
+        });
+        this.listProcess = this.listAuxDetailTx.filter((item) => {
+          return (item.Saldo > 0 && item.CantidadOperacion > 0);
+        });
+        this.listFinalizado = this.listAuxDetailTx.filter((item) => {
+          return (item.CantidadPedida == item.CantidadOperacion);
+        });
+
+        this.countConfirm = this.listConfirm.length;
+        this.countProcess = this.listProcess.length;
+        this.countFinalizado = this.listFinalizado.length;
+      } else {
+        this.countConfirm = this.rowCount;
+        this.countProcess = this.rowCount;
+        this.countFinalizado = this.rowCount;
         alert('Orden no existe');
       }
       
+      // if(this.rowCount <= 0){
+      //   alert('Orden no existe');
+      // }
+      
     }else{
       this.rowCount = this.listDetailTx.length;
+
+      this.listConfirm = this.listDetailTx.filter((item) => {
+        return (item.CantidadPedida == item.Saldo);
+      });
+      this.listProcess = this.listDetailTx.filter((item) => {
+        return (item.Saldo > 0 && item.CantidadOperacion > 0);
+      });
+      this.listFinalizado = this.listAuxDetailTx.filter((item) => {
+        return (item.CantidadPedida == item.CantidadOperacion);
+      });
+
+      this.countConfirm = this.listConfirm.length;
+      this.countProcess = this.listProcess.length;
+      this.countFinalizado = this.listFinalizado.length;
+
       return this.listAuxDetailTx = this.listDetailTx;
     }
   }

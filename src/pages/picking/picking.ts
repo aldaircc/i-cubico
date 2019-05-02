@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { PickingServiceProvider } from '../../providers/picking-service/picking-service';
-import { IonicPage, App, Navbar, NavController, NavParams, ModalController, PopoverController, ToastController } from 'ionic-angular';
+import { IonicPage, App, Navbar, NavController, NavParams, ModalController, PopoverController, ToastController, AlertController } from 'ionic-angular';
 import { RutaPickingPage } from '../picking/ruta-picking/ruta-picking'
 import { IncidenciaPage } from '../incidencia/incidencia';
 import { PopoverPickingPage } from '../picking/popover/popover-picking/popover-picking'
@@ -33,6 +33,7 @@ export class PickingPage {
   nomAlmacen: any;
   rowCount: any;
   vPickingPage: any;
+  vDatosRecibidos: any;
 
   listAuxOrdenesPicking: any = [];
   listaTempRutaPicking: any = [];
@@ -43,15 +44,20 @@ export class PickingPage {
 
   rowPickingSelect: any;
 
+  userProfile={"Almacen":"","ApeNom":"","page":"1"};
+  //userProfile2:any;
+  
+
   // @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
   // @ViewChild('popoverText', { read: ElementRef }) text: ElementRef;
   @ViewChild(Navbar) navBar: Navbar;
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, public modalCtrl: ModalController, private popoverCtrl: PopoverController,
-    public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider) {
+    public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider, public alertCtrl: AlertController) {
     const data = JSON.parse(localStorage.getItem('vUserData'));
     this.userDetail = this.sGlobal.apeNom;
     this.nomAlmacen = this.sGlobal.nombreAlmacen;
+    this.vDatosRecibidos = navParams.get('data');
     this.getDataOrdenes();
   }
 
@@ -105,7 +111,7 @@ export class PickingPage {
   }
 
 
-  habilitaIncidencia(obj):void{
+  habilitaIncidencia(obj): void {
     this.rowPickingSelect = obj;
     this.presentToast('Se habilito la opción Registrar incidencias');
   }
@@ -171,7 +177,7 @@ export class PickingPage {
         this.presentToast('No tiene ordenes asignadas.');
       }
     }, (err) => {
-      console.log('E-Ordenes Picking listar', err);
+      console.log('E-getOrdenesXUsuario', err);
     });
   }
 
@@ -243,7 +249,7 @@ export class PickingPage {
     this.navCtrl.push(MainMenuPage);
   }
 
-  showModalAdministrarUaPage(){
+  showModalAdministrarUaPage() {
     debugger;
     let obj = {
       'page': "modal",
@@ -251,7 +257,7 @@ export class PickingPage {
     let modalIncidencia = this.modalCtrl.create(AdministrarUaPage, { 'data': obj });
     modalIncidencia.onDidDismiss(data => {
       debugger;
-        if(data.response == 200){
+      if (data.response == 200) {
         this.navCtrl.pop();
       }
       console.log("datos", data);
@@ -267,7 +273,7 @@ export class PickingPage {
     debugger;
     let obj = {
       'Id_Tx': data.Id_Tx,
-      'FlagPausa' : data.FlagPausa,
+      'FlagPausa': data.FlagPausa,
       'NumOrden': data.NumOrden,
       'id_Cliente': data.Id_Cuenta,
       'id_Modulo': 5
@@ -279,7 +285,7 @@ export class PickingPage {
       console.log("datos", data);
     });
     modalIncidencia.present();
-  } 
+  }
 
   presentToast(message) {
     let toast = this.toastCtrl.create({
@@ -299,7 +305,7 @@ export class PickingPage {
     //   ev: ev
     // });
 
-    let popover = this.popoverCtrl.create(PopoverPickingPage, {'page' : 0, 'has_Id_Tx': (this.rowPickingSelect != undefined) ? true : false });
+    let popover = this.popoverCtrl.create(PopoverPickingPage, { 'page': 0, 'has_Id_Tx': (this.rowPickingSelect != undefined) ? true : false });
     popover.present({
       ev: ev
     });
@@ -316,19 +322,57 @@ export class PickingPage {
       } else if (popoverData == 4) {
         debugger;
         this.goMenu();
-      }else if (popoverData == 5) {
+      } else if (popoverData == 5) {
         debugger;
-        this.navCtrl.pop();
-        var nav = this.app.getRootNav();
-        nav.setRoot(HomePage);
+        this.presentAlertConfirm("¿Estás seguro que deseas cerrar sesión?").then((result) => {
+          if (result) {
+            this.navCtrl.pop();
+            var nav = this.app.getRootNav();
+            nav.setRoot(HomePage);
+          }
+        })
       }
     });
+  }
+
+  presentAlertConfirm(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+              resolve(false);
+              console.log('Disagree clicked');
+            }
+          },
+          {
+            text: 'Aceptar',
+            handler: () => {
+              resolve(true);
+              console.log('Agree clicked');
+            }
+          }
+        ]
+      });
+      confirm.present();
+    })
   }
 
   ionViewDidLoad() {
     this.navBar.backButtonClick = (e: UIEvent) => {
       // todo something
-      this.navCtrl.push(MainMenuPage);
+      debugger;
+
+
+      this.userProfile.Almacen = this.sGlobal.nombreAlmacen;
+      this.userProfile.ApeNom = this.sGlobal.apeNom;      
+      this.navCtrl.push(MainMenuPage, this.userProfile);
+
+      
+      //this.navCtrl.push(MainMenuPage);
     }
     console.log('ionViewDidLoad PickingPage');
   }

@@ -51,7 +51,7 @@ export class EtiquetadoPage_04Page {
           this.codigoBarra = res[0].CodigoBarra;
           this.id_Sector = res[0].Id_Sector;
           this.sector = res[0].Sector;
-          alert('Código de ubicación, verificado correctamente.');
+          //alert('Código de ubicación, verificado correctamente.');
           //this.strUbicacion = "";
           this.selectAll(this.inputUbi, 600);
   

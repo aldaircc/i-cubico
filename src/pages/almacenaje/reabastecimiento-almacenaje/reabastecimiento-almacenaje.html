@@ -23,10 +23,7 @@
             </ion-row>
         </ion-grid>
     </ion-toolbar>
-</ion-header>
-<ion-content>
-
-    <ion-grid style="padding: 0px;">
+    <ion-grid class="bgHeader statico" style="padding: 0px;">
         <ion-row no-padding no-margin style="background: #00BFFF">
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px">
                 <ion-label style="padding-left: 10px; margin-top: 3px; margin-bottom: 0px; color: yellow; font-weight:bold ">
@@ -64,7 +61,8 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-
+</ion-header>
+<ion-content>
     <ion-row class="bgWhite">
         <ion-card *ngFor="let objReabastecer of listAuxReabastecimiento">
             <ion-card-content style="padding: 8px 2px; font-size: 12px">

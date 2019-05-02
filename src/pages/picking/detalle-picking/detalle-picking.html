@@ -26,11 +26,8 @@
             </ion-row>
         </ion-grid>
     </ion-toolbar>
-</ion-header>
 
-<ion-content>
-
-    <ion-grid style="padding: 0px;">
+    <ion-grid class="bgHeader statico" style="padding: 0px;">
         <ion-row no-padding no-margin style="background: #00BFFF">
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px">
                 <ion-label style="padding-left: 10px; margin-top: 3px; margin-bottom: 1px; color: yellow; font-weight:bold ">
@@ -57,9 +54,14 @@
         </ion-row>
     </ion-grid>
 
-    <ion-row class="bgLightBlue">
+    <ion-row class="bgHeader statico" class="bgLightBlue">
         <ion-searchbar placeholder="Buscar código o articulo" (ionInput)="filterItems($event)" [(ngModel)]="searchQuery"></ion-searchbar>
     </ion-row>
+</ion-header>
+
+<ion-content> 
+
+    
 
     <ion-row class="bgWhite">
         <ion-card *ngFor="let objDetallePicking of listAuxDetallePicking">

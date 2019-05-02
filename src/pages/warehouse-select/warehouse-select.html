@@ -35,11 +35,12 @@
   <ion-list>
     <ion-item>
       <ion-label>Almacen:</ion-label>
-      <ion-select [(ngModel)]="wareHouseInfo.Id_Almacen" multiple="false" cancelText="Cancelar" okText="Seleccionar" (ionChange)="selectWareHouse($event)">
-          <ion-option *ngFor="let wareHome of listWarehouse" [value] = "wareHome">{{wareHome.Almacen}}</ion-option>
+      <ion-select [(ngModel)]="wareHouseInfo.Id_Almacen" multiple="false" cancelText="Cancelar" okText="Seleccionar" (ionChange)="selectWareHouse($event)" >
+          <ion-option *ngFor="let wareHome of listWarehouse" [value] = "wareHome.Id_Almacen">{{wareHome.Almacen}}</ion-option>
       </ion-select>
     </ion-item>
   </ion-list>
+  <!-- (ionChange)="selectWareHouse( $event)" -->
   <p align="center">
     <button ion-button icon-start color="danger" (click)="logout()">
       <ion-icon name='home' is-active="false"  ></ion-icon>

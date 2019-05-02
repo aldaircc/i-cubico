@@ -104,7 +104,7 @@ export class CierrePickingPage {
           }
         }, (err) => {
           this.Aceptarisenabled = false;
-          console.log('E-Muelle por almacen', err);
+          console.log('E-getMuelleXAlmacen', err);
         });
       } else {
         this.Aceptarisenabled = false;
@@ -150,7 +150,7 @@ export class CierrePickingPage {
               console.log(this.resultCierre.message, this.listNombreMuelleXAlmacen);
             }
           }, (err) => {
-            console.log('E-Muelle por almacen', err);
+            console.log('E-CerrarPicking', err);
           });
 
         } else {
@@ -185,7 +185,7 @@ export class CierrePickingPage {
               console.log(this.resultCierre.message, this.listNombreMuelleXAlmacen);
             }
           }, (err) => {
-            console.log('E-Muelle por almacen', err);
+            console.log('E-CerrarPicking', err);
           });
         }
       })
@@ -457,14 +457,20 @@ export class CierrePickingPage {
       } else if (popoverData == 3) {
         debugger;
         this.goConsultarUbicacionPage();
-      } else if (popoverData == 4) {
+      } 
+      // else if (popoverData == 4) {
+      //   debugger;
+      //   this.goMenu();
+      // } 
+      else if (popoverData == 4) {
         debugger;
-        this.goMenu();
-      } else if (popoverData == 5) {
-        debugger;
-        this.navCtrl.pop();
-        var nav = this.app.getRootNav();
-        nav.setRoot(HomePage);
+        this.presentAlertConfirm("¿Estás seguro que deseas cerrar sesión?").then((result) => {
+          if (result) {
+            this.navCtrl.pop();
+            var nav = this.app.getRootNav();
+            nav.setRoot(HomePage);
+          }
+        })
       }
     });
   }

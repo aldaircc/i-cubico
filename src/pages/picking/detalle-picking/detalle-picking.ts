@@ -205,7 +205,7 @@ export class DetallePickingPage {
         alert('No se encontrarón datos.');
       }
     }, (err) => {
-      console.log('E-Detalle Picking listar', err);
+      console.log('E-getDetallePicking', err);
     });
   }
 
@@ -321,14 +321,20 @@ export class DetallePickingPage {
       } else if (popoverData == 3) {
         debugger;
         this.goConsultarUbicacionPage();
-      } else if (popoverData == 4) {
+      } 
+      // else if (popoverData == 4) {
+      //   debugger;
+      //   this.goMenu();
+      // } 
+      else if (popoverData == 4) {
         debugger;
-        this.goMenu();
-      } else if (popoverData == 5) {
-        debugger;
-        this.navCtrl.pop();
-        var nav = this.app.getRootNav();
-        nav.setRoot(HomePage);
+        this.presentAlertConfirm("¿Estás seguro que deseas cerrar sesión?").then((result) => {
+          if (result) {
+            this.navCtrl.pop();
+            var nav = this.app.getRootNav();
+            nav.setRoot(HomePage);
+          }
+        })
       }
     });
   }

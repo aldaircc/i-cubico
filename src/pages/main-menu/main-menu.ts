@@ -9,7 +9,12 @@ import { EtiquetadoPage_01Page } from '../etiquetado/etiquetado-page-01/etiqueta
 import { TransferPage_01Page } from '../transferencia/transfer-page-01/transfer-page-01';
 import { InventarioPage_01Page } from '../inventario/inventario-page-01/inventario-page-01';
 import { DespachoPage } from '../despacho/despacho';
+
 import { GlobalServiceProvider } from '../../providers/global-service/global-service';
+
+import { WarehouseSelectPage } from '../warehouse-select/warehouse-select';
+
+
 /**
  * Generated class for the MainMenuPage page.
  *
@@ -24,19 +29,34 @@ import { GlobalServiceProvider } from '../../providers/global-service/global-ser
 })
 export class MainMenuPage {
   userProfile:any;
+  userProfileBack:any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider) {
     this.userProfile=this.navParams.data;
 
+  userProfileBack={"Almacen":"","ApeNom":"","page":"1"};
+
+
+  vMainMenuPage: any;
+  //vDatosRecibidos: any = [];
   }
+ 
+
 
   ionViewDidLoad() {
-    console.log(this.navParams.get('Almacen'));
-   
+    console.log(this.navParams.get('Almacen'));   
   }
 
   goBackWarehouseSelect():void{
-    this.navCtrl.pop();
+    if(this.userProfile.page == "0"){
+      this.navCtrl.pop();
+    }else{
+      // this.userProfileBack.Almacen = this.userProfile.nombreAlmacen;
+      // this.userProfileBack.ApeNom = this.userProfile.apeNom; 
+      this.navCtrl.push(WarehouseSelectPage, this.userProfileBack);
+    }
 
+    //this.navCtrl.pop();
   }
 
   goBackLoginPage():void{
@@ -52,6 +72,10 @@ export class MainMenuPage {
   }
 
   goPickingPage(){
+    debugger;
+    
+    //this.navCtrl.push(PickingPage, this.userProfile);
+
     this.navCtrl.push(PickingPage);
 
   }

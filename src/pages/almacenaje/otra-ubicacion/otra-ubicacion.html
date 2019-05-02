@@ -16,10 +16,8 @@
             </ion-row>
         </ion-grid>
     </ion-toolbar>
-</ion-header>
 
-<ion-content>
-    <ion-grid class="bgLightBlue">
+    <ion-grid class="bgHeader statico" class="bgLightBlue">
         <ion-row no-padding no-margin class="bgLightBlue" style=" text-align: center">
             <ion-col style="padding-left: 0px; padding-right: 0px">
                 <ion-label style="padding-left: 10px; margin-top: 3px; margin-bottom: 0px; color: #054B77; font-weight:bold ">
@@ -37,7 +35,7 @@
                 <ion-select [(ngModel)]="id_Sectorlt" interface="action-sheet" (ionChange)="onChange($event)">
                     <ion-option *ngFor="let sector of listSector" value="{{ sector.Id_Sector }}">{{ sector.Sector }}
                     </ion-option>
-                </ion-select>
+                </ion-select>                
             </ion-col>
         </ion-row>
         <ion-row radio-group [(ngModel)]="tipoFiltro" class="bgLightBlue" (ionChange)="onChangeRadio($event)">
@@ -77,6 +75,10 @@
             </ion-col>
         </ion-row>
     </ion-grid>
+</ion-header>
+
+<ion-content>
+    
 
 
     <ion-row class="bgWhite">

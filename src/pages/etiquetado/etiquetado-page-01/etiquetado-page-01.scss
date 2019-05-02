@@ -18,4 +18,12 @@ page-etiquetado-page-01 {
         padding: 12px;
         font-size: initial;
     }
+
+    .statico{
+        position: sticky; //sticky
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+    }
 }
