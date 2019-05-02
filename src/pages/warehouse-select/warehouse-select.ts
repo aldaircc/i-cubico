@@ -24,7 +24,7 @@ export class WarehouseSelectPage {
   userDetails:any;
   userProfile={"Almacen":"","ApeNom":"","Cliente":"","Correo":"","FlagActivo":false,"FlagPermiso":false,"FlagRestablecer":false,"Foto":null,"Id_Almacen":"","Id_Cliente":null,"Id_Perfil":"","Perfil":"","Usuario":""};
   userInfo={"strUsuario":""};
-  cedisInfo={"Centro":"","Id_Centro":""};
+  cedisInfo={"Centro":"","Id_Centro":0};
   wareHouseInfo={"Almacen":"","Cliente":null,"CorreoSupervisor":"","Id_Almacen":"","Id_Cliente":"","NombreSupervisor":""};
   
   constructor(public navCtrl: NavController, public navParams: NavParams,public auth:AuthService,
@@ -67,7 +67,7 @@ export class WarehouseSelectPage {
     let wareInfo={"strUsuario": this.userProfile.Usuario,"intIdCentro":this.cedisInfo.Id_Centro};
     this.auth.getWarehouse(wareInfo).then((result) => {
       this.responseData = result;
-     
+      this.sGlobal.Id_Centro=this.cedisInfo.Id_Centro;
       if(this.responseData.length>0){
           /* localStorage.setItem('vUserData', JSON.stringify(this.responseData));
           this.navCtrl.push(WarehouseSelectPage); */
@@ -96,10 +96,29 @@ export class WarehouseSelectPage {
   }
 
   goNext():void{
+    let message = this.validarCampos();
+    if(message.length > 0){
+      alert(message);
+      return;
+    }
+
     this.navCtrl.push(MainMenuPage, this.userProfile);
   }
 
-  
+  validarCampos(){
+    debugger;
+    var message = "";
+    if(this.sGlobal.Id_Centro == 0){
+      message = "Seleccione centro de distribución";
+      return message;
+    }
+    else if(this.sGlobal.Id_Almacen == 0){
+      message = "Seleccione almacén";
+      return message;
+    }
+    return message;
+  }
+
  logout(){
       localStorage.clear();
       setTimeout(() => this.goBack(), 1000);

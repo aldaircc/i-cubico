@@ -9,7 +9,7 @@ import { EtiquetadoPage_01Page } from '../etiquetado/etiquetado-page-01/etiqueta
 import { TransferPage_01Page } from '../transferencia/transfer-page-01/transfer-page-01';
 import { InventarioPage_01Page } from '../inventario/inventario-page-01/inventario-page-01';
 import { DespachoPage } from '../despacho/despacho';
-
+import { GlobalServiceProvider } from '../../providers/global-service/global-service';
 /**
  * Generated class for the MainMenuPage page.
  *
@@ -24,7 +24,7 @@ import { DespachoPage } from '../despacho/despacho';
 })
 export class MainMenuPage {
   userProfile:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider) {
     this.userProfile=this.navParams.data;
 
   }
@@ -40,6 +40,9 @@ export class MainMenuPage {
   }
 
   goBackLoginPage():void{
+    debugger;
+    this.sGlobal.Id_Centro=0;
+    this.sGlobal.Id_Almacen=0;
     this.navCtrl.push(HomePage);
   }
 
@@ -60,6 +63,7 @@ export class MainMenuPage {
   goEmbalajePage(){
     this.navCtrl.push(EmbalajePage);
     }
+
   goEtiquetado(){
     this.navCtrl.push(EtiquetadoPage_01Page, { codePage: 7 });
   }
