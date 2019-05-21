@@ -19,13 +19,14 @@ import { HomePage } from '../home/home';
   templateUrl: 'warehouse-select.html',
 })
 export class WarehouseSelectPage {
+
   listCedis = [];
   listWarehouse = [];
   responseData: any;
   userDetails: any;
   userProfile = { "Almacen": "", "ApeNom": "", "Cliente": "", "Correo": "", "FlagActivo": false, "FlagPermiso": false, "FlagRestablecer": false, "Foto": null, "Id_Almacen": "", "Id_Cliente": null, "Id_Perfil": "", "Perfil": "", "Usuario": "", "page": "0" };
   userInfo = { "strUsuario": "" };
-  cedisInfo = { "Centro": "", "Id_Centro": "" };
+  cedisInfo = { "Centro": "", "Id_Centro": 0 };
   wareHouseInfo = { "Almacen": "", "Cliente": null, "CorreoSupervisor": "", "Id_Almacen": "", "Id_Cliente": "", "NombreSupervisor": "" };
 
 
@@ -33,6 +34,7 @@ export class WarehouseSelectPage {
   userProfileBack: any;
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, public auth: AuthService,
+
     public sGlobal: GlobalServiceProvider) {
     debugger;
     //const data = JSON.parse(localStorage.getItem('vUserData'));
@@ -52,7 +54,7 @@ export class WarehouseSelectPage {
     //si viene de picking y almacenaje
     if (this.userProfileBack.page == "1") {
       debugger;
-      this.cedisInfo.Id_Centro = this.sGlobal.Id_Centro.toString();
+      this.cedisInfo.Id_Centro = this.sGlobal.Id_Centro;
     }
 
   }
@@ -84,11 +86,12 @@ export class WarehouseSelectPage {
 
   getWarehouse() {
     debugger;
-    let wareInfo = { "strUsuario": this.userProfile.Usuario, "intIdCentro": parseInt(this.cedisInfo.Id_Centro) };
-    this.sGlobal.Id_Centro = parseInt(this.cedisInfo.Id_Centro);
+    let wareInfo = { "strUsuario": this.userProfile.Usuario, "intIdCentro": this.cedisInfo.Id_Centro };
+    this.sGlobal.Id_Centro = this.cedisInfo.Id_Centro;
     this.auth.getWarehouse(wareInfo).then((result) => {
       debugger;
       this.responseData = result;
+      this.sGlobal.Id_Centro=this.cedisInfo.Id_Centro;
       debugger;
       if (this.responseData.length > 0) {
         /* localStorage.setItem('vUserData', JSON.stringify(this.responseData));
@@ -105,17 +108,6 @@ export class WarehouseSelectPage {
     }, (err) => {
       console.log(err);
     });
-  }
-
-  selectWareHouse0(data) {
-    debugger;
-    let wareBodega: any = data;
-    this.sGlobal.Id_Almacen = wareBodega.Id_Almacen;
-    this.sGlobal.nombreAlmacen = wareBodega.Almacen;
-
-    this.userProfile.Id_Almacen = wareBodega.Id_Almacen;
-    this.userProfile.Almacen = wareBodega.Almacen;
-
   }
 
   selectWareHouse(data) {
@@ -145,14 +137,32 @@ export class WarehouseSelectPage {
     }
   }
 
-  goNext(): void {
+  goNext():void{
+    let message = this.validarCampos();
+    if(message.length > 0){
+      alert(message);
+      return;
+    }
+
     this.navCtrl.push(MainMenuPage, this.userProfile);
   }
 
-
-  logout() {
+  validarCampos(){
     debugger;
-    localStorage.clear();
-    setTimeout(() => this.goBack(), 1000);
+    var message = "";
+    if(this.sGlobal.Id_Centro == 0){
+      message = "Seleccione centro de distribución";
+      return message;
+    }
+    else if(this.sGlobal.Id_Almacen == 0){
+      message = "Seleccione almacén";
+      return message;
+    }
+    return message;
   }
+
+ logout(){
+      localStorage.clear();
+      setTimeout(() => this.goBack(), 1000);
+ }
 }

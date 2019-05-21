@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class GlobalServiceProvider {
 
-  Id_Almacen : number = 1006;
+  Id_Almacen : number = 0;
   Id_Impresora : number = 0;
   Id_Muelle : number = 0;
   Id_Centro : number = 0;
@@ -21,8 +21,13 @@ export class GlobalServiceProvider {
   nombreCentro: string;
   userName : string = "";
   apeNom: string = "";
+<<<<<<< HEAD
+  url : string = "http://172.16.32.15:8085/SGAA_WCF/";
+  urlPrint : string =  "http://172.16.32.16/SGAA_WCF_PRINT/";
+=======
   url : string = "";
   urlPrint : string =  "";
+>>>>>>> 263941f0cff8d14344eea86e098c19dd4ec72c2e
   usuario: string;
   produccion: string;
   tablaEst : string;
@@ -40,10 +45,10 @@ export class GlobalServiceProvider {
   constructor(public http: HttpClient) {
     this.userName = "ADMIN";
     this.apeNom = "Administrador";
-    this.Id_Almacen = 1006;
-    this.Id_Muelle = 1;
+    this.Id_Almacen = 0;
+    this.Id_Muelle = 0;
     this.Id_TerminalRF = 2;
-    this.Id_Centro = 1;
+    this.Id_Centro = 0;
     this.nombreEmpresa = "TESLA S.A";
     this.nombreImpresora = "INTERMEC";
     this.nombreAlmacen = "Almacen 369";
