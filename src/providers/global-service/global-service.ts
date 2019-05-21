@@ -21,13 +21,8 @@ export class GlobalServiceProvider {
   nombreCentro: string;
   userName : string = "";
   apeNom: string = "";
-<<<<<<< HEAD
-  url : string = "http://172.16.32.15:8085/SGAA_WCF/";
-  urlPrint : string =  "http://172.16.32.16/SGAA_WCF_PRINT/";
-=======
   url : string = "";
   urlPrint : string =  "";
->>>>>>> 263941f0cff8d14344eea86e098c19dd4ec72c2e
   usuario: string;
   produccion: string;
   tablaEst : string;

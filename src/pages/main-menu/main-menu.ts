@@ -29,15 +29,17 @@ import { WarehouseSelectPage } from '../warehouse-select/warehouse-select';
 })
 export class MainMenuPage {
   userProfile:any;
-  userProfileBack:any;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider) {
-    this.userProfile=this.navParams.data;
+  //userProfileBack:any;
 
   userProfileBack={"Almacen":"","ApeNom":"","page":"1"};
 
 
   vMainMenuPage: any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider) {
+    this.userProfile=this.navParams.data;
+
+  
   //vDatosRecibidos: any = [];
   }
  
