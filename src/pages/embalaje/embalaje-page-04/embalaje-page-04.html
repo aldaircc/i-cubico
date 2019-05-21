@@ -49,7 +49,7 @@
     </ion-grid>   
 
     <ion-row class="bgWhite">
-        <ion-card *ngFor="let objDetBultoEmbalaje of vEmbalajePage03">        
+        <ion-card *ngFor="let objDetBultoEmbalaje of vEmbalajePage03" (press)="getRegistrarIncidencia(objDetBultoEmbalaje)">        
             <ion-card-content>
                 <h5>{{objDetBultoEmbalaje.Producto}}</h5>
                 <h5><b>Cod. Producto: </b> {{objDetBultoEmbalaje.Codigo}} </h5>            
@@ -68,7 +68,7 @@
         </ion-col>
         <ion-col col-3 col-sm>
           <ion-item>
-              <ion-input type="Text" placeholder="0.00" [(ngModel)]="cantEmbalar"></ion-input>
+              <ion-input type="number" placeholder="0.00" [(ngModel)]="cantEmbalar"></ion-input>
           </ion-item>
         </ion-col>
         
@@ -88,7 +88,7 @@
           </button>
       </ion-buttons>
       <ion-buttons class="centroIzquierda">
-        <button ion-button icon-only (click)="goToEmbalajePage08()">
+        <button ion-button icon-only (click)="goToEmbalajePage06()">
             <ion-icon name="logo-dropbox" ></ion-icon>
         </button>
       </ion-buttons>    

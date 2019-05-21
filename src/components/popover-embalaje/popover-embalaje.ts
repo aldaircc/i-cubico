@@ -22,18 +22,18 @@ export class PopoverEmbalajeComponent {
   isDisplayCerrar : boolean = false;
 
   constructor(public viewCtrl: ViewController) {
-    let page = viewCtrl.data.page;
+    let page = viewCtrl.data;
     this.evaluateDisplayOptions(page);
   }
 
   evaluateDisplayOptions(value){
-    switch (value) {
+    switch (value.page) {
       case 11:
       this.isDisplayPrint = false;
       this.isDisplayIncidencia = false;      
         break;
       case 12:
-      this.isDisplayIncidencia  = true;
+      this.isDisplayIncidencia = value.has_Id_Tx;      
       this.isDisplayMasivo = true;
       this.isDisplayEtqMaster  = true;
       this.isDisplayPrint = true;

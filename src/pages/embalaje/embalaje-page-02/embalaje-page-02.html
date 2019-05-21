@@ -39,7 +39,7 @@
               <div class="textHeader">Usuario:</div>
             </ion-col>
             <ion-col col-8 col-sm>
-              <div class="valueHeader">{{NombreUsuario}}</div>
+              <div class="valueHeader">{{ sGlobal.apeNom}}</div>
             </ion-col>
           </ion-row>
           <ion-row align-items-center>
@@ -47,7 +47,7 @@
                 <div class="textHeader">Almacén:</div>
               </ion-col>
               <ion-col col-8 col-sm>
-                <div class="valueHeader">{{NombreAlmacen}}</div>
+                <div class="valueHeader">{{sGlobal.nombreAlmacen}}</div>
               </ion-col>
           </ion-row>         
       </ion-grid>
@@ -59,7 +59,7 @@
   
   <ion-row class="bgWhite">
     <ion-card *ngFor="let objEmbalaje of listAuxEmbalaje">            
-      <ion-card-content no-padding  (click)="goDetEmbalajePackingPage(objEmbalaje)">
+      <ion-card-content no-padding  (click)="goDetEmbalajePackingPage(objEmbalaje)" (press)="getRegistrarIncidencia(objEmbalaje)">          
         <ion-grid>
           <ion-row>
             <ion-col col-1 col-sm

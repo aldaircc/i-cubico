@@ -58,7 +58,7 @@
   </ion-row>
   
   <ion-row class="bgWhite">
-    <ion-card *ngFor="let objDetEmbalaje of listAuxDetEmbalaje">  
+    <ion-card *ngFor="let objDetEmbalaje of listAuxDetEmbalaje" (press)="getRegistrarIncidencia(objDetEmbalaje)">  
       <ion-grid>
         <ion-row>          
           <ion-col col-1 col-sm 

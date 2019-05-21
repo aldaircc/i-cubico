@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController, PopoverController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController, PopoverController,ToastController } from 'ionic-angular';
 import { HomePage } from '../../home/home';
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
 import { PopoverEmbalajeComponent } from '../../../components/popover-embalaje/popover-embalaje';
 import { EmbalajePage_03Page } from '../embalaje-page-03/embalaje-page-03';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
+import { IncidenciaPage } from '../../incidencia/incidencia';
 import { ImpresoraPage } from '../../impresora/impresora';
 
 /**
@@ -20,19 +21,16 @@ import { ImpresoraPage } from '../../impresora/impresora';
   templateUrl: 'embalaje-page-02.html',
 })
 export class EmbalajePage_02Page {
-
-  NombreUsuario: any;
-  NombreAlmacen: any;
+  
   listEmbalaje: any;
   listAuxEmbalaje: any;
   vEmbalajePage02:any = [];
   rowCount: any;
+  rowReciboSelect: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private alertCtrl: AlertController,public sEmbalaje: EmbalajeServiceProvider, 
-    public popoverCtrl: PopoverController,public sGlobal: GlobalServiceProvider,public modalCtrl: ModalController) {
-      this.NombreUsuario = this.sGlobal.userName;
-      this.NombreAlmacen = this.sGlobal.nombreAlmacen;
+    public toastCtrl: ToastController,private alertCtrl: AlertController,public sEmbalaje: EmbalajeServiceProvider, 
+    public popoverCtrl: PopoverController,public sGlobal: GlobalServiceProvider,public modalCtrl: ModalController) {            
   }
 
   ionViewDidLoad() {
@@ -58,6 +56,26 @@ export class EmbalajePage_02Page {
     });
   }
 
+  getRegistrarIncidencia(obj):void{  
+    debugger;
+    this.rowReciboSelect = obj;
+    this.showToast('Recibo: '+ obj.Id_Tx + ' seleccionado', 2000, 'bottom', true, 'x', true);
+  }
+
+  showToast(message, duration, position, showClose, closeText, dismissChange){
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: duration,
+      position: position,
+      showCloseButton: showClose,
+      closeButtonText: closeText,
+      dismissOnPageChange: dismissChange
+    });
+
+    toast.present();
+  }
+  
+
   filterItems(ev: any) {
     const val = ev.target.value;
     if (val && val.trim() != '') {
@@ -76,20 +94,51 @@ export class EmbalajePage_02Page {
   }
 
    presentPopover(myEvent){
-    let popover = this.popoverCtrl.create(PopoverEmbalajeComponent, {'page' : 12});
+    
+    let popover = this.popoverCtrl.create(PopoverEmbalajeComponent, {'page' : 12, 'has_Id_Tx': (this.rowReciboSelect != undefined) ? true : false });
     popover.present({
       ev: myEvent
     });
 
-    popover.onDidDismiss(popoverData =>{
-      debugger;
+    popover.onDidDismiss(popoverData =>{     
+     console.log(popoverData);
+      if(popoverData == 1){
+        this.showModalIncidencia(this.rowReciboSelect);
+      }
       if(popoverData == 4){
         this.showModalImpresora();
       }else if(popoverData == 5){
         this.goBackLoginPage();
       }
+      this.rowReciboSelect = null;
     });   
   }
+
+  showModalIncidencia(data) {
+    let obj = {
+      'Id_Tx': data.Id_Tx,
+      'FlagPausa': data.FlagPausa,
+      'Cliente': data.Cliente,
+      'Id_Cliente': data.Id_Cliente,
+      'Proveedor': data.Proveedor,
+      'Id_TipoMovimiento': data.Id_TipoMovimiento,
+      'Origen': 'RP01',
+      'id_Modulo': 1
+    };
+
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia': obj });
+
+    modalIncidencia.onDidDismiss(result => {
+      if (result.response == 200 && result.isChangePage == true) {
+        data.FlagPausa = !data.FlagPausa;
+        //this.goToReciboPage02(data);
+      }else{
+        //this.getDataRecepcion();
+      }
+    });
+    modalIncidencia.present();
+  }
+
 
   showModalImpresora(){
     let modalIncidencia = this.modalCtrl.create(ImpresoraPage);

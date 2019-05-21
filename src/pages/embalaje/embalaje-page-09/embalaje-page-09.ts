@@ -25,6 +25,7 @@ export class EmbalajePage_09Page {
   vEmbalajePage03: any;
   vEmbalajeTotalPage03: any;
   vNroBulto2: any;
+  vFlagTodoItems: false;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController,
@@ -35,12 +36,43 @@ export class EmbalajePage_09Page {
       this.vEmbalajePage03 = navParams.get('dataPageFiltro');                
       this.vEmbalajeTotalPage03 = navParams.get('dataTotalPage03');  
       this.vNroBulto2 = navParams.get('dataNroBulto2');            
+      this.vFlagTodoItems = navParams.get('flagTodoItems');    
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EmbalajePage_09Page');
   }
 
+  getDataBultosDespachoDetalle() {
+    this.ListarBultosDespachoDetalle(this.vEmbalajePage02.Id_Tx);
+  }
+
+  llenarNumeros(bulto){    
+    debugger;
+    let s =bulto + "";
+    while (s.length < 3)
+      this.vNroBultoCeros = s = "0" + s;
+    return this.vNroBultoCeros;
+  }
+
+  ListarBultosDespachoDetalle(strId_Tx) {
+    this.sEmbalaje.ListarBultosDespachoDetalle(strId_Tx).then((result) => {
+             
+    this.lstDetalleBultoXBulto = result;      
+    for (let index = 0; index < this.lstDetalleBultoXBulto.length; index++) {      
+      this.lstDetalleBultoXBulto[index].NroBulto = this.llenarNumeros(this.lstDetalleBultoXBulto[index].NroBulto);      
+    }      
+
+    if (this.lstDetalleBultoXBulto.length > 0) {
+
+    } else {
+      alert('No se encontrarón datos.');
+    }
+    }, (err) => {
+      console.log('E-Embalaje listar', err);
+    });
+  }
+  
   getDataDetalleBultoXBulto() {
     this.ListarDetalleBultoXBulto(this.vEmbalajePage02.Id_Tx,this.vNroBulto);
   }
@@ -49,6 +81,11 @@ export class EmbalajePage_09Page {
     this.sEmbalaje.ListarDetalleBultoXBulto(strId_Tx,intNroBulto).then((result) => {
       debugger;
       this.lstDetalleBultoXBulto = result;
+
+      for (let index = 0; index < this.lstDetalleBultoXBulto.length; index++) {      
+        this.lstDetalleBultoXBulto[index].NroBulto = this.llenarNumeros(this.lstDetalleBultoXBulto[index].NroBulto);      
+      }    
+
       if (this.lstDetalleBultoXBulto.length > 0) {
 
       } else {
@@ -120,6 +157,7 @@ export class EmbalajePage_09Page {
   }
 
   goToEmbalajePage04(){
+    
     debugger;
     this.navCtrl.push(EmbalajePage_04Page,{
       dataPageFiltro: this.vEmbalajePage03,                       
@@ -130,7 +168,12 @@ export class EmbalajePage_09Page {
   }
 
   ionViewWillEnter() {
-    this.getDataDetalleBultoXBulto();    
+    debugger;
+    if(this.vFlagTodoItems)
+      this.getDataBultosDespachoDetalle();
+    else
+      this.getDataDetalleBultoXBulto();    
+    
   }
 
 }

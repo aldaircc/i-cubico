@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController, PopoverController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController, PopoverController,ToastController } from 'ionic-angular';
 import { HomePage } from '../../home/home';
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
 import { PopoverEmbalajeComponent } from '../../../components/popover-embalaje/popover-embalaje';
 import { EmbalajePage_04Page } from '../embalaje-page-04/embalaje-page-04';
 import { EmbalajePage_08Page } from '../embalaje-page-08/embalaje-page-08';
 import { EmbalajePage_02Page } from '../embalaje-page-02/embalaje-page-02';
+import { IncidenciaPage } from '../../incidencia/incidencia';
 import { ImpresoraPage } from '../../impresora/impresora';
 
 /**
@@ -29,13 +30,17 @@ export class EmbalajePage_03Page {
   vNroBulto: any;
   vTipoCierre: any;
 
+  rowReciboSelect: any;
+
   rowCount: any;
   rowCountPendiente: number = 0;
   rowCountEnProceso: number = 0;
   rowCountCompleto: number = 0;
 
+  
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private alertCtrl: AlertController,
+    private alertCtrl: AlertController,public toastCtrl: ToastController,
     public sEmbalaje: EmbalajeServiceProvider, public popoverCtrl: PopoverController,public modalCtrl: ModalController) {
       this.vEmbalajePage02 = navParams.get('dataPage02');
   }
@@ -119,24 +124,72 @@ export class EmbalajePage_03Page {
       }   
     }
   }
+
+  getRegistrarIncidencia(obj):void{  
+    debugger;
+    this.rowReciboSelect = obj;
+    this.showToast('Recibo: '+ obj.Id_Tx + ' seleccionado', 2000, 'bottom', true, 'x', true);
+  }
+
+  showToast(message, duration, position, showClose, closeText, dismissChange){
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: duration,
+      position: position,
+      showCloseButton: showClose,
+      closeButtonText: closeText,
+      dismissOnPageChange: dismissChange
+    });
+
+    toast.present();
+  }
   
    presentPopover(myEvent){
-    let popover = this.popoverCtrl.create(PopoverEmbalajeComponent, {'page' : 12});
+    let popover = this.popoverCtrl.create(PopoverEmbalajeComponent, {'page' : 12, 'has_Id_Tx': (this.rowReciboSelect != undefined) ? true : false });
     popover.present({
       ev: myEvent
     });
 
     popover.onDidDismiss(popoverData =>{
       debugger;
+      if(popoverData == 1){
+        this.showModalIncidencia(this.rowReciboSelect);
+      }
       if(popoverData == 4){
         this.showModalImpresora();
       }else if(popoverData == 5){
         this.goBackLoginPage();
       }
+      this.rowReciboSelect = null;
     });   
   }
 
   
+  showModalIncidencia(data) {
+    let obj = {
+      'Id_Tx': data.Id_Tx,
+      'FlagPausa': data.FlagPausa,
+      'Cliente': data.Cliente,
+      'Id_Cliente': data.Id_Cliente,
+      'Proveedor': data.Proveedor,
+      'Id_TipoMovimiento': data.Id_TipoMovimiento,
+      'Origen': 'RP01',
+      'id_Modulo': 1
+    };
+
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia': obj });
+
+    modalIncidencia.onDidDismiss(result => {
+      if (result.response == 200 && result.isChangePage == true) {
+        data.FlagPausa = !data.FlagPausa;
+        //this.goToReciboPage02(data);
+      }else{
+        //this.getDataRecepcion();
+      }
+    });
+    modalIncidencia.present();
+  }
+
   showModalImpresora(){
     let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
     modalIncidencia.present();
@@ -165,7 +218,7 @@ export class EmbalajePage_03Page {
 
   ListarBultosDespacho(strId_Tx) {        
     this.sEmbalaje.ListarBultosDespacho(strId_Tx).then((result) => {         
-      this.listDetBultosEmbalaje = result;                 
+      this.listDetBultosEmbalaje = result;                            
     }, (err) => {
       console.log('E-Embalaje listar', err);
     });
@@ -173,7 +226,7 @@ export class EmbalajePage_03Page {
 
   validacionNroBulto(){     
     if(this.listDetBultosEmbalaje.length > 0)
-    this.vNroBulto = this.listDetBultosEmbalaje[this.listDetBultosEmbalaje.length - 1].NroBulto + 1
+    this.vNroBulto = this.listDetBultosEmbalaje[this.listDetBultosEmbalaje.length - 1].NroBulto
     else
       this.vNroBulto = 1
   }
@@ -190,8 +243,7 @@ export class EmbalajePage_03Page {
 
   goToEmbalajePage08(){               
     this.navCtrl.push(EmbalajePage_08Page,{
-      dataPage02: this.vEmbalajePage02,
-      totalBultos: this.rowCount
+      dataPage02: this.vEmbalajePage02      
     });
   }
 

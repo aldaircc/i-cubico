@@ -24,18 +24,17 @@ export class EmbalajePage_08Page {
 
   listImpresora: any;
   listDetBultosEmbalaje: any;  
-  vEmbalajeTotalPage02: any;
-  vTotalBultos: any;
+  vEmbalajeTotalPage02: any;  
   formatLabels : any = 'ETQ_Bultov2.txt';
   id_Impresora: any;  
   vNombreImpresora: any;
+  vUltimoBulto:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,    
     public sImpresora: ImpresoraServiceProvider,  public sEmbalaje: EmbalajeServiceProvider, public sEtq: EtiquetadoServiceProvider,
     public alertCtrl: AlertController,public sGlobal: GlobalServiceProvider) {       
       debugger;
-      this.vEmbalajeTotalPage02 = navParams.get('dataPage02');   
-      this.vTotalBultos = navParams.get('totalBultos');              
+      this.vEmbalajeTotalPage02 = navParams.get('dataPage02');         
       this.getDataDetBultosEmbalaje();                 
   }
 
@@ -79,6 +78,11 @@ export class EmbalajePage_08Page {
   ListarBultosDespacho(strId_Tx) {    
     this.sEmbalaje.ListarBultosDespacho(strId_Tx).then((result) => {           
       this.listDetBultosEmbalaje = result; 
+      debugger;
+      for (let index = 0; index < this.listDetBultosEmbalaje.length; index++) {
+        if(index == this.listDetBultosEmbalaje.length - 1)          
+          this.vUltimoBulto = this.listDetBultosEmbalaje[index].NroBulto;
+      }
                       
     }, (err) => {
       console.log('E-Embalaje listar', err);
@@ -114,7 +118,7 @@ export class EmbalajePage_08Page {
       listEtq.push({ "campo": "|FACTURA|", "valor" : "" });
       listEtq.push({ "campo": "|CODZONA|", "valor" : this.vEmbalajeTotalPage02.CodigoZona } );
       listEtq.push({ "campo": "|CLIENTE|", "valor" :  this.vEmbalajeTotalPage02.Cliente });
-      listEtq.push({ "campo": "|ALMACEN|", "valor" : "Almacén PT" });
+      listEtq.push({ "campo": "|ALMACEN|", "valor" : this.sGlobal.nombreAlmacen });
       listEtq.push({ "campo": "|ZONA|", "valor" :  this.vEmbalajeTotalPage02.Zona });
       listEtq.push({ "campo": "|DIRECCION|", "valor" : this.vEmbalajeTotalPage02.Direccion });
       listEtq.push({ "campo": "|PICKING|", "valor" : this.vEmbalajeTotalPage02.NumOrden });
