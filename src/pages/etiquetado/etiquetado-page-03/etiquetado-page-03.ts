@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { AlmacenajeServiceProvider } from '../../../providers/almacenaje-service/almacenaje-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { EtiquetadoPage_04Page } from '../etiquetado-page-04/etiquetado-page-04';
@@ -24,18 +24,25 @@ export class EtiquetadoPage_03Page {
   @ViewChild('inputUA', { read: ElementRef }) private inputUA:ElementRef;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
-    public sAlm: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
+    public sAlm: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider, public toastCtrl: ToastController) {
   }
 
   AddUA(): void{
     if(this.strUA.trim() == ""){
-      alert('Ingresar UA');
+      this.presentToast('Ingresar UA');
       this.selectAll(this.inputUA, 500);
+      
       return;
+    }else{
+      if(this.strUA.length < 12){
+        this.presentToast('El código de UA debe tener 12 dígitos.');
+        this.selectAll(this.inputUA, 500);
+        return;
+      }
     }
 
     if(this.existInList()){
-      alert('La UA ya se encuentra en la lista');
+      this.presentToast('La UA ya se encuentra en la lista');
       this.strUA = "";
       this.selectAll(this.inputUA, 500);
       return;
@@ -82,7 +89,7 @@ export class EtiquetadoPage_03Page {
           this.selectAll(this.inputUA, 500);
         }
       }else{
-        alert('UA no registrada');
+        this.presentToast('UA no registrada');
         this.strUA = "";
         this.selectAll(this.inputUA, 500);
       }
@@ -128,7 +135,7 @@ export class EtiquetadoPage_03Page {
 
       this.navCtrl.push(EtiquetadoPage_04Page, { 'listUA' : listUA });
     }else{
-      alert('No existen UAs registradas');
+      this.presentToast('No existen UAs registradas');
       this.selectAll(this.inputUA, 500);
     }
   }
@@ -138,6 +145,15 @@ export class EtiquetadoPage_03Page {
     this.strUA = "";
     this.rowCount = 0;
     this.selectAll(this.inputUA, 500);
+  }
+
+  presentToast(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 5000,
+      position: 'bottom'
+    });
+    toast.present();
   }
 
   selectAll(el: ElementRef, time){

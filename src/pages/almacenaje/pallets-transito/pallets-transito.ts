@@ -72,54 +72,23 @@ export class PalletsTransitoPage {
   validarCodigo(){
     if(this.codeBar){
       if(this.codeBar.trim()!=""){
-        debugger;
-        this.sAlmacenaje.getValidarUATransito(this.codeBar, this.vTransitoPage.Id_Ubicacion_Transito).then((result)=>{
+        if(this.codeBar.length==12){
           debugger;
-          this.listPalletTransito = result;
-          if(this.listPalletTransito.length == 0){
-            this.presentAlert("Pallet/UA' no registrada").then((resultAlert) => {
-              if (resultAlert) {
-                setTimeout(() => {
-                  this.txtCodPalletUaRef.setFocus();
-                  this.selectAll(this.txtCodPalletUa);
-                }, (500));
-              }
-            })
-          }else{
-            if(this.listAuxPalletTransito.length == 0){
-              for (var i = 0; i < this.listPalletTransito.length; i++) {
-                var obj = {
-                  'Cantidad': result[i].Cantidad,
-                  'CodigoProducto': result[i].CodigoProducto,
-                  'FechaEmision': result[i].FechaEmision,
-                  'FechaVencimiento': result[i].FechaVencimiento,
-                  'FlagAveriado': result[i].FlagAveriado,
-                  'FlagCuarentena': result[i].FlagCuarentena,
-                  'FlagDisponible': result[i].FlagDisponible,
-                  'Id_Condicion': result[i].Id_Condicion,
-                  'Id_Marca': result[i].Id_Marca,
-                  'Id_Producto': result[i].Id_Producto,
-                  'Id_UM': result[i].Id_UM,
-                  'LoteLab': result[i].LoteLab,
-                  'LotePT': result[i].LotePT,
-                  'NombreProducto': result[i].NombreProducto,
-                  'Serie': result[i].Serie,
-                  'UA_CodBarra': result[i].UA_CodBarra,
-                  'UM': result[i].UM
-                };
-                this.listAuxPalletTransito.push(obj);
-              }
-            }else{
-              //Validar que num de UA recibida no se encuentre en la lista Auxiliar
-              for (var i = 0; i < this.listPalletTransito.length; i++) {
-                var resultUA = false;
-                var UA = result[i].UA_CodBarra;
-                for (var j = 0; j < this.listAuxPalletTransito.length; j++) {
-                  if(UA == this.listAuxPalletTransito[j].UA_CodBarra){ //Si no se encuentra en la lista agregar elemento a la lista
-                    resultUA = true;
-                  }                  
+          this.sAlmacenaje.getValidarUATransito(this.codeBar, this.vTransitoPage.Id_Ubicacion_Transito).then((result)=>{
+            debugger;
+            this.listPalletTransito = result;
+            if(this.listPalletTransito.length == 0){
+              this.presentAlert("Pallet/UA' no registrada").then((resultAlert) => {
+                if (resultAlert) {
+                  setTimeout(() => {
+                    this.txtCodPalletUaRef.setFocus();
+                    this.selectAll(this.txtCodPalletUa);
+                  }, (500));
                 }
-                if(!resultUA){
+              })
+            }else{
+              if(this.listAuxPalletTransito.length == 0){
+                for (var i = 0; i < this.listPalletTransito.length; i++) {
                   var obj = {
                     'Cantidad': result[i].Cantidad,
                     'CodigoProducto': result[i].CodigoProducto,
@@ -141,21 +110,77 @@ export class PalletsTransitoPage {
                   };
                   this.listAuxPalletTransito.push(obj);
                 }
+              }else{
+                //Validar que num de UA recibida no se encuentre en la lista Auxiliar
+                for (var i = 0; i < this.listPalletTransito.length; i++) {
+                  var resultUA = false;
+                  var UA = result[i].UA_CodBarra;
+                  for (var j = 0; j < this.listAuxPalletTransito.length; j++) {
+                    if(UA == this.listAuxPalletTransito[j].UA_CodBarra){ //Si no se encuentra en la lista agregar elemento a la lista
+                      resultUA = true;
+                    }                  
+                  }
+                  if(!resultUA){
+                    var obj = {
+                      'Cantidad': result[i].Cantidad,
+                      'CodigoProducto': result[i].CodigoProducto,
+                      'FechaEmision': result[i].FechaEmision,
+                      'FechaVencimiento': result[i].FechaVencimiento,
+                      'FlagAveriado': result[i].FlagAveriado,
+                      'FlagCuarentena': result[i].FlagCuarentena,
+                      'FlagDisponible': result[i].FlagDisponible,
+                      'Id_Condicion': result[i].Id_Condicion,
+                      'Id_Marca': result[i].Id_Marca,
+                      'Id_Producto': result[i].Id_Producto,
+                      'Id_UM': result[i].Id_UM,
+                      'LoteLab': result[i].LoteLab,
+                      'LotePT': result[i].LotePT,
+                      'NombreProducto': result[i].NombreProducto,
+                      'Serie': result[i].Serie,
+                      'UA_CodBarra': result[i].UA_CodBarra,
+                      'UM': result[i].UM
+                    };
+                    this.listAuxPalletTransito.push(obj);
+                    
+                  }else{
+                    this.presentAlert("El código de Pallet/UA ya se encuentra en la lista.").then((resultAlert) => {
+                      if (resultAlert) {
+                        setTimeout(() => {
+                          this.codeBar = "";
+                          this.txtCodPalletUaRef.setFocus();
+                          this.selectAll(this.txtCodPalletUa);
+                        }, (500));
+                      }
+                    })
+                    // setTimeout(() => {
+                    //   this.codeBar = "";
+                    //   this.txtCodPalletUaRef.setFocus();
+                    //   this.selectAll(this.txtCodPalletUa);
+                    // }, (500));
+                  }
+                }
               }
-            }
-            this.rowCount = this.listAuxPalletTransito.length;
-
-            setTimeout(() => {
-              this.txtCodPalletUaRef.setFocus();
-              this.selectAll(this.txtCodPalletUa);
-            }, (500));
-          }                
-        },err=>{
-          console.log('E-getDataRutaPicking',err);
-        });        
+              this.rowCount = this.listAuxPalletTransito.length;
+  
+              setTimeout(() => {
+                this.codeBar = "";
+                this.txtCodPalletUaRef.setFocus();
+                this.selectAll(this.txtCodPalletUa);
+              }, (500));
+            }                
+          },err=>{
+            console.log('E-getDataRutaPicking',err);
+          }); 
+        }else{
+          this.presentToast("El código de Pallet/UA's debe tener 12 dígitos.");
+          setTimeout(() => {          
+            this.txtCodPalletUaRef.setFocus();
+            this.selectAll(this.txtCodPalletUa);
+          }, (500));
+        }               
       }else{
         this.presentToast("Ingrese código de Pallet/UA's");
-        setTimeout(() => {
+        setTimeout(() => {          
           this.txtCodPalletUaRef.setFocus();
           this.selectAll(this.txtCodPalletUa);
         }, (500));
@@ -238,7 +263,7 @@ export class PalletsTransitoPage {
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 2000,
+      duration: 5000,
       position: 'bottom'
     });  
     toast.present();
@@ -249,15 +274,23 @@ export class PalletsTransitoPage {
     nativeEl.select();
   }
 
-  goAlmacenajePalletUaPage(){
+  dataFromAlmacenajePalletUAPage : any;  
+  Selectedcallback = data => {
+    debugger;
+    this.dataFromAlmacenajePalletUAPage = data;
+    console.log('data received from other page', this.dataFromAlmacenajePalletUAPage);
+    this.vTransitoPage = this.dataFromAlmacenajePalletUAPage;
+    this.limpiar();
+    debugger;
+  };
 
+  goAlmacenajePalletUaPage(){
     var listUA = [];
       this.listAuxPalletTransito.forEach(el => {
         listUA.push(el.UA_CodBarra);
       });
       debugger;
-    this.vPalletTransitoPage = {
-      
+    this.vPalletTransitoPage = {      
       'Sector' : this.listUbicacion[0].Sector,
       'Fila' : this.listUbicacion[0].Fila,
       'Columna' : this.listUbicacion[0].Columna,
@@ -271,9 +304,22 @@ export class PalletsTransitoPage {
       'lst_UA' : listUA
     };
     this.navCtrl.push(AlmacenajePalletUaPage, {
-      data: this.vPalletTransitoPage
+      data: this.vPalletTransitoPage, palletTransito: this.Selectedcallback
     });
+    // this.navCtrl.push(EtiquetadoPage_02Page, {
+    //   producto: this.productSelectedcallback
+    // });
   }
+
+  // dataFromAlmacenajePalletUaPage : any;
+  // productSelectedcallback = data => {
+  //   this.dataFromAlmacenajePalletUaPage = data;
+  //   console.log('data received from other page', this.dataFromAlmacenajePalletUaPage);
+  //   debugger;
+  //   this.vEtq.Codigo = this.dataFromEtqPage02.Codigo;
+  //   this.listarUMxProducto(this.vEtq.Id_Producto);
+  //   //this.initPage();
+  // };
 
   goDetallePalletUaPage(data) {
     debugger;
@@ -292,32 +338,32 @@ export class PalletsTransitoPage {
     });
   }
 
-  goOtraUbicacionPage() {
-
-    
+  goOtraUbicacionPage() {    
     this.vPalletTransitoPage = {
       'Id_Marca' : this.listAuxPalletTransito[0].Id_Marca
     };
     this.navCtrl.push(OtraUbicacionPage, {
       data: this.vPalletTransitoPage
     });
-
     //this.navCtrl.push(OtraUbicacionPage);
   }
 
   ionViewDidLoad() {
     setTimeout(() => {
-      this.txtCodPalletUaRef.setFocus();
+      this.selectAll(this.txtCodPalletUa);
+      //this.txtCodPalletUaRef.setFocus();
     }, (500));
     this.navBar.backButtonClick = (e:UIEvent)=>{
       if(this.listAuxPalletTransito.length>0){
         this.presentAlertConfirm("Quedan " + this.rowCount + " registros por ubicar. ¿Está seguro de salir?").then((result) => {
           if (result) {
-            this.navCtrl.push(TransitoPage);
+            // this.navCtrl.push(TransitoPage);
+            this.navCtrl.pop();
           }
         })
       }else{
-        this.navCtrl.push(TransitoPage);
+        // this.navCtrl.push(TransitoPage);
+        this.navCtrl.pop();
       }             
      }
     console.log('ionViewDidLoad PalletsTransitoPage');

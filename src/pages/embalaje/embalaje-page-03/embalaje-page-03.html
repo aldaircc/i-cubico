@@ -12,53 +12,50 @@
         Recibo<
       </ion-title>
     </ion-navbar> -->
-    <ion-toolbar no-border-top>
+    <ion-toolbar no-padding no-margin color="primary">
       <ion-navbar>
         <ion-title>         
-          Detalle Pedido
+          DETALLE EMBALAJE
         </ion-title>
       </ion-navbar>
       <ion-buttons start>
         <button ion-button icon-only (click)="getDataDetBultosEmbalaje()">
-          <ion-icon name="refresh"></ion-icon>
+          <ion-icon name="sync"></ion-icon>
         </button>
         <button ion-button icon-only (click)="presentPopover($event)">
             <ion-icon name="more"></ion-icon>
           </button>
       </ion-buttons>
     </ion-toolbar>
-  </ion-header>
-  
-  
+    <ion-grid class="bgHeader statico">        
+        <ion-row align-items-center>
+          <ion-col col-4 col-sm class="bgHeader-col"> 
+            <div class="bgHeader-label">N° Orden:</div>
+          </ion-col>
+          <ion-col col-8 col-sm class="bgHeader-col">  
+            <div class="bgHeader-text">{{ vEmbalajePage02.NumOrden }}</div>
+          </ion-col>
+        </ion-row>
+        <ion-row align-items-center>
+            <ion-col col-4 col-sm class="bgHeader-col">
+              <div class="bgHeader-label">Cliente:</div>
+            </ion-col>
+            <ion-col col-8 col-sm class="bgHeader-col">
+              <div class="bgHeader-text">{{ vEmbalajePage02.Cliente }}</div>
+            </ion-col>
+        </ion-row>         
+    </ion-grid>  
+  </ion-header> 
   <ion-content>
-  
-    
-      <ion-grid class="bgHeader">        
-          <ion-row align-items-center>
-            <ion-col col-4 col-sm>
-              <div class="textHeader">N° Orden:</div>
-            </ion-col>
-            <ion-col col-8 col-sm>
-              <div class="valueHeader">{{ vEmbalajePage02.NumOrden }}</div>
-            </ion-col>
-          </ion-row>
-          <ion-row align-items-center>
-              <ion-col col-4 col-sm>
-                <div class="textHeader">Cliente:</div>
-              </ion-col>
-              <ion-col col-8 col-sm>
-                <div class="valueHeader">{{ vEmbalajePage02.Cliente }}</div>
-              </ion-col>
-          </ion-row>         
-      </ion-grid>     
 
   <!-- Start:  data-binding list -->
-  <ion-row class="bgLightBlue">
-      <ion-searchbar (ionInput)="filterItems($event)"></ion-searchbar>
+  <ion-row>
+      <ion-searchbar (ionInput)="filterItems($event)" placeholder="Buscar..."></ion-searchbar>
   </ion-row>
   
   <ion-row class="bgWhite">
-    <ion-card *ngFor="let objDetEmbalaje of listAuxDetEmbalaje" (press)="getRegistrarIncidencia(objDetEmbalaje)">  
+      <!-- <ion-card *ngFor="let objDetEmbalaje of listAuxDetEmbalaje" (press)="getRegistrarIncidencia(objDetEmbalaje)">   -->
+    <ion-card *ngFor="let objDetEmbalaje of listAuxDetEmbalaje">
       <ion-grid>
         <ion-row>          
           <ion-col col-1 col-sm 
@@ -89,27 +86,63 @@
   
   <ion-footer class="bgLightBlue">
     <ion-grid>
-        <ion-row>
+        <!-- <ion-row>
             <ion-col col-6 col-sm class="right">
                 <div class="fieldForm">Total:</div>
             </ion-col>
             <ion-col col-6 col-sm class="left">
                 <div class="fieldForm"> {{ rowCount }} fila(s) </div>
             </ion-col>
-        </ion-row>
-        <ion-row class="center">
-            <ion-col col-4 col-sm>
-                <button ion-button class="gris negro"> {{ rowCountPendiente }} </button>
+        </ion-row> -->
+        <ion-row no-padding no-margin>
+            <ion-col col-6 style="margin: 0px; padding: 1px">
+                <ion-label no-padding no-margin class="total-footer">
+                    Total ítems: {{rowCount}} fila(s)
+                </ion-label>
             </ion-col>
-            <ion-col col-4 col-sm>
-                <button ion-button class="amarillo negro"> {{ rowCountEnProceso }} </button>
+            <ion-col col-2 class="col-counts-footer">
+                <ion-label no-padding no-margin class="count-gris-footer box-counter">
+                    {{rowCountPendiente}}
+                </ion-label>
             </ion-col>
-            <ion-col col-4 col-sm>
-                <button ion-button class="verde negro"> {{ rowCountCompleto }} </button>
+            <ion-col ccol-2 class="col-counts-footer">
+                <ion-label no-padding no-margin class="count-yellow-footer box-counter">
+                    {{rowCountEnProceso}}
+                </ion-label>
+            </ion-col>
+            <ion-col col-2 class="col-counts-footer">
+                <ion-label no-padding no-margin class="count-green-footer box-counter">
+                    {{rowCountCompleto}}
+                </ion-label>
             </ion-col>
         </ion-row>
     </ion-grid>
-    <ion-toolbar color="primary">
+    <ion-grid style="margin: 0px; padding: 0px">
+        <ion-row>
+          <ion-col style="margin: 0px; padding: 0px;">
+            <button ion-button style=" margin: 0px; padding: 0px"  (click)="cerrarDespacho()" medium full>
+              <div>
+                <ion-icon name='md-checkmark'></ion-icon> <br>
+              </div>
+            </button>
+          </ion-col>
+          <ion-col style="margin: 0px; padding: 0px;">
+            <button ion-button style=" margin: 0px; padding: 0px" (click)="goToEmbalajePage08()" medium full>
+              <div>
+                <ion-icon name='md-print'></ion-icon> <br>
+              </div>
+            </button>
+          </ion-col>
+          <ion-col style="margin: 0px; padding: 0px; ">
+            <button ion-button style="margin: 0px; padding: 0px" (click)="goToEmbalajePage04()" medium full>
+              <div>
+                <ion-icon name='md-cube'></ion-icon> <br>
+              </div>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    <!-- <ion-toolbar color="primary">
       <ion-buttons left>
           <button ion-button icon-only  (click)="cerrarDespacho()">
               <ion-icon name="md-checkmark"></ion-icon>
@@ -125,5 +158,5 @@
             <ion-icon name="md-cube"></ion-icon>
         </button>
       </ion-buttons>
-    </ion-toolbar>
+    </ion-toolbar> -->
   </ion-footer>

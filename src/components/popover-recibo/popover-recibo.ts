@@ -14,9 +14,9 @@ import { ViewController } from 'ionic-angular';
 export class PopoverReciboComponent {
 
   text: string;
-  isDisplayEtq : boolean = false;
-  isDisplayIncidencia : boolean = false;
-  isDisplayPrint : boolean = false;
+  isDisplayEtq: boolean = false;
+  isDisplayIncidencia: boolean = false;
+  isDisplayPrint: boolean = false;
   isDisplaySesion: boolean = false;
   isDisplayUA: boolean = false;
 
@@ -25,7 +25,7 @@ export class PopoverReciboComponent {
     this.evaluateDisplayOptions(page);
   }
 
-  evaluateDisplayOptions(value){
+  evaluateDisplayOptions(value) {
     switch (value.page) {
       case 0:
         this.isDisplayPrint = true;
@@ -73,12 +73,18 @@ export class PopoverReciboComponent {
         this.isDisplayEtq = false;
         this.isDisplaySesion = true;
         break;
+      case 52:
+        this.isDisplayPrint = false;
+        this.isDisplayIncidencia = false;
+        this.isDisplayEtq = false;
+        this.isDisplaySesion = true;
+        break;
       default:
         break;
     }
   }
 
-  itemClick(item){
+  itemClick(item) {
     this.viewCtrl.dismiss(item);
   }
 

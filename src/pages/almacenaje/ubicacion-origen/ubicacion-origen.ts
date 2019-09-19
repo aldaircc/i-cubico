@@ -98,7 +98,7 @@ export class UbicacionOrigenPage {
         }else{
           this.presentAlert("¿Ubicación de origen ingresada no existe?").then((result) => {
             setTimeout(() => {
-              this.txtCodUbicacionRef.setFocus();
+              //this.txtCodUbicacionRef.setFocus();
               this.selectAll(this.txtCodUbicacion);
             }, (500));
           })
@@ -106,14 +106,14 @@ export class UbicacionOrigenPage {
       }else{
         this.presentToast("Ingrese código de ubicación");
         setTimeout(() => {
-          this.txtCodUbicacionRef.setFocus();
+          //this.txtCodUbicacionRef.setFocus();
           this.selectAll(this.txtCodUbicacion);
         }, (500));
       }
     }else{
       this.presentToast("Ingrese código de ubicación");
       setTimeout(() => {
-        this.txtCodUbicacionRef.setFocus();
+        //this.txtCodUbicacionRef.setFocus();
         this.selectAll(this.txtCodUbicacion);
       }, (500));
     }
@@ -180,14 +180,17 @@ export class UbicacionOrigenPage {
       'FechaVencimiento': this.listUbicacionOrigen[0].FechaVencimiento,
       'SectorD': this.vDatosRecibidos.SectorD,
     };
-    this.navCtrl.push(ReabastecimientoPickingPage, {
+    // PREGUNTAR SI VA PARA REABASTECIMIENTOPICKING O REABASTECIMIENTOALMACENAJE
+    //TAMBIEN UTILIZAR CALLBACK PARA ENVIAR LOS DATOS A UBICACIONORIGENPAGE
+    this.navCtrl.push(ReabastecimientoPickingPage, { 
       data: this.vUbicacionOrigenPage      
     });
   }
 
   ionViewDidLoad() {
     setTimeout(() => {
-      this.txtCodUbicacionRef.setFocus();
+      //this.txtCodUbicacionRef.setFocus();
+      this.selectAll(this.txtCodUbicacion);
     }, (500));
     console.log('ionViewDidLoad UbicacionOrigenPage');
   }

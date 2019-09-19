@@ -108,39 +108,73 @@ export class DetallePorProductoPage {
     })
   }
 
-  goPickingPorProductoPage() {
+  // goPickingPorProductoPage() {
+  //   debugger;
+  //   this.vDetalleXProducto = {
+  //     'idRutaPicking': this.vPickingXProducto.idRutaPicking,
+  //     'Id_Tx': this.vPickingXProducto.Id_Tx,
+  //     'NumOrden': this.vPickingXProducto.NumOrden,
+  //     'Cliente': this.vPickingXProducto.Cliente,
+  //     'Ciudad': this.vPickingXProducto.Ciudad,
+  //     'Zona': this.vPickingXProducto.Zona,
+  //     'FlagPausa': this.vPickingXProducto.FlagPausa,
+  //     'Id_Cuenta': this.vPickingXProducto.Id_Cuenta
+  //   };
+  //   this.navCtrl.push(PickingPorProductoPage, {
+  //     data: this.vDetalleXProducto
+  //   });
+  // }
+
+  goPickingPorProductoPage(){
     debugger;
-    this.vDetalleXProducto = {
-      'idRutaPicking': this.vPickingXProducto.idRutaPicking,
-      'Id_Tx': this.vPickingXProducto.Id_Tx,
-      'NumOrden': this.vPickingXProducto.NumOrden,
-      'Cliente': this.vPickingXProducto.Cliente,
-      'Ciudad': this.vPickingXProducto.Ciudad,
-      'Zona': this.vPickingXProducto.Zona,
-      'FlagPausa': this.vPickingXProducto.FlagPausa,
-      'Id_Cuenta': this.vPickingXProducto.Id_Cuenta
-    };
-    this.navCtrl.push(PickingPorProductoPage, {
-      data: this.vDetalleXProducto
-    });
+      this.navCtrl.pop().then(() => {
+        this.vDetalleXProducto = {
+          'idRutaPicking': this.vPickingXProducto.idRutaPicking,
+          'Id_Tx': this.vPickingXProducto.Id_Tx,
+          'NumOrden': this.vPickingXProducto.NumOrden,
+          'Cliente': this.vPickingXProducto.Cliente,
+          'Ciudad': this.vPickingXProducto.Ciudad,
+          'Zona': this.vPickingXProducto.Zona,
+          'FlagPausa': this.vPickingXProducto.FlagPausa,
+          'Id_Cuenta': this.vPickingXProducto.Id_Cuenta
+        };
+        this.navParams.get('detallePorProducto')(this.vDetalleXProducto);
+      });
   }
 
-  goDetallePickingPage() {
+  // goDetallePickingPage() {
+  //   debugger;
+  //   this.vDetalleXProducto = {
+  //     'Id_Page_Anterior2': this.vPickingXProducto.Id_Page_Anterior2,
+  //     'Id_Tx': this.vPickingXProducto.Id_Tx,
+  //     'NumOrden': this.vPickingXProducto.NumOrden,
+  //     'Cliente': this.vPickingXProducto.Cliente,
+  //     'Ciudad': this.vPickingXProducto.Ciudad,
+  //     'Zona': this.vPickingXProducto.Zona,
+  //     'idRutaPicking': this.vPickingXProducto.idRutaPicking,
+  //     'FlagPausa': this.vPickingXProducto.FlagPausa,
+  //     'Id_Cuenta': this.vPickingXProducto.Id_Cuenta
+  //   };
+  //   this.navCtrl.push(DetallePickingPage, {
+  //     data: this.vDetalleXProducto
+  //   });
+  // }
+
+  goDetallePickingPage(){
     debugger;
-    this.vDetalleXProducto = {
-      'Id_Page_Anterior2': this.vPickingXProducto.Id_Page_Anterior2,
-      'Id_Tx': this.vPickingXProducto.Id_Tx,
-      'NumOrden': this.vPickingXProducto.NumOrden,
-      'Cliente': this.vPickingXProducto.Cliente,
-      'Ciudad': this.vPickingXProducto.Ciudad,
-      'Zona': this.vPickingXProducto.Zona,
-      'idRutaPicking': this.vPickingXProducto.idRutaPicking,
-      'FlagPausa': this.vPickingXProducto.FlagPausa,
-      'Id_Cuenta': this.vPickingXProducto.Id_Cuenta
-    };
-    this.navCtrl.push(DetallePickingPage, {
-      data: this.vDetalleXProducto
-    });
+      this.navCtrl.pop().then(() => {
+        this.vDetalleXProducto = {
+          'Id_Tx': this.vPickingXProducto.Id_Tx,
+          'NumOrden': this.vPickingXProducto.NumOrden,
+          'Cliente': this.vPickingXProducto.Cliente,
+          'Ciudad': this.vPickingXProducto.Ciudad,
+          'Zona': this.vPickingXProducto.Zona,
+          'idRutaPicking': this.vPickingXProducto.idRutaPicking,
+          'FlagPausa': this.vPickingXProducto.FlagPausa,
+          'Id_Cuenta': this.vPickingXProducto.Id_Cuenta
+        };
+        this.navParams.get('detalleProducto')(this.vDetalleXProducto);
+      });
   }
 
 
@@ -199,13 +233,27 @@ export class DetallePorProductoPage {
       'id_Cliente': data.Id_Cuenta,
       'id_Modulo': 5
     };
-
+    this.sGlobal.resultIncidencia = false;
     let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia': obj });
     modalIncidencia.onDidDismiss(data => {
       debugger;
+      if (this.sGlobal.resultIncidencia) {
+        this.goOrdenesPicking();
+      }
       console.log("datos", data);
     });
     modalIncidencia.present();
+  }
+
+  goOrdenesPicking() {
+  
+    this.navCtrl.getViews().forEach(item => {
+      if (item.name == 'PickingPage') {
+        this.navCtrl.popTo(item);
+      }
+    });
+
+
   }
 
   showModalAdministrarUaPage(){
@@ -240,7 +288,13 @@ export class DetallePorProductoPage {
 
     popover.onDidDismiss(popoverData => {
       if (popoverData == 1) {
-        this.showModalIncidencia(this.vPickingXProducto);
+        debugger;
+        if(this.vPickingXProducto.Id_Estado != 2){          
+          this.showModalIncidencia(this.vPickingXProducto);
+        }else{
+          this.presentAlert("No puede registrar incidencia de una transacción que no fue iniciada"); 
+        }
+        // this.showModalIncidencia(this.vPickingXProducto);
       } else if (popoverData == 2) {
         debugger;
         this.showModalAdministrarUaPage();
@@ -266,16 +320,16 @@ export class DetallePorProductoPage {
   }
 
   ionViewDidLoad() {
-    this.navBar.backButtonClick = (e: UIEvent) => {
-      // todo something
+    // this.navBar.backButtonClick = (e: UIEvent) => {
+    //   // todo something
 
-      if (this.vPickingXProducto.Id_Page_Anterior == 5) {
-        this.goPickingPorProductoPage(); //ir a ordenes picking
-      }
-      if (this.vPickingXProducto.Id_Page_Anterior == 3) {
-        this.goDetallePickingPage(); //ir a detalle picking
-      }      
-    }
+    //   if (this.vPickingXProducto.Id_Page_Anterior == 5) {
+    //     this.goPickingPorProductoPage(); //ir a ordenes picking
+    //   }
+    //   if (this.vPickingXProducto.Id_Page_Anterior == 3) {
+    //     this.goDetallePickingPage(); //ir a detalle picking
+    //   }      
+    // }
     console.log('ionViewDidLoad DetallePorProductoPage');
   }
 }

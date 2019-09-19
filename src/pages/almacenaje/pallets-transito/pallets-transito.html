@@ -10,7 +10,7 @@
             <ion-row no-padding no-margin>
                 <ion-col col-10 no-padding no-margin>
                     <ion-navbar no-padding no-margin>
-                        <ion-label style="font-size: 15px; color: white; font-weight:bold;">PALLETS / UA´S EN TRÁNSITO</ion-label>
+                        <ion-label style="font-size: 14px; color: white; font-weight:bold;">PALLETS / UA´S EN TRÁNSITO</ion-label>
                     </ion-navbar>
                 </ion-col>
                 <ion-col no-margin no-padding col-2>
@@ -24,11 +24,11 @@
         </ion-grid>
     </ion-toolbar>
 
-    <ion-grid class="bgHeader statico" style="padding: 0px;">
-        <ion-row no-padding no-margin class="bgLightBlue" style="   padding-left: 10px; padding-top: 5px">
+    <ion-grid class="statico" style="padding: 0px;">
+        <ion-row no-padding no-margin style="padding-left: 10px; padding-top: 5px">
             <ion-col col-10 style="padding-left: 0px; padding-right: 0px; padding-top: 0px">
                 <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-                    <ion-input #txtCodPalletUa [(ngModel)]="codeBar" placeholder="Ingrese Pallets/UA´s" (keyup.enter)="validarCodigo()"
+                    <ion-input #txtCodPalletUa [(ngModel)]="codeBar" maxlength="12" placeholder="Ingrese Pallets/UA´s" (keyup.enter)="validarCodigo()"
                         type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
                 </ion-item>
             </ion-col>
@@ -112,15 +112,15 @@
     </ion-row>
 </ion-content>
 
-<ion-footer style="background: #054B77">
-    <ion-grid style="color: white">
+<ion-footer>
+    <ion-grid class="bgFooter">
         <ion-row no-padding no-margin>
-            <ion-col col-10 style="margin: 0px; padding-top: 0.9%; padding-bottom: 0.5%">
-                <ion-label no-padding no-margin style="font-weight:bold; color:white; margin: 0px; padding: 0px">
+            <ion-col col-10 class="bgFooter-col-text">
+                <ion-label no-padding no-margin class="bgFooter-label">
                     Total Ítems: {{rowCount}}
                 </ion-label>
             </ion-col>
-            <ion-col col-2 style="margin: 0px; padding: 0%; text-align: center">
+            <ion-col col-2 class="bgFooter-col">
                 <button no-margin no-padding ion-button icon-only clear (click)="ubicacion()" style="
             position: absolute;	top: 0;	bottom: 0; left: 0; right: 0;  margin: auto; background:none;">
                     <ion-icon name="locate" color="light"></ion-icon>

@@ -75,7 +75,7 @@ export class ParticionarUaPage {
         this.showModalImpresora();
       })
     } else {
-      this.presentAlertConfirm("¿Está seguro de imprimir la etiqueta?”.").then((resultAlert3) => {
+      this.presentAlertConfirm("¿Está seguro de imprimir la etiqueta?.").then((resultAlert3) => {
         if (resultAlert3) {
           //Imprimir y Particionar
           this.particionarUA_ImprimirUA();
@@ -109,11 +109,12 @@ export class ParticionarUaPage {
         listEtq.push({ "campo": "|ORDEN|", "valor": "" });
         listEtq.push({ "campo": "|USUARIO|", "valor": this.sGlobal.apeNom });
         listEtq.push({ "campo": "|COMPOSICION|", "valor": "" });
-        listEtq.push({ "campo": "|UM|", "valor": this.vDatosRecibidos.UM });
-        listEtq.push({ "campo": "|CANTIDAD|", "valor": parseFloat(this.vDatosRecibidos.CantidadTotal).toFixed(2) });
+        listEtq.push({ "campo": "|UMED|", "valor": this.vDatosRecibidos.UM });
+        listEtq.push({ "campo": "|CANTIDAD|", "valor": parseFloat(this.vDatosRecibidos.CantidadTotal) });
+        // listEtq.push({ "campo": "|CANTIDAD|", "valor": parseFloat(this.vDatosRecibidos.CantidadTotal).toFixed(2) });
         listEtq.push({ "campo": "|COPIAS|", "valor": "1" });
         listEtq.push({ "campo": "|CODBARRA|", "valor": this.NuevaUA });
-        listEtq.push({ "campo": "|PRODUCTO|", "valor": this.vDatosRecibidos.Descripcion });
+        listEtq.push({ "campo": "|PRODUCTO|", "valor": this.vDatosRecibidos.DescProducto });
         listEtq.push({ "campo": "|EAN14|", "valor": "" });
         listEtq.push({ "campo": "|EAN|", "valor": "" });
         listEtq.push({ "campo": "|VENCIMIENTO|", "valor": moment(fechaVencimientoPrint).format("MMM-YYYY") });
@@ -194,14 +195,25 @@ export class ParticionarUaPage {
     })
   }
 
-  goAdministrarUaPage() {
-    this.vParticionarPage = {
-      'page': 3,
-      'CodBar_UA': this.vDatosRecibidos.CodBar_UA
-    };
-    this.navCtrl.push(AdministrarUaPage, {
-      data: this.vParticionarPage
-    });
+  // goAdministrarUaPage() {
+  //   this.vParticionarPage = {
+  //     'page': 3,
+  //     'CodBar_UA': this.vDatosRecibidos.CodBar_UA
+  //   };
+  //   this.navCtrl.push(AdministrarUaPage, {
+  //     data: this.vParticionarPage
+  //   });
+  // }
+
+  goAdministrarUaPage(){
+    debugger;
+      this.navCtrl.pop().then(() => {
+        this.vParticionarPage = {
+          'page': 3,
+          'CodBar_UA': this.vDatosRecibidos.CodBar_UA
+        };
+        this.navParams.get('particionar')(this.vParticionarPage);
+      });
   }
 
   ionViewDidLoad() {

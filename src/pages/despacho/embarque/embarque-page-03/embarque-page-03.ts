@@ -27,6 +27,14 @@ export class EmbarquePage_03Page {
   totalBultos: number = 0;
   totalSaldo: number = 0;
 
+  rowCountPendiente: number = 0;
+  rowCountEnProceso: number = 0;
+  rowCountCompleto: number = 0;
+
+  listDetalleSinTrabajar: any = [];
+  listDetalleProceso: any = [];
+  listDetalleFinalizado: any = [];
+
   constructor(public app: App, public popoverCtrl: PopoverController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sGlobal: GlobalServiceProvider, public sDesp: DespachoServiceProvider) {
       this.vParameter = this.navParams.get('vParameter');
@@ -55,10 +63,30 @@ export class EmbarquePage_03Page {
     this.sDesp.listarDetalleXTransporte(strIdTransporte).then(result=>{
       this.listDetalle = result;
       this.rowCount = this.listDetalle.length;
+      if (this.rowCount > 0) {
+        this.listDetalleSinTrabajar = this.listDetalle.filter((item) => {
+          return (item.CantidadBultos == item.SaldoBultos);
+        });
+        this.listDetalleProceso = this.listDetalle.filter((item) => {
+          return (item.OperacionBultos > 0 && item.SaldoBultos > 0);
+        });
+        this.listDetalleFinalizado = this.listDetalle.filter((item) => {          
+          return (item.OperacionBultos > 0 && item.SaldoBultos == 0);
+        });
+        this.rowCountPendiente = this.listDetalleSinTrabajar.length;
+        this.rowCountEnProceso = this.listDetalleProceso.length;
+        this.rowCountCompleto = this.listDetalleFinalizado.length;
+      } else {
+        this.rowCountPendiente = this.rowCount;
+        this.rowCountEnProceso = this.rowCount;
+        this.rowCountCompleto = this.rowCount;
+      }
       this.totalBultos = this.listDetalle.reduce((sum, c) => sum + c.CantidadBultos, 0);
       this.totalSaldo = this.listDetalle.reduce((sum, c) => sum + c.SaldoBultos, 0);
     });
   }
+
+  
 
   presentConfirmDialog(title, message): Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -86,7 +114,9 @@ export class EmbarquePage_03Page {
   }
 
   cerrarEmbarque(): void{
-    this.presentConfirmDialog('¿Finalizar despacho?', 'Existen discrepancias. ¿Finalizar despacho?').then(result=>{
+    var mensaje = "";
+    this.totalSaldo == 0 ? mensaje = "¿Finalizar despacho?" : mensaje = "Existen discrepancias. ¿Finalizar despacho?";
+    this.presentConfirmDialog('Mensaje', mensaje).then(result=>{
       if(result == true){
         this.sDesp.cerrarEmbarque(this.vParameter.Id_Tra, ((this.totalSaldo == 0) ? 5 : 6) , this.sGlobal.userName).then(result=>{
           let res: any = result;

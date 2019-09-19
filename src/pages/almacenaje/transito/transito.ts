@@ -64,9 +64,9 @@ export class TransitoPage {
   }
 
   ionViewDidLoad() {
-    this.navBar.backButtonClick = (e:UIEvent)=>{
-      this.navCtrl.push(AlmacenajePage);       
-     }
+    // this.navBar.backButtonClick = (e:UIEvent)=>{
+    //   this.navCtrl.push(AlmacenajePage);             
+    //  }
     console.log('ionViewDidLoad TransitoPage');
   }
 }

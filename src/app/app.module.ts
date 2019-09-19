@@ -87,8 +87,8 @@ import { EmbarquePage_04Page } from '../pages/despacho/embarque/embarque-page-04
 import { EmbarquePage_05Page } from '../pages/despacho/embarque/embarque-page-05/embarque-page-05'; //Loque#369Dev
 import { ReciboBultoPage_01Page } from '../pages/despacho/recibo/recibo-bulto-page-01/recibo-bulto-page-01'; //Loque#369Dev
 import { EmbalajePage_02Page } from '../pages/embalaje/embalaje-page-02/embalaje-page-02';
-import { EmbalajeServiceProvider } from '../providers/embalaje-service/embalaje-service'; //Yus
-import { PopoverEmbalajeComponent } from '../components/popover-embalaje/popover-embalaje'; //Yus
+import { EmbalajeServiceProvider } from '../providers/embalaje-service/embalaje-service';//Yus
+import { PopoverEmbalajeComponent } from '../components/popover-embalaje/popover-embalaje';//Yus
 import { EmbalajePage_03Page } from '../pages/embalaje/embalaje-page-03/embalaje-page-03';//YUS
 import { EmbalajePage_04Page } from '../pages/embalaje/embalaje-page-04/embalaje-page-04';//YUS
 import { EmbalajePage_05Page } from '../pages/embalaje/embalaje-page-05/embalaje-page-05';//YUS
@@ -96,6 +96,7 @@ import { EmbalajePage_06Page } from '../pages/embalaje/embalaje-page-06/embalaje
 import { EmbalajePage_07Page } from '../pages/embalaje/embalaje-page-07/embalaje-page-07';//YUS
 import { EmbalajePage_08Page } from '../pages/embalaje/embalaje-page-08/embalaje-page-08';//YUS
 import { EmbalajePage_09Page } from '../pages/embalaje/embalaje-page-09/embalaje-page-09';//YUS
+import { BultoMasivoPage } from '../pages/embalaje/bulto-masivo/bulto-masivo';//aromero
 import { SelectAllDirective } from '../directives/select-all/select-all';
 import { AlmacenajeServiceProvider } from '../providers/almacenaje-service/almacenaje-service';
 import { InventarioServiceProvider } from '../providers/inventario-service/inventario-service';
@@ -103,6 +104,9 @@ import { DespachoServiceProvider } from '../providers/despacho-service/despacho-
 import { from } from 'rxjs/observable/from';
 import { ConfigurarPage } from '../pages/configurar/configurar';//YUS
 import { ParametrosPage } from '../pages/configurar/parametros/parametros';//YUS
+import { HTTP } from '@ionic-native/http/ngx';
+import { File } from '@ionic-native/file';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
 
 @NgModule({
   declarations: [
@@ -169,6 +173,7 @@ import { ParametrosPage } from '../pages/configurar/parametros/parametros';//YUS
     EmbalajePage_07Page, //YUS
     EmbalajePage_08Page, //YUS
     EmbalajePage_09Page, //YUS
+    BultoMasivoPage, //YUS
     SelectAllDirective, //Loque#369Dev
     TransitoPage, //aromero
     PalletsTransitoPage, //aromero
@@ -192,7 +197,7 @@ import { ParametrosPage } from '../pages/configurar/parametros/parametros';//YUS
     ConsultarEanPage, //aromero
     UbicacionOrigenPage, //aromero
     ConfigurarPage, //YUS    
-    ParametrosPage //YUS    
+    ParametrosPage //YUS  
   ],
   imports: [
     BrowserModule,HttpModule,HttpClientModule,
@@ -243,6 +248,7 @@ import { ParametrosPage } from '../pages/configurar/parametros/parametros';//YUS
     EmbarquePage_03Page, //Loque#369Dev
     EmbarquePage_04Page, //Loque#369Dev
     EmbarquePage_05Page, //Loque#369Dev
+    BultoMasivoPage, //aromero
     ReciboBultoPage_01Page,//Loque#369Dev
     PickingPage,
     RutaPickingPage,
@@ -287,11 +293,14 @@ import { ParametrosPage } from '../pages/configurar/parametros/parametros';//YUS
     ConsultarEanPage, //aromero
     UbicacionOrigenPage, //aromero
     ConfigurarPage, //YUS    
-    ParametrosPage //YUS    
+    ParametrosPage//YUS   
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    HTTP,
+    File,
+    AndroidPermissions,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService, //Loque#369Dev
     ReciboServiceProvider, //Loque#369Dev
@@ -304,6 +313,7 @@ import { ParametrosPage } from '../pages/configurar/parametros/parametros';//YUS
     AlmacenajeServiceProvider,
     InventarioServiceProvider,
     DespachoServiceProvider //Loque#369Dev
+    
   ]
 })
 export class AppModule {}

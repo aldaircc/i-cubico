@@ -25,13 +25,13 @@
             <ion-label style="font-size: 15px; color: white; font-weight:bold;">PARTICIONAR UA</ion-label>
           </ion-navbar>
         </ion-col>
-        <ion-col no-margin no-padding col-2>
+        <!-- <ion-col no-margin no-padding col-2>
           <ion-buttons start style="margin-top: 12px; text-align: center">
             <button no-margin no-padding ion-button icon-only (click)="presentPopover($event)">
               <ion-icon name="document"></ion-icon>
             </button>
           </ion-buttons>
-        </ion-col>
+        </ion-col> -->
       </ion-row>
     </ion-grid>
   </ion-toolbar>
@@ -39,7 +39,7 @@
 
 <ion-content>
   <ion-grid style="padding: 0px;">
-    <ion-row no-padding style="margin-top: 15px; margin-bottom: 10px; ">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
       <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
           Código:
@@ -51,7 +51,7 @@
         </ion-label>
       </ion-col>
     </ion-row>
-    <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; ">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
       <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
           U.M.:
@@ -64,7 +64,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; margin-left: 10px; height: 50px; margin-right: 10px; background: #F2F5A9 ">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; margin-left: 10px; height: 50px; margin-right: 10px; background: #F2F5A9 ">
       <ion-col col-12 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="text-align: center; padding-left: 0px; font-weight:bold; margin-top: 0px; margin-bottom: 0px;">
           <h5>
@@ -76,19 +76,19 @@
   </ion-grid>
 
   <ion-grid style="padding: 0px;">
-    <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; ">
-      <ion-col col-2 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
+      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
           Lote:
         </ion-label>
       </ion-col>
-      <ion-col col-10 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+      <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
           {{ vDatosRecibidos.Lote }}
         </ion-label>
       </ion-col>
     </ion-row>
-    <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; ">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
       <ion-col col-2 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
           F.E:
@@ -110,10 +110,10 @@
         </ion-label>
       </ion-col>
     </ion-row>
-    <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; ">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
       <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-          Cant. UA:
+          Cantidad <br> UA:
         </ion-label>
       </ion-col>
       <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
@@ -132,39 +132,38 @@
         </ion-label>
       </ion-col>
     </ion-row>
-
-    <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; ">
-      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
+      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-          Cantidad Total:
+          Cantidad <br>Total:
         </ion-label>
       </ion-col>
-      <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+      <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
           {{ vDatosRecibidos.CantidadTotal }}
         </ion-label>
       </ion-col>
     </ion-row>
-    <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; ">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
       <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 12px; margin-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 0px; margin-bottom: 0px;">
           Impresora:
         </ion-label>
       </ion-col>
       <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 12px; margin-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 0px; margin-bottom: 0px;">
           {{ NombreImpresora }}
         </ion-label>
       </ion-col>
     </ion-row>
-    <ion-row no-padding style="margin-top: 5px; margin-bottom:10px; ">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
       <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 0px; margin-bottom: 0px;">
           Nueva UA:
         </ion-label>
       </ion-col>
       <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 12px; margin-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 0px; margin-bottom: 0px;">
           {{ NuevaUA }}
         </ion-label>
       </ion-col>

@@ -5,5 +5,34 @@ page-reubicacion {
         left: 0;
         right: 0;
         z-index: 9999;
+        padding: 0px !important;
     }
+
+    .colorItem{
+        background-color: #d8e2f4 !important;        
+        border-bottom:solid!important;
+        border-bottom-color:#C3C2C9!important; 
+    }
+
+    .colorInput{
+        background-color: #d8e2f4 !important;  
+        outline: none;
+        background-color: #dfe;
+        border: 0;
+    }
+
+    .grid {
+        padding-top: 5px;
+        padding-right: 5px;
+        padding-bottom: 5px;
+        padding-left: 5px
+    }
+
+    // .item-md.item-block .item-inner {
+    //     padding-right: 0px !important;
+    //     border-bottom: none !important;
+    // }
+    // .no-padding-left {
+    //     padding-left: 0px !important;
+    // }
 }

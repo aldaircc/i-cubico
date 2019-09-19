@@ -93,9 +93,11 @@ export class IncidenciaPage {
       let res : any = result;
       if(res.errNumber == 0){
         let content = (this.flagPausa == true) ? "Continuar transacción":"Transacción detenida";
-        alert(content);
+        this.sGlobal.resultIncidencia = true;
+        alert(content);        
       }else{
-        alert(res.message);
+        this.sGlobal.resultIncidencia = false;
+        alert(res.message);        
       }
     });
   }
@@ -107,9 +109,10 @@ export class IncidenciaPage {
       let content = (this.flagPausa == true) ? "Continuar transacción":"Transacción detenida";
       alert(content);
       let data = { 'response': 200, 'isChangePage': this.flagPausa };
+      this.sGlobal.resultIncidencia = true;
       this.dismiss(data);
-
     }else{
+      this.sGlobal.resultIncidencia = false;
       alert(res.message);
     }
     });

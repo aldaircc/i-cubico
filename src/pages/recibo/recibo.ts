@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, PopoverController, App, ToastController, AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, Platform, Navbar, NavParams, ModalController, PopoverController, App, ToastController, AlertController, ViewController } from 'ionic-angular';
 import { ReciboServiceProvider } from '../../providers/recibo-service/recibo-service';
 import { ReciboPage_02Page } from './recibo-page-02/recibo-page-02';
 import { IncidenciaPage } from '../incidencia/incidencia';
 import { GlobalServiceProvider } from '../../providers/global-service/global-service';
 import { PopoverReciboComponent } from '../../components/popover-recibo/popover-recibo';
 import { ImpresoraPage } from '../impresora/impresora';
+import { MainMenuPage } from '../main-menu/main-menu';
 import { HomePage } from '../home/home';
 
 /**
@@ -22,6 +23,7 @@ import { HomePage } from '../home/home';
 })
 export class ReciboPage {
 
+  @ViewChild(Navbar) navBar: Navbar;
   userDetail: any;
   listAuxRecepcion: any;
   listRecepcion: any;
@@ -35,11 +37,13 @@ export class ReciboPage {
   countConfirm: number = 0;
   countProcess: number = 0;
 
-  constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController,
-    public toastCtrl: ToastController, public sRecibo: ReciboServiceProvider, public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider,
-    public alertCtrl: AlertController) { }
+  //userProfile = { "Almacen": "", "ApeNom": "", "page": "1" };
 
-  showToast(message, duration, position, showClose, closeText, dismissChange){
+  constructor(public app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController,
+    public toastCtrl: ToastController, public sRecibo: ReciboServiceProvider, public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider,
+    public alertCtrl: AlertController, public viewCtrl: ViewController) { }
+
+  showToast(message, duration, position, showClose, closeText, dismissChange) {
     let toast = this.toastCtrl.create({
       message: message,
       duration: duration,
@@ -52,18 +56,31 @@ export class ReciboPage {
     toast.present();
   }
 
-  presentPopover(myEvent){
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 11, 'has_Id_Tx': (this.rowReciboSelect != undefined) ? true : false });
+  presentPopover(myEvent) {
+    debugger;
+    var estadoOrden = false;
+    if (this.rowReciboSelect) {
+      if (this.rowReciboSelect.Id_Estado == 2) {
+        estadoOrden = false;
+      } else {
+        estadoOrden = true;
+      }
+    } else {
+      estadoOrden = false;
+    }
+
+    // let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 11, 'has_Id_Tx': (this.rowReciboSelect != undefined) ? true : false });
+    let popover = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 11, 'has_Id_Tx': estadoOrden });
     popover.present({
       ev: myEvent
     });
 
-    popover.onDidDismiss(popoverData =>{
-      if(popoverData == 2){
+    popover.onDidDismiss(popoverData => {
+      if (popoverData == 2) {
         this.showModalIncidencia(this.rowReciboSelect);
-      }else if(popoverData == 3){
+      } else if (popoverData == 3) {
         this.showModalImpresora();
-      }else if(popoverData == 4){
+      } else if (popoverData == 4) {
         this.presentAlertConfirm("¿Estás seguro que deseas cerrar sesión?").then((result) => {
           if (result) {
             this.navCtrl.pop();
@@ -71,7 +88,7 @@ export class ReciboPage {
             nav.setRoot(HomePage);
           }
         })
-        
+
       }
       this.rowReciboSelect = null;
     });
@@ -103,7 +120,7 @@ export class ReciboPage {
     })
   }
 
-  showModalImpresora(){
+  showModalImpresora() {
     let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
     modalIncidencia.present();
   }
@@ -232,9 +249,9 @@ export class ReciboPage {
     this.getRecepcionesXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen, this.sGlobal.Id_Muelle);
   }
 
-  getReciboRow(obj):void{
+  getReciboRow(obj): void {
     this.rowReciboSelect = obj;
-    this.showToast('Recibo: '+ obj.Id_Tx + ' seleccionado', 2000, 'bottom', true, 'x', true);
+    this.showToast('Recibo: ' + obj.Id_Tx + ' seleccionado', 2000, 'bottom', true, 'x', true);
   }
 
   showModalIncidencia(data) {
@@ -255,7 +272,7 @@ export class ReciboPage {
       if (result.response == 200 && result.isChangePage == true) {
         data.FlagPausa = !data.FlagPausa;
         this.goToReciboPage02(data);
-      }else{
+      } else {
         this.getDataRecepcion();
       }
     });
@@ -264,5 +281,24 @@ export class ReciboPage {
 
   ionViewWillEnter() {
     this.getDataRecepcion();
+  }
+
+  ionViewDidLoad() {
+    // this.navBar.backButtonClick = (e: UIEvent) => {
+    //   debugger;
+    //   this.userProfile.Almacen = this.sGlobal.nombreAlmacen;
+    //   this.userProfile.ApeNom = this.sGlobal.apeNom;
+    //   this.navCtrl.push(MainMenuPage, this.userProfile);
+    // }
+    // this.platform.registerBackButtonAction(() => {
+    //   let nav = this.app.getActiveNavs()[0];
+    //   let activeView = nav.getActive();       
+    //   if (activeView.name === 'ReciboPage') {
+    //     this.userProfile.Almacen = this.sGlobal.nombreAlmacen;
+    //     this.userProfile.ApeNom = this.sGlobal.apeNom;
+    //     this.navCtrl.push(MainMenuPage, this.userProfile);
+    //   }
+    // });
+    console.log('ionViewDidLoad ReciboPage');
   }
 }

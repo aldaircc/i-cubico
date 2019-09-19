@@ -140,6 +140,8 @@ export class EmbalajePage_08Page {
       if (message.errNumber == -1){
         //Toast.makeText(this, "Print"+ message.message, Toast.LENGTH_SHORT).show();
         alert(message.mensaje);
+      }else{
+        alert("Impresión exitosa.");
       }
     });    
   }

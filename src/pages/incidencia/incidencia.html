@@ -5,9 +5,9 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar no-padding no-margin color="primary">
   <ion-navbar>
-      <ion-title>Registrar incidencia</ion-title>
+      <ion-title>REGISTRAR INCIDENCIA</ion-title>
     </ion-navbar>
 
   <ion-buttons start>
@@ -56,8 +56,19 @@
     </ion-grid>
 
 </ion-content>
-<ion-footer>
+
+<ion-footer style="background: #054B77">
+    <ion-row no-padding style="margin-top: 2px; margin-bottom: 2px; text-align: center">
+      <ion-col col-12 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <button ion-button icon-start (click)="btnProcesar()">
+            {{ (flagPausa == true) ? 'Continuar' : 'Detener' }}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-footer>
+
+<!-- <ion-footer>
   <ion-toolbar>
     <button ion-button full (click)="btnProcesar()">{{ (flagPausa == true) ? 'Continuar' : 'Detener' }}</button>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

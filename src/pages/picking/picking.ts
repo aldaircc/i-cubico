@@ -44,9 +44,9 @@ export class PickingPage {
 
   rowPickingSelect: any;
 
-  userProfile={"Almacen":"","ApeNom":"","page":"1"};
+  // userProfile={"Almacen":"","ApeNom":"","page":"1"};
   //userProfile2:any;
-  
+
 
   // @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
   // @ViewChild('popoverText', { read: ElementRef }) text: ElementRef;
@@ -112,8 +112,13 @@ export class PickingPage {
 
 
   habilitaIncidencia(obj): void {
-    this.rowPickingSelect = obj;
-    this.presentToast('Se habilito la opción Registrar incidencias');
+    if (obj.Id_Estado == 2) {
+      this.rowPickingSelect = undefined;
+      this.presentToast('No puede registrar incidencia de una transacción que no fue iniciada.');
+    } else {
+      this.rowPickingSelect = obj;
+      this.presentToast('Se habilito la opción Registrar incidencias.');
+    }
   }
 
   getDataOrdenes() {
@@ -213,30 +218,43 @@ export class PickingPage {
     });
   }
 
+  // dataFromRutaPickingPage: any;
+  // rutaPickingCallback = data => {
+  //   debugger;
+  //   this.dataFromRutaPickingPage = data;
+  //   console.log('data received from other page', this.dataFromRutaPickingPage);
+  //   debugger;    
+  //   this.vPickingPage = this.dataFromRutaPickingPage;
+  //   //this.getDataOrdenes();
+  // };
+
   goRutaPickingPage(data) {
     this.vPickingPage = {
-      'Id_Page_Anterior': 1,
+      //'Id_Page_Anterior': 1,
       'Id_Tx': data.Id_Tx,
       'NumOrden': data.NumOrden,
       'Cliente': data.Cliente,
       'Id_Cuenta': data.Id_Cuenta,
       'Ciudad': data.Ciudad,
       'Zona': data.Zona,
+      'Id_Estado': data.Id_Estado,
       'FlagPausa': data.FlagPausa
     };
     this.navCtrl.push(RutaPickingPage, {
       data: this.vPickingPage
+      // data: this.vPickingPage, rutaPicking: this.rutaPickingCallback
     });
   }
 
   goDetallePickingPage(data) {
     debugger;
     this.vPickingPage = {
-      'Id_Page_Anterior': 1,
+      //'Id_Page_Anterior': 1,
       'Id_Tx': data.Id_Tx,
       'NumOrden': data.NumOrden,
       'Id_Cuenta': data.Id_Cuenta,
       'Cliente': data.Cliente,
+      'Id_Estado': data.Id_Estado,
       'FlagPausa': data.FlagPausa
     };
     this.navCtrl.push(DetallePickingPage, {
@@ -278,10 +296,11 @@ export class PickingPage {
       'id_Cliente': data.Id_Cuenta,
       'id_Modulo': 5
     };
-
+    this.sGlobal.resultIncidencia = false;
     let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia': obj });
     modalIncidencia.onDidDismiss(data => {
       debugger;
+      this.getDataOrdenes();
       console.log("datos", data);
     });
     modalIncidencia.present();
@@ -290,7 +309,7 @@ export class PickingPage {
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 2000,
+      duration: 5000,
       position: 'bottom'
     });
     toast.present();
@@ -319,10 +338,12 @@ export class PickingPage {
       } else if (popoverData == 3) {
         debugger;
         this.goConsultarUbicacionPage();
-      } else if (popoverData == 4) {
-        debugger;
-        this.goMenu();
-      } else if (popoverData == 5) {
+      }
+      // else if (popoverData == 4) {
+      //   debugger;
+      //   this.goMenu();
+      // } 
+      else if (popoverData == 4) {
         debugger;
         this.presentAlertConfirm("¿Estás seguro que deseas cerrar sesión?").then((result) => {
           if (result) {
@@ -362,18 +383,22 @@ export class PickingPage {
   }
 
   ionViewDidLoad() {
-    this.navBar.backButtonClick = (e: UIEvent) => {
-      // todo something
-      debugger;
+    // this.navBar.backButtonClick = (e: UIEvent) => {
+    //   // todo something
+    //   debugger;
 
 
-      this.userProfile.Almacen = this.sGlobal.nombreAlmacen;
-      this.userProfile.ApeNom = this.sGlobal.apeNom;      
-      this.navCtrl.push(MainMenuPage, this.userProfile);
+    //   this.userProfile.Almacen = this.sGlobal.nombreAlmacen;
+    //   this.userProfile.ApeNom = this.sGlobal.apeNom;      
+    //   this.navCtrl.push(MainMenuPage, this.userProfile);
 
-      
-      //this.navCtrl.push(MainMenuPage);
-    }
+
+    //   //this.navCtrl.push(MainMenuPage);
+    // }
     console.log('ionViewDidLoad PickingPage');
+  }
+
+  ionViewWillEnter() {
+    this.getDataOrdenes();
   }
 }

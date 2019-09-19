@@ -18,7 +18,7 @@ import { GlobalServiceProvider } from '../../providers/global-service/global-ser
 export class AlmacenajePage {
     @ViewChild(Navbar) navBar: Navbar;
 
-    userProfile={"Almacen":"","ApeNom":"","page":"1"};
+    //userProfile={"Almacen":"","ApeNom":"","page":"1"};
 
     constructor(public navCtrl: NavController, public auth: AuthService, public toastCtrl: ToastController,
         public sGlobal: GlobalServiceProvider) {
@@ -45,12 +45,12 @@ export class AlmacenajePage {
     }
 
     ionViewDidLoad() {
-        this.navBar.backButtonClick = (e: UIEvent) => {
-            this.userProfile.Almacen = this.sGlobal.nombreAlmacen;
-            this.userProfile.ApeNom = this.sGlobal.apeNom;
-            this.navCtrl.push(MainMenuPage, this.userProfile);
-            //this.navCtrl.push(MainMenuPage);
-        }
+        // this.navBar.backButtonClick = (e: UIEvent) => {
+        //     this.userProfile.Almacen = this.sGlobal.nombreAlmacen;
+        //     this.userProfile.ApeNom = this.sGlobal.apeNom;
+        //     this.navCtrl.push(MainMenuPage, this.userProfile);
+        //     //this.navCtrl.push(MainMenuPage);
+        // }
         console.log('ionViewDidLoad PickingPage');
     }
 }

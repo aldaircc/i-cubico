@@ -26,38 +26,38 @@
             </ion-row>
         </ion-grid>
     </ion-toolbar>
+
+    <ion-grid class="bgHeader statico">
+            <ion-row no-padding no-margin>
+                <ion-col col-3 class="bgHeader-col">
+                    <ion-label class="bgHeader-label-button">
+                        N° Ruta:
+                    </ion-label>
+                </ion-col>
+                <ion-col col-5 class="bgHeader-col">
+                    <ion-label class="bgHeader-text-button">
+                        {{ contador }} / {{ total }}
+                    </ion-label>
+                </ion-col>
+                <ion-col col-4 class="bgHeader-col">
+                    <button ion-button (click)="BackRutaPicking()" [disabled]="!Backisenabled " class="bgHeader-button"
+                        icon-start>
+                        <ion-icon name='arrow-dropleft'></ion-icon>
+                    </button>
+    
+                    <button ion-button (click)="NextRutaPicking()" [disabled]="Nextisenabled" class="bgHeader-button"
+                        icon-end>
+                        <ion-icon name='arrow-dropright'></ion-icon>
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
 </ion-header>
 
 
 
 <ion-content [ngClass]="{bgWhite: (!isBgRed && !isBgYellow && !isBgGreen), bgRed:(isBgRed), bgYellow:(isBgYellow), bgGreen:(isBgGreen), bgWhite:(isbgWhite)}">
-
-    <ion-grid style="padding: 0px;">
-        <ion-row no-padding no-margin style="background: #00BFFF">
-            <ion-col col-3 style="padding-left: 2px; padding-right: 2px">
-                <ion-label style="padding-left: 10px; margin-top: 15px; margin-bottom: 1px; color: yellow; font-weight:bold ">
-                    N° Ruta:
-                </ion-label>
-            </ion-col>
-            <ion-col col-5 style="padding-left: 2px; padding-right: 2px">
-                <ion-label style="padding-left: 10px; margin-top: 15px; margin-bottom: 1px; color: white; font-weight:bold;  ">
-                    {{ contador }} / {{ total }}
-                </ion-label>
-            </ion-col>
-            <ion-col col-4 style="padding-left: 2px; padding-right: 2px">
-                <button ion-button (click)="BackRutaPicking()" [disabled]="!Backisenabled " style="background: #2ECCFA"
-                    icon-start>
-                    <ion-icon name='arrow-dropleft'></ion-icon>
-                </button>
-
-                <button ion-button (click)="NextRutaPicking()" [disabled]="Nextisenabled" style="background: #2ECCFA"
-                    icon-end>
-                    <ion-icon name='arrow-dropright'></ion-icon>
-                </button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-
+ 
     <ion-grid style="padding: 0px;">
         <ion-row no-padding style="margin-top: 15px; margin-bottom: 15px;">
             <!-- <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
@@ -131,22 +131,22 @@
         </ion-row>
         <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;">
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 10px; margin-bottom: 0px;">
                     Cajas:
                 </ion-label>
             </ion-col>
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 10px; margin-bottom: 0px; color:dimgray">
                     {{pickingProducto.Caja | number:'1.2-2'}}
                 </ion-label>
             </ion-col>
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
                 <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                    Saldo:
+                    Saldo <br/> por caja:
                 </ion-label>
             </ion-col>
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
+                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 10px; margin-bottom: 0px; color:dimgray">
                     {{pickingProducto.SaldoCaja | number:'1.2-2'}}
                 </ion-label>
             </ion-col>
@@ -184,7 +184,7 @@
     </ion-grid>
 </ion-content>
 
-<ion-footer>
+<!-- <ion-footer>
     <ion-grid style="padding-left: 0px; padding-right: 0px; padding-top: 0px; padding-bottom: 5px;">
         <ion-row no-padding no-margin>
             <ion-col col-4 style="margin: 0px; padding: 1px; ">
@@ -218,7 +218,7 @@
             <ion-col col-6 style="margin: 0px; padding: 1px; ">
                 <button ion-button (click)="goReabastecimientoPage()" large full style="background:  #A4A4A4">
                     <div>
-                        <ion-icon name='cube'></ion-icon> <br>
+                        <ion-icon name='logo-dropbox'></ion-icon> <br>
                         <label style="font-size: 10px">Reabastecimiento</label>
                     </div>
                 </button>
@@ -234,4 +234,51 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-</ion-footer>
+</ion-footer> -->
+
+<ion-footer style="background:#054B77">
+    <ion-grid style="margin: 0px; padding: 0px">
+      <ion-row>
+        <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+          <button ion-button style=" margin: 0px; padding: 0px" (click)="goDetallePickingPage()"
+            medium full>
+            <div>
+              <ion-icon name='cube'></ion-icon> <br>
+            </div>
+          </button>
+        </ion-col>
+        <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+          <button ion-button style=" margin: 0px; padding: 0px" (click)="goDetallePorProductoPage()"
+            medium full>
+            <div>
+              <ion-icon name='list-box'></ion-icon> <br>
+            </div>
+          </button>
+        </ion-col>
+        <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+          <button ion-button style="margin: 0px; padding: 0px" (click)="goRutaPickingPageUpdate()"
+            medium full>
+            <div>
+              <ion-icon name='add'></ion-icon> <br>
+            </div>
+          </button>
+        </ion-col>
+        <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+          <button ion-button style=" margin: 0px; padding: 0px" (click)="goReabastecimientoPage()"
+            medium full>
+            <div>
+              <ion-icon name='logo-dropbox'></ion-icon> <br>
+            </div>
+          </button>
+        </ion-col>
+        <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+          <button ion-button style=" margin: 0px; padding: 0px" (click)="registarUA()"
+            medium full>
+            <div>
+              <ion-icon name='checkbox-outline'></ion-icon> <br>
+            </div>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>

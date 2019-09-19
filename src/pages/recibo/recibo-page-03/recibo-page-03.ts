@@ -1,14 +1,16 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, IonicFormInput, Button, PopoverController, ModalController, App } from 'ionic-angular';
+import { IonicPage, NavController, Platform, NavParams, ToastController, IonicFormInput, Button, PopoverController, ModalController, App, AlertController } from 'ionic-angular';
 import { ReciboServiceProvider } from '../../../providers/recibo-service/recibo-service';
 import { isNullOrUndefined } from '../../../../node_modules/@swimlane/ngx-datatable/release/utils';
 import { ReciboPage_04Page } from '../recibo-page-04/recibo-page-04';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { PopoverReciboComponent } from '../../../components/popover-recibo/popover-recibo';
 import { EtiquetadoPage_01Page } from '../../etiquetado/etiquetado-page-01/etiquetado-page-01';
+import { ReciboPage } from '../../recibo/recibo';
 import { ImpresoraPage } from '../../impresora/impresora';
 import { IncidenciaPage } from '../../incidencia/incidencia';
 import { HomePage } from '../../home/home';
+import {ReciboPage_02Page} from '../recibo-page-02/recibo-page-02';
 
 /**
  * Generated class for the ReciboPage_03Page page.
@@ -42,15 +44,11 @@ export class ReciboPage_03Page {
   @ViewChild('iCodeBar', { read: ElementRef }) private iCodeBar:ElementRef;
   @ViewChild('iCantidadRecibida', { read: ElementRef }) private iCantidadRecibida:ElementRef;
 
-  constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, 
     public toastCtrl: ToastController , public sRecibo: ReciboServiceProvider,
-    public popoverCtrl: PopoverController, public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider) {
+    public popoverCtrl: PopoverController, public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider,
+    public alertCtrl: AlertController) {
     this.vReciboPage02 = navParams.get('dataPage02');
-  }
-
-  ionViewWillEnter(){
-    this.selectAll(this.iCodeBar, 500);
-    this.getUAsProducto(this.vReciboPage02.Id_Tx, this.vReciboPage02.Id_Producto, this.vReciboPage02.Item);
   }
 
   getUAsProducto(strId_Tx, intId_Producto, intItem):void{
@@ -78,7 +76,7 @@ export class ReciboPage_03Page {
   }
 
   validarCodeBar(){
-
+    debugger;
     if (this.codeBar.Text.trim().length >= 12){
 
       if(this.vReciboPage02.FlagSeriePT == true){
@@ -93,6 +91,7 @@ export class ReciboPage_03Page {
           this.vReciboPage02.Id_TipoMovimiento === 14){
             this.sRecibo.validarReciboTransferenciaSerie(this.vReciboPage02.NumOrden, this.codeBar.Text, 
               this.vReciboPage02.Item).then((result)=>{
+                debugger;
               let rpta :any = result;
               if(rpta.errNumber != 0){
                 this.isBgRed = true;
@@ -112,14 +111,23 @@ export class ReciboPage_03Page {
         }else{
           this.sRecibo.validarReciboSerie(this.codeBar.Text, this.vReciboPage02.Id_Tx, this.vReciboPage02.Id_Producto).then(result=>{
               let res: any = result;
+              debugger;
               if(res.errNumber != 0){
                 this.codeBar.Text = "";
                 this.cantidadRec = 0;
-                this.bolUaValida = true;
+                this.bolUaValida = false;
+                this.isBgRed = true;
+                this.isBgYellow = false;
+                this.isBgGreen = false;
                 this.selectAll(this.iCodeBar, 500);
                 this.presentToast(res.message);
               }else{
-                this.bolUaValida = false;
+                this.bolUaValida = true;
+                // this.isBgRed = true;
+                // this.isBgYellow = false;
+                // this.isBgGreen = false;
+                // this.selectAll(this.iCodeBar, 500);
+                //this.presentToast("Ingrese codigo de barras correcto");
               }
           });
         }
@@ -157,6 +165,7 @@ export class ReciboPage_03Page {
             
             this.sRecibo.validarUAReciboTransferencia(ua).then((result)=>{
               this.cantidad = 0;
+              debugger;
               let rpta:any = result;
               if(rpta.errNumber === 0){                
 
@@ -206,7 +215,7 @@ export class ReciboPage_03Page {
               this.cantidad = 0;
               this.selectAll(this.iCodeBar, 500);
               let rpta:any = result;
-
+              debugger;
               if(rpta.errNumber === 0){
 
                 if(this.cantidad === 0){
@@ -262,6 +271,7 @@ export class ReciboPage_03Page {
       this.presentToast("Ingrese codigo de barras correcto");
       this.isBgRed = true;
       this.isBgYellow = false;
+      this.isBgGreen = false;
       this.bolUaValida = false;
       this.cantidadAve = 0;
       this.cantidadRec = 0;
@@ -270,6 +280,7 @@ export class ReciboPage_03Page {
   }
 
   validarCamposIngreso(){
+    debugger;
     var result:boolean = true;
 
     if(this.bolUaValida == false){
@@ -508,18 +519,71 @@ export class ReciboPage_03Page {
         console.log('data para imprimir', this.vReciboPage02);
         this.navigateToEtqCajaLpn(this.vReciboPage02);
       }else if(popoverData == 2){
-        this.showModalIncidencia(this.vReciboPage02);
+        if(this.vReciboPage02.CantidadPedida != this.vReciboPage02.Saldo){
+          this.showModalIncidencia(this.vReciboPage02);
+        }else{
+          this.presentAlert("No puede registrar incidencia de una transacción que no fue trabajada"); 
+        }        
       }else if(popoverData == 3){
         this.showModalImpresora();
       }else if(popoverData == 4){
-        this.navCtrl.pop();
-        var nav = this.app.getRootNav();
-        nav.setRoot(HomePage);
+        this.presentAlertConfirm("¿Estás seguro que deseas cerrar sesión?").then((result) => {
+          if (result) {
+            this.navCtrl.pop();
+            var nav = this.app.getRootNav();
+            nav.setRoot(HomePage);
+          }
+        })        
       }else if(popoverData == 5){
         this.goToReciboPage04();
       }
     });
   }
+
+  presentAlert(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            resolve(true);
+            console.log('Agree clicked');
+          }
+        }]
+      });
+      confirm.present();
+    })
+  }
+
+  presentAlertConfirm(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+              resolve(false);
+              console.log('Disagree clicked');
+            }
+          },
+          {
+            text: 'Aceptar',
+            handler: () => {
+              resolve(true);
+              console.log('Agree clicked');
+            }
+          }
+        ]
+      });
+      confirm.present();
+    })
+  }
+  
 
   showModalImpresora(){
     let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
@@ -527,6 +591,7 @@ export class ReciboPage_03Page {
   }
 
   showModalIncidencia(data){
+    debugger;
     let obj = { 
         'Id_Tx' : data.Id_Tx,
         'FlagPausa' : data.FlagPausa,
@@ -541,13 +606,20 @@ export class ReciboPage_03Page {
     let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia' : obj});
     modalIncidencia.onDidDismiss(data =>{
       if(data.response == 200){
-        this.navCtrl.pop();
+        debugger;
+        // this.navCtrl.pop();
+        this.navCtrl.getViews().forEach(item => {
+          if (item.name == 'ReciboPage') {
+            this.navCtrl.popTo(item);
+          }
+        });
       }
     });
     modalIncidencia.present();
   }
 
   navigateToEtqCajaLpn(data){
+    debugger;
     let objEtq = {
     "LoteLab": data.Lote,
     "Id_Producto": data.Id_Producto,
@@ -573,7 +645,9 @@ export class ReciboPage_03Page {
     "Id_Cliente": data.Id_Cliente,
     "idTipoMovimiento": data.idTipoMovimiento,
     "IdCuentaLPN": data.IdCuentaLPN,
-    "Id_SubAlmacen": data.Id_SubAlmacen
+    "Id_SubAlmacen": data.Id_SubAlmacen,
+    "Saldo": data.Saldo,
+    "page": true
   }
 
     let etqModal = this.modalCtrl.create(EtiquetadoPage_01Page, { vEtq: objEtq });
@@ -581,5 +655,13 @@ export class ReciboPage_03Page {
       console.log("Data retornada del modal", data);
     });
     etqModal.present();
+  }
+
+  ionViewWillEnter(){
+    this.selectAll(this.iCodeBar, 500);
+    this.getUAsProducto(this.vReciboPage02.Id_Tx, this.vReciboPage02.Id_Producto, this.vReciboPage02.Item);
+  }
+
+  ionViewDidLoad() {    
   }
 }

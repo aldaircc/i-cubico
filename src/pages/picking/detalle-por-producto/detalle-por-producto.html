@@ -28,41 +28,41 @@
         </ion-grid>
     </ion-toolbar>
 
-    <ion-grid class="bgHeader statico" style="padding: 0px;">
-        <ion-row no-padding no-margin style="background: #00BFFF">
-            <ion-col col-3 style="padding-left: 0px; padding-right: 0px">
-                <ion-label style="padding-left: 10px; margin-top: 5px; margin-bottom: 1px; color: yellow; font-weight:bold ">
+    <ion-grid class="bgHeader statico">
+        <ion-row no-padding no-margin>
+            <ion-col col-3 class="bgHeader-col">
+                <ion-label class="bgHeader-label">
                     N° Orden:
                 </ion-label>
             </ion-col>
-            <ion-col col-9 style="padding-left: 0px; padding-right: 0px">
-                <ion-label style="padding-left: 10px; margin-top: 5px; margin-bottom: 1px; color: white; font-weight:bold ">
+            <ion-col col-9 class="bgHeader-col">
+                <ion-label class="bgHeader-text">
                     {{ vPickingXProducto.NumOrden }}
                 </ion-label>
             </ion-col>
         </ion-row>
-        <ion-row no-padding no-margin style="background: #00BFFF">
-            <ion-col col-3 style="padding-left: 0px; padding-right: 0px; padding-TOP: 0px">
-                <ion-label style="padding-left: 10px; margin-top: 1px; margin-bottom: 1px; color: yellow; font-weight:bold ">
+        <ion-row no-padding no-margin>
+            <ion-col col-3 class="bgHeader-col">
+                <ion-label class="bgHeader-label">
                     Código:
                 </ion-label>
             </ion-col>
-            <ion-col col-9 style="padding-left: 0px; padding-right: 0px; padding-TOP: 0px">
-                <ion-label style="padding-left: 10px; margin-top: 1px; margin-bottom: 1px; color: white; font-weight:bold ">
+            <ion-col col-9 class="bgHeader-col">
+                <ion-label class="bgHeader-text">
                     {{ vPickingXProducto.CodigoProducto }}
                 </ion-label>
             </ion-col>
         </ion-row>
-        <ion-row no-padding no-margin style="background: #00BFFF">
-            <ion-col col-12 style="padding-left: 0px; padding-right: 0px; padding-TOP: 0px; text-align: center">
-                <ion-label style="font-size: 12px; padding-left: 10px; margin-top: 1px; margin-bottom: 1px; color: white; font-weight:bold ">
+        <ion-row no-padding no-margin>
+            <ion-col col-12 class="bgHeader-col">
+                <ion-label class="bgHeader-text" style="font-size: 12px; text-align: center">
                     {{ vPickingXProducto.Producto }}
                 </ion-label>
             </ion-col>
         </ion-row>
     </ion-grid>
 
-    <ion-row class="bgHeader statico" class="bgLightBlue">
+    <ion-row class="statico">
         <ion-searchbar placeholder="Buscar UA" (ionInput)="filterItems($event)" [(ngModel)]="searchQuery"></ion-searchbar>
     </ion-row>
 </ion-header>

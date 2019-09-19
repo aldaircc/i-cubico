@@ -6,25 +6,66 @@
 -->
 <ion-header>
 
-  <ion-toolbar no-border-top>
+  <ion-toolbar no-padding no-margin color="primary">
     <ion-navbar>
-      <ion-title>         
-       Preparar Bultos
+      <ion-title>
+        PREPARAR BULTOS
       </ion-title>
     </ion-navbar>
-    <ion-buttons start>    
+    <ion-buttons start>
       <button ion-button icon-only (click)="presentPopover($event)">
-          <ion-icon name="more"></ion-icon>
-        </button>
+        <ion-icon name="more"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-toolbar>
+
+  <ion-grid class="bgHeader statico">
+    <ion-row no-padding no-margin>
+      <ion-col col-2 col-sm class="bgHeader-col">
+          <ion-label class="bgHeader-label-button">
+              Bulto:
+          </ion-label>
+        <!-- <div class="bgHeader-label-button">Bulto:</div> -->
+      </ion-col>
+      <ion-col col-3 col-sm class="bgHeader-col">
+          <ion-label class="bgHeader-text-button">
+              {{vNroBultoCeros}}
+          </ion-label>
+        <!-- <div class="bgHeader-text-button">{{vNroBultoCeros}}</div> -->
+      </ion-col>
+      <ion-col col-3 col-sm class="bgHeader-col">
+          <ion-label class="bgHeader-text-button">
+              {{vNroItem}} / {{vTotalItems}}
+          </ion-label>
+        <!-- <div class="bgHeader-text-button">{{vNroItem}} / {{vTotalItems}}</div> -->
+      </ion-col>
+      <ion-col class="bgHeader-col">
+          <button ion-button icon-start (click)="goToAnterior()" class="bgHeader-button">
+              <ion-icon name="arrow-dropleft"></ion-icon>
+            </button>
+            <button ion-button icon-end (click)="goToSiguiente()" class="bgHeader-button">
+                <ion-icon name="arrow-dropright"></ion-icon>
+              </button>
+      </ion-col>
+      <!-- <ion-col col-2 col-sm class="bgHeader-col">
+        <button ion-button icon-only (click)="goToAnterior()" class="bgHeader-button">
+          <ion-icon name="arrow-dropleft"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col col-2 col-sm class="bgHeader-col">
+        <button ion-button icon-only (click)="goToSiguiente()" class="bgHeader-button">
+          <ion-icon name="arrow-dropright"></ion-icon>
+        </button>
+      </ion-col> -->
+    </ion-row>
+  </ion-grid>
 
 </ion-header>
 
 
 <ion-content padding>
 
-    <ion-grid class="bgHeader">        
+  <!-- <ion-grid class="bgHeader">        
         <ion-row align-items-center>
           <ion-col col-2 col-sm>
             <div class="textHeader">Bulto:</div>
@@ -46,42 +87,79 @@
               </button>
           </ion-col>
         </ion-row>       
-    </ion-grid>   
+    </ion-grid>    -->
 
-    <ion-row class="bgWhite">
-        <ion-card *ngFor="let objDetBultoEmbalaje of vEmbalajePage03" (press)="getRegistrarIncidencia(objDetBultoEmbalaje)">        
-            <ion-card-content>
-                <h5>{{objDetBultoEmbalaje.Producto}}</h5>
-                <h5><b>Cod. Producto: </b> {{objDetBultoEmbalaje.Codigo}} </h5>            
-                <h5><b>Lote: </b> {{objDetBultoEmbalaje.Lote}} </h5>                            
-                <h5><b>C. Picking: </b>{{objDetBultoEmbalaje.CantidadOperacion|number : '1.2-2' }}</h5>                        
-                <h5><b>Saldo: </b>{{objDetBultoEmbalaje.Saldo|number : '1.2-2' }}</h5>                        
-                <h5><b>C. Pedida: </b>{{objDetBultoEmbalaje.CantidadPedida|number : '1.2-2' }}</h5>                        
-                <h5><b>C. Despachada: </b>{{objDetBultoEmbalaje.CantidadDespacho|number : '1.2-2' }}</h5>                        
-            </ion-card-content>
-          </ion-card>
-    </ion-row> 
+  <ion-row class="bgWhite">
+    <ion-card *ngFor="let objDetBultoEmbalaje of vEmbalajePage03" (press)="getRegistrarIncidencia(objDetBultoEmbalaje)">
+      <ion-card-content>
+        <h5>{{objDetBultoEmbalaje.Producto}}</h5>
+        <h5><b>Cod. Producto: </b> {{objDetBultoEmbalaje.Codigo}} </h5>
+        <h5><b>Lote: </b> {{objDetBultoEmbalaje.Lote}} </h5>
+        <h5><b>C. Picking: </b>{{objDetBultoEmbalaje.CantidadOperacion|number : '1.2-2' }}</h5>
+        <h5><b>Saldo: </b>{{objDetBultoEmbalaje.Saldo|number : '1.2-2' }}</h5>
+        <h5><b>C. Pedida: </b>{{objDetBultoEmbalaje.CantidadPedida|number : '1.2-2' }}</h5>
+        <h5><b>C. Despachada: </b>{{objDetBultoEmbalaje.CantidadDespacho|number : '1.2-2' }}</h5>
+      </ion-card-content>
+    </ion-card>
+  </ion-row>
 
-    <ion-row align-items-center>
-        <ion-col col-3 col-sm>
-          Cantidad
-        </ion-col>
-        <ion-col col-3 col-sm>
-          <ion-item>
-              <ion-input type="number" placeholder="0.00" [(ngModel)]="cantEmbalar"></ion-input>
-          </ion-item>
-        </ion-col>
-        
-        <button clear ion-button icon-only (click)="guardarProductoBulto()">
-          <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
-        </button>          
-    </ion-row>
+  <ion-row align-items-center>
+    <ion-col col-3 col-sm>
+      Cantidad
+    </ion-col>
+    <ion-col col-3 col-sm>
+      <!-- <ion-item>
+        <ion-input id="txtCantidad" type="number" min="0" placeholder="0.00" [(ngModel)]="cantEmbalar" 
+        onkeypress="return (event.charCode != 46 && event.charCode > 31 && (event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-input>
+      </ion-item> -->
+      <ion-item>
+        <ion-input id="txtCantidad" type="number" min="0" placeholder="0.00" [(ngModel)]="cantEmbalar"
+        onkeypress="return (event.charCode != 46 && event.charCode > 31 && (event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-input>
+    </ion-item>
+    </ion-col>
+
+    <button clear ion-button icon-only (click)="guardarProductoBulto()">
+      <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
+    </button>
+  </ion-row>
 
 
 </ion-content>
 
 <ion-footer class="bgLightBlue">
-    <ion-toolbar color="primary">
+  <ion-grid style="margin: 0px; padding: 0px">
+    <ion-row>
+      <ion-col style="margin: 0px; padding: 0px;">
+        <button ion-button style=" margin: 0px; padding: 0px" (click)="goToEmbalajePage07()" medium full>
+          <div>
+            <ion-icon name='md-time'></ion-icon> <br>
+          </div>
+        </button>
+      </ion-col>
+      <ion-col style="margin: 0px; padding: 0px;">
+        <button ion-button style=" margin: 0px; padding: 0px" (click)="goToEmbalajePage06()" medium full>
+          <div>
+            <ion-icon name='logo-dropbox'></ion-icon> <br>
+          </div>
+        </button>
+      </ion-col>
+      <ion-col style="margin: 0px; padding: 0px; ">
+        <button ion-button style="margin: 0px; padding: 0px" (click)="goToEmbalajePage05()" medium full>
+          <div>
+            <ion-icon name='md-list'></ion-icon> <br>
+          </div>
+        </button>
+      </ion-col>
+      <ion-col style="margin: 0px; padding: 0px; ">
+        <button ion-button style="margin: 0px; padding: 0px" (click)="goToEmbalajePage09()" medium full>
+          <div>
+            <ion-icon name='ios-albums-outline'></ion-icon> <br>
+          </div>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- <ion-toolbar color="primary">
       <ion-buttons left>
           <button ion-button icon-only  (click)="goToEmbalajePage07()">
               <ion-icon name="md-time"></ion-icon>
@@ -102,5 +180,5 @@
             <ion-icon name="ios-albums-outline" ></ion-icon>
         </button>
       </ion-buttons>
-    </ion-toolbar>
-  </ion-footer>
+    </ion-toolbar> -->
+</ion-footer>

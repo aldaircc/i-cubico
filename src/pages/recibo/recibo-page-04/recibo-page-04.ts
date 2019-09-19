@@ -153,30 +153,59 @@ export class ReciboPage_04Page {
   }
 
   evaluateSaldo(){
-    if(this.vReciboPage03.currentSaldo > 0){
-      let alert = this.alertCtrl.create({
-        title: 'Confirmar cierre de pallet',
-        message: '¿Tiene un saldo pendiente, está seguro de cerrar el pallet?',
-        buttons: [
-          {
-            text: 'No',
-            role: 'cancel',
-            handler: () => {
-            
-            }
-          },
-          {
-            text: 'Si',
-            handler: () => {
-            this.goToReciboPage05(this.vReciboPage03);
-            }
-          }
-        ]
-      });
-      alert.present();
-    }else{
-      this.goToReciboPage05(this.vReciboPage03);
+    debugger;
+    var flagPallet = true;
+    for(var i = 0; i < this.listBulto.length; i++){
+      if(!this.listBulto[i].Contenedor){
+        flagPallet = false;
+      }
     }
+
+    if(!flagPallet){
+      if(this.vReciboPage03.currentSaldo > 0){
+        let alert = this.alertCtrl.create({
+          title: 'Confirmar cierre de pallet',
+          message: '¿Tiene un saldo pendiente, está seguro de cerrar el pallet?',
+          buttons: [
+            {
+              text: 'No',
+              role: 'cancel',
+              handler: () => {              
+              }
+            },
+            {
+              text: 'Si',
+              handler: () => {
+              this.goToReciboPage05(this.vReciboPage03);
+              }
+            }
+          ]
+        });
+        alert.present();
+      }else{  
+        this.goToReciboPage05(this.vReciboPage03);
+      }
+    }else{
+      this.presentAlert("No existen UA´s disponibles");
+    }
+  }
+
+  presentAlert(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            resolve(true);
+            console.log('Agree clicked');
+          }
+        }]
+      });
+      confirm.present();
+    })
   }
 
   goToReciboPage05(data){
@@ -225,4 +254,6 @@ export class ReciboPage_04Page {
     let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
     modalIncidencia.present();
   }
+
+  
 }

@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController, PopoverController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, Navbar, Platform, App, NavParams, AlertController, ModalController, PopoverController } from 'ionic-angular';
 import { ReciboServiceProvider } from '../../../providers/recibo-service/recibo-service';
 import { ReciboPage_03Page } from '../recibo-page-03/recibo-page-03';
 import { ImpresoraPage } from '../../impresora/impresora';
 import { PopoverReciboComponent } from '../../../components/popover-recibo/popover-recibo';
 import { IncidenciaPage } from '../../incidencia/incidencia';
+import { ReciboPage } from '../../recibo/recibo';
 import { EtiquetadoPage_01Page } from '../../etiquetado/etiquetado-page-01/etiquetado-page-01';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 
@@ -23,6 +24,7 @@ import { GlobalServiceProvider } from '../../../providers/global-service/global-
 
 export class ReciboPage_02Page {
  
+  @ViewChild(Navbar) navBar: Navbar;
   tablestyle = 'bootstrap';
 
   vReciboPage01:any = [];
@@ -41,8 +43,9 @@ export class ReciboPage_02Page {
   countConfirm: number = 0;
   countProcess: number = 0;
   countFinalizado: number = 0;
+  cantPendiente: number = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, 
     private alertCtrl: AlertController, public sRecibo: ReciboServiceProvider,
     public modalCtrl: ModalController, public popoverCtrl: PopoverController, public sGlobal: GlobalServiceProvider) {
       this.vReciboPage01 = navParams.get('data');
@@ -58,7 +61,11 @@ export class ReciboPage_02Page {
 
     popover.onDidDismiss(popoverData =>{
       if(popoverData == 2){
-        this.showModalIncidencia(this.vReciboPage01);
+        if(this.listAuxDetailTx.length != this.listConfirm.length){
+          this.showModalIncidencia(this.vReciboPage01);
+        }else{
+          this.presentAlert("No puede registrar incidencia de una transacción que no fue trabajada"); 
+        }        
       }else if(popoverData == 3){
         this.showModalImpresora();
       }
@@ -97,10 +104,6 @@ export class ReciboPage_02Page {
     } else {
       this.tablestyle = 'dark';
     }
-  }
-
-  ionViewDidLoad() {
-
   }
 
   getDetailXTx(strIdTx){
@@ -299,43 +302,81 @@ export class ReciboPage_02Page {
         return prev + cur.Saldo;
       }, 0);
 
-      if(saldo > 0){
-        message = "Existen " + saldo + " productos con saldo pendiente ¿Está seguro de cerrar la transacción?";
-      }else{
-        message = "¿Está seguro de cerrar la transacción?";
-      }
+      // if(saldo > 0){
+      //   message = "Existen " + saldo + " productos con saldo pendiente ¿Está seguro de cerrar la transacción?";
+      // }else{
+      //   message = "¿Está seguro de cerrar la transacción?";
+      // }
 
-      let alerta = this.alertCtrl.create({
-        title: 'Advertencia',
-        message: message,
-        buttons: [
-          {
-            text: 'Cancelar',
-            role: 'cancel',
-            handler: () => {
-              return;
-            }
-          },
-          {
-            text: 'Aceptar',
-            handler: () => {
+
+      debugger;
+      if(this.listAuxDetailTx.length != this.listConfirm.length){
+        if(saldo > 0){
+          this.cantPendiente = this.countConfirm + this.countProcess;
+          this.presentAlertConfirm("Existen " + this.cantPendiente + " producto(s) con saldo pendiente ¿Está seguro de cerrar la transacción?").then((resultAlert) => {
+            if (resultAlert) {
               this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result=>{
                 let res: any = result; 
                 this.getDetailXTx(this.vReciboPage01.Id_Tx);
+                this.navCtrl.push(ReciboPage);
               });
             }
-          }
-        ]
-      });
-      alerta.present();
+            else{
+              return;
+            }
+          })
+
+         // message = "Existen " + this.rowCount + " productos con saldo pendiente ¿Está seguro de cerrar la transacción?";
+        }else{
+          this.presentAlertConfirm("¿Está seguro de cerrar la transacción?").then((resultAlert) => {
+            if (resultAlert) {
+              this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result=>{
+                let res: any = result; 
+                this.getDetailXTx(this.vReciboPage01.Id_Tx);
+                this.navCtrl.push(ReciboPage);
+              });
+            }else{
+              return;
+            }
+          })
+          //message = "¿Está seguro de cerrar la transacción?";
+        }
+      }else{
+        this.presentAlert("No se puede cerrar una transacción que no fue trabajada");  
+      }
+
+      // let alerta = this.alertCtrl.create({
+      //   title: 'Advertencia',
+      //   message: message,
+      //   buttons: [
+      //     {
+      //       text: 'Cancelar',
+      //       role: 'cancel',
+      //       handler: () => {
+      //         return;
+      //       }
+      //     },
+      //     {
+      //       text: 'Aceptar',
+      //       handler: () => {
+      //         this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result=>{
+      //           let res: any = result; 
+      //           this.getDetailXTx(this.vReciboPage01.Id_Tx);
+      //         });
+      //       }
+      //     }
+      //   ]
+      // });
+      // alerta.present();
     }
   }
 
   navigateToEtqCajaLpn(data){
+    debugger;
     let objEtq = {
     "LoteLab": data.Lote,
     "Id_Producto": data.Id_Producto,
-    "Id_UM": data.UM,
+    "Id_UM": data.Id_UM,
     "CantidadPedida": data.CantidadPedida,
     "Codigo": data.Codigo,
     "Articulo": data.Descripcion, //Articulo
@@ -356,7 +397,9 @@ export class ReciboPage_02Page {
     "Id_Cliente": this.vReciboPage01.Id_Cliente,
     "idTipoMovimiento": this.vReciboPage01.Id_TipoMovimiento,
     "IdCuentaLPN": this.vReciboPage01.Id_Cliente,
-    "Id_SubAlmacen": data.Id_SubAlmacen
+    "Id_SubAlmacen": data.Id_SubAlmacen,
+    "Saldo": data.Saldo, //Add by Arturo
+    "page": true
   }
 
     let etqModal = this.modalCtrl.create(EtiquetadoPage_01Page, { vEtq: objEtq });
@@ -366,7 +409,55 @@ export class ReciboPage_02Page {
     etqModal.present();
   }
 
+  presentAlert(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            resolve(true);
+            console.log('Agree clicked');
+          }
+        }]
+      });
+      confirm.present();
+    })
+  }
+
+  presentAlertConfirm(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+              resolve(false);
+              console.log('Disagree clicked');
+            }
+          },
+          {
+            text: 'Aceptar',
+            handler: () => {
+              resolve(true);
+              console.log('Agree clicked');
+            }
+          }
+        ]
+      });
+      confirm.present();
+    })
+  }
+
   ionViewWillEnter(){
     this.getDetailXTx(this.vReciboPage01.Id_Tx);
+  }
+
+  ionViewDidLoad() {
+    
   }
 }

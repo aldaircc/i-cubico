@@ -39,6 +39,7 @@ export class EmbalajePage_04Page {
   listDetBultosEmbalaje: any;
   rowCount: any;
   rowReciboSelect: any;
+  txtCant : any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController,
     public toastCtrl: ToastController,private alertCtrl: AlertController,public sEmbalaje: EmbalajeServiceProvider,public modalCtrl: ModalController,
@@ -109,11 +110,23 @@ export class EmbalajePage_04Page {
     });
   }
 
+  
+
+
+  // goToEmbalajePage07() {
+  //   debugger;    
+  //   this.navCtrl.push(EmbalajePage_07Page, {
+  //     dataNroBulto: this.vNroBulto, dataNroBultoCeros: this.vNroBultoCeros,
+  //     dataPage02: this.vEmbalajePage02, peso: this.pesoCallback
+  //   });
+  // }
+
   goToEmbalajePage07(){           
     this.navCtrl.push(EmbalajePage_07Page,{      
       dataNroBulto: this.vNroBulto,
       dataNroBultoCeros: this.vNroBultoCeros, 
-      dataPage02: this.vEmbalajePage02 
+      dataPage02: this.vEmbalajePage02
+      //page: 4 
     });
   }
 
@@ -122,11 +135,15 @@ export class EmbalajePage_04Page {
     this.navCtrl.push(EmbalajePage_06Page,{                  
       dataNroBulto: this.vNroBulto,
       dataNroBultoCeros: this.vNroBultoCeros,      
-      dataPage02: this.vEmbalajePage02 
+      dataPage02: this.vEmbalajePage02,
+      //peso: 0 
     });
   }
 
-  llenarNumeros(){    
+  llenarNumeros(){ 
+    debugger;   
+    this.vNroBulto = this.vNroBulto  + 1;
+    this.vNroBultoCeros = parseInt(this.vNroBultoCeros)   + 1;
     let s = this.vNroBultoCeros + "";
     while (s.length < 3)
       this.vNroBultoCeros = s = "0" + s;
@@ -267,21 +284,55 @@ export class EmbalajePage_04Page {
       'id_Modulo': 1
     };
 
+    this.sGlobal.resultIncidencia = false;
     let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia': obj });
-
     modalIncidencia.onDidDismiss(result => {
-      if (result.response == 200 && result.isChangePage == true) {
-        data.FlagPausa = !data.FlagPausa;
-        //this.goToReciboPage02(data);
-      }else{
-        //this.getDataRecepcion();
+      if (this.sGlobal.resultIncidencia) {
+        this.goToEmbalajePage02();
       }
+      // if (result.response == 200 && result.isChangePage == true) {
+      //   data.FlagPausa = !data.FlagPausa;
+      //   //this.goToReciboPage02(data);
+      // }else{
+      //   //this.getDataRecepcion();
+      // }
     });
     modalIncidencia.present();
   }
 
+  goToEmbalajePage02() {
+    this.navCtrl.getViews().forEach(item => {
+      if (item.name == 'EmbalajePage_02Page') {
+        this.navCtrl.popTo(item);
+      }
+    });
+  }
+
+//   this.txtCant = document.getElementById('txtCantidad');
+
+//   number.onkeydown = function(e) {
+//     if(!((e.keyCode > 95 && e.keyCode < 106)
+//       || (e.keyCode > 47 && e.keyCode < 58) 
+//       || e.keyCode == 8)) {
+//         return false;
+//     }
+// }
+
+CantChange(ev:any){
+      if(!((ev.keyCode > 95 && ev.keyCode < 106)
+      || (ev.keyCode > 47 && ev.keyCode < 58) 
+      || ev.keyCode == 8)) {
+        return true;
+    }
+}
+
   presentPopover(myEvent){
-    let popover = this.popoverCtrl.create(PopoverEmbalajeComponent, {'page' : 12, 'has_Id_Tx': (this.rowReciboSelect != undefined) ? true : false });    
+    // let popover = this.popoverCtrl.create(PopoverEmbalajeComponent, {'page' : 12, 'has_Id_Tx': (this.rowReciboSelect != undefined) ? true : false });    
+    // popover.present({
+    //   ev: myEvent
+    // });
+
+    let popover = this.popoverCtrl.create(PopoverEmbalajeComponent, { 'page': 15 });
     popover.present({
       ev: myEvent
     });
@@ -289,7 +340,8 @@ export class EmbalajePage_04Page {
     popover.onDidDismiss(popoverData =>{
       debugger;
       if(popoverData == 1){
-        this.showModalIncidencia(this.rowReciboSelect);
+        // this.showModalIncidencia(this.rowReciboSelect);
+        this.showModalIncidencia(this.vEmbalajePage02);        
       }
       if(popoverData == 4){
         this.showModalImpresora();
@@ -308,7 +360,13 @@ export class EmbalajePage_04Page {
   }
 
   ionViewWillEnter() {       
-    this.getDataDetEmbalaje();    
+    this.getDataDetEmbalaje();  
+    
+    if(this.sGlobal.resultGrabarBulto){
+      this.llenarNumeros();
+      this.sGlobal.resultGrabarBulto = false;
+    }
+    
     debugger; 
     // this.getDataDetBultosEmbalaje();    
   }

@@ -26,4 +26,14 @@ page-etiquetado-page-01 {
         right: 0;
         z-index: 9999;
     }
+
+    .select-md .select-placeholder {
+        color: #000 !important;
+    }
+
+    .text-input-md {
+        margin: 0px 0px !important;
+        padding: 0;
+        width: calc(100% - 8px - 8px);
+    }
 }

@@ -38,7 +38,7 @@ export class EmbarquePage_04Page {
         title: title,
         message: message,
         buttons: [{
-          text: 'OK',
+          text: 'Si',
           handler: () => {
             resolve(true);
           },

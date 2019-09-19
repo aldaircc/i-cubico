@@ -1,0 +1,201 @@
+<!--
+  Generated template for the BultoMasivoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+  <ion-toolbar no-padding no-margin color="primary">
+    <ion-grid style="padding: 0px;">
+      <ion-row no-padding no-margin>
+        <ion-col no-margin no-padding col-10>
+          <ion-navbar no-padding no-margin>
+            <ion-label style="font-size: 15px; color: white; font-weight:bold;">GENERAR BULTOS MASIVOS</ion-label>
+          </ion-navbar>
+        </ion-col>
+        <ion-col no-margin no-padding col-2>
+          <ion-buttons start style="margin-top: 12px; text-align: center">
+            <button no-margin no-padding ion-button icon-only (click)="presentPopover($event)">
+              <ion-icon name="more"></ion-icon>
+            </button>
+          </ion-buttons>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+
+  <ion-grid class="bgHeader statico">
+    <ion-row no-padding no-margin>
+      <ion-col col-8 class="bgHeader-col">
+        <ion-label class="bgHeader-text">
+          ANDANTOL 0,75% GEL X 5 G M.M
+        </ion-label>
+      </ion-col>
+      <ion-col col-2 class="bgHeader-col">
+        <ion-label class="bgHeader-label">
+          U.M:
+        </ion-label>
+      </ion-col>
+      <ion-col col-2 class="bgHeader-col">
+        <ion-label class="bgHeader-text">
+          UNIDAD
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding no-margin>
+      <ion-col col-2 class="bgHeader-col">
+        <ion-label class="bgHeader-label">
+          Código:
+        </ion-label>
+      </ion-col>
+      <ion-col col-6 class="bgHeader-col">
+        <ion-label class="bgHeader-text">
+          122104A1002001
+        </ion-label>
+      </ion-col>
+      <ion-col col-2 class="bgHeader-col">
+        <ion-label class="bgHeader-label">
+          Lote:
+        </ion-label>
+      </ion-col>
+      <ion-col col-2 class="bgHeader-col">
+        <ion-label class="bgHeader-text">
+          UNIDAD
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding no-margin>
+      <ion-col col-3 class="bgHeader-col">
+        <ion-label class="bgHeader-label">
+          C. Picking:
+        </ion-label>
+      </ion-col>
+      <ion-col col-5 class="bgHeader-col">
+        <ion-label class="bgHeader-text">
+          100.00
+        </ion-label>
+      </ion-col>
+      <ion-col col-2 class="bgHeader-col">
+        <ion-label class="bgHeader-label">
+          Saldo:
+        </ion-label>
+      </ion-col>
+      <ion-col col-2 class="bgHeader-col">
+        <ion-label class="bgHeader-text">
+          100.00
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-grid style="padding: 10px">
+    <!-- Fila 01 -->
+    <ion-row align-items-center>
+      <ion-col col-12 col-sm no-padding no-margin>
+        <ion-select placeholder="UA alternativa" [(ngModel)]="id_UAlt" interface="action-sheet" #selectUA_Alt
+          style="padding: 8px 8px 8px 0px">
+          <ion-option value="" default>UA alternativa</ion-option>
+          <ion-option *ngFor="let ua of listUM" value="{{ ua.Id_UM }}">
+            <!-- {{ ua.Nombre }}  -->
+          </ion-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <!-- Fila 02 -->
+    <ion-row align-items-center>
+      <ion-col col-4 col-sm no-padding no-margin>
+        Cantidad/U.M.B:
+      </ion-col>
+
+      <ion-col col-8 col-sm no-padding no-margin>
+        <ion-item>
+          <ion-input type="Text" [(ngModel)]="serie" [disabled]="!isEnabledSerie" #iSerie></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <!-- Fila 03 -->
+    <ion-row align-items-center>
+      <ion-col col-4 col-sm no-padding no-margin>
+        N° Bultos:
+      </ion-col>
+      <ion-col col-8 col-sm no-padding no-margin>
+        <ion-item>
+          <ion-input type="Text" [(ngModel)]="lote" [disabled]="!isEnabledLote" #iLote></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <!-- Fila 04 -->
+    <ion-row align-items-center>
+      <ion-col col-4 col-sm no-padding no-margin>
+        Sueltos:
+      </ion-col>
+      <ion-col col-8 col-sm no-padding no-margin>
+        <ion-item>
+          <ion-input type="Text" [(ngModel)]="lote" [disabled]="!isEnabledLote" #iLote></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>  
+
+
+    <!-- Fila 05 -->
+    <ion-row align-items-center>
+      <ion-col col-4 col-sm no-padding no-margin>
+        Peso físico:
+      </ion-col>
+      <ion-col col-4 col-sm no-padding no-margin>
+        <ion-item>
+          <ion-input type="number" min="0" placeholder="0" [(ngModel)]="cantxEtq" (input)="numEtqTextChange($event)"
+            #iCantidad [disabled]="!cantDisabled" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-1 col-sm no-padding no-margin>
+        Kg.
+      </ion-col>
+
+      <ion-col col-3 col-sm no-padding no-margin>
+          <button no-margin no-padding ion-button icon-only clear (click)="ValidarOrden(objEmbalaje)"
+          style="position: absolute;	top: 0;	bottom: 0; left: 0; right: 0; width: 80%; margin: auto; background:none;">
+            <ion-icon name="md-play" color="dark"></ion-icon>
+          </button>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row align-items-center>
+      <ion-col col-4 col-sm no-padding no-margin>
+        Generar bultos:
+      </ion-col>
+
+      <ion-col col-8 col-sm no-padding no-margin>
+        <ion-item>
+          <ion-input type="number" min="0" [(ngModel)]="cantEtqSaldo" (input)="numEtqTextChange($event)"
+            #iSaldoEtq [disabled]="!saldoDisabled" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-grid class="bgFooter">
+    <ion-row>
+      <ion-col col-2 class="bgFooter-col">        
+      </ion-col>
+      <ion-col col-8 class="bgFooter-col">
+      </ion-col>
+      <ion-col col-2 class="bgFooter-col">
+          <button ion-button icon-start (click)="imprimirEtiqueta()" #iBtnSave>
+              <ion-icon name="md-barcode"></ion-icon>
+            </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

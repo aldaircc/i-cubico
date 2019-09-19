@@ -257,10 +257,28 @@ export class DetallePickingPage {
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 2000,
+      duration: 5000,
       position: 'bottom'
     });
     toast.present();
+  }
+
+  presentAlert(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            resolve(true);
+            console.log('Agree clicked');
+          }
+        }]
+      });
+      confirm.present();
+    })
   }
 
   showModalIncidencia(data) {
@@ -271,14 +289,29 @@ export class DetallePickingPage {
       'NumOrden': data.NumOrden,
       'id_Cliente': data.Id_Cuenta,
       'id_Modulo': 5
-    };
+    };    
 
+    this.sGlobal.resultIncidencia = false;
     let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia': obj });
     modalIncidencia.onDidDismiss(data => {
       debugger;
+      if (this.sGlobal.resultIncidencia) {
+        this.goOrdenesPicking();
+      }
       console.log("datos", data);
     });
     modalIncidencia.present();
+  }
+
+  goOrdenesPicking() {
+  
+    this.navCtrl.getViews().forEach(item => {
+      if (item.name == 'PickingPage') {
+        this.navCtrl.popTo(item);
+      }
+    });
+
+
   }
 
   showModalAdministrarUaPage(){
@@ -314,7 +347,12 @@ export class DetallePickingPage {
 
     popover.onDidDismiss(popoverData => {
       if (popoverData == 1) {
-        this.showModalIncidencia(this.vRutaPickingPage);
+        if(this.vRutaPickingPage.Id_Estado != 2){          
+          this.showModalIncidencia(this.vRutaPickingPage);
+        }else{
+          this.presentAlert("No puede registrar incidencia de una transacción que no fue iniciada"); 
+        }
+        // this.showModalIncidencia(this.vRutaPickingPage);
       } else if (popoverData == 2) {
         debugger;
         this.showModalAdministrarUaPage();
@@ -376,6 +414,7 @@ export class DetallePickingPage {
       'Ciudad': this.vRutaPickingPage.Ciudad,
       'Zona': this.vRutaPickingPage.Zona,
       'FlagPausa': this.vRutaPickingPage.FlagPausa,
+      'Id_Estado': this.vRutaPickingPage.Id_Estado,
       'Id_Cuenta': this.vRutaPickingPage.Id_Cuenta
     };
     this.navCtrl.push(RutaPickingPage, {
@@ -383,21 +422,39 @@ export class DetallePickingPage {
     });
   }
 
-  goBackRutaPickingPage(idRutaPicking) {
-    this.vDetallePickingPage = {
-      'Id_Page_Anterior': 3,
-      'idRutaPicking': idRutaPicking,
-      'Id_Tx': this.vRutaPickingPage.Id_Tx,
-      'NumOrden': this.vRutaPickingPage.NumOrden,
-      'Cliente': this.vRutaPickingPage.Cliente,
-      'Ciudad': this.vRutaPickingPage.Ciudad,
-      'Zona': this.vRutaPickingPage.Zona,
-      'FlagPausa': this.vRutaPickingPage.FlagPausa,
-      'Id_Cuenta': this.vRutaPickingPage.Id_Cuenta
-    };
-    this.navCtrl.push(RutaPickingPage, {
-      data: this.vDetallePickingPage
-    });
+  // goBackRutaPickingPage(idRutaPicking) {
+  //   this.vDetallePickingPage = {
+  //     //'Id_Page_Anterior': 3,
+  //     'idRutaPicking': idRutaPicking,
+  //     'Id_Tx': this.vRutaPickingPage.Id_Tx,
+  //     'NumOrden': this.vRutaPickingPage.NumOrden,
+  //     'Cliente': this.vRutaPickingPage.Cliente,
+  //     'Ciudad': this.vRutaPickingPage.Ciudad,
+  //     'Zona': this.vRutaPickingPage.Zona,
+  //     'FlagPausa': this.vRutaPickingPage.FlagPausa,
+  //     'Id_Cuenta': this.vRutaPickingPage.Id_Cuenta
+  //   };
+  //   this.navCtrl.push(RutaPickingPage, {
+  //     data: this.vDetallePickingPage
+  //   });
+  // }
+
+  goBackRutaPickingPage(){
+    debugger;
+      this.navCtrl.pop().then(() => {
+        this.vDetallePickingPage = {
+          'idRutaPicking': 0,
+          'Id_Tx': this.vRutaPickingPage.Id_Tx,
+          'NumOrden': this.vRutaPickingPage.NumOrden,
+          'Cliente': this.vRutaPickingPage.Cliente,
+          'Ciudad': this.vRutaPickingPage.Ciudad,
+          'Zona': this.vRutaPickingPage.Zona,
+          'FlagPausa': this.vRutaPickingPage.FlagPausa,
+          'Id_Estado': this.vRutaPickingPage.Id_Estado,
+          'Id_Cuenta': this.vRutaPickingPage.Id_Cuenta
+        };
+        this.navParams.get('detallePicking')(this.vDetallePickingPage);
+      });
   }
 
   goCerrarPickingPage() {
@@ -420,19 +477,28 @@ export class DetallePickingPage {
     });
   }
 
+  dataFromDetallePorProductoPage : any; 
+  detallePorProductoCallback = data => {
+    debugger;
+    this.dataFromDetallePorProductoPage = data;
+    console.log('data received from other page', this.dataFromDetallePorProductoPage);
+    debugger;
+    this.vRutaPickingPage = this.dataFromDetallePorProductoPage;
+  };
+
   goDetallePorProductoPage(data): void {
     debugger;
 
-    var idPageAnterior2 = 0;
-    if (this.vRutaPickingPage.Id_Page_Anterior) {
-      idPageAnterior2 = this.vRutaPickingPage.Id_Page_Anterior;
-    } else {
-      idPageAnterior2 = this.vRutaPickingPage.Id_Page_Anterior2;
-    }
+    // var idPageAnterior2 = 0;
+    // if (this.vRutaPickingPage.Id_Page_Anterior) {
+    //   idPageAnterior2 = this.vRutaPickingPage.Id_Page_Anterior;
+    // } else {
+    //   idPageAnterior2 = this.vRutaPickingPage.Id_Page_Anterior2;
+    // }
 
     this.vDetallePickingPage = {
-      'Id_Page_Anterior': 3,
-      'Id_Page_Anterior2': idPageAnterior2,
+      // 'Id_Page_Anterior': 3,
+      // 'Id_Page_Anterior2': idPageAnterior2,
       'Id_Tx': this.vRutaPickingPage.Id_Tx,
       'NumOrden': this.vRutaPickingPage.NumOrden,
       'Cliente': this.vRutaPickingPage.Cliente,
@@ -444,63 +510,81 @@ export class DetallePickingPage {
       'Item': data.Item,
       'idRutaPicking': this.vRutaPickingPage.idRutaPicking,
       'FlagPausa': this.vRutaPickingPage.FlagPausa,
-      'Id_Cuenta': this.vRutaPickingPage.Id_Cuenta
+      'Id_Cuenta': this.vRutaPickingPage.Id_Cuenta,
+      'Id_Estado': this.vRutaPickingPage.Id_Estado
     };
 
     this.navCtrl.push(DetallePorProductoPage, {
-      data: this.vDetallePickingPage
+      data: this.vDetallePickingPage, detalleProducto: this.detallePorProductoCallback
     });
   }
 
-  goPickingPage() {
-    this.navCtrl.push(PickingPage);
-  }
+  // goPickingPage() {
+  //   this.navCtrl.push(PickingPage);
+  // }
 
-  goPickingPorProductoPage() {
+  // goPickingPorProductoPage() {
+  //   debugger;
+  //   this.vDetallePickingPage = {
+  //     //'Id_Page_Anterior': 3,
+  //     'idRutaPicking': this.vRutaPickingPage.idRutaPicking,
+  //     'Id_Tx': this.vRutaPickingPage.Id_Tx,
+  //     'NumOrden': this.vRutaPickingPage.NumOrden,
+  //     'Cliente': this.vRutaPickingPage.Cliente,
+  //     'Ciudad': this.vRutaPickingPage.Ciudad,
+  //     'Zona': this.vRutaPickingPage.Zona
+  //   };
+  //   this.navCtrl.push(PickingPorProductoPage, {
+  //     data: this.vDetallePickingPage
+  //   });
+  // } 
+
+  goPickingPorProductoPage(){
     debugger;
-    this.vDetallePickingPage = {
-      'Id_Page_Anterior': 3,
-      'idRutaPicking': this.vRutaPickingPage.idRutaPicking,
-      'Id_Tx': this.vRutaPickingPage.Id_Tx,
-      'NumOrden': this.vRutaPickingPage.NumOrden,
-      'Cliente': this.vRutaPickingPage.Cliente,
-      'Ciudad': this.vRutaPickingPage.Ciudad,
-      'Zona': this.vRutaPickingPage.Zona
-    };
-    this.navCtrl.push(PickingPorProductoPage, {
-      data: this.vDetallePickingPage
-    });
+      this.navCtrl.pop().then(() => {
+        this.vDetallePickingPage = {
+          'idRutaPicking': this.vRutaPickingPage.idRutaPicking,
+          'Id_Tx': this.vRutaPickingPage.Id_Tx,
+          'NumOrden': this.vRutaPickingPage.NumOrden,
+          'Cliente': this.vRutaPickingPage.Cliente,
+          'Ciudad': this.vRutaPickingPage.Ciudad,
+          'Zona': this.vRutaPickingPage.Zona
+        };
+        this.navParams.get('detallePicking')(this.vDetallePickingPage);
+      });
   }
+
+  
 
   ionViewDidLoad() {
     debugger;
-    this.navBar.backButtonClick = (e: UIEvent) => {
-      debugger;
-      if (this.vRutaPickingPage.Id_Page_Anterior == 1) {
-        this.goPickingPage(); //ir a ordenes picking
-      }
-      if (this.vRutaPickingPage.Id_Page_Anterior == 2) {
-        debugger;
-        this.goBackRutaPickingPage(0); //ir a ruta picking
-      }
-      if (this.vRutaPickingPage.Id_Page_Anterior == 5) {
-        debugger;
-        this.goPickingPorProductoPage(); //ir a picking por producto
-      }
-      if (this.vRutaPickingPage.Id_Page_Anterior2 == 1) {
-        debugger;
-        this.goPickingPage(); //ir a ordenes picking
-      }
-      if (this.vRutaPickingPage.Id_Page_Anterior2 == 2) {
-        debugger;
-        this.goBackRutaPickingPage(0); //ir a ruta picking
-      }
-      if (this.vRutaPickingPage.Id_Page_Anterior2 == 5) {
-        debugger;
-        this.goPickingPorProductoPage(); //ir a picking por producto
-      }
+    // this.navBar.backButtonClick = (e: UIEvent) => {
+    //   debugger;
+    //   if (this.vRutaPickingPage.Id_Page_Anterior == 1) {
+    //     this.goPickingPage(); //ir a ordenes picking
+    //   }
+    //   if (this.vRutaPickingPage.Id_Page_Anterior == 2) {
+    //     debugger;
+    //     this.goBackRutaPickingPage(0); //ir a ruta picking
+    //   }
+    //   if (this.vRutaPickingPage.Id_Page_Anterior == 5) {
+    //     debugger;
+    //     this.goPickingPorProductoPage(); //ir a picking por producto
+    //   }
+    //   if (this.vRutaPickingPage.Id_Page_Anterior2 == 1) {
+    //     debugger;
+    //     this.goPickingPage(); //ir a ordenes picking
+    //   }
+    //   if (this.vRutaPickingPage.Id_Page_Anterior2 == 2) {
+    //     debugger;
+    //     this.goBackRutaPickingPage(0); //ir a ruta picking
+    //   }
+    //   if (this.vRutaPickingPage.Id_Page_Anterior2 == 5) {
+    //     debugger;
+    //     this.goPickingPorProductoPage(); //ir a picking por producto
+    //   }
 
-    }
+    // }
 
 
     console.log('ionViewDidLoad DetallePickingPage');

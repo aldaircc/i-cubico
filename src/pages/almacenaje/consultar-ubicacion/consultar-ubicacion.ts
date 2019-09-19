@@ -34,31 +34,27 @@ export class ConsultarUbicacionPage {
   validarCodigo() {
     if (this.codeBar) {
       if (this.codeBar.trim() != "") {
-        if(this.codeBar.length == 14){
+        if (this.codeBar.length == 14) {
           this.codeBarBK = this.codeBar.trim();
           debugger;
           this.ListarUAsXUbicacion();
-        }else{
-          this.presentAlert("Debe ingresar una ubicación valida").then((resultAlert) => {
-            if (resultAlert) {
-              setTimeout(() => {
-                this.txtBuscarRef.setFocus();
-                this.selectAll(this.txtBuscar);
-              }, (500));
-            }
-          })
-        }        
+        } else {
+          this.presentToast("El código de ubicación debe tener 14 dígitos.");
+          setTimeout(() => {
+            this.selectAll(this.txtBuscar);
+          }, (500));
+        }
       } else {
         this.presentToast("Ingrese código de ubicación");
         setTimeout(() => {
-          this.txtBuscarRef.setFocus();
+          //this.txtBuscarRef.setFocus();
           this.selectAll(this.txtBuscar);
         }, (500));
       }
     } else {
       this.presentToast("Ingrese código de ubicación");
       setTimeout(() => {
-        this.txtBuscarRef.setFocus();
+        //this.txtBuscarRef.setFocus();
         this.selectAll(this.txtBuscar);
       }, (500));
     }
@@ -73,14 +69,14 @@ export class ConsultarUbicacionPage {
         this.presentAlert("No se encontraron registros").then((resultAlert) => {
           if (resultAlert) {
             setTimeout(() => {
-              this.txtBuscarRef.setFocus();
+              //this.txtBuscarRef.setFocus();
               this.selectAll(this.txtBuscar);
             }, (500));
           }
         })
       } else {
         setTimeout(() => {
-          this.txtBuscarRef.setFocus();
+          //this.txtBuscarRef.setFocus();
           this.selectAll(this.txtBuscar);
         }, (500));
       }
@@ -100,7 +96,7 @@ export class ConsultarUbicacionPage {
   }
 
   eliminarUA(data) {
-    this.presentAlertConfirm("¿Está seguro de eliminar la UA: " + data.UA_CodBarra + " en la ubicación?”.").then((result) => {
+    this.presentAlertConfirm("¿Está seguro de eliminar la UA: " + data.UA_CodBarra + " en la ubicación?.").then((result) => {
       if (result) {
         debugger;
         let fecha = new Date().toISOString();
@@ -131,7 +127,7 @@ export class ConsultarUbicacionPage {
 
   eliminarUAS() {
     if (this.listUas.length > 0) {
-      this.presentAlertConfirm("¿Está seguro de eliminar : " + this.rowCount + " registros de UA´s en la ubicación?”.").then((result) => {
+      this.presentAlertConfirm("¿Está seguro de eliminar : " + this.rowCount + " registros de UA´s en la ubicación?.").then((result) => {
         if (result) {
           for (var i = 0; i < this.listUas.length; i++) {
             var count = 0;
@@ -192,7 +188,7 @@ export class ConsultarUbicacionPage {
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 2000,
+      duration: 5000,
       position: 'bottom'
     });
     toast.present();
@@ -250,7 +246,8 @@ export class ConsultarUbicacionPage {
       })
     }
     setTimeout(() => {
-      this.txtBuscarRef.setFocus();
+      //this.txtBuscarRef.setFocus();
+      this.selectAll(this.txtBuscar);
     }, (500));
     console.log('ionViewDidLoad ConsultarUbicacionPage');
   }

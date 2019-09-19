@@ -56,7 +56,7 @@ export class TransferPage_04Page {
 
   validarUA(){
     if(this.codeBar.Text.trim() != ""){
-      this.validarUATransfSubAlmacen(this.vParameter.Id_Tx, this.codeBar.Text, this.vParameter.Lote, this.vParameter.Id_SubAlmacenDestino, this.vParameter.Id_Ubicacion, this.vParameter.Item);
+      this.validarUATransfSubAlmacen(this.vParameter.Id_Tx, this.codeBar.Text, this.vParameter.Lote, this.vParameter.Id_SubAlmacenOrigen, this.vParameter.Id_Ubicacion, this.vParameter.Item);
       this.isEnablebtnPicking = true;
       this.isError = false;
     }else{
@@ -77,7 +77,7 @@ export class TransferPage_04Page {
 
         if(cantCurrentUA <= saldo){
           
-          let message = this.pickingUASubAlmacen(saldo, cantCurrentUA, this.codeBar.Text, this.vParameter.Id_Tx, this.vParameter.Id_Producto, this.vParameter.Lote, this.cantUA, false, this.sGlobal.Id_TerminalRF, this.vParameter.Item, this.sGlobal.Id_Almacen, this.vParameter.Id_SubAlmacen, this.sGlobal.userName);
+          let message = this.pickingUASubAlmacen(saldo, cantCurrentUA, this.codeBar.Text, this.vParameter.Id_Tx, this.vParameter.Id_Producto, this.vParameter.Lote, this.cantUA, false, this.sGlobal.Id_TerminalRF, this.vParameter.Item, this.sGlobal.Id_Almacen, this.vParameter.Id_SubAlmacenDestino, this.sGlobal.userName);
 
         } else if(saldo == 0){
           alert('El saldo es 0, el producto se encuentra verificado.');
@@ -112,6 +112,7 @@ export class TransferPage_04Page {
 
   pickingUASubAlmacen(saldo, cantCurrentUA, strUA, strIdTx, intIdProducto, strLote, decCantidad, bolAnular, intIdRF, intItem, intIdAlmacen, intIdSubAlmacen, strUser): void{
     let message;
+    debugger;
     this.sPicking.pickingUASubAlmacen(strUA, strIdTx, intIdProducto, strLote, decCantidad, bolAnular, intIdRF, intItem, intIdAlmacen, intIdSubAlmacen, strUser).then(result=>{
       message = result;
 
@@ -130,6 +131,7 @@ export class TransferPage_04Page {
           this.navCtrl.remove(3, 2);
         }
       }else{
+        debugger;
         this.codeBar.Text = "";
         this.cantUA = 0;
         alert(message.message);

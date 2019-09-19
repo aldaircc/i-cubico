@@ -30,15 +30,16 @@ export class EmbarquePage_01Page {
   }
 
   presentPopover(event){
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 51});
+    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 52});
     popover.present({
       ev: event
     });
 
     popover.onDidDismiss(popoverData =>{
-      if(popoverData == 2){
-        this.showModalIncidencia();
-      }else if(popoverData == 4){
+      // if(popoverData == 2){
+      //   this.showModalIncidencia();
+      // }else 
+      if(popoverData == 4){
         this.navCtrl.pop();
         var nav = this.app.getRootNav();
         nav.setRoot(HomePage);

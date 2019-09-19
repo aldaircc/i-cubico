@@ -6,17 +6,17 @@
 -->
 <ion-header>
 
-    <ion-toolbar no-border-top>
+    <ion-toolbar no-padding no-margin color="primary">
         <ion-navbar>
             <ion-title>         
-             Detalle
+             DETALLE
             </ion-title>
         </ion-navbar>
         <ion-segment [(ngModel)]="detalle">
-            <ion-segment-button value="bultos">
+            <ion-segment-button value="bultos" style="color:white">
               Bultos
             </ion-segment-button>
-            <ion-segment-button value="detalleBultos">
+            <ion-segment-button value="detalleBultos" style="color:white">
               Detalle Bultos
             </ion-segment-button>           
           </ion-segment>
@@ -70,7 +70,7 @@
                   </ion-col>                  
                   <ion-col col-2 col-sm>
                       <button clear ion-button icon-only (click)="eliminarBulto(objDetBultoXBulto)">
-                        <ion-icon name="ios-trash-outline"></ion-icon>
+                        <ion-icon name="md-trash" color="dark"></ion-icon>
                       </button>
                   </ion-col>                  
                 </ion-row>                                                    
@@ -78,19 +78,21 @@
             </ion-card>
           </ion-row>     
         </ion-list>
-    
-       
     </div>
 
 
 </ion-content>
 
-<ion-footer class="bgLightBlue">
-  <ion-toolbar color="primary">
-    <ion-buttons right>
-      <button ion-button icon-only (click)="goToEmbalajePage06()">
-          <ion-icon name="logo-dropbox" ></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-toolbar>
+<ion-footer>
+    <ion-grid class="bgFooter">
+        <ion-row>
+            <ion-col col-12 class="bgFooter-col">
+                <button ion-button icon-start (click)="goToEmbalajePage06()">
+                    <ion-icon name="logo-dropbox"></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-footer>
+
+

@@ -54,7 +54,81 @@
     }
 
     .bgHeader{
-        background-color: /**#3878be**/ #03A9F5 !important;        
+        background-color: /**#3878be**/ /**#00BFFF**/  #03A9F5 !important; 
+        padding-top: 7px;    
+        padding-left: 12px;
+        padding-right: 12px;
+        padding-bottom: 7px;
+    }
+
+    .bgHeader-button{
+        background-color: #03A9F5 !important;
+    }
+
+    .bgHeader-col{
+        padding: 0px;
+    }
+
+    .bgHeader-label{
+        color: yellow; 
+        font-weight:bold ;  
+        margin: 2px;  
+    }
+
+    .bgHeader-text{
+        color: white; 
+        font-weight:bold;
+        margin: 2px;
+    }
+
+    .bgHeader-label-button{
+        color: yellow; 
+        font-weight:bold ;  
+        margin-top: 15px; 
+        margin-bottom: 0px; 
+        padding: 0px;
+    }
+
+    .bgHeader-text-button{
+        color: white; 
+        font-weight:bold;
+        margin-top: 15px;
+        margin-bottom: 0px; 
+        padding: 0px;
+
+    }
+
+    .box-titel{
+        margin: 0px; 
+        padding: 0px; 
+        font-weight:bold; 
+        text-align: center;
+    }
+
+    .box-row{
+        margin-left:10px; 
+        margin-right:10px; 
+        background: #03A9F5;
+    }
+
+    .box-label{
+        font-weight:bold; 
+        color: white; 
+        text-align: center;
+    }
+
+    .item-input-text1{
+        font-weight:bold; 
+        padding: 0px; 
+        margin: 0px;
+    }
+
+    .input-text1{
+        font-weight:bold; 
+        font-size: 13px; 
+        padding: 0px; 
+        margin: 0px; 
+        color:dimgray;
     }
 
     .bgLightBlue{
@@ -62,7 +136,7 @@
     }
 
     .bgWhite{
-        background-color: whitesmoke !important;
+        background-color: white !important;
     }
 
     .bgRed{
@@ -138,6 +212,78 @@
         color: white;
     }
 
+    .total-footer{
+        padding-top: 8px; 
+        padding-bottom: 6px; 
+        font-weight:bold; 
+        color:black;
+    }
+
+    .col-counts-footer{
+        padding-top: 0px; 
+        padding-bottom: 0px; 
+        padding-left: 4px; 
+        padding-right: 4px; 
+        text-align: center;
+    }
+
+    .count-gris-footer{
+        padding-top: 6px; 
+        padding-bottom: 6px; 
+        font-weight:bold; 
+        color:black; 
+        background: #A4A4A4;
+    }
+
+    .count-yellow-footer{
+        padding-top: 6px; 
+        padding-bottom: 6px; 
+        font-weight:bold; 
+        color:black; 
+        background: #FFFF00;
+    }
+
+    .count-green-footer{
+        padding-top: 6px; 
+        padding-bottom: 6px; 
+        font-weight:bold; 
+        color:black; 
+        background: #04B404;
+    }
+
+    .box-counter{
+        border-radius: 5px;
+        border: 1px solid #e6e9ee;
+        padding: 5px;
+        text-align: center;
+     }
+
+     .bgFooter{
+        background:#054B77 !important;
+        color: white;
+        margin: 0px; 
+        padding: 0px
+     }
+
+     .bgFooter-col{
+        margin: 0px; 
+        padding: 0px; 
+        text-align: right;
+     }
+
+     .bgFooter-col-text{
+        margin: 0px; 
+        padding-top: 2%; 
+        padding-bottom: 2%;
+     }
+
+     .bgFooter-label{
+        font-weight:bold; 
+        //color:white; 
+        margin: 0px; 
+        padding: 0px;
+     }
+
     $toolbar-background: #3D9BDD;
     
     ion-icon {
@@ -163,6 +309,8 @@
             mask-image: url(../assets/icon/md-save.svg);
         }
       }
+
+
       
   @import 'themes/bootstrap';
   @import 'themes/dark';

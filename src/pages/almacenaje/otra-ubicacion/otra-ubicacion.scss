@@ -27,4 +27,23 @@ page-otra-ubicacion {
         right: 0;
         z-index: 9999;
     }
+
+    .item-md.item-block .item-inner {
+        padding-right: 0px !important;
+        border-bottom: none !important;
+    }
+    .no-padding-left {
+        padding-left: 0px !important;
+    }
+
+    .input-borde1{        
+        border-bottom: 1px solid #dedede;
+    }
+
+
+    .input-has-focus{
+        border-bottom: 1px solid #054B77;
+      }
+
+ 
 }

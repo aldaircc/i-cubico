@@ -111,6 +111,7 @@ export class EmbalajeServiceProvider {
       this.http.post(this.sGlobal.despacho + 'RegistrarPesoBulto/entidad', JSON.stringify(parameter), {headers: this.headers})
       .map(res=>res.json())
       .subscribe(data=>{
+        resolve(data);
         console.log('RegistrarPesoBulto', data);
       },err=>{
         console.log('Error RegistrarPesoBulto', err);
@@ -139,6 +140,7 @@ export class EmbalajeServiceProvider {
       this.http.post(this.sGlobal.despacho + 'CerrarDespacho/idTx/idEstado/usuario/IdAlmacen', JSON.stringify(parameter), {headers: this.headers})
       .map(res=>res.json())
       .subscribe(data=>{
+        resolve(data);
         console.log('Cerrar despacho', data);
       },err=>{
         console.log('Error Cerrar despacho', err);

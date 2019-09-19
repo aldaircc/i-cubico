@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { OtraUbicacionPage } from '../otra-ubicacion/otra-ubicacion'
 import { AlmacenajeServiceProvider } from '../../../providers/almacenaje-service/almacenaje-service';
@@ -19,6 +19,7 @@ import { PalletsTransitoPage } from '../pallets-transito/pallets-transito';
 })
 export class AlmacenajePalletUaPage {
   @ViewChild('txtCodUbicacion') txtCodUbicacionRef;
+  @ViewChild('txtCodUbicacion', { read: ElementRef }) private txtCodUbicacion: ElementRef;
   vDatosUbicacion: any = [];
   vAlmacenajePalletUaPage: any = [];
   codeBar: string;
@@ -31,39 +32,61 @@ export class AlmacenajePalletUaPage {
   rowCount: any = 0;
   rowCountTotal: any = 0;
 
+  vUbicacion : any ={
+    'Sector' : "",
+    'Fila' : "",
+    'Columna' : "",
+    'Nivel' : "",
+    'Posicion' : "",
+    'CodigoBarraUbi' : "",
+    'Id_Ubicacion' : 0,
+    'Id_Ubicacion_Transito' : 0,
+    'CantidadPallets' : 0,
+    'lst_UA' : []
+  };
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vDatosUbicacion = navParams.get('data');
+    ///this.vUbicacion = (navParams.get('vUbicacion') != null) ? navParams.get('vUbicacion') : this.vUbicacion;
     debugger;
     this.rowCountTotal = this.vDatosUbicacion.CantidadPallets;
+    // if(this.vUbicacion.CantidadPallets != 0)
+    // {
+    //   this.rowCountTotal = this.vUbicacion.CantidadPallets;
+    // }
   }
 
   validarCodeBar() {
     debugger;
     if (this.codeBar) {
       if (this.codeBar.trim() != "") {
-        this.codBar = this.vDatosUbicacion.CodigoBarraUbi.trim();
-        if (this.codeBar.trim() == this.codBar) {
-          this.isbgWhite = false;
-          this.isBgRed = false;
-          this.isBgYellow = true;
-          this.isBgGreen = false;
-          this.valorCodBarra = true;
-        } else {
-          this.isbgWhite = false;
-          this.isBgRed = true;
-          this.isBgYellow = false;
-          this.isBgGreen = false;
-          this.codeBar = "";
-          this.valorCodBarra = false;
-          this.presentAlert("Ubicación no es correcta.").then((resultAlert) => {
-            if (resultAlert) {
-              setTimeout(() => {
-                this.txtCodUbicacionRef.setFocus();
-              }, (500));
-            }
-          })
-        }
+        if(this.codeBar.length==14){
+          this.codBar = this.vDatosUbicacion.CodigoBarraUbi.trim();
+          if (this.codeBar.trim() == this.codBar) {
+            this.isbgWhite = false;
+            this.isBgRed = false;
+            this.isBgYellow = true;
+            this.isBgGreen = false;
+            this.valorCodBarra = true;
+          } else {
+            this.isbgWhite = false;
+            this.isBgRed = true;
+            this.isBgYellow = false;
+            this.isBgGreen = false;
+            this.codeBar = "";
+            this.valorCodBarra = false;
+            this.presentAlert("Ubicación no es correcta.").then((resultAlert) => {
+              if (resultAlert) {
+                setTimeout(() => {
+                  this.txtCodUbicacionRef.setFocus();
+                }, (500));
+              }
+            })
+          }
+        }else{
+          this.presentToast("El código de ubicación debe tener 14 dígitos.");
+        }        
       }
       else {
         this.presentToast("Ingrese código de ubicación");
@@ -99,7 +122,9 @@ export class AlmacenajePalletUaPage {
                   this.isBgGreen = true;
                   this.presentAlert("Proceso de almacenaje de Pallets/UA´s finalizado.").then((resultAlert) => {
                     if (resultAlert) {
-                      this.goPalletsUasTransito();
+                      //this.goPalletsUasTransito();
+                      // this.navCtrl.pop();
+                      this.goBackPalletTransito();
                     }
                   })
                 } else {
@@ -133,7 +158,7 @@ export class AlmacenajePalletUaPage {
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 2000,
+      duration: 5000,
       position: 'bottom'
     });
     toast.present();
@@ -164,24 +189,62 @@ export class AlmacenajePalletUaPage {
       'CantidadPallets': this.vDatosUbicacion.CantidadPallets,
       'lst_UA': this.vDatosUbicacion.lst_UA
     };
+    // this.navCtrl.push(OtraUbicacionPage, {
+    //   data: this.vAlmacenajePalletUaPage
+    // });
     this.navCtrl.push(OtraUbicacionPage, {
-      data: this.vAlmacenajePalletUaPage
+      data: this.vAlmacenajePalletUaPage, ubicacion: this.Selectedcallback
     });
   }
 
-  goPalletsUasTransito() {
+  dataFromOtraUbicacionPage : any;  
+  Selectedcallback = data => {
     debugger;
-    this.vAlmacenajePalletUaPage = {
-      'Id_Ubicacion_Transito': this.vDatosUbicacion.Id_Ubicacion_Transito
-    };
-    this.navCtrl.push(PalletsTransitoPage, {
-      data: this.vAlmacenajePalletUaPage
-    });
+    this.dataFromOtraUbicacionPage = data;
+    console.log('data received from other page', this.dataFromOtraUbicacionPage);
+    debugger;
+    this.vDatosUbicacion.Sector = this.dataFromOtraUbicacionPage.Sector;
+    this.vDatosUbicacion.Fila = this.dataFromOtraUbicacionPage.Fila;
+    this.vDatosUbicacion.Columna = this.dataFromOtraUbicacionPage.Columna;
+    this.vDatosUbicacion.Nivel = this.dataFromOtraUbicacionPage.Nivel;
+    this.vDatosUbicacion.Posicion = this.dataFromOtraUbicacionPage.Posicion;
+    this.vDatosUbicacion.CodigoBarraUbi = this.dataFromOtraUbicacionPage.CodigoBarra;
+    this.vDatosUbicacion.Id_Ubicacion = this.dataFromOtraUbicacionPage.Id_Ubicacion;
+    this.vDatosUbicacion.Id_Ubicacion_Transito = this.dataFromOtraUbicacionPage.Id_Ubicacion_Transito;
+    this.vDatosUbicacion.CantidadPallets = this.dataFromOtraUbicacionPage.CantidadPallets;
+    this.vDatosUbicacion.lst_UA = this.dataFromOtraUbicacionPage.lst_UA;
+  };
+
+
+  goBackPalletTransito(){
+    debugger;
+      this.navCtrl.pop().then(() => {
+        this.vAlmacenajePalletUaPage = {
+          'Id_Ubicacion': this.vDatosUbicacion.Id_Ubicacion
+        };
+        this.navParams.get('palletTransito')(this.vAlmacenajePalletUaPage);
+      });
+  }
+
+  // goPalletsUasTransito() {
+  //   debugger;
+  //   this.vAlmacenajePalletUaPage = {
+  //     'Id_Ubicacion_Transito': this.vDatosUbicacion.Id_Ubicacion_Transito
+  //   };
+  //   this.navCtrl.push(PalletsTransitoPage, {
+  //     data: this.vAlmacenajePalletUaPage
+  //   });
+  // }
+
+  selectAll(el: ElementRef) {
+    let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
+    nativeEl.select();
   }
 
   ionViewDidLoad() {
     setTimeout(() => {
-      this.txtCodUbicacionRef.setFocus();
+      //this.txtCodUbicacionRef.setFocus();
+      this.selectAll(this.txtCodUbicacion);
     }, (500));
     console.log('ionViewDidLoad AlmacenajePalletUaPage');
   }

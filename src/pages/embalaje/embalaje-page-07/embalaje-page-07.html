@@ -5,66 +5,78 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-    <ion-toolbar no-border-top>
+    <ion-toolbar no-padding no-margin color="primary">
         <ion-navbar>
-          <ion-title>         
-           Pesar
-          </ion-title>
-        </ion-navbar>   
-      </ion-toolbar>
+            <ion-title>
+                Pesar
+            </ion-title>
+        </ion-navbar>
+    </ion-toolbar>
 
 </ion-header>
 
 <ion-content>
-  <ion-grid>   
-    <ion-row>
-        <ion-col>
-            <div>
-                <h6><b>Balanza:</b></h6>  
-              </div>
-        </ion-col>             
-    </ion-row>    
-    <ion-row>
-        <ion-item>                   
-            <ion-select col-12 col-sm [(ngModel)]="id_Balanza" interface="action-sheet">
-              <ion-option *ngFor="let balanza of listBalanza" value="{{ balanza.IdBalanza }}" >{{ balanza.Descripcion }} </ion-option>
-            </ion-select>
-        </ion-item> 
-    </ion-row>    
-    <ion-row>   
-        <ion-col>            
-          <div>
-            <h6><b>Peso Físico (Kg):</b></h6>  
-          </div>   
-        </ion-col>            
-    </ion-row>
-    <ion-row>
-        <ion-col class="centrar"> 
-            <button clear ion-button icon-only>
-              <ion-icon name="ios-stopwatch-outline"></ion-icon>
-            </button> 
-          </ion-col>    
-    </ion-row>
-    <ion-row>
-        <ion-col col-5 col-sm>            
-        </ion-col>
-        <ion-col col-3 col-sm>            
-            <ion-item>
-                <ion-input type="Number" placeholder="0.00" [(ngModel)]="pesoFisico"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col col-4 col-sm>            
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <div>
+                    <h6><b>Balanza:</b></h6>
+                </div>
             </ion-col>
-    </ion-row>
-  </ion-grid>
+        </ion-row>
+        <ion-row>
+            <ion-item>
+                <ion-select col-12 col-sm [(ngModel)]="IdBalanza" interface="action-sheet" #selectFormat (ionChange)="onChange($event)">
+                    <ion-option *ngFor="let balanza of listBalanza" value="{{ balanza.IdBalanza }}">{{
+                        balanza.Descripcion }} </ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <div>
+                    <h6><b>Peso Físico (Kg):</b></h6>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col class="centrar">
+                <button clear ion-button icon-only>
+                    <ion-icon name="ios-stopwatch-outline"></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-5 col-sm>
+            </ion-col>
+            <ion-col col-3 col-sm>
+                <ion-item>
+                    <ion-input type="number" min="0" placeholder="0.00" [(ngModel)]="pesoFisico"
+                    onkeypress="return (event.charCode != 46 && event.charCode > 31 && (event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col col-4 col-sm>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
-<ion-footer class="bgLightBlue">
-    <ion-toolbar color="primary">        
+<ion-footer>
+    <ion-grid class="bgFooter">
+        <ion-row>
+            <ion-col col-12 class="bgFooter-col">
+                <button ion-button icon-start (click)="goDetalleDespacho()">
+                    <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer>
+<!-- <ion-footer class="bgLightBlue">
+    <ion-toolbar color="primary">
         <ion-buttons right>
             <button ion-button icon-only (click)="GuardarPesoBulto()">
-                <ion-icon name="ios-checkmark-circle-outline" ></ion-icon>
+                <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
             </button>
         </ion-buttons>
     </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

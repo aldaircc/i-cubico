@@ -90,10 +90,10 @@ export class ReabastecimientoPage {
     this.navCtrl.push(ConsultarUbicacionPage);
   }
 
-  goMenu() {
-    debugger;
-    this.navCtrl.push(MainMenuPage);
-  }
+  // goMenu() {
+  //   debugger;
+  //   this.navCtrl.push(MainMenuPage);
+  // }
 
   presentPopover(ev) {
 

@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Select } from 'ionic-angular';
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
+import { EmbalajePage_06Page } from '../embalaje-page-06/embalaje-page-06';
+import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 
 /**
  * Generated class for the EmbalajePage_07Page page.
@@ -19,14 +21,19 @@ export class EmbalajePage_07Page {
   listBalanza: any;
   pesoFisico: number;
   vNroBulto: number;
-  vNroBultoCeros:any;
+  vNroBultoCeros: any;
   vEmbalajePage02: any;
-  
+  vDetalleDespacho: any = [];
+  vPage: any;
+  IdBalanza: number = 0;
+  @ViewChild('selectFormat') selectFormat: Select;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public sEmbalaje: EmbalajeServiceProvider) {
-      this.vNroBulto = navParams.get('dataNroBulto'); 
-      this.vNroBultoCeros = navParams.get('dataNroBultoCeros');  
-      this.vEmbalajePage02 = navParams.get('dataPage02');     
+    public sEmbalaje: EmbalajeServiceProvider, public sGlobal: GlobalServiceProvider) {
+    this.vNroBulto = navParams.get('dataNroBulto');
+    this.vNroBultoCeros = navParams.get('dataNroBultoCeros');
+    this.vEmbalajePage02 = navParams.get('dataPage02');
+    //this.vPage = navParams.get('page');
   }
 
   getDataBalanzasXAlmacen() {
@@ -34,7 +41,7 @@ export class EmbalajePage_07Page {
   }
 
   ListarBalanzasXAlmacen(intId_almacen) {
-    this.sEmbalaje.ListarBalanzasXAlmacen(intId_almacen).then((result) => {      
+    this.sEmbalaje.ListarBalanzasXAlmacen(intId_almacen).then((result) => {
       this.listBalanza = result;
       if (this.listBalanza.length > 0) {
 
@@ -47,23 +54,114 @@ export class EmbalajePage_07Page {
   }
 
   ionViewWillEnter() {
-    this.getDataBalanzasXAlmacen();    
+    this.getDataBalanzasXAlmacen();
   }
-  
-  GuardarPesoBulto(){   
 
-    var objEmbalaje = {
-      'Id_Tx': this.vEmbalajePage02.Id_Tx,
-      'NroBulto': this.vNroBulto,
-      'Peso': this.pesoFisico,
-      'Observacion': this.vEmbalajePage02.Direccion,
-      'CodigoBarra': this.vEmbalajePage02.Id_Tx+'/'+this.vNroBultoCeros      
-    };
-    debugger;
-    this.sEmbalaje.RegistrarPesoBulto(objEmbalaje).then((result)=>{      
-      console.log(result);
-    });
+  // goDetalleDespacho() {
+  //   debugger;
+  //   this.navCtrl.pop().then(() => {
+  //     this.vDetalleDespacho = {
+  //       'peso': this.pesoFisico
+  //     };
+  //     this.navParams.get('peso')(this.vDetalleDespacho);
+  //   });
+  // } 
+
+  onChange() {     
+    debugger
+    let obj = this.listBalanza.filter(x => x.IdBalanza == this.IdBalanza)[0];  
   }
+
+validarCampos(){
+  var message = "";
+  if(this.IdBalanza == 0){
+    message = "Seleccione una balanza";
+    setTimeout(() => {
+      this.selectFormat.open();
+    }, 500);
+    return message;
+  }
+
+  if(!this.pesoFisico){
+    this.pesoFisico = 0;
+  }
+
+  return message;
+}
+  
+
+  goDetalleDespacho() {
+    debugger;
+
+    let message = this.validarCampos();
+    if(message.length > 0){
+      alert(message);
+      return;
+    }
+
+    var resultFor = false;
+    this.navCtrl.getViews().forEach(item => {
+      debugger;
+      if (item.name == 'EmbalajePage_06Page') {
+        debugger;
+        resultFor = true;
+        this.sGlobal.resultObtenerPeso = true;
+        this.sGlobal.pesoBulto = this.pesoFisico;
+        this.navCtrl.popTo(item);
+      } 
+    });
+
+    if(!resultFor){
+      this.sGlobal.resultObtenerPeso = true;
+      this.sGlobal.pesoBulto = this.pesoFisico;
+      this.navCtrl.push(EmbalajePage_06Page, {
+        dataNroBulto: this.vNroBulto, dataNroBultoCeros: this.vNroBultoCeros,
+        dataPage02: this.vEmbalajePage02
+      });
+    }
+    
+      
+
+    // if (this.vPage == 6) {
+    //   this.navCtrl.pop().then(() => {
+    //     this.vDetalleDespacho = {
+    //       'peso': this.pesoFisico
+    //     };
+    //     this.navParams.get('peso')(this.vDetalleDespacho);
+    //   });
+    // }else{
+    //   this.navCtrl.push(EmbalajePage_06Page, {
+    //     dataNroBulto: this.vNroBulto, dataNroBultoCeros: this.vNroBultoCeros,
+    //     dataPage02: this.vEmbalajePage02, peso: this.pesoFisico
+    //   });
+    // }
+    // this.navCtrl.getViews().forEach(item => {
+    //   if (item.name == 'EmbalajePage_06Page') {
+    //     this.navCtrl.popTo(item).then(() => {
+    //       this.vDetalleDespacho = {
+    //         'peso': this.pesoFisico
+    //       };
+    //       this.navParams.get('peso')(this.vDetalleDespacho);
+    //     });
+    //   }
+    // });
+  }
+
+  // GuardarPesoBulto_Old(){   
+  //   var objEmbalaje = {
+  //     'Id_Tx': this.vEmbalajePage02.Id_Tx,
+  //     'NroBulto': this.vNroBulto,
+  //     'Peso': this.pesoFisico,
+  //     'Observacion': this.vEmbalajePage02.Direccion,
+  //     'CodigoBarra': this.vEmbalajePage02.Id_Tx+'/'+this.vNroBultoCeros      
+  //   };
+  //   debugger;
+  //   this.sEmbalaje.RegistrarPesoBulto(objEmbalaje).then((result)=>{      
+  //     console.log(result);
+  //     debugger;
+  //     this.goDetalleDespacho();
+  //   });
+  // }
 
 
   ionViewDidLoad() {

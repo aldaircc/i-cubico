@@ -5,36 +5,37 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>Ubicaciones lote</ion-title>
+  <ion-navbar no-padding no-margin color="primary">
+    <ion-title>UBICACIONES LOTE</ion-title>
   </ion-navbar>
+
+  <ion-grid class="bgHeader statico">
+      <ion-row align-items-center>
+        <ion-col col-3 col-sm class="bgHeader-col">
+          <div class="bgHeader-label">Código: </div>
+        </ion-col>
+        <ion-col col-9 col-sm class="bgHeader-col">
+          <div class="bgHeader-text">{{ vParameter.Cod_Producto }}</div>
+        </ion-col>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col col-12 col-sm class="bgHeader-col">
+          <div class="bgHeader-text" style="text-align: center">{{ vParameter.Producto }}</div>
+        </ion-col>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col col-3 col-sm class="bgHeader-col">
+          <div class="bgHeader-label">Lote: </div>
+        </ion-col>
+        <ion-col col-8 col-sm class="bgHeader-col">
+          <div class="bgHeader-text">{{ vParameter.Lote }}</div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 </ion-header>
 
 <ion-content>
-  <ion-grid class="bgHeader">
-    <ion-row align-items-center>
-      <ion-col col-3 col-sm>
-        <div class="textHeader">Código: </div>
-      </ion-col>
-      <ion-col col-9 col-sm>
-        <div class="valueHeader">{{ vParameter.Cod_Producto }}</div>
-      </ion-col>
-    </ion-row>
-    <ion-row align-items-center>
-      <ion-col col-12 col-sm>
-        <div class="valueHeader">{{ vParameter.Producto }}</div>
-      </ion-col>
-    </ion-row>
-    <ion-row align-items-center>
-      <ion-col col-3 col-sm>
-        <div class="textHeader">Lote: </div>
-      </ion-col>
-      <ion-col col-8 col-sm>
-        <div class="valueHeader">{{ vParameter.Lote }}</div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  
 
   <ion-card *ngFor="let obj of listUbiLote">  
       <ion-card-content no-padding (click)="goToTransferPage04(obj)">
@@ -67,7 +68,7 @@
               </ion-row>
             </ion-col>
         <ion-col col-1 col-sm align-self-center>
-            <ion-icon name="arrow-round-forward"></ion-icon>
+            <ion-icon name="md-play"></ion-icon>
         </ion-col>
           </ion-row>
         </ion-grid>

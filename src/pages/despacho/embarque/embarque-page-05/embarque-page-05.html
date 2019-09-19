@@ -6,8 +6,8 @@
 -->
 <ion-header no-border>
 
-  <ion-navbar>
-    <ion-title>Detalle</ion-title>
+  <ion-navbar no-padding no-margin color="primary">
+    <ion-title>DETALLE</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="presentPopover($event)">
         <ion-icon name="more"></ion-icon>
@@ -15,7 +15,7 @@
     </ion-buttons>
   </ion-navbar>
 
-  <ion-toolbar>
+  <ion-toolbar no-padding no-margin color="primary">
     <ion-buttons class="inline-block-button">
       <button small ion-button [ngClass]="(bolBulto == true) ? 'selected-tab': 'unselected-tab'" (click)="mostrarBultos()">
         Bultos

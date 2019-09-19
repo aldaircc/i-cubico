@@ -10,14 +10,14 @@
       <ion-row no-padding no-margin>
         <ion-col no-margin no-padding col-12>
           <ion-navbar no-padding no-margin>
-            <ion-label style="font-size: 15px; color: white; font-weight:bold;">CONSULTAR UBICACIONES DE PRODUCTO</ion-label>
+            <ion-label style="font-size: 13px; color: white; font-weight:bold;">CONSULTAR UBICACIONES DE PRODUCTO</ion-label>
           </ion-navbar>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-toolbar>
 
-  <ion-grid class="bgHeader statico" class="bgLightBlue" style="padding: 0px;">
+  <ion-grid class="statico" style="padding: 0px;">
     <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
       <ion-col col-5 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
@@ -26,7 +26,7 @@
       </ion-col>
       <ion-col col-7 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtEan [(ngModel)]="codeEan" (keyup.enter)="validarCodeBar()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+          <ion-input #txtEan [(ngModel)]="codeEan" maxlength="14" (keyup.enter)="validarCodeBar()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -44,10 +44,18 @@
       </ion-col>
     </ion-row>
 
-    <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; ">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; height: 17px">
       <ion-col col-12 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 2px; margin-bottom: 0px;">
           {{ producto }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; height: 17px">
+      <ion-col col-12 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 0px; margin-bottom: 0px;">
+          {{ sector }}
         </ion-label>
       </ion-col>
     </ion-row>
@@ -57,13 +65,7 @@
 <ion-content>
   
 
-  <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; ">
-    <ion-col col-12 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-      <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
-        {{ sector }}
-      </ion-label>
-    </ion-col>
-  </ion-row>
+  
 
   <ion-row class="bgWhite">
     <ion-card *ngFor="let objEan of listAuxResultEan">

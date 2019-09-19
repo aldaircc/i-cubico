@@ -129,9 +129,9 @@ export class EmbalajePage_09Page {
               debugger;
               console.log(result);
               var respuesta : any = result;
-
               this.mostrarConfirmacion("Confirmación",respuesta.message);            
-              this.getDataDetalleBultoXBulto();         
+              this.getDataDetalleBultoXBulto();  
+                     
             });
             
           }

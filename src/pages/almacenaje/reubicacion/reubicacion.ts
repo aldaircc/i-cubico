@@ -45,34 +45,39 @@ export class ReubicacionPage {
     debugger;
     if (this.codeBar) {
       if (this.codeBar.trim() != "") {
-        if (!this.codeBar_Bk) {
-          debugger;
-          this.codeBar_Bk = this.codeBar.trim();
-        }
-        if (this.codeBar_Bk != this.codeBar.trim()) {
-          debugger;
-          //Preguntar si desea cambiar de num de ubicacion
-          this.presentAlertConfirm("¿Desea cambiar el código de ubicación?”.").then((resultAlert3) => {
-            if (resultAlert3) {
-              this.Fila = "";
-              this.Columna = "";
-              this.Nivel = "";
-              this.Posicion = "";
-              this.codePalletUA = "";
-              this.txtPalletUaisenabled = false;
-              this.resultPalletUA = [];
-              this.listAuxResultPalletUA = [];
-              this.rowCount = this.resultPalletUA.length;
-              setTimeout(() => {
-                this.txtCodUbicacionRef.setFocus();
-              }, (500));
-              this.codeBar_Bk = this.codeBar.trim();
-              this.ListarUbicacionXCodigoBarra();
-            }
-          })
+        if (this.codeBar.length == 14) {
+          if (!this.codeBar_Bk) {
+            debugger;
+            this.codeBar_Bk = this.codeBar.trim();
+          }
+          if (this.codeBar_Bk != this.codeBar.trim()) {
+            debugger;
+            //Preguntar si desea cambiar de num de ubicacion
+            this.presentAlertConfirm("¿Desea cambiar el código de ubicación?”.").then((resultAlert3) => {
+              if (resultAlert3) {
+                this.Fila = "";
+                this.Columna = "";
+                this.Nivel = "";
+                this.Posicion = "";
+                this.codePalletUA = "";
+                this.txtPalletUaisenabled = false;
+                this.resultPalletUA = [];
+                this.listAuxResultPalletUA = [];
+                this.rowCount = this.resultPalletUA.length;
+                setTimeout(() => {
+                  //this.txtCodUbicacionRef.setFocus();
+                  this.selectAll(this.txtCodUbicacion);
+                }, (500));
+                this.codeBar_Bk = this.codeBar.trim();
+                this.ListarUbicacionXCodigoBarra();
+              }
+            })
+          } else {
+            this.codeBar_Bk = this.codeBar.trim();
+            this.ListarUbicacionXCodigoBarra();
+          }
         } else {
-          this.codeBar_Bk = this.codeBar.trim();
-          this.ListarUbicacionXCodigoBarra();
+          this.presentToast("El código de ubicación debe tener 14 dígitos.");
         }
       }
       else {
@@ -82,7 +87,8 @@ export class ReubicacionPage {
       this.presentToast("Ingrese código de ubicación");
     }
     setTimeout(() => {
-      this.txtCodUbicacionRef.setFocus();
+      //this.txtCodUbicacionRef.setFocus();
+      this.selectAll(this.txtCodUbicacion);
     }, (500));
   }
 
@@ -97,7 +103,7 @@ export class ReubicacionPage {
         this.Posicion = this.resultUbicacion[0].Posicion;
         this.txtPalletUaisenabled = true;
         setTimeout(() => {
-          this.txtPalletUaRef.setFocus();
+          //this.txtPalletUaRef.setFocus();
           this.selectAll(this.txtPalletUa);
         }, (500));
       } else {
@@ -106,7 +112,7 @@ export class ReubicacionPage {
           if (resultAlert) {
             //select y focus en ubicaicon origen
             setTimeout(() => {
-              this.txtCodUbicacionRef.setFocus();
+              //this.txtCodUbicacionRef.setFocus();
               this.selectAll(this.txtCodUbicacion);
             }, (500));
           }
@@ -123,43 +129,14 @@ export class ReubicacionPage {
       if (this.codeBar.trim() != "") {
         if (this.codePalletUA) {
           if (this.codePalletUA.trim() != "") {
-            this.sAlmacenaje.getValidarExisteUAUbicada(this.codePalletUA, "", this.resultUbicacion[0].Id_Ubicacion).then((result) => {
-              debugger;
-              this.resultPalletUA = result;
-              //this.rowCount = this.resultPalletUA.length;
-              if (this.resultPalletUA.length > 0) {
-                if (this.listAuxResultPalletUA.length == 0) {
-                  for (var i = 0; i < this.resultPalletUA.length; i++) {
-                    var obj = {
-                      'Cantidad': result[i].Cantidad,
-                      'CodigoProducto': result[i].CodigoProducto,
-                      'FlagAveriado': result[i].FlagAveriado,
-                      'FlagDisponible': result[i].FlagDisponible,
-                      'Id_Marca': result[i].Id_Marca,
-                      'Id_Producto': result[i].Id_Producto,
-                      'Id_UM': result[i].Id_UM,
-                      'LoteLab': result[i].LoteLab,
-                      'LotePT': result[i].LotePT,
-                      'NombreProducto': result[i].NombreProducto,
-                      'UA_CodBarra': result[i].UA_CodBarra,
-                      'UM': result[i].UM
-                    };
-                    this.listAuxResultPalletUA.push(obj);
-                  }
-                } else {
-                  for (var i = 0; i < this.resultPalletUA.length; i++) {
-                    var resultPalletUA = false;
-                    var UA = result[i].UA_CodBarra;
-                    var IdProducto = result[i].Id_Producto;
-                    for (var j = 0; j < this.listAuxResultPalletUA.length; j++) {
-                      if (UA == this.listAuxResultPalletUA[j].UA_CodBarra) { //Si no se encuentra en la lista agregar elemento a la lista
-                        resultPalletUA = true;
-                      }
-                      if (IdProducto != this.listAuxResultPalletUA[0].Id_Producto) {
-                        resultPalletUA = true;
-                      }
-                    }
-                    if (!resultPalletUA) {
+            if (this.codePalletUA.length == 12) {
+              this.sAlmacenaje.getValidarExisteUAUbicada(this.codePalletUA, "", this.resultUbicacion[0].Id_Ubicacion).then((result) => {
+                debugger;
+                this.resultPalletUA = result;
+                //this.rowCount = this.resultPalletUA.length;
+                if (this.resultPalletUA.length > 0) {
+                  if (this.listAuxResultPalletUA.length == 0) {
+                    for (var i = 0; i < this.resultPalletUA.length; i++) {
                       var obj = {
                         'Cantidad': result[i].Cantidad,
                         'CodigoProducto': result[i].CodigoProducto,
@@ -176,51 +153,102 @@ export class ReubicacionPage {
                       };
                       this.listAuxResultPalletUA.push(obj);
                     }
+                  } else {
+                    for (var i = 0; i < this.resultPalletUA.length; i++) {
+                      var resultPalletUA = false;
+                      var UA = result[i].UA_CodBarra;
+                      var IdProducto = result[i].Id_Producto;
+                      for (var j = 0; j < this.listAuxResultPalletUA.length; j++) {
+                        if (UA == this.listAuxResultPalletUA[j].UA_CodBarra) { //Si no se encuentra en la lista agregar elemento a la lista
+                          resultPalletUA = true;
+                        }
+                        if (IdProducto != this.listAuxResultPalletUA[0].Id_Producto) {
+                          resultPalletUA = true;
+                        }
+                      }
+                      if (!resultPalletUA) {
+                        var obj = {
+                          'Cantidad': result[i].Cantidad,
+                          'CodigoProducto': result[i].CodigoProducto,
+                          'FlagAveriado': result[i].FlagAveriado,
+                          'FlagDisponible': result[i].FlagDisponible,
+                          'Id_Marca': result[i].Id_Marca,
+                          'Id_Producto': result[i].Id_Producto,
+                          'Id_UM': result[i].Id_UM,
+                          'LoteLab': result[i].LoteLab,
+                          'LotePT': result[i].LotePT,
+                          'NombreProducto': result[i].NombreProducto,
+                          'UA_CodBarra': result[i].UA_CodBarra,
+                          'UM': result[i].UM
+                        };
+                        this.listAuxResultPalletUA.push(obj);
+                      } else {
+                        this.presentAlert("El código de Pallet/UA ya se encuentra en la lista.").then((resultAlert) => {
+                          if (resultAlert) {
+                            setTimeout(() => {
+                              this.codePalletUA = "";
+                              //this.txtPalletUaRef.setFocus();
+                              this.selectAll(this.txtPalletUa);
+                            }, (500));
+                          }
+                        })
+                      }
+                    }
                   }
-                }
-                this.rowCount = this.listAuxResultPalletUA.length;
-                // this.codeBar = "";
-                setTimeout(() => {
-                  this.txtPalletUaRef.setFocus();
-                  this.selectAll(this.txtPalletUa);
-                }, (500));
+                  this.rowCount = this.listAuxResultPalletUA.length;
+                  // this.codeBar = "";
+                  setTimeout(() => {
+                    this.codePalletUA = "";
+                    //this.txtPalletUaRef.setFocus();
+                    this.selectAll(this.txtPalletUa);
+                  }, (500));
 
-              } else {
-                this.presentAlert("UA/Pallet no pertenece a la ubicación.").then((resultAlert) => {
-                  if (resultAlert) {
-                    setTimeout(() => {
-                      this.txtPalletUaRef.setFocus();
-                      this.selectAll(this.txtPalletUa);
-                    }, (500));
-                  }
-                })
-              }
-            }, err => {
-              console.log('E-getListarUbicacionXCodigoBarra', err);
-            });
+                } else {
+                  this.presentAlert("UA/Pallet no pertenece a la ubicación.").then((resultAlert) => {
+                    if (resultAlert) {
+                      setTimeout(() => {
+                        //this.txtPalletUaRef.setFocus();
+                        this.selectAll(this.txtPalletUa);
+                      }, (500));
+                    }
+                  })
+                }
+              }, err => {
+                console.log('E-getListarUbicacionXCodigoBarra', err);
+              });
+            } else {
+              this.presentToast("El código Pallet/UA debe tener 12 dígitos.");
+              setTimeout(() => {
+                this.selectAll(this.txtPalletUa);
+              }, (500));
+            }
           }
           else {
             this.presentToast("Ingrese código de Pallet/UA");
             setTimeout(() => {
-              this.txtPalletUaRef.setFocus();
+              //this.txtPalletUaRef.setFocus();
+              this.selectAll(this.txtPalletUa);
             }, (500));
           }
         } else {
           this.presentToast("Ingrese código de Pallet/UA");
           setTimeout(() => {
-            this.txtPalletUaRef.setFocus();
+            //this.txtPalletUaRef.setFocus();
+            this.selectAll(this.txtPalletUa);
           }, (500));
         }
       } else {
         this.presentToast("Ingrese código de ubicación");
         setTimeout(() => {
-          this.txtCodUbicacionRef.setFocus();
+          //this.txtCodUbicacionRef.setFocus();
+          this.selectAll(this.txtCodUbicacion);
         }, (500));
       }
     } else {
       this.presentToast("Ingrese código de ubicación");
       setTimeout(() => {
-        this.txtCodUbicacionRef.setFocus();
+        //this.txtCodUbicacionRef.setFocus();
+        this.selectAll(this.txtCodUbicacion);
       }, (500));
     }
   }
@@ -252,7 +280,8 @@ export class ReubicacionPage {
     this.listAuxResultPalletUA = [];
     this.rowCount = this.resultPalletUA.length;
     setTimeout(() => {
-      this.txtCodUbicacionRef.setFocus();
+      //this.txtCodUbicacionRef.setFocus();
+      this.selectAll(this.txtCodUbicacion);
     }, (500));
   }
 
@@ -264,7 +293,7 @@ export class ReubicacionPage {
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 2000,
+      duration: 5000,
       position: 'bottom'
     });
     toast.present();
@@ -316,45 +345,77 @@ export class ReubicacionPage {
 
   goReubicacionDestinoPage() {
     debugger;
-    if (this.listAuxResultPalletUA.length > 0) {
+    if (this.codeBar) {
+      if (this.codeBar.trim() != "") {
+        if (this.listAuxResultPalletUA.length > 0){
+          var listUA = [];
+              this.listAuxResultPalletUA.forEach(el => {
+                listUA.push(el.UA_CodBarra);
+              });
 
-      var listUA = [];
-      this.listAuxResultPalletUA.forEach(el => {
-        listUA.push(el.UA_CodBarra);
-      });
+              let cantidadTotal = this.listAuxResultPalletUA.reduce(function (prev, cur) {
+                return prev + cur.Cantidad;
+              }, 0);
 
-      let cantidadTotal = this.listAuxResultPalletUA.reduce(function (prev, cur) {
-        return prev + cur.Cantidad;
-      }, 0);
-
-      this.vReubicacionDestinoPage = {
-        'Codigo_Origen': this.codeBar_Bk,
-        'Total_Pallet': this.rowCount,
-        'Id_Producto': this.listAuxResultPalletUA[0].Id_Producto,
-        'cantidadTotal': cantidadTotal,
-        'listUA': listUA
-      };
-      this.navCtrl.push(ReubicacionDestinoPage, {
-        data: this.vReubicacionDestinoPage
-      });
+              this.vReubicacionDestinoPage = {
+                'Codigo_Origen': this.codeBar_Bk,
+                'Total_Pallet': this.rowCount,
+                'Id_Producto': this.listAuxResultPalletUA[0].Id_Producto,
+                'cantidadTotal': cantidadTotal,
+                'listUA': listUA
+              };
+              this.navCtrl.push(ReubicacionDestinoPage, {
+                data: this.vReubicacionDestinoPage
+              });
+        }else{
+          if (this.codePalletUA) {
+            if (this.codePalletUA.trim() != "") {
+              this.presentToast("No ha agregado el código de Pallet/UA");
+              setTimeout(() => {
+                this.selectAll(this.txtPalletUa);
+              }, (500));
+            } else {
+              this.presentToast("Ingrese código de Pallet/UA");
+              setTimeout(() => {
+                this.selectAll(this.txtPalletUa);
+              }, (500));
+            }
+          } else {
+            this.presentToast("Ingrese código de Pallet/UA");
+            setTimeout(() => {
+              this.selectAll(this.txtPalletUa);
+            }, (500));
+          }
+        }        
+      } else {
+        this.presentToast("Ingrese código de ubicación origen.");
+        setTimeout(() => {
+          this.selectAll(this.txtCodUbicacion);
+        }, (500));
+      }
     } else {
-      this.presentToast("No se encontraron registros.");
+      this.presentToast("Ingrese código de ubicación origen.");
       setTimeout(() => {
-        this.txtCodUbicacionRef.setFocus();
         this.selectAll(this.txtCodUbicacion);
       }, (500));
     }
   }
 
   ionViewDidLoad() {
-    this.navBar.backButtonClick = (e: UIEvent) => {
-      // todo something
-      this.navCtrl.push(AlmacenajePage);
-    }
+    // this.navBar.backButtonClick = (e: UIEvent) => {
+    //   this.navCtrl.push(AlmacenajePage);
+    // }
 
     setTimeout(() => {
-      this.txtCodUbicacionRef.setFocus();
+      this.selectAll(this.txtCodUbicacion);
+      //this.txtCodUbicacionRef.setFocus();
     }, (500));
     console.log('ionViewDidLoad ReubicacionPage');
   }
+
+  ionViewWillEnter() {
+    this.limpiar();
+  }
+
+
 }

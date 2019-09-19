@@ -43,45 +43,49 @@ export class ReubicarUaPage {
     debugger;
     if (this.codeBar) {
       if (this.codeBar.trim() != "") {
-        this.sAlmacenaje.getListarUbicacionXCodigoBarra(this.codeBar, this.sGlobal.Id_Almacen).then((result) => {
-          debugger;
-          this.resultUbicacion = result;
-          if (this.resultUbicacion.length > 0) {
-
-            if(this.vDatosRecibidos.Id_Ubicacion != this.resultUbicacion[0].Id_Ubicacion){
-              this.Sector = this.resultUbicacion[0].Sector;
-              this.Fila = this.resultUbicacion[0].Fila;
-              this.Columna = this.resultUbicacion[0].Columna;
-              this.Nivel = this.resultUbicacion[0].Nivel;
-              this.Posicion = this.resultUbicacion[0].Posicion;
-            }else{
-              this.presentAlert("La Ubicación debe ser diferente a la ubicación origen.").then((resultAlert) => {
+        if(this.codeBar.length == 14){
+          this.sAlmacenaje.getListarUbicacionXCodigoBarra(this.codeBar, this.sGlobal.Id_Almacen).then((result) => {
+            debugger;
+            this.resultUbicacion = result;
+            if (this.resultUbicacion.length > 0) {
+  
+              if(this.vDatosRecibidos.Id_Ubicacion != this.resultUbicacion[0].Id_Ubicacion){
+                this.Sector = this.resultUbicacion[0].Sector;
+                this.Fila = this.resultUbicacion[0].Fila;
+                this.Columna = this.resultUbicacion[0].Columna;
+                this.Nivel = this.resultUbicacion[0].Nivel;
+                this.Posicion = this.resultUbicacion[0].Posicion;
+              }else{
+                this.presentAlert("La Ubicación debe ser diferente a la ubicación origen.").then((resultAlert) => {
+                  if (resultAlert) {
+                    setTimeout(() => {
+                      //this.txtCodUbicacionRef.setFocus();
+                      this.selectAll(this.txtCodUbicacion);
+                    }, (500));
+                  }
+                })
+              } 
+            } else {
+              this.Sector = "";
+              this.Fila = "";
+              this.Columna = "";
+              this.Nivel = "";
+              this.Posicion = "";
+              this.presentAlert("Ubicación no registrada.").then((resultAlert) => {
                 if (resultAlert) {
                   setTimeout(() => {
-                    this.txtCodUbicacionRef.setFocus();
+                    //this.txtCodUbicacionRef.setFocus();
                     this.selectAll(this.txtCodUbicacion);
                   }, (500));
                 }
               })
-            } 
-          } else {
-            this.Sector = "";
-            this.Fila = "";
-            this.Columna = "";
-            this.Nivel = "";
-            this.Posicion = "";
-            this.presentAlert("Ubicación no registrada.").then((resultAlert) => {
-              if (resultAlert) {
-                setTimeout(() => {
-                  this.txtCodUbicacionRef.setFocus();
-                  this.selectAll(this.txtCodUbicacion);
-                }, (500));
-              }
-            })
-          }
-        }, err => {
-          console.log('E-getListarUbicacionXCodigoBarra', err);
-        });
+            }
+          }, err => {
+            console.log('E-getListarUbicacionXCodigoBarra', err);
+          });
+        }else{
+          this.presentToast("El código de ubicación debe tener 14 dígitos.");
+        }        
       }
       else {
         this.presentToast("Ingrese código de ubicación");
@@ -90,48 +94,74 @@ export class ReubicarUaPage {
       this.presentToast("Ingrese código de ubicación");
     }
     setTimeout(() => {
-      this.txtCodUbicacionRef.setFocus();
+      //this.txtCodUbicacionRef.setFocus();
+      this.selectAll(this.txtCodUbicacion);
     }, (500));
   }
 
   reubicarUA(){
-    this.presentAlertConfirm("¿Está seguro de cambiar la ubicación?”.").then((result) => {
-      if (result) {
-        this.sAlmacenaje.postReUbicarUA(this.vDatosRecibidos.CodBar_UA, this.resultUbicacion[0].Id_Ubicacion, this.sGlobal.userName).then((result) => {
-          debugger;
-          this.resultReubicar = result;
-          let res: any = result;
-          if (res.errNumber == 0) {
-            console.log(res.message);
-            this.presentAlert("UA reubicada correctamente.").then((resultAlert2) => {
-              this.Sector = "";
-              this.Fila = "";
-              this.Columna = "";
-              this.Nivel = "";
-              this.Posicion = "";
-              this.codeBar = "";
-              this.goAdministrarUaPage();
-            })
-          } else {
-            //this.presentAlert("Error. No se pudo realizar la reasignación.").then((resultAlert2) => {
-            this.presentAlert(res.message).then((resultAlert2) => {
+    debugger;
+    if (this.codeBar){
+      if (this.codeBar.trim() != ""){
+        if(this.resultUbicacion){
+          this.presentAlertConfirm("¿Está seguro de cambiar la ubicación?.").then((result) => {
+            if (result) {
+              debugger;
+              this.sAlmacenaje.postReUbicarUA(this.vDatosRecibidos.CodBar_UA, this.resultUbicacion[0].Id_Ubicacion, this.sGlobal.userName).then((result) => {
+                debugger;
+                this.resultReubicar = result;
+                debugger;
+                let res: any = result;
+                if (res.errNumber == 0) {
+                  console.log(res.message);
+                  this.presentAlert("UA reubicada correctamente.").then((resultAlert2) => {
+                    this.Sector = "";
+                    this.Fila = "";
+                    this.Columna = "";
+                    this.Nivel = "";
+                    this.Posicion = "";
+                    this.codeBar = "";
+                    this.goAdministrarUaPage();
+                  })
+                } else {
+                  debugger;
+                  //this.presentAlert("Error. No se pudo realizar la reasignación.").then((resultAlert2) => {
+                  this.presentAlert(res.message).then((resultAlert2) => {
+                    setTimeout(() => {
+                      //this.txtCodUbicacionRef.setFocus();
+                      this.selectAll(this.txtCodUbicacion);
+                    }, (500));
+                  })            
+                  console.log(res.message);
+                }
+              }, err => {
+                console.log('E-postReAsignarUA', err);
+              });
+            }else{
               setTimeout(() => {
-                this.txtCodUbicacionRef.setFocus();
+                //this.txtCodUbicacionRef.setFocus();
                 this.selectAll(this.txtCodUbicacion);
               }, (500));
-            })            
-            console.log(res.message);
-          }
-        }, err => {
-          console.log('E-postReAsignarUA', err);
-        });
-      }else{
+            }
+          })
+        }else{
+          this.presentToast("No hay registros, debe consultar la ubicación");
         setTimeout(() => {
-          this.txtCodUbicacionRef.setFocus();
+          this.selectAll(this.txtCodUbicacion);
+        }, (500));
+        }        
+      }else{
+        this.presentToast("Ingrese código de ubicación");
+        setTimeout(() => {
           this.selectAll(this.txtCodUbicacion);
         }, (500));
       }
-    })
+    }else{
+      this.presentToast("Ingrese código de ubicación");
+      setTimeout(() => {
+        this.selectAll(this.txtCodUbicacion);
+      }, (500));
+    }    
   }
   
   selectAll(el: ElementRef) {
@@ -142,7 +172,7 @@ export class ReubicarUaPage {
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 2000,
+      duration: 5000,
       position: 'bottom'
     });
     toast.present();
@@ -192,22 +222,34 @@ export class ReubicarUaPage {
     })
   }
 
-  goAdministrarUaPage() {
-    this.vReubicarUAPage = {
-      'page': 2
-    };
-    this.navCtrl.push(AdministrarUaPage, {
-      data: this.vReubicarUAPage
-    });
+  // goAdministrarUaPage() {
+  //   this.vReubicarUAPage = {
+  //     'page': 2
+  //   };
+  //   this.navCtrl.push(AdministrarUaPage, {
+  //     data: this.vReubicarUAPage
+  //   });
+  // }
+
+  goAdministrarUaPage(){
+    debugger;
+      this.navCtrl.pop().then(() => {
+        this.vReubicarUAPage = {
+          'page': 2
+        };
+        this.navParams.get('reubicar')(this.vReubicarUAPage);
+      });
   }
 
   ionViewDidLoad() {
     //Enviar page 2 a administrar ua
     this.navBar.backButtonClick = (e: UIEvent) => {
-      this.goAdministrarUaPage();       
+      this.navCtrl.pop();
+      //this.goAdministrarUaPage();       
   }
     setTimeout(() => {
-      this.txtCodUbicacionRef.setFocus();
+      //this.txtCodUbicacionRef.setFocus();
+      this.selectAll(this.txtCodUbicacion);
     }, (500));
     console.log('ionViewDidLoad ReubicarUaPage');
   }

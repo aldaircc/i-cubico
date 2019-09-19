@@ -15,6 +15,8 @@ export class AuthService {
 
   getUsers(credenciales){
     return new Promise(resolve=>{
+      debugger;
+      var user = this.sGlobal.usuario;
        this.http.get(this.sGlobal.usuario + 'ValidarUsuario',{ params: credenciales})
        .map(res=>res.json())
        .subscribe(data=>{
@@ -29,7 +31,7 @@ export class AuthService {
   getCedis(userInfo){
 
     return new Promise(resolve=>{
-    
+    var user = this.sGlobal.usuario;
       this.http.get(this.sGlobal.usuario + 'ListarCentrosXUsuario',{ params: userInfo})
       .map(res=>res.json())
       .subscribe(data=>{

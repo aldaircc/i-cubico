@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, App, Navbar, NavController, NavParams, PopoverController, ModalController, ToastController, AlertController } from 'ionic-angular';
 import { DetallePickingPage } from '../detalle-picking/detalle-picking';
 import { PickingPorProductoPage } from '../picking-por-producto/picking-por-producto';
@@ -33,6 +33,7 @@ export class RutaPickingPage {
 
   @ViewChild(Navbar) navBar: Navbar;
   @ViewChild('txtCodUbicacion') txtCodUbicacionRef;
+  @ViewChild('txtCodUbicacion', { read: ElementRef }) private txtCodUbicacion: ElementRef;
 
   vPickingPage: any = [];
   vRutaPickingPage: any = [];
@@ -84,7 +85,8 @@ export class RutaPickingPage {
       this.presentToast("Ingrese código de ubicación");
     }
     setTimeout(() => {
-      this.txtCodUbicacionRef.setFocus();
+      //this.txtCodUbicacionRef.setFocus();
+      this.selectAll(this.txtCodUbicacion);
     }, (500));
   }
 
@@ -193,56 +195,154 @@ export class RutaPickingPage {
 
   NextRutaPicking() {
     debugger;
-    this.total = this.listaRutaPicking.length;
+    var posicionTempGlobal = this.posicion;
+    var contadorTempGlobal = this.contador;
+    // this.total = this.listaRutaPicking.length;
     this.posicion = this.posicion + 1;
     if (this.posicion < this.listaRutaPicking.length) {
-      this.contador = this.contador + 1;
-      this.rutaPicking = this.listaRutaPicking[this.posicion];
-      this.Backisenabled = true;
+      //Si tiene ruta
+      if (this.listaRutaPicking[this.posicion].IdUbicacion != 0) {
+        this.contador = this.contador + 1;
+        this.rutaPicking = this.listaRutaPicking[this.posicion];
+        this.Backisenabled = true;
+      } else { //Si no tiene ruta        
+        if (this.posicion == this.listaRutaPicking.length - 1) {
+          this.posicion = this.posicion - 1;
+          // this.contador = this.contador - 1;
+          this.presentAlert("No hay mas articulos con ruta.");
+        } else {
+          this.presentAlertConfirm("El siguiente articulo no tiene ruta,  si desea ir a un articulo que tenga ruta presionar ACEPTAR.").then((result) => {
+            if (result) {
+              debugger;        
+              this.contador = this.contador + 1;      
+              var tieneRuta = false;
+              var posicionTemp = this.posicion;
+              for (var i = posicionTemp + 1 ; i < this.listaRutaPicking.length; i++) {
+                this.posicion = this.posicion + 1;
+                this.contador = this.contador + 1;
+                if (this.listaRutaPicking[i].IdUbicacion != 0) {
+                  this.rutaPicking = this.listaRutaPicking[i];
+                  this.Backisenabled = true;                  
+                  tieneRuta = true;
+                  return;
+                }
+              }
+              if (!tieneRuta) {
+                this.presentAlert("No hay mas articulos con ruta.");
+                this.posicion = posicionTempGlobal;
+                this.contador = contadorTempGlobal;
+              }
+            } else {
+              this.posicion = this.posicion - 1;
+            }
+          })
+        }
+      }
+      // this.contador = this.contador + 1;
+      // this.rutaPicking = this.listaRutaPicking[this.posicion];
+      // this.Backisenabled = true;
     }
-    if (this.contador == this.listaRutaPicking.length) {
+    if (this.posicion == this.listaRutaPicking.length - 1) {
       this.Nextisenabled = true;
     }
     this.codeBar = "";
     setTimeout(() => {
-      this.txtCodUbicacionRef.setFocus();
+      //this.txtCodUbicacionRef.setFocus();
+      this.selectAll(this.txtCodUbicacion);
     }, (500));
   }
 
   BackRutaPicking() {
     debugger;
-    this.total = this.listaRutaPicking.length;
-    this.posicion = this.posicion - 1;
+    //this.total = this.listaRutaPicking.length;
+    var posicionTempGlobal = this.posicion;
+    var contadorTempGlobal = this.contador;
+    this.posicion = this.posicion - 1;    
     if (this.posicion >= 0) {
-      this.contador = this.contador - 1;
-      this.rutaPicking = this.listaRutaPicking[this.posicion];
-      this.Nextisenabled = false;
+      //Si tiene ruta
+      if (this.listaRutaPicking[this.posicion].IdUbicacion != 0) {
+        this.contador = this.contador - 1;
+        this.rutaPicking = this.listaRutaPicking[this.posicion];
+        this.Nextisenabled = false;
+      }else{
+        if (this.posicion  == 0) {
+          this.posicion = this.posicion + 1;  
+          // this.contador = this.contador + 1;
+          this.presentAlert("No hay mas articulos con ruta.");
+        }else{
+          this.presentAlertConfirm("El siguiente articulo no tiene ruta,  si desea ir a un articulo que tenga ruta presionar ACEPTAR.").then((result) => {            
+            if (result) {
+              debugger;        
+              this.contador = this.contador - 1;     
+              var posicionTemp = this.posicion; 
+              var tieneRuta = false;              
+              for (var i = posicionTemp - 1 ; i >= 0; i--) {
+                this.posicion = this.posicion - 1;
+                this.contador = this.contador - 1;
+                if (this.listaRutaPicking[i].IdUbicacion != 0) {
+                  this.rutaPicking = this.listaRutaPicking[i];
+                  if (this.posicion == 0) {
+                    this.Backisenabled = false;
+                  }
+                  tieneRuta = true;
+                  return;
+                }
+              }
+              if (!tieneRuta) {                
+                this.presentAlert("No hay mas articulos con ruta.");
+                this.posicion = posicionTempGlobal;
+                this.contador = contadorTempGlobal;
+              }
+            } else {
+              this.posicion = this.posicion + 1;
+            }
+          })
+        }
+      }
+      // this.contador = this.contador - 1;
+      // this.rutaPicking = this.listaRutaPicking[this.posicion];
+      // this.Nextisenabled = false;
     }
-    if (this.contador == 1) {
+    debugger;
+    if (this.posicion == 0) {
       this.Backisenabled = false;
     }
+    // if (this.contador == 1) {
+    //   this.Backisenabled = false;
+    // }
     this.codeBar = "";
     setTimeout(() => {
-      this.txtCodUbicacionRef.setFocus();
+      //this.txtCodUbicacionRef.setFocus();
+      this.selectAll(this.txtCodUbicacion);
     }, (500));
   }
 
   presentPopover(ev) {
-    let popover = this.popoverCtrl.create(PopoverPickingPage, {'page' : 1});
+    let popover = this.popoverCtrl.create(PopoverPickingPage, { 'page': 1 });
     popover.present({
       ev: ev
     });
 
+    // let popover = this.popoverCtrl.create(PopoverPickingPage, { 'page': 0, 'has_Id_Tx': (this.vPickingPage.Id_Estado  != 2) ? true : false });
+    // popover.present({
+    //   ev: ev
+    // });
+
     popover.onDidDismiss(popoverData => {
       if (popoverData == 1) {
-        this.showModalIncidencia(this.vPickingPage);
+        if(this.vPickingPage.Id_Estado != 2){          
+          this.showModalIncidencia(this.vPickingPage);
+        }else{
+          this.presentAlert("No puede registrar incidencia de una transacción que no fue iniciada"); 
+        }
+        // this.showModalIncidencia(this.vPickingPage);
       } else if (popoverData == 2) {
         debugger;
         this.showModalAdministrarUaPage();
       } else if (popoverData == 3) {
         debugger;
         this.goConsultarUbicacionPage();
-      } 
+      }
       // else if (popoverData == 4) {
       //   debugger;
       //   this.goMenu();
@@ -258,6 +358,24 @@ export class RutaPickingPage {
         })
       }
     });
+  }
+
+  presentAlert(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            resolve(true);
+            console.log('Agree clicked');
+          }
+        }]
+      });
+      confirm.present();
+    })
   }
 
   presentAlertConfirm(message): Promise<boolean> {
@@ -289,7 +407,7 @@ export class RutaPickingPage {
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 2000,
+      duration: 5000,
       position: 'bottom'
     });
     toast.present();
@@ -299,21 +417,24 @@ export class RutaPickingPage {
     debugger;
     let obj = {
       'Id_Tx': data.Id_Tx,
-      'FlagPausa' : data.FlagPausa,
+      'FlagPausa': data.FlagPausa,
       'NumOrden': data.NumOrden,
       'id_Cliente': data.Id_Cuenta,
       'id_Modulo': 5
     };
-
+    this.sGlobal.resultIncidencia = false;
     let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia': obj });
     modalIncidencia.onDidDismiss(data => {
       debugger;
+      if(this.sGlobal.resultIncidencia){
+        this.goPickingPage();
+      }      
       console.log("datos", data);
     });
     modalIncidencia.present();
   }
 
-   showModalAdministrarUaPage(){
+  showModalAdministrarUaPage() {
     debugger;
     let obj = {
       'page': "modal",
@@ -321,7 +442,7 @@ export class RutaPickingPage {
     let modalIncidencia = this.modalCtrl.create(AdministrarUaPage, { 'data': obj });
     modalIncidencia.onDidDismiss(data => {
       debugger;
-        if(data.response == 200){
+      if (data.response == 200) {
         this.navCtrl.pop();
       }
       console.log("datos", data);
@@ -329,14 +450,34 @@ export class RutaPickingPage {
     modalIncidencia.present();
   }
 
-  goPickingPage() {
-    this.navCtrl.push(PickingPage);
+  // goPickingPage() {
+  //   this.navCtrl.push(PickingPage);
+  // }
+
+  goPickingPage(){
+    debugger;
+    this.navCtrl.getViews().forEach(item => {
+      if (item.name == 'PickingPage') {
+        this.navCtrl.popTo(item);
+      }
+    });
   }
+
+  dataFromDetallePickingPage: any;
+  detallePickingCallback = data => {
+    debugger;
+    this.dataFromDetallePickingPage = data;
+    console.log('data received from other page', this.dataFromDetallePickingPage);
+    debugger;
+    this.vRutaPickingPage = this.dataFromDetallePickingPage;
+  };
+
+
 
   goDetallePickingPage() {
     debugger;
     this.vRutaPickingPage = {
-      'Id_Page_Anterior': 2,
+      //'Id_Page_Anterior': 2,
       'Id_Tx': this.vPickingPage.Id_Tx,
       'NumOrden': this.vPickingPage.NumOrden,
       'Cliente': this.vPickingPage.Cliente,
@@ -344,9 +485,10 @@ export class RutaPickingPage {
       'Zona': this.vPickingPage.Zona,
       'FlagPausa': this.vPickingPage.FlagPausa,
       'Id_Cuenta': this.vPickingPage.Id_Cuenta,
+      'Id_Estado': this.vPickingPage.Id_Estado
     };
     this.navCtrl.push(DetallePickingPage, {
-      data: this.vRutaPickingPage
+      data: this.vRutaPickingPage, detallePicking: this.detallePickingCallback
     });
   }
 
@@ -370,6 +512,15 @@ export class RutaPickingPage {
     });
   }
 
+  dataFromPickingPorProductoPage: any;
+  pickingPorProductoCallback = data => {
+    debugger;
+    this.dataFromPickingPorProductoPage = data;
+    console.log('data received from other page', this.dataFromPickingPorProductoPage);
+    debugger;
+    this.vRutaPickingPage = this.dataFromPickingPorProductoPage;
+  };
+
   goPickingPorProductoPage() {
     debugger;
     this.vRutaPickingPage = {
@@ -380,26 +531,33 @@ export class RutaPickingPage {
       'Ciudad': this.vPickingPage.Ciudad,
       'Zona': this.vPickingPage.Zona,
       'FlagPausa': this.vPickingPage.FlagPausa,
-      'Id_Cuenta': this.vPickingPage.Id_Cuenta
+      'Id_Cuenta': this.vPickingPage.Id_Cuenta,
+      'Id_Estado': this.vPickingPage.Id_Estado
     };
     this.navCtrl.push(PickingPorProductoPage, {
-      data: this.vRutaPickingPage
+      data: this.vRutaPickingPage, pickingPorProducto: this.pickingPorProductoCallback
     });
   }
 
-  goMenu() {
-    debugger;
-    this.navCtrl.push(MainMenuPage);
+  // goMenu() {
+  //   debugger;
+  //   this.navCtrl.push(MainMenuPage);
+  // }
+
+  selectAll(el: ElementRef) {
+    let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
+    nativeEl.select();
   }
 
   ionViewDidLoad() {
     setTimeout(() => {
-      this.txtCodUbicacionRef.setFocus();
+      //this.txtCodUbicacionRef.setFocus();
+      this.selectAll(this.txtCodUbicacion);
     }, (500));
 
-    this.navBar.backButtonClick = (e: UIEvent) => {
-      this.goPickingPage();
-    }
+    // this.navBar.backButtonClick = (e: UIEvent) => {
+    //   this.goPickingPage();
+    // }
 
     console.log('ionViewDidLoad RutaPickingPage');
   }

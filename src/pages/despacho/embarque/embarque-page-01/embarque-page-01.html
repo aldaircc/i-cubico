@@ -6,13 +6,13 @@
 -->
 <ion-header>
 
-  <ion-toolbar no-border-top>
+  <ion-toolbar no-padding no-margin color="primary">
     <ion-navbar>
-      <ion-title>Embarque</ion-title>
+      <ion-title>EMBARQUE</ion-title>
     </ion-navbar>
     <ion-buttons start>
       <button ion-button icon-only (click)="listarPlanificacionXUsuario(sGlobal.userName, sGlobal.Id_Almacen)">
-        <ion-icon name="refresh"></ion-icon>
+        <ion-icon name="sync"></ion-icon>
       </button>
     </ion-buttons>
     <ion-buttons end>
@@ -23,21 +23,56 @@
   </ion-toolbar>
 
   <ion-grid class="bgHeader statico">
+    <ion-row no-padding no-margin>
+        <ion-col col-3 class="bgHeader-col">
+            <ion-label class="bgHeader-label">
+              Usuario:
+            </ion-label>
+        </ion-col>
+        <ion-col col-9 class="bgHeader-col">
+            <ion-label class="bgHeader-text">
+                {{sGlobal.apeNom}}
+            </ion-label>
+        </ion-col>
+    </ion-row>
+    <ion-row no-padding no-margin>
+        <ion-col col-3 class="bgHeader-col">
+            <ion-label class="bgHeader-label" >
+              Almacén:
+            </ion-label>
+        </ion-col>
+        <ion-col col-9 class="bgHeader-col">
+            <ion-label class="bgHeader-text" >
+                {{sGlobal.nombreAlmacen}}
+            </ion-label>
+        </ion-col>
+    </ion-row>
+</ion-grid>
+
+  <!-- <ion-grid class="bgHeader statico">
     <ion-row align-items-center>
-      <ion-col col-3 col-sm>
-        <div class="textHeader">Centro: </div>
+      <ion-col col-3 col-sm class="bgHeader-col">
+        <div class="bgHeader-label">Almacen: </div>
       </ion-col>
       <ion-col col-9 col-sm>
-        <div class="valueHeader">{{ sGlobal.nombreCentro }}</div>
+        <div class="bgHeader-text">{{ sGlobal.nombreAlmacen }}</div>
       </ion-col>
     </ion-row>
-  </ion-grid>
+    <ion-row align-items-center>
+      <ion-col col-3 col-sm class="bgHeader-col">
+        <div class="bgHeader-label">Usuario: </div>
+      </ion-col>
+      <ion-col col-9 col-sm>
+        <div class="bgHeader-text">{{ sGlobal.apeNom }}</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
 
 </ion-header>
 
 <ion-content>
   <ion-row class="bgLightBlue">
-      <ion-searchbar (ionInput)="filterItems($event)"></ion-searchbar>
+      <ion-searchbar (ionInput)="filterItems($event)" placeholder="N° Planificación"></ion-searchbar>
   </ion-row>
 
   <ion-list [virtualScroll]="listAuxEmbarque" [approxItemHeight]="'20px'">
@@ -74,7 +109,7 @@
               </ion-row>
             </ion-col>
             <ion-col col-1 col-sm align-self-center>
-              <ion-icon name="arrow-round-forward"></ion-icon>
+              <ion-icon name="md-play"></ion-icon>
             </ion-col>
           </ion-row>
         </ion-grid>

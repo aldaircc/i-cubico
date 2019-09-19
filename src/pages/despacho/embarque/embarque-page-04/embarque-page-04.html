@@ -5,10 +5,15 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+  <ion-toolbar no-padding no-margin color="primary">
+    <ion-navbar>
+      <ion-title>
+        EMBARQUE DE BULTOS
+      </ion-title>
+    </ion-navbar>
+  </ion-toolbar>
 
-  <ion-navbar>
-    <ion-title>Embarque de bultos</ion-title>
-  </ion-navbar>
+
 
   <ion-grid class="bgHeader statico">
     <ion-row align-items-center>
@@ -42,30 +47,35 @@
     <ion-row align-items-center>
       <ion-col col-sm>
         <ion-item>
-          <ion-input #inputCodeBarBulto type="text" [(ngModel)]="strCodeBarBulto" (keyup.enter)="cargarBulto()" #inputCodeBarBulto></ion-input>
+          <ion-input #inputCodeBarBulto type="text" [(ngModel)]="strCodeBarBulto" (keyup.enter)="cargarBulto()"
+            #inputCodeBarBulto></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row align-items-center>
-      <ion-col><ion-label class="fieldForm">Bulto:</ion-label> </ion-col>
+      <ion-col>
+        <ion-label class="fieldForm">Bulto:</ion-label>
+      </ion-col>
       <ion-col> {{ bultoLeido }} / {{ vParameter.totalBultos }} </ion-col>
     </ion-row>
 
     <ion-row align-items-center>
-      <ion-col><ion-label class="fieldForm">Sub-Bultos:</ion-label></ion-col>
+      <ion-col>
+        <ion-label class="fieldForm">Sub-Bultos:</ion-label>
+      </ion-col>
       <ion-col> {{ subBultoLeido }} / {{ vParameter.totalSaldo }}</ion-col>
     </ion-row>
 
   </ion-grid>
 
-    <!-- <ion-item>
+  <!-- <ion-item>
       <ion-label stacked>Código bulto:</ion-label>
       <ion-input #inputCodeBarBulto type="text" [(ngModel)]="strCodeBarBulto" (keyup.enter)="cargarBulto()" #inputCodeBarBulto></ion-input>
     </ion-item> -->
 </ion-content>
 
-<ion-footer>
+<!-- <ion-footer>
   <ion-toolbar>
     <ion-buttons right>
       <button ion-button icon-only (click)="goToEmbarPage05(vParameter)">
@@ -73,4 +83,16 @@
       </button>
     </ion-buttons>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->
+
+<ion-footer>
+    <ion-grid class="bgFooter">
+      <ion-row>
+        <ion-col col-12 class="bgFooter-col">
+          <button ion-button icon-start (click)="goToEmbarPage05(vParameter)">
+            <ion-icon name="list-box"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>    
+    </ion-grid>
+  </ion-footer>

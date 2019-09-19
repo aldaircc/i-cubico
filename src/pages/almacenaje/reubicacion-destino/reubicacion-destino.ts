@@ -41,53 +41,57 @@ export class ReubicacionDestinoPage {
     debugger;
     if (this.codeBarDestino) {
       if (this.codeBarDestino.trim() != "") {
-        if (this.codeBarDestino != this.vDatosRecibidos.Codigo_Origen) {
-          this.sAlmacenaje.getListarUbicacionXCodigoBarra(this.codeBarDestino, this.sGlobal.Id_Almacen).then((result) => {
-            debugger;
-            this.resultUbicacion = result;
-            if (this.resultUbicacion.length > 0) {
-              this.sAlmacenaje.getListarUAsXUbicacion(this.codeBarDestino, this.sGlobal.Id_Almacen).then((resultUAs) => {
-                debugger;
-                this.resultUAsUbicacion = resultUAs;
-                this.rowCountUAS = this.resultUAsUbicacion.length;
-              }, err => {
-                console.log('E-getListarUbicacionXCodigoBarra', err);
-              });
-              this.Sector = this.resultUbicacion[0].Sector;
-              this.Fila = this.resultUbicacion[0].Fila;
-              this.Columna = this.resultUbicacion[0].Columna;
-              this.Nivel = this.resultUbicacion[0].Nivel;
-              this.Posicion = this.resultUbicacion[0].Posicion;
-              setTimeout(() => {
-                this.txtCodDestinoRef.setFocus();
-                this.selectAll(this.txtCodDestino);
-              }, (500));
-            } else {
-              //Mensaje la ubicacion no exiset
-              this.presentAlert("Ubicación destino no existe.").then((resultAlert) => {
-                if (resultAlert) {
-                  //select y focus en ubicaicon origen
-                  setTimeout(() => {
-                    this.txtCodDestinoRef.setFocus();
-                    this.selectAll(this.txtCodDestino);
-                  }, (500));
-                }
-              })
-            }
-          }, err => {
-            console.log('E-getListarUbicacionXCodigoBarra', err);
-          });
-        }
-        else {
-          this.presentAlert("El código de ubicación destino tiene que ser diferente al código de ubicación origen.").then((resultAlert) => {
-            if (resultAlert) {
-              setTimeout(() => {
-                this.txtCodDestinoRef.setFocus();
-                this.selectAll(this.txtCodDestino);
-              }, (500));
-            }
-          })
-        }
+        if(this.codeBarDestino.length==14){
+          if (this.codeBarDestino != this.vDatosRecibidos.Codigo_Origen) {
+            this.sAlmacenaje.getListarUbicacionXCodigoBarra(this.codeBarDestino, this.sGlobal.Id_Almacen).then((result) => {
+              debugger;
+              this.resultUbicacion = result;
+              if (this.resultUbicacion.length > 0) {
+                this.sAlmacenaje.getListarUAsXUbicacion(this.codeBarDestino, this.sGlobal.Id_Almacen).then((resultUAs) => {
+                  debugger;
+                  this.resultUAsUbicacion = resultUAs;
+                  this.rowCountUAS = this.resultUAsUbicacion.length;
+                }, err => {
+                  console.log('E-getListarUbicacionXCodigoBarra', err);
+                });
+                this.Sector = this.resultUbicacion[0].Sector;
+                this.Fila = this.resultUbicacion[0].Fila;
+                this.Columna = this.resultUbicacion[0].Columna;
+                this.Nivel = this.resultUbicacion[0].Nivel;
+                this.Posicion = this.resultUbicacion[0].Posicion;
+                setTimeout(() => {
+                  //this.txtCodDestinoRef.setFocus();
+                  this.selectAll(this.txtCodDestino);
+                }, (500));
+              } else {
+                //Mensaje la ubicacion no exiset
+                this.presentAlert("Ubicación destino no existe.").then((resultAlert) => {
+                  if (resultAlert) {
+                    //select y focus en ubicaicon origen
+                    setTimeout(() => {
+                      //this.txtCodDestinoRef.setFocus();
+                      this.selectAll(this.txtCodDestino);
+                    }, (500));
+                  }
+                })
+              }
+            }, err => {
+              console.log('E-getListarUbicacionXCodigoBarra', err);
+            });
+          }
+          else {
+            this.presentAlert("El código de ubicación destino tiene que ser diferente al código de ubicación origen.").then((resultAlert) => {
+              if (resultAlert) {
+                setTimeout(() => {
+                  //this.txtCodDestinoRef.setFocus();
+                  this.selectAll(this.txtCodDestino);
+                }, (500));
+              }
+            })
+          }
+        }else{
+          this.presentToast("El código de ubicación debe tener 14 dígitos.");
+        }        
       }
       else {
         this.presentToast("Ingrese código de ubicación");
@@ -96,7 +100,8 @@ export class ReubicacionDestinoPage {
       this.presentToast("Ingrese código de ubicación");
     }
     setTimeout(() => {
-      this.txtCodDestinoRef.setFocus();
+      //this.txtCodDestinoRef.setFocus();
+      this.selectAll(this.txtCodDestino);
     }, (500));
   }
 
@@ -106,7 +111,7 @@ export class ReubicacionDestinoPage {
       if (this.codeBarDestino.trim() != "") {
         if (this.resultUbicacion.length > 0) {
           if (this.rowCountUAS > 0) {
-            this.presentAlertConfirm("Ubicación destino no se encuentra vacia. ¿Esta seguro de continuar?”.").then((resultAlert3) => {
+            this.presentAlertConfirm("Ubicación destino no se encuentra vacía. ¿Está seguro de continuar?.").then((resultAlert3) => {
               if (resultAlert3) {
                 this.registrarReubicacionDestino(this.sGlobal.Id_Centro, this.vDatosRecibidos.Id_Producto, this.sGlobal.Id_Almacen, this.vDatosRecibidos.cantidadTotal, this.resultUbicacion[0].Id_Ubicacion, this.sGlobal.userName, this.vDatosRecibidos.listUA);
               }
@@ -137,7 +142,8 @@ export class ReubicacionDestinoPage {
         console.log(res.message);
         this.presentAlert("UA´s o Pallets reubicadas correctamente.").then((resultAlert) => {
           if (resultAlert) {
-            this.goBackReubicacionMasiva()
+            //this.goBackReubicacionMasiva()
+            this.navCtrl.pop();
           }
         })
       } else {
@@ -162,7 +168,8 @@ export class ReubicacionDestinoPage {
     this.resultUbicacion = [];
     this.rowCountUAS = 0;
     setTimeout(() => {
-      this.txtCodDestinoRef.setFocus();
+      //this.txtCodDestinoRef.setFocus();
+      this.selectAll(this.txtCodDestino);
     }, (500));
   }
 
@@ -212,31 +219,34 @@ export class ReubicacionDestinoPage {
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 2000,
+      duration: 5000,
       position: 'bottom'
     });
     toast.present();
   }
 
-  goBackReubicacionMasiva() {
-    this.navCtrl.push(ReubicacionPage);
-  }
+  // goBackReubicacionMasiva() {
+  //   this.navCtrl.push(ReubicacionPage);
+  // }
 
   ionViewDidLoad() {
     this.navBar.backButtonClick = (e: UIEvent) => {
       if (this.vDatosRecibidos.Total_Pallet > 0) {
         this.presentAlertConfirm("Quedan " + this.vDatosRecibidos.Total_Pallet + " Pallet/Ua por reubicar. ¿Está seguro de salir?").then((result) => {
           if (result) {
-            this.navCtrl.push(ReubicacionPage);
+            // this.navCtrl.push(ReubicacionPage);
+            this.navCtrl.pop();
           }
         })
       } else {
-        this.navCtrl.push(ReubicacionPage);
+        // this.navCtrl.push(ReubicacionPage);
+        this.navCtrl.pop();
       }
     }
 
     setTimeout(() => {
-      this.txtCodDestinoRef.setFocus();
+      //this.txtCodDestinoRef.setFocus();
+      this.selectAll(this.txtCodDestino);
     }, (500));
     console.log('ionViewDidLoad ReubicacionDestinoPage');
   }

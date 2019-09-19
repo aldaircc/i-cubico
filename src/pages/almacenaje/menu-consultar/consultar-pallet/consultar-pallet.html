@@ -24,7 +24,7 @@
     </ion-grid>
   </ion-toolbar>
 
-  <ion-grid class="bgHeader statico" class="bgLightBlue" style="padding: 0px;">
+  <ion-grid class="statico" style="padding: 0px;">
     <ion-row no-padding style="margin-top: 15px; margin-bottom: 5px; ">
       <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
@@ -32,8 +32,9 @@
         </ion-label>
       </ion-col>
       <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtPallet [(ngModel)]="codeBarPallet" (keyup.enter)="validarCodeBar()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+        <ion-item class="item-input-text1">
+          <ion-input #txtPallet [(ngModel)]="codeBarPallet" maxlength="12" (keyup.enter)="validarCodeBar()" type="text" 
+          value="" class="input-text1"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -53,57 +54,57 @@
   </ion-grid>
 
 
-  <ion-grid class="bgHeader statico" class="bgLightBlue">
+  <ion-grid class="statico">
     <ion-row no-padding no-margin>
       <ion-col col-3 no-padding>
-        <ion-label style="margin: 0px; padding: 0px; font-weight:bold; text-align: center">
+        <ion-label class="box-titel">
           FILA
         </ion-label>
       </ion-col>
       <ion-col col-3 no-padding>
-        <ion-label style="margin: 0px; padding: 0px; font-weight:bold; text-align: center">
+        <ion-label class="box-titel">
           COLUMNA
         </ion-label>
       </ion-col>
       <ion-col col-3 no-padding>
-        <ion-label style="margin: 0px; padding: 0px; font-weight:bold; text-align: center">
+        <ion-label class="box-titel">
           NIVEL
         </ion-label>
       </ion-col>
       <ion-col col-3 no-padding>
-        <ion-label style="margin: 0px; padding: 0px; font-weight:bold; text-align: center">
+        <ion-label class="box-titel">
           POSICIÓN
         </ion-label>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-grid class="bgHeader statico" class="bgLightBlue" style="padding-bottom: 10px">
+  <ion-grid class="statico" style="padding-bottom: 10px">
     <ion-row no-padding no-margin>
       <ion-col col-3 no-padding>
-        <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
-          <ion-label style="font-weight:bold; color: white; text-align: center">
+        <ion-row class="box-row" style="height: 43px">
+          <ion-label class="box-label">
             {{ ResultPallet_Aux.Fila }}
           </ion-label>
         </ion-row>
       </ion-col>
       <ion-col col-3 no-padding>
-        <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
-          <ion-label style="font-weight:bold; color: white; text-align: center">
+        <ion-row class="box-row" style="height: 43px">
+          <ion-label class="box-label">
             {{ ResultPallet_Aux.Columna }}
           </ion-label>
         </ion-row>
       </ion-col>
       <ion-col col-3 no-padding>
-        <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
-          <ion-label style="font-weight:bold; color: white; text-align: center">
+        <ion-row class="box-row" style="height: 43px">
+          <ion-label class="box-label">
             {{ ResultPallet_Aux.Nivel }}
           </ion-label>
         </ion-row>
       </ion-col>
       <ion-col col-3 no-padding>
-        <ion-row style="margin-left:10px; margin-right:10px; background: #00BFFF">
-          <ion-label style="font-weight:bold; color: white; text-align: center">
+        <ion-row class="box-row" style="height: 43px">
+          <ion-label class="box-label">
             {{ ResultPallet_Aux.Posicion }}
           </ion-label>
         </ion-row>

@@ -43,14 +43,14 @@ export class MenuConsultarPage {
     this.navCtrl.push(ConsultarEanPage);
   }
   
-  goMenuAlmacenajePage(){
-    this.navCtrl.push(AlmacenajePage);
-  }
+  // goMenuAlmacenajePage(){
+  //   this.navCtrl.push(AlmacenajePage);
+  // }
 
   ionViewDidLoad() {
-    this.navBar.backButtonClick = (e: UIEvent) => {
-      this.goMenuAlmacenajePage();       
-  }
+  //   this.navBar.backButtonClick = (e: UIEvent) => {
+  //     this.goMenuAlmacenajePage();       
+  // }
     console.log('ionViewDidLoad MenuConsultarPage');
   }
 

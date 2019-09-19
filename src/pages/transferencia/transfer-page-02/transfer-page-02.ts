@@ -20,18 +20,18 @@ export class TransferPage_02Page {
 
   listDetalle: any = [];
   vParameter: any;
-  rowCount : number = 0;
+  rowCount: number = 0;
   countPendient: number = 0;
   countConfirm: number = 0;
   countProcess: number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public sPicking: PickingServiceProvider,
     public alertCtrl: AlertController, public sGlobal: GlobalServiceProvider) {
-      this.vParameter = this.navParams.get('vParameter');
+    this.vParameter = this.navParams.get('vParameter');
   }
 
-  listarDetalleTransfXTx(strIdTx){
-    this.sPicking.listarDetalleTransfXTx(strIdTx).then(result=>{
+  listarDetalleTransfXTx(strIdTx) {
+    this.sPicking.listarDetalleTransfXTx(strIdTx).then(result => {
       this.listDetalle = result;
       this.rowCount = this.listDetalle.length;
       this.countPendient = this.listDetalle.reduce((acc, cur) => (cur.Saldo == cur.CantidadPedida) ? ++acc : acc, 0);
@@ -40,7 +40,7 @@ export class TransferPage_02Page {
     });
   }
 
-  cerrarTx(){
+  cerrarTx() {
     let saldoTotal = this.listDetalle.reduce((sum, c) => sum + c.Saldo, 0);
     let message = (saldoTotal > 0) ? "Existe saldo. ¿Desea cerrar la transacción?" : "¿Estas seguro de cerrar la transacción?";
 
@@ -52,18 +52,21 @@ export class TransferPage_02Page {
           text: 'No',
           role: 'cancel',
           handler: () => {
-            
+
           }
         },
         {
           text: 'Si',
           handler: () => {
-            this.sPicking.cerrarTransferenciaXSubAlmacen(this.vParameter.Id_Tx, this.sGlobal.userName).then(result=>{
+            debugger;
+            this.presentAlert("Operación exitosa").then((resultAlert2) => {
+              this.sPicking.cerrarTransferenciaXSubAlmacen(this.vParameter.Id_Tx, this.sGlobal.userName).then(result => {
                 let res: any = result;
-                if(res != null){
+                if (res != null) {
                   this.navCtrl.pop();
                 }
-            });
+              });
+            })
           }
         }
       ]
@@ -71,28 +74,47 @@ export class TransferPage_02Page {
     alert.present();
   }
 
-  goToTransferPage03(data): void{
+  presentAlert(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            resolve(true);
+            console.log('Agree clicked');
+          }
+        }]
+      });
+      confirm.present();
+    })
+
+  }
+
+  goToTransferPage03(data): void {
     let parameter = {
-      'Id_Almacen' : this.sGlobal.Id_Almacen,
+      'Id_Almacen': this.sGlobal.Id_Almacen,
       'Id_SubAlmacenOrigen': this.vParameter.Id_SubAlmacenOrigen,
       'Id_SubAlmacenDestino': this.vParameter.Id_SubAlmacenDestino,
-      'Id_Tx' : data.Id_Tx,
-      'Item' : data.Item,
-      'Cod_Producto' : data.Codigo,
-      'Producto' : data.Producto,
-      'Lote' : data.Lote,
-      'CantidadPedida' : data.CantidadPedida,
-      'Id_Producto' : data.Id_Producto,
-      'CantidadOperacion' : data.CantidadOperacion,
-      'Saldo' : data.Saldo,
+      'Id_Tx': data.Id_Tx,
+      'Item': data.Item,
+      'Cod_Producto': data.Codigo,
+      'Producto': data.Producto,
+      'Lote': data.Lote,
+      'CantidadPedida': data.CantidadPedida,
+      'Id_Producto': data.Id_Producto,
+      'CantidadOperacion': data.CantidadOperacion,
+      'Saldo': data.Saldo,
       'Id_UM': data.Id_UM,
       'UM': data.UM
     };
 
-    this.navCtrl.push(TransferPage_03Page, {'vParameter' : parameter});
+    this.navCtrl.push(TransferPage_03Page, { 'vParameter': parameter });
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.listarDetalleTransfXTx(this.vParameter.Id_Tx);
   }
 }

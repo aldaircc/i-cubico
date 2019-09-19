@@ -5,16 +5,16 @@
   Ionic pages and navigation.
 -->
 <ion-header no-border>
-  <ion-toolbar>
+  <ion-toolbar no-padding no-margin color="primary">
     <ion-navbar>
-      <ion-title>CÚBICO -ETIQUETADO</ion-title>
+      <ion-title>ETIQUETADO</ion-title>
       <ion-buttons end>
         <button ion-button icon-only (click)="presentPopover($event)">
           <ion-icon name="more"></ion-icon>
         </button>
       </ion-buttons>
     </ion-navbar>
-  
+
     <ion-buttons start>
       <button ion-button (click)="dismiss()" [hidden]="isVisibleSearchButton">
         <span ion-text color="primary" showWhen="ios">Cancel</span>
@@ -24,20 +24,74 @@
   </ion-toolbar>
 
   <ion-grid class="bgHeader statico">
+    <ion-row no-padding no-margin>
+      <ion-col col-12 class="bgHeader-col" [hidden]="!titutlos1isDisplay">
+        <ion-row no-padding no-margin>
+          <ion-col col-4 class="bgHeader-col">
+            <ion-label class="bgHeader-label">
+              Producto:
+            </ion-label>
+          </ion-col>
+          <ion-col col-8 class="bgHeader-col">
+            <ion-label class="bgHeader-text">
+              {{ vEtq.Codigo }}
+            </ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row no-padding no-margin>
+          <ion-col col-12 class="bgHeader-col">
+            <ion-label class="bgHeader-text">
+              {{ vEtq.Articulo }}
+            </ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+
+      <ion-col col-10 class="bgHeader-col" [hidden]="!titutlos2isDisplay">
+        <ion-row no-padding no-margin>
+          <ion-col col-4 class="bgHeader-col">
+            <ion-label class="bgHeader-label">
+              Producto:
+            </ion-label>
+          </ion-col>
+          <ion-col col-6 class="bgHeader-col">
+            <ion-label class="bgHeader-text">
+              {{ vEtq.Codigo }}
+            </ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row no-padding no-margin>
+          <ion-col col-12 class="bgHeader-col">
+            <ion-label class="bgHeader-text">
+              {{ vEtq.Articulo }}
+            </ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+
+      <ion-col col-2 class="bgHeader-col" [hidden]="!isVisibleSearchButton">
+        <button ion-button (click)="goToEtqPage02()" class="bgHeader-button">
+          <ion-icon name='search'></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- <ion-grid class="bgHeader statico">
       <ion-row>
-        <ion-col col-sm>
-          <!-- Fila 01 -->
+        <ion-col col-sm class="bgHeader-col">
+         
           <ion-row align-items-center>
-            <ion-col col-4 col-sm>
-              <div class="textHeader">Producto:</div> <!--Código-->
+            <ion-col col-4 col-sm class="bgHeader-col">
+              <div class="textHeader">Producto:</div> 
             </ion-col>
             <ion-col col-8 col-sm class="valueHeader">
               {{ vEtq.Codigo }}
             </ion-col>
           </ion-row>
-          <!-- Fila 02 -->
+          
           <ion-row align-items-center class="valueHeader">
-            <ion-col col-12 col-sm>
+            <ion-col col-12 col-sm class="bgHeader-col">
               <div>{{ vEtq.Articulo }}</div>
             </ion-col>
           </ion-row>
@@ -49,133 +103,199 @@
           </button>
         </ion-col>
       </ion-row>    
-    </ion-grid>
+    </ion-grid> -->
 </ion-header>
 
 <ion-content>
 
-  <ion-grid >
-    <!-- Fila 01 -->
-    <ion-row  align-items-center>
-      <ion-col col-3 col-sm>
-        Lote
+  <ion-grid>
+    <!-- Nueva Fila -->
+    <ion-row align-items-center>
+      <ion-col col-2 col-sm no-padding no-margin>
+        Serie
       </ion-col>
-      
-      <ion-col col-6 col-sm>
+
+      <ion-col col-10 col-sm no-padding no-margin>
         <ion-item>
-            <ion-input type="Text" placeholder="Lote" [(ngModel)]="lote" [disabled]="!isEnabledLote" #iLote></ion-input>
+          <ion-input type="Text" maxlength="30" placeholder="Serie" [(ngModel)]="serie" [disabled]="!isEnabledSerie"
+            #iSerie></ion-input>
         </ion-item>
       </ion-col>
 
-      <ion-col col-3 col-sm>
+    </ion-row>
+
+    <!-- Fila 01 -->
+    <ion-row align-items-center>
+      <ion-col col-2 col-sm no-padding no-margin>
+        Lote
+      </ion-col>
+
+      <ion-col col-7 col-sm no-padding no-margin>
+        <ion-item>
+          <ion-input type="text" maxlength="30" placeholder="Lote" [(ngModel)]="lote" [disabled]="!isEnabledLote"
+          (ngModelChange)="lote = $event.toLocaleUpperCase()" #iLote></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-3 col-sm no-padding no-margin>
         {{ this.vEtq.UM }}
       </ion-col>
     </ion-row>
 
     <!-- Fila 02 -->
     <ion-row align-items-center>
-      <ion-col col-3 col-sm>
+      <ion-col col-1 col-sm no-padding no-margin>
         F.E
       </ion-col>
-      <ion-col col-1 col-sm>
-          <ion-checkbox [(ngModel)]="fecEmiChecked" [disabled]="!isEnabledLote"></ion-checkbox>
+      <ion-col col-1 col-sm no-padding no-margin>
+        <ion-checkbox [(ngModel)]="fecEmiChecked" [disabled]="!isEnabledLote"></ion-checkbox>
       </ion-col>
-      <ion-col col-8 col-sm>
-        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="MMM DD YYYY" max="2999-12-31" [(ngModel)]="this.fecEmi" [disabled]="!fecEmiChecked"></ion-datetime>
+      <ion-col col-4 col-sm no-padding no-margin>
+        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="MMM DD YYYY" max="2999-12-31" [(ngModel)]="this.fecEmi"
+          [disabled]="!fecEmiChecked" style="padding: 8px 16px 8px 0px"></ion-datetime>
       </ion-col>
-      <ion-col col-3 col-sm>
+      <ion-col col-1 col-sm no-padding no-margin>
         F.V
       </ion-col>
-      <ion-col col-1 col-sm>
-          <ion-checkbox [(ngModel)]="fecVenChecked" [disabled]="!isEnabledLote"></ion-checkbox>
+      <ion-col col-1 col-sm no-padding no-margin>
+        <ion-checkbox [(ngModel)]="fecVenChecked" [disabled]="!isEnabledLote"></ion-checkbox>
       </ion-col>
-      <ion-col col-8 col-sm col-md-12>
-        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="MMM DD YYYY" max="2999-12-31" [(ngModel)]="this.fecVen" [disabled]="!fecVenChecked"></ion-datetime>
+      <ion-col col-4 col-sm col-md-12 no-padding no-margin>
+        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="MMM DD YYYY" max="2999-12-31" [(ngModel)]="this.fecVen"
+          [disabled]="!fecVenChecked" style="padding: 8px 16px 8px 0px"></ion-datetime>
       </ion-col>
     </ion-row>
 
     <!-- Fila 03 -->
-    <ion-row align-items-center >
-      <ion-col col-5 col-sm item-inner>
+    <ion-row align-items-center>
+      <!-- <ion-col col-4 col-sm item-inner no-padding no-margin>
         UA alternativa
+      </ion-col> -->
+      <!-- <ion-item>
+          <ion-label>CeDis:</ion-label>
+          <ion-select [(ngModel)]="id_UAlt" interface="action-sheet" #selectUA_Alt [disabled]="!UMAlterDisabled" style="padding: 8px 3px 8px 3px">
+              <ion-option *ngFor="let ua of listUM" value="{{ ua.Id_UM }}">{{ ua.Nombre }} </ion-option>
+            </ion-select>
+        </ion-item> -->
+
+      <ion-col col-6 col-sm no-padding no-margin>
+        <ion-select placeholder="UA alternativa" [(ngModel)]="id_UAlt" interface="action-sheet" #selectUA_Alt
+          [disabled]="!UMAlterDisabled" style="padding: 8px 8px 8px 0px">
+          <ion-option value="" default>UA alternativa</ion-option>
+          <ion-option *ngFor="let ua of listUM" value="{{ ua.Id_UM }}">{{ ua.Nombre }} </ion-option>
+        </ion-select>
       </ion-col>
-      <ion-col col-7 col-sm>
-        <ion-select [(ngModel)]="id_UAlt" interface="action-sheet"  #selectUA_Alt> <!-- (ionChange)="onChange($event)" -->
-          <ion-option *ngFor="let ua of listUM" value="{{ ua.Id_UM }}" >{{ ua.Nombre }} </ion-option>
+      <ion-col col-6 col-sm no-padding no-margin>
+        <ion-select placeholder="Formato" [(ngModel)]="id_FormatLabel" interface="action-sheet" #selectFormat style="padding: 8px 3px 8px 5px">
+          <ion-option value="" disabled selected>Formato</ion-option>
+          <ion-option *ngFor="let f of formatLabels" value="{{ f.Id_Format }}">{{ f.Label }}</ion-option>
         </ion-select>
       </ion-col>
     </ion-row>
 
     <!-- Fila 04 -->
     <ion-row align-items-center>
-      <ion-col col-3 col-sm>
-        Cantidad
+      <ion-col col-2 col-sm no-padding no-margin>
+        Cant.
       </ion-col>
-      <ion-col col-3 col-sm>
+      <ion-col col-4 col-sm no-padding no-margin>
         <ion-item>
-            <ion-input type="number" placeholder="0" [(ngModel)]="cantxEtq" (input)="numEtqTextChange($event)" #iCantidad></ion-input>
+          <!-- onkeypress="return (event.charCode != 46 && event.charCode > 31 && (event.charCode < 48 || event.charCode > 57)) ? false :true"  -->
+          <ion-input type="text" min="0" max="999" placeholder="0" [(ngModel)]="cantxEtq" name="txtCant" onkeypress="return (event.charCode != 46 && event.charCode > 31 && (event.charCode < 48 || event.charCode > 57)) ? false :true"
+            (keyup)="numEtqTextChange($event)" #iCantidad [disabled]="!cantDisabled">
+          </ion-input>
         </ion-item>
       </ion-col>
-    </ion-row>
 
-    <!-- Fila 05 -->
-    <ion-row align-items-center >
-      <ion-col col-3 col-sm>
+      <ion-col col-2 col-sm no-padding no-margin>
         #Etq.
       </ion-col>
 
-      <ion-col col-3 col-sm>
+      <ion-col col-4 col-sm no-padding no-margin>
         <ion-item>
-            <ion-input type="number" placeholder="0" [(ngModel)]="numEtq" (input)="numEtqTextChange($event)" #iNumEtq></ion-input>
+          <ion-input type="text" min="0" placeholder="0" [(ngModel)]="numEtq" name="txtNumEtq" (keyup)="numEtqTextChange($event)"
+            #iNumEtq [disabled]="!etqDisabled" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"></ion-input>
         </ion-item>
       </ion-col>
 
-      <ion-col col-3 col-sm>
+
+    </ion-row>
+
+    <!-- Fila 05 -->
+    <!-- <ion-row align-items-center >
+      <ion-col col-3 col-sm no-padding no-margin>
+        #Etq.
+      </ion-col>
+
+      <ion-col col-3 col-sm no-padding no-margin>
+        <ion-item>
+            <ion-input type="number" placeholder="0" [(ngModel)]="numEtq" (input)="numEtqTextChange($event)" #iNumEtq [disabled]="!etqDisabled"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-3 col-sm no-padding no-margin>
         Etq. saldo
       </ion-col>
 
-      <ion-col col-3 col-sm>
+      <ion-col col-3 col-sm no-padding no-margin>
         <ion-item>
-            <ion-input type="number" placeholder="0" [(ngModel)]="cantEtqSaldo" (input)="numEtqTextChange($event)" #iSaldoEtq></ion-input>
+            <ion-input type="number" placeholder="0" [(ngModel)]="cantEtqSaldo" (input)="numEtqTextChange($event)" #iSaldoEtq [disabled]="!saldoDisabled"></ion-input>
         </ion-item>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
 
     <!-- Fila 06 -->
     <ion-row align-items-center>
-      <ion-col col-5 col-sm item-inner>
-          Formato
-        </ion-col>
-        <ion-col col-7 col-sm>
-          <ion-select [(ngModel)]="id_FormatLabel" interface="action-sheet" #selectFormat>
-              <ion-option *ngFor="let f of formatLabels" value="{{ f.Id_Format }}">{{ f.Label }}</ion-option>
-          </ion-select>
-        </ion-col>
+      <!-- <ion-col col-3 col-sm item-inner no-padding no-margin>
+        Formato
+      </ion-col> -->
+
+      <!-- <ion-col col-3 col-sm item-inner no-padding no-margin>
+        Sub almacén
+      </ion-col> -->
+      <ion-col col-2 col-sm no-padding no-margin>
+        Etq. <br> saldo
+      </ion-col>
+
+      <ion-col col-4 col-sm no-padding no-margin>
+        <ion-item>
+          <ion-input type="text" min="0" placeholder="0" [(ngModel)]="cantEtqSaldo" (keyup)="numEtqTextChange($event)"
+            #iSaldoEtq [disabled]="!saldoDisabled" name="txtEtqSaldo" onkeypress="return (event.charCode != 46 && event.charCode > 31 && (event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-6 col-sm no-padding no-margin>
+        <ion-select placeholder="Sub almacén" [(ngModel)]="id_SubAlm" interface="action-sheet" #selectSubAlmacen style="padding: 8px 3px 8px 3px">
+          <ion-option value="" disabled selected>Sub almacén</ion-option>
+          <ion-option *ngFor="let sa of listSubAlm" value="{{ sa.Id_SubAlmacen }}">{{ sa.NombreSubAlmacen }}
+          </ion-option>
+        </ion-select>
+      </ion-col>
     </ion-row>
 
     <!-- Fila 07 -->
-    <ion-row align-items-center>
-      <ion-col col-5 col-sm item-inner>
+    <!-- <ion-row align-items-center>
+      <ion-col col-5 col-sm item-inner no-padding no-margin>
           Sub almacén
         </ion-col>
-        <ion-col col-7 col-sm>
-          <ion-select [(ngModel)]="id_SubAlm" interface="action-sheet">
+        <ion-col col-7 col-sm no-padding no-margin>
+          <ion-select [(ngModel)]="id_SubAlm" interface="action-sheet" #selectSubAlmacen>
             <ion-option *ngFor="let sa of listSubAlm" value="{{ sa.Id_SubAlmacen }}" >{{ sa.NombreSubAlmacen }} </ion-option>
           </ion-select>
         </ion-col>
-    </ion-row>
+    </ion-row> -->
 
     <!-- Fila 08 -->
     <ion-row align-items-center>
-      <ion-col col-3 col-sm>
+      <ion-col col-3 col-sm no-padding no-margin>
         Copias
       </ion-col>
-      <ion-col col-3 col-sm>
+      <ion-col col-3 col-sm no-padding no-margin>
         <ion-item>
-            <ion-input type="number" placeholder="0" [(ngModel)]="numCopia" #iNumCopia></ion-input>
+          <ion-input type="number" style="margin:0px" placeholder="0" [(ngModel)]="numCopia" #iNumCopia></ion-input>
         </ion-item>
       </ion-col>
-      <ion-col col-6 col-sm>
+      <ion-col col-6 col-sm no-padding no-margin>
         <div class="totalSuma">{{ totalSuma }}</div>
       </ion-col>
     </ion-row>
@@ -183,7 +303,25 @@
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
+  <ion-grid class="bgFooter">
+    <ion-row>
+      <ion-col col-2 class="bgFooter-col">
+        <button ion-button icon-start (click)="imprimirEtiqueta()" #iBtnSave>
+          <ion-icon name="md-barcode"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col col-8 class="bgFooter-col">
+      </ion-col>
+      <ion-col col-2 class="bgFooter-col">
+        <button ion-button icon-start (click)="goToEtqPage03()" [hidden]="!isVisibleSearchButton" #iBtnUbicar>
+          <ion-icon name="map"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
+
+<!-- <ion-toolbar>
     <ion-buttons left>
       <button ion-button icon-only small (click)="imprimirEtiqueta()" #iBtnSave>
           <ion-icon name="label" name="md-barcode"></ion-icon>
@@ -194,5 +332,4 @@
             <ion-icon name="map"></ion-icon>
         </button>
       </ion-buttons>
-  </ion-toolbar>
-</ion-footer>
+  </ion-toolbar> -->

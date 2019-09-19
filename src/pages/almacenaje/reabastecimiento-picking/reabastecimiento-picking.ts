@@ -63,7 +63,7 @@ export class ReabastecimientoPickingPage {
             this.Agregarisenabled = true;
             this.ParticionUA = true;
             setTimeout(() => {
-              this.txtCantidadUARef.setFocus();
+              //this.txtCantidadUARef.setFocus();
               this.selectAll(this.txtCantidadUA);
             }, (500));
           } else {
@@ -73,7 +73,7 @@ export class ReabastecimientoPickingPage {
             this.ParticionUA = false;
             this.presentAlert("Pallet/UA no existe").then((result) => {
               setTimeout(() => {
-                this.txtCodBarraUARef.setFocus();
+                //this.txtCodBarraUARef.setFocus();
                 this.selectAll(this.txtCodBarraUA);
               }, (500));
             })
@@ -84,14 +84,14 @@ export class ReabastecimientoPickingPage {
       } else {
         this.presentToast("Ingrese Pallet/UA");
         setTimeout(() => {
-          this.txtCodBarraUARef.setFocus();
+          //this.txtCodBarraUARef.setFocus();
           this.selectAll(this.txtCodBarraUA);
         }, (500));
       }
     } else {
       this.presentToast("Ingrese Pallet/UA");
       setTimeout(() => {
-        this.txtCodBarraUARef.setFocus();
+        //this.txtCodBarraUARef.setFocus();
         this.selectAll(this.txtCodBarraUA);
       }, (500));
     }
@@ -115,7 +115,7 @@ export class ReabastecimientoPickingPage {
       debugger;
       this.presentAlert("Pallet/UA no existe").then((result) => {
         setTimeout(() => {
-          this.txtCodBarraUARef.setFocus();
+          //this.txtCodBarraUARef.setFocus();
           this.selectAll(this.txtCodBarraUA);
         }, (500));
       })
@@ -126,7 +126,7 @@ export class ReabastecimientoPickingPage {
       debugger;
       this.presentAlert("Pallet/UA no existe").then((result) => {
         setTimeout(() => {
-          this.txtCodBarraUARef.setFocus();
+          //this.txtCodBarraUARef.setFocus();
           this.selectAll(this.txtCodBarraUA);
         }, (500));
       })
@@ -137,7 +137,7 @@ export class ReabastecimientoPickingPage {
       debugger;
       this.presentAlert("La cantidad Pallet/UA debe ser diferente de 0.").then((result) => {
         setTimeout(() => {
-          this.txtCantidadUARef.setFocus();
+          //this.txtCantidadUARef.setFocus();
           this.selectAll(this.txtCantidadUA);
         }, (500));
       })
@@ -148,7 +148,7 @@ export class ReabastecimientoPickingPage {
       debugger;
       this.presentAlert("Pallet/UA excede el saldo").then((result) => {
         setTimeout(() => {
-          this.txtCantidadUARef.setFocus();
+          //this.txtCantidadUARef.setFocus();
           this.selectAll(this.txtCantidadUA);
         }, (500));
       })
@@ -189,7 +189,7 @@ export class ReabastecimientoPickingPage {
     this.Agregarisenabled = false;
     this.ParticionUA = false;
     setTimeout(() => {
-      this.txtCodBarraUARef.setFocus();
+      //this.txtCodBarraUARef.setFocus();
       this.selectAll(this.txtCodBarraUA);
     }, (500));
 
@@ -212,21 +212,21 @@ export class ReabastecimientoPickingPage {
       if (cant > this.CantidadBk) {
         this.presentAlert("La cantidad no debe ser mayor o igual al de la UA").then((resultAlert) => {
           setTimeout(() => {
-            this.txtCantidadUARef.setFocus();
+            //this.txtCantidadUARef.setFocus();
             this.selectAll(this.txtCantidadUA);
           }, (500));
         })
       } else if (cant == this.CantidadBk) {
         this.presentAlert("La cantidad no debe ser mayor o igual al de la UA").then((resultAlert) => {
           setTimeout(() => {
-            this.txtCantidadUARef.setFocus();
+            //this.txtCantidadUARef.setFocus();
             this.selectAll(this.txtCantidadUA);
           }, (500));
         })
       } else if (cant > this.saldo) {
         this.presentAlert("La cantidad no debe ser mayor al Saldo").then((resultAlert) => {
           setTimeout(() => {
-            this.txtCantidadUARef.setFocus();
+            //this.txtCantidadUARef.setFocus();
             this.selectAll(this.txtCantidadUA);
           }, (500));
         })
@@ -256,7 +256,7 @@ export class ReabastecimientoPickingPage {
             this.Agregarisenabled = false;
             this.ParticionUA = false;
             setTimeout(() => {
-              this.txtCodBarraUARef.setFocus();
+              //this.txtCodBarraUARef.setFocus();
               this.selectAll(this.txtCodBarraUA);
             }, (500));
           }
@@ -391,7 +391,8 @@ export class ReabastecimientoPickingPage {
 
   ionViewDidLoad() {
     setTimeout(() => {
-      this.txtCodBarraUARef.setFocus();
+      //this.txtCodBarraUARef.setFocus();
+      this.selectAll(this.txtCodBarraUA);
     }, (500));
     console.log('ionViewDidLoad ReabastecimientoPickingPage');
   }

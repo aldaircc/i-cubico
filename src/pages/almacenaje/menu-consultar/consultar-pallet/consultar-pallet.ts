@@ -32,46 +32,50 @@ export class ConsultarPalletPage {
     debugger;
     if (this.codeBarPallet) {
       if (this.codeBarPallet.trim() != "") {
-        debugger;
-        debugger;
-        this.sAlmacenaje.getListarUAUbicada(this.codeBarPallet, this.sGlobal.Id_Almacen).then((result) => {
+        if(this.codeBarPallet.length==12){
           debugger;
-          this.ResultPallet = result;
-          this.rowCount = this.ResultPallet.length;
-          if (this.ResultPallet.length == 0) {
-            this.presentAlert("No hay datos para mostrar, código de pallet no existe").then((resultAlert) => {
-              if (resultAlert) {
-                setTimeout(() => {
-                  this.txtPalletRef.setFocus();
-                  this.selectAll(this.txtPallet);
-                }, (500));
-              }
-            })
-          } else {
-            this.ResultPallet_Aux = this.ResultPallet[0];
-            let CantidadTotal = this.ResultPallet.reduce(function (prev, cur) {
-              return prev + cur.Cantidad;
-            }, 0); //Obtener el cantidad total.
-            this.rowCountTotal = CantidadTotal;
-          }
-        }, err => {
-          console.log('E-getListarUAUbicada', err);
-        });
+          this.sAlmacenaje.getListarUAUbicada(this.codeBarPallet, this.sGlobal.Id_Almacen).then((result) => {
+            debugger;
+            this.ResultPallet = result;
+            this.rowCount = this.ResultPallet.length;
+            if (this.ResultPallet.length == 0) {
+              this.presentAlert("No hay datos para mostrar, código de pallet no existe").then((resultAlert) => {
+                if (resultAlert) {
+                  setTimeout(() => {
+                    //this.txtPalletRef.setFocus();
+                    this.selectAll(this.txtPallet);
+                  }, (500));
+                }
+              })
+            } else {
+              this.ResultPallet_Aux = this.ResultPallet[0];
+              let CantidadTotal = this.ResultPallet.reduce(function (prev, cur) {
+                return prev + cur.Cantidad;
+              }, 0); //Obtener el cantidad total.
+              this.rowCountTotal = CantidadTotal;
+            }
+          }, err => {
+            console.log('E-getListarUAUbicada', err);
+          });
+        }else{
+          this.presentToast("El código de pallet debe tener 12 dígitos");
+        }        
       }
       else {
-        this.presentToast("Ingrese código de ubicación");
+        this.presentToast("Ingrese código de pallet");
       }
     } else {
-      this.presentToast("Ingrese código de ubicación");
+      this.presentToast("Ingrese código de pallet");
     }
     setTimeout(() => {
-      this.txtPalletRef.setFocus();
+      //this.txtPalletRef.setFocus();
+      this.selectAll(this.txtPallet);
     }, (500));
   }
 
   eliminarPallet() {
     if (this.ResultPallet.length > 0) {
-      this.presentAlertConfirm("¿Está seguro de eliminar el Pallet : " + this.codeBarPallet.trim() + "?”.").then((result) => {
+      this.presentAlertConfirm("¿Está seguro de eliminar el Pallet : " + this.codeBarPallet.trim() + "?.").then((result) => {
         if (result) {
           debugger;
           for (var i = 0; i < this.ResultPallet.length; i++) {
@@ -118,7 +122,8 @@ export class ConsultarPalletPage {
     this.rowCount = 0;
     this.rowCountTotal = 0;
     setTimeout(() => {
-      this.txtPalletRef.setFocus();
+      //this.txtPalletRef.setFocus();
+      this.selectAll(this.txtPallet);
     }, (500));
   }
 
@@ -181,7 +186,8 @@ export class ConsultarPalletPage {
 
   ionViewDidLoad() {
     setTimeout(() => {
-      this.txtPalletRef.setFocus();
+      //this.txtPalletRef.setFocus();
+      this.selectAll(this.txtPallet);
     }, (500));
     console.log('ionViewDidLoad ConsultarPalletPage');
   }

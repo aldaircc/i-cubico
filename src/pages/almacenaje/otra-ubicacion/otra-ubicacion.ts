@@ -29,15 +29,15 @@ export class OtraUbicacionPage {
   tipoFiltro: number = 0;
   listUbicaciones: any = [];
   listAuxUbicaciones: any = [];
-  codeBar:string;
+  codeBar: string;
   rowCount: any = 0;
   vOtraUbiacionPage: any;
   vDatosUbicacion: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider,
-    public sAlmacenaje: AlmacenajeServiceProvider, public toastCtrl:ToastController) {
-      this.vDatosUbicacion = navParams.get('data');
-      debugger;
+    public sAlmacenaje: AlmacenajeServiceProvider, public toastCtrl: ToastController) {
+    this.vDatosUbicacion = navParams.get('data');
+    debugger;
     this.listarSectoresXAlmacen();
   }
 
@@ -50,7 +50,7 @@ export class OtraUbicacionPage {
 
   onChange() {
     let obj = this.listSector.filter(x => x.Id_Sector == this.id_Sectorlt)[0];
-    debugger;    
+    debugger;
     var idMarca = this.vDatosUbicacion.Id_Marca;
     var idCondicion = 1;
     this.ListarUbicacionesDisponibles(this.sGlobal.Id_Almacen, idMarca, idCondicion, obj.Id_Sector)
@@ -66,7 +66,7 @@ export class OtraUbicacionPage {
       });
       this.rowCount = this.listAuxUbicaciones.length;
 
-      if(this.rowCount==0){
+      if (this.rowCount == 0) {
         this.presentToast("No se encontraron registros");
       }
     }
@@ -76,7 +76,7 @@ export class OtraUbicacionPage {
         return (item.Marca == "Sin Marca");
       });
       this.rowCount = this.listAuxUbicaciones.length;
-      if(this.rowCount==0){
+      if (this.rowCount == 0) {
         this.presentToast("No se encontraron registros");
       }
     }
@@ -85,40 +85,47 @@ export class OtraUbicacionPage {
       this.txtCodUbicacionisenabled = true;
       this.rowCount = this.listAuxUbicaciones.length;
       setTimeout(() => {
-        this.txtCodUbicacionRef.setFocus();
+        this.selectAll(this.txtCodUbicacion);
+        //this.txtCodUbicacionRef.setFocus();
       }, (500));
     }
   }
 
-  filtrarCodeBar(){
-    if(this.codeBar){
-      if(this.codeBar.trim()!=""){
-        this.listAuxUbicaciones = this.listUbicaciones.filter((item) => {
-          return (item.CodigoBarra.trim() == this.codeBar.trim());      
-        }); 
-        this.rowCount = this.listAuxUbicaciones.length;   
-        if(this.rowCount==0){
-          this.presentToast("No se encontraron registros");
+  filtrarCodeBar() {
+    if (this.codeBar) {
+      if (this.codeBar.trim() != "") {
+        if (this.codeBar.length == 14) {
+          this.listAuxUbicaciones = this.listUbicaciones.filter((item) => {
+            return (item.CodigoBarra.trim() == this.codeBar.trim());
+          });
+          this.rowCount = this.listAuxUbicaciones.length;
+          if (this.rowCount == 0) {
+            this.presentToast("No se encontraron registros");
+          }
+          setTimeout(() => {
+            //this.txtCodUbicacionRef.setFocus();
+            this.selectAll(this.txtCodUbicacion);
+          }, (500));
+        } else {
+          this.presentToast("El código de ubicación debe tener 14 dígitos.");
+          setTimeout(() => {
+            this.selectAll(this.txtCodUbicacion);
+          }, (500));
         }
-        setTimeout(() => {
-          this.txtCodUbicacionRef.setFocus();
-          this.selectAll(this.txtCodUbicacion);
-        }, (500));
-
-      }else{
+      } else {
         this.presentToast("Ingrese código de ubicación");
         setTimeout(() => {
-          this.txtCodUbicacionRef.setFocus();
+          //this.txtCodUbicacionRef.setFocus();
           this.selectAll(this.txtCodUbicacion);
         }, (500));
-      }      
-    }else{
+      }
+    } else {
       this.presentToast("Ingrese código de ubicación");
       setTimeout(() => {
-        this.txtCodUbicacionRef.setFocus();
+        //this.txtCodUbicacionRef.setFocus();
         this.selectAll(this.txtCodUbicacion);
       }, (500));
-    }  
+    }
   }
 
   ListarUbicacionesDisponibles(intIdAlmacen, intIdMarca, intCondicion, intIdSector) {
@@ -132,14 +139,14 @@ export class OtraUbicacionPage {
         this.radioGroupisenabled2 = true;
         this.radioGroupisenabled3 = true;
         this.tipoFiltro = 1;
-      }      
+      }
     });
   }
 
-  SeleccionarUbicacion(data){
-    this.goAlmacenajePalletPage(data)
-  }
-  
+  // SeleccionarUbicacion(data){
+  //   this.goAlmacenajePalletPage(data)
+  // }
+
   selectAll(el: ElementRef) {
     let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
     nativeEl.select();
@@ -150,28 +157,38 @@ export class OtraUbicacionPage {
       message: message,
       duration: 2000,
       position: 'bottom'
-    });  
+    });
     toast.present();
   }
 
-  goAlmacenajePalletPage(data){
+  SeleccionarUbicacion(data) {
     debugger;
-    this.vOtraUbiacionPage = {
-      'Sector' : data.Sector,
-      'Fila' : data.Fila,
-      'Columna' : data.Columna,
-      'Nivel' : data.Nivel,
-      'Posicion' : data.Posicion,
-      'CodigoBarraUbi' : data.CodigoBarra,
-      'Id_Ubicacion' : data.Id_Ubicacion,
-      'Id_Ubicacion_Transito' : this.vDatosUbicacion.Id_Ubicacion_Transito,
-      'CantidadPallets' : this.vDatosUbicacion.CantidadPallets,
-      'lst_UA' : this.vDatosUbicacion.lst_UA
-    };
-    this.navCtrl.push(AlmacenajePalletUaPage, {
-      data: this.vOtraUbiacionPage
+    this.navCtrl.pop().then(() => {
+      data.Id_Ubicacion_Transito = this.vDatosUbicacion.Id_Ubicacion_Transito,
+        data.CantidadPallets = this.vDatosUbicacion.CantidadPallets,
+        data.lst_UA = this.vDatosUbicacion.lst_UA,
+        this.navParams.get('ubicacion')(data);
     });
   }
+
+  // goAlmacenajePalletPage(data){
+  //   debugger;
+  //   this.vOtraUbiacionPage = {
+  //     'Sector' : data.Sector,
+  //     'Fila' : data.Fila,
+  //     'Columna' : data.Columna,
+  //     'Nivel' : data.Nivel,
+  //     'Posicion' : data.Posicion,
+  //     'CodigoBarraUbi' : data.CodigoBarra,
+  //     'Id_Ubicacion' : data.Id_Ubicacion,
+  //     'Id_Ubicacion_Transito' : this.vDatosUbicacion.Id_Ubicacion_Transito,
+  //     'CantidadPallets' : this.vDatosUbicacion.CantidadPallets,
+  //     'lst_UA' : this.vDatosUbicacion.lst_UA
+  //   };
+  //   this.navCtrl.push(AlmacenajePalletUaPage, {
+  //     data: this.vOtraUbiacionPage
+  //   });
+  // }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OtraUbicacionPage');

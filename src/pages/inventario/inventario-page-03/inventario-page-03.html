@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar no-padding no-margin color="primary">
     <ion-title>Inventario tipo</ion-title>
   </ion-navbar>
 
@@ -15,6 +15,45 @@
 
 <ion-content>
   <ion-grid class="bgHeader">
+    <ion-row no-padding no-margin>
+      <ion-col col-5 class="bgHeader-col">
+        <ion-label class="bgHeader-label">
+          TIPO INVENTARIO:
+        </ion-label>
+      </ion-col>
+      <ion-col col-7 class="bgHeader-col">
+        <ion-label class="bgHeader-text">
+          {{ vParameter.TipoInventario }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding no-margin>
+      <ion-col col-5 class="bgHeader-col">
+        <ion-label class="bgHeader-label">
+          {{ lblInfo01.Text }}
+        </ion-label>
+      </ion-col>
+      <ion-col col-7 class="bgHeader-col">
+        <ion-label class="bgHeader-text">
+          {{ (strTipoInventario == 'GENERAL') ? vParameter.Sector :vParameter.Codigo }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding no-margin>
+      <ion-col col-5 class="bgHeader-col">
+        <ion-label class="bgHeader-label">
+          {{ lblInfo02.Text }}
+        </ion-label>
+      </ion-col>
+      <ion-col col-7 class="bgHeader-col">
+        <ion-label class="bgHeader-text">
+          {{ lblInfo02.Value }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- <ion-grid class="bgHeader">
     <ion-row>
       <ion-col col-5 col-sm><div class="textHeader">TIPO INVENTARIO:</div></ion-col>
       <ion-col col-7 col-sm><div class="valueHeader">{{ vParameter.TipoInventario }}</div></ion-col>
@@ -27,21 +66,24 @@
       <ion-col col-5 col-sm><div class="textHeader">{{ lblInfo02.Text }}</div></ion-col>
       <ion-col col-7 col-sm><div class="valueHeader">{{ lblInfo02.Value }}</div></ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
 
   <ion-grid>
     <ion-row align-items-center>
-      <ion-col col-3 col-sm><div class="fielForm">Fecha:</div></ion-col>
+      <ion-col col-3 col-sm>
+        <div class="fielForm">Fecha:</div>
+      </ion-col>
       <ion-col col-9 col-sm>
-          <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="MMM DD YYYY" [(ngModel)]="dtpFecha.Text" [disabled]="!dtpFecha.Enable"></ion-datetime>
+        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="MMM DD YYYY" [(ngModel)]="dtpFecha.Text" [disabled]="!dtpFecha.Enable"></ion-datetime>
       </ion-col>
     </ion-row>
-    
+
     <ion-row>
       <ion-col>
         <ion-item>
-            <ion-label stacked>Inventariador:</ion-label>
-          <ion-input [(ngModel)]="txtInventareador.Text" (ionFocus)="fixScroll()" id="absence-textarea" [disabled]="isInit" #inputInventariador></ion-input>
+          <ion-label stacked>Inventariador:</ion-label>
+          <ion-input [(ngModel)]="txtInventareador.Text" (ionFocus)="fixScroll()" id="absence-textarea" [disabled]="isInit"
+            #inputInventariador></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -50,6 +92,25 @@
 </ion-content>
 
 <ion-footer>
+  <ion-grid class="bgFooter">
+    <ion-row>
+      <ion-col col-2 class="bgFooter-col">
+        <button ion-button icon-start (click)="cerrarInventario()">
+          <ion-icon name="custom-save"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col col-8 class="bgFooter-col">
+      </ion-col>
+      <ion-col col-2 class="bgFooter-col">
+        <button ion-button icon-start (click)="continuarInventario()">
+          <ion-icon name="play"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
+
+<!-- <ion-footer>
   <ion-toolbar>
     <ion-buttons right>
       <button ion-button icon-only (click)="continuarInventario()">
@@ -63,4 +124,4 @@
       </button>
     </ion-buttons>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

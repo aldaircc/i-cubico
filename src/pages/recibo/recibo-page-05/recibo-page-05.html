@@ -5,7 +5,7 @@
   Ionic pages and navigation.
 -->
 <ion-header no-border>
-  <ion-navbar>
+  <ion-navbar no-padding no-margin color="primary">
     <ion-title>Imprimir etiqueta de pallet</ion-title>
   </ion-navbar>
 </ion-header>
@@ -18,7 +18,26 @@
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
+  <ion-grid class="bgFooter">
+    <ion-row>
+      <ion-col col-2 class="bgFooter-col">
+        <button ion-button icon-start (click)="onClickEtqPallet()">
+          <ion-icon name="barcode"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col col-8 class="bgFooter-col">
+      </ion-col>
+      <ion-col col-2 class="bgFooter-col">
+        <button ion-button icon-start (click)="onClickRegistrar()">
+          <ion-icon name="checkbox-outline"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>    
+  </ion-grid>
+</ion-footer>
+
+<!-- <ion-footer>
+  <ion-toolbar class="bgFooter">
     <ion-buttons left>
       <button ion-button icon-only small (click)="onClickEtqPallet()">
         <ion-icon name="barcode"></ion-icon>
@@ -30,4 +49,4 @@
       </button>
     </ion-buttons>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

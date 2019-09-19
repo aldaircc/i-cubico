@@ -30,7 +30,7 @@ page-home {
             background-image: url('../assets/imgs/fondoAlmacen.jpeg');
             background-repeat: no-repeat;
             background-position: center;
-            background-size: cover;
+            //background-size: cover;
             
 
       } 
@@ -45,29 +45,9 @@ page-home {
     }
 
     .scroll-content {
-        display: table !important;
         width: 100% !important;
-        height: 100% !important;
     
-        form {
-          display: table-cell;
-          vertical-align: middle;
-    
-          .header {
-            padding-bottom: 20px;
-    
-            img {
-              display: block;
-              width: 80%;
-              margin: 0 auto;
-            }
-          }
-    
-          .button.button-light.active, .button.button-light.activated {
-            color: #fff;
-            opacity: inherit;
-          }
-        }
+        
       }
 
 

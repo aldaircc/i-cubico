@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, Platform, NavController, NavParams, App, ViewController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { ReciboPage } from '../recibo/recibo';
 import { PickingPage } from '../picking/picking';
@@ -28,37 +28,48 @@ import { WarehouseSelectPage } from '../warehouse-select/warehouse-select';
   templateUrl: 'main-menu.html',
 })
 export class MainMenuPage {
+
   userProfile:any;
   //userProfileBack:any;
 
-  userProfileBack={"Almacen":"","ApeNom":"","page":"1"};
+  //userProfileBack={"Almacen":"","ApeNom":"","page":"1"};
 
 
   vMainMenuPage: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider) {
+  constructor(private app:App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider, public viewCtrl: ViewController) {
     this.userProfile=this.navParams.data;
-
-  
   //vDatosRecibidos: any = [];
   }
- 
 
-
-  ionViewDidLoad() {
+  ionViewDidLoad() {    
+    // this.platform.registerBackButtonAction(() => { 
+    //   debugger;
+    //   let nav = this.app.getActiveNavs()[0];
+    //   let activeView = nav.getActive();        
+    //   if(activeView.name === 'MainMenuPage'){
+    //     if(this.userProfile.page == "0"){
+    //       this.navCtrl.pop();
+    //     }else{
+    //       // this.userProfileBack.Almacen = this.userProfile.nombreAlmacen;
+    //       // this.userProfileBack.ApeNom = this.userProfile.apeNom; 
+    //       this.navCtrl.push(WarehouseSelectPage, this.userProfileBack);
+    //     }
+    //   }      
+    // });
     console.log(this.navParams.get('Almacen'));   
   }
 
   goBackWarehouseSelect():void{
-    if(this.userProfile.page == "0"){
-      this.navCtrl.pop();
-    }else{
+    debugger;
+    //if(this.userProfile.page == "0"){
+      //this.navCtrl.pop();
+    //}else{
       // this.userProfileBack.Almacen = this.userProfile.nombreAlmacen;
       // this.userProfileBack.ApeNom = this.userProfile.apeNom; 
-      this.navCtrl.push(WarehouseSelectPage, this.userProfileBack);
-    }
-
-    //this.navCtrl.pop();
+      //this.navCtrl.push(WarehouseSelectPage, this.userProfileBack);
+    //}
+    this.navCtrl.pop();
   }
 
   goBackLoginPage():void{
@@ -70,14 +81,10 @@ export class MainMenuPage {
 
   goReciboPage(){
     this.navCtrl.push(ReciboPage);
-
   }
 
   goPickingPage(){
     debugger;
-    
-    //this.navCtrl.push(PickingPage, this.userProfile);
-
     this.navCtrl.push(PickingPage);
 
   }

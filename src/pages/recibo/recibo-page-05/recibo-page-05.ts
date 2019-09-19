@@ -157,6 +157,7 @@ export class ReciboPage_05Page {
         let res : any = result;
         if(res.errNumber == 0){
           alert("UA's registradas: "+ this.contPrintUA + " de " + this.listBulto.length);
+          this.navCtrl.pop();
         }else{
           alert('Error al momento de registrar las UAs');
         }

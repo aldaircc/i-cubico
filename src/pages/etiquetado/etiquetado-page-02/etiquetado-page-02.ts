@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Select } from 'ionic-angular';
 import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 
@@ -18,6 +18,7 @@ import { GlobalServiceProvider } from '../../../providers/global-service/global-
 export class EtiquetadoPage_02Page {
 
   @ViewChild('txtFiltro') txtFiltroRef;
+  @ViewChild('selectFormat') selectFormat: Select;
   @ViewChild('txtFiltro', { read: ElementRef }) private txtFiltro: ElementRef;
 
   listCuentaAlmac: any;
@@ -39,7 +40,6 @@ export class EtiquetadoPage_02Page {
       alert(message);
       return;
     }
-
     this.listarProductoXFiltro(this.tipoFiltro, this.filterText, this.IdCuenta);
   }
 
@@ -47,6 +47,9 @@ export class EtiquetadoPage_02Page {
     var message = "";
     if(this.IdCuenta == 0){
       message = "Seleccione una cuenta";
+      setTimeout(() => {
+        this.selectFormat.open();
+      }, 500);
       return message;
     }
 
@@ -58,7 +61,7 @@ export class EtiquetadoPage_02Page {
     if(this.filterText.trim() == ""){
       message = "Ingrese filtro";
       setTimeout(() => {
-        this.txtFiltroRef.setFocus();
+        //this.txtFiltroRef.setFocus();
         this.selectAll(this.txtFiltro);
       }, (500));
       return message;
@@ -67,6 +70,7 @@ export class EtiquetadoPage_02Page {
   }
 
   selectCard(data){
+    debugger;
       this.navCtrl.pop().then(() => {
         data.IdCuentaLPN = this.IdCuenta;
         this.navParams.get('producto')(data);
@@ -76,7 +80,8 @@ export class EtiquetadoPage_02Page {
   onChangeRadio() {
     if (this.tipoFiltro == 1 || this.tipoFiltro == 2 || this.tipoFiltro == 3){
       setTimeout(() => {
-        this.txtFiltroRef.setFocus();
+        //this.txtFiltroRef.setFocus();
+        this.selectAll(this.txtFiltro);
       }, (500));
     }
   }
@@ -104,7 +109,7 @@ export class EtiquetadoPage_02Page {
         alert('No se encontraron resultados');
       }
       setTimeout(() => {
-        this.txtFiltroRef.setFocus();
+        //this.txtFiltroRef.setFocus();
         this.selectAll(this.txtFiltro);
       }, (500));
     });

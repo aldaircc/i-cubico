@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, App, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, App, NavController, NavParams, AlertController, Platform, ViewController } from 'ionic-angular';
 import { MainMenuPage } from '../main-menu/main-menu';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { GlobalServiceProvider } from '../../providers/global-service/global-service';
@@ -31,11 +31,11 @@ export class WarehouseSelectPage {
 
 
   vWarehousePage: any;
-  userProfileBack: any;
+  //userProfileBack: any;
 
-  constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, public auth: AuthService,
 
-    public sGlobal: GlobalServiceProvider) {
+  constructor(public app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public auth: AuthService,
+    public sGlobal: GlobalServiceProvider, public alertCtrl: AlertController, public viewCtrl: ViewController) {
     debugger;
     //const data = JSON.parse(localStorage.getItem('vUserData'));
     this.userDetails = this.sGlobal.vUserData;
@@ -48,19 +48,57 @@ export class WarehouseSelectPage {
     this.userProfile.Usuario = this.userDetails[0].Usuario;
     this.userInfo.strUsuario = this.userProfile.Usuario;
 
-    this.userProfileBack = this.navParams.data;
+    //this.userProfileBack = this.navParams.data;
     this.getCedis();
 
     //si viene de picking y almacenaje
-    if (this.userProfileBack.page == "1") {
-      debugger;
-      this.cedisInfo.Id_Centro = this.sGlobal.Id_Centro;
-    }
+    // if (this.userProfileBack.page == "1") {
+    //   debugger;
+    //   this.cedisInfo.Id_Centro = this.sGlobal.Id_Centro;
+    // }
+  }
 
+  presentAlertConfirm(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+              resolve(false);
+              console.log('Disagree clicked');
+            }
+          },
+          {
+            text: 'Aceptar',
+            handler: () => {
+              resolve(true);
+              console.log('Agree clicked');
+            }
+          }
+        ]
+      });
+      confirm.present();
+    })
   }
 
   ionViewDidLoad() {
-    //console.log('ionViewDidLoad WarehouseSelectPage');
+    // this.platform.registerBackButtonAction(() => {
+    //   let nav = this.app.getActiveNav();
+    //   let view = nav.getActive();
+    //   if (view.component.name == "WarehouseSelectPage"){
+    //       this.presentAlertConfirm("¿Deseas cerrar sesión?").then((result) => {
+    //       if (result) {
+    //         this.logout();
+    //       }
+    //     })
+    //   }else{
+    //     this.navCtrl.pop();
+    //   }
+    // });
+    console.log('ionViewDidLoad WarehouseSelectPage');
   }
 
   getCedis() {
@@ -72,12 +110,10 @@ export class WarehouseSelectPage {
         /* localStorage.setItem('vUserData', JSON.stringify(this.responseData));
         this.navCtrl.push(WarehouseSelectPage); */
         this.listCedis = this.responseData;
-        if (this.userProfileBack.page == "1") {
-          debugger;
-
-          this.getWarehouse();
-
-        }
+        // if (this.userProfileBack.page == "1") {
+        //   debugger;
+        //   this.getWarehouse();
+        // }
       }
     }, (err) => {
       console.log(err);
@@ -91,7 +127,7 @@ export class WarehouseSelectPage {
     this.auth.getWarehouse(wareInfo).then((result) => {
       debugger;
       this.responseData = result;
-      this.sGlobal.Id_Centro=this.cedisInfo.Id_Centro;
+      this.sGlobal.Id_Centro = this.cedisInfo.Id_Centro;
       debugger;
       if (this.responseData.length > 0) {
         /* localStorage.setItem('vUserData', JSON.stringify(this.responseData));
@@ -99,10 +135,10 @@ export class WarehouseSelectPage {
         this.listWarehouse = this.responseData;
 
       }
-      if (this.userProfileBack.page == "1") {
-        debugger;
-        this.wareHouseInfo.Id_Almacen = this.sGlobal.Id_Almacen.toString();
-      }
+      // if (this.userProfileBack.page == "1") {
+      //   debugger;
+      //   this.wareHouseInfo.Id_Almacen = this.sGlobal.Id_Almacen.toString();
+      // }
       else {
       }
     }, (err) => {
@@ -129,17 +165,18 @@ export class WarehouseSelectPage {
 
   goBack(): void {
 
-    if (this.userProfileBack.page == "1") {
-      debugger;
-      this.navCtrl.push(HomePage);
-    } else {
-      this.navCtrl.pop();
-    }
+    // if (this.userProfileBack.page == "1") {
+    //   debugger;
+    //   this.navCtrl.push(HomePage);
+    // } else {
+    //   this.navCtrl.pop();
+    // }
+    this.navCtrl.pop();
   }
 
-  goNext():void{
+  goNext(): void {
     let message = this.validarCampos();
-    if(message.length > 0){
+    if (message.length > 0) {
       alert(message);
       return;
     }
@@ -147,22 +184,30 @@ export class WarehouseSelectPage {
     this.navCtrl.push(MainMenuPage, this.userProfile);
   }
 
-  validarCampos(){
+  validarCampos() {
     debugger;
     var message = "";
-    if(this.sGlobal.Id_Centro == 0){
+    if (this.sGlobal.Id_Centro == 0) {
       message = "Seleccione centro de distribución";
       return message;
     }
-    else if(this.sGlobal.Id_Almacen == 0){
+    else if (this.sGlobal.Id_Almacen == 0) {
       message = "Seleccione almacén";
       return message;
     }
     return message;
   }
 
- logout(){
-      localStorage.clear();
-      setTimeout(() => this.goBack(), 1000);
- }
+  logout() {
+    debugger
+    this.presentAlertConfirm("¿Deseas cerrar sesión?").then((result) => {
+      if (result) {
+        localStorage.clear();
+        setTimeout(() => this.goBack(), 1000);
+      }
+    })
+
+    // localStorage.clear();
+    // setTimeout(() => this.goBack(), 1000);
+  }
 }

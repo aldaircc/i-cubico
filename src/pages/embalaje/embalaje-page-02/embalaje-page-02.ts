@@ -23,10 +23,15 @@ import { ImpresoraPage } from '../../impresora/impresora';
 export class EmbalajePage_02Page {
   
   listEmbalaje: any;
-  listAuxEmbalaje: any;
+  
   vEmbalajePage02:any = [];
   rowCount: any;
   rowReciboSelect: any;
+  rowCountConfirm: any;
+  rowCountProceso: any;
+  listAuxEmbalaje: any = [];
+  listDetalleConfirm: any = [];
+  listDetalleProceso: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public toastCtrl: ToastController,private alertCtrl: AlertController,public sEmbalaje: EmbalajeServiceProvider, 
@@ -43,9 +48,58 @@ export class EmbalajePage_02Page {
 
   ListarDespachoXUsuario(strUsuario, intIdAlmacen) {
     this.sEmbalaje.ListarDespachoXUsuario(strUsuario, intIdAlmacen).then((result) => {
+
+      this.listAuxEmbalaje = [];
+      this.listDetalleConfirm = [];
+      this.listDetalleProceso = [];
+
       this.listEmbalaje = result;
-      this.listAuxEmbalaje = this.listEmbalaje;
+      debugger;
+      // this.listAuxEmbalaje = this.listEmbalaje;
+      for (var i = 0; i < this.listEmbalaje.length; i++) {
+        var obj = {
+          'Ciudad': result[i].Ciudad,
+          'Cliente': result[i].Cliente,
+          'CodigoZona': result[i].CodigoZona,
+          'Direccion': result[i].Direccion,
+          'Estado': result[i].Estado,
+          'FechaDocumento': result[i].FechaDocumento,
+          'FechaLlegada': result[i].FechaLlegada,
+          'FlagCajaRegistradora': result[i].FlagCajaRegistradora,
+          'FlagEtqLogistica': result[i].FlagEtqLogistica,
+          'FlagEtqSGAA': result[i].FlagEtqSGAA,
+          'FlagPausa': result[i].FlagPausa,
+          'FlagVolumen': result[i].FlagVolumen,
+          'Id_Ciudad': result[i].Id_Ciudad,
+          'Id_ClienteLab': result[i].Id_ClienteLab,
+          'Id_Estado': result[i].Id_Estado,
+          'Id_Sucursal': result[i].Id_Sucursal,
+          'Id_TipoDocumento': result[i].Id_TipoDocumento,
+          'Id_TipoMovimiento': result[i].Id_TipoMovimiento,
+          'Id_Tx': result[i].Id_Tx,
+          'NumOrden': result[i].NumOrden,
+          'NumeroFactura': result[i].NumeroFactura,
+          'Observacion': result[i].Observacion,
+          'Socio': result[i].Socio,
+          'Sucursal': result[i].Sucursal,
+          'TipoDocumento': result[i].TipoDocumento,
+          'TipoMovimiento': result[i].TipoMovimiento,
+          'Zona': result[i].Zona
+        };
+        this.listAuxEmbalaje.push(obj);
+
+        if (result[i].Id_Estado == 2) {
+          this.listDetalleConfirm.push(obj);
+        }
+        if (result[i].Id_Estado == 3) {
+          this.listDetalleProceso.push(obj);
+        }
+      }
+
       this.rowCount = this.listAuxEmbalaje.length;
+      this.rowCountConfirm = this.listDetalleConfirm.length;
+      this.rowCountProceso = this.listDetalleProceso.length;
+
       if (this.listEmbalaje.length > 0) {
 
       } else {
@@ -84,11 +138,38 @@ export class EmbalajePage_02Page {
       });
       this.rowCount = this.listAuxEmbalaje.length;
       debugger;
-      if(this.rowCount == 0)
-        this.mostrarConfirmacion("Advertencia","No se encontró la orden");
+      if (this.rowCount > 0) {
+        this.listDetalleConfirm = this.listAuxEmbalaje.filter((item) => {
+          return (item.Id_Estado == 2);
+        });
+        this.listDetalleProceso = this.listAuxEmbalaje.filter((item) => {
+          return (item.Id_Estado == 3);
+        });
+        this.rowCountConfirm = this.listDetalleConfirm.length;
+        this.rowCountProceso = this.listDetalleProceso.length;
+      } else {
+        this.rowCountConfirm = this.rowCount;
+        this.rowCountProceso = this.rowCount;
+      }
+      // if(this.rowCount == 0)
+      //   this.mostrarConfirmacion("Advertencia","No se encontró la orden");
 
     } else {
+      // this.rowCount = this.listEmbalaje.length;
+      // return this.listAuxEmbalaje = this.listEmbalaje;
+
       this.rowCount = this.listEmbalaje.length;
+
+      this.listDetalleConfirm = this.listEmbalaje.filter((item) => {
+        return (item.Id_Estado == 2);
+      });
+      this.listDetalleProceso = this.listEmbalaje.filter((item) => {
+        return (item.Id_Estado == 3);
+      });
+
+      this.rowCountConfirm = this.listDetalleConfirm.length;
+      this.rowCountProceso = this.listDetalleProceso.length;
+
       return this.listAuxEmbalaje = this.listEmbalaje;
     }
   }
@@ -129,6 +210,7 @@ export class EmbalajePage_02Page {
     let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia': obj });
 
     modalIncidencia.onDidDismiss(result => {
+      this.getDataEmbalaje();
       if (result.response == 200 && result.isChangePage == true) {
         data.FlagPausa = !data.FlagPausa;
         //this.goToReciboPage02(data);
@@ -160,6 +242,15 @@ export class EmbalajePage_02Page {
       ]
     });
     alertConfirmacion.present();
+  }
+
+  ValidarOrden(data) {
+    debugger;
+    if (data.FlagPausa == true) {
+      this.showModalIncidencia(data);
+    } else {
+      this.goDetEmbalajePackingPage(data)
+    }
   }
 
   goDetEmbalajePackingPage(data){    

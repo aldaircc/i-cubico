@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, App, NavController, NavParams, PopoverController, ToastController, AlertController, ModalController } from 'ionic-angular';
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 import { ImpresoraPage } from '../../impresora/impresora'
@@ -29,6 +29,7 @@ import { PopoverPickingPage } from '../../picking/popover/popover-picking/popove
 })
 export class CierrePickingPage {
   @ViewChild('txtCodMuelle') txtCodMuelleRef;
+  @ViewChild('txtCodMuelle', { read: ElementRef }) private txtCodMuelle: ElementRef;
 
   vRutaPickingPage: any = [];
   codeBar: string;
@@ -96,7 +97,8 @@ export class CierrePickingPage {
               if (resultAlert3) {
                 // Mostrar lista de impresoras
                 setTimeout(() => {
-                  this.txtCodMuelleRef.setFocus();
+                  //this.txtCodMuelleRef.setFocus();
+                  this.selectAll(this.txtCodMuelle);
                 }, (500));
               }
             })
@@ -110,14 +112,16 @@ export class CierrePickingPage {
         this.Aceptarisenabled = false;
         this.presentToast("Ingrese código de muelle");
         setTimeout(() => {
-          this.txtCodMuelleRef.setFocus();
+          //this.txtCodMuelleRef.setFocus();
+          this.selectAll(this.txtCodMuelle);
         }, (500));
       }
     } else {
       this.Aceptarisenabled = false;
       this.presentToast("Ingrese código de muelle");
       setTimeout(() => {
-        this.txtCodMuelleRef.setFocus();
+        //this.txtCodMuelleRef.setFocus();
+        this.selectAll(this.txtCodMuelle);
       }, (500));
     }
 
@@ -434,13 +438,14 @@ export class CierrePickingPage {
   }
 
   goConsultarUbicacionPage() {
+    
     this.navCtrl.push(ConsultarUbicacionPage);
   }
 
-  goMenu() {
-    debugger;
-    this.navCtrl.push(MainMenuPage);
-  }
+  // goMenu() {
+  //   debugger;
+  //   this.navCtrl.push(MainMenuPage);
+  // }
 
   presentPopover(ev) {
     let popover = this.popoverCtrl.create(PopoverPickingPage, {'page' : 1});
@@ -486,16 +491,25 @@ export class CierrePickingPage {
   }
 
   goBackRutaPicking() {
+    debugger;    
     this.navCtrl.pop();
   }
 
   goPickingPage() {
-    this.navCtrl.push(PickingPage);
+    this.navCtrl.popTo(this.navCtrl.getByIndex(3));
+    //this.navCtrl.push(PickingPage);
   }
+
+  selectAll(el: ElementRef) {
+    let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
+    nativeEl.select();
+  }
+
 
   ionViewDidLoad() {
     setTimeout(() => {
-      this.txtCodMuelleRef.setFocus();
+      //this.txtCodMuelleRef.setFocus();
+      this.selectAll(this.txtCodMuelle);
     }, (500));
     console.log('ionViewDidLoad CierrePickingPage');
   }

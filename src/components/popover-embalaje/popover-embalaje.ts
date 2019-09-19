@@ -11,48 +11,55 @@ import { ViewController } from 'ionic-angular';
   selector: 'popover-embalaje',
   templateUrl: 'popover-embalaje.html'
 })
-export class PopoverEmbalajeComponent {  
+export class PopoverEmbalajeComponent {
 
   text: string;
 
-  isDisplayIncidencia : boolean = false;
-  isDisplayMasivo : boolean = false;
-  isDisplayEtqMaster : boolean = false;
-  isDisplayPrint : boolean = false;
-  isDisplayCerrar : boolean = false;
+  isDisplayIncidencia: boolean = false;
+  isDisplayMasivo: boolean = false;
+  isDisplayEtqMaster: boolean = false;
+  isDisplayPrint: boolean = false;
+  isDisplayCerrar: boolean = false;
 
   constructor(public viewCtrl: ViewController) {
     let page = viewCtrl.data;
     this.evaluateDisplayOptions(page);
   }
 
-  evaluateDisplayOptions(value){
+  evaluateDisplayOptions(value) {
     switch (value.page) {
       case 11:
-      this.isDisplayPrint = false;
-      this.isDisplayIncidencia = false;      
+        this.isDisplayPrint = false;
+        this.isDisplayIncidencia = false;
         break;
       case 12:
-      this.isDisplayIncidencia = value.has_Id_Tx;      
-      this.isDisplayMasivo = true;
-      this.isDisplayEtqMaster  = true;
-      this.isDisplayPrint = true;
-      this.isDisplayCerrar = true;     
+        this.isDisplayIncidencia = value.has_Id_Tx;
+        this.isDisplayMasivo = false;
+        this.isDisplayEtqMaster = true;
+        this.isDisplayPrint = true;
+        this.isDisplayCerrar = true;
         break;
       case 13:
-      this.isDisplayPrint = true;
-      this.isDisplayCerrar = true;   
+        this.isDisplayPrint = true;
+        this.isDisplayCerrar = true;
         break;
       case 14:
         this.isDisplayPrint = true;
-        this.isDisplayIncidencia = false;        
+        this.isDisplayIncidencia = false;
+        break;
+      case 15:
+        this.isDisplayIncidencia = true;
+        this.isDisplayMasivo = true;
+        this.isDisplayEtqMaster = true;
+        this.isDisplayPrint = true;
+        this.isDisplayCerrar = true;
         break;
       default:
         break;
     }
   }
 
-  itemClick(item){
+  itemClick(item) {
     this.viewCtrl.dismiss(item);
   }
 

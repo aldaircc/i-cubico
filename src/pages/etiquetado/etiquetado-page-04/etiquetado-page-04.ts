@@ -39,37 +39,42 @@ export class EtiquetadoPage_04Page {
   
   verificarUbicacion(): void{
     if(this.strUbicacion.trim() != ""){
-      this.sAlmac.listarUbicacionXCodigoBarra(this.strUbicacion, this.sGlobal.Id_Almacen).then(result=>{
-        let res: any = result;
-        if(res.length != 0){
-          this.fila = res[0].Fila;
-          this.columna = res[0].Columna;
-          this.nivel = res[0].Nivel;
-          this.posicion = res[0].Posicion;
-          this.pasillo = res[0].Pasillo;
-          this.id_Ubicacion = res[0].Id_Ubicacion;
-          this.codigoBarra = res[0].CodigoBarra;
-          this.id_Sector = res[0].Id_Sector;
-          this.sector = res[0].Sector;
-          //alert('Código de ubicación, verificado correctamente.');
-          //this.strUbicacion = "";
-          this.selectAll(this.inputUbi, 600);
-  
-        }else{
-          alert('La ubicación no es correcta');
-          this.fila = "";
-          this.columna = "";
-          this.nivel = "";
-          this.posicion = "";
-          this.pasillo = "";
-          this.sector = "";
-          this.id_Ubicacion = 0;
-          this.codigoBarra = "";
-          this.id_Sector = 0;
-          this.strUbicacion = "";
-          this.selectAll(this.inputUbi, 600);
-        }
-      });
+      if(this.strUbicacion.length==14){
+        this.sAlmac.listarUbicacionXCodigoBarra(this.strUbicacion, this.sGlobal.Id_Almacen).then(result=>{
+          let res: any = result;
+          if(res.length != 0){
+            this.fila = res[0].Fila;
+            this.columna = res[0].Columna;
+            this.nivel = res[0].Nivel;
+            this.posicion = res[0].Posicion;
+            this.pasillo = res[0].Pasillo;
+            this.id_Ubicacion = res[0].Id_Ubicacion;
+            this.codigoBarra = res[0].CodigoBarra;
+            this.id_Sector = res[0].Id_Sector;
+            this.sector = res[0].Sector;
+            //alert('Código de ubicación, verificado correctamente.');
+            //this.strUbicacion = "";
+            this.selectAll(this.inputUbi, 600);
+    
+          }else{
+            alert('La ubicación no es correcta');
+            this.fila = "";
+            this.columna = "";
+            this.nivel = "";
+            this.posicion = "";
+            this.pasillo = "";
+            this.sector = "";
+            this.id_Ubicacion = 0;
+            this.codigoBarra = "";
+            this.id_Sector = 0;
+            this.strUbicacion = "";
+            this.selectAll(this.inputUbi, 600);
+          }
+        });
+      }else{
+        alert('El código de ubicación debe tener 14 dígitos.');
+        this.selectAll(this.inputUbi, 600);
+      }      
     }else{
       alert('Ingrese ubicación');
       this.selectAll(this.inputUbi, 600);
@@ -108,9 +113,18 @@ export class EtiquetadoPage_04Page {
         this.id_Sector = 0;
         this.strUbicacion = "";
         this.selectAll(this.inputUbi, 500);
+        this.goToUbicarUA();
       }else{
         alert(res.message);
         this.selectAll(this.inputUbi, 600);
+      }
+    });
+  }
+
+  goToUbicarUA(){
+    this.navCtrl.getViews().forEach(item => {
+      if (item.name == 'EtiquetadoPage_03Page') {
+        this.navCtrl.popTo(item);
       }
     });
   }

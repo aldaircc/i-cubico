@@ -6,11 +6,62 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar no-padding no-margin color="primary">
     <ion-title>Detalle de programación</ion-title>
   </ion-navbar>
 
-  <ion-grid class="bgHeader">
+  <ion-grid class="bgHeader statico">
+      <ion-row no-padding no-margin>
+          <ion-col col-3 class="bgHeader-col">
+              <ion-label class="bgHeader-label">
+                  Inventario:
+              </ion-label>
+          </ion-col>
+          <ion-col col-9 class="bgHeader-col">
+              <ion-label class="bgHeader-text">
+                  {{vParameter.Id_Inventario}}
+              </ion-label>
+          </ion-col>
+      </ion-row>
+      <ion-row no-padding no-margin>
+          <ion-col col-3 class="bgHeader-col">
+              <ion-label class="bgHeader-label" >
+                  Fec. prog.:
+              </ion-label>
+          </ion-col>
+          <ion-col col-9 class="bgHeader-col">
+              <ion-label class="bgHeader-text" >
+                  {{vParameter.FechaProgramacion|momentjs:'DD/MM/YYYY'}}
+              </ion-label>
+          </ion-col>
+      </ion-row>
+      <ion-row no-padding no-margin>
+          <ion-col col-3 class="bgHeader-col">
+              <ion-label class="bgHeader-label" >
+                  Usuario:
+              </ion-label>
+          </ion-col>
+          <ion-col col-9 class="bgHeader-col">
+              <ion-label class="bgHeader-text" >
+                  {{sGlobal.apeNom}}
+              </ion-label>
+          </ion-col>
+      </ion-row>
+      <ion-row no-padding no-margin>
+          <ion-col col-3 class="bgHeader-col">
+              <ion-label class="bgHeader-label" >
+                  Tipo inv.:
+              </ion-label>
+          </ion-col>
+          <ion-col col-9 class="bgHeader-col">
+              <ion-label class="bgHeader-text" >
+                  {{vParameter.TipoInventario}}
+              </ion-label>
+          </ion-col>
+      </ion-row>
+  </ion-grid>
+
+  <!-- <ion-grid class="bgHeader">
     <ion-row align-items-center>
       <ion-col col-3 col-sm>
         <div class="textHeader">Inventario </div>
@@ -43,7 +94,7 @@
         <div class="valueHeader">{{ vParameter.TipoInventario }}</div>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
   
 </ion-header>
 
@@ -165,6 +216,28 @@
 </ion-content>
 
 <ion-footer class="bgLightBlue">
+    <ion-grid>
+        <ion-row no-padding no-margin>
+            <ion-col col-8 style="margin: 0px; padding: 1px">
+                <ion-label no-padding no-margin class="total-footer">
+                    Total Ítems: {{rowCount}}
+                </ion-label>
+            </ion-col>
+            <ion-col col-2 class="col-counts-footer">
+                <ion-label no-padding no-margin class="count-gris-footer box-counter">
+                    {{countConfirm}}
+                </ion-label>
+            </ion-col>
+            <ion-col col-2 class="col-counts-footer">
+                <ion-label no-padding no-margin class="count-yellow-footer box-counter">
+                    {{countProcess}}
+                </ion-label>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer>
+
+<!-- <ion-footer class="bgLightBlue">
   <ion-grid>
     <p class="subtitleForm fieldForm" text-center>
       TOTAL ITEMS: {{ rowCount }}
@@ -174,4 +247,4 @@
       <ion-col col-2 offset-2 col-sm class="box-counter bg-process"> {{ countProcess }} </ion-col>
     </ion-row>
   </ion-grid>
-</ion-footer>
+</ion-footer> -->

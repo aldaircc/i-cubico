@@ -6,14 +6,13 @@
 -->
 <ion-header>
 
-  <ion-toolbar no-border-top>
+  <ion-toolbar no-padding no-margin color="primary">
     <ion-navbar>
       <ion-title>         
-       Detalle Despacho
+       DETALLE DESPACHO
       </ion-title>
     </ion-navbar>   
   </ion-toolbar>
-
 </ion-header>
 
 
@@ -111,7 +110,26 @@
 </ion-content>
 
 <ion-footer class="bgLightBlue">
-        <ion-toolbar color="primary">
+        <ion-grid style="margin: 0px; padding: 0px">
+                <ion-row>
+                  <ion-col style="margin: 0px; padding: 0px;">
+                    <button ion-button style="margin: 0px; padding: 0px" (click)="goToReciboPage04()" medium full>
+                      <div>
+                        <ion-icon name='md-close-circle'></ion-icon> <br>
+                      </div>
+                    </button>
+                  </ion-col>
+                  <ion-col style="margin: 0px; padding: 0px;">
+                    <button ion-button style=" margin: 0px; padding: 0px" (click)="GuardarPesoBulto()" medium full>
+                      <div>
+                        <ion-icon name='ios-checkmark-circle-outline'></ion-icon> <br>
+                      </div>
+                    </button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+        <!-- <ion-toolbar color="primary">
             <ion-buttons left>
                 <button ion-button icon-only (click)="goToReciboPage04()">
                     <ion-icon name="md-close-circle" ></ion-icon>
@@ -122,5 +140,5 @@
                     <ion-icon name="ios-checkmark-circle-outline" ></ion-icon>
                 </button>
             </ion-buttons>
-        </ion-toolbar>
+        </ion-toolbar> -->
 </ion-footer>

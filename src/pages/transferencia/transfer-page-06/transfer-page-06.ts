@@ -19,6 +19,7 @@ import { AlmacenajeServiceProvider } from '../../../providers/almacenaje-service
 export class TransferPage_06Page {
   
   vParameter: any;
+  vEnviarData: any;
   strUbicacion: string = "";
   Id_UbicacionDestino: number = 0;
   fila: string = "";
@@ -33,7 +34,7 @@ export class TransferPage_06Page {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, public sAlmac: AlmacenajeServiceProvider, 
     public sGlobal: GlobalServiceProvider) {
-    this.vParameter = this.navParams.get('vParameter');
+    this.vParameter = this.navParams.get('data');
   }
 
   validarUbicacion(){
@@ -92,9 +93,20 @@ export class TransferPage_06Page {
       let res: any = result;
       if(res.errNumber == 0){
         alert(res.message);
-        this.navCtrl.pop();
+        this.goBackTransferPage05();
+        // this.navCtrl.pop();
       }
     });
+  }
+
+  goBackTransferPage05(){
+    debugger;
+      this.navCtrl.pop().then(() => {
+        this.vEnviarData = {          
+          'bolSinUbi': false
+        };
+        this.navParams.get('transferpage06')(this.vEnviarData);
+      });
   }
   
   selectAll(el: ElementRef, time){

@@ -42,14 +42,14 @@ export class UbicacionDestinoPage {
 
           this.RegistrarUA = true;
           setTimeout(() => {
-            this.txtCodPalletUaRef.setFocus();
+            //this.txtCodPalletUaRef.setFocus();
             this.selectAll(this.txtCodPalletUa);
           }, (500));
         }else{
           this.presentAlert("Ubicación destino incorrecta.").then((resultAlert) => {
             this.RegistrarUA = false;
           setTimeout(() => {
-            this.txtCodUbicacionRef.setFocus();
+            //this.txtCodUbicacionRef.setFocus();
             this.selectAll(this.txtCodUbicacion);
           }, (500));
           })
@@ -57,14 +57,14 @@ export class UbicacionDestinoPage {
       } else {
         this.presentToast("Ingrese Código de ubicación");
         setTimeout(() => {
-          this.txtCodUbicacionRef.setFocus();
+          //this.txtCodUbicacionRef.setFocus();
           this.selectAll(this.txtCodUbicacion);
         }, (500));
       }
     } else {
       this.presentToast("Ingrese Código de ubicación");
       setTimeout(() => {
-        this.txtCodUbicacionRef.setFocus();
+        //this.txtCodUbicacionRef.setFocus();
         this.selectAll(this.txtCodUbicacion);
       }, (500));
     }
@@ -108,14 +108,14 @@ export class UbicacionDestinoPage {
         } else {
           this.presentToast("Ingrese Pallet/UA");
           setTimeout(() => {
-            this.txtCodPalletUaRef.setFocus();
+            //this.txtCodPalletUaRef.setFocus();
             this.selectAll(this.txtCodPalletUa);
           }, (500));
         }
       } else {
         this.presentToast("Ingrese Pallet/UA");
         setTimeout(() => {
-          this.txtCodPalletUaRef.setFocus();
+          //this.txtCodPalletUaRef.setFocus();
           this.selectAll(this.txtCodPalletUa);
         }, (500));
       }
@@ -161,7 +161,8 @@ export class UbicacionDestinoPage {
 
   ionViewDidLoad() {
     setTimeout(() => {
-      this.txtCodUbicacionRef.setFocus();
+      //this.txtCodUbicacionRef.setFocus();
+      this.selectAll(this.txtCodUbicacion);
     }, (500));
     console.log('ionViewDidLoad UbicacionDestinoPage');
   }

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, Navbar, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
+import { IonicPage, Navbar, NavController, NavParams, ToastController, AlertController, App, Platform } from 'ionic-angular';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { UbicacionOrigenPage } from '../ubicacion-origen/ubicacion-origen'
 import { AlmacenajeServiceProvider } from '../../../providers/almacenaje-service/almacenaje-service';
@@ -33,7 +33,7 @@ export class ReabastecimientoAlmacenajePage {
 
   vReabastecerPage: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider,
+  constructor(public app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider,
     public sAlmacenaje: AlmacenajeServiceProvider, public toastCtrl: ToastController, public alertCtrl: AlertController) {
     this.fecha = new Date().toISOString();
     this.nomAlmacen = this.sGlobal.nombreAlmacen;
@@ -172,6 +172,19 @@ export class ReabastecimientoAlmacenajePage {
         }
       })
     }
+    // this.platform.registerBackButtonAction(() => {
+    //   let nav = this.app.getActiveNav();
+    //   let view = nav.getActive();
+    //   if (view.component.name == "ReabastecimientoAlmacenajePage"){
+    //       this.presentAlertConfirm("¿Está seguro de salir?").then((result) => {
+    //       if (result) {
+    //         this.navCtrl.pop();
+    //       }
+    //     })
+    //   }else{
+    //     this.navCtrl.pop();
+    //   }
+    // });
     console.log('ionViewDidLoad ReabastecimientoAlmacenajePage');
   }
 }
