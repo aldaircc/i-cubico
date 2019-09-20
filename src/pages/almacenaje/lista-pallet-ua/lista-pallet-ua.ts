@@ -20,31 +20,31 @@ export class ListaPalletUaPage {
   rowCount: any;
   Cant_Total: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl:AlertController, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public toastCtrl: ToastController) {
     this.vDatosRecibidos = navParams.get('data');
     this.listPalletUA = this.vDatosRecibidos.lst_PalletUA;
     this.rowCount = this.listPalletUA.length;
     this.contador();
   }
 
-  contador(){
+  contador() {
     this.Cant_Total = this.listPalletUA.reduce(function (prev, cur) {
       debugger;
       return prev + cur.Cantidad;
     }, 0);
   }
 
-  eliminarPalletUA(data){
+  eliminarPalletUA(data) {
     debugger;
     this.presentAlertConfirm("¿Está seguro de eliminar el Pallet/UA?”.").then((result) => {
       if (result) {
         for (var j = 0; j < this.listPalletUA.length; j++) {
-          if(data.Id == this.listPalletUA[j].Id){
-            this.listPalletUA.splice(j,1);
+          if (data.Id == this.listPalletUA[j].Id) {
+            this.listPalletUA.splice(j, 1);
             this.rowCount = this.listPalletUA.length;
             this.contador();
             this.presentToast('Se elimino correctamente el Pallet/UA.');
-          }                  
+          }
         }
       }
     })
@@ -81,7 +81,7 @@ export class ListaPalletUaPage {
       message: message,
       duration: 2000,
       position: 'bottom'
-    });  
+    });
     toast.present();
   }
 

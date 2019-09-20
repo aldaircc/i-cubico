@@ -6,7 +6,6 @@ import { IncidenciaPage } from '../incidencia/incidencia';
 import { GlobalServiceProvider } from '../../providers/global-service/global-service';
 import { PopoverReciboComponent } from '../../components/popover-recibo/popover-recibo';
 import { ImpresoraPage } from '../impresora/impresora';
-import { MainMenuPage } from '../main-menu/main-menu';
 import { HomePage } from '../home/home';
 
 /**
@@ -30,14 +29,10 @@ export class ReciboPage {
   vReciboPage01: any;
   rowCount: any;
   rowReciboSelect: any;
-
   listConfirm: any = [];
   listProcess: any = [];
-
   countConfirm: number = 0;
   countProcess: number = 0;
-
-  //userProfile = { "Almacen": "", "ApeNom": "", "page": "1" };
 
   constructor(public app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController,
     public toastCtrl: ToastController, public sRecibo: ReciboServiceProvider, public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider,
@@ -52,7 +47,6 @@ export class ReciboPage {
       closeButtonText: closeText,
       dismissOnPageChange: dismissChange
     });
-
     toast.present();
   }
 
@@ -69,7 +63,6 @@ export class ReciboPage {
       estadoOrden = false;
     }
 
-    // let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 11, 'has_Id_Tx': (this.rowReciboSelect != undefined) ? true : false });
     let popover = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 11, 'has_Id_Tx': estadoOrden });
     popover.present({
       ev: myEvent
@@ -154,13 +147,9 @@ export class ReciboPage {
       this.listProcess = this.listRecepcion.filter((item) => {
         return (item.Id_Estado == 3);
       });
-
       this.countConfirm = this.listConfirm.length;
       this.countProcess = this.listProcess.length;
-
       return this.listAuxRecepcion = this.listRecepcion;
-
-
     }
   }
 
@@ -173,7 +162,6 @@ export class ReciboPage {
 
       debugger;
       this.listRecepcion = result;
-      //this.listAuxRecepcion = this.listRecepcion;
 
       for (var i = 0; i < this.listRecepcion.length; i++) {
         var obj = {
@@ -284,21 +272,6 @@ export class ReciboPage {
   }
 
   ionViewDidLoad() {
-    // this.navBar.backButtonClick = (e: UIEvent) => {
-    //   debugger;
-    //   this.userProfile.Almacen = this.sGlobal.nombreAlmacen;
-    //   this.userProfile.ApeNom = this.sGlobal.apeNom;
-    //   this.navCtrl.push(MainMenuPage, this.userProfile);
-    // }
-    // this.platform.registerBackButtonAction(() => {
-    //   let nav = this.app.getActiveNavs()[0];
-    //   let activeView = nav.getActive();       
-    //   if (activeView.name === 'ReciboPage') {
-    //     this.userProfile.Almacen = this.sGlobal.nombreAlmacen;
-    //     this.userProfile.ApeNom = this.sGlobal.apeNom;
-    //     this.navCtrl.push(MainMenuPage, this.userProfile);
-    //   }
-    // });
     console.log('ionViewDidLoad ReciboPage');
   }
 }

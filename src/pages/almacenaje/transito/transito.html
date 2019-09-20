@@ -35,13 +35,6 @@
     </ion-grid>
 </ion-header>
 <ion-content>
-
-    
-
-    <!-- <ion-row class="bgLightBlue">
-        <ion-searchbar placeholder="Buscar N° de Orden" (ionInput)="filterItems($event)" [(ngModel)]="searchQuery"></ion-searchbar>
-    </ion-row> -->
-
     <ion-row class="bgWhite">
         <ion-card *ngFor="let objAlmacenaje of listAuxUbicacionTransito">
             <ion-card-content style="padding: 8px 2px; font-size: 12px">
@@ -87,7 +80,6 @@
                     <div no-margin style="position: relative; text-align: center; float:none; padding-top: 3%; margin-right: 2px;  width: 8%;">
                         <button no-margin no-padding ion-button icon-only clear (click)="goPalletsUasTransito(objAlmacenaje)"
                             style="position: absolute;	top: 0;	bottom: 0; left: 0; right: 0; width: 80%; margin: auto; background:none;">
-                            <!-- <ion-icon name="md-arrow-dropright" color="dark"></ion-icon> -->
                             <ion-icon name="md-play" color="dark"></ion-icon>
                         </button>
                     </div>
@@ -96,31 +88,3 @@
         </ion-card>
     </ion-row>
 </ion-content>
-
-<!-- <ion-footer style="background: white">   
-    <ion-grid style="color: white">
-        <ion-row no-padding no-margin style="text-align: center" > 
-            <ion-col col-12 style="margin: 0px; padding: 1px; ">
-                <ion-label no-padding no-margin style="font-weight:bold; color:black">
-                    Total Ítems: {{rowCount}} 
-                </ion-label>
-            </ion-col>
-        </ion-row>
-        <ion-row no-padding no-margin>
-                <ion-col col-4 style="margin: 0px; padding: 0px; ; text-align: center">
-                </ion-col>
-                <ion-col col-2 style="margin-right: 4px; padding: 0px; background: #A4A4A4; text-align: center">
-                    <ion-label no-padding no-margin style="font-weight:bold; color:black">
-                        {{rowCountSinTrabajar}}
-                    </ion-label>
-                </ion-col>
-                <ion-col col-2 style="margin: 0px; padding: 0px; background: #FFFF00; text-align: center">
-                    <ion-label no-padding no-margin style="font-weight:bold; color:black">
-                        {{rowCountProceso}}
-                    </ion-label>
-                </ion-col>
-                <ion-col col-4 style="margin: 0px; padding: 0px; text-align: center">
-                </ion-col>
-            </ion-row>
-    </ion-grid>
-</ion-footer> -->

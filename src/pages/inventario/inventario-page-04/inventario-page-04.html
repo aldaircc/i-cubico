@@ -11,53 +11,44 @@
 </ion-header>
 
 <ion-content [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgRed }">
-    <ion-grid class="bgHeader">
-        <ion-row no-padding no-margin>
-            <ion-col col-3 class="bgHeader-col">
-                <ion-label class="bgHeader-label">
-                    {{ lblInfo01.Text }}
-                </ion-label>
-            </ion-col>
-            <ion-col col-9 class="bgHeader-col">
-                <ion-label class="bgHeader-text">
-                    {{ (strTipoInventario == 'GENERAL') ? vParameter.Sector :vParameter.Codigo }}
-                </ion-label>
-            </ion-col>
-        </ion-row>
-        <ion-row no-padding no-margin>
-            <ion-col col-3 class="bgHeader-col">
-                <ion-label class="bgHeader-label" >
-                    {{ lblInfo02.Text }}
-                </ion-label>
-            </ion-col>
-            <ion-col col-9 class="bgHeader-col">
-                <ion-label class="bgHeader-text" >
-                    {{ lblInfo02.Value }}
-                </ion-label>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-  <!-- <ion-grid class="bgHeader">
-    <ion-row>
-      <ion-col col-3 col-sm><div class="textHeader">{{ lblInfo01.Text }}</div></ion-col> -->
-      <!-- <ion-col col-9 col-sm><div class="valueHeader">{{ lblInfo01.Value }}</div></ion-col> -->
-      <!-- <ion-col col-7 col-sm><div class="valueHeader">{{ (strTipoInventario == 'GENERAL') ? vParameter.Sector :vParameter.Codigo }}</div></ion-col>
+  <ion-grid class="bgHeader">
+    <ion-row no-padding no-margin>
+      <ion-col col-3 class="bgHeader-col">
+        <ion-label class="bgHeader-label">
+          {{ lblInfo01.Text }}
+        </ion-label>
+      </ion-col>
+      <ion-col col-9 class="bgHeader-col">
+        <ion-label class="bgHeader-text">
+          {{ (strTipoInventario == 'GENERAL') ? vParameter.Sector :vParameter.Codigo }}
+        </ion-label>
+      </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col col-3 col-sm><div class="textHeader">{{ lblInfo02.Text }} </div></ion-col>
-      <ion-col col-9 col-sm><div class="valueHeader">{{ lblInfo02.Value }}</div></ion-col>
+    <ion-row no-padding no-margin>
+      <ion-col col-3 class="bgHeader-col">
+        <ion-label class="bgHeader-label">
+          {{ lblInfo02.Text }}
+        </ion-label>
+      </ion-col>
+      <ion-col col-9 class="bgHeader-col">
+        <ion-label class="bgHeader-text">
+          {{ lblInfo02.Value }}
+        </ion-label>
+      </ion-col>
     </ion-row>
-  </ion-grid> -->
+  </ion-grid>
 
   <ion-list>
     <ion-item class="input-has-focus">
       <ion-label>Ubicación:</ion-label>
-      <ion-input type="text" [(ngModel)]="strUbicacion" (keyup.enter)="validarUbicacion()" [disabled]="!isEnabledUbicacion" #inputUbicacion></ion-input>
+      <ion-input type="text" [(ngModel)]="strUbicacion" (keyup.enter)="validarUbicacion()" [disabled]="!isEnabledUbicacion"
+        #inputUbicacion></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>Código de barras UA:</ion-label>
-      <ion-input type="text" [(ngModel)]="strCodeBarUA" (keyup.enter)="buscarArticuloEnLista()" [disabled]="!isEnabledCodeBar" #inputCodeBarUA></ion-input>
+      <ion-input type="text" [(ngModel)]="strCodeBarUA" (keyup.enter)="buscarArticuloEnLista()" [disabled]="!isEnabledCodeBar"
+        #inputCodeBarUA></ion-input>
     </ion-item>
 
     <ion-item [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgRed }" [hidden]="!isVisibleData">
@@ -70,87 +61,50 @@
     </ion-item>
     <ion-item [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgRed }" [hidden]="!isVisibleData">
       <ion-label>Averiado:</ion-label>
-      <ion-input type="text" [(ngModel)]="txtAveriados.Text" type="number" pattern="[0-9]*" (keyup.enter)="pressEnterAveriado()" #inputAveriado></ion-input>
+      <ion-input type="text" [(ngModel)]="txtAveriados.Text" type="number" pattern="[0-9]*" (keyup.enter)="pressEnterAveriado()"
+        #inputAveriado></ion-input>
     </ion-item>
     <ion-item [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgRed }" [hidden]="!isVisibleData">
       <ion-label>Cantidad:</ion-label>
-      <ion-input type="text" [(ngModel)]="txtCantidad.Text" type="number" pattern="[0-9]*" (keyup.enter)="registrar()" #inputCantidad></ion-input>
+      <ion-input type="text" [(ngModel)]="txtCantidad.Text" type="number" pattern="[0-9]*" (keyup.enter)="registrar()"
+        #inputCantidad></ion-input>
     </ion-item>
-
   </ion-list>
-
 </ion-content>
 
 <ion-footer style="background:#054B77">
-    <ion-grid style="margin: 0px; padding: 0px">
-      <ion-row>
-        <ion-col style="margin: 0px; padding: 0px; width: 20%;">
-          <button ion-button style=" margin: 0px; padding: 0px" (click)="cambiarUbicacion()"
-            medium full>
-            <div>
-              <ion-icon name='checkmark'></ion-icon> <br>
-            </div>
-          </button>
-        </ion-col>
-        <ion-col style="margin: 0px; padding: 0px; width: 20%;">
-          <button ion-button style=" margin: 0px; padding: 0px" (click)="cambiarArticulo()" [hidden]="!isVisibleData"
-            medium full>
-            <div>
-              <ion-icon name='grid'></ion-icon> <br>
-            </div>
-          </button>
-        </ion-col>
-        <ion-col style="margin: 0px; padding: 0px; width: 20%;">
-          <button ion-button style="margin: 0px; padding: 0px" (click)="registrar()" [hidden]="!isVisibleData"
-            medium full>
-            <div>
-              <ion-icon name='alarm'></ion-icon> <br>
-            </div>
-          </button>
-        </ion-col>
-        <ion-col style="margin: 0px; padding: 0px; width: 20%;">
-          <button ion-button style=" margin: 0px; padding: 0px" (click)="goToDetail()"
-            medium full>
-            <div>
-              <ion-icon name='reorder'></ion-icon> <br>
-            </div>
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-footer>
-
-<!-- <ion-footer class="bgFooter">
-  <ion-toolbar class="bgFooter">
+  <ion-grid style="margin: 0px; padding: 0px">
     <ion-row>
-      <ion-col>
-        <ion-buttons left>
-          <button ion-button icon-only (click)="cambiarUbicacion()">
-            <ion-icon name="checkmark"></ion-icon>
-          </button>
-        </ion-buttons>
+      <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+        <button ion-button style=" margin: 0px; padding: 0px" (click)="cambiarUbicacion()" medium full>
+          <div>
+            <ion-icon name='checkmark'></ion-icon> <br>
+          </div>
+        </button>
       </ion-col>
-      <ion-col>
-        <ion-buttons justify-content-center align-items-end (click)="cambiarArticulo()" [hidden]="!isVisibleData">
-          <button ion-button icon-only>
-            <ion-icon name="grid"></ion-icon>
-          </button>
-        </ion-buttons>
+      <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+        <button ion-button style=" margin: 0px; padding: 0px" (click)="cambiarArticulo()" [hidden]="!isVisibleData"
+          medium full>
+          <div>
+            <ion-icon name='grid'></ion-icon> <br>
+          </div>
+        </button>
       </ion-col>
-      <ion-col>
-        <ion-buttons justify-content-center align-items-end right>
-          <button ion-button icon-only (click)="registrar()" [hidden]="!isVisibleData">
-            <ion-icon name="alarm"></ion-icon>
-          </button>
-        </ion-buttons>
+      <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+        <button ion-button style="margin: 0px; padding: 0px" (click)="registrar()" [hidden]="!isVisibleData" medium
+          full>
+          <div>
+            <ion-icon name='alarm'></ion-icon> <br>
+          </div>
+        </button>
       </ion-col>
-      <ion-col>
-        <ion-buttons right>
-          <button ion-button icon-only (click)="goToDetail()">
-            <ion-icon name="reorder"></ion-icon>
-          </button>
-        </ion-buttons>
+      <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+        <button ion-button style=" margin: 0px; padding: 0px" (click)="goToDetail()" medium full>
+          <div>
+            <ion-icon name='reorder'></ion-icon> <br>
+          </div>
+        </button>
       </ion-col>
     </ion-row>
-  </ion-toolbar>
-</ion-footer> -->
+  </ion-grid>
+</ion-footer>

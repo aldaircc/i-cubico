@@ -8,49 +8,46 @@
 
   <ion-toolbar no-padding no-margin color="primary">
     <ion-navbar>
-      <ion-title>         
-       ÍTEMS AÑADIDOS
+      <ion-title>
+        ÍTEMS AÑADIDOS
       </ion-title>
-    </ion-navbar>   
+    </ion-navbar>
   </ion-toolbar>
-
 </ion-header>
 
 
 <ion-content padding>
-
   <ion-row class="bgWhite">
-    <ion-card *ngFor="let objDetBultoXBulto of lstDetalleBultoXBulto">        
-      <ion-card-content>  
+    <ion-card *ngFor="let objDetBultoXBulto of lstDetalleBultoXBulto">
+      <ion-card-content>
         <ion-row>
           <ion-col col-10 col-sm>
-            <h5><b>{{objDetBultoXBulto.Producto}}</b></h5>                          
-            <h5><b>Código: </b>{{objDetBultoXBulto.Codigo}}</h5>                                                    
-            <h5><b>Cantidad: </b>{{objDetBultoXBulto.Cantidad|number : '1.2-2' }}</h5>                                
+            <h5><b>{{objDetBultoXBulto.Producto}}</b></h5>
+            <h5><b>Código: </b>{{objDetBultoXBulto.Codigo}}</h5>
+            <h5><b>Cantidad: </b>{{objDetBultoXBulto.Cantidad|number : '1.2-2' }}</h5>
             <h5><b>N° Bulto: </b>{{ objDetBultoXBulto.NroBulto }}</h5>
             <h5><b>Ítem: </b>{{objDetBultoXBulto.Item }}</h5>
             <h5><b>Lote: </b>{{objDetBultoXBulto.LoteLab }}</h5>
           </ion-col>
           <ion-col col-2 col-sm>
-              <button clear ion-button icon-only (click)="EliminarItems(objDetBultoXBulto)">
-                <ion-icon name="md-trash" color="dark"></ion-icon>
-              </button>
+            <button clear ion-button icon-only (click)="EliminarItems(objDetBultoXBulto)">
+              <ion-icon name="md-trash" color="dark"></ion-icon>
+            </button>
           </ion-col>
         </ion-row>
       </ion-card-content>
     </ion-card>
   </ion-row>
-
 </ion-content>
 
 <ion-footer>
-    <ion-grid class="bgFooter">
-        <ion-row>
-            <ion-col col-12 class="bgFooter-col">
-                <button ion-button icon-start (click)="goToEmbalajePage04()">
-                    <ion-icon name="md-cube"></ion-icon>
-                </button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+  <ion-grid class="bgFooter">
+    <ion-row>
+      <ion-col col-12 class="bgFooter-col">
+        <button ion-button icon-start (click)="goToEmbalajePage04()">
+          <ion-icon name="md-cube"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-footer>

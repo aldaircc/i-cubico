@@ -25,8 +25,8 @@ export class GlobalServiceProvider {
   nombreCentro: string;
   userName: string = "";
   apeNom: string = "";
-  url : string = "";
-  urlPrint : string =  "";
+  url: string = "";
+  urlPrint: string = "";
   // url: string = "";
   // urlPrint: string = "";
   usuario: string;
@@ -54,17 +54,16 @@ export class GlobalServiceProvider {
   }
 
   loadXML() {
-
-    this.userName = "ADMIN";
-    this.apeNom = "Administrador";
+    this.userName = "";
+    this.apeNom = "";
     this.Id_Almacen = 0;
     this.Id_Muelle = 0;
-    this.Id_TerminalRF = 2;
+    this.Id_TerminalRF = 0;
     this.Id_Centro = 0;
-    this.nombreEmpresa = "TESLA S.A";
+    this.nombreEmpresa = "";
     this.nombreImpresora = "";
-    this.nombreAlmacen = "Almacen 369";
-    this.nombreCentro = "Centro 01";
+    this.nombreAlmacen = "";
+    this.nombreCentro = "";
     this.usuario = this.url + 'UsuarioService.svc/rest/';
     this.produccion = this.url + 'ProduccionService.svc/rest/';
     this.tablaEst = this.url + 'TablasEstaticasService.svc/rest/';
@@ -77,6 +76,6 @@ export class GlobalServiceProvider {
     this.pickingService = this.url + "PickingService.svc/rest/";
     this.almacenajeService = this.url + "AlmacenajeService.svc/rest/";
     this.inventarioService = this.url + "InventarioService.svc/rest/";
-    this.despachoService = this.url + "DespachoService.svc/rest/";    
+    this.despachoService = this.url + "DespachoService.svc/rest/";
   }
 }

@@ -29,87 +29,59 @@ import { WarehouseSelectPage } from '../warehouse-select/warehouse-select';
 })
 export class MainMenuPage {
 
-  userProfile:any;
-  //userProfileBack:any;
-
-  //userProfileBack={"Almacen":"","ApeNom":"","page":"1"};
-
-
+  userProfile: any;
   vMainMenuPage: any;
 
-  constructor(private app:App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider, public viewCtrl: ViewController) {
-    this.userProfile=this.navParams.data;
-  //vDatosRecibidos: any = [];
+  constructor(private app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider, public viewCtrl: ViewController) {
+    this.userProfile = this.navParams.data;
   }
 
-  ionViewDidLoad() {    
-    // this.platform.registerBackButtonAction(() => { 
-    //   debugger;
-    //   let nav = this.app.getActiveNavs()[0];
-    //   let activeView = nav.getActive();        
-    //   if(activeView.name === 'MainMenuPage'){
-    //     if(this.userProfile.page == "0"){
-    //       this.navCtrl.pop();
-    //     }else{
-    //       // this.userProfileBack.Almacen = this.userProfile.nombreAlmacen;
-    //       // this.userProfileBack.ApeNom = this.userProfile.apeNom; 
-    //       this.navCtrl.push(WarehouseSelectPage, this.userProfileBack);
-    //     }
-    //   }      
-    // });
-    console.log(this.navParams.get('Almacen'));   
+  ionViewDidLoad() {
+    console.log(this.navParams.get('Almacen'));
   }
 
-  goBackWarehouseSelect():void{
+  goBackWarehouseSelect(): void {
     debugger;
-    //if(this.userProfile.page == "0"){
-      //this.navCtrl.pop();
-    //}else{
-      // this.userProfileBack.Almacen = this.userProfile.nombreAlmacen;
-      // this.userProfileBack.ApeNom = this.userProfile.apeNom; 
-      //this.navCtrl.push(WarehouseSelectPage, this.userProfileBack);
-    //}
     this.navCtrl.pop();
   }
 
-  goBackLoginPage():void{
+  goBackLoginPage(): void {
     debugger;
-    this.sGlobal.Id_Centro=0;
-    this.sGlobal.Id_Almacen=0;
+    this.sGlobal.Id_Centro = 0;
+    this.sGlobal.Id_Almacen = 0;
     this.navCtrl.push(HomePage);
   }
 
-  goReciboPage(){
+  goReciboPage() {
     this.navCtrl.push(ReciboPage);
   }
 
-  goPickingPage(){
+  goPickingPage() {
     debugger;
     this.navCtrl.push(PickingPage);
-
   }
 
-  goAlmacenajePage(){
+  goAlmacenajePage() {
     this.navCtrl.push(AlmacenajePage);
   }
 
-  goEmbalajePage(){
+  goEmbalajePage() {
     this.navCtrl.push(EmbalajePage);
-    }
+  }
 
-  goEtiquetado(){
+  goEtiquetado() {
     this.navCtrl.push(EtiquetadoPage_01Page, { codePage: 7 });
   }
 
-  goTransferencia(){
+  goTransferencia() {
     this.navCtrl.push(TransferPage_01Page);
   }
 
-  goInventario(){
+  goInventario() {
     this.navCtrl.push(InventarioPage_01Page);
   }
 
-  goDespacho(){
+  goDespacho() {
     this.navCtrl.push(DespachoPage);
   }
 }

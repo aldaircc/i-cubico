@@ -28,28 +28,19 @@ export class PickingPage {
 
   searchQuery: string = '';
   listOrdenesPicking: any;
-  //listAuxOrdenesPicking: any;
   userDetail: any;
   nomAlmacen: any;
   rowCount: any;
   vPickingPage: any;
   vDatosRecibidos: any;
-
   listAuxOrdenesPicking: any = [];
   listaTempRutaPicking: any = [];
   listDetalleSinTrabajar: any = [];
   listDetalleProceso: any = [];
   rowCountSinTrabajar: any;
   rowCountProceso: any;
-
   rowPickingSelect: any;
 
-  // userProfile={"Almacen":"","ApeNom":"","page":"1"};
-  //userProfile2:any;
-
-
-  // @ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
-  // @ViewChild('popoverText', { read: ElementRef }) text: ElementRef;
   @ViewChild(Navbar) navBar: Navbar;
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, public modalCtrl: ModalController, private popoverCtrl: PopoverController,
@@ -94,9 +85,6 @@ export class PickingPage {
 
       this.rowCountSinTrabajar = this.listDetalleSinTrabajar.length;
       this.rowCountProceso = this.listDetalleProceso.length;
-
-
-
       return this.listAuxOrdenesPicking = this.listOrdenesPicking;
     }
   }
@@ -110,7 +98,6 @@ export class PickingPage {
     }
   }
 
-
   habilitaIncidencia(obj): void {
     if (obj.Id_Estado == 2) {
       this.rowPickingSelect = undefined;
@@ -122,7 +109,6 @@ export class PickingPage {
   }
 
   getDataOrdenes() {
-    // this.getOrdenesXUsuario(this.userDetail[0].Usuario, 2);
     this.searchQuery = "";
     this.getOrdenesXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
@@ -134,9 +120,7 @@ export class PickingPage {
       this.listAuxOrdenesPicking = [];
       this.listDetalleSinTrabajar = [];
       this.listDetalleProceso = [];
-
       this.listOrdenesPicking = result;
-      //this.listAuxOrdenesPicking = this.listOrdenesPicking;
 
       for (var i = 0; i < this.listOrdenesPicking.length; i++) {
         var obj = {
@@ -162,8 +146,6 @@ export class PickingPage {
           'Zona': result[i].Zona
         };
         this.listAuxOrdenesPicking.push(obj);
-        //this.idRutaPicking = this.idRutaPicking + 1;
-
         if (result[i].Id_Estado == 2) {
           this.listDetalleSinTrabajar.push(obj);
         }
@@ -197,9 +179,6 @@ export class PickingPage {
             this.goRutaPickingPage(data);
             return;
           } else {
-            // this.presentToast("No existe ruta para este producto");
-            // this.goDetallePickingPage(data);
-            //return;
             if (i == this.listaTempRutaPicking.length - 1) {
               this.presentToast("No existe ruta para este producto");
               this.goDetallePickingPage(data);
@@ -218,19 +197,8 @@ export class PickingPage {
     });
   }
 
-  // dataFromRutaPickingPage: any;
-  // rutaPickingCallback = data => {
-  //   debugger;
-  //   this.dataFromRutaPickingPage = data;
-  //   console.log('data received from other page', this.dataFromRutaPickingPage);
-  //   debugger;    
-  //   this.vPickingPage = this.dataFromRutaPickingPage;
-  //   //this.getDataOrdenes();
-  // };
-
   goRutaPickingPage(data) {
     this.vPickingPage = {
-      //'Id_Page_Anterior': 1,
       'Id_Tx': data.Id_Tx,
       'NumOrden': data.NumOrden,
       'Cliente': data.Cliente,
@@ -242,14 +210,12 @@ export class PickingPage {
     };
     this.navCtrl.push(RutaPickingPage, {
       data: this.vPickingPage
-      // data: this.vPickingPage, rutaPicking: this.rutaPickingCallback
     });
   }
 
   goDetallePickingPage(data) {
     debugger;
     this.vPickingPage = {
-      //'Id_Page_Anterior': 1,
       'Id_Tx': data.Id_Tx,
       'NumOrden': data.NumOrden,
       'Id_Cuenta': data.Id_Cuenta,
@@ -316,19 +282,10 @@ export class PickingPage {
   }
 
   presentPopover(ev) {
-    // let popover = this.popoverCtrl.create(PopoverPickingPage, {
-    //   // contentEle: this.content.nativeElement,
-    //   // textEle: this.text.nativeElement
-    // });
-    // popover.present({
-    //   ev: ev
-    // });
-
     let popover = this.popoverCtrl.create(PopoverPickingPage, { 'page': 0, 'has_Id_Tx': (this.rowPickingSelect != undefined) ? true : false });
     popover.present({
       ev: ev
     });
-
     popover.onDidDismiss(popoverData => {
       if (popoverData == 1) {
         this.showModalIncidencia(this.rowPickingSelect);
@@ -339,10 +296,6 @@ export class PickingPage {
         debugger;
         this.goConsultarUbicacionPage();
       }
-      // else if (popoverData == 4) {
-      //   debugger;
-      //   this.goMenu();
-      // } 
       else if (popoverData == 4) {
         debugger;
         this.presentAlertConfirm("¿Estás seguro que deseas cerrar sesión?").then((result) => {
@@ -383,18 +336,6 @@ export class PickingPage {
   }
 
   ionViewDidLoad() {
-    // this.navBar.backButtonClick = (e: UIEvent) => {
-    //   // todo something
-    //   debugger;
-
-
-    //   this.userProfile.Almacen = this.sGlobal.nombreAlmacen;
-    //   this.userProfile.ApeNom = this.sGlobal.apeNom;      
-    //   this.navCtrl.push(MainMenuPage, this.userProfile);
-
-
-    //   //this.navCtrl.push(MainMenuPage);
-    // }
     console.log('ionViewDidLoad PickingPage');
   }
 

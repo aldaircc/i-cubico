@@ -37,21 +37,21 @@ export class EmbarquePage_03Page {
 
   constructor(public app: App, public popoverCtrl: PopoverController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sGlobal: GlobalServiceProvider, public sDesp: DespachoServiceProvider) {
-      this.vParameter = this.navParams.get('vParameter');
+    this.vParameter = this.navParams.get('vParameter');
   }
 
   ionViewWillEnter() {
     this.listarDetalleXTransporte(this.vParameter.Id_Tra);
   }
 
-  presentPopover(myEvent){
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 1 });
+  presentPopover(myEvent) {
+    let popover = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 1 });
     popover.present({
       ev: myEvent
     });
 
-    popover.onDidDismiss(popoverData =>{
-     if(popoverData == 4){
+    popover.onDidDismiss(popoverData => {
+      if (popoverData == 4) {
         this.navCtrl.pop();
         var nav = this.app.getRootNav();
         nav.setRoot(HomePage);
@@ -59,8 +59,8 @@ export class EmbarquePage_03Page {
     });
   }
 
-  listarDetalleXTransporte(strIdTransporte): void{
-    this.sDesp.listarDetalleXTransporte(strIdTransporte).then(result=>{
+  listarDetalleXTransporte(strIdTransporte): void {
+    this.sDesp.listarDetalleXTransporte(strIdTransporte).then(result => {
       this.listDetalle = result;
       this.rowCount = this.listDetalle.length;
       if (this.rowCount > 0) {
@@ -70,7 +70,7 @@ export class EmbarquePage_03Page {
         this.listDetalleProceso = this.listDetalle.filter((item) => {
           return (item.OperacionBultos > 0 && item.SaldoBultos > 0);
         });
-        this.listDetalleFinalizado = this.listDetalle.filter((item) => {          
+        this.listDetalleFinalizado = this.listDetalle.filter((item) => {
           return (item.OperacionBultos > 0 && item.SaldoBultos == 0);
         });
         this.rowCountPendiente = this.listDetalleSinTrabajar.length;
@@ -86,11 +86,10 @@ export class EmbarquePage_03Page {
     });
   }
 
-  
+
 
   presentConfirmDialog(title, message): Promise<boolean> {
     return new Promise((resolve, reject) => {
-
       const confirm = this.alertCtrl.create({
         title: title,
         message: message,
@@ -107,36 +106,36 @@ export class EmbarquePage_03Page {
             resolve(false);
           }
         }
-      ]
+        ]
       });
       confirm.present();
     })
   }
 
-  cerrarEmbarque(): void{
+  cerrarEmbarque(): void {
     var mensaje = "";
     this.totalSaldo == 0 ? mensaje = "¿Finalizar despacho?" : mensaje = "Existen discrepancias. ¿Finalizar despacho?";
-    this.presentConfirmDialog('Mensaje', mensaje).then(result=>{
-      if(result == true){
-        this.sDesp.cerrarEmbarque(this.vParameter.Id_Tra, ((this.totalSaldo == 0) ? 5 : 6) , this.sGlobal.userName).then(result=>{
+    this.presentConfirmDialog('Mensaje', mensaje).then(result => {
+      if (result == true) {
+        this.sDesp.cerrarEmbarque(this.vParameter.Id_Tra, ((this.totalSaldo == 0) ? 5 : 6), this.sGlobal.userName).then(result => {
           let res: any = result;
-          if(res[0].ERROR == 0){
+          if (res[0].ERROR == 0) {
             alert(res[0].MENSAGE);
             //Ir a la primera pantalla
             this.navCtrl.remove(this.navCtrl.getViews().length - 2, 2);
           }
         });
-      }else{
+      } else {
         return;
       }
     });
   }
 
-  verificarDespacho(): void{
+  verificarDespacho(): void {
     this.listarDetalleXTransporte(this.vParameter.Id_Tra);
   }
 
-  goToEmbarPage04(obj): void{
+  goToEmbarPage04(obj): void {
     let parameter = {
       'Id_Tra': obj.Id_Tra,
       'Id_Conductor': obj.Id_Conductor,
@@ -154,7 +153,7 @@ export class EmbarquePage_03Page {
     this.navCtrl.push(EmbarquePage_04Page, { 'vParameter': parameter });
   }
 
-  goToEmbarPage05(obj): void{
+  goToEmbarPage05(obj): void {
     let parameter = {
       'Id_Tra': obj.Id_Tra,
       'Id_Conductor': obj.Id_Conductor,
@@ -168,6 +167,6 @@ export class EmbarquePage_03Page {
       'totalSaldo': this.totalSaldo,
       'OperacionBultos': obj.OperacionBultos
     };
-    this.navCtrl.push(EmbarquePage_05Page, { 'vParameter': parameter});
+    this.navCtrl.push(EmbarquePage_05Page, { 'vParameter': parameter });
   }
 }

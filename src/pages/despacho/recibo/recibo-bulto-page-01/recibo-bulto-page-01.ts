@@ -21,65 +21,38 @@ export class ReciboBultoPage_01Page {
   strDescripcionMuelle: string = "";
   intCodigoMuelle: number = 0;
   @ViewChild('inputCodigoMuelle', { read: ElementRef }) private inputCodigoMuelle: ElementRef;
-  
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider,
     public sPicking: PickingServiceProvider) {
   }
 
-  validarMuelle(){
-    
-    if(this.strCodigoBarra.trim() != ""){
+  validarMuelle() {
+    if (this.strCodigoBarra.trim() != "") {
       debugger;
 
-      this.sPicking.getMuelleXAlmacen(this.sGlobal.Id_Almacen, this.strCodigoBarra).then(result =>{
+      this.sPicking.getMuelleXAlmacen(this.sGlobal.Id_Almacen, this.strCodigoBarra).then(result => {
         debugger;
         let res: any = result;
 
-        if(res.length > 0){
+        if (res.length > 0) {
           this.strDescripcionMuelle = res[0].Muelle;
           this.intCodigoMuelle = res[0].Id_Muelle;
 
-        }else{
+        } else {
           alert('Muelle no encontrado');
           this.selectAll(this.inputCodigoMuelle, 600);
         }
 
       });
 
-    }else{
+    } else {
       alert('Ingrese código de muelle');
     }
-
-    // if (!string.IsNullOrEmpty(strCodBarMuelle))
-    // {
-    //     Cursor.Current = Cursors.WaitCursor;
-    //     var infoMuelle = new GestionPickingMovil().ListarNombreMuelle(control.Global.IdAlmacen, strCodBarMuelle.Trim());
-    //     if (infoMuelle.Count > 0)
-    //     {
-
-    //         lblMuelleSel.Text = infoMuelle[0].Muelle;
-    //         codigoMuelle = infoMuelle[0].Id_Muelle;
-    //         //ListarRecepcion(control.Global.Usuario, control.Global.IdAlmacen, codigoMuelle);
-    //         btn01a02.Focus();
-    //         Cursor.Current = Cursors.Default;
-
-    //     }
-    //     else
-    //     {
-    //         Cursor.Current = Cursors.Default;
-
-    //         MessageBox.Show("Muelle no encontrado", "Aviso",
-    //                     MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
-    //         txtValidaMuelle.Focus();
-    //         txtValidaMuelle.SelectAll();
-    //         return;
-    //     }
-    // }
   }
 
-  selectAll(el: ElementRef, time){
+  selectAll(el: ElementRef, time) {
     let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
-    setTimeout(()=>{
+    setTimeout(() => {
       nativeEl.select();
     }, time);
   }

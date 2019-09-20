@@ -4,110 +4,73 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<!-- <ion-header no-border>
-  <ion-navbar>
-    <ion-title>ETIQUETADO</ion-title>
-  </ion-navbar>
-</ion-header> -->
 
 <ion-header>
-    <ion-toolbar no-padding no-margin color="primary">
-        <ion-grid style="padding: 0px;">
-            <ion-row no-padding no-margin>
-                <ion-col col-12 no-padding no-margin>
-                    <ion-navbar no-padding no-margin>
-                        <ion-label style="font-size: 13px; color: white; font-weight:bold;">BUSCAR PRODUCTO</ion-label>
-                    </ion-navbar>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-    </ion-toolbar>
-    <ion-grid class="statico">
-        <ion-row align-items-center>
-          <ion-col col-3 col-sm item-inner class="no-padding-bottom-top">
-            <ion-label style="padding-left: 0px; font-weight:bold; margin-top: 0px; margin-bottom: 0px;">Cuenta:</ion-label>
-          </ion-col>
-          <ion-col col-9 col-sm>
-              <ion-select [(ngModel)]="IdCuenta" interface="action-sheet" #selectFormat (ionChange)="onChange($event)">
-                <ion-option *ngFor="let cuenta of listCuentaAlmac" value="{{ cuenta.Id_Cuenta }}">{{ cuenta.NombreCuenta }}</ion-option>
-              </ion-select>        
-          </ion-col>
-        </ion-row>
-    
-        <!-- <ion-row>
-          <ion-col class="no-padding-bottom-top" col-3 col-sm>
-            <ion-label class="fieldForm valueHeader">Cuenta:</ion-label>
-          </ion-col>
-          <ion-col class="no-padding-bottom-top" col-9 col-sm>
-            <ion-item>
-              <ion-label style="visibility: hidden;">
-                Cuenta:
-              </ion-label>
-              <ion-select [(ngModel)]="IdCuenta">
-                <ion-option *ngFor="let cuenta of listCuentaAlmac" value="{{ cuenta.Id_Cuenta}}">{{ cuenta.NombreCuenta }}</ion-option>
-              </ion-select>
-            </ion-item>
-          </ion-col>
-        </ion-row> -->
-    
-        <!-- <ion-row class="bgLightBlue">
-          <ion-col class="no-padding-bottom-top">
-            <ion-label >Buscar:</ion-label>
-          </ion-col>
-        </ion-row> -->
-    
-    
-        <ion-row radio-group [(ngModel)]="tipoFiltro" (ionChange)="onChangeRadio($event)">
-    
-          <ion-col color="primary">
-            <ion-item >
-              <!-- <ion-label class="valueHeader">Código</ion-label> -->
-              <ion-label >Código</ion-label>
-              <ion-radio  mode="md" item-left value="1"></ion-radio>
-            </ion-item>
-          </ion-col>
-    
-          <ion-col >
-            <ion-item>
-              <ion-label >Descripción</ion-label>
-              <ion-radio mode="md" item-left value="2"></ion-radio>
-            </ion-item>
-          </ion-col>
-    
-          <ion-col >
-            <ion-item>
-              <ion-label >EAN13</ion-label>
-              <ion-radio mode="md" item-left value="3"></ion-radio>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-    
-        <ion-row>
-          <ion-col  col-10 col-sm>
-            <ion-list>
-              <ion-item class="transparent no-padding-left">
-                <ion-input #txtFiltro placeholder="Ingrese texto" [(ngModel)]="filterText" clearInput 
-                ></ion-input>
-              </ion-item>
-            </ion-list>
-          </ion-col>
-          <!-- <ion-col col-2 col-sm>
-            <button ion-button only-icon small (click)="filtrarProducto()">
-              <ion-icon name="search"></ion-icon>
-            </button>
-          </ion-col> -->    
-          <ion-col class="no-padding-bottom-top" col-2 col-sm>
-            <button ion-button block outline only-icon (click)="filtrarProducto()">
-              <ion-icon name="search" class="lupa"></ion-icon>
-            </button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+  <ion-toolbar no-padding no-margin color="primary">
+    <ion-grid style="padding: 0px;">
+      <ion-row no-padding no-margin>
+        <ion-col col-12 no-padding no-margin>
+          <ion-navbar no-padding no-margin>
+            <ion-label style="font-size: 13px; color: white; font-weight:bold;">BUSCAR PRODUCTO</ion-label>
+          </ion-navbar>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+  <ion-grid class="statico">
+    <ion-row align-items-center>
+      <ion-col col-3 col-sm item-inner class="no-padding-bottom-top">
+        <ion-label style="padding-left: 0px; font-weight:bold; margin-top: 0px; margin-bottom: 0px;">Cuenta:</ion-label>
+      </ion-col>
+      <ion-col col-9 col-sm>
+        <ion-select [(ngModel)]="IdCuenta" interface="action-sheet" #selectFormat (ionChange)="onChange($event)">
+          <ion-option *ngFor="let cuenta of listCuentaAlmac" value="{{ cuenta.Id_Cuenta }}">{{ cuenta.NombreCuenta }}</ion-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row radio-group [(ngModel)]="tipoFiltro" (ionChange)="onChangeRadio($event)">
+      <ion-col color="primary">
+        <ion-item>
+          <ion-label>Código</ion-label>
+          <ion-radio mode="md" item-left value="1"></ion-radio>
+        </ion-item>
+      </ion-col>
+
+      <ion-col>
+        <ion-item>
+          <ion-label>Descripción</ion-label>
+          <ion-radio mode="md" item-left value="2"></ion-radio>
+        </ion-item>
+      </ion-col>
+
+      <ion-col>
+        <ion-item>
+          <ion-label>EAN13</ion-label>
+          <ion-radio mode="md" item-left value="3"></ion-radio>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-10 col-sm>
+        <ion-list>
+          <ion-item class="transparent no-padding-left">
+            <ion-input #txtFiltro placeholder="Ingrese texto" [(ngModel)]="filterText" clearInput></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <ion-col class="no-padding-bottom-top" col-2 col-sm>
+        <button ion-button block outline only-icon (click)="filtrarProducto()">
+          <ion-icon name="search" class="lupa"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-header>
 
 <ion-content>
   <!-- Original -->
-  
 
   <!-- Fin original -->
 
@@ -142,9 +105,7 @@
             </ion-row>
           </ion-col>
           <ion-col col-1 col-sm align-self-center>
-            <!-- <button ion-button icon-only> -->
             <ion-icon name="checkmark"></ion-icon>
-            <!-- </button> -->
           </ion-col>
         </ion-row>
       </ion-grid>

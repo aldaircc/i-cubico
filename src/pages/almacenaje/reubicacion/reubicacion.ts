@@ -3,7 +3,6 @@ import { IonicPage, Navbar, NavController, NavParams, AlertController, ToastCont
 import { ReubicacionDestinoPage } from '../../almacenaje/reubicacion-destino/reubicacion-destino'
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { AlmacenajeServiceProvider } from '../../../providers/almacenaje-service/almacenaje-service';
-import { AlmacenajePage } from '../../almacenaje/almacenaje';
 
 /**
  * Generated class for the ReubicacionPage page.
@@ -65,7 +64,6 @@ export class ReubicacionPage {
                 this.listAuxResultPalletUA = [];
                 this.rowCount = this.resultPalletUA.length;
                 setTimeout(() => {
-                  //this.txtCodUbicacionRef.setFocus();
                   this.selectAll(this.txtCodUbicacion);
                 }, (500));
                 this.codeBar_Bk = this.codeBar.trim();
@@ -87,7 +85,6 @@ export class ReubicacionPage {
       this.presentToast("Ingrese código de ubicación");
     }
     setTimeout(() => {
-      //this.txtCodUbicacionRef.setFocus();
       this.selectAll(this.txtCodUbicacion);
     }, (500));
   }
@@ -103,7 +100,6 @@ export class ReubicacionPage {
         this.Posicion = this.resultUbicacion[0].Posicion;
         this.txtPalletUaisenabled = true;
         setTimeout(() => {
-          //this.txtPalletUaRef.setFocus();
           this.selectAll(this.txtPalletUa);
         }, (500));
       } else {
@@ -112,7 +108,6 @@ export class ReubicacionPage {
           if (resultAlert) {
             //select y focus en ubicaicon origen
             setTimeout(() => {
-              //this.txtCodUbicacionRef.setFocus();
               this.selectAll(this.txtCodUbicacion);
             }, (500));
           }
@@ -133,7 +128,6 @@ export class ReubicacionPage {
               this.sAlmacenaje.getValidarExisteUAUbicada(this.codePalletUA, "", this.resultUbicacion[0].Id_Ubicacion).then((result) => {
                 debugger;
                 this.resultPalletUA = result;
-                //this.rowCount = this.resultPalletUA.length;
                 if (this.resultPalletUA.length > 0) {
                   if (this.listAuxResultPalletUA.length == 0) {
                     for (var i = 0; i < this.resultPalletUA.length; i++) {
@@ -187,7 +181,6 @@ export class ReubicacionPage {
                           if (resultAlert) {
                             setTimeout(() => {
                               this.codePalletUA = "";
-                              //this.txtPalletUaRef.setFocus();
                               this.selectAll(this.txtPalletUa);
                             }, (500));
                           }
@@ -196,10 +189,8 @@ export class ReubicacionPage {
                     }
                   }
                   this.rowCount = this.listAuxResultPalletUA.length;
-                  // this.codeBar = "";
                   setTimeout(() => {
                     this.codePalletUA = "";
-                    //this.txtPalletUaRef.setFocus();
                     this.selectAll(this.txtPalletUa);
                   }, (500));
 
@@ -207,7 +198,6 @@ export class ReubicacionPage {
                   this.presentAlert("UA/Pallet no pertenece a la ubicación.").then((resultAlert) => {
                     if (resultAlert) {
                       setTimeout(() => {
-                        //this.txtPalletUaRef.setFocus();
                         this.selectAll(this.txtPalletUa);
                       }, (500));
                     }
@@ -226,28 +216,24 @@ export class ReubicacionPage {
           else {
             this.presentToast("Ingrese código de Pallet/UA");
             setTimeout(() => {
-              //this.txtPalletUaRef.setFocus();
               this.selectAll(this.txtPalletUa);
             }, (500));
           }
         } else {
           this.presentToast("Ingrese código de Pallet/UA");
           setTimeout(() => {
-            //this.txtPalletUaRef.setFocus();
             this.selectAll(this.txtPalletUa);
           }, (500));
         }
       } else {
         this.presentToast("Ingrese código de ubicación");
         setTimeout(() => {
-          //this.txtCodUbicacionRef.setFocus();
           this.selectAll(this.txtCodUbicacion);
         }, (500));
       }
     } else {
       this.presentToast("Ingrese código de ubicación");
       setTimeout(() => {
-        //this.txtCodUbicacionRef.setFocus();
         this.selectAll(this.txtCodUbicacion);
       }, (500));
     }
@@ -280,7 +266,6 @@ export class ReubicacionPage {
     this.listAuxResultPalletUA = [];
     this.rowCount = this.resultPalletUA.length;
     setTimeout(() => {
-      //this.txtCodUbicacionRef.setFocus();
       this.selectAll(this.txtCodUbicacion);
     }, (500));
   }
@@ -347,27 +332,27 @@ export class ReubicacionPage {
     debugger;
     if (this.codeBar) {
       if (this.codeBar.trim() != "") {
-        if (this.listAuxResultPalletUA.length > 0){
+        if (this.listAuxResultPalletUA.length > 0) {
           var listUA = [];
-              this.listAuxResultPalletUA.forEach(el => {
-                listUA.push(el.UA_CodBarra);
-              });
+          this.listAuxResultPalletUA.forEach(el => {
+            listUA.push(el.UA_CodBarra);
+          });
 
-              let cantidadTotal = this.listAuxResultPalletUA.reduce(function (prev, cur) {
-                return prev + cur.Cantidad;
-              }, 0);
+          let cantidadTotal = this.listAuxResultPalletUA.reduce(function (prev, cur) {
+            return prev + cur.Cantidad;
+          }, 0);
 
-              this.vReubicacionDestinoPage = {
-                'Codigo_Origen': this.codeBar_Bk,
-                'Total_Pallet': this.rowCount,
-                'Id_Producto': this.listAuxResultPalletUA[0].Id_Producto,
-                'cantidadTotal': cantidadTotal,
-                'listUA': listUA
-              };
-              this.navCtrl.push(ReubicacionDestinoPage, {
-                data: this.vReubicacionDestinoPage
-              });
-        }else{
+          this.vReubicacionDestinoPage = {
+            'Codigo_Origen': this.codeBar_Bk,
+            'Total_Pallet': this.rowCount,
+            'Id_Producto': this.listAuxResultPalletUA[0].Id_Producto,
+            'cantidadTotal': cantidadTotal,
+            'listUA': listUA
+          };
+          this.navCtrl.push(ReubicacionDestinoPage, {
+            data: this.vReubicacionDestinoPage
+          });
+        } else {
           if (this.codePalletUA) {
             if (this.codePalletUA.trim() != "") {
               this.presentToast("No ha agregado el código de Pallet/UA");
@@ -386,7 +371,7 @@ export class ReubicacionPage {
               this.selectAll(this.txtPalletUa);
             }, (500));
           }
-        }        
+        }
       } else {
         this.presentToast("Ingrese código de ubicación origen.");
         setTimeout(() => {
@@ -402,13 +387,8 @@ export class ReubicacionPage {
   }
 
   ionViewDidLoad() {
-    // this.navBar.backButtonClick = (e: UIEvent) => {
-    //   this.navCtrl.push(AlmacenajePage);
-    // }
-
     setTimeout(() => {
       this.selectAll(this.txtCodUbicacion);
-      //this.txtCodUbicacionRef.setFocus();
     }, (500));
     console.log('ionViewDidLoad ReubicacionPage');
   }
@@ -416,6 +396,4 @@ export class ReubicacionPage {
   ionViewWillEnter() {
     this.limpiar();
   }
-
-
 }

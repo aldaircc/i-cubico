@@ -3,8 +3,6 @@ import { IonicPage, App, NavController, NavParams, AlertController, Platform, Vi
 import { MainMenuPage } from '../main-menu/main-menu';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { GlobalServiceProvider } from '../../providers/global-service/global-service';
-import { HomePage } from '../home/home';
-
 
 /**
  * Generated class for the WarehouseSelectPage page.
@@ -28,16 +26,11 @@ export class WarehouseSelectPage {
   userInfo = { "strUsuario": "" };
   cedisInfo = { "Centro": "", "Id_Centro": 0 };
   wareHouseInfo = { "Almacen": "", "Cliente": null, "CorreoSupervisor": "", "Id_Almacen": "", "Id_Cliente": "", "NombreSupervisor": "" };
-
-
   vWarehousePage: any;
-  //userProfileBack: any;
-
 
   constructor(public app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public auth: AuthService,
     public sGlobal: GlobalServiceProvider, public alertCtrl: AlertController, public viewCtrl: ViewController) {
     debugger;
-    //const data = JSON.parse(localStorage.getItem('vUserData'));
     this.userDetails = this.sGlobal.vUserData;
     this.userProfile.ApeNom = this.userDetails[0].ApeNom;
     this.userProfile.Correo = this.userDetails[0].Correo;
@@ -47,15 +40,7 @@ export class WarehouseSelectPage {
     this.userProfile.Id_Almacen = this.userDetails[0].Id_Almacen;
     this.userProfile.Usuario = this.userDetails[0].Usuario;
     this.userInfo.strUsuario = this.userProfile.Usuario;
-
-    //this.userProfileBack = this.navParams.data;
     this.getCedis();
-
-    //si viene de picking y almacenaje
-    // if (this.userProfileBack.page == "1") {
-    //   debugger;
-    //   this.cedisInfo.Id_Centro = this.sGlobal.Id_Centro;
-    // }
   }
 
   presentAlertConfirm(message): Promise<boolean> {
@@ -85,19 +70,6 @@ export class WarehouseSelectPage {
   }
 
   ionViewDidLoad() {
-    // this.platform.registerBackButtonAction(() => {
-    //   let nav = this.app.getActiveNav();
-    //   let view = nav.getActive();
-    //   if (view.component.name == "WarehouseSelectPage"){
-    //       this.presentAlertConfirm("¿Deseas cerrar sesión?").then((result) => {
-    //       if (result) {
-    //         this.logout();
-    //       }
-    //     })
-    //   }else{
-    //     this.navCtrl.pop();
-    //   }
-    // });
     console.log('ionViewDidLoad WarehouseSelectPage');
   }
 
@@ -107,13 +79,7 @@ export class WarehouseSelectPage {
       this.responseData = result;
       if (this.responseData.length > 0) {
         debugger;
-        /* localStorage.setItem('vUserData', JSON.stringify(this.responseData));
-        this.navCtrl.push(WarehouseSelectPage); */
         this.listCedis = this.responseData;
-        // if (this.userProfileBack.page == "1") {
-        //   debugger;
-        //   this.getWarehouse();
-        // }
       }
     }, (err) => {
       console.log(err);
@@ -130,15 +96,8 @@ export class WarehouseSelectPage {
       this.sGlobal.Id_Centro = this.cedisInfo.Id_Centro;
       debugger;
       if (this.responseData.length > 0) {
-        /* localStorage.setItem('vUserData', JSON.stringify(this.responseData));
-        this.navCtrl.push(WarehouseSelectPage); */
         this.listWarehouse = this.responseData;
-
       }
-      // if (this.userProfileBack.page == "1") {
-      //   debugger;
-      //   this.wareHouseInfo.Id_Almacen = this.sGlobal.Id_Almacen.toString();
-      // }
       else {
       }
     }, (err) => {
@@ -148,7 +107,6 @@ export class WarehouseSelectPage {
 
   selectWareHouse(data) {
     debugger;
-
     for (var i = 0; i < this.listWarehouse.length; i++) {
       debugger;
       if (this.listWarehouse[i].Id_Almacen == data) {
@@ -164,13 +122,6 @@ export class WarehouseSelectPage {
 
 
   goBack(): void {
-
-    // if (this.userProfileBack.page == "1") {
-    //   debugger;
-    //   this.navCtrl.push(HomePage);
-    // } else {
-    //   this.navCtrl.pop();
-    // }
     this.navCtrl.pop();
   }
 
@@ -180,7 +131,6 @@ export class WarehouseSelectPage {
       alert(message);
       return;
     }
-
     this.navCtrl.push(MainMenuPage, this.userProfile);
   }
 
@@ -206,8 +156,5 @@ export class WarehouseSelectPage {
         setTimeout(() => this.goBack(), 1000);
       }
     })
-
-    // localStorage.clear();
-    // setTimeout(() => this.goBack(), 1000);
   }
 }

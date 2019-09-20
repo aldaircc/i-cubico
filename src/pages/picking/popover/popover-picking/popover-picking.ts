@@ -20,7 +20,6 @@ export class PopoverPickingPage {
   isDisplayIncidencias: boolean = false;
   isDisplayUA: boolean = false;
   isDisplayUbicacion: boolean = false;
-  //isDisplayMenu: boolean = false;
   isDisplayCerrar: boolean = false;
 
 
@@ -35,20 +34,17 @@ export class PopoverPickingPage {
         this.isDisplayIncidencias = value.has_Id_Tx;;
         this.isDisplayUA = true;
         this.isDisplayUbicacion = true;
-        // this.isDisplayMenu = false;
         this.isDisplayCerrar = true;
         break;
       case 1:
         this.isDisplayIncidencias = true;
         this.isDisplayUA = true;
         this.isDisplayUbicacion = true;
-        // this.isDisplayMenu = true;
         this.isDisplayCerrar = true;
         break;
       default:
         break;
     }
-
   }
 
   ionViewDidLoad() {

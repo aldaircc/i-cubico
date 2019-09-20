@@ -9,8 +9,7 @@ page-main-menu {
       cursor: pointer;
       border-radius: 50%;
     }
-      
-    /* Darker background on mouse-over */
+
     .btn:hover {
       background-color: #e61919; //RoyalBlue;
     }
@@ -22,18 +21,11 @@ page-main-menu {
       font-size:1.8rem;
     }
     
-    // .text:hover
-    // {
-    //   cursor: pointer;
-    //   color: #1565C0;
-    // }
-
     .margin-text-circle-button{
       margin: 5px 0px 15px 0px;
     }
 
     .Icono {
-      // background-color: #e61919;
       font-size:280%;
     }
 

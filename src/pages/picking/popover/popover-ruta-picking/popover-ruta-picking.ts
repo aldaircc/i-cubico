@@ -27,5 +27,4 @@ export class PopoverRutaPickingPage {
     debugger;
     this.viewCtrl.dismiss(item);
   }
-
 }

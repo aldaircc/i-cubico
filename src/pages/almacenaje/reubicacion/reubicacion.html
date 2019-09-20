@@ -24,7 +24,7 @@
     </ion-grid>
   </ion-toolbar>
 
-  <ion-grid  >
+  <ion-grid>
     <ion-row no-padding style="margin-top: 15px; margin-bottom: 15px;">
       <ion-col col-5 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
@@ -33,15 +33,15 @@
       </ion-col>
       <ion-col col-7 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtCodUbicacion [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" type="text" value="" maxlength="14"
-          style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"
-          onkeypress="return ((event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-input>
+          <ion-input #txtCodUbicacion [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" type="text" value=""
+            maxlength="14" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"
+            onkeypress="return ((event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-grid  >
+  <ion-grid>
     <ion-row no-padding no-margin>
       <ion-col col-3 no-padding>
         <ion-label class="box-titel">
@@ -66,11 +66,11 @@
     </ion-row>
   </ion-grid>
 
-  <ion-grid >
+  <ion-grid>
     <ion-row no-padding no-margin>
       <ion-col col-3 no-padding>
         <ion-row class="box-row" style="height: 43px">
-          <ion-label class="box-label" >
+          <ion-label class="box-label">
             {{ Fila }}
           </ion-label>
         </ion-row>
@@ -97,9 +97,9 @@
         </ion-row>
       </ion-col>
     </ion-row>
-  </ion-grid>  
+  </ion-grid>
 
-  <ion-grid >
+  <ion-grid>
     <ion-row no-padding style="margin-top: 5px; margin-bottom: 10px; ">
       <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
@@ -108,8 +108,8 @@
       </ion-col>
       <ion-col col-6 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtPalletUa [(ngModel)]="codePalletUA" [disabled]="!txtPalletUaisenabled" (keyup.enter)="validarPalletUA()" maxlength="12"
-            type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+          <ion-input #txtPalletUa [(ngModel)]="codePalletUA" [disabled]="!txtPalletUaisenabled" (keyup.enter)="validarPalletUA()"
+            maxlength="12" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col col-2 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">

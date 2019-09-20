@@ -6,25 +6,17 @@
 -->
 <ion-header no-border>
 
-    <ion-toolbar no-padding no-margin color="primary">
-        <ion-navbar>
-          <ion-title>DATOS VEHÍCULO</ion-title>
-        </ion-navbar>
-        <ion-buttons end>
-          <button ion-button icon-only (click)="presentPopover($event)">
-            <ion-icon name="more"></ion-icon>
-          </button>
-        </ion-buttons>
-      </ion-toolbar>
-
-  <!-- <ion-navbar>
-    <ion-title>DATOS VEHÍCULO</ion-title>
+  <ion-toolbar no-padding no-margin color="primary">
+    <ion-navbar>
+      <ion-title>DATOS VEHÍCULO</ion-title>
+    </ion-navbar>
     <ion-buttons end>
       <button ion-button icon-only (click)="presentPopover($event)">
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-buttons>
-  </ion-navbar> -->
+  </ion-toolbar>
+
 
   <ion-grid class="bgHeader statico">
     <ion-row align-items-center>
@@ -36,7 +28,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  
+
 </ion-header>
 
 <ion-content no-padding>
@@ -63,40 +55,22 @@
 </ion-content>
 
 <ion-footer class="bgLightBlue">
-    <ion-grid style="margin: 0px; padding: 0px">
-            <ion-row>
-              <ion-col style="margin: 0px; padding: 0px;">
-                <button ion-button style="margin: 0px; padding: 0px" (click)="closeEmbarPage03()" medium full>
-                  <div>
-                    <ion-icon name="label" name="close-circle"></ion-icon> <br>
-                  </div>
-                </button>
-              </ion-col>
-              <ion-col style="margin: 0px; padding: 0px;">
-                <button ion-button style=" margin: 0px; padding: 0px" (click)="goToEmbarPage03(vParameter)" medium full>
-                  <div>
-                    <ion-icon name="label" name="play"></ion-icon> <br>
-                  </div>
-                </button>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+  <ion-grid style="margin: 0px; padding: 0px">
+    <ion-row>
+      <ion-col style="margin: 0px; padding: 0px;">
+        <button ion-button style="margin: 0px; padding: 0px" (click)="closeEmbarPage03()" medium full>
+          <div>
+            <ion-icon name="label" name="close-circle"></ion-icon> <br>
+          </div>
+        </button>
+      </ion-col>
+      <ion-col style="margin: 0px; padding: 0px;">
+        <button ion-button style=" margin: 0px; padding: 0px" (click)="goToEmbarPage03(vParameter)" medium full>
+          <div>
+            <ion-icon name="label" name="play"></ion-icon> <br>
+          </div>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-footer>
-
-
-
-<!-- <ion-footer>
-  <ion-toolbar>
-    <ion-buttons left>
-      <button ion-button icon-only (click)="closeEmbarPage03()">
-          <ion-icon name="label" name="close-circle"></ion-icon>
-      </button>
-    </ion-buttons>
-
-    <ion-buttons right>
-      <button ion-button icon-only (click)="goToEmbarPage03(vParameter)">
-          <ion-icon name="label" name="play"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer> -->

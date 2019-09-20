@@ -2,8 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, App, ModalController, NavController, NavParams, AlertController, PopoverController, Navbar } from 'ionic-angular';
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
-import { PickingPorProductoPage } from '../picking-por-producto/picking-por-producto';
-import { DetallePickingPage } from '../detalle-picking/detalle-picking';
 import { IncidenciaPage } from '../../incidencia/incidencia';
 import { AdministrarUaPage } from '../../almacenaje/menu-consultar/administrar-ua/administrar-ua'
 import { ConsultarUbicacionPage } from '../../almacenaje/consultar-ubicacion/consultar-ubicacion'
@@ -33,7 +31,6 @@ export class DetallePorProductoPage {
   listAuxDetalleProducto: any;
   rowCount: any;
   searchQuery: string = '';
-
 
   constructor(public app: App, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, public alertCtrl: AlertController,
@@ -84,21 +81,20 @@ export class DetallePorProductoPage {
         debugger;
         // Eliminar UA
         let objUA = {
-          'UA_CodBarra': data.UA_CodBarra, //
-          'Id_Tx': this.vPickingXProducto.Id_Tx,   //this.vPickingXProducto.Id_Tx,
-          'Id_Producto': this.vPickingXProducto.IdProducto,  //this.vPickingXProducto.IdProducto
-          'Id_UM': data.Id_UM,  //
-          'Cantidad': data.Cantidad,  //
-          'FlagAnulado': true, //
-          'Id_TerminalRF': this.sGlobal.Id_TerminalRF,  //
-          'Item': this.vPickingXProducto.Item,  //
-          'Id_Almacen': this.sGlobal.Id_Almacen,  //
-          'UsuarioRegistro': this.sGlobal.userName,  //
+          'UA_CodBarra': data.UA_CodBarra,
+          'Id_Tx': this.vPickingXProducto.Id_Tx,
+          'Id_Producto': this.vPickingXProducto.IdProducto,
+          'Id_UM': data.Id_UM,
+          'Cantidad': data.Cantidad,
+          'FlagAnulado': true,
+          'Id_TerminalRF': this.sGlobal.Id_TerminalRF,
+          'Item': this.vPickingXProducto.Item,
+          'Id_Almacen': this.sGlobal.Id_Almacen,
+          'UsuarioRegistro': this.sGlobal.userName,
         };
         this.sPicking.RegistarEliminarUA(objUA).then(result => {
           debugger;
           this.resultEliminar = result;
-          //this.presentAlert(this.resultEliminar.message);
           this.presentAlert(this.resultEliminar.message).then((resultAlert2) => {
             this.getDetalleXProductoLoad();
           })
@@ -106,77 +102,41 @@ export class DetallePorProductoPage {
         });
       }
     })
-  }
+  } 
 
-  // goPickingPorProductoPage() {
-  //   debugger;
-  //   this.vDetalleXProducto = {
-  //     'idRutaPicking': this.vPickingXProducto.idRutaPicking,
-  //     'Id_Tx': this.vPickingXProducto.Id_Tx,
-  //     'NumOrden': this.vPickingXProducto.NumOrden,
-  //     'Cliente': this.vPickingXProducto.Cliente,
-  //     'Ciudad': this.vPickingXProducto.Ciudad,
-  //     'Zona': this.vPickingXProducto.Zona,
-  //     'FlagPausa': this.vPickingXProducto.FlagPausa,
-  //     'Id_Cuenta': this.vPickingXProducto.Id_Cuenta
-  //   };
-  //   this.navCtrl.push(PickingPorProductoPage, {
-  //     data: this.vDetalleXProducto
-  //   });
-  // }
-
-  goPickingPorProductoPage(){
+  goPickingPorProductoPage() {
     debugger;
-      this.navCtrl.pop().then(() => {
-        this.vDetalleXProducto = {
-          'idRutaPicking': this.vPickingXProducto.idRutaPicking,
-          'Id_Tx': this.vPickingXProducto.Id_Tx,
-          'NumOrden': this.vPickingXProducto.NumOrden,
-          'Cliente': this.vPickingXProducto.Cliente,
-          'Ciudad': this.vPickingXProducto.Ciudad,
-          'Zona': this.vPickingXProducto.Zona,
-          'FlagPausa': this.vPickingXProducto.FlagPausa,
-          'Id_Cuenta': this.vPickingXProducto.Id_Cuenta
-        };
-        this.navParams.get('detallePorProducto')(this.vDetalleXProducto);
-      });
-  }
+    this.navCtrl.pop().then(() => {
+      this.vDetalleXProducto = {
+        'idRutaPicking': this.vPickingXProducto.idRutaPicking,
+        'Id_Tx': this.vPickingXProducto.Id_Tx,
+        'NumOrden': this.vPickingXProducto.NumOrden,
+        'Cliente': this.vPickingXProducto.Cliente,
+        'Ciudad': this.vPickingXProducto.Ciudad,
+        'Zona': this.vPickingXProducto.Zona,
+        'FlagPausa': this.vPickingXProducto.FlagPausa,
+        'Id_Cuenta': this.vPickingXProducto.Id_Cuenta
+      };
+      this.navParams.get('detallePorProducto')(this.vDetalleXProducto);
+    });
+  }  
 
-  // goDetallePickingPage() {
-  //   debugger;
-  //   this.vDetalleXProducto = {
-  //     'Id_Page_Anterior2': this.vPickingXProducto.Id_Page_Anterior2,
-  //     'Id_Tx': this.vPickingXProducto.Id_Tx,
-  //     'NumOrden': this.vPickingXProducto.NumOrden,
-  //     'Cliente': this.vPickingXProducto.Cliente,
-  //     'Ciudad': this.vPickingXProducto.Ciudad,
-  //     'Zona': this.vPickingXProducto.Zona,
-  //     'idRutaPicking': this.vPickingXProducto.idRutaPicking,
-  //     'FlagPausa': this.vPickingXProducto.FlagPausa,
-  //     'Id_Cuenta': this.vPickingXProducto.Id_Cuenta
-  //   };
-  //   this.navCtrl.push(DetallePickingPage, {
-  //     data: this.vDetalleXProducto
-  //   });
-  // }
-
-  goDetallePickingPage(){
+  goDetallePickingPage() {
     debugger;
-      this.navCtrl.pop().then(() => {
-        this.vDetalleXProducto = {
-          'Id_Tx': this.vPickingXProducto.Id_Tx,
-          'NumOrden': this.vPickingXProducto.NumOrden,
-          'Cliente': this.vPickingXProducto.Cliente,
-          'Ciudad': this.vPickingXProducto.Ciudad,
-          'Zona': this.vPickingXProducto.Zona,
-          'idRutaPicking': this.vPickingXProducto.idRutaPicking,
-          'FlagPausa': this.vPickingXProducto.FlagPausa,
-          'Id_Cuenta': this.vPickingXProducto.Id_Cuenta
-        };
-        this.navParams.get('detalleProducto')(this.vDetalleXProducto);
-      });
+    this.navCtrl.pop().then(() => {
+      this.vDetalleXProducto = {
+        'Id_Tx': this.vPickingXProducto.Id_Tx,
+        'NumOrden': this.vPickingXProducto.NumOrden,
+        'Cliente': this.vPickingXProducto.Cliente,
+        'Ciudad': this.vPickingXProducto.Ciudad,
+        'Zona': this.vPickingXProducto.Zona,
+        'idRutaPicking': this.vPickingXProducto.idRutaPicking,
+        'FlagPausa': this.vPickingXProducto.FlagPausa,
+        'Id_Cuenta': this.vPickingXProducto.Id_Cuenta
+      };
+      this.navParams.get('detalleProducto')(this.vDetalleXProducto);
+    });
   }
-
 
   presentAlertConfirm(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -207,7 +167,6 @@ export class DetallePorProductoPage {
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
-
       const confirm = this.alertCtrl.create({
         title: 'Mensaje',
         message: message,
@@ -228,7 +187,7 @@ export class DetallePorProductoPage {
     debugger;
     let obj = {
       'Id_Tx': data.Id_Tx,
-      'FlagPausa' : data.FlagPausa,
+      'FlagPausa': data.FlagPausa,
       'NumOrden': data.NumOrden,
       'id_Cliente': data.Id_Cuenta,
       'id_Modulo': 5
@@ -246,17 +205,14 @@ export class DetallePorProductoPage {
   }
 
   goOrdenesPicking() {
-  
     this.navCtrl.getViews().forEach(item => {
       if (item.name == 'PickingPage') {
         this.navCtrl.popTo(item);
       }
     });
-
-
   }
 
-  showModalAdministrarUaPage(){
+  showModalAdministrarUaPage() {
     debugger;
     let obj = {
       'page': "modal",
@@ -264,7 +220,7 @@ export class DetallePorProductoPage {
     let modalIncidencia = this.modalCtrl.create(AdministrarUaPage, { 'data': obj });
     modalIncidencia.onDidDismiss(data => {
       debugger;
-        if(data.response == 200){
+      if (data.response == 200) {
         this.navCtrl.pop();
       }
       console.log("datos", data);
@@ -281,7 +237,8 @@ export class DetallePorProductoPage {
     this.navCtrl.push(MainMenuPage);
   }
 
-  presentPopover(ev) {    let popover = this.popoverCtrl.create(PopoverPickingPage, {'page' : 1});
+  presentPopover(ev) {
+    let popover = this.popoverCtrl.create(PopoverPickingPage, { 'page': 1 });
     popover.present({
       ev: ev
     });
@@ -289,23 +246,18 @@ export class DetallePorProductoPage {
     popover.onDidDismiss(popoverData => {
       if (popoverData == 1) {
         debugger;
-        if(this.vPickingXProducto.Id_Estado != 2){          
+        if (this.vPickingXProducto.Id_Estado != 2) {
           this.showModalIncidencia(this.vPickingXProducto);
-        }else{
-          this.presentAlert("No puede registrar incidencia de una transacción que no fue iniciada"); 
+        } else {
+          this.presentAlert("No puede registrar incidencia de una transacción que no fue iniciada");
         }
-        // this.showModalIncidencia(this.vPickingXProducto);
       } else if (popoverData == 2) {
         debugger;
         this.showModalAdministrarUaPage();
       } else if (popoverData == 3) {
         debugger;
         this.goConsultarUbicacionPage();
-      } 
-      // else if (popoverData == 4) {
-      //   debugger;
-      //   this.goMenu();
-      // } 
+      }
       else if (popoverData == 4) {
         debugger;
         this.presentAlertConfirm("¿Estás seguro que deseas cerrar sesión?").then((result) => {
@@ -320,16 +272,6 @@ export class DetallePorProductoPage {
   }
 
   ionViewDidLoad() {
-    // this.navBar.backButtonClick = (e: UIEvent) => {
-    //   // todo something
-
-    //   if (this.vPickingXProducto.Id_Page_Anterior == 5) {
-    //     this.goPickingPorProductoPage(); //ir a ordenes picking
-    //   }
-    //   if (this.vPickingXProducto.Id_Page_Anterior == 3) {
-    //     this.goDetallePickingPage(); //ir a detalle picking
-    //   }      
-    // }
     console.log('ionViewDidLoad DetallePorProductoPage');
   }
 }

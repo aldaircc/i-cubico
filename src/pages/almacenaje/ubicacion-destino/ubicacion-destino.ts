@@ -26,102 +26,65 @@ export class UbicacionDestinoPage {
   RegistrarUA: boolean = false;
   vDatosRecibidos: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl:AlertController,
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController) {
-      this.vDatosRecibidos = navParams.get('data');
+    this.vDatosRecibidos = navParams.get('data');
   }
 
   validarCodeBar() {
     if (this.codeBarUbicacion) {
       if (this.codeBarUbicacion.trim() != "") {
         debugger;
-
         //Segun la validacion posicionarse para validar el Pallet/UA
 
-        if(this.codeBarUbicacion.trim() == this.vDatosRecibidos.CodigoBarra.trim()){
+        if (this.codeBarUbicacion.trim() == this.vDatosRecibidos.CodigoBarra.trim()) {
 
           this.RegistrarUA = true;
           setTimeout(() => {
-            //this.txtCodPalletUaRef.setFocus();
             this.selectAll(this.txtCodPalletUa);
           }, (500));
-        }else{
+        } else {
           this.presentAlert("Ubicación destino incorrecta.").then((resultAlert) => {
             this.RegistrarUA = false;
-          setTimeout(() => {
-            //this.txtCodUbicacionRef.setFocus();
-            this.selectAll(this.txtCodUbicacion);
-          }, (500));
+            setTimeout(() => {
+              this.selectAll(this.txtCodUbicacion);
+            }, (500));
           })
-        }  
+        }
       } else {
         this.presentToast("Ingrese Código de ubicación");
         setTimeout(() => {
-          //this.txtCodUbicacionRef.setFocus();
           this.selectAll(this.txtCodUbicacion);
         }, (500));
       }
     } else {
       this.presentToast("Ingrese Código de ubicación");
       setTimeout(() => {
-        //this.txtCodUbicacionRef.setFocus();
         this.selectAll(this.txtCodUbicacion);
       }, (500));
     }
   }
 
   validarCodeBarPallet() {
-    if(this.RegistrarUA){
+    if (this.RegistrarUA) {
       if (this.codeBarPalletUA) {
         if (this.codeBarPalletUA.trim() != "") {
           debugger;
-  
-          //Segun su validacion registrar
-  
-          // this.sAlmacenaje.getValidarUAUbicacion(this.codeBarUbicacion.trim(), this.vDatosRecibidos.Id_Ubicacion).then((result) => {
-          //   debugger;
-          //   this.listValidarUA = result;
-          //   if (this.listValidarUA.length > 0) {
-          //     this.Textcantidad = this.listValidarUA[0].Cantidad
-          //     this.CantidadBk = this.listValidarUA[0].Cantidad;
-          //     this.Agregarisenabled = true;
-          //     this.ParticionUA = true;
-          //     setTimeout(() => {
-          //       this.txtCantidadUARef.setFocus();
-          //       this.selectAll(this.txtCantidadUA);
-          //     }, (500));
-          //   } else {
-          //     this.Textcantidad = "";
-          //     this.CantidadBk = "";
-          //     this.Agregarisenabled = false;
-          //     this.ParticionUA = false;
-          //     this.presentAlert("Pallet/UA no existe").then((result) => {
-          //       setTimeout(() => {
-          //         this.txtCodBarraUARef.setFocus();
-          //         this.selectAll(this.txtCodBarraUA);
-          //       }, (500));
-          //     })
-          //   }
-          // }, (err) => {
-          //   console.log('E-Ordenes Picking listar', err);
-          // });
         } else {
           this.presentToast("Ingrese Pallet/UA");
           setTimeout(() => {
-            //this.txtCodPalletUaRef.setFocus();
             this.selectAll(this.txtCodPalletUa);
           }, (500));
         }
       } else {
         this.presentToast("Ingrese Pallet/UA");
         setTimeout(() => {
-          //this.txtCodPalletUaRef.setFocus();
           this.selectAll(this.txtCodPalletUa);
         }, (500));
       }
-    }else{
+    } else {
       this.presentToast("Debe consultar el código de ubicación.");
-    }    
+    }
   }
 
   ontxtUbicacionChange() {
@@ -161,7 +124,6 @@ export class UbicacionDestinoPage {
 
   ionViewDidLoad() {
     setTimeout(() => {
-      //this.txtCodUbicacionRef.setFocus();
       this.selectAll(this.txtCodUbicacion);
     }, (500));
     console.log('ionViewDidLoad UbicacionDestinoPage');

@@ -18,19 +18,13 @@
 
 <ion-content no-padding>
   <ion-grid>
-    <!-- <ion-row>
-      <ion-label class="fieldForm">Ingresar UA</ion-label>
-    </ion-row> -->
     <ion-row>
-        <ion-col col-12 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-            <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-                <ion-input #inputUA type="text" maxlength="12" placeholder="Ingresar UA" [(ngModel)]="strUA" (keyup.enter)="AddUA()" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
-              </ion-item>
-          </ion-col>
-      
-      <!-- <ion-item class="colorItem item-md item-block item-inner no-padding-left">
-        <ion-input #inputUA class="colorInput" type="text" placeholder="Ingresar UA" [(ngModel)]="strUA" (keyup.enter)="AddUA()" ></ion-input>
-      </ion-item> -->
+      <ion-col col-12 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
+          <ion-input #inputUA type="text" maxlength="12" placeholder="Ingresar UA" [(ngModel)]="strUA" (keyup.enter)="AddUA()"
+            style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+        </ion-item>
+      </ion-col>
     </ion-row>
   </ion-grid>
 
@@ -103,23 +97,3 @@
     </ion-row>
   </ion-grid>
 </ion-footer>
-
-<!-- <ion-footer>
-  <ion-toolbar>
-    <ion-grid>
-      <ion-row>
-        <ion-col col-3 col-sm>
-          <div class="fieldForm">Total</div>
-        </ion-col>
-        <ion-col col-5 col-sm>
-          <div class="fieldForm"> {{ rowCount }} UA(s) </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <ion-buttons right>
-      <button ion-button icon-only (click)="goToEtqPage04()">
-        <ion-icon name="map"></ion-icon>
-      </button>  
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer> -->

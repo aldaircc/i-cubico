@@ -1,7 +1,5 @@
 page-home {
-
     .card-background-page {
-
         ion-card {
           position: relative;
           text-align: center;
@@ -22,21 +20,16 @@ page-home {
           top: 52%;
           width: 100%;
           color: #fff;
-        }
-      
+        }      
       }
       .bg-image{
             // background-image: url('../assets/imgs/fondomobil.jpg');
             background-image: url('../assets/imgs/fondoAlmacen.jpeg');
             background-repeat: no-repeat;
             background-position: center;
-            //background-size: cover;
-            
-
       } 
       .logo {
         margin: 0 auto;
-        //margin-top: 60px;
         padding-left: 15px;
         padding-right: 15px;
         padding-top: 0px;
@@ -45,13 +38,6 @@ page-home {
     }
 
     .scroll-content {
-        width: 100% !important;
-    
-        
-      }
-
-
-   
-       
-      
+        width: 100% !important;   
+      }      
 }

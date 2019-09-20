@@ -1,44 +1,27 @@
-<!-- <ion-header>
-  <ion-navbar>
-    <ion-title>Inicio de sesión</ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content padding class="bg-image" scroll="false" has-bouncing="false">
+  <div class="logo">
+    <img src="assets/imgs/sgaa-red.png" (click)="configurar()">
+  </div>
 
- <ion-grid class="bgLightBlue">
-   </ion-grid>
-
-   <ion-content padding class="bg-image"  scroll="false" has-bouncing="false">
- -->
-
- <ion-content padding class="bg-image"  scroll="false" has-bouncing="false">
-
-        
-        <div  class="logo">
-            <!-- <img src="assets/imgs/sgaaMobile.png" (click)="configurar()"> -->
-            <img src="assets/imgs/sgaa-red.png" (click)="configurar()">
-        </div>
-      
-          <ion-card>
-             <ion-card-content>
-            <ion-list>
-              <ion-item>
-                <ion-label ><ion-icon name="contact"></ion-icon></ion-label>
-                <ion-input  type="text"[(ngModel)]="userData.Usuario" placeholder="Ingrese usuario" ></ion-input>
-              </ion-item>   
-                  
-              <ion-item>
-                  <ion-label ><ion-icon name="key"></ion-icon></ion-label>
-                  <ion-input type="password" [(ngModel)]="userData.Clave" placeholder="Ingrese contraseña"></ion-input>
-                </ion-item>
-        
-            </ion-list>
-            <div padding>
-              <button ion-button block round  (click)="iniciarSesionWeb()" >Inicio sesión</button>
-            </div>
-          </ion-card-content>
-          </ion-card>
-        
-    
- 
- 
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            <ion-icon name="contact"></ion-icon>
+          </ion-label>
+          <ion-input type="text" [(ngModel)]="userData.Usuario" placeholder="Ingrese usuario"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <ion-icon name="key"></ion-icon>
+          </ion-label>
+          <ion-input type="password" [(ngModel)]="userData.Clave" placeholder="Ingrese contraseña"></ion-input>
+        </ion-item>
+      </ion-list>
+      <div padding>
+        <button ion-button block round (click)="iniciarSesionWeb()">Inicio sesión</button>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

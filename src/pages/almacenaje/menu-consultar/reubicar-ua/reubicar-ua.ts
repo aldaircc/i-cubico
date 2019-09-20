@@ -37,8 +37,6 @@ export class ReubicarUaPage {
       this.vDatosRecibidos = navParams.get('data');
   }
 
-  //Id_Ubicacion
-
   validarCodeBar() {
     debugger;
     if (this.codeBar) {
@@ -59,7 +57,6 @@ export class ReubicarUaPage {
                 this.presentAlert("La Ubicación debe ser diferente a la ubicación origen.").then((resultAlert) => {
                   if (resultAlert) {
                     setTimeout(() => {
-                      //this.txtCodUbicacionRef.setFocus();
                       this.selectAll(this.txtCodUbicacion);
                     }, (500));
                   }
@@ -74,7 +71,6 @@ export class ReubicarUaPage {
               this.presentAlert("Ubicación no registrada.").then((resultAlert) => {
                 if (resultAlert) {
                   setTimeout(() => {
-                    //this.txtCodUbicacionRef.setFocus();
                     this.selectAll(this.txtCodUbicacion);
                   }, (500));
                 }
@@ -94,7 +90,6 @@ export class ReubicarUaPage {
       this.presentToast("Ingrese código de ubicación");
     }
     setTimeout(() => {
-      //this.txtCodUbicacionRef.setFocus();
       this.selectAll(this.txtCodUbicacion);
     }, (500));
   }
@@ -125,10 +120,8 @@ export class ReubicarUaPage {
                   })
                 } else {
                   debugger;
-                  //this.presentAlert("Error. No se pudo realizar la reasignación.").then((resultAlert2) => {
                   this.presentAlert(res.message).then((resultAlert2) => {
                     setTimeout(() => {
-                      //this.txtCodUbicacionRef.setFocus();
                       this.selectAll(this.txtCodUbicacion);
                     }, (500));
                   })            
@@ -139,7 +132,6 @@ export class ReubicarUaPage {
               });
             }else{
               setTimeout(() => {
-                //this.txtCodUbicacionRef.setFocus();
                 this.selectAll(this.txtCodUbicacion);
               }, (500));
             }
@@ -180,7 +172,6 @@ export class ReubicarUaPage {
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
-
       const confirm = this.alertCtrl.create({
         title: 'Mensaje',
         message: message,
@@ -222,15 +213,6 @@ export class ReubicarUaPage {
     })
   }
 
-  // goAdministrarUaPage() {
-  //   this.vReubicarUAPage = {
-  //     'page': 2
-  //   };
-  //   this.navCtrl.push(AdministrarUaPage, {
-  //     data: this.vReubicarUAPage
-  //   });
-  // }
-
   goAdministrarUaPage(){
     debugger;
       this.navCtrl.pop().then(() => {
@@ -244,11 +226,9 @@ export class ReubicarUaPage {
   ionViewDidLoad() {
     //Enviar page 2 a administrar ua
     this.navBar.backButtonClick = (e: UIEvent) => {
-      this.navCtrl.pop();
-      //this.goAdministrarUaPage();       
+      this.navCtrl.pop();      
   }
     setTimeout(() => {
-      //this.txtCodUbicacionRef.setFocus();
       this.selectAll(this.txtCodUbicacion);
     }, (500));
     console.log('ionViewDidLoad ReubicarUaPage');

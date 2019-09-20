@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
 import { EmbalajePage_04Page } from '../embalaje-page-04/embalaje-page-04';
 
@@ -27,16 +27,15 @@ export class EmbalajePage_09Page {
   vNroBulto2: any;
   vFlagTodoItems: false;
 
-
-  constructor(public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController,
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
     public sEmbalaje: EmbalajeServiceProvider) {
-      this.vNroBulto = navParams.get('dataNroBulto'); 
-      this.vNroBultoCeros = navParams.get('dataNroBultoCeros'); 
-      this.vEmbalajePage02 = navParams.get('dataPage02');   
-      this.vEmbalajePage03 = navParams.get('dataPageFiltro');                
-      this.vEmbalajeTotalPage03 = navParams.get('dataTotalPage03');  
-      this.vNroBulto2 = navParams.get('dataNroBulto2');            
-      this.vFlagTodoItems = navParams.get('flagTodoItems');    
+    this.vNroBulto = navParams.get('dataNroBulto');
+    this.vNroBultoCeros = navParams.get('dataNroBultoCeros');
+    this.vEmbalajePage02 = navParams.get('dataPage02');
+    this.vEmbalajePage03 = navParams.get('dataPageFiltro');
+    this.vEmbalajeTotalPage03 = navParams.get('dataTotalPage03');
+    this.vNroBulto2 = navParams.get('dataNroBulto2');
+    this.vFlagTodoItems = navParams.get('flagTodoItems');
   }
 
   ionViewDidLoad() {
@@ -47,9 +46,9 @@ export class EmbalajePage_09Page {
     this.ListarBultosDespachoDetalle(this.vEmbalajePage02.Id_Tx);
   }
 
-  llenarNumeros(bulto){    
+  llenarNumeros(bulto) {
     debugger;
-    let s =bulto + "";
+    let s = bulto + "";
     while (s.length < 3)
       this.vNroBultoCeros = s = "0" + s;
     return this.vNroBultoCeros;
@@ -57,34 +56,32 @@ export class EmbalajePage_09Page {
 
   ListarBultosDespachoDetalle(strId_Tx) {
     this.sEmbalaje.ListarBultosDespachoDetalle(strId_Tx).then((result) => {
-             
-    this.lstDetalleBultoXBulto = result;      
-    for (let index = 0; index < this.lstDetalleBultoXBulto.length; index++) {      
-      this.lstDetalleBultoXBulto[index].NroBulto = this.llenarNumeros(this.lstDetalleBultoXBulto[index].NroBulto);      
-    }      
 
-    if (this.lstDetalleBultoXBulto.length > 0) {
+      this.lstDetalleBultoXBulto = result;
+      for (let index = 0; index < this.lstDetalleBultoXBulto.length; index++) {
+        this.lstDetalleBultoXBulto[index].NroBulto = this.llenarNumeros(this.lstDetalleBultoXBulto[index].NroBulto);
+      }
+      if (this.lstDetalleBultoXBulto.length > 0) {
 
-    } else {
-      alert('No se encontrarón datos.');
-    }
+      } else {
+        alert('No se encontrarón datos.');
+      }
     }, (err) => {
       console.log('E-Embalaje listar', err);
     });
   }
-  
+
   getDataDetalleBultoXBulto() {
-    this.ListarDetalleBultoXBulto(this.vEmbalajePage02.Id_Tx,this.vNroBulto);
+    this.ListarDetalleBultoXBulto(this.vEmbalajePage02.Id_Tx, this.vNroBulto);
   }
 
-  ListarDetalleBultoXBulto(strId_Tx,intNroBulto) {
-    this.sEmbalaje.ListarDetalleBultoXBulto(strId_Tx,intNroBulto).then((result) => {
+  ListarDetalleBultoXBulto(strId_Tx, intNroBulto) {
+    this.sEmbalaje.ListarDetalleBultoXBulto(strId_Tx, intNroBulto).then((result) => {
       debugger;
       this.lstDetalleBultoXBulto = result;
-
-      for (let index = 0; index < this.lstDetalleBultoXBulto.length; index++) {      
-        this.lstDetalleBultoXBulto[index].NroBulto = this.llenarNumeros(this.lstDetalleBultoXBulto[index].NroBulto);      
-      }    
+      for (let index = 0; index < this.lstDetalleBultoXBulto.length; index++) {
+        this.lstDetalleBultoXBulto[index].NroBulto = this.llenarNumeros(this.lstDetalleBultoXBulto[index].NroBulto);
+      }
 
       if (this.lstDetalleBultoXBulto.length > 0) {
 
@@ -96,15 +93,13 @@ export class EmbalajePage_09Page {
     });
   }
 
-  EliminarItems(objDetBultoXBulto){
+  EliminarItems(objDetBultoXBulto) {
     objDetBultoXBulto.Anulado = 1;
-    objDetBultoXBulto.Lote = objDetBultoXBulto.LoteLab;    
+    objDetBultoXBulto.Lote = objDetBultoXBulto.LoteLab;
     this.mostrarAlerta(objDetBultoXBulto);
   }
 
-
-  mostrarAlerta(objDetBultoXBulto){
-
+  mostrarAlerta(objDetBultoXBulto) {
     var message = "";
     message = "¿Desea eliminar bulto?";
 
@@ -122,18 +117,18 @@ export class EmbalajePage_09Page {
         {
           text: 'Aceptar',
           handler: () => {
-            console.log('Buy clicked');  
-                    
-            
-            this.sEmbalaje.RegistrarProductoBulto(objDetBultoXBulto).then((result)=>{ 
+            console.log('Buy clicked');
+
+
+            this.sEmbalaje.RegistrarProductoBulto(objDetBultoXBulto).then((result) => {
               debugger;
               console.log(result);
-              var respuesta : any = result;
-              this.mostrarConfirmacion("Confirmación",respuesta.message);            
-              this.getDataDetalleBultoXBulto();  
-                     
+              var respuesta: any = result;
+              this.mostrarConfirmacion("Confirmación", respuesta.message);
+              this.getDataDetalleBultoXBulto();
+
             });
-            
+
           }
         }
       ]
@@ -142,8 +137,7 @@ export class EmbalajePage_09Page {
 
   }
 
-  mostrarConfirmacion(title,message){
-  
+  mostrarConfirmacion(title, message) {
     let alertConfirmacion = this.alertCtrl.create({
       title: title,
       message: message,
@@ -156,24 +150,21 @@ export class EmbalajePage_09Page {
     alertConfirmacion.present();
   }
 
-  goToEmbalajePage04(){
-    
+  goToEmbalajePage04() {
     debugger;
-    this.navCtrl.push(EmbalajePage_04Page,{
-      dataPageFiltro: this.vEmbalajePage03,                       
+    this.navCtrl.push(EmbalajePage_04Page, {
+      dataPageFiltro: this.vEmbalajePage03,
       dataPage02: this.vEmbalajePage02,
       dataTotalPage03: this.vEmbalajeTotalPage03,
-      nroBulto: this.vNroBulto2      
+      nroBulto: this.vNroBulto2
     });
   }
 
   ionViewWillEnter() {
     debugger;
-    if(this.vFlagTodoItems)
+    if (this.vFlagTodoItems)
       this.getDataBultosDespachoDetalle();
     else
-      this.getDataDetalleBultoXBulto();    
-    
+      this.getDataDetalleBultoXBulto();
   }
-
 }

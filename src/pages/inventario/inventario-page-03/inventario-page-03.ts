@@ -19,28 +19,28 @@ import moment from 'moment';
   templateUrl: 'inventario-page-03.html',
 })
 export class InventarioPage_03Page {
-
   vParameter: any;
   isInit: boolean = false;
-  btnIniciar: any = { 'Text': ''};
+  btnIniciar: any = { 'Text': '' };
   txtInventareador: any = { 'Text': '', 'ReadOnly': false };
-  dtpFecha: any = { 'Text': new Date().toISOString(), 'Enabled': true};
+  dtpFecha: any = { 'Text': new Date().toISOString(), 'Enabled': true };
   lblInfo01: any = { 'Text': '', 'Value': '' };
   lblInfo02: any = { 'Text': '', 'Value': '' };
   strTipoInventario: string = "";
-  @ViewChild('inputInventariador', { read: ElementRef }) private inputInventariador:ElementRef;
-  
+  @ViewChild('inputInventariador', { read: ElementRef }) private inputInventariador: ElementRef;
+  @ViewChild(Content) content: Content;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vParameter = this.navParams.get('vParameter');
     this.strTipoInventario = this.vParameter.TipoInventario;
-    if(this.vParameter.Id_Estado == 10){
+    if (this.vParameter.Id_Estado == 10) {
       this.btnIniciar.Text = 'Iniciar';
       this.txtInventareador.ReadOnly = false;
       this.dtpFecha.Enabled = false;
       this.isInit = false;
 
-    }else{
+    } else {
       this.btnIniciar.Text = 'Continuar';
       this.dtpFecha.Enabled = false;
       this.isInit = true;
@@ -54,14 +54,13 @@ export class InventarioPage_03Page {
     this.txtInventareador.Text = this.vParameter.UsuarioInventariador;
   }
 
-  continuarInventario(): void{
-    if(this.btnIniciar.Text == 'Iniciar'){
-
-      if(this.txtInventareador.Text.trim() == ""){
+  continuarInventario(): void {
+    if (this.btnIniciar.Text == 'Iniciar') {
+      if (this.txtInventareador.Text.trim() == "") {
         alert('Ingrese Inventareador');
         this.selectAll(this.inputInventariador, 500);
         return;
-      }else{
+      } else {
         const confirm = this.alertCtrl.create({
           title: 'Inventario',
           message: '¿Está seguro de iniciar el inventario?',
@@ -73,9 +72,9 @@ export class InventarioPage_03Page {
                 this.dtpFecha.Enabled = false;
                 this.initInventario(this.vParameter.Id_Inventario, 1);
 
-                if(this.strTipoInventario == 'GENERAL'){
+                if (this.strTipoInventario == 'GENERAL') {
                   this.goToInventPage04();
-                }else if(this.strTipoInventario == 'CICLICO'){
+                } else if (this.strTipoInventario == 'CICLICO') {
                   this.goToInventPage06();
                 }
               }
@@ -91,17 +90,17 @@ export class InventarioPage_03Page {
         confirm.present();
       }
 
-    }else{
-      if(this.strTipoInventario == 'CICLICO'){
+    } else {
+      if (this.strTipoInventario == 'CICLICO') {
         this.goToInventPage06();
-      }else{
+      } else {
         this.goToInventPage04();
       }
     }
   }
 
-  cerrarInventario(): void{
-    if(this.vParameter.Id_Estado == 3){
+  cerrarInventario(): void {
+    if (this.vParameter.Id_Estado == 3) {
 
       const confirm = this.alertCtrl.create({
         title: 'Confirmar cierre',
@@ -116,55 +115,53 @@ export class InventarioPage_03Page {
           {
             text: 'No',
             handler: () => {
-              return;   
+              return;
             }
           }
         ]
       });
       confirm.present();
-    }else{
+    } else {
       alert('No puede cerrar un inventario que no se ha iniciado');
       this.selectAll(this.inputInventariador, 500);
       return;
     }
   }
 
-  initInventario(Id_Tx, intTipo): void{
-    if(this.strTipoInventario == 'GENERAL'){
+  initInventario(Id_Tx, intTipo): void {
+    if (this.strTipoInventario == 'GENERAL') {
       this.iniTerInvXPercha(Id_Tx, this.lblInfo01.Value, this.lblInfo02.Value, this.txtInventareador.Text, this.sGlobal.userName, this.sGlobal.Id_TerminalRF, intTipo);
-    }else{
+    } else {
       this.iniTerInvXProducto(Id_Tx, this.lblInfo01.Value, this.vParameter.Lote, this.txtInventareador.Text, this.sGlobal.userName, this.sGlobal.Id_TerminalRF, intTipo);
     }
   }
 
-  iniTerInvXProducto(strIdInventario, intIdProducto, strLote, strUsuarioInventariador, strUsuario, intIdRF, intTipo): void{
-    this.sInve.iniTerInvXProducto(strIdInventario, intIdProducto, strLote, strUsuarioInventariador, strUsuario, intIdRF, intTipo).then(result=>{
+  iniTerInvXProducto(strIdInventario, intIdProducto, strLote, strUsuarioInventariador, strUsuario, intIdRF, intTipo): void {
+    this.sInve.iniTerInvXProducto(strIdInventario, intIdProducto, strLote, strUsuarioInventariador, strUsuario, intIdRF, intTipo).then(result => {
       let res: any = result;
-      if (res.errNumber != 0)
-      {
+      if (res.errNumber != 0) {
         alert("No se pudo cerrar el inventario");
-      }else{
-        alert("Cierre de inventario exitoso");
-      }
-    });
-  }
-  
-  iniTerInvXPercha(strIdInventario, intIdSector, strFila, strUsuarioInventariador, strUsuario, intIdRF, intTipo): void{
-    this.sInve.iniTerInvXPercha(strIdInventario, intIdSector, strFila, strUsuarioInventariador, strUsuario, intIdRF, intTipo).then(result=>{
-      let res: any = result;
-      if (res.errNumber != 0)
-      {
-        alert("No se pudo inicializar el inventario");
-      }else{
+      } else {
         alert("Cierre de inventario exitoso");
       }
     });
   }
 
-  goToInventPage04(): void{
+  iniTerInvXPercha(strIdInventario, intIdSector, strFila, strUsuarioInventariador, strUsuario, intIdRF, intTipo): void {
+    this.sInve.iniTerInvXPercha(strIdInventario, intIdSector, strFila, strUsuarioInventariador, strUsuario, intIdRF, intTipo).then(result => {
+      let res: any = result;
+      if (res.errNumber != 0) {
+        alert("No se pudo inicializar el inventario");
+      } else {
+        alert("Cierre de inventario exitoso");
+      }
+    });
+  }
+
+  goToInventPage04(): void {
     var parameter: any;
 
-    parameter = (this.vParameter.TipoInventario == 'GENERAL') ? 
+    parameter = (this.vParameter.TipoInventario == 'GENERAL') ?
       {
         'Fila': this.vParameter.Fila,
         'Id_Estado': this.vParameter.Id_Estado,
@@ -175,24 +172,24 @@ export class InventarioPage_03Page {
         'UsuarioInventariador': this.vParameter.UsuarioInventariador,
         'TipoInventario': this.vParameter.TipoInventario
       }
-    :
+      :
       {
-        'Id_Inventario' : this.vParameter.Id_Inventario,
-        'Id_Estado' : this.vParameter.Id_Estado,
-        'UsuarioInventariador' : this.vParameter.UsuarioInventariador,
-        'UsuarioAsignado' : this.vParameter.UsuarioAsignado,
-        'Id_Producto' : this.vParameter.Id_Producto,
-        'Codigo' : this.vParameter.Codigo,
-        'Producto' : this.vParameter.Producto,
-        'Lote' : this.vParameter.Lote,
+        'Id_Inventario': this.vParameter.Id_Inventario,
+        'Id_Estado': this.vParameter.Id_Estado,
+        'UsuarioInventariador': this.vParameter.UsuarioInventariador,
+        'UsuarioAsignado': this.vParameter.UsuarioAsignado,
+        'Id_Producto': this.vParameter.Id_Producto,
+        'Codigo': this.vParameter.Codigo,
+        'Producto': this.vParameter.Producto,
+        'Lote': this.vParameter.Lote,
         'TipoInventario': this.vParameter.TipoInventario
       }
-     ;
+      ;
 
-    this.navCtrl.push(InventarioPage_04Page, {'vParameter': parameter});
+    this.navCtrl.push(InventarioPage_04Page, { 'vParameter': parameter });
   }
 
-  goToInventPage06(): void{
+  goToInventPage06(): void {
     let parameter = {
       'Codigo': this.vParameter.Codigo,
       'Id_Estado': this.vParameter.Id_Estado,
@@ -205,30 +202,26 @@ export class InventarioPage_03Page {
       'UsuarioInventariador': this.vParameter.UsuarioInventariador
     };
 
-    this.navCtrl.push(InventarioPage_06Page, { 'vParameter' : parameter });
+    this.navCtrl.push(InventarioPage_06Page, { 'vParameter': parameter });
+  }
+  
+  fixScroll() {
+    setTimeout(() => {
+      let element = document.getElementById("absence-textarea");
+      let box = element.getBoundingClientRect();
+      let top = Math.round(box.top * 10);
+      this.content.scrollTo(0, top, 100);
+    }, 350);
   }
 
-  @ViewChild(Content) content: Content;
-
-  fixScroll(){
-    //if(this.device.platform == "Android"){
-      setTimeout(() => {
-        let element = document.getElementById("absence-textarea");
-        let box = element.getBoundingClientRect();
-        let top = Math.round(box.top*10);
-        this.content.scrollTo(0, top, 100);
-      }, 350);
-    //}
+  selectAll(el: ElementRef, time) {
+    let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
+    setTimeout(() => {
+      nativeEl.select();
+    }, time);
   }
 
-    selectAll(el: ElementRef, time){
-      let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
-      setTimeout(()=>{
-        nativeEl.select();
-      }, time);
-  }
-
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.selectAll(this.inputInventariador, 500);
   }
 }

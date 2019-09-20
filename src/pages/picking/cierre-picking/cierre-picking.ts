@@ -3,16 +3,11 @@ import { IonicPage, App, NavController, NavParams, PopoverController, ToastContr
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 import { ImpresoraPage } from '../../impresora/impresora'
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
-import { PickingPage } from '../../picking/picking';
-
 import { IncidenciaPage } from '../../incidencia/incidencia';
 import { AdministrarUaPage } from '../../almacenaje/menu-consultar/administrar-ua/administrar-ua'
 import { ConsultarUbicacionPage } from '../../almacenaje/consultar-ubicacion/consultar-ubicacion'
-import { MainMenuPage } from '../../main-menu/main-menu'
 import { HomePage } from '../../home/home';
-
 import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
-
 import { PopoverPickingPage } from '../../picking/popover/popover-picking/popover-picking'
 
 /**
@@ -33,12 +28,9 @@ export class CierrePickingPage {
 
   vRutaPickingPage: any = [];
   codeBar: string;
-
   listNombreMuelleXAlmacen: any = [];
   resultMuelleXAlmacen: any = [];
-
   resultCierre: any = [];
-
   Aceptarisenabled: boolean = false;
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
@@ -64,7 +56,6 @@ export class CierrePickingPage {
     const MY_REGEXP = /^\s*(\-|\+)?(\d+|(\d*(\.\d*)))([eE][+-]?\d+)?\s*$/;
     let newValue = event.target.value;
     let regExp = new RegExp(MY_REGEXP);
-
     if (!regExp.test(newValue)) {
       event.target.value = newValue.slice(0, -1);
     }
@@ -74,7 +65,6 @@ export class CierrePickingPage {
     this.resultMuelleXAlmacen = [];
     this.Aceptarisenabled = false;
   }
-
 
   validarCodeBar() {
     debugger;
@@ -90,14 +80,12 @@ export class CierrePickingPage {
           } else {
             this.resultMuelleXAlmacen = [];
             this.Aceptarisenabled = false;
-            //this.presentAlert("Código de barras muelle no es correcto");
             this.codeBar = "";
 
             this.presentAlert("¿Código de barras muelle no es correcto”.").then((resultAlert3) => {
               if (resultAlert3) {
                 // Mostrar lista de impresoras
                 setTimeout(() => {
-                  //this.txtCodMuelleRef.setFocus();
                   this.selectAll(this.txtCodMuelle);
                 }, (500));
               }
@@ -112,7 +100,6 @@ export class CierrePickingPage {
         this.Aceptarisenabled = false;
         this.presentToast("Ingrese código de muelle");
         setTimeout(() => {
-          //this.txtCodMuelleRef.setFocus();
           this.selectAll(this.txtCodMuelle);
         }, (500));
       }
@@ -120,7 +107,6 @@ export class CierrePickingPage {
       this.Aceptarisenabled = false;
       this.presentToast("Ingrese código de muelle");
       setTimeout(() => {
-        //this.txtCodMuelleRef.setFocus();
         this.selectAll(this.txtCodMuelle);
       }, (500));
     }
@@ -159,7 +145,6 @@ export class CierrePickingPage {
 
         } else {
           this.goBackRutaPicking();
-          //this.navCtrl.pop();
         }
       })
     } else {
@@ -176,7 +161,6 @@ export class CierrePickingPage {
                     if (result) {
                       // Mostrar lista de impresoras
                       this.showModalImpresora();
-                      
                     }
                     //Ir a detalle ordenes
                     this.goPickingPage();
@@ -200,7 +184,6 @@ export class CierrePickingPage {
     debugger;
     var listContainer = [];
     var listEtq = [];
-
     listEtq = [];
     listEtq.push({ "campo": "|NROPICKING|", "valor": this.vRutaPickingPage.NumOrden });
     listEtq.push({ "campo": "|CLIENTE|", "valor": this.vRutaPickingPage.Cliente });
@@ -233,7 +216,6 @@ export class CierrePickingPage {
                     debugger;
                     this.resultCierre = resultCerrar;
                     if (this.resultCierre.errNumber == 0) {
-
                       this.presentAlert("Operación exitosa").then((resultAlert2) => {
                         if (resultAlert2) {
                           this.presentAlertConfirm("¿Desea imprimir el picking?”.").then((resultAlert3) => {
@@ -252,25 +234,8 @@ export class CierrePickingPage {
                   }, (err) => {
                     console.log('E-Muelle por almacen', err);
                   });
-                  // this.CerrarPicking(this.vRutaPickingPage.Id_Tx, 6, "Admin", this.listNombreMuelleXAlmacen[0].Id_Muelle, 2);
-                  // debugger;
-                  // if(this.resultCierre.errNumber == 0){
-                  //   this.presentAlert("Operación exitosa").then((result) => {
-                  //     if (result) {
-                  //       this.presentAlertConfirm("¿Desea imprimir el picking?”.").then((result) => {
-                  //         if (result) {
-                  //           // Mostrar lista de impresoras
-                  //           this.showModalImpresora();
-                  //         }
-                  //       })
-                  //     }
-                  //   })
-                  // }else{
-                  //   this.presentToast(this.resultCierre.message);
-                  // }   
                 } else {
                   this.goBackRutaPicking();
-                  //this.navCtrl.pop();
                 }
               })
             } else {
@@ -299,25 +264,9 @@ export class CierrePickingPage {
                   }, (err) => {
                     console.log('E-Muelle por almacen', err);
                   });
-                  // this.CerrarPicking(this.vRutaPickingPage.Id_Tx, 5, "Admin", this.listNombreMuelleXAlmacen[0].Id_Muelle, 2);
-                  // if(this.resultCierre.errNumber == 0){
-                  //   this.presentAlert("Operación exitosa").then((result) => {
-                  //     if (result) {
-                  //       this.presentAlertConfirm("¿Desea imprimir el picking?”.").then((result) => {
-                  //         if (result) {
-                  //           // Mostrar lista de impresoras
-                  //           this.showModalImpresora();
-                  //         }
-                  //       })
-                  //     }
-                  //   });
-                  // }else{
-                  //   this.presentToast(this.resultCierre.message);
-                  // }
                 }
               })
             }
-
           } else {
             this.presentAlert("Código de barras muelle no es correcto");
             this.codeBar = "";
@@ -332,9 +281,8 @@ export class CierrePickingPage {
     } else {
       this.presentToast("Ingrese código de muelle");
     }
-
   }
-  
+
   CerrarPicking_old(idTx, idEstado, usuario, idMuelle, IdAlmacen) {
     debugger;
     this.sPicking.CerrarPicking(idTx, idEstado, usuario, idMuelle, IdAlmacen).then((result) => {
@@ -352,7 +300,6 @@ export class CierrePickingPage {
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
-
       const confirm = this.alertCtrl.create({
         title: 'Mensaje',
         message: message,
@@ -407,7 +354,7 @@ export class CierrePickingPage {
     debugger;
     let obj = {
       'Id_Tx': data.Id_Tx,
-      'FlagPausa' : data.FlagPausa,
+      'FlagPausa': data.FlagPausa,
       'NumOrden': data.NumOrden,
       'id_Cliente': data.Id_Cuenta,
       'id_Modulo': 5
@@ -438,17 +385,11 @@ export class CierrePickingPage {
   }
 
   goConsultarUbicacionPage() {
-    
     this.navCtrl.push(ConsultarUbicacionPage);
   }
 
-  // goMenu() {
-  //   debugger;
-  //   this.navCtrl.push(MainMenuPage);
-  // }
-
   presentPopover(ev) {
-    let popover = this.popoverCtrl.create(PopoverPickingPage, {'page' : 1});
+    let popover = this.popoverCtrl.create(PopoverPickingPage, { 'page': 1 });
     popover.present({
       ev: ev
     });
@@ -462,11 +403,7 @@ export class CierrePickingPage {
       } else if (popoverData == 3) {
         debugger;
         this.goConsultarUbicacionPage();
-      } 
-      // else if (popoverData == 4) {
-      //   debugger;
-      //   this.goMenu();
-      // } 
+      }
       else if (popoverData == 4) {
         debugger;
         this.presentAlertConfirm("¿Estás seguro que deseas cerrar sesión?").then((result) => {
@@ -483,21 +420,20 @@ export class CierrePickingPage {
   showModalImpresora() {
     let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
     modalIncidencia.present();
-    modalIncidencia.onDidDismiss(printSel =>{
-     if(printSel != ""){
-      this.imprimir();
-     }
+    modalIncidencia.onDidDismiss(printSel => {
+      if (printSel != "") {
+        this.imprimir();
+      }
     });
   }
 
   goBackRutaPicking() {
-    debugger;    
+    debugger;
     this.navCtrl.pop();
   }
 
   goPickingPage() {
     this.navCtrl.popTo(this.navCtrl.getByIndex(3));
-    //this.navCtrl.push(PickingPage);
   }
 
   selectAll(el: ElementRef) {
@@ -505,13 +441,10 @@ export class CierrePickingPage {
     nativeEl.select();
   }
 
-
   ionViewDidLoad() {
     setTimeout(() => {
-      //this.txtCodMuelleRef.setFocus();
       this.selectAll(this.txtCodMuelle);
     }, (500));
     console.log('ionViewDidLoad CierrePickingPage');
   }
-
 }

@@ -52,7 +52,6 @@ export class TransferPage_02Page {
           text: 'No',
           role: 'cancel',
           handler: () => {
-
           }
         },
         {

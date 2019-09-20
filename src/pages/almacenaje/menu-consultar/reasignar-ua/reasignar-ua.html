@@ -28,9 +28,8 @@
       </ion-col>
       <ion-col col-7 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtCodUbicacion [(ngModel)]="codeBar" maxlength="14" (keyup.enter)="validarCodeBar()" type="text" value="" 
-          style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"
-          onkeypress="return ((event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-input>
+          <ion-input #txtCodUbicacion [(ngModel)]="codeBar" maxlength="14" (keyup.enter)="validarCodeBar()" type="text"
+            value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray" onkeypress="return ((event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -107,7 +106,6 @@
     </ion-row>
   </ion-grid>
 
-  <!-- [ngClass]="{bgWhite: (!isBgGreen), bgGreen:(isBgGreen), bgWhite:(isbgWhite)}" -->
   <ion-grid style="padding: 0px;">
     <ion-row no-padding [ngClass]="{bgWhite: (!isBgGreen), bgGreen:(isBgGreen), bgWhite:(isbgWhite)}" style="margin-top: 5px; margin-bottom: 5px; padding-top: 10px; padding-bottom: 10px">
       <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
@@ -118,20 +116,11 @@
       <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-item [ngClass]="{bgWhite: (!isBgGreen), bgGreen:(isBgGreen), bgWhite:(isbgWhite)}" style="font-weight:bold; padding: 0px; margin: 0px;">
           <ion-input #txtPalletUa [(ngModel)]="codePalletUA" [disabled]="!txtPalletUaisenabled" (keyup.enter)="validarPalletUA()"
-          maxlength="12" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px;"></ion-input>
+            maxlength="12" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px;"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
   </ion-grid>
-
-  <!-- <ion-row no-padding style="margin-top: 15px; margin-bottom: 15px; text-align: center">
-    <ion-col col-12 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-      <button ion-button icon-start (click)="reasignarPalletUA()">
-        <ion-icon name="checkmark"></ion-icon>
-        ACEPTAR
-      </button>
-    </ion-col>
-  </ion-row> -->
 </ion-content>
 
 <ion-footer>
@@ -142,6 +131,6 @@
           <ion-icon name="checkbox-outline"></ion-icon>
         </button>
       </ion-col>
-    </ion-row>    
+    </ion-row>
   </ion-grid>
 </ion-footer>

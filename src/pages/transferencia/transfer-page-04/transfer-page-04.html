@@ -10,7 +10,6 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content>
   <ion-grid>
     <ion-row no-padding style="margin-top: 15px; margin-bottom: 5px;">
@@ -23,19 +22,6 @@
         {{ vParameter.Cod_Producto }}
       </ion-col>
     </ion-row>
-    <!-- <ion-row align-items-center>
-      <ion-col col-3 col-sm class="bgHeader-col">
-        <div class="textHeader">Código: </div>
-      </ion-col>
-      <ion-col col-9 col-sm class="bgHeader-col">
-        <div class="valueHeader">{{ vParameter.Cod_Producto }}</div>
-      </ion-col>
-    </ion-row> -->
-    <!-- <ion-row align-items-center>
-      <ion-col col-12 col-sm class="bgHeader-col" style="text-align: center">
-        <div class="valueHeader">{{ vParameter.Producto }}</div>
-      </ion-col>
-    </ion-row> -->
     <ion-row no-padding style="margin-top: 5px; margin-bottom: 5px; ">
       <ion-col col-12 style="padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px; text-align: center">
         <ion-label style="font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
@@ -53,17 +39,6 @@
         {{ vParameter.Lote }}
       </ion-col>
     </ion-row>
-    <!-- <ion-row align-items-center>
-      <ion-col col-3 col-sm class="bgHeader-col">
-        <div class="textHeader">Lote: </div>
-      </ion-col>
-      <ion-col col-9 col-sm class="bgHeader-col">
-        <div class="valueHeader">{{ vParameter.Lote }}</div>
-      </ion-col>
-    </ion-row> -->
-
-    <!-- <ion-row class="hr">
-    </ion-row> -->
 
     <ion-row align-items-center>
       <ion-col col-3 col-sm style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px; font-weight:bold">
@@ -86,37 +61,6 @@
         </ion-item>
       </ion-col>
     </ion-row>
-
-    <!-- <ion-row align-items-center>
-      <ion-col col-3 col-sm>
-        <ion-label class="textHeader">Cantidad</ion-label>
-      </ion-col>
-      <ion-col col-3 col-sm>
-        <ion-item class="item-input-text1">
-          <ion-input type="text" placeholder="0" [(ngModel)]="vParameter.CantidadPedida" [disabled]="true" class="input-text1"></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col col-3 col-sm>
-        <ion-label class="textHeader">Recibida</ion-label>
-      </ion-col>
-      <ion-col col-3 col-sm>
-        <ion-item class="item-input-text1">
-          <ion-input type="text" placeholder="0" [(ngModel)]="vParameter.CantidadOperacion" [disabled]="true" class="input-text1"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row> -->
-
-    <!-- <ion-row align-items-center>
-      <ion-col col-3 col-sm>
-        <ion-label class="textHeader">Saldo</ion-label>
-      </ion-col>
-      <ion-col col-3 col-sm>
-        <ion-item class="item-input-text1">
-          <ion-input type="text" placeholder="0" [(ngModel)]="vParameter.Saldo" [disabled]="true" class="input-text1"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row> -->
-
     <ion-row align-items-center>
       <ion-col col-3 col-sm style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px; font-weight:bold">
         Saldo
@@ -127,8 +71,6 @@
         </ion-item>
       </ion-col>
     </ion-row>
-
-
   </ion-grid>
 
   <ion-grid>
@@ -189,21 +131,6 @@
     </ion-row>
   </ion-grid>
 
-  <!-- <ion-grid class="bgCustomSkyBlue">
-    <ion-row align-items-center class="textColorNavy textBold">
-      <ion-col col-3 col-sm text-center>Fila</ion-col>
-      <ion-col col-3 col-sm text-center>Columna</ion-col>
-      <ion-col col-3 col-sm text-center>Nivel</ion-col>
-      <ion-col col-3 col-sm text-center>Posición</ion-col>
-    </ion-row>
-    <ion-row center text-center>
-      <ion-col><div class="boxUbicacion textBold font-x-large text-color-white"> {{ vParameter.Fila }} </div></ion-col>
-      <ion-col><div class="boxUbicacion textBold font-x-large text-color-white"> {{ vParameter.Columna }} </div></ion-col>
-      <ion-col><div class="boxUbicacion textBold font-x-large text-color-white"> {{ vParameter.Nivel }} </div></ion-col>
-      <ion-col><div class="boxUbicacion textBold font-x-large text-color-white"> {{ vParameter.Posicion }} </div></ion-col>
-    </ion-row>
-  </ion-grid> -->
-
   <ion-grid [ngClass]="{bgWhite: (isNormal), bgYellow: (!isError && (isNormal == false)), bgRed:(isError)}">
     <ion-row align-items-center>
       <ion-col col-4 col-sm>
@@ -226,7 +153,6 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
 </ion-content>
 
 <ion-footer style="background:#054B77">
@@ -256,25 +182,3 @@
     </ion-row>
   </ion-grid>
 </ion-footer>
-
-<!-- <ion-footer>
-  <ion-toolbar>
-    <ion-buttons left>
-      <button ion-button icon-only (click)="goToParticionarUA()">
-          <ion-icon name="label" name="md-cube"></ion-icon>
-      </button>
-    </ion-buttons>
-    
-    <ion-buttons>
-      <button ion-button icon-only (click)="listarUAs()" style="margin-left: 43.33%">
-        <ion-icon name="label" name="md-grid"></ion-icon>
-      </button>
-    </ion-buttons>
-
-    <ion-buttons right>
-      <button ion-button icon-only (click)="pickingUA()" [disabled]="!isEnablebtnPicking">
-          <ion-icon name="label" name="md-checkbox-outline"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer> -->

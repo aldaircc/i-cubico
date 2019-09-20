@@ -18,7 +18,7 @@ export class DetallePalletUaPage {
   vParemetrosRecibidos: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.vParemetrosRecibidos = navParams.get('data'); 
+    this.vParemetrosRecibidos = navParams.get('data');
   }
 
   ionViewDidLoad() {

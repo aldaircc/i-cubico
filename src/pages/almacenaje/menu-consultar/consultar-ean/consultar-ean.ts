@@ -50,7 +50,6 @@ export class ConsultarEanPage {
                 this.producto = "";
                 this.sector = "";
                 setTimeout(() => {
-                  //this.txtEanRef.setFocus();
                   this.selectAll(this.txtEan);
                 }, (500));
               }
@@ -75,7 +74,6 @@ export class ConsultarEanPage {
       this.presentToast("Ingrese código Ean");
     }
     setTimeout(() => {
-      //this.txtEanRef.setFocus();
       this.selectAll(this.txtEan);
     }, (500));
   }
@@ -113,10 +111,8 @@ export class ConsultarEanPage {
 
   ionViewDidLoad() {
     setTimeout(() => {
-      //this.txtEanRef.setFocus();
       this.selectAll(this.txtEan);
     }, (500));
     console.log('ionViewDidLoad ConsultarEanPage');
   }
-
 }

@@ -4,7 +4,6 @@ import { GlobalServiceProvider } from '../../../providers/global-service/global-
 
 import { AlmacenajeServiceProvider } from '../../../providers/almacenaje-service/almacenaje-service';
 import { PalletsTransitoPage } from '../pallets-transito/pallets-transito';
-import {AlmacenajePage} from '../../almacenaje/almacenaje'
 
 /**
  * Generated class for the TransitoPage page.
@@ -19,7 +18,7 @@ import {AlmacenajePage} from '../../almacenaje/almacenaje'
   templateUrl: 'transito.html',
 })
 export class TransitoPage {
-  @ViewChild(Navbar) navBar: Navbar; 
+  @ViewChild(Navbar) navBar: Navbar;
   nomAlmacen: any;
   rowCount: any;
   listUbicacionTransito: any;
@@ -32,31 +31,31 @@ export class TransitoPage {
     this.nomAlmacen = this.sGlobal.nombreAlmacen;
   }
 
-  getUbicacionTransitoLoad(){
+  getUbicacionTransitoLoad() {
     this.getUbicacionTransito(this.sGlobal.Id_Almacen);
   }
 
-  getUbicacionTransito(intIdAlmacen){
+  getUbicacionTransito(intIdAlmacen) {
     debugger;
-    this.sAlmacenaje.getUbicacionTransito(intIdAlmacen).then((result)=>{
+    this.sAlmacenaje.getUbicacionTransito(intIdAlmacen).then((result) => {
       debugger;
       this.listUbicacionTransito = result;
       this.listAuxUbicacionTransito = this.listUbicacionTransito;
       this.rowCount = this.listAuxUbicacionTransito.length;
-      if(this.listUbicacionTransito.length > 0){
+      if (this.listUbicacionTransito.length > 0) {
         console.log('Datos ubicacion transito', this.listUbicacionTransito);
-      }else{
+      } else {
         alert('No se encontrarón datos.');
       }
-    }, (err)=>{
+    }, (err) => {
       console.log('E-Ubicacion transito listar', err);
-    });    
+    });
   }
 
-  goPalletsUasTransito(data){
+  goPalletsUasTransito(data) {
     debugger;
     this.vTransitoPage = {
-      'Id_Ubicacion_Transito' : data.Id_Ubicacion
+      'Id_Ubicacion_Transito': data.Id_Ubicacion
     };
     this.navCtrl.push(PalletsTransitoPage, {
       data: this.vTransitoPage
@@ -64,9 +63,6 @@ export class TransitoPage {
   }
 
   ionViewDidLoad() {
-    // this.navBar.backButtonClick = (e:UIEvent)=>{
-    //   this.navCtrl.push(AlmacenajePage);             
-    //  }
     console.log('ionViewDidLoad TransitoPage');
   }
 }

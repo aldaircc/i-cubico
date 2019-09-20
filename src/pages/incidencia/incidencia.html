@@ -6,69 +6,60 @@
 -->
 <ion-header>
   <ion-toolbar no-padding no-margin color="primary">
-  <ion-navbar>
+    <ion-navbar>
       <ion-title>REGISTRAR INCIDENCIA</ion-title>
     </ion-navbar>
 
-  <ion-buttons start>
-    <button ion-button (click)="dismiss()">
-      <span ion-text color="primary" showWhen="ios">Cancel</span>
-      <ion-icon name='md-close'></ion-icon>
-    </button>
-  </ion-buttons>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">Cancel</span>
+        <ion-icon name='md-close'></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
 
-    <ion-grid class="bgWhite borderSolid">
-      <ion-row>
-        <ion-col col-4 col-sm>
-          <ion-label>N° Orden:</ion-label>
-        </ion-col>
-        <ion-col col-8 col-sm>
-          <ion-label> {{ (vParameters != undefined) ? this.vParameters.Id_Tx : '' }}</ion-label>
-        </ion-col>
-      </ion-row>
+  <ion-grid class="bgWhite borderSolid">
+    <ion-row>
+      <ion-col col-4 col-sm>
+        <ion-label>N° Orden:</ion-label>
+      </ion-col>
+      <ion-col col-8 col-sm>
+        <ion-label> {{ (vParameters != undefined) ? this.vParameters.Id_Tx : '' }}</ion-label>
+      </ion-col>
+    </ion-row>
 
-      <ion-row>
-        <ion-col col-3 col-sm>
-          <ion-label>Causal:</ion-label>
-        </ion-col>
-        <ion-col col-9 col-sm>
-            <ion-select #causal [(ngModel)]="id_Causal" interface="action-sheet" [disabled]="flagPausa">
-              <ion-option *ngFor="let causal of listCausal" value="{{ causal.Id_Causal }}" >{{causal.Causal}} </ion-option>
-            </ion-select>
-        </ion-col>
-      </ion-row>
+    <ion-row>
+      <ion-col col-3 col-sm>
+        <ion-label>Causal:</ion-label>
+      </ion-col>
+      <ion-col col-9 col-sm>
+        <ion-select #causal [(ngModel)]="id_Causal" interface="action-sheet" [disabled]="flagPausa">
+          <ion-option *ngFor="let causal of listCausal" value="{{ causal.Id_Causal }}">{{causal.Causal}} </ion-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
 
-      <ion-row>
-        <ion-col col-12 col-sm>
-          <ion-label>Observación:</ion-label>
-        </ion-col>
-        <ion-col col-12 col-sm>
-          <ion-item>
-            <ion-textarea type="text" rows="7" autosize [(ngModel)]="observacion"></ion-textarea>
-            
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
+    <ion-row>
+      <ion-col col-12 col-sm>
+        <ion-label>Observación:</ion-label>
+      </ion-col>
+      <ion-col col-12 col-sm>
+        <ion-item>
+          <ion-textarea type="text" rows="7" autosize [(ngModel)]="observacion"></ion-textarea>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
 
 <ion-footer style="background: #054B77">
-    <ion-row no-padding style="margin-top: 2px; margin-bottom: 2px; text-align: center">
-      <ion-col col-12 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
-        <button ion-button icon-start (click)="btnProcesar()">
-            {{ (flagPausa == true) ? 'Continuar' : 'Detener' }}
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-footer>
-
-<!-- <ion-footer>
-  <ion-toolbar>
-    <button ion-button full (click)="btnProcesar()">{{ (flagPausa == true) ? 'Continuar' : 'Detener' }}</button>
-  </ion-toolbar>
-</ion-footer> -->
+  <ion-row no-padding style="margin-top: 2px; margin-bottom: 2px; text-align: center">
+    <ion-col col-12 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+      <button ion-button icon-start (click)="btnProcesar()">
+        {{ (flagPausa == true) ? 'Continuar' : 'Detener' }}
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, Navbar, NavController, NavParams, AlertController } from 'ionic-angular';
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
 import { EmbalajePage_07Page } from '../embalaje-page-07/embalaje-page-07';
-import { EmbalajePage_04Page } from '../embalaje-page-04/embalaje-page-04';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 
 /**
@@ -34,34 +33,15 @@ export class EmbalajePage_06Page {
     this.vNroBulto = navParams.get('dataNroBulto');
     this.vNroBultoCeros = navParams.get('dataNroBultoCeros');
     this.vEmbalajePage02 = navParams.get('dataPage02');
-    //this.pesoFisico = navParams.get('peso');
   }
 
-  // dataFromPeso: any;
-  // pesoCallback = data => {
-  //   debugger;
-  //   this.dataFromPeso = data;
-  //   console.log('data received from other page', this.dataFromPeso);
-  //   debugger;
-  //   this.pesoFisico = this.dataFromPeso.peso;
-  // };
-
   goToEmbalajePage07() {
-    debugger;    
+    debugger;
     this.navCtrl.push(EmbalajePage_07Page, {
       dataNroBulto: this.vNroBulto, dataNroBultoCeros: this.vNroBultoCeros,
       dataPage02: this.vEmbalajePage02
     });
   }
-
-
-  // goToEmbalajePage07() {
-  //   debugger;
-  //   this.navCtrl.push(EmbalajePage_07Page, {
-  //     dataNroBulto: this.vNroBulto, dataNroBultoCeros: this.vNroBultoCeros,
-  //     dataPage02: this.vEmbalajePage02, page: 6, peso: this.pesoCallback
-  //   });
-  // }
 
   GuardarPesoBulto() {
     debugger;
@@ -90,7 +70,7 @@ export class EmbalajePage_06Page {
     }
   }
 
-  goPrepararBultosBack() { 
+  goPrepararBultosBack() {
     this.navCtrl.getViews().forEach(item => {
       if (item.name == 'EmbalajePage_04Page') {
         this.sGlobal.resultGrabarBulto = true;
@@ -101,7 +81,6 @@ export class EmbalajePage_06Page {
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
-
       const confirm = this.alertCtrl.create({
         title: 'Mensaje',
         message: message,
@@ -117,33 +96,15 @@ export class EmbalajePage_06Page {
     })
   }
 
-  // goToEmbalajePage07_old(){           
-  //   this.navCtrl.push(EmbalajePage_07Page,{      
-  //     dataNroBulto: this.vNroBulto,
-  //     dataNroBultoCeros: this.vNroBultoCeros, 
-  //     dataPage02: this.vEmbalajePage02 
-  //   });
-  // }
-
   goToReciboPage04() {
     this.navCtrl.getViews().forEach(item => {
       if (item.name == 'EmbalajePage_04Page') {
         this.navCtrl.popTo(item);
       }
     });
-    // this.navCtrl.push(EmbalajePage_04Page, {
-    //   dataPageFiltro: '',
-    //   dataTotalPage03: '',
-    //   nroBulto: this.vNroBulto + 1,
-    //   dataPage02: this.vEmbalajePage02
-    //   //dataNroBulto: this.vNroBulto,
-    //   //nroBulto: this.vNroBultoCeros, 
-    //   //dataPage02: this.vEmbalajePage02 
-    // });
   }
 
   ionViewDidLoad() {
-
     this.navBar.backButtonClick = (e: UIEvent) => {
       this.navCtrl.getViews().forEach(item => {
         if (item.name == 'EmbalajePage_04Page') {
@@ -151,8 +112,6 @@ export class EmbalajePage_06Page {
         }
       });
     }
-
-
     console.log('ionViewDidLoad EmbalajePage_06Page');
   }
 
@@ -160,15 +119,12 @@ export class EmbalajePage_06Page {
     this.vFlagNuevoNumero = true;
   }
 
-  ionViewWillEnter() {  
-    if(this.sGlobal.resultObtenerPeso){
+  ionViewWillEnter() {
+    if (this.sGlobal.resultObtenerPeso) {
       debugger;
       this.pesoFisico = this.sGlobal.pesoBulto;
       this.sGlobal.resultObtenerPeso = false;
       this.sGlobal.pesoBulto = 0;
-    }       
+    }
   }
-
-
-
 }

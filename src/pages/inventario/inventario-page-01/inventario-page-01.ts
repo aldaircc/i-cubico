@@ -23,7 +23,7 @@ export class InventarioPage_01Page {
   countConfirm: number = 0;
   countProcess: number = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public navCtrl: NavController, public navParams: NavParams,
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
   }
 
@@ -31,9 +31,8 @@ export class InventarioPage_01Page {
     this.listarInventarioXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
 
-  
-  listarInventarioXUsuario(strUsuario, intIdAlmacen): void{
-    this.sInve.listarInventarioXUsuario(strUsuario, intIdAlmacen).then(result=>{
+  listarInventarioXUsuario(strUsuario, intIdAlmacen): void {
+    this.sInve.listarInventarioXUsuario(strUsuario, intIdAlmacen).then(result => {
       this.listInvent = result;
       this.countConfirm = this.listInvent.reduce((acc, cur) => cur.Id_Estado === 10 ? ++acc : acc, 0);
       this.countProcess = this.listInvent.reduce((acc, cur) => cur.Id_Estado === 3 ? ++acc : acc, 0);
@@ -41,7 +40,7 @@ export class InventarioPage_01Page {
     });
   }
 
-  goToInventPage02(data): void{
+  goToInventPage02(data): void {
     let parameter = {
       'Id_Inventario': data.Id_Inventario,
       'FechaProgramacion': data.FechaProgramacion,
@@ -49,6 +48,6 @@ export class InventarioPage_01Page {
       'Id_Estado': data.Id_Estado,
       'TipoInventario': data.TipoInventario
     }
-    this.navCtrl.push(InventarioPage_02Page, { 'vParameter' : parameter });
+    this.navCtrl.push(InventarioPage_02Page, { 'vParameter': parameter });
   }
 }

@@ -20,20 +20,20 @@ import { ImpresoraPage } from '../impresora/impresora';
 })
 export class DespachoPage {
 
-  constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public popoverCtrl: PopoverController, public modalCtrl: ModalController) {
   }
 
-  presentPopover(myEvent){
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 0 });
+  presentPopover(myEvent) {
+    let popover = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 0 });
     popover.present({
       ev: myEvent
     });
 
-    popover.onDidDismiss(popoverData =>{
-     if(popoverData == 3){
+    popover.onDidDismiss(popoverData => {
+      if (popoverData == 3) {
         this.showModalImpresora();
-      }else if(popoverData == 4){
+      } else if (popoverData == 4) {
         this.navCtrl.pop();
         var nav = this.app.getRootNav();
         nav.setRoot(HomePage);
@@ -41,16 +41,16 @@ export class DespachoPage {
     });
   }
 
-  showModalImpresora(){
+  showModalImpresora() {
     let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
     modalIncidencia.present();
   }
 
-  goToEmbarPage01(){
+  goToEmbarPage01() {
     this.navCtrl.push(EmbarquePage_01Page);
   }
 
-  gotToReciboBultoPage01(){
+  gotToReciboBultoPage01() {
     this.navCtrl.push(ReciboBultoPage_01Page);
   }
 }

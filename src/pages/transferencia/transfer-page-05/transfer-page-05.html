@@ -18,78 +18,56 @@
 </ion-header>
 
 <ion-content>
-    <ion-grid class="bgHeader statico">
-        <ion-row no-padding no-margin>
-            <ion-col col-5 class="bgHeader-col">
-                <ion-label class="bgHeader-label">
-                    N° Transferencia:
-                </ion-label>
-            </ion-col>
-            <ion-col col-7 class="bgHeader-col">
-                <ion-label class="bgHeader-text">
-                    {{vParameter.Id_Tx}}
-                </ion-label>
-            </ion-col>
-        </ion-row>
-        <ion-row no-padding no-margin>
-            <ion-col col-5 class="bgHeader-col">
-                <ion-label class="bgHeader-label" >
-                    Código:
-                </ion-label>
-            </ion-col>
-            <ion-col col-7 class="bgHeader-col">
-                <ion-label class="bgHeader-text" >
-                    {{vParameter.Cod_Producto}}
-                </ion-label>
-            </ion-col>
-        </ion-row>
-        <ion-row no-padding no-margin>
-            <ion-col col-12 class="bgHeader-col">
-                <ion-label class="bgHeader-text" style="text-align: center" >
-                    {{vParameter.Producto}}
-                </ion-label>
-            </ion-col>
-        </ion-row>
-        <ion-row no-padding no-margin>
-            <ion-col col-5 class="bgHeader-col">
-                <ion-label class="bgHeader-label" >
-                    Lote:
-                </ion-label>
-            </ion-col>
-            <ion-col col-7 class="bgHeader-col">
-                <ion-label class="bgHeader-text" >
-                    {{vParameter.Lote}}
-                </ion-label>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-
-  <!-- <ion-grid class="bgHeader">
-    <ion-row align-items-center>
-      <ion-col col-5 col-sm class="textHeader"> N° Transferencia:
+  <ion-grid class="bgHeader statico">
+    <ion-row no-padding no-margin>
+      <ion-col col-5 class="bgHeader-col">
+        <ion-label class="bgHeader-label">
+          N° Transferencia:
+        </ion-label>
       </ion-col>
-      <ion-col col-7 col-sm class="valueHeader">{{ vParameter.Id_Tx }}</ion-col>
-    </ion-row>
-    <ion-row align-items-center>
-      <ion-col col-5 col-sm class="textHeader"> Código </ion-col>
-      <ion-col col-7 col-sm class="valueHeader"> {{ vParameter.Cod_Producto }} </ion-col>
-    </ion-row>
-    <ion-row align-items-center>
-      <ion-col col-12 col-sm class="valueHeader">
-        {{ vParameter.Producto }}
+      <ion-col col-7 class="bgHeader-col">
+        <ion-label class="bgHeader-text">
+          {{vParameter.Id_Tx}}
+        </ion-label>
       </ion-col>
     </ion-row>
-    <ion-row align-items-center>
-      <ion-col col-5 col-sm class="textHeader">Lote</ion-col>
-      <ion-col col-7 col-sm class="valueHeader"> {{ vParameter.Lote }} </ion-col>
+    <ion-row no-padding no-margin>
+      <ion-col col-5 class="bgHeader-col">
+        <ion-label class="bgHeader-label">
+          Código:
+        </ion-label>
+      </ion-col>
+      <ion-col col-7 class="bgHeader-col">
+        <ion-label class="bgHeader-text">
+          {{vParameter.Cod_Producto}}
+        </ion-label>
+      </ion-col>
     </ion-row>
-  </ion-grid> -->
-
+    <ion-row no-padding no-margin>
+      <ion-col col-12 class="bgHeader-col">
+        <ion-label class="bgHeader-text" style="text-align: center">
+          {{vParameter.Producto}}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding no-margin>
+      <ion-col col-5 class="bgHeader-col">
+        <ion-label class="bgHeader-label">
+          Lote:
+        </ion-label>
+      </ion-col>
+      <ion-col col-7 class="bgHeader-col">
+        <ion-label class="bgHeader-text">
+          {{vParameter.Lote}}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <ion-item>
     <ion-label>UA's sin ubicación</ion-label>
     <ion-checkbox [(ngModel)]="bolSinUbi" (ionChange)="checkboxClicked($event);"></ion-checkbox>
   </ion-item>
-  
+
   <ion-card *ngFor="let obj of listAxUATrans">
     <ion-card-content no-padding>
       <ion-grid>
@@ -132,43 +110,22 @@
       </ion-grid>
     </ion-card-content>
   </ion-card>
-
 </ion-content>
 
 <ion-footer>
-    <ion-grid class="bgFooter">
-        <ion-row no-padding no-margin>
-            <ion-col col-10 class="bgFooter-col-text">
-                <ion-label no-padding no-margin class="bgFooter-label">
-                    Total: {{ rowCount }} fila(s)
-                </ion-label>
-            </ion-col>
-            <ion-col col-2 class="bgFooter-col">
-                <button no-margin no-padding ion-button icon-only clear [disabled]="!bolSinUbi" (click)="goToTransferPage06()" 
-                style="position: absolute;	top: 0;	bottom: 0; left: 0; right: 0;  margin: auto; background:none;">
-                    <ion-icon name="md-cart" color="light"></ion-icon>
-                </button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+  <ion-grid class="bgFooter">
+    <ion-row no-padding no-margin>
+      <ion-col col-10 class="bgFooter-col-text">
+        <ion-label no-padding no-margin class="bgFooter-label">
+          Total: {{ rowCount }} fila(s)
+        </ion-label>
+      </ion-col>
+      <ion-col col-2 class="bgFooter-col">
+        <button no-margin no-padding ion-button icon-only clear [disabled]="!bolSinUbi" (click)="goToTransferPage06()"
+          style="position: absolute;	top: 0;	bottom: 0; left: 0; right: 0;  margin: auto; background:none;">
+          <ion-icon name="md-cart" color="light"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-footer>
-
-<!-- <ion-footer class="bgLightBlue">
-  <ion-toolbar>
-    <ion-grid>
-      <ion-row>
-        <ion-col col-3 col-sm>
-          <div class="fieldForm">Total</div>
-        </ion-col>
-        <ion-col col-5 col-sm>
-          <div class="fieldForm"> {{ rowCount }} fila(s) </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <ion-buttons right>
-      <button ion-button icon-only (click)="goToTransferPage06()" [disabled]="!bolSinUbi">
-        <ion-icon name="md-cart"></ion-icon>
-      </button>  
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer> -->

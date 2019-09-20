@@ -13,33 +13,18 @@
                         <ion-label style="font-size: 15px; color: white; font-weight:bold;">CONSULTAR UBICACIÓN</ion-label>
                     </ion-navbar>
                 </ion-col>
-                <!-- <ion-col no-margin no-padding col-2>
-                    <ion-buttons start style="margin-top: 12px; text-align: center">
-                        <button no-margin no-padding ion-button icon-only (click)="eliminarUAS()">
-                            <ion-icon name="md-trash"></ion-icon>
-                        </button>
-                    </ion-buttons>
-                </ion-col> -->
             </ion-row>
         </ion-grid>
     </ion-toolbar>
 
     <ion-row class="statico">
-        <ion-searchbar #txtBuscar placeholder="Cod. Barra ubicación" maxlength="14" (keyup.enter)="validarCodigo()" [(ngModel)]="codeBar"
-        onkeypress="return ((event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-searchbar>
+        <ion-searchbar #txtBuscar placeholder="Cod. Barra ubicación" maxlength="14" (keyup.enter)="validarCodigo()"
+            [(ngModel)]="codeBar" onkeypress="return ((event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-searchbar>
     </ion-row>
 
 </ion-header>
 
 <ion-content>
-    
-    <!-- <ion-row>
-        <ion-item class="bgLightBlue">
-            <ion-label>Todos</ion-label>
-            <ion-checkbox color="dark" checked="true"></ion-checkbox>
-        </ion-item>
-    </ion-row> -->
-
     <ion-row class="bgWhite">
         <ion-card *ngFor="let objListUAs of listUas">
             <ion-card-content style="padding: 8px 2px; font-size: 12px" (press)="goDetalleProductoPage(objListUAs)">
@@ -127,9 +112,9 @@
             <ion-col col-2 class="bgFooter-col">
                 <button no-margin no-padding ion-button icon-only clear (click)="eliminarUAS()" style="
                     position: absolute;	top: 0;	bottom: 0; right: 0;  margin: auto; background:none;">
-                  <ion-icon name="trash" color="light"></ion-icon>
+                    <ion-icon name="trash" color="light"></ion-icon>
                 </button>
-              </ion-col>
+            </ion-col>
         </ion-row>
     </ion-grid>
 </ion-footer>

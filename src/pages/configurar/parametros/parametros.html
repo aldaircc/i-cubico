@@ -18,68 +18,60 @@
     </ion-toolbar>
 </ion-header>
 
-<!-- <ion-header>
-
-  <ion-navbar>
-    <ion-title>Parámetros</ion-title>
-  </ion-navbar>
-
-</ion-header> -->
-
-
 <ion-content padding>
-    <ion-grid>   
+    <ion-grid>
         <ion-row>
-            <ion-col>            
-              <div>
-                <h6><b>Ruta servicio BD:</b></h6>  
-              </div>   
-            </ion-col>       
+            <ion-col>
+                <div>
+                    <h6><b>Ruta servicio BD:</b></h6>
+                </div>
+            </ion-col>
         </ion-row>
         <ion-row>
-            <ion-col>        
+            <ion-col>
                 <ion-item>
                     <ion-input #iRutaBD type="Text" placeholder="Ingrese ruta de servicio" [(ngModel)]="rutaServicioBD"></ion-input>
                 </ion-item>
             </ion-col>
-        </ion-row>  
-        <ion-row>
-            <ion-col>            
-              <div>
-                <h6><b>Ruta servicio Impresión:</b></h6>  
-              </div>   
-            </ion-col>       
         </ion-row>
         <ion-row>
-            <ion-col>        
+            <ion-col>
+                <div>
+                    <h6><b>Ruta servicio Impresión:</b></h6>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
                 <ion-item>
-                    <ion-input #iRutaImpresion type="Text" placeholder="Ingrese ruta de servicio de impresión" [(ngModel)]="rutaServicioImpresion"></ion-input>
+                    <ion-input #iRutaImpresion type="Text" placeholder="Ingrese ruta de servicio de impresión"
+                        [(ngModel)]="rutaServicioImpresion"></ion-input>
                 </ion-item>
             </ion-col>
-        </ion-row>  
-        <ion-row>
-            <ion-col>            
-              <div>
-                <h6><b>Id RF:</b></h6>  
-              </div>   
-            </ion-col>       
         </ion-row>
         <ion-row>
-            <ion-col>        
+            <ion-col>
+                <div>
+                    <h6><b>Id RF:</b></h6>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
                 <ion-item>
                     <ion-input #iRF type="Text" placeholder="Ingrese RF" [(ngModel)]="idRF"></ion-input>
                 </ion-item>
             </ion-col>
-        </ion-row>  
-        <ion-row>
-            <ion-col>            
-              <div>
-                <h6><b>Contraseña:</b></h6>  
-              </div>   
-            </ion-col>       
         </ion-row>
         <ion-row>
-            <ion-col>        
+            <ion-col>
+                <div>
+                    <h6><b>Contraseña:</b></h6>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
                 <ion-item>
                     <ion-input #iPassword type="password" placeholder="Ingrese contraseña" [(ngModel)]="clave"></ion-input>
                 </ion-item>
@@ -87,7 +79,7 @@
         </ion-row>
     </ion-grid>
     <div padding>
-        <button ion-button block round (click)="grabarParametros()" >Grabar</button>
-        <button ion-button block round color="danger" (click)="goBackLoginPage()" >Cancelar</button>
-    </div>   
+        <button ion-button block round (click)="grabarParametros()">Grabar</button>
+        <button ion-button block round color="danger" (click)="goBackLoginPage()">Cancelar</button>
+    </div>
 </ion-content>

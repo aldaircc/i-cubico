@@ -29,18 +29,13 @@ export class ReabastecimientoPickingPage {
   vDatosRecibidos: any = [];
   codeBar: string;
   Textcantidad: string;
-
   listValidarUA: any;
   listPalletUATemp: any = [];
-
   cantSugerida: number;
   saldo: number;
-
   Agregarisenabled: boolean = false;
-
   Id: number = 1;
   CantidadBk: any;
-
   ParticionUA: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
@@ -63,7 +58,6 @@ export class ReabastecimientoPickingPage {
             this.Agregarisenabled = true;
             this.ParticionUA = true;
             setTimeout(() => {
-              //this.txtCantidadUARef.setFocus();
               this.selectAll(this.txtCantidadUA);
             }, (500));
           } else {
@@ -73,7 +67,6 @@ export class ReabastecimientoPickingPage {
             this.ParticionUA = false;
             this.presentAlert("Pallet/UA no existe").then((result) => {
               setTimeout(() => {
-                //this.txtCodBarraUARef.setFocus();
                 this.selectAll(this.txtCodBarraUA);
               }, (500));
             })
@@ -84,14 +77,12 @@ export class ReabastecimientoPickingPage {
       } else {
         this.presentToast("Ingrese Pallet/UA");
         setTimeout(() => {
-          //this.txtCodBarraUARef.setFocus();
           this.selectAll(this.txtCodBarraUA);
         }, (500));
       }
     } else {
       this.presentToast("Ingrese Pallet/UA");
       setTimeout(() => {
-        //this.txtCodBarraUARef.setFocus();
         this.selectAll(this.txtCodBarraUA);
       }, (500));
     }
@@ -115,7 +106,6 @@ export class ReabastecimientoPickingPage {
       debugger;
       this.presentAlert("Pallet/UA no existe").then((result) => {
         setTimeout(() => {
-          //this.txtCodBarraUARef.setFocus();
           this.selectAll(this.txtCodBarraUA);
         }, (500));
       })
@@ -126,7 +116,6 @@ export class ReabastecimientoPickingPage {
       debugger;
       this.presentAlert("Pallet/UA no existe").then((result) => {
         setTimeout(() => {
-          //this.txtCodBarraUARef.setFocus();
           this.selectAll(this.txtCodBarraUA);
         }, (500));
       })
@@ -137,7 +126,6 @@ export class ReabastecimientoPickingPage {
       debugger;
       this.presentAlert("La cantidad Pallet/UA debe ser diferente de 0.").then((result) => {
         setTimeout(() => {
-          //this.txtCantidadUARef.setFocus();
           this.selectAll(this.txtCantidadUA);
         }, (500));
       })
@@ -148,7 +136,6 @@ export class ReabastecimientoPickingPage {
       debugger;
       this.presentAlert("Pallet/UA excede el saldo").then((result) => {
         setTimeout(() => {
-          //this.txtCantidadUARef.setFocus();
           this.selectAll(this.txtCantidadUA);
         }, (500));
       })
@@ -172,7 +159,6 @@ export class ReabastecimientoPickingPage {
       cajas = 0;
     }
 
-
     //Agregar a la lista 
     var obj = {
       'Id': this.Id,
@@ -189,44 +175,34 @@ export class ReabastecimientoPickingPage {
     this.Agregarisenabled = false;
     this.ParticionUA = false;
     setTimeout(() => {
-      //this.txtCodBarraUARef.setFocus();
       this.selectAll(this.txtCodBarraUA);
     }, (500));
 
     //actualizar saldo
-
     this.saldo = this.saldo - cant;
 
-
     this.presentToast("Se agrego Pallet/UA a la lista.");
-
-
-
   }
 
   showModalParticionarUaPage() {
     debugger;
-
     if (this.ParticionUA == true) {
       var cant = parseFloat(this.Textcantidad);
       if (cant > this.CantidadBk) {
         this.presentAlert("La cantidad no debe ser mayor o igual al de la UA").then((resultAlert) => {
           setTimeout(() => {
-            //this.txtCantidadUARef.setFocus();
             this.selectAll(this.txtCantidadUA);
           }, (500));
         })
       } else if (cant == this.CantidadBk) {
         this.presentAlert("La cantidad no debe ser mayor o igual al de la UA").then((resultAlert) => {
           setTimeout(() => {
-            //this.txtCantidadUARef.setFocus();
             this.selectAll(this.txtCantidadUA);
           }, (500));
         })
       } else if (cant > this.saldo) {
         this.presentAlert("La cantidad no debe ser mayor al Saldo").then((resultAlert) => {
           setTimeout(() => {
-            //this.txtCantidadUARef.setFocus();
             this.selectAll(this.txtCantidadUA);
           }, (500));
         })
@@ -256,7 +232,6 @@ export class ReabastecimientoPickingPage {
             this.Agregarisenabled = false;
             this.ParticionUA = false;
             setTimeout(() => {
-              //this.txtCodBarraUARef.setFocus();
               this.selectAll(this.txtCodBarraUA);
             }, (500));
           }
@@ -268,53 +243,6 @@ export class ReabastecimientoPickingPage {
       this.presentToast("Debe consultar el Pallet/UA.");
     }
   }
-
-  // goParticionarUaPage() {
-  //   debugger;
-
-  //   var cant = parseFloat(this.Textcantidad);
-
-  //   if (cant > this.CantidadBk) {
-  //     this.presentAlert("La cantidad no debe ser mayor o igual al de la UA").then((resultAlert) => {
-  //       setTimeout(() => {
-  //         this.txtCantidadUARef.setFocus();
-  //         this.selectAll(this.txtCantidadUA);
-  //       }, (500));
-  //     })
-
-  //   } else if (cant == this.CantidadBk) {
-  //     this.presentAlert("La cantidad no debe ser mayor o igual al de la UA").then((resultAlert) => {
-  //       setTimeout(() => {
-  //         this.txtCantidadUARef.setFocus();
-  //         this.selectAll(this.txtCantidadUA);
-  //       }, (500));
-  //     })
-  //   } else if (cant > this.saldo) {
-  //     this.presentAlert("La cantidad no debe ser mayor al Saldo").then((resultAlert) => {
-  //       setTimeout(() => {
-  //         this.txtCantidadUARef.setFocus();
-  //         this.selectAll(this.txtCantidadUA);
-  //       }, (500));
-  //     })
-  //   }
-  //   else {
-  //     this.vReabastecimientoPickingPage = {
-  //       'CodBar_UA': this.listValidarUA[0].UA_CodBarra,
-  //       'UM': this.listValidarUA[0].UM,
-  //       'Codigo': this.listValidarUA[0].CodigoProducto,
-  //       'DescProducto': this.listValidarUA[0].NombreProducto,
-  //       'Lote': this.listValidarUA[0].LoteLab,
-  //       'FechaEmision': this.vDatosRecibidos.FechaEmision,
-  //       'FechaVencimiento': this.vDatosRecibidos.FechaVencimiento,
-  //       'Pasillo': this.vDatosRecibidos.SectorD,
-  //       'CantidadTotal': parseFloat(this.Textcantidad)
-  //     };
-  //     this.navCtrl.push(ParticionarUaPage, {
-  //       data: this.vReabastecimientoPickingPage
-  //     });
-  //   }
-  // }
-
 
   goListaPalletUaPage() {
     debugger;
@@ -388,10 +316,8 @@ export class ReabastecimientoPickingPage {
     })
   }
 
-
   ionViewDidLoad() {
     setTimeout(() => {
-      //this.txtCodBarraUARef.setFocus();
       this.selectAll(this.txtCodBarraUA);
     }, (500));
     console.log('ionViewDidLoad ReabastecimientoPickingPage');

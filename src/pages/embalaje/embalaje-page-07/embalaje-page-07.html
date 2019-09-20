@@ -51,8 +51,7 @@
             </ion-col>
             <ion-col col-3 col-sm>
                 <ion-item>
-                    <ion-input type="number" min="0" placeholder="0.00" [(ngModel)]="pesoFisico"
-                    onkeypress="return (event.charCode != 46 && event.charCode > 31 && (event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-input>
+                    <ion-input type="number" min="0" placeholder="0.00" [(ngModel)]="pesoFisico" onkeypress="return (event.charCode != 46 && event.charCode > 31 && (event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-input>
                 </ion-item>
             </ion-col>
             <ion-col col-4 col-sm>
@@ -71,12 +70,3 @@
         </ion-row>
     </ion-grid>
 </ion-footer>
-<!-- <ion-footer class="bgLightBlue">
-    <ion-toolbar color="primary">
-        <ion-buttons right>
-            <button ion-button icon-only (click)="GuardarPesoBulto()">
-                <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
-            </button>
-        </ion-buttons>
-    </ion-toolbar>
-</ion-footer> -->

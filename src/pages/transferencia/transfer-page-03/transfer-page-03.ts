@@ -18,47 +18,46 @@ import { TransferPage_04Page } from '../transfer-page-04/transfer-page-04';
 })
 export class TransferPage_03Page {
 
-  vParameter : any;
-  listUbiLote : any;
-  rowCount : number = 0;
+  vParameter: any;
+  listUbiLote: any;
+  rowCount: number = 0;
   lote: string = "";
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sGlobal: GlobalServiceProvider, public sPicking: PickingServiceProvider) {
-      this.vParameter = this.navParams.get('vParameter');
+    this.vParameter = this.navParams.get('vParameter');
   }
 
-  listarStockProductoXUbicaciones(intIdAlmacen, intIdSubAlmacenOrigen, intIdProducto, strLote){
-    this.sPicking.listarStockProductoXUbicaciones(intIdAlmacen, intIdSubAlmacenOrigen, intIdProducto, strLote).then(result=>{
-      let res:any = result;
+  listarStockProductoXUbicaciones(intIdAlmacen, intIdSubAlmacenOrigen, intIdProducto, strLote) {
+    this.sPicking.listarStockProductoXUbicaciones(intIdAlmacen, intIdSubAlmacenOrigen, intIdProducto, strLote).then(result => {
+      let res: any = result;
       var strSector;
       res.forEach(el => {
         let dataUbi = el.Ubicacion.split('-');
         dataUbi.forEach(cel => {
           let val = cel.split(':');
-          if(val[0].trim().length > 1){
+          if (val[0].trim().length > 1) {
             strSector = val[0].substring(0, val[0].length - 1).trim();
             el.Sector = strSector;
             el.Fila = val[1].trim();
-          }else{
-            switch (val[0].trim()){
-              case  'F': 
+          } else {
+            switch (val[0].trim()) {
+              case 'F':
                 el.Fila = (parseInt(val[1]) <= 9) ? "0" + val[1].trim() : val[1].trim();
                 break;
-              case  'N': 
+              case 'N':
                 el.Nivel = (parseInt(val[1]) <= 9) ? "0" + val[1].trim() : val[1].trim();
                 break;
-              case  'C': 
+              case 'C':
                 el.Columna = (parseInt(val[1]) <= 9) ? "0" + val[1].trim() : val[1].trim();
                 break;
-              case  'P': 
+              case 'P':
                 el.Posicion = (parseInt(val[1]) <= 9) ? "0" + val[1].trim() : val[1].trim();
                 break;
               default:
                 break;
             }
           }
-
         });
         el.Ubicacion_2 = el.Ubicacion.replace(strSector, '');
       });
@@ -68,7 +67,7 @@ export class TransferPage_03Page {
     });
   }
 
-  goToTransferPage04(data):void{
+  goToTransferPage04(data): void {
     let parameter = {
       'CantidadOperacion': this.vParameter.CantidadOperacion,
       'CantidadPedida': this.vParameter.CantidadPedida,
@@ -82,23 +81,21 @@ export class TransferPage_03Page {
       'Lote': this.vParameter.Lote,
       'Producto': this.vParameter.Producto,
       'Saldo': this.vParameter.Saldo,
-      'UM': this.vParameter.UM, 
-
-      'Cantidad' : data.Cantidad,
-      'Id_Ubicacion' : data.Id_Ubicacion,
-      'Ubicacion' : data.Ubicacion,
-      'Ubicacion_2' : data.Ubicacion_2,
-      'Sector' : data.Sector,
-      'Fila' : data.Fila,
-      'Columna' : data.Columna,
-      'Nivel' : data.Nivel,
-      'Posicion' : data.Posicion
+      'UM': this.vParameter.UM,
+      'Cantidad': data.Cantidad,
+      'Id_Ubicacion': data.Id_Ubicacion,
+      'Ubicacion': data.Ubicacion,
+      'Ubicacion_2': data.Ubicacion_2,
+      'Sector': data.Sector,
+      'Fila': data.Fila,
+      'Columna': data.Columna,
+      'Nivel': data.Nivel,
+      'Posicion': data.Posicion
     };
-    
     this.navCtrl.push(TransferPage_04Page, { 'vParameter': parameter });
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.listarStockProductoXUbicaciones(this.sGlobal.Id_Almacen, this.vParameter.Id_SubAlmacenOrigen, this.vParameter.Id_Producto, this.vParameter.Lote);
   }
 }

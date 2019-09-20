@@ -19,24 +19,24 @@ import { HomePage } from '../../../home/home';
 })
 export class EmbarquePage_02Page {
 
-  vParameter :any;
+  vParameter: any;
   totalSubBultos: number = 0;
   totalSubBultosLeido: number = 0;
 
-  constructor(public app: App, public popoverCtrl: PopoverController, public modalCtrl:ModalController, public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider,
+  constructor(public app: App, public popoverCtrl: PopoverController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider,
     public sDesp: DespachoServiceProvider) {
     this.vParameter = this.navParams.get('vParameter');
     this.listarSubBultosLeidos(this.vParameter.Id_Tra, 2);
   }
 
-presentPopover(myEvent){
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 1});
+  presentPopover(myEvent) {
+    let popover = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 1 });
     popover.present({
       ev: myEvent
     });
 
-    popover.onDidDismiss(popoverData =>{
-      if(popoverData == 4){
+    popover.onDidDismiss(popoverData => {
+      if (popoverData == 4) {
         this.navCtrl.pop();
         var nav = this.app.getRootNav();
         nav.setRoot(HomePage);
@@ -44,15 +44,15 @@ presentPopover(myEvent){
     });
   }
 
-  listarSubBultosLeidos(strTransaccion, tipo){
-    this.sDesp.listarSubBultosLeidos(strTransaccion, tipo).then(result=>{
+  listarSubBultosLeidos(strTransaccion, tipo) {
+    this.sDesp.listarSubBultosLeidos(strTransaccion, tipo).then(result => {
       let res: any = result;
       this.totalSubBultos = res.length;
       this.totalSubBultosLeido = res.reduce((acc, cur) => (cur.FlagLeido == true) ? ++acc : acc, 0);
     });
   }
 
-  goToEmbarPage03(obj):void{
+  goToEmbarPage03(obj): void {
     let parameter = {
       'Id_Tra': obj.Id_Tra,
       'Id_Conductor': obj.Id_Conductor,
@@ -62,11 +62,11 @@ presentPopover(myEvent){
       'Placa': obj.Placa,
       'totalSubBultos': this.totalSubBultos,
       'totSubBultosLeido': this.totalSubBultosLeido
-   };
-   this.navCtrl.push(EmbarquePage_03Page, { 'vParameter': parameter });
+    };
+    this.navCtrl.push(EmbarquePage_03Page, { 'vParameter': parameter });
   }
 
-  closeEmbarPage03(): void{
+  closeEmbarPage03(): void {
     this.navCtrl.pop();
   }
 }

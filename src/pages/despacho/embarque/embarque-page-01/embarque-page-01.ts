@@ -29,17 +29,14 @@ export class EmbarquePage_01Page {
     public sGlobal: GlobalServiceProvider, public sDesp: DespachoServiceProvider) {
   }
 
-  presentPopover(event){
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 52});
+  presentPopover(event) {
+    let popover = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 52 });
     popover.present({
       ev: event
     });
 
-    popover.onDidDismiss(popoverData =>{
-      // if(popoverData == 2){
-      //   this.showModalIncidencia();
-      // }else 
-      if(popoverData == 4){
+    popover.onDidDismiss(popoverData => {
+      if (popoverData == 4) {
         this.navCtrl.pop();
         var nav = this.app.getRootNav();
         nav.setRoot(HomePage);
@@ -47,19 +44,19 @@ export class EmbarquePage_01Page {
     });
   }
 
-  showModalIncidencia(){
+  showModalIncidencia() {
     debugger;
     let modalIncidencia = this.modalCtrl.create(IncidenciaPage);
-    modalIncidencia.onDidDismiss(data =>{
-      if(data.response == 200){
+    modalIncidencia.onDidDismiss(data => {
+      if (data.response == 200) {
         this.navCtrl.pop();
       }
     });
     modalIncidencia.present();
   }
 
-  listarPlanificacionXUsuario(strUsuario, intIdAlmacen): void{
-    this.sDesp.listarPlanificacionXUsuario(strUsuario, intIdAlmacen).then(result=>{
+  listarPlanificacionXUsuario(strUsuario, intIdAlmacen): void {
+    this.sDesp.listarPlanificacionXUsuario(strUsuario, intIdAlmacen).then(result => {
       let res: any = result;
       this.listEmbarque = res;
       this.listAuxEmbarque = this.listEmbarque;
@@ -67,7 +64,7 @@ export class EmbarquePage_01Page {
     });
   }
 
-  filterItems(ev: any):void{
+  filterItems(ev: any): void {
     const val = ev.target.value;
     if (val && val.trim() != '') {
       this.listAuxEmbarque = this.listEmbarque.filter((item) => {
@@ -80,20 +77,20 @@ export class EmbarquePage_01Page {
     }
   }
 
-  goToEmbarPage02(obj):void{
+  goToEmbarPage02(obj): void {
     let parameter = {
-       'Id_Tra': obj.Id_Tra,
-       'Id_Conductor': obj.Id_Conductor,
-       'Conductor': obj.Conductor,
-       'Documento': obj.Documento,
-       'Id_Vehiculo': obj.Id_Vehiculo,
-       'Placa': obj.Placa
+      'Id_Tra': obj.Id_Tra,
+      'Id_Conductor': obj.Id_Conductor,
+      'Conductor': obj.Conductor,
+      'Documento': obj.Documento,
+      'Id_Vehiculo': obj.Id_Vehiculo,
+      'Placa': obj.Placa
     };
 
     this.navCtrl.push(EmbarquePage_02Page, { 'vParameter': parameter });
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.listarPlanificacionXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
 }

@@ -10,70 +10,70 @@
   </ion-navbar>
 
   <ion-grid class="bgHeader statico">
-      <ion-row align-items-center>
-        <ion-col col-3 col-sm class="bgHeader-col">
-          <div class="bgHeader-label">Código: </div>
-        </ion-col>
-        <ion-col col-9 col-sm class="bgHeader-col">
-          <div class="bgHeader-text">{{ vParameter.Cod_Producto }}</div>
-        </ion-col>
-      </ion-row>
-      <ion-row align-items-center>
-        <ion-col col-12 col-sm class="bgHeader-col">
-          <div class="bgHeader-text" style="text-align: center">{{ vParameter.Producto }}</div>
-        </ion-col>
-      </ion-row>
-      <ion-row align-items-center>
-        <ion-col col-3 col-sm class="bgHeader-col">
-          <div class="bgHeader-label">Lote: </div>
-        </ion-col>
-        <ion-col col-8 col-sm class="bgHeader-col">
-          <div class="bgHeader-text">{{ vParameter.Lote }}</div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <ion-row align-items-center>
+      <ion-col col-3 col-sm class="bgHeader-col">
+        <div class="bgHeader-label">Código: </div>
+      </ion-col>
+      <ion-col col-9 col-sm class="bgHeader-col">
+        <div class="bgHeader-text">{{ vParameter.Cod_Producto }}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-12 col-sm class="bgHeader-col">
+        <div class="bgHeader-text" style="text-align: center">{{ vParameter.Producto }}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-3 col-sm class="bgHeader-col">
+        <div class="bgHeader-label">Lote: </div>
+      </ion-col>
+      <ion-col col-8 col-sm class="bgHeader-col">
+        <div class="bgHeader-text">{{ vParameter.Lote }}</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-header>
 
 <ion-content>
-  
 
-  <ion-card *ngFor="let obj of listUbiLote">  
-      <ion-card-content no-padding (click)="goToTransferPage04(obj)">
-        <ion-grid>
-          <ion-row>
-            <ion-col col-11 col-sm>
-              <ion-row>
-                <ion-col class="tf03-card-col" col-4 col-sm>
-                  <ion-label class="tf03-card-label fieldForm">Sector:</ion-label>
-                </ion-col>
-                <ion-col class="tf03-card-col" col-sm>
-                  <ion-label class="tf03-card-label">{{ obj.Sector }}</ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col class="tf03-card-col" col-4 col-sm>
-                  <ion-label class="tf03-card-label fieldForm">Ubicación:</ion-label>
-                </ion-col>
-                <ion-col class="tf03-card-col" col-sm>
-                  <ion-label class="tf03-card-label">{{ obj.Ubicacion_2 }}</ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col class="tf03-card-col" col-5 col-sm>
-                  <ion-label class="tf03-card-label fieldForm">Cantidad UA's:</ion-label>
-                </ion-col>
-                <ion-col class="tf03-card-col" col-7 col-sm>
-                  <ion-label class="tf03-card-label">{{ obj.Cantidad }}</ion-label>
-                </ion-col>
-              </ion-row>
-            </ion-col>
-        <ion-col col-1 col-sm align-self-center>
+
+  <ion-card *ngFor="let obj of listUbiLote">
+    <ion-card-content no-padding (click)="goToTransferPage04(obj)">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-11 col-sm>
+            <ion-row>
+              <ion-col class="tf03-card-col" col-4 col-sm>
+                <ion-label class="tf03-card-label fieldForm">Sector:</ion-label>
+              </ion-col>
+              <ion-col class="tf03-card-col" col-sm>
+                <ion-label class="tf03-card-label">{{ obj.Sector }}</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="tf03-card-col" col-4 col-sm>
+                <ion-label class="tf03-card-label fieldForm">Ubicación:</ion-label>
+              </ion-col>
+              <ion-col class="tf03-card-col" col-sm>
+                <ion-label class="tf03-card-label">{{ obj.Ubicacion_2 }}</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="tf03-card-col" col-5 col-sm>
+                <ion-label class="tf03-card-label fieldForm">Cantidad UA's:</ion-label>
+              </ion-col>
+              <ion-col class="tf03-card-col" col-7 col-sm>
+                <ion-label class="tf03-card-label">{{ obj.Cantidad }}</ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          <ion-col col-1 col-sm align-self-center>
             <ion-icon name="md-play"></ion-icon>
-        </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-card-content>
-    </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
 
 <ion-footer class="bgLightBlue">

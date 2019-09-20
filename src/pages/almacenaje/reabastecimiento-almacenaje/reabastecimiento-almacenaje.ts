@@ -22,7 +22,6 @@ export class ReabastecimientoAlmacenajePage {
   fecha: any;
   nomAlmacen: any;
   userDetail: any;
-
   listReabastecimiento: any;
   listAuxReabastecimiento: any = [];
   listSinTrabajar: any = [];
@@ -30,7 +29,6 @@ export class ReabastecimientoAlmacenajePage {
   rowCount: any;
   rowCountSinTrabajar: any;
   rowCountProceso: any;
-
   vReabastecerPage: any;
 
   constructor(public app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider,
@@ -41,7 +39,7 @@ export class ReabastecimientoAlmacenajePage {
     this.getReabastecimiento();
   }
 
-  getReabastecimiento(){
+  getReabastecimiento() {
     this.getListarReabastecimientoXUsuario(this.sGlobal.Id_Almacen, this.sGlobal.userName);
   }
 
@@ -53,7 +51,6 @@ export class ReabastecimientoAlmacenajePage {
       this.listSinTrabajar = [];
       this.listProceso = [];
       this.listReabastecimiento = result;
-      //this.listAuxOrdenesPicking = this.listOrdenesPicking;
 
       for (var i = 0; i < this.listReabastecimiento.length; i++) {
         var obj = {
@@ -88,7 +85,6 @@ export class ReabastecimientoAlmacenajePage {
           'Ubicacion_Origen': result[i].Ubicacion_Origen
         };
         this.listAuxReabastecimiento.push(obj);
-        //this.idRutaPicking = this.idRutaPicking + 1;
 
         if (result[i].Id_Estado == 10) {
           this.listSinTrabajar.push(obj);
@@ -162,8 +158,6 @@ export class ReabastecimientoAlmacenajePage {
     });
   }
 
-
-
   ionViewDidLoad() {
     this.navBar.backButtonClick = (e: UIEvent) => {
       this.presentAlertConfirm("¿Está seguro de salir?").then((result) => {
@@ -171,20 +165,7 @@ export class ReabastecimientoAlmacenajePage {
           this.navCtrl.pop();
         }
       })
-    }
-    // this.platform.registerBackButtonAction(() => {
-    //   let nav = this.app.getActiveNav();
-    //   let view = nav.getActive();
-    //   if (view.component.name == "ReabastecimientoAlmacenajePage"){
-    //       this.presentAlertConfirm("¿Está seguro de salir?").then((result) => {
-    //       if (result) {
-    //         this.navCtrl.pop();
-    //       }
-    //     })
-    //   }else{
-    //     this.navCtrl.pop();
-    //   }
-    // });
+    }   
     console.log('ionViewDidLoad ReabastecimientoAlmacenajePage');
   }
 }

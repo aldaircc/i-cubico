@@ -18,35 +18,25 @@
     </ion-toolbar>
 </ion-header>
 
-<!-- <ion-header>
-
-  <ion-navbar>
-    <ion-title>Configurar parámetros</ion-title>
-  </ion-navbar>
-
-</ion-header> -->
-
-
 <ion-content padding>
-    <ion-grid>   
+    <ion-grid>
         <ion-row>
-            <ion-col>            
-              <div>
-                <h6><b>Contraseña:</b></h6>  
-              </div>   
-            </ion-col>       
+            <ion-col>
+                <div>
+                    <h6><b>Contraseña:</b></h6>
+                </div>
+            </ion-col>
         </ion-row>
         <ion-row>
-            <ion-col>        
+            <ion-col>
                 <ion-item>
                     <ion-input #iClave type="password" placeholder="Ingrese contraseña" [(ngModel)]="clave"></ion-input>
                 </ion-item>
             </ion-col>
-        </ion-row>  
+        </ion-row>
     </ion-grid>
     <div padding>
-        <button ion-button block round  (click)="ingresarParametros()" >Aceptar</button>
-        <button ion-button block round color="danger"  (click)="goBackLoginPage()" >Salir</button>
-    </div>   
-
+        <button ion-button block round (click)="ingresarParametros()">Aceptar</button>
+        <button ion-button block round color="danger" (click)="goBackLoginPage()">Salir</button>
+    </div>
 </ion-content>

@@ -28,8 +28,8 @@
         <ion-row no-padding no-margin style="padding-left: 10px; padding-top: 5px">
             <ion-col col-10 style="padding-left: 0px; padding-right: 0px; padding-top: 0px">
                 <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-                    <ion-input #txtCodPalletUa [(ngModel)]="codeBar" maxlength="12" placeholder="Ingrese Pallets/UA´s" (keyup.enter)="validarCodigo()"
-                        type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+                    <ion-input #txtCodPalletUa [(ngModel)]="codeBar" maxlength="12" placeholder="Ingrese Pallets/UA´s"
+                        (keyup.enter)="validarCodigo()" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
                 </ion-item>
             </ion-col>
             <ion-col col-2 style="padding-left: 0px; padding-right: 0px; padding-top: 0px">
@@ -43,7 +43,7 @@
 </ion-header>
 
 <ion-content>
-    
+
 
     <ion-row class="bgWhite">
         <ion-card *ngFor="let objPalletTransito of listAuxPalletTransito">

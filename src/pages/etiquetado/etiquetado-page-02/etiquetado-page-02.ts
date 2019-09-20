@@ -29,23 +29,23 @@ export class EtiquetadoPage_02Page {
   rowCount: string = "";
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public navCtrl: NavController, public navParams: NavParams,
     public sEtq: EtiquetadoServiceProvider, public sGlobal: GlobalServiceProvider) {
-      this.listarCuentasXAlmacenUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen, 0);
+    this.listarCuentasXAlmacenUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen, 0);
   }
 
-  filtrarProducto(): void{
+  filtrarProducto(): void {
     let message = this.validarCampos();
-    if(message.length > 0){
+    if (message.length > 0) {
       alert(message);
       return;
     }
     this.listarProductoXFiltro(this.tipoFiltro, this.filterText, this.IdCuenta);
   }
 
-  validarCampos(){
+  validarCampos() {
     var message = "";
-    if(this.IdCuenta == 0){
+    if (this.IdCuenta == 0) {
       message = "Seleccione una cuenta";
       setTimeout(() => {
         this.selectFormat.open();
@@ -53,15 +53,14 @@ export class EtiquetadoPage_02Page {
       return message;
     }
 
-    if(this.tipoFiltro == 0){
+    if (this.tipoFiltro == 0) {
       message = "Seleccione un tipo de filtro"
       return message;
     }
 
-    if(this.filterText.trim() == ""){
+    if (this.filterText.trim() == "") {
       message = "Ingrese filtro";
       setTimeout(() => {
-        //this.txtFiltroRef.setFocus();
         this.selectAll(this.txtFiltro);
       }, (500));
       return message;
@@ -69,51 +68,49 @@ export class EtiquetadoPage_02Page {
     return message;
   }
 
-  selectCard(data){
+  selectCard(data) {
     debugger;
-      this.navCtrl.pop().then(() => {
-        data.IdCuentaLPN = this.IdCuenta;
-        this.navParams.get('producto')(data);
-      });
+    this.navCtrl.pop().then(() => {
+      data.IdCuentaLPN = this.IdCuenta;
+      this.navParams.get('producto')(data);
+    });
   }
 
   onChangeRadio() {
-    if (this.tipoFiltro == 1 || this.tipoFiltro == 2 || this.tipoFiltro == 3){
+    if (this.tipoFiltro == 1 || this.tipoFiltro == 2 || this.tipoFiltro == 3) {
       setTimeout(() => {
-        //this.txtFiltroRef.setFocus();
         this.selectAll(this.txtFiltro);
       }, (500));
     }
   }
 
-  listarCuentasXAlmacenUsuario(strUsuario, intIdAlmacen, intIdCuenta): void{
-    this.sEtq.listarCuentasXAlmacenUsuario(strUsuario, intIdAlmacen, intIdCuenta).then(result=>{
+  listarCuentasXAlmacenUsuario(strUsuario, intIdAlmacen, intIdCuenta): void {
+    this.sEtq.listarCuentasXAlmacenUsuario(strUsuario, intIdAlmacen, intIdCuenta).then(result => {
       debugger;
       this.listCuentaAlmac = result;
     });
   }
 
-  onChange() {     
+  onChange() {
     debugger
-    let obj = this.listCuentaAlmac.filter(x => x.Id_Cuenta == this.IdCuenta)[0];  
+    let obj = this.listCuentaAlmac.filter(x => x.Id_Cuenta == this.IdCuenta)[0];
     this.sGlobal.nombreEmpresa = obj.NombreCuenta;
   }
 
-  listarProductoXFiltro(intTipo, strFiltro, intIdCuenta): void{
-    this.sEtq.listarProductoXFiltro(intTipo, strFiltro, intIdCuenta).then(result=>{
+  listarProductoXFiltro(intTipo, strFiltro, intIdCuenta): void {
+    this.sEtq.listarProductoXFiltro(intTipo, strFiltro, intIdCuenta).then(result => {
       debugger;
       this.listFilter = result;
       debugger;
       this.rowCount = this.listFilter.length;
-      if(this.listFilter.length == 0){
+      if (this.listFilter.length == 0) {
         alert('No se encontraron resultados');
       }
       setTimeout(() => {
-        //this.txtFiltroRef.setFocus();
         this.selectAll(this.txtFiltro);
       }, (500));
     });
-  }  
+  }
 
   selectAll(el: ElementRef) {
     let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');

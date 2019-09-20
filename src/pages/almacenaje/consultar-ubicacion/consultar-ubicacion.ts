@@ -47,14 +47,12 @@ export class ConsultarUbicacionPage {
       } else {
         this.presentToast("Ingrese código de ubicación");
         setTimeout(() => {
-          //this.txtBuscarRef.setFocus();
           this.selectAll(this.txtBuscar);
         }, (500));
       }
     } else {
       this.presentToast("Ingrese código de ubicación");
       setTimeout(() => {
-        //this.txtBuscarRef.setFocus();
         this.selectAll(this.txtBuscar);
       }, (500));
     }
@@ -69,14 +67,12 @@ export class ConsultarUbicacionPage {
         this.presentAlert("No se encontraron registros").then((resultAlert) => {
           if (resultAlert) {
             setTimeout(() => {
-              //this.txtBuscarRef.setFocus();
               this.selectAll(this.txtBuscar);
             }, (500));
           }
         })
       } else {
         setTimeout(() => {
-          //this.txtBuscarRef.setFocus();
           this.selectAll(this.txtBuscar);
         }, (500));
       }
@@ -246,7 +242,6 @@ export class ConsultarUbicacionPage {
       })
     }
     setTimeout(() => {
-      //this.txtBuscarRef.setFocus();
       this.selectAll(this.txtBuscar);
     }, (500));
     console.log('ionViewDidLoad ConsultarUbicacionPage');

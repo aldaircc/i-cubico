@@ -20,27 +20,24 @@ export class UbicacionOrigenPage {
 
   @ViewChild('txtCodUbicacion') txtCodUbicacionRef;
   @ViewChild('txtCodUbicacion', { read: ElementRef }) private txtCodUbicacion: ElementRef;
-  codeBar:string;
+  codeBar: string;
   vDatosRecibidos: any = [];
   vUbicacionOrigenPage: any;
-
   listUbicacionDestino: any;
   listUbicacionOrigen: any;
-  //listAuxUbicacionDestino: any = [];
-
   listAuxUbicacionDestino: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider, public sAlmacenaje: AlmacenajeServiceProvider) {
-      this.vDatosRecibidos = navParams.get('data');
-      this.getRutaReabastecimientoXTx(this.vDatosRecibidos.Id_Tx, this.vDatosRecibidos.Id_Producto, this.sGlobal.Id_Almacen);
-  } 
+    this.vDatosRecibidos = navParams.get('data');
+    this.getRutaReabastecimientoXTx(this.vDatosRecibidos.Id_Tx, this.vDatosRecibidos.Id_Producto, this.sGlobal.Id_Almacen);
+  }
 
-  getRutaReabastecimientoXTx(Id_Tx, Id_Producto, Id_Almacen){
+  getRutaReabastecimientoXTx(Id_Tx, Id_Producto, Id_Almacen) {
     debugger;
     this.sAlmacenaje.getRutaReabastecimientoXTx(Id_Tx, Id_Producto, Id_Almacen).then((result) => {
       debugger;
-      this.listUbicacionDestino = result;      
+      this.listUbicacionDestino = result;
       if (this.listUbicacionDestino.length > 0) {
         this.listAuxUbicacionDestino = result[0];
         this.getListarUbicacionUASugeridaXReabastecer(this.sGlobal.Id_Almacen, this.vDatosRecibidos.Id_Producto, this.listAuxUbicacionDestino.ubiDestino, this.vDatosRecibidos.Movimiento);
@@ -53,13 +50,11 @@ export class UbicacionOrigenPage {
     });
   }
 
-
-  getListarUbicacionUASugeridaXReabastecer(intIdAlmacen, intIdProducto, intIdUbiDestino, strMovimiento){
+  getListarUbicacionUASugeridaXReabastecer(intIdAlmacen, intIdProducto, intIdUbiDestino, strMovimiento) {
     debugger;
     this.sAlmacenaje.getListarUbicacionUASugeridaXReabastecer(intIdAlmacen, intIdProducto, intIdUbiDestino, strMovimiento).then((result) => {
       debugger;
       this.listUbicacionOrigen = result;
-
       if (this.listUbicacionOrigen.length > 0) {
         console.log('Datos reabastecimiento', this.listUbicacionOrigen);
       } else {
@@ -70,10 +65,8 @@ export class UbicacionOrigenPage {
     });
   }
 
-
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
-
       const confirm = this.alertCtrl.create({
         title: 'Mensaje',
         message: message,
@@ -89,31 +82,28 @@ export class UbicacionOrigenPage {
     })
   }
 
-  validarCodeBar(){
-    if(this.codeBar){
-      if(this.codeBar.trim()!=""){
+  validarCodeBar() {
+    if (this.codeBar) {
+      if (this.codeBar.trim() != "") {
         debugger;
-        if(this.codeBar.trim() == this.listUbicacionOrigen[0].CodigoBarra.trim()){
+        if (this.codeBar.trim() == this.listUbicacionOrigen[0].CodigoBarra.trim()) {
           this.goReabastecimientoPickingPage();
-        }else{
+        } else {
           this.presentAlert("¿Ubicación de origen ingresada no existe?").then((result) => {
             setTimeout(() => {
-              //this.txtCodUbicacionRef.setFocus();
               this.selectAll(this.txtCodUbicacion);
             }, (500));
           })
         }
-      }else{
+      } else {
         this.presentToast("Ingrese código de ubicación");
         setTimeout(() => {
-          //this.txtCodUbicacionRef.setFocus();
           this.selectAll(this.txtCodUbicacion);
         }, (500));
       }
-    }else{
+    } else {
       this.presentToast("Ingrese código de ubicación");
       setTimeout(() => {
-        //this.txtCodUbicacionRef.setFocus();
         this.selectAll(this.txtCodUbicacion);
       }, (500));
     }
@@ -129,7 +119,7 @@ export class UbicacionOrigenPage {
       message: message,
       duration: 2000,
       position: 'bottom'
-    });  
+    });
     toast.present();
   }
 
@@ -162,7 +152,6 @@ export class UbicacionOrigenPage {
   goReabastecimientoPickingPage() {
     debugger;
     this.vUbicacionOrigenPage = {
-      
       'Id_Tx': this.vDatosRecibidos.Id_Tx,
       'Codigo': this.vDatosRecibidos.Codigo,
       'Id_Producto': this.vDatosRecibidos.Id_Producto,
@@ -180,16 +169,13 @@ export class UbicacionOrigenPage {
       'FechaVencimiento': this.listUbicacionOrigen[0].FechaVencimiento,
       'SectorD': this.vDatosRecibidos.SectorD,
     };
-    // PREGUNTAR SI VA PARA REABASTECIMIENTOPICKING O REABASTECIMIENTOALMACENAJE
-    //TAMBIEN UTILIZAR CALLBACK PARA ENVIAR LOS DATOS A UBICACIONORIGENPAGE
-    this.navCtrl.push(ReabastecimientoPickingPage, { 
-      data: this.vUbicacionOrigenPage      
+    this.navCtrl.push(ReabastecimientoPickingPage, {
+      data: this.vUbicacionOrigenPage
     });
   }
 
   ionViewDidLoad() {
     setTimeout(() => {
-      //this.txtCodUbicacionRef.setFocus();
       this.selectAll(this.txtCodUbicacion);
     }, (500));
     console.log('ionViewDidLoad UbicacionOrigenPage');

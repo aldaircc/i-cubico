@@ -94,7 +94,6 @@ export class TransferPage_05Page {
 
   goToTransferPage06(): void{
     if(this.listAxUATrans.length > 0){
-      // let parameter = {
         this.vEnviarParameters = {
         'Id_Tx': this.vParameter.Id_Tx,
         'Id_Producto': this.vParameter.Id_Producto,
@@ -105,8 +104,7 @@ export class TransferPage_05Page {
         'Producto': this.vParameter.Producto,
         'CantidadPallet': this.listAxUATrans.reduce(function(prev, cur){ return prev + cur.Cantidad }, 0)
       };
-      this.navCtrl.push(TransferPage_06Page, { data : this.vEnviarParameters, transferpage06: this.transferpage06Callback });
-      // this.navCtrl.push(TransferPage_06Page, { 'vParameter' : parameter, transferpage06: this.transferpage06Callback });
+      this.navCtrl.push(TransferPage_06Page, { data : this.vEnviarParameters, transferpage06: this.transferpage06Callback });      
     }else{
       alert('No existen UAs para reubicar.');
       return;

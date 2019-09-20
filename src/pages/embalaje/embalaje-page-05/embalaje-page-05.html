@@ -21,14 +21,11 @@
             </ion-segment-button>           
           </ion-segment>
     </ion-toolbar>
-
 </ion-header>
 
 
 <ion-content padding>
-
-    <div [ngSwitch]="detalle">
-     
+    <div [ngSwitch]="detalle">     
       <ion-list *ngSwitchCase="'bultos'">
         <ion-row class="bgWhite">
           <ion-card *ngFor="let objDetBultosEmbalaje of listDetBultosEmbalaje">        
@@ -79,8 +76,6 @@
           </ion-row>     
         </ion-list>
     </div>
-
-
 </ion-content>
 
 <ion-footer>

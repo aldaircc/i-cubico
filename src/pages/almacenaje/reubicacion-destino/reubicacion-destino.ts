@@ -2,7 +2,6 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, Navbar, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { AlmacenajeServiceProvider } from '../../../providers/almacenaje-service/almacenaje-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
-import { ReubicacionPage } from '../../almacenaje/reubicacion/reubicacion'
 
 /**
  * Generated class for the ReubicacionDestinoPage page.
@@ -41,7 +40,7 @@ export class ReubicacionDestinoPage {
     debugger;
     if (this.codeBarDestino) {
       if (this.codeBarDestino.trim() != "") {
-        if(this.codeBarDestino.length==14){
+        if (this.codeBarDestino.length == 14) {
           if (this.codeBarDestino != this.vDatosRecibidos.Codigo_Origen) {
             this.sAlmacenaje.getListarUbicacionXCodigoBarra(this.codeBarDestino, this.sGlobal.Id_Almacen).then((result) => {
               debugger;
@@ -60,7 +59,6 @@ export class ReubicacionDestinoPage {
                 this.Nivel = this.resultUbicacion[0].Nivel;
                 this.Posicion = this.resultUbicacion[0].Posicion;
                 setTimeout(() => {
-                  //this.txtCodDestinoRef.setFocus();
                   this.selectAll(this.txtCodDestino);
                 }, (500));
               } else {
@@ -69,7 +67,6 @@ export class ReubicacionDestinoPage {
                   if (resultAlert) {
                     //select y focus en ubicaicon origen
                     setTimeout(() => {
-                      //this.txtCodDestinoRef.setFocus();
                       this.selectAll(this.txtCodDestino);
                     }, (500));
                   }
@@ -83,15 +80,14 @@ export class ReubicacionDestinoPage {
             this.presentAlert("El código de ubicación destino tiene que ser diferente al código de ubicación origen.").then((resultAlert) => {
               if (resultAlert) {
                 setTimeout(() => {
-                  //this.txtCodDestinoRef.setFocus();
                   this.selectAll(this.txtCodDestino);
                 }, (500));
               }
             })
           }
-        }else{
+        } else {
           this.presentToast("El código de ubicación debe tener 14 dígitos.");
-        }        
+        }
       }
       else {
         this.presentToast("Ingrese código de ubicación");
@@ -100,7 +96,6 @@ export class ReubicacionDestinoPage {
       this.presentToast("Ingrese código de ubicación");
     }
     setTimeout(() => {
-      //this.txtCodDestinoRef.setFocus();
       this.selectAll(this.txtCodDestino);
     }, (500));
   }
@@ -127,10 +122,10 @@ export class ReubicacionDestinoPage {
         this.presentToast('Ingrese código de ubicación');
         this.selectAll(this.txtCodDestino);
       }
-    }else{
+    } else {
       this.presentToast('Ingrese código de ubicación');
-        this.selectAll(this.txtCodDestino);
-    }    
+      this.selectAll(this.txtCodDestino);
+    }
   }
 
   registrarReubicacionDestino(IdCentro, IdProducto, IdAlmacen, Cantidad, IdUbicacionDestino, strUsuario, strUA): void {
@@ -142,7 +137,6 @@ export class ReubicacionDestinoPage {
         console.log(res.message);
         this.presentAlert("UA´s o Pallets reubicadas correctamente.").then((resultAlert) => {
           if (resultAlert) {
-            //this.goBackReubicacionMasiva()
             this.navCtrl.pop();
           }
         })
@@ -168,7 +162,6 @@ export class ReubicacionDestinoPage {
     this.resultUbicacion = [];
     this.rowCountUAS = 0;
     setTimeout(() => {
-      //this.txtCodDestinoRef.setFocus();
       this.selectAll(this.txtCodDestino);
     }, (500));
   }
@@ -225,27 +218,20 @@ export class ReubicacionDestinoPage {
     toast.present();
   }
 
-  // goBackReubicacionMasiva() {
-  //   this.navCtrl.push(ReubicacionPage);
-  // }
-
   ionViewDidLoad() {
     this.navBar.backButtonClick = (e: UIEvent) => {
       if (this.vDatosRecibidos.Total_Pallet > 0) {
         this.presentAlertConfirm("Quedan " + this.vDatosRecibidos.Total_Pallet + " Pallet/Ua por reubicar. ¿Está seguro de salir?").then((result) => {
           if (result) {
-            // this.navCtrl.push(ReubicacionPage);
             this.navCtrl.pop();
           }
         })
       } else {
-        // this.navCtrl.push(ReubicacionPage);
         this.navCtrl.pop();
       }
     }
 
     setTimeout(() => {
-      //this.txtCodDestinoRef.setFocus();
       this.selectAll(this.txtCodDestino);
     }, (500));
     console.log('ionViewDidLoad ReubicacionDestinoPage');

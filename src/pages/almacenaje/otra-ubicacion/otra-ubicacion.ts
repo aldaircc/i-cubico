@@ -2,8 +2,6 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { AlmacenajeServiceProvider } from '../../../providers/almacenaje-service/almacenaje-service';
-import { AlmacenajePalletUaPage } from '../almacenaje-pallet-ua/almacenaje-pallet-ua'
-
 
 /**
  * Generated class for the OtraUbicacionPage page.
@@ -86,7 +84,6 @@ export class OtraUbicacionPage {
       this.rowCount = this.listAuxUbicaciones.length;
       setTimeout(() => {
         this.selectAll(this.txtCodUbicacion);
-        //this.txtCodUbicacionRef.setFocus();
       }, (500));
     }
   }
@@ -103,7 +100,6 @@ export class OtraUbicacionPage {
             this.presentToast("No se encontraron registros");
           }
           setTimeout(() => {
-            //this.txtCodUbicacionRef.setFocus();
             this.selectAll(this.txtCodUbicacion);
           }, (500));
         } else {
@@ -115,14 +111,12 @@ export class OtraUbicacionPage {
       } else {
         this.presentToast("Ingrese código de ubicación");
         setTimeout(() => {
-          //this.txtCodUbicacionRef.setFocus();
           this.selectAll(this.txtCodUbicacion);
         }, (500));
       }
     } else {
       this.presentToast("Ingrese código de ubicación");
       setTimeout(() => {
-        //this.txtCodUbicacionRef.setFocus();
         this.selectAll(this.txtCodUbicacion);
       }, (500));
     }
@@ -142,10 +136,6 @@ export class OtraUbicacionPage {
       }
     });
   }
-
-  // SeleccionarUbicacion(data){
-  //   this.goAlmacenajePalletPage(data)
-  // }
 
   selectAll(el: ElementRef) {
     let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
@@ -169,26 +159,7 @@ export class OtraUbicacionPage {
         data.lst_UA = this.vDatosUbicacion.lst_UA,
         this.navParams.get('ubicacion')(data);
     });
-  }
-
-  // goAlmacenajePalletPage(data){
-  //   debugger;
-  //   this.vOtraUbiacionPage = {
-  //     'Sector' : data.Sector,
-  //     'Fila' : data.Fila,
-  //     'Columna' : data.Columna,
-  //     'Nivel' : data.Nivel,
-  //     'Posicion' : data.Posicion,
-  //     'CodigoBarraUbi' : data.CodigoBarra,
-  //     'Id_Ubicacion' : data.Id_Ubicacion,
-  //     'Id_Ubicacion_Transito' : this.vDatosUbicacion.Id_Ubicacion_Transito,
-  //     'CantidadPallets' : this.vDatosUbicacion.CantidadPallets,
-  //     'lst_UA' : this.vDatosUbicacion.lst_UA
-  //   };
-  //   this.navCtrl.push(AlmacenajePalletUaPage, {
-  //     data: this.vOtraUbiacionPage
-  //   });
-  // }
+  }  
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OtraUbicacionPage');

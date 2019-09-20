@@ -12,13 +12,10 @@
 
 <ion-content no-padding>
   <ion-grid>
-    <!-- <ion-row>
-      <ion-label class="fieldForm">Ingresar Ubicación</ion-label>
-    </ion-row> -->
     <ion-row>
       <ion-item>
         <ion-input #inputUbi type="text" maxlength="14" [(ngModel)]="strUbicacion" placeholder="Ingresar Ubicación"
-        onkeypress="return ((event.charCode < 48 || event.charCode > 57)) ? false :true" (keyup.enter)="verificarUbicacion()"></ion-input>
+          onkeypress="return ((event.charCode < 48 || event.charCode > 57)) ? false :true" (keyup.enter)="verificarUbicacion()"></ion-input>
       </ion-item>
     </ion-row>
   </ion-grid>
@@ -40,87 +37,65 @@
         <ion-label>{{ pasillo }}</ion-label>
       </ion-col>
     </ion-row>
-
-    <!-- <ion-row align-items-center class="textColorNavy textBold">
-      <ion-col col-3 col-sm text-center>Fila</ion-col>
-      <ion-col col-3 col-sm text-center>Columna</ion-col>
-      <ion-col col-3 col-sm text-center>Nivel</ion-col>
-      <ion-col col-3 col-sm text-center>Posición</ion-col>
+  </ion-grid>
+  <ion-grid>
+    <ion-row no-padding no-margin>
+      <ion-col col-3 no-padding>
+        <ion-label class="box-titel">
+          FILA
+        </ion-label>
+      </ion-col>
+      <ion-col col-3 no-padding>
+        <ion-label class="box-titel">
+          COLUMNA
+        </ion-label>
+      </ion-col>
+      <ion-col col-3 no-padding>
+        <ion-label class="box-titel">
+          NIVEL
+        </ion-label>
+      </ion-col>
+      <ion-col col-3 no-padding>
+        <ion-label class="box-titel">
+          POSICIÓN
+        </ion-label>
+      </ion-col>
     </ion-row>
-    <ion-row center text-center>
-      <ion-col>
-        <div class="boxUbicacion textBold font-x-large text-color-white"> {{ fila }} </div>
-      </ion-col>
-      <ion-col>
-        <div class="boxUbicacion textBold font-x-large text-color-white"> {{ columna }} </div>
-      </ion-col>
-      <ion-col>
-        <div class="boxUbicacion textBold font-x-large text-color-white"> {{ nivel }} </div>
-      </ion-col>
-      <ion-col>
-        <div class="boxUbicacion textBold font-x-large text-color-white"> {{ posicion }} </div>
-      </ion-col>
-    </ion-row> -->
-  </ion-grid>
-  <ion-grid>
-      <ion-row no-padding no-margin>
-          <ion-col col-3 no-padding>
-              <ion-label class="box-titel">
-                  FILA
-              </ion-label>
-          </ion-col>
-          <ion-col col-3 no-padding>
-              <ion-label class="box-titel">
-                  COLUMNA
-              </ion-label>
-          </ion-col>
-          <ion-col col-3 no-padding>
-              <ion-label class="box-titel">
-                  NIVEL
-              </ion-label>
-          </ion-col>
-          <ion-col col-3 no-padding>
-              <ion-label class="box-titel">
-                  POSICIÓN
-              </ion-label>
-          </ion-col>
-      </ion-row>
   </ion-grid>
 
   <ion-grid>
-      <ion-row no-padding no-margin>
-          <ion-col col-3 no-padding>
-              <ion-row class="box-row">
-                  <ion-label class="box-label">
-                      {{ fila }}
-                  </ion-label>
-              </ion-row>
-          </ion-col>
-          <ion-col col-3 no-padding>
-              <ion-row class="box-row">
-                  <ion-label class="box-label">
-                      {{ columna }}
-                  </ion-label>
-              </ion-row>
-          </ion-col>
-          <ion-col col-3 no-padding>
-              <ion-row class="box-row">
-                  <ion-label class="box-label">
-                      {{ nivel }}
-                  </ion-label>
-              </ion-row>
-          </ion-col>
-          <ion-col col-3 no-padding>
-              <ion-row class="box-row">
-                  <ion-label class="box-label">
-                      {{ posicion }}
-                  </ion-label>
-              </ion-row>
-          </ion-col>
-      </ion-row>
+    <ion-row no-padding no-margin>
+      <ion-col col-3 no-padding>
+        <ion-row class="box-row">
+          <ion-label class="box-label">
+            {{ fila }}
+          </ion-label>
+        </ion-row>
+      </ion-col>
+      <ion-col col-3 no-padding>
+        <ion-row class="box-row">
+          <ion-label class="box-label">
+            {{ columna }}
+          </ion-label>
+        </ion-row>
+      </ion-col>
+      <ion-col col-3 no-padding>
+        <ion-row class="box-row">
+          <ion-label class="box-label">
+            {{ nivel }}
+          </ion-label>
+        </ion-row>
+      </ion-col>
+      <ion-col col-3 no-padding>
+        <ion-row class="box-row">
+          <ion-label class="box-label">
+            {{ posicion }}
+          </ion-label>
+        </ion-row>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>
-
 
 <ion-footer>
   <ion-grid class="bgFooter">
@@ -139,23 +114,3 @@
     </ion-row>
   </ion-grid>
 </ion-footer>
-
-<!-- <ion-footer>
-  <ion-toolbar>
-    <ion-grid>
-      <ion-row>
-        <ion-col col-5 col-sm>
-          <div class="textBold">Total UA's a ubicar:</div>
-        </ion-col>
-        <ion-col col-5 col-sm>
-          <div class="textBold"> {{ rowCount }} </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <ion-buttons right>
-      <button ion-button icon-only (click)="registrarUbic()">
-        <ion-icon name="checkmark"></ion-icon>
-      </button>  
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer> -->

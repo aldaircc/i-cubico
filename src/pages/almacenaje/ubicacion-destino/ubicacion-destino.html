@@ -121,12 +121,10 @@
 
   <ion-row>
     <ion-item>
-      <ion-input #txtCodUbicacion 
-        type="text" value="" [(ngModel)]="codeBarUbicacion" (keyup.enter)="validarCodeBar()" (ngModelChange)="ontxtUbicacionChange()"></ion-input>
+      <ion-input #txtCodUbicacion type="text" value="" [(ngModel)]="codeBarUbicacion" (keyup.enter)="validarCodeBar()"
+        (ngModelChange)="ontxtUbicacionChange()"></ion-input>
     </ion-item>
   </ion-row>
-
-  <!-- (keydown)="keydown($event)" (keyup)="keyup($event)" (ngModelChange)="ontxtCodMuelleChange()" maxlength="6" -->
 
   <ion-row no-padding style="margin-top: 20px; margin-bottom: 2px; margin-left: 10px">
     <ion-col col-12 no-padding no-margin>
@@ -138,8 +136,7 @@
 
   <ion-row>
     <ion-item>
-      <ion-input #txtCodPalletUa
-        type="text" value="" [(ngModel)]="codeBarPalletUA" (keyup.enter)="validarCodeBarPallet()"></ion-input>
+      <ion-input #txtCodPalletUa type="text" value="" [(ngModel)]="codeBarPalletUA" (keyup.enter)="validarCodeBarPallet()"></ion-input>
     </ion-item>
   </ion-row>
 </ion-content>

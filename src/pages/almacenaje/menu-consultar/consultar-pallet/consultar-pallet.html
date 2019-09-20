@@ -33,8 +33,8 @@
       </ion-col>
       <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-item class="item-input-text1">
-          <ion-input #txtPallet [(ngModel)]="codeBarPallet" maxlength="12" (keyup.enter)="validarCodeBar()" type="text" 
-          value="" class="input-text1"></ion-input>
+          <ion-input #txtPallet [(ngModel)]="codeBarPallet" maxlength="12" (keyup.enter)="validarCodeBar()" type="text"
+            value="" class="input-text1"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -113,12 +113,7 @@
   </ion-grid>
 </ion-header>
 
-
-
 <ion-content>
-  
-
-
   <ion-row class="bgWhite">
     <ion-card *ngFor="let objPallet of ResultPallet">
       <ion-card-content style="padding: 8px 2px; font-size: 12px">

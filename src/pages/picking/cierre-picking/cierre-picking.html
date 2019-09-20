@@ -6,7 +6,6 @@
 -->
 <ion-header>
     <ion-toolbar no-padding no-margin color="primary">
-
         <ion-grid style="padding: 0px;">
             <ion-row no-padding no-margin>
                 <ion-col no-margin no-padding col-10>
@@ -26,10 +25,7 @@
     </ion-toolbar>
 </ion-header>
 
-
-
 <ion-content>
-
     <ion-grid class="bgHeader">
         <ion-row no-padding no-margin>
             <ion-col col-12 class="bgHeader-col">
@@ -73,14 +69,12 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-
     <ion-row>
         <ion-item>
             <ion-input #txtCodMuelle (keydown)="keydown($event)" (keyup)="keyup($event)" (ngModelChange)="ontxtCodMuelleChange()"
                 type="text" maxlength="6" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()"></ion-input>
         </ion-item>
     </ion-row>
-
     <ion-grid style="padding: 0px;">
         <ion-row no-padding style="margin-top: 15px; margin-bottom: 15px; margin-left: 10px; height: 50px; margin-right: 10px; background: #F2F5A9 ">
             <ion-col col-12 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">

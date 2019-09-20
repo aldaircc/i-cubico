@@ -10,113 +10,111 @@ import { GlobalServiceProvider } from '../global-service/global-service';
 */
 @Injectable()
 
-export class EtiquetadoServiceProvider{
-//export class EtqCajaServiceProvider {
-  
+export class EtiquetadoServiceProvider {
   headers = new Headers();
   constructor(public http: Http, public sGlobal: GlobalServiceProvider) {
     this.headers.append('Accept', 'application/json');
     this.headers.append('Content-Type', 'application/json');
   }
 
-  listarUMxProducto(intIdProducto){
-    let parameter = { 'intIdProducto' : intIdProducto };
-    return new Promise(result=>{
-      this.http.get(this.sGlobal.UMService + 'ListarUMXProducto', { params : parameter })
-      .map(res=>res.json())
-      .subscribe(data=>{
-        result(data);
-      },err => {
-        console.log('Error listarUMxProducto', err);
-      });
+  listarUMxProducto(intIdProducto) {
+    let parameter = { 'intIdProducto': intIdProducto };
+    return new Promise(result => {
+      this.http.get(this.sGlobal.UMService + 'ListarUMXProducto', { params: parameter })
+        .map(res => res.json())
+        .subscribe(data => {
+          result(data);
+        }, err => {
+          console.log('Error listarUMxProducto', err);
+        });
     })
   }
 
-  listarSubAlmacenesXCuenta(intIdCuenta, intIdAlmacen){
-    let parameter = { 'intIdCuenta' : intIdCuenta, 'intIdAlmacen' : intIdAlmacen };
-    return new Promise(result=>{
-      this.http.get(this.sGlobal.tablaEst + 'ListarSubAlmacenesXCuentaAlmacen', { params : parameter })
-      .map(res => res.json())
-      .subscribe(data=>{
-        result(data);
-      }, err => {
-        console.log('Error listarSubAlmacenesXCuenta', err);
-      });
+  listarSubAlmacenesXCuenta(intIdCuenta, intIdAlmacen) {
+    let parameter = { 'intIdCuenta': intIdCuenta, 'intIdAlmacen': intIdAlmacen };
+    return new Promise(result => {
+      this.http.get(this.sGlobal.tablaEst + 'ListarSubAlmacenesXCuentaAlmacen', { params: parameter })
+        .map(res => res.json())
+        .subscribe(data => {
+          result(data);
+        }, err => {
+          console.log('Error listarSubAlmacenesXCuenta', err);
+        });
     })
   }
 
-  registrarUAMasivo(imp, idCentro){
+  registrarUAMasivo(imp, idCentro) {
     var parameter = {
-      'imp' : imp,
+      'imp': imp,
       'idCentro': idCentro
     };
 
-    return new Promise((result, reject)=>{
-      this.http.post(this.sGlobal.recepcion + 'registrarUAMasivo/imp/idCentro', JSON.stringify(parameter), { headers : this.headers })
-      .map(res => res.json())
-      .subscribe(data=>{
-        result(data);
-      },err =>{
-        console.log('Error registrarUAMasivo', err);
-      })
+    return new Promise((result, reject) => {
+      this.http.post(this.sGlobal.recepcion + 'registrarUAMasivo/imp/idCentro', JSON.stringify(parameter), { headers: this.headers })
+        .map(res => res.json())
+        .subscribe(data => {
+          result(data);
+        }, err => {
+          console.log('Error registrarUAMasivo', err);
+        })
     });
   }
 
-  imprimirListaEtiquetas(lista, formato, nombreImpresora, esScript){
+  imprimirListaEtiquetas(lista, formato, nombreImpresora, esScript) {
     var parameter = {
-      'lista' : lista,
-      'formato' : formato,
-      'nombreImpresora' : nombreImpresora,
-      'esScript' : esScript 
+      'lista': lista,
+      'formato': formato,
+      'nombreImpresora': nombreImpresora,
+      'esScript': esScript
     };
     console.log(JSON.stringify(parameter));
-    return new Promise((result, reject)=>{
-      this.http.post(this.sGlobal.impresoraService+'imprimirListaEtiquetas/lista/formato/nombreImpresora/esScript', 
-      JSON.stringify(parameter), {headers: this.headers})
-      .map(res=>res.json())
-      .subscribe(data=>{
-        result(data);
-      },err =>{
-        console.log('Error imprimirListaEtiquetas', err);
-      })
+    return new Promise((result, reject) => {
+      this.http.post(this.sGlobal.impresoraService + 'imprimirListaEtiquetas/lista/formato/nombreImpresora/esScript',
+        JSON.stringify(parameter), { headers: this.headers })
+        .map(res => res.json())
+        .subscribe(data => {
+          result(data);
+        }, err => {
+          console.log('Error imprimirListaEtiquetas', err);
+        })
     });
   }
 
   //Loque#369Dev
-  listarCuentasXAlmacenUsuario(strUsuario, intIdAlmacen, intIdCuenta){
+  listarCuentasXAlmacenUsuario(strUsuario, intIdAlmacen, intIdCuenta) {
     let parameter = {
-      'strUsuario' : strUsuario,
-      'intIdAlmacen' : intIdAlmacen,
-      'intIdCuenta' : intIdCuenta
+      'strUsuario': strUsuario,
+      'intIdAlmacen': intIdAlmacen,
+      'intIdCuenta': intIdCuenta
     };
 
-    return new Promise((result)=>{
-      this.http.get(this.sGlobal.tablaEst + 'ListarCuentasXAlmacenUsuario', {params:parameter})
-      .map(res=>res.json())
-      .subscribe(data=>{
-        result(data);
-      },err=>{
-        console.log('E-listarCuentasXAlmacenUsuario', err);
-      })
+    return new Promise((result) => {
+      this.http.get(this.sGlobal.tablaEst + 'ListarCuentasXAlmacenUsuario', { params: parameter })
+        .map(res => res.json())
+        .subscribe(data => {
+          result(data);
+        }, err => {
+          console.log('E-listarCuentasXAlmacenUsuario', err);
+        })
     });
   }
 
-  listarProductoXFiltro(intTipo, strFiltro, intIdCuenta){
+  listarProductoXFiltro(intTipo, strFiltro, intIdCuenta) {
     let parameter = {
-      'intTipo' : intTipo,
-      'strFiltro' : strFiltro,
-      'intIdCuenta' : intIdCuenta
+      'intTipo': intTipo,
+      'strFiltro': strFiltro,
+      'intIdCuenta': intIdCuenta
     };
-    return new Promise((result)=>{
-      this.http.get(this.sGlobal.recepcion + 'ListarProductoXFiltro', {params:parameter})
-      .map(res=>res.json())
-      .subscribe(data=>{
-        result(data);
-      },err=>{
-        console.log('E-listarProductoXFiltro', err);
-      })
+    return new Promise((result) => {
+      this.http.get(this.sGlobal.recepcion + 'ListarProductoXFiltro', { params: parameter })
+        .map(res => res.json())
+        .subscribe(data => {
+          result(data);
+        }, err => {
+          console.log('E-listarProductoXFiltro', err);
+        })
     });
   }
 
-  
+
 }

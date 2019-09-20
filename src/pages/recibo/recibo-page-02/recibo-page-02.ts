@@ -23,75 +23,71 @@ import { GlobalServiceProvider } from '../../../providers/global-service/global-
 })
 
 export class ReciboPage_02Page {
- 
+
   @ViewChild(Navbar) navBar: Navbar;
   tablestyle = 'bootstrap';
-
-  vReciboPage01:any = [];
-  vReciboPage02:any = [];
+  vReciboPage01: any = [];
+  vReciboPage02: any = [];
   listDetailTx: any = [];
-  listAuxDetailTx:any = [];
-  rowCount:number = 0;
+  listAuxDetailTx: any = [];
+  rowCount: number = 0;
   userDetail: any;
   bolAutomatic: boolean = false;
-
-
   listConfirm: any = [];
   listProcess: any = [];
   listFinalizado: any = [];
-
   countConfirm: number = 0;
   countProcess: number = 0;
   countFinalizado: number = 0;
   cantPendiente: number = 0;
 
-  constructor(public app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams,
     private alertCtrl: AlertController, public sRecibo: ReciboServiceProvider,
     public modalCtrl: ModalController, public popoverCtrl: PopoverController, public sGlobal: GlobalServiceProvider) {
-      this.vReciboPage01 = navParams.get('data');
-      const data = JSON.parse(localStorage.getItem('vUserData'));
-      this.userDetail = data;
+    this.vReciboPage01 = navParams.get('data');
+    const data = JSON.parse(localStorage.getItem('vUserData'));
+    this.userDetail = data;
   }
 
-  presentPopover(myEvent){
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 12});
+  presentPopover(myEvent) {
+    let popover = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 12 });
     popover.present({
       ev: myEvent
     });
 
-    popover.onDidDismiss(popoverData =>{
-      if(popoverData == 2){
-        if(this.listAuxDetailTx.length != this.listConfirm.length){
+    popover.onDidDismiss(popoverData => {
+      if (popoverData == 2) {
+        if (this.listAuxDetailTx.length != this.listConfirm.length) {
           this.showModalIncidencia(this.vReciboPage01);
-        }else{
-          this.presentAlert("No puede registrar incidencia de una transacción que no fue trabajada"); 
-        }        
-      }else if(popoverData == 3){
+        } else {
+          this.presentAlert("No puede registrar incidencia de una transacción que no fue trabajada");
+        }
+      } else if (popoverData == 3) {
         this.showModalImpresora();
       }
     });
   }
 
-  showModalImpresora(){
+  showModalImpresora() {
     let modalIncidencia = this.modalCtrl.create(ImpresoraPage);
     modalIncidencia.present();
   }
 
-  showModalIncidencia(data){
-    let obj = { 
-        'Id_Tx' : data.Id_Tx,
-        'FlagPausa' : data.FlagPausa,
-        'Cliente' : data.Cliente,
-        'Id_Cliente' : data.Id_Cliente,
-        'Proveedor' : data.Proveedor,
-        'Id_TipoMovimiento' : data.Id_TipoMovimiento,
-        'Origen' : 'RP02',
-        'id_Modulo': 1
-      };
+  showModalIncidencia(data) {
+    let obj = {
+      'Id_Tx': data.Id_Tx,
+      'FlagPausa': data.FlagPausa,
+      'Cliente': data.Cliente,
+      'Id_Cliente': data.Id_Cliente,
+      'Proveedor': data.Proveedor,
+      'Id_TipoMovimiento': data.Id_TipoMovimiento,
+      'Origen': 'RP02',
+      'id_Modulo': 1
+    };
 
-    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia' : obj});
-    modalIncidencia.onDidDismiss(data =>{
-      if(data.response == 200){
+    let modalIncidencia = this.modalCtrl.create(IncidenciaPage, { 'pIncidencia': obj });
+    modalIncidencia.onDidDismiss(data => {
+      if (data.response == 200) {
         this.navCtrl.pop();
       }
     });
@@ -106,17 +102,14 @@ export class ReciboPage_02Page {
     }
   }
 
-  getDetailXTx(strIdTx){
-    this.sRecibo.getDetalleXTx(strIdTx).then((result)=>{
+  getDetailXTx(strIdTx) {
+    this.sRecibo.getDetalleXTx(strIdTx).then((result) => {
       debugger;
-
       this.listConfirm = [];
       this.listProcess = [];
       this.listFinalizado = [];
       this.listAuxDetailTx = [];
-
       this.listDetailTx = result;
-      //this.listAuxDetailTx = this.listDetailTx;
 
       for (var i = 0; i < this.listDetailTx.length; i++) {
         var obj = {
@@ -181,16 +174,16 @@ export class ReciboPage_02Page {
       this.countProcess = this.listProcess.length;
       this.countFinalizado = this.listFinalizado.length;
 
-      if(this.listDetailTx.length == 0){
+      if (this.listDetailTx.length == 0) {
         alert('No se encontraron detalles');
       }
     });
   }
 
-  filterItems(ev: any){
+  filterItems(ev: any) {
     const val = ev.target.value.trim();
-    if(val && val.trim() != ''){
-      this.listAuxDetailTx = this.listDetailTx.filter((item)=>{
+    if (val && val.trim() != '') {
+      this.listAuxDetailTx = this.listDetailTx.filter((item) => {
         return (item.Codigo.toLowerCase().indexOf(val.toLowerCase()) > -1) || (item.Descripcion.toLowerCase().indexOf(val.toLowerCase()) > -1);
       });
       this.rowCount = this.listAuxDetailTx.length;
@@ -214,12 +207,7 @@ export class ReciboPage_02Page {
         this.countFinalizado = this.rowCount;
         alert('Orden no existe');
       }
-      
-      // if(this.rowCount <= 0){
-      //   alert('Orden no existe');
-      // }
-      
-    }else{
+    } else {
       this.rowCount = this.listDetailTx.length;
 
       this.listConfirm = this.listDetailTx.filter((item) => {
@@ -235,172 +223,134 @@ export class ReciboPage_02Page {
       this.countConfirm = this.listConfirm.length;
       this.countProcess = this.listProcess.length;
       this.countFinalizado = this.listFinalizado.length;
-
       return this.listAuxDetailTx = this.listDetailTx;
     }
   }
 
-  goToReciboPage03(data){
-  this.vReciboPage02 = {
-    "Id_Tx":this.vReciboPage01.Id_Tx,
-    "NumOrden":this.vReciboPage01.NumOrden,
-    "Codigo":data.Codigo,
-    "Descripcion":data.Descripcion, //Articulo
-    "Id_Producto":data.Id_Producto, //Id_Articulio
-    "UM":data.UM,
-    "Id_UM":data.Id_UM,
-    "Fecha_Emi":data.FechaEmision,
-    "Fecha_Venci":data.FechaVencimiento,
-    "Lote":data.Lote,
-    "CantPedida":data.CantidadPedida,
-    "CantidadOperacion":data.CantidadOperacion, //CantRecib
-    "Saldo":data.Saldo,
-    "Item":data.Item,
-    "Factor":data.Factor,
-    "FlagSeriePT":data.FlagSeriePT,
-    "Id_TipoMovimiento":this.vReciboPage01.Id_TipoMovimiento,
-    "bolAutomatic": this.bolAutomatic, //value check
-    "FlagPausa":this.vReciboPage01.FlagPausa,
-    "Cuenta":this.vReciboPage01.Cuenta,
-    "Id_Cliente":this.vReciboPage01.Id_Cliente,
-
-    //Campos utiles para impresión
-    "CantidadPedida": data.CantidadPedida,
-	  "LoteLab": data.Lote,
-	  "Articulo": data.Descripcion,
-	  "Cliente": this.vReciboPage01.Cuenta,
-	  "UM_Base": data.UMBase,
-	  "TipoAlmacenaje": data.TipoAlmacenaje,
-    "Acceso": 0,
-    "NroDoc": this.vReciboPage01.NumOrden,
-    "FecEmi": data.FechaEmision,
-    "FecVen": data.FechaVencimiento,
-    "FlagSerie": data.FlagSeriePT,
-    "FlagLote": data.FlagLotePT,
-    "CondicionAlmac": data.CondicionAlmacenamiento,
-    "Condicion": data.Condicion,
-    "Id_Condicion": data.Id_Condicion,
-    "idTipoMovimiento": this.vReciboPage01.Id_TipoMovimiento,
-	  "IdCuentaLPN": this.vReciboPage01.Id_Cliente,
-    "Id_SubAlmacen": data.Id_SubAlmacen,
-    "NombreSubAlmacen": data.NombreSubAlmacen
-  };
+  goToReciboPage03(data) {
+    this.vReciboPage02 = {
+      "Id_Tx": this.vReciboPage01.Id_Tx,
+      "NumOrden": this.vReciboPage01.NumOrden,
+      "Codigo": data.Codigo,
+      "Descripcion": data.Descripcion,
+      "Id_Producto": data.Id_Producto,
+      "UM": data.UM,
+      "Id_UM": data.Id_UM,
+      "Fecha_Emi": data.FechaEmision,
+      "Fecha_Venci": data.FechaVencimiento,
+      "Lote": data.Lote,
+      "CantPedida": data.CantidadPedida,
+      "CantidadOperacion": data.CantidadOperacion,
+      "Saldo": data.Saldo,
+      "Item": data.Item,
+      "Factor": data.Factor,
+      "FlagSeriePT": data.FlagSeriePT,
+      "Id_TipoMovimiento": this.vReciboPage01.Id_TipoMovimiento,
+      "bolAutomatic": this.bolAutomatic,
+      "FlagPausa": this.vReciboPage01.FlagPausa,
+      "Cuenta": this.vReciboPage01.Cuenta,
+      "Id_Cliente": this.vReciboPage01.Id_Cliente,
+      "CantidadPedida": data.CantidadPedida,
+      "LoteLab": data.Lote,
+      "Articulo": data.Descripcion,
+      "Cliente": this.vReciboPage01.Cuenta,
+      "UM_Base": data.UMBase,
+      "TipoAlmacenaje": data.TipoAlmacenaje,
+      "Acceso": 0,
+      "NroDoc": this.vReciboPage01.NumOrden,
+      "FecEmi": data.FechaEmision,
+      "FecVen": data.FechaVencimiento,
+      "FlagSerie": data.FlagSeriePT,
+      "FlagLote": data.FlagLotePT,
+      "CondicionAlmac": data.CondicionAlmacenamiento,
+      "Condicion": data.Condicion,
+      "Id_Condicion": data.Id_Condicion,
+      "idTipoMovimiento": this.vReciboPage01.Id_TipoMovimiento,
+      "IdCuentaLPN": this.vReciboPage01.Id_Cliente,
+      "Id_SubAlmacen": data.Id_SubAlmacen,
+      "NombreSubAlmacen": data.NombreSubAlmacen
+    };
 
     this.navCtrl.push(ReciboPage_03Page, {
       dataPage02: this.vReciboPage02
     });
   }
 
-  cerrarTxRecepcion(){
-    if(this.vReciboPage01.Id_TipoMovimiento === 0){
+  cerrarTxRecepcion() {
+    if (this.vReciboPage01.Id_TipoMovimiento === 0) {
       alert('Esta transacción no tiene tipo de movimiento');
       return;
-    }else{
-      
+    } else {
       var message = "";
-      let saldo = this.listDetailTx.reduce(function(prev, cur){
+      let saldo = this.listDetailTx.reduce(function (prev, cur) {
         return prev + cur.Saldo;
       }, 0);
 
-      // if(saldo > 0){
-      //   message = "Existen " + saldo + " productos con saldo pendiente ¿Está seguro de cerrar la transacción?";
-      // }else{
-      //   message = "¿Está seguro de cerrar la transacción?";
-      // }
-
-
       debugger;
-      if(this.listAuxDetailTx.length != this.listConfirm.length){
-        if(saldo > 0){
+      if (this.listAuxDetailTx.length != this.listConfirm.length) {
+        if (saldo > 0) {
           this.cantPendiente = this.countConfirm + this.countProcess;
           this.presentAlertConfirm("Existen " + this.cantPendiente + " producto(s) con saldo pendiente ¿Está seguro de cerrar la transacción?").then((resultAlert) => {
             if (resultAlert) {
-              this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result=>{
-                let res: any = result; 
+              this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result => {
+                let res: any = result;
                 this.getDetailXTx(this.vReciboPage01.Id_Tx);
                 this.navCtrl.push(ReciboPage);
               });
             }
-            else{
+            else {
               return;
             }
           })
-
-         // message = "Existen " + this.rowCount + " productos con saldo pendiente ¿Está seguro de cerrar la transacción?";
-        }else{
+        } else {
           this.presentAlertConfirm("¿Está seguro de cerrar la transacción?").then((resultAlert) => {
             if (resultAlert) {
-              this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result=>{
-                let res: any = result; 
+              this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result => {
+                let res: any = result;
                 this.getDetailXTx(this.vReciboPage01.Id_Tx);
                 this.navCtrl.push(ReciboPage);
               });
-            }else{
+            } else {
               return;
             }
           })
-          //message = "¿Está seguro de cerrar la transacción?";
         }
-      }else{
-        this.presentAlert("No se puede cerrar una transacción que no fue trabajada");  
+      } else {
+        this.presentAlert("No se puede cerrar una transacción que no fue trabajada");
       }
-
-      // let alerta = this.alertCtrl.create({
-      //   title: 'Advertencia',
-      //   message: message,
-      //   buttons: [
-      //     {
-      //       text: 'Cancelar',
-      //       role: 'cancel',
-      //       handler: () => {
-      //         return;
-      //       }
-      //     },
-      //     {
-      //       text: 'Aceptar',
-      //       handler: () => {
-      //         this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result=>{
-      //           let res: any = result; 
-      //           this.getDetailXTx(this.vReciboPage01.Id_Tx);
-      //         });
-      //       }
-      //     }
-      //   ]
-      // });
-      // alerta.present();
     }
   }
 
-  navigateToEtqCajaLpn(data){
+  navigateToEtqCajaLpn(data) {
     debugger;
     let objEtq = {
-    "LoteLab": data.Lote,
-    "Id_Producto": data.Id_Producto,
-    "Id_UM": data.Id_UM,
-    "CantidadPedida": data.CantidadPedida,
-    "Codigo": data.Codigo,
-    "Articulo": data.Descripcion, //Articulo
-    "UM": data.UM,
-    "Cliente": this.vReciboPage01.Cuenta,//data.Cuenta,
-    "UM_Base": data.UMBase,
-    "TipoAlmacenaje": data.TipoAlmacenaje,
-    "Item": data.Item,
-    "Acceso": 0,
-    "NroDoc": this.vReciboPage01.NumOrden,
-    "FecEmi": data.FechaEmision,
-    "FecVen": data.FechaVencimiento,
-    "FlagSerie": data.FlagSeriePT,
-    "FlagLote": data.FlagLotePT,
-    "CondicionAlmac": data.CondicionAlmacenamiento,
-    "Condicion": data.Condicion,
-    "Id_Condicion": data.Id_Condicion,
-    "Id_Cliente": this.vReciboPage01.Id_Cliente,
-    "idTipoMovimiento": this.vReciboPage01.Id_TipoMovimiento,
-    "IdCuentaLPN": this.vReciboPage01.Id_Cliente,
-    "Id_SubAlmacen": data.Id_SubAlmacen,
-    "Saldo": data.Saldo, //Add by Arturo
-    "page": true
-  }
+      "LoteLab": data.Lote,
+      "Id_Producto": data.Id_Producto,
+      "Id_UM": data.Id_UM,
+      "CantidadPedida": data.CantidadPedida,
+      "Codigo": data.Codigo,
+      "Articulo": data.Descripcion,
+      "UM": data.UM,
+      "Cliente": this.vReciboPage01.Cuenta,
+      "UM_Base": data.UMBase,
+      "TipoAlmacenaje": data.TipoAlmacenaje,
+      "Item": data.Item,
+      "Acceso": 0,
+      "NroDoc": this.vReciboPage01.NumOrden,
+      "FecEmi": data.FechaEmision,
+      "FecVen": data.FechaVencimiento,
+      "FlagSerie": data.FlagSeriePT,
+      "FlagLote": data.FlagLotePT,
+      "CondicionAlmac": data.CondicionAlmacenamiento,
+      "Condicion": data.Condicion,
+      "Id_Condicion": data.Id_Condicion,
+      "Id_Cliente": this.vReciboPage01.Id_Cliente,
+      "idTipoMovimiento": this.vReciboPage01.Id_TipoMovimiento,
+      "IdCuentaLPN": this.vReciboPage01.Id_Cliente,
+      "Id_SubAlmacen": data.Id_SubAlmacen,
+      "Saldo": data.Saldo,
+      "page": true
+    }
 
     let etqModal = this.modalCtrl.create(EtiquetadoPage_01Page, { vEtq: objEtq });
     etqModal.onDidDismiss(data => {
@@ -411,7 +361,6 @@ export class ReciboPage_02Page {
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
-
       const confirm = this.alertCtrl.create({
         title: 'Mensaje',
         message: message,
@@ -453,11 +402,10 @@ export class ReciboPage_02Page {
     })
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.getDetailXTx(this.vReciboPage01.Id_Tx);
   }
 
   ionViewDidLoad() {
-    
   }
 }

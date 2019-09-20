@@ -29,42 +29,40 @@ export class ConfigurarPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private file: File,
     public alertCtrl: AlertController) {
+    this.getJSON().subscribe(
+      (data) => {
+        {
+          debugger;
+          this.clavejson = data.passwordConfig;
+        }
+      }
+    )
   }
 
-  goBackLoginPage(){
+  goBackLoginPage() {
     this.navCtrl.push(HomePage);
   }
 
-  ingresarParametros(){
-
-    if(this.clave){
-      if(this.clave.trim()!= ""){
-        this.getJSON().subscribe(
-          (data) => {
-            {
-              debugger;
-              this.clavejson = data.passwordConfig;
-            }
-          }
-        )
-  
-        if(this.clave==this.clavejson){
+  ingresarParametros() {
+    if (this.clave) {
+      if (this.clave.trim() != "") {
+        if (this.clave == this.clavejson) {
           this.navCtrl.push(ParametrosPage)
-        }else{
+        } else {
           this.presentAlert("Contraseña incorrecta.");
           this.selectAll(this.iClave, 500);
         }
-      }else{      
+      } else {
         this.presentAlert("Debe ingresar contraseña");
         this.selectAll(this.iClave, 500);
       }
-    }else{
+    } else {
       this.presentAlert("Debe ingresar contraseña");
       this.selectAll(this.iClave, 500);
-    }        
+    }
   }
 
-  public getJSON(): Observable<any> {    
+  public getJSON(): Observable<any> {
     return this.http.get(this.file.externalRootDirectory + "/Config/connect.json")
       .map((res: any) => res.json());
   }
@@ -78,7 +76,6 @@ export class ConfigurarPage {
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
-
       const confirm = this.alertCtrl.create({
         title: 'Mensaje',
         message: message,
@@ -97,5 +94,4 @@ export class ConfigurarPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ConfigurarPage');
   }
-
 }

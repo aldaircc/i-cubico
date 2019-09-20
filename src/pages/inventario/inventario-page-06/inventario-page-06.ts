@@ -17,32 +17,29 @@ import { InventarioPage_04Page } from '../inventario-page-04/inventario-page-04'
   templateUrl: 'inventario-page-06.html',
 })
 export class InventarioPage_06Page {
-
   vParameter: any;
   listUbicacion: any;
-
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vParameter = this.navParams.get('vParameter');
   }
 
-  listarUbicacionesSugeridasXProducto(intIdProducto, strLote, intIdAlmacen): void{
-    this.sInve.listarUbicacionesSugeridasXProducto(intIdProducto, strLote, intIdAlmacen).then(result=>{
+  listarUbicacionesSugeridasXProducto(intIdProducto, strLote, intIdAlmacen): void {
+    this.sInve.listarUbicacionesSugeridasXProducto(intIdProducto, strLote, intIdAlmacen).then(result => {
       this.listUbicacion = result;
       this.listUbicacion.forEach(el => {
         el.cantidadxUbicacion = this.listUbicacion.reduce((acc, cur) => cur.Id_Ubicacion === el.Id_Ubicacion ? ++acc : acc, 0);
       });
     });
   }
-  
-  ionViewWillEnter(){
+
+  ionViewWillEnter() {
     this.listarUbicacionesSugeridasXProducto(this.vParameter.Id_Producto, this.vParameter.Lote, this.sGlobal.Id_Almacen);
   }
 
-  goToInventPage04(obj): void{
+  goToInventPage04(obj): void {
     var parameter: any;
-
-    parameter = (this.vParameter.TipoInventario == 'GENERAL') ? 
+    parameter = (this.vParameter.TipoInventario == 'GENERAL') ?
       {
         'Fila': this.vParameter.Fila,
         'Id_Estado': this.vParameter.Id_Estado,
@@ -53,18 +50,17 @@ export class InventarioPage_06Page {
         'UsuarioInventariador': this.vParameter.UsuarioInventariador,
         'TipoInventario': this.vParameter.TipoInventario
       }
-    :
+      :
       {
-        'Id_Inventario' : this.vParameter.Id_Inventario,
-        'Id_Estado' : this.vParameter.Id_Estado,
-        'UsuarioInventariador' : this.vParameter.UsuarioInventariador,
-        'UsuarioAsignado' : this.vParameter.UsuarioAsignado,
-        'Id_Producto' : this.vParameter.Id_Producto,
-        'Codigo' : this.vParameter.Codigo,
-        'Producto' : this.vParameter.Producto,
-        'Lote' : this.vParameter.Lote,
+        'Id_Inventario': this.vParameter.Id_Inventario,
+        'Id_Estado': this.vParameter.Id_Estado,
+        'UsuarioInventariador': this.vParameter.UsuarioInventariador,
+        'UsuarioAsignado': this.vParameter.UsuarioAsignado,
+        'Id_Producto': this.vParameter.Id_Producto,
+        'Codigo': this.vParameter.Codigo,
+        'Producto': this.vParameter.Producto,
+        'Lote': this.vParameter.Lote,
         'TipoInventario': this.vParameter.TipoInventario,
-        
         'CodigoBarra': obj.CodigoBarra,
         'Columna': obj.Columna,
         'Fila': obj.Fila,
@@ -76,7 +72,6 @@ export class InventarioPage_06Page {
         'Sector': obj.Sector,
         'cantidadxUbicacion': obj.cantidadxUbicacion
       };
-
     this.navCtrl.push(InventarioPage_04Page, { 'vParameter': parameter });
   }
 }

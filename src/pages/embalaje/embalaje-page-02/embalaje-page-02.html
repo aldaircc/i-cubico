@@ -6,12 +6,6 @@
 -->
 <ion-header class="sgaaTitleBackcolor" no-border>
 
-  <!-- <ion-navbar >
-      <ion-title >
-          <ion-icon name="clipboard"></ion-icon>
-        Recibo<
-      </ion-title>
-    </ion-navbar> -->
   <ion-toolbar no-padding no-margin color="primary">
     <ion-navbar>
       <ion-title>
@@ -57,120 +51,91 @@
   <ion-row class="bgWhite">
     <ion-card *ngFor="let objEmbalaje of listAuxEmbalaje">
       <ion-card-content style="padding: 8px 2px; font-size: 12px" (press)="getRegistrarIncidencia(objEmbalaje)">
-          <ion-row no-padding no-margin>
-            <!-- <ion-col col-1 col-sm [ngClass]="objEmbalaje.Id_Estado == 3 ? 'label-color bg-process' : 'label-color bg-confirm'">
-            </ion-col>
-            <ion-col col-10 col-sm>
-              <h5><b>Nro. Orden: </b> {{objEmbalaje.NumOrden}}</h5>
-              <h5><b>Cliente: </b> {{objEmbalaje.Cliente}}</h5>
-              <h5><b>Dirección: </b> {{objEmbalaje.Direccion}}</h5>
-              <h5><b>Cuenta: </b> {{objEmbalaje.Socio}}</h5>
-              <h5><b>Fecha Documento: </b> {{ objEmbalaje.FechaDocumento|momentjs: 'DD/MM/YYYY'}} </h5>
-              <h5><b>Fecha Entrega: </b> {{ objEmbalaje.FechaLlegada|momentjs: 'DD/MM/YYYY'}} </h5>
-            </ion-col>
-            <ion-col col-1 col-sm align-self-center>
-              <ion-icon name="play"></ion-icon>
-            </ion-col> -->
-            <div no-margin [ngClass]="objEmbalaje.Id_Estado == 3 ? 'bg-process' : 'bg-confirm'"
-              style="margin-right: 2px;  width: 2%;">
-            </div>
-            <div no-padding no-margin style=" width: 90%;">
-              <ion-row no-padding no-margin>
-                <ion-col col-3 no-padding no-margin>
-                  <ion-label no-padding no-margin style="font-weight:bold;">
-                    Nro. Orden:
-                  </ion-label>
-                </ion-col>
-                <ion-col col-9 no-padding no-margin>
-                  <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                    {{objEmbalaje.NumOrden}}
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row no-padding no-margin>
-                <ion-col col-3 no-padding no-margin>
-                  <ion-label no-padding no-margin style="font-weight:bold;">
-                    Cliente:
-                  </ion-label>
-                </ion-col>
-                <ion-col col-9 no-padding no-margin>
-                  <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                    {{ objEmbalaje.Cliente}}
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row no-padding no-margin>
-                <ion-col col-3 no-padding no-margin>
-                  <ion-label no-padding no-margin style="font-weight:bold;">
-                    Dirección:
-                  </ion-label>
-                </ion-col>
-                <ion-col col-9 no-padding no-margin>
-                  <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                    {{objEmbalaje.Direccion}}
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row no-padding no-margin>
-                <ion-col col-3 no-padding no-margin>
-                  <ion-label no-padding no-margin style="font-weight:bold;">
-                    Cuenta:
-                  </ion-label>
-                </ion-col>
-                <ion-col col-9 no-padding no-margin>
-                  <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                    {{objEmbalaje.Socio}}
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row no-padding no-margin>
-                <ion-col col-3 no-padding no-margin>
-                    <ion-label no-padding no-margin style="font-weight:bold;">
-                        Fecha Doc.:
-                    </ion-label>
-                </ion-col>
-                <ion-col col-3 no-padding no-margin>
-                    <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                        {{objEmbalaje.FechaDocumento|momentjs: 'DD/MM/YYYY'}}
-                    </ion-label>
-                </ion-col>
-                <ion-col col-2 no-padding no-margin>
-                    <ion-label no-padding no-margin style="font-weight:bold;">
-                        Entrega:
-                    </ion-label>
-                </ion-col>
-                <ion-col col-4 no-padding no-margin>
-                    <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
-                        {{objEmbalaje.FechaLlegada|momentjs: 'DD/MM/YYYY'}}
-                    </ion-label>
-                </ion-col>
+        <ion-row no-padding no-margin>
+          <div no-margin [ngClass]="objEmbalaje.Id_Estado == 3 ? 'bg-process' : 'bg-confirm'" style="margin-right: 2px;  width: 2%;">
+          </div>
+          <div no-padding no-margin style=" width: 90%;">
+            <ion-row no-padding no-margin>
+              <ion-col col-3 no-padding no-margin>
+                <ion-label no-padding no-margin style="font-weight:bold;">
+                  Nro. Orden:
+                </ion-label>
+              </ion-col>
+              <ion-col col-9 no-padding no-margin>
+                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                  {{objEmbalaje.NumOrden}}
+                </ion-label>
+              </ion-col>
             </ion-row>
-            </div>
-            <div no-margin style="position: relative; text-align: center; float:none; padding-top: 3%; margin-right: 2px;  width: 6%;">
-              <!-- <button no-margin no-padding ion-button icon-only clear (click)="goDetEmbalajePackingPage(objEmbalaje)"  -->
-              <button no-margin no-padding ion-button icon-only clear (click)="ValidarOrden(objEmbalaje)"
-              style="position: absolute;	top: 0;	bottom: 0; left: 0; right: 0; width: 80%; margin: auto; background:none;">
-                <ion-icon name="md-play" color="dark"></ion-icon>
-              </button>
-            </div>
-          </ion-row>
+            <ion-row no-padding no-margin>
+              <ion-col col-3 no-padding no-margin>
+                <ion-label no-padding no-margin style="font-weight:bold;">
+                  Cliente:
+                </ion-label>
+              </ion-col>
+              <ion-col col-9 no-padding no-margin>
+                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                  {{ objEmbalaje.Cliente}}
+                </ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row no-padding no-margin>
+              <ion-col col-3 no-padding no-margin>
+                <ion-label no-padding no-margin style="font-weight:bold;">
+                  Dirección:
+                </ion-label>
+              </ion-col>
+              <ion-col col-9 no-padding no-margin>
+                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                  {{objEmbalaje.Direccion}}
+                </ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row no-padding no-margin>
+              <ion-col col-3 no-padding no-margin>
+                <ion-label no-padding no-margin style="font-weight:bold;">
+                  Cuenta:
+                </ion-label>
+              </ion-col>
+              <ion-col col-9 no-padding no-margin>
+                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                  {{objEmbalaje.Socio}}
+                </ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row no-padding no-margin>
+              <ion-col col-3 no-padding no-margin>
+                <ion-label no-padding no-margin style="font-weight:bold;">
+                  Fecha Doc.:
+                </ion-label>
+              </ion-col>
+              <ion-col col-3 no-padding no-margin>
+                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                  {{objEmbalaje.FechaDocumento|momentjs: 'DD/MM/YYYY'}}
+                </ion-label>
+              </ion-col>
+              <ion-col col-2 no-padding no-margin>
+                <ion-label no-padding no-margin style="font-weight:bold;">
+                  Entrega:
+                </ion-label>
+              </ion-col>
+              <ion-col col-4 no-padding no-margin>
+                <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
+                  {{objEmbalaje.FechaLlegada|momentjs: 'DD/MM/YYYY'}}
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          </div>
+          <div no-margin style="position: relative; text-align: center; float:none; padding-top: 3%; margin-right: 2px;  width: 6%;">
+            <button no-margin no-padding ion-button icon-only clear (click)="ValidarOrden(objEmbalaje)" style="position: absolute;	top: 0;	bottom: 0; left: 0; right: 0; width: 80%; margin: auto; background:none;">
+              <ion-icon name="md-play" color="dark"></ion-icon>
+            </button>
+          </div>
+        </ion-row>
       </ion-card-content>
     </ion-card>
   </ion-row>
 </ion-content>
-
-<!-- <ion-footer class="bgLightBlue">
-    <ion-grid>
-      <ion-row>
-        <ion-col col-5 col-sm>
-            <div class="fieldForm">Total registros</div>
-        </ion-col>
-        <ion-col col-7 col-sm>
-            <div class="fieldForm"> {{ rowCount }} fila(s) </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-footer> -->
 
 <ion-footer class="bgLightBlue">
   <ion-grid>

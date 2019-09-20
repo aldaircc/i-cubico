@@ -8,7 +8,6 @@ import { EtiquetadoPage_02Page } from '../etiquetado-page-02/etiquetado-page-02'
 import { PopoverReciboComponent } from '../../../components/popover-recibo/popover-recibo';
 import { HomePage } from '../../home/home';
 import { EtiquetadoPage_03Page } from '../etiquetado-page-03/etiquetado-page-03';
-import { MainMenuPage } from '../../main-menu/main-menu';
 
 /**
  * Generated class for the EtiquetadoPage_01Page page.
@@ -66,16 +65,11 @@ export class EtiquetadoPage_01Page {
 
   fecEmi: any = new Date().toISOString();
   fecVen: any = new Date().toISOString();
-
   listUM: any = [];
   id_UAlt: number = 0;
-
   listSubAlm: any = [];
-  //id_SubAlm : number = 0;
   id_SubAlm: any;
-
   id_FormatLabel: any;
-
   lote: string = "";
   serie: string = "";
   isVisibleSearchButton: boolean = false;
@@ -88,7 +82,6 @@ export class EtiquetadoPage_01Page {
   etqDisabled: boolean = true;
   saldoDisabled: boolean = true;
   UMAlterDisabled: boolean = true;
-
   cantXBulto: number = 0;
   residuo: number = 0;
 
@@ -98,24 +91,17 @@ export class EtiquetadoPage_01Page {
   numCopia: number = 1;
   cantEtqSaldo: number;
   totalSuma: any;
-
   resultCantidad: boolean = true;
   resultNumEtq: boolean = true;
   resultEtqSaldo: boolean = true;
-
   obj2: any;
-
   titutlos1isDisplay: boolean = false;
   titutlos2isDisplay: boolean = true;
-
-  // userProfile={"Almacen":"","ApeNom":"","page":"1"};
 
   @ViewChild('selectUA_Alt') selectUA_Alt: Select;
   @ViewChild('selectFormat') selectFormat: Select;
   @ViewChild('selectSubAlmacen') selectSubAlmacen: Select;
-
   @ViewChild('iLote', { read: ElementRef }) private inputUbi: ElementRef;
-
   @ViewChild('iCantidad', { read: ElementRef }) private iCantidad: ElementRef;
   @ViewChild('iLote', { read: ElementRef }) private iLote: ElementRef;
   @ViewChild('iSerie', { read: ElementRef }) private iSerie: ElementRef;
@@ -123,7 +109,6 @@ export class EtiquetadoPage_01Page {
   @ViewChild('iSaldoEtq', { read: ElementRef }) private iSaldoEtq: ElementRef;
   @ViewChild('iNumCopia', { read: ElementRef }) private iNumCopia: ElementRef;
   @ViewChild(Navbar) navBar: Navbar;
-
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public viewCtrl: ViewController, public sEtq: EtiquetadoServiceProvider,
@@ -136,7 +121,6 @@ export class EtiquetadoPage_01Page {
 
     this.vEtq = (navParams.get('vEtq') != null) ? navParams.get('vEtq') : this.vEtq;
     this.listarUMxProducto(this.vEtq.Id_Producto);
-    //this.initPage();
   }
 
   initPage(): void {
@@ -150,30 +134,6 @@ export class EtiquetadoPage_01Page {
       this.serie = "";
       this.fecEmi = (this.vEtq.FecEmi != null) ? moment(this.vEtq.FecEmi).toISOString() : this.fecEmi; // .format('YYYY-MM-DD');
       this.fecVen = (this.vEtq.FecVen != null) ? moment(this.vEtq.FecVen).toISOString() : this.fecVen;//format('YYYY-MM-DD');
-
-
-      // if(this.findArticulo == false){
-      //   /**
-      //     presenter = new EtqPresenterImpl(this);
-      //     presenter.listUMxProducto(intR_IdProducto);
-      //     prepareFormatLabel();
-
-      //     if (strR_TipoAlmacenaje == "1"){
-      //         strEtq = "ETQ_UA.txt";
-      //     }else if (strR_TipoAlmacenaje == "2"){
-      //         strEtq = "ETQ_Pallet.txt";
-      //     }else if (strR_TipoAlmacenaje == "3"){
-      //         strEtq = "ETQ_UA.txt";
-      //     }else{
-      //         strEtq = "";
-      //     }
-      //     spnSubAlmacen.setEnabled(false); 
-      //   **/
-      //  this.listarUMxProducto(this.vEtq.Id_Producto);
-      // }
-
-      //this.listarUMxProducto(this.vEtq.Id_Producto);
-
 
       this.listarSubAlmacenesXCuenta(this.vEtq.IdCuentaLPN, this.sGlobal.Id_Almacen);
 
@@ -200,15 +160,12 @@ export class EtiquetadoPage_01Page {
       if (this.vEtq.FlagLote) {
         this.isEnabledSerie = false;
         this.isEnabledLote = true;
-        //this.fecEmi = true;
         this.fecEmiChecked = true;
-        //this.fecVen = true;
         this.fecVenChecked = true;
         this.UMAlterDisabled = true;
         this.cantDisabled = true;
         this.etqDisabled = true;
         this.saldoDisabled = true;
-
 
         if (!this.vEtq.page) {
           this.selectAll(this.iLote, 500);
@@ -226,15 +183,12 @@ export class EtiquetadoPage_01Page {
           debugger;
           this.numEtq = this.vEtq.Saldo / this.cantxEtq;
           this.cantEtqSaldo = this.vEtq.Saldo % this.cantxEtq;
-
         }
       }
       if (this.vEtq.FlagSerie && this.vEtq.FlagLote) {
         this.isEnabledSerie = true;
         this.isEnabledLote = true;
-        //this.fecEmi = true;
         this.fecEmiChecked = true;
-        //this.fecVen = true;
         this.fecVenChecked = true;
         this.UMAlterDisabled = false;
         this.cantDisabled = false;
@@ -247,17 +201,8 @@ export class EtiquetadoPage_01Page {
           this.selectAll(this.iSerie, 500);
         }
       }
-
       this.calcularTotalSuma();
-
-      // this.isEnabledSerie = this.vEtq.FlagSerie;
-      // this.isEnabledLote = this.vEtq.FlagLote;
-      // this.fecEmiChecked = this.vEtq.FlagLote;
-      // this.fecVenChecked = this.vEtq.FlagLote;      
-
-
       this.lote = (this.vEtq.FlagLote == true) ? this.vEtq.LoteLab : "";
-
     }
   }
 
@@ -281,29 +226,7 @@ export class EtiquetadoPage_01Page {
       this.numEtq = 0;
       this.cantEtqSaldo = 0;
     }
-
     this.calcularTotalSuma();
-    /**
-    if (list.size() > 0){
-                    UMxProducto obj = (UMxProducto) spnUAlter.getSelectedItem();
-                    dbl_CantXBulto = obj.getCantXBulto();
-
-                    if (!findArticulo){
-                        fac = obj.getFactor();
-                        Integer numEtqPrint = (int) (dblR_CantPedida / fac);
-                        Double saldoEtq = dblR_CantPedida - (numEtqPrint * fac);
-                        edtCantxEtq.setText(fac.toString());
-                        edtNumEtq.setText(numEtqPrint.toString());
-                        edtCantEtqSaldo.setText(saldoEtq.toString());
-                    }else{
-                        dbl_CantXBulto = obj.getCantXBulto();
-                        edtCantxEtq.setText(dbl_CantXBulto.toString());
-                        edtNumEtq.setText("0");
-                        edtCantEtqSaldo.setText("0");
-                    }
-
-                } 
-    **/
   }
 
   listarUMxProducto(intIdProducto) {
@@ -315,8 +238,6 @@ export class EtiquetadoPage_01Page {
     });
   }
 
-
-
   listarSubAlmacenesXCuenta(intIdCuenta, intIdAlmacen) {
     this.sEtq.listarSubAlmacenesXCuenta(intIdCuenta, intIdAlmacen).then(result => {
       console.log('result listarSubAlmacenesXCuenta', result);
@@ -324,20 +245,16 @@ export class EtiquetadoPage_01Page {
     });
   }
 
-
   validarCampos() {
     debugger;
     var message = "";
-
     if (this.vEtq.Codigo == null || this.vEtq.Articulo == null) {
       message = "Debe buscar producto";
-
       return message;
     }
 
     if (this.vEtq.Codigo == "" || this.vEtq.Articulo == "") {
       message = "Debe buscar producto";
-
       return message;
     }
 
@@ -482,13 +399,11 @@ export class EtiquetadoPage_01Page {
       this.showModalImpresora();
     } else {
       const confirm = this.alertCtrl.create({
-        //title: 'Use this lightsaber?',
         message: '¿Está seguro de imprimir ' + this.numEtq + ' etiqueta(s)?',
         buttons: [
           {
             text: 'Si',
             handler: () => {
-
               //Imprimir etiquetas
               if (this.cantEtqSaldo < 0 || this.cantEtqSaldo == undefined) {
                 this.cantEtqSaldo = 0;
@@ -518,11 +433,6 @@ export class EtiquetadoPage_01Page {
               debugger;
 
               this.registrarUAMasivo(objImp);
-              /**
-                Inicio
-                        presenter.registerUAMasivo(objImp, 1);//Global.idCentro);
-                Fin 
-              **/
             }
           },
           {
@@ -570,7 +480,7 @@ export class EtiquetadoPage_01Page {
           listEtq.push({ "campo": "|ORDEN|", "valor": (this.findArticulo == true) ? "" : this.vEtq.NroDoc });
           listEtq.push({ "campo": "|USUARIO|", "valor": this.sGlobal.userName });
           listEtq.push({ "campo": "|COMPOSICION|", "valor": this.vEtq.CondicionAlmac });
-          listEtq.push({ "campo": "|UMED|", "valor": this.vEtq.UM });
+          listEtq.push({ "campo": "|UM|", "valor": this.vEtq.UM });
           listEtq.push({ "campo": "|TXTSALDO|", "valor": (i == 0 && this.cantEtqSaldo > 0) ? "SALDO" : "" });
           listEtq.push({ "campo": "|COPIAS|", "valor": this.numCopia });
           listEtq.push({ "campo": "|CODBARRA|", "valor": res[i].UA_CodBarra });
@@ -598,7 +508,7 @@ export class EtiquetadoPage_01Page {
           listEtq.push({ "campo": "|ORDEN|", "valor": (this.findArticulo != false) ? "" : this.vEtq.NroDoc });
           listEtq.push({ "campo": "|USUARIO|", "valor": this.sGlobal.userName });
           listEtq.push({ "campo": "|COMPOSICION|", "valor": this.vEtq.CondicionAlmac });
-          listEtq.push({ "campo": "|UMED|", "valor": this.vEtq.UM });
+          listEtq.push({ "campo": "|UM|", "valor": this.vEtq.UM });
           listEtq.push({ "campo": "|TXTSALDO|", "valor": (i == 0 && this.cantEtqSaldo > 0) ? "SALDO" : "" });
           listEtq.push({ "campo": "|COPIAS|", "valor": this.numCopia });
           listEtq.push({ "campo": "|CODBARRA|", "valor": res[i].UA_CodBarra });
@@ -642,16 +552,15 @@ export class EtiquetadoPage_01Page {
           cant = cant + 1;
         }
       }
-      if(cant>0){
+      if (cant > 0) {
         this.totalSuma = ((parseFloat(cantXCaja) * parseInt(numEtqTem)) + parseFloat(etqSaldoCant)).toFixed(3);
-      }else{
+      } else {
         this.totalSuma = (parseFloat(cantXCaja) * parseInt(numEtqTem)) + parseFloat(etqSaldoCant);
       }
     } else {
       this.totalSuma = (parseFloat(cantXCaja) * parseInt(numEtqTem)) + parseFloat(etqSaldoCant);
     }
   }
-
 
   numEtqTextChange(ev: any) {
     let val = ev.target.value;
@@ -719,88 +628,12 @@ export class EtiquetadoPage_01Page {
       }
       alert("El número ingresado no tiene formato correcto, vuelva a ingresar.")
     }
-
-    // var regExp = /^[0-9]\d*(\.\d+)?$/.test(val);
-    // if (regExp == false) {
-    //   if (name == "txtCant") {
-    //     this.cantxEtq = 0;
-    //     this.selectAll(this.iCantidad, 500);
-    //     this.resultCantidad = false;
-    //   }
-    //   if (name == "txtNumEtq") {
-    //     this.numEtq = 0;
-    //     this.selectAll(this.iNumEtq, 500);
-    //     this.resultNumEtq = false;
-    //   }
-    //   if (name == "txtEtqSaldo") {
-    //     this.cantEtqSaldo = 0;
-    //     this.selectAll(this.iSaldoEtq, 500);
-    //     this.resultEtqSaldo = false;
-    //   }
-    //   alert("El número ingresado no tiene formato correcto, vuelva a ingresar.");
-    // }
-    // else {
-    //   if (name == "txtNumEtq") {
-    //     if (val > 999) {
-    //       this.numEtq = 0;
-    //       this.selectAll(this.iNumEtq, 500);
-    //       this.resultNumEtq = false;
-    //       alert("La cantidad ingresada debe ser menor.");
-    //     } else {
-    //       this.resultNumEtq = true;
-    //     }
-    //   } else {
-    //     debugger;
-    //     // var cant = 0;
-    //     // for(var i = 0; i < val.length; i++){
-    //     //   if(val.charAt(i)=="."){
-    //     //     cant = cant + 1;
-    //     //     alert(cant)
-    //     //   }
-    //     // }
-
-    //     if (val > 99999.999) {
-    //       if (name == "txtCant") {
-    //         this.cantxEtq = 0;
-    //         this.selectAll(this.iCantidad, 500);
-    //         this.resultCantidad = false;
-    //       }
-    //       if (name == "txtEtqSaldo") {
-    //         this.cantEtqSaldo = 0;
-    //         this.selectAll(this.iSaldoEtq, 500);
-    //         this.resultEtqSaldo = false;
-    //       }
-    //       alert("La cantidad ingresada debe ser menor. Maximo 5 número enteros y 3 decimales.");
-    //     } else {
-    //       var Decimal = /^[1-9]\d*(\.\d{1,3})?$/.test(val);
-    //       if (!Decimal) {
-    //         if (name == "txtCant") {
-    //           this.resultCantidad = false;
-    //         }
-    //         if (name == "txtEtqSaldo") {
-    //           this.resultEtqSaldo = false;
-    //         }
-    //         alert("El número solo debe tener 3 decimales.");
-    //       } else {
-    //         if (name == "txtCant") {
-    //           this.resultCantidad = true;
-    //         }
-    //         if (name == "txtEtqSaldo") {
-    //           this.resultEtqSaldo = true;
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
-
     if (val != "") {
       this.calcularTotalSuma();
     } else {
       this.totalSuma = 0;
     }
   }
-
-
 
   dismiss() {
     this.viewCtrl.dismiss();
@@ -832,10 +665,7 @@ export class EtiquetadoPage_01Page {
     this.vEtq.UM = this.dataFromEtqPage02.UM;
     this.vEtq.CondicionAlmac = this.dataFromEtqPage02.Composicion; //Composicion
     this.vEtq.IdCuentaLPN = this.dataFromEtqPage02.IdCuentaLPN;
-    //this.isEnabledLote = this.vEtq.FlagLote;
-    //this.isEnabledSerie = this.vEtq.FlagSerie; //Arturo Add
     this.listarUMxProducto(this.vEtq.Id_Producto);
-    //this.initPage();
   };
 
   presentPopover(myEvent) {
@@ -866,17 +696,7 @@ export class EtiquetadoPage_01Page {
     }, time);
   }
 
-
-
   ionViewDidLoad() {
-    // this.navBar.backButtonClick = (e: UIEvent) => {
-    //   // todo something
-    //   debugger;
-    //   this.userProfile.Almacen = this.sGlobal.nombreAlmacen;
-    //   this.userProfile.ApeNom = this.sGlobal.apeNom;      
-    //   this.navCtrl.push(MainMenuPage, this.userProfile);
-    //   //this.navCtrl.push(MainMenuPage);
-    // }
     console.log('ionViewDidLoad EtiquetadoPage01');
   }
 }

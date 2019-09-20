@@ -5,7 +5,6 @@ import { AlmacenajeServiceProvider } from '../../../providers/almacenaje-service
 import { DetallePalletUaPage } from '../detalle-pallet-ua/detalle-pallet-ua'
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { OtraUbicacionPage } from '../otra-ubicacion/otra-ubicacion'
-import {TransitoPage} from '../transito/transito';
 
 /**
  * Generated class for the PalletsTransitoPage page.
@@ -152,11 +151,6 @@ export class PalletsTransitoPage {
                         }, (500));
                       }
                     })
-                    // setTimeout(() => {
-                    //   this.codeBar = "";
-                    //   this.txtCodPalletUaRef.setFocus();
-                    //   this.selectAll(this.txtCodPalletUa);
-                    // }, (500));
                   }
                 }
               }
@@ -306,20 +300,7 @@ export class PalletsTransitoPage {
     this.navCtrl.push(AlmacenajePalletUaPage, {
       data: this.vPalletTransitoPage, palletTransito: this.Selectedcallback
     });
-    // this.navCtrl.push(EtiquetadoPage_02Page, {
-    //   producto: this.productSelectedcallback
-    // });
   }
-
-  // dataFromAlmacenajePalletUaPage : any;
-  // productSelectedcallback = data => {
-  //   this.dataFromAlmacenajePalletUaPage = data;
-  //   console.log('data received from other page', this.dataFromAlmacenajePalletUaPage);
-  //   debugger;
-  //   this.vEtq.Codigo = this.dataFromEtqPage02.Codigo;
-  //   this.listarUMxProducto(this.vEtq.Id_Producto);
-  //   //this.initPage();
-  // };
 
   goDetallePalletUaPage(data) {
     debugger;
@@ -345,24 +326,20 @@ export class PalletsTransitoPage {
     this.navCtrl.push(OtraUbicacionPage, {
       data: this.vPalletTransitoPage
     });
-    //this.navCtrl.push(OtraUbicacionPage);
   }
 
   ionViewDidLoad() {
     setTimeout(() => {
       this.selectAll(this.txtCodPalletUa);
-      //this.txtCodPalletUaRef.setFocus();
     }, (500));
     this.navBar.backButtonClick = (e:UIEvent)=>{
       if(this.listAuxPalletTransito.length>0){
         this.presentAlertConfirm("Quedan " + this.rowCount + " registros por ubicar. ¿Está seguro de salir?").then((result) => {
           if (result) {
-            // this.navCtrl.push(TransitoPage);
             this.navCtrl.pop();
           }
         })
       }else{
-        // this.navCtrl.push(TransitoPage);
         this.navCtrl.pop();
       }             
      }

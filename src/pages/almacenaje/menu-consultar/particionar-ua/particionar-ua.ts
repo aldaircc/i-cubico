@@ -90,11 +90,11 @@ export class ParticionarUaPage {
       debugger;
       this.NuevaUA = result;
 
-      if(this.NuevaUA.trim() != ""){
+      if (this.NuevaUA.trim() != "") {
         debugger;
         var listContainer = [];
         var listEtq = [];
-  
+
         this.fecha = new Date().toISOString()
         let fechaVencimientoPrint = moment(this.vDatosRecibidos.FechaVencimiento, "DD-MM-YYYY").toDate();
         listEtq = [];
@@ -121,9 +121,9 @@ export class ParticionarUaPage {
         listEtq.push({ "campo": "|CUENTA|", "valor": this.vDatosRecibidos.Pasillo });
         listEtq.push({ "campo": "|TXTSALDO|", "valor": "" });
         listContainer.push({ 'etiqueta': listEtq });
-  
+
         debugger;
-  
+
         this.sEtq.imprimirListaEtiquetas(listContainer, 'ETQ_UA.txt', this.sGlobal.nombreImpresora, true).then(result => {
           debugger;
           var message: any = result;
@@ -131,9 +131,9 @@ export class ParticionarUaPage {
             alert(message.mensaje);
           }
         });
-      }else{
+      } else {
         this.presentAlert("No se pudo particionar la UA.");
-      }      
+      }
     });
   }
 
@@ -145,12 +145,9 @@ export class ParticionarUaPage {
     });
   }
 
-  dismiss(data = { 'response': 400, 'limpiar' : 1 }) {
+  dismiss(data = { 'response': 400, 'limpiar': 1 }) {
     this.viewCtrl.dismiss(data);
   }
-
-  // let printSel = {'printSel': print.Nombre };
-  //           this.dismiss(printSel);
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -195,25 +192,15 @@ export class ParticionarUaPage {
     })
   }
 
-  // goAdministrarUaPage() {
-  //   this.vParticionarPage = {
-  //     'page': 3,
-  //     'CodBar_UA': this.vDatosRecibidos.CodBar_UA
-  //   };
-  //   this.navCtrl.push(AdministrarUaPage, {
-  //     data: this.vParticionarPage
-  //   });
-  // }
-
-  goAdministrarUaPage(){
+  goAdministrarUaPage() {
     debugger;
-      this.navCtrl.pop().then(() => {
-        this.vParticionarPage = {
-          'page': 3,
-          'CodBar_UA': this.vDatosRecibidos.CodBar_UA
-        };
-        this.navParams.get('particionar')(this.vParticionarPage);
-      });
+    this.navCtrl.pop().then(() => {
+      this.vParticionarPage = {
+        'page': 3,
+        'CodBar_UA': this.vDatosRecibidos.CodBar_UA
+      };
+      this.navParams.get('particionar')(this.vParticionarPage);
+    });
   }
 
   ionViewDidLoad() {

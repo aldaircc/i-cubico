@@ -25,108 +25,84 @@
   </ion-toolbar>
 
 
-<ion-grid class="bgHeader statico">   
-    <ion-row no-padding no-margin >
-        <ion-col col-3 class="bgHeader-col">
-            <ion-label class="bgHeader-label">
-                Usuario:
-            </ion-label>
-        </ion-col>
-        <ion-col col-9 class="bgHeader-col">
-            <ion-label class="bgHeader-text">
-                {{ sGlobal.apeNom}}
-            </ion-label>
-        </ion-col>
+  <ion-grid class="bgHeader statico">
+    <ion-row no-padding no-margin>
+      <ion-col col-3 class="bgHeader-col">
+        <ion-label class="bgHeader-label">
+          Usuario:
+        </ion-label>
+      </ion-col>
+      <ion-col col-9 class="bgHeader-col">
+        <ion-label class="bgHeader-text">
+          {{ sGlobal.apeNom}}
+        </ion-label>
+      </ion-col>
     </ion-row>
-    <ion-row no-padding no-margin >
-        <ion-col col-3 class="bgHeader-col">
-            <ion-label class="bgHeader-label">
-                Almacén:
-            </ion-label>
-        </ion-col>
-        <ion-col col-9 class="bgHeader-col">
-            <ion-label class="bgHeader-text">
-                {{sGlobal.nombreAlmacen}}
-            </ion-label>
-        </ion-col>
+    <ion-row no-padding no-margin>
+      <ion-col col-3 class="bgHeader-col">
+        <ion-label class="bgHeader-label">
+          Almacén:
+        </ion-label>
+      </ion-col>
+      <ion-col col-9 class="bgHeader-col">
+        <ion-label class="bgHeader-text">
+          {{sGlobal.nombreAlmacen}}
+        </ion-label>
+      </ion-col>
     </ion-row>
-
-  <!-- <ion-row align-items-center>
-    <ion-col col-12 col-sm>
-      <div class="textHeader">{{ sGlobal.apeNom }}</div>
-    </ion-col>
-    <ion-col col-12 col-sm>
-      <div class="valueHeader">{{ sGlobal.nombreAlmacen }}</div>
-    </ion-col>
-  </ion-row> -->
-</ion-grid>
+  </ion-grid>
 
 </ion-header>
 
 <ion-content no-scroll>
-
-    
-
-<!-- Start:  data-binding list -->
-<ion-row>
+  <!-- Start:  data-binding list -->
+  <ion-row>
     <ion-searchbar (ionInput)="filterItems($event)" placeholder="Buscar"></ion-searchbar>
-</ion-row>
+  </ion-row>
 
-<ion-row class="bgWhite">
+  <ion-row class="bgWhite">
+  </ion-row>
 
-</ion-row>
-
-<ion-list [virtualScroll]="listAuxRecepcion" [approxItemHeight]="'20px'">
-  <ion-card *virtualItem="let objRecepcion" (press)="getReciboRow(objRecepcion)">
-    <ion-grid>
-      <ion-row>
-        <ion-col col-1 col-sm
-        [ngClass]="objRecepcion.Id_Estado == 3 ? 'label-color bg-process' : 'label-color bg-confirm'">
-        </ion-col>
-        <ion-col col-10 col-sm>
-          <ion-row>
-            <ion-col class="rec01-card-col" col-4 col-sm>
-              <ion-label class="rec01-card-label fieldForm">N° Orden:</ion-label>
-            </ion-col>
-            <ion-col class="rec01-card-col" col-8 col-sm>
-              <ion-label class="rec01-card-label">{{ objRecepcion.NumOrden }}</ion-label>
-            </ion-col>            
-          </ion-row>
-          <!-- <ion-row>
-            <ion-col class="rec01-card-col" col-4 col-sm>
-              <ion-label class="rec01-card-label fieldForm">Estado:</ion-label>
-            </ion-col>
-            <ion-col class="rec01-card-col" col-8 col-sm>
-              <ion-label class="rec01-card-label">{{ objRecepcion.Estado }}</ion-label>
-            </ion-col>
-          </ion-row> -->
-          <ion-row>
-            <ion-col class="rec01-card-col" col-4 col-sm>
-              <ion-label class="rec01-card-label fieldForm">Fecha:</ion-label>
-            </ion-col>
-            <ion-col class="rec01-card-col">
-              <ion-label class="rec01-card-label">{{ objRecepcion.FechaDocumento|momentjs:'DD/MM/YYYY'}}</ion-label>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col class="rec01-card-col" col-4 col-sm>
-              <ion-label class="rec01-card-label fieldForm">Proveedor:</ion-label>
-            </ion-col>
-            <ion-col class="rec01-card-col" col-8 col-sm>
-              <ion-label class="rec01-card-label">{{ objRecepcion.Proveedor }}</ion-label>
-            </ion-col>
-          </ion-row>
-          
-          <ion-row>
-            <ion-col class="rec01-card-col" col-4 col-sm>
-              <ion-label class="rec01-card-label fieldForm">Tipo Mov.:</ion-label>
-            </ion-col>
-            <ion-col class="rec01-card-col" col-8 col-sm>
-              <ion-label class="rec01-card-label">{{ objRecepcion.TipoMovimiento }}</ion-label>
-            </ion-col>
-          </ion-row>
-          <ion-row>
+  <ion-list [virtualScroll]="listAuxRecepcion" [approxItemHeight]="'20px'">
+    <ion-card *virtualItem="let objRecepcion" (press)="getReciboRow(objRecepcion)">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-1 col-sm [ngClass]="objRecepcion.Id_Estado == 3 ? 'label-color bg-process' : 'label-color bg-confirm'">
+          </ion-col>
+          <ion-col col-10 col-sm>
+            <ion-row>
+              <ion-col class="rec01-card-col" col-4 col-sm>
+                <ion-label class="rec01-card-label fieldForm">N° Orden:</ion-label>
+              </ion-col>
+              <ion-col class="rec01-card-col" col-8 col-sm>
+                <ion-label class="rec01-card-label">{{ objRecepcion.NumOrden }}</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="rec01-card-col" col-4 col-sm>
+                <ion-label class="rec01-card-label fieldForm">Fecha:</ion-label>
+              </ion-col>
+              <ion-col class="rec01-card-col">
+                <ion-label class="rec01-card-label">{{ objRecepcion.FechaDocumento|momentjs:'DD/MM/YYYY'}}</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="rec01-card-col" col-4 col-sm>
+                <ion-label class="rec01-card-label fieldForm">Proveedor:</ion-label>
+              </ion-col>
+              <ion-col class="rec01-card-col" col-8 col-sm>
+                <ion-label class="rec01-card-label">{{ objRecepcion.Proveedor }}</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="rec01-card-col" col-4 col-sm>
+                <ion-label class="rec01-card-label fieldForm">Tipo Mov.:</ion-label>
+              </ion-col>
+              <ion-col class="rec01-card-col" col-8 col-sm>
+                <ion-label class="rec01-card-label">{{ objRecepcion.TipoMovimiento }}</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
               <ion-col class="rec01-card-col" col-4 col-sm>
                 <ion-label class="rec01-card-label fieldForm">Cuenta:</ion-label>
               </ion-col>
@@ -134,68 +110,34 @@
                 <ion-label class="rec01-card-label">{{ objRecepcion.Cliente }}</ion-label>
               </ion-col>
             </ion-row>
-        </ion-col>
-        <ion-col col-1 col-sm align-self-center (click)="evaluateGoReciboPage02(objRecepcion)">
-          <!-- <button ion-button icon-only> -->
+          </ion-col>
+          <ion-col col-1 col-sm align-self-center (click)="evaluateGoReciboPage02(objRecepcion)">
             <ion-icon name="md-play"></ion-icon>
-          <!-- </button> -->
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
-</ion-list>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </ion-list>
 </ion-content>
 
 <ion-footer class="bgLightBlue">
-    <ion-grid>
-        <!-- <ion-row no-padding no-margin style="text-align: center">
-            <ion-col col-12 style="margin: 0px; padding: 1px; ">
-                <ion-label no-padding no-margin style="font-weight:bold; color:black">
-                    Total Ítems: {{rowCount}}
-                </ion-label>
-            </ion-col>
-        </ion-row> -->
-        <ion-row no-padding no-margin>
-            <ion-col col-8 style="margin: 0px; padding: 1px; ">
-                <ion-label no-padding no-margin class="total-footer">
-                    Total Ítems: {{rowCount}}
-                </ion-label>
-            </ion-col>
-            <!-- <ion-col col-4 style="margin: 0px; padding: 0px; ; text-align: center">
-            </ion-col> -->
-            <ion-col col-2 class="col-counts-footer">
-                <ion-label no-padding no-margin class="count-gris-footer box-counter">
-                    {{countConfirm}}
-                </ion-label>
-            </ion-col>
-            <ion-col col-2 class="col-counts-footer">
-                <ion-label no-padding no-margin class="count-yellow-footer box-counter">
-                    {{countProcess}}
-                </ion-label>
-            </ion-col>
-            <!-- <ion-col col-4 style="margin: 0px; padding: 0px; text-align: center">
-            </ion-col> -->
-        </ion-row>
-
-      <!-- <p class="subtitleForm fieldForm" text-center>
-        TOTAL ITEMS: {{ rowCount }}
-      </p>
-      <ion-row>
-        <ion-col col-2 offset-3 col-sm class="box-counter bg-confirm"> {{ countConfirm }} </ion-col>
-        <ion-col col-2 offset-2 col-sm class="box-counter bg-process"> {{ countProcess }} </ion-col>
-      </ion-row> -->
-    </ion-grid>
-  </ion-footer>
-
-<!-- <ion-footer class="bgLightBlue">
   <ion-grid>
-    <ion-row>
-      <ion-col col-2 col-sm>
-          <div class="fieldForm">Total</div>
+    <ion-row no-padding no-margin>
+      <ion-col col-8 style="margin: 0px; padding: 1px; ">
+        <ion-label no-padding no-margin class="total-footer">
+          Total Ítems: {{rowCount}}
+        </ion-label>
       </ion-col>
-      <ion-col col-9 col-sm>
-          <div class="fieldForm"> {{ rowCount }} fila(s) </div>
+      <ion-col col-2 class="col-counts-footer">
+        <ion-label no-padding no-margin class="count-gris-footer box-counter">
+          {{countConfirm}}
+        </ion-label>
+      </ion-col>
+      <ion-col col-2 class="col-counts-footer">
+        <ion-label no-padding no-margin class="count-yellow-footer box-counter">
+          {{countProcess}}
+        </ion-label>
       </ion-col>
     </ion-row>
   </ion-grid>
-</ion-footer> -->
+</ion-footer>

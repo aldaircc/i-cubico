@@ -1,18 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 import { WarehouseSelectPage } from '../warehouse-select/warehouse-select';
-//import {AuthService} from '../../services/loginservice/auth.service';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { GlobalServiceProvider } from '../../providers/global-service/global-service';
 import { ConfigurarPage } from '../configurar/configurar';
-import { HttpClient } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
-import 'rxjs/add/operator/map';
 import xml2js from 'xml2js';
 import { map } from "rxjs/operators";
-// import { Http } from '@angular/http';
 import { fetch as fetchPolyfill } from 'whatwg-fetch'
-
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
@@ -31,13 +25,12 @@ export class HomePage {
   public xmlItems: any;
   public jsonItems: any;
   responseData: any;
-  userData = { "Usuario": "admin", "Clave": "cipsa2018", "idterminal": "1" };
+  userData = { "Usuario": "", "Clave": "", "idterminal": "1" };
 
   constructor(public navCtrl: NavController, public auth: AuthService, public sGlobal: GlobalServiceProvider,
     public http: Http, public platform: Platform, private androidPermissions: AndroidPermissions, private file: File,
     public alertCtrl: AlertController) {
     var obj;
-
     this.platform.ready().then(() => {
       debugger;
       this.androidPermissions.requestPermissions(
@@ -46,21 +39,18 @@ export class HomePage {
           this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE
         ]
       );
-    });    
-  }  
+    });
+  }
 
   iniciarSesion() {
-
     this.getJSON().subscribe(
       (data) => {
         {
           debugger;
           this.sGlobal.url = data.url;
           this.sGlobal.urlPrint = data.urlPrint;
+          this.sGlobal.Id_TerminalRF = data.idRF;
           this.sGlobal.loadXML();
-
-          this.sGlobal.url = localStorage.getItem("url");
-          this.sGlobal.urlPrint = localStorage.getItem("urlPrint");
 
           this.auth.getUsers(this.userData).then((result) => {
             this.responseData = result;
@@ -68,8 +58,6 @@ export class HomePage {
               this.sGlobal.vUserData = result;
               this.sGlobal.userName = result[0].Usuario;
               this.sGlobal.apeNom = result[0].ApeNom;
-      
-      
               this.navCtrl.push(WarehouseSelectPage);
             }
             else {
@@ -80,19 +68,16 @@ export class HomePage {
           });
         }
       }
-    )    
+    )
   }
 
   iniciarSesionWeb() {
-
     this.auth.getUsers(this.userData).then((result) => {
       this.responseData = result;
       if (this.responseData.length > 0) {
         this.sGlobal.vUserData = result;
         this.sGlobal.userName = result[0].Usuario;
         this.sGlobal.apeNom = result[0].ApeNom;
-
-
         this.navCtrl.push(WarehouseSelectPage);
       }
       else {
@@ -100,12 +85,11 @@ export class HomePage {
       }
     }, (err) => {
       console.log(err);
-    });    
+    });
   }
 
   presentAlert(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
-
       const confirm = this.alertCtrl.create({
         title: 'Mensaje',
         message: message,
@@ -132,5 +116,5 @@ export class HomePage {
   public getJSON(): Observable<any> {
     return this.http.get(this.file.externalRootDirectory + "/Config/connect.json")
       .map((res: any) => res.json());
-  }  
+  }
 }

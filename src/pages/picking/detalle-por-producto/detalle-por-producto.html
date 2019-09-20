@@ -6,11 +6,10 @@
 -->
 <ion-header>
     <ion-toolbar no-padding no-margin color="primary">
-
         <ion-grid style="padding: 0px;">
             <ion-row no-padding no-margin>
                 <ion-col no-margin no-padding col-9>
-                    <ion-navbar no-padding no-margin > 
+                    <ion-navbar no-padding no-margin>
                         <ion-label style="font-size: 15px; color: white; font-weight:bold;">DETALLE POR PRODUCTO</ion-label>
                     </ion-navbar>
                 </ion-col>
@@ -67,16 +66,11 @@
     </ion-row>
 </ion-header>
 
-
-
 <ion-content>
-    
-
     <ion-row class="bgWhite">
         <ion-card *ngFor="let objDetalleProducto of listAuxDetalleProducto">
             <ion-card-content style="padding: 8px 4px; font-size: 12px">
                 <ion-row no-padding no-margin>
-                    
                     <div no-padding no-margin style=" width: 90%;">
                         <ion-row no-padding no-margin>
                             <ion-col col-3 no-padding no-margin>
@@ -126,8 +120,8 @@
                         </ion-row>
                     </div>
                     <div no-margin style="position: relative; text-align: center; float:none; padding-top: 3%; margin-right: 2px;  width: 8%;">
-                        <button no-margin no-padding ion-button icon-only clear (click)="eliminarUA(objDetalleProducto)" style="
-                        position: absolute;	top: 0;	bottom: 0; left: 0; right: 0; width: 80%; margin: auto; background:none;">
+                        <button no-margin no-padding ion-button icon-only clear (click)="eliminarUA(objDetalleProducto)"
+                            style="position: absolute;	top: 0;	bottom: 0; left: 0; right: 0; width: 80%; margin: auto; background:none;">
                             <ion-icon name="md-trash" color="dark"></ion-icon>
                         </button>
                     </div>

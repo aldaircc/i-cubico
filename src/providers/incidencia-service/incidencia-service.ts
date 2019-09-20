@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, URLSearchParams } from '@angular/http';
+import { GlobalServiceProvider } from '../global-service/global-service';
 
 /*
   Generated class for the IncidenciaServiceProvider provider.
@@ -10,48 +11,52 @@ import { Http, Headers, URLSearchParams } from '@angular/http';
 @Injectable()
 export class IncidenciaServiceProvider {
 
-  apiUrl = 'http://172.16.32.15:8085/SGAA_WCF/';
+  //apiUrl = 'http://172.16.32.15:8085/SGAA_WCF/';
   headers = new Headers();
   usuario = 'UsuarioService.svc/rest/';
   produccion = 'ProduccionService.svc/rest/';
   tablaEst = 'TablasEstaticasService.svc/rest/';
   recepcion = 'RecepcionService.svc/rest/';
 
-  constructor(public http: Http) {
+  
+
+  constructor(public http: Http, public sGlobal: GlobalServiceProvider) {
     console.log('Hello IncidenciaServiceProvider Provider');
     this.headers.append('Accept', 'application/json');
     this.headers.append('Content-Type', 'application/json');
   }
 
-  listarCausalesXModulo(intIdCliente, intIdModulo){
-    let parameter : any;
-    parameter = {'intIdCliente': intIdCliente, 'intIdModulo': intIdModulo};
-    return new Promise(resolve=>{
-      this.http.get(this.apiUrl + this.recepcion + 'ListarCausalesXModulo', {params: parameter})
-      .map(res=>res.json())
-      .subscribe(data=>{
-        resolve(data);
-      },err =>{
-        console.log('Error listarCausalesXModulo', err);
-      });
+  listarCausalesXModulo(intIdCliente, intIdModulo) {
+    let parameter: any;
+    parameter = { 'intIdCliente': intIdCliente, 'intIdModulo': intIdModulo };
+    return new Promise(resolve => {
+      // this.http.get(this.apiUrl + this.recepcion + 'ListarCausalesXModulo', { params: parameter })
+      this.http.get(this.sGlobal.url + this.recepcion + 'ListarCausalesXModulo', { params: parameter })
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log('Error listarCausalesXModulo', err);
+        });
     });
   }
 
-  registrarControlOP(strIdOP, intIdLineaMAQ, intIdCausal, strUsuario, strObservacion, bFlagPausa){
-   let parameter = {'strIdOP': strIdOP, 'intIdLineaMAQ' : intIdLineaMAQ, 'intIdCausal' : intIdCausal, 'strUsuario' : strUsuario, 'strObservacion' : strObservacion, 'bFlagPausa' : bFlagPausa };
+  registrarControlOP(strIdOP, intIdLineaMAQ, intIdCausal, strUsuario, strObservacion, bFlagPausa) {
+    let parameter = { 'strIdOP': strIdOP, 'intIdLineaMAQ': intIdLineaMAQ, 'intIdCausal': intIdCausal, 'strUsuario': strUsuario, 'strObservacion': strObservacion, 'bFlagPausa': bFlagPausa };
 
-   return new Promise((resolve, reject)=>{
-    this.http.post(this.apiUrl+this.produccion+'RegistrarControlOP', JSON.stringify(parameter), { headers: this.headers})
-    .map(res=>res.json())
-    .subscribe(data=>{
-      resolve(data);
-    },err=>{
-      console.log('E-registrarControlOP',err);
-    })
-   });
+    return new Promise((resolve, reject) => {
+      // this.http.post(this.apiUrl + this.produccion + 'RegistrarControlOP', JSON.stringify(parameter), { headers: this.headers })
+      this.http.post(this.sGlobal.url + this.produccion + 'RegistrarControlOP', JSON.stringify(parameter), { headers: this.headers })
+      .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log('E-registrarControlOP', err);
+        })
+    });
   }
 
-  registrarControl(id_Tx, id_Causal, usuario, id_TerminalRF, observacion, flagPausa){
+  registrarControl(id_Tx, id_Causal, usuario, id_TerminalRF, observacion, flagPausa) {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('Id_Tx', id_Tx);
     urlSearchParams.append('Id_Causal', id_Causal);
@@ -61,39 +66,42 @@ export class IncidenciaServiceProvider {
     urlSearchParams.append('FlagPausa', flagPausa);
 
     return new Promise((resolve, reject) => {
-      this.http.post(this.apiUrl + this.tablaEst + 'RegistrarControl?'+ urlSearchParams.toString(), null)
-      .map(res=>res.json())
-      .subscribe(data=>{
-        resolve(data);
-      },err=>{
-        console.log('E-registrarControl', err);
-      });
+      // this.http.post(this.apiUrl + this.tablaEst + 'RegistrarControl?' + urlSearchParams.toString(), null)
+      this.http.post(this.sGlobal.url + this.tablaEst + 'RegistrarControl?' + urlSearchParams.toString(), null)
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log('E-registrarControl', err);
+        });
     });
   }
 
-  buscarControlUsuario(strId_OP, strUsuario){
-    let parameter = { 'strId_OP' : strId_OP, 'strUsuario' : strUsuario};
+  buscarControlUsuario(strId_OP, strUsuario) {
+    let parameter = { 'strId_OP': strId_OP, 'strUsuario': strUsuario };
     return new Promise((resolve) => {
-      this.http.get(this.apiUrl + this.produccion + 'BuscarControlUsuario', { params : parameter})
-      .map(res=> res.json())
-      .subscribe(data =>{
-        resolve(data);
-      },err => {
-        console.log('E - buscarControlUsuario', err);
-      })
+      // this.http.get(this.apiUrl + this.produccion + 'BuscarControlUsuario', { params: parameter })
+      this.http.get(this.sGlobal.url + this.produccion + 'BuscarControlUsuario', { params: parameter })
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log('E - buscarControlUsuario', err);
+        })
     });
   }
 
-  buscarControlPendiente(StrIdTx, strUsuario){
-    let parameter = { 'StrIdTx' : StrIdTx, 'strUsuario' : strUsuario };
-    return new Promise((resolve)=>{
-      this.http.get(this.apiUrl + this.tablaEst + 'BuscarControlPendiente', { params : parameter })
-      .map(res => res.json())
-      .subscribe(data => {
-        resolve(data);
-      }, err => {
-        console.log('E - buscarControlPendiente', err);
-      })
+  buscarControlPendiente(StrIdTx, strUsuario) {
+    let parameter = { 'StrIdTx': StrIdTx, 'strUsuario': strUsuario };
+    return new Promise((resolve) => {
+      // this.http.get(this.apiUrl + this.tablaEst + 'BuscarControlPendiente', { params: parameter })
+      this.http.get(this.sGlobal.url + this.tablaEst + 'BuscarControlPendiente', { params: parameter })
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log('E - buscarControlPendiente', err);
+        })
     });
   }
 }

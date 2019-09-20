@@ -22,7 +22,7 @@ export class ConsultarPalletPage {
   ResultPallet: any = [];
   ResultPallet_Aux: any = [];
   rowCount: any = 0;
-  rowCountTotal: any = 0;  
+  rowCountTotal: any = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
@@ -32,7 +32,7 @@ export class ConsultarPalletPage {
     debugger;
     if (this.codeBarPallet) {
       if (this.codeBarPallet.trim() != "") {
-        if(this.codeBarPallet.length==12){
+        if (this.codeBarPallet.length == 12) {
           debugger;
           this.sAlmacenaje.getListarUAUbicada(this.codeBarPallet, this.sGlobal.Id_Almacen).then((result) => {
             debugger;
@@ -42,7 +42,6 @@ export class ConsultarPalletPage {
               this.presentAlert("No hay datos para mostrar, código de pallet no existe").then((resultAlert) => {
                 if (resultAlert) {
                   setTimeout(() => {
-                    //this.txtPalletRef.setFocus();
                     this.selectAll(this.txtPallet);
                   }, (500));
                 }
@@ -57,9 +56,9 @@ export class ConsultarPalletPage {
           }, err => {
             console.log('E-getListarUAUbicada', err);
           });
-        }else{
+        } else {
           this.presentToast("El código de pallet debe tener 12 dígitos");
-        }        
+        }
       }
       else {
         this.presentToast("Ingrese código de pallet");
@@ -68,7 +67,6 @@ export class ConsultarPalletPage {
       this.presentToast("Ingrese código de pallet");
     }
     setTimeout(() => {
-      //this.txtPalletRef.setFocus();
       this.selectAll(this.txtPallet);
     }, (500));
   }
@@ -122,7 +120,6 @@ export class ConsultarPalletPage {
     this.rowCount = 0;
     this.rowCountTotal = 0;
     setTimeout(() => {
-      //this.txtPalletRef.setFocus();
       this.selectAll(this.txtPallet);
     }, (500));
   }
@@ -186,7 +183,6 @@ export class ConsultarPalletPage {
 
   ionViewDidLoad() {
     setTimeout(() => {
-      //this.txtPalletRef.setFocus();
       this.selectAll(this.txtPallet);
     }, (500));
     console.log('ionViewDidLoad ConsultarPalletPage');

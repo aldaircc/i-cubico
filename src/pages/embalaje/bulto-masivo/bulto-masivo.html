@@ -96,8 +96,7 @@
     <!-- Fila 01 -->
     <ion-row align-items-center>
       <ion-col col-12 col-sm no-padding no-margin>
-        <ion-select placeholder="UA alternativa" [(ngModel)]="id_UAlt" interface="action-sheet" #selectUA_Alt
-          style="padding: 8px 8px 8px 0px">
+        <ion-select placeholder="UA alternativa" [(ngModel)]="id_UAlt" interface="action-sheet" #selectUA_Alt style="padding: 8px 8px 8px 0px">
           <ion-option value="" default>UA alternativa</ion-option>
           <ion-option *ngFor="let ua of listUM" value="{{ ua.Id_UM }}">
             <!-- {{ ua.Nombre }}  -->
@@ -141,7 +140,7 @@
           <ion-input type="Text" [(ngModel)]="lote" [disabled]="!isEnabledLote" #iLote></ion-input>
         </ion-item>
       </ion-col>
-    </ion-row>  
+    </ion-row>
 
 
     <!-- Fila 05 -->
@@ -161,10 +160,9 @@
       </ion-col>
 
       <ion-col col-3 col-sm no-padding no-margin>
-          <button no-margin no-padding ion-button icon-only clear (click)="ValidarOrden(objEmbalaje)"
-          style="position: absolute;	top: 0;	bottom: 0; left: 0; right: 0; width: 80%; margin: auto; background:none;">
-            <ion-icon name="md-play" color="dark"></ion-icon>
-          </button>
+        <button no-margin no-padding ion-button icon-only clear (click)="ValidarOrden(objEmbalaje)" style="position: absolute;	top: 0;	bottom: 0; left: 0; right: 0; width: 80%; margin: auto; background:none;">
+          <ion-icon name="md-play" color="dark"></ion-icon>
+        </button>
       </ion-col>
     </ion-row>
 
@@ -176,8 +174,8 @@
 
       <ion-col col-8 col-sm no-padding no-margin>
         <ion-item>
-          <ion-input type="number" min="0" [(ngModel)]="cantEtqSaldo" (input)="numEtqTextChange($event)"
-            #iSaldoEtq [disabled]="!saldoDisabled" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"></ion-input>
+          <ion-input type="number" min="0" [(ngModel)]="cantEtqSaldo" (input)="numEtqTextChange($event)" #iSaldoEtq
+            [disabled]="!saldoDisabled" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -187,14 +185,14 @@
 <ion-footer>
   <ion-grid class="bgFooter">
     <ion-row>
-      <ion-col col-2 class="bgFooter-col">        
+      <ion-col col-2 class="bgFooter-col">
       </ion-col>
       <ion-col col-8 class="bgFooter-col">
       </ion-col>
       <ion-col col-2 class="bgFooter-col">
-          <button ion-button icon-start (click)="imprimirEtiqueta()" #iBtnSave>
-              <ion-icon name="md-barcode"></ion-icon>
-            </button>
+        <button ion-button icon-start (click)="imprimirEtiqueta()" #iBtnSave>
+          <ion-icon name="md-barcode"></ion-icon>
+        </button>
       </ion-col>
     </ion-row>
   </ion-grid>

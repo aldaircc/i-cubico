@@ -33,7 +33,6 @@ export class EmbalajePage_07Page {
     this.vNroBulto = navParams.get('dataNroBulto');
     this.vNroBultoCeros = navParams.get('dataNroBultoCeros');
     this.vEmbalajePage02 = navParams.get('dataPage02');
-    //this.vPage = navParams.get('page');
   }
 
   getDataBalanzasXAlmacen() {
@@ -57,48 +56,33 @@ export class EmbalajePage_07Page {
     this.getDataBalanzasXAlmacen();
   }
 
-  // goDetalleDespacho() {
-  //   debugger;
-  //   this.navCtrl.pop().then(() => {
-  //     this.vDetalleDespacho = {
-  //       'peso': this.pesoFisico
-  //     };
-  //     this.navParams.get('peso')(this.vDetalleDespacho);
-  //   });
-  // } 
-
-  onChange() {     
+  onChange() {
     debugger
-    let obj = this.listBalanza.filter(x => x.IdBalanza == this.IdBalanza)[0];  
+    let obj = this.listBalanza.filter(x => x.IdBalanza == this.IdBalanza)[0];
   }
 
-validarCampos(){
-  var message = "";
-  if(this.IdBalanza == 0){
-    message = "Seleccione una balanza";
-    setTimeout(() => {
-      this.selectFormat.open();
-    }, 500);
+  validarCampos() {
+    var message = "";
+    if (this.IdBalanza == 0) {
+      message = "Seleccione una balanza";
+      setTimeout(() => {
+        this.selectFormat.open();
+      }, 500);
+      return message;
+    }
+    if (!this.pesoFisico) {
+      this.pesoFisico = 0;
+    }
     return message;
   }
 
-  if(!this.pesoFisico){
-    this.pesoFisico = 0;
-  }
-
-  return message;
-}
-  
-
   goDetalleDespacho() {
     debugger;
-
     let message = this.validarCampos();
-    if(message.length > 0){
+    if (message.length > 0) {
       alert(message);
       return;
     }
-
     var resultFor = false;
     this.navCtrl.getViews().forEach(item => {
       debugger;
@@ -108,10 +92,10 @@ validarCampos(){
         this.sGlobal.resultObtenerPeso = true;
         this.sGlobal.pesoBulto = this.pesoFisico;
         this.navCtrl.popTo(item);
-      } 
+      }
     });
 
-    if(!resultFor){
+    if (!resultFor) {
       this.sGlobal.resultObtenerPeso = true;
       this.sGlobal.pesoBulto = this.pesoFisico;
       this.navCtrl.push(EmbalajePage_06Page, {
@@ -119,53 +103,9 @@ validarCampos(){
         dataPage02: this.vEmbalajePage02
       });
     }
-    
-      
-
-    // if (this.vPage == 6) {
-    //   this.navCtrl.pop().then(() => {
-    //     this.vDetalleDespacho = {
-    //       'peso': this.pesoFisico
-    //     };
-    //     this.navParams.get('peso')(this.vDetalleDespacho);
-    //   });
-    // }else{
-    //   this.navCtrl.push(EmbalajePage_06Page, {
-    //     dataNroBulto: this.vNroBulto, dataNroBultoCeros: this.vNroBultoCeros,
-    //     dataPage02: this.vEmbalajePage02, peso: this.pesoFisico
-    //   });
-    // }
-    // this.navCtrl.getViews().forEach(item => {
-    //   if (item.name == 'EmbalajePage_06Page') {
-    //     this.navCtrl.popTo(item).then(() => {
-    //       this.vDetalleDespacho = {
-    //         'peso': this.pesoFisico
-    //       };
-    //       this.navParams.get('peso')(this.vDetalleDespacho);
-    //     });
-    //   }
-    // });
   }
-
-  // GuardarPesoBulto_Old(){   
-  //   var objEmbalaje = {
-  //     'Id_Tx': this.vEmbalajePage02.Id_Tx,
-  //     'NroBulto': this.vNroBulto,
-  //     'Peso': this.pesoFisico,
-  //     'Observacion': this.vEmbalajePage02.Direccion,
-  //     'CodigoBarra': this.vEmbalajePage02.Id_Tx+'/'+this.vNroBultoCeros      
-  //   };
-  //   debugger;
-  //   this.sEmbalaje.RegistrarPesoBulto(objEmbalaje).then((result)=>{      
-  //     console.log(result);
-  //     debugger;
-  //     this.goDetalleDespacho();
-  //   });
-  // }
-
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EmbalajePage_07Page');
   }
-
 }

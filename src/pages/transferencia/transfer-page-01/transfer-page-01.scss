@@ -12,13 +12,6 @@ page-transfer-page-01 {
          background: yellow;
       }
 
-      // .box-counter{
-      //    border-radius: 5px;
-      //    border: 1px solid #e6e9ee;
-      //    padding: 5px;
-      //    text-align: center;
-      // }
-
       .label-color{
          width: 0.1%;
          max-width: 0.1%;
@@ -33,7 +26,6 @@ page-transfer-page-01 {
       }
 
     .datatable-header {
-        //background: rgba(164, 192, 214,1);
         background: #3878be; //nuevo color de fondo
         padding: 1em 0 0 1em;
      }
@@ -57,7 +49,6 @@ page-transfer-page-01 {
      }
   
      .datatable-body-cell {
-        //font-size: 1.2em;
         font-size: 1em;
         padding: 1em;
      }
@@ -66,8 +57,7 @@ page-transfer-page-01 {
      // Style footer appearance
      .datatable-footer {
         background: rgba(218, 226, 234,1);
-        padding: 0 1em 0 1em;
-  
+        padding: 0 1em 0 1em;  
         .pager {
            li {
                 padding: 0 1em !important;

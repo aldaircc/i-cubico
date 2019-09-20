@@ -26,7 +26,7 @@ export class EmbarquePage_05Page {
   bolSubBulto: boolean = false;
   rowCount: number = 0;
 
-  constructor(public app: App, public popoverCtrl: PopoverController,public navCtrl: NavController, public navParams: NavParams, public sDesp: DespachoServiceProvider,
+  constructor(public app: App, public popoverCtrl: PopoverController, public navCtrl: NavController, public navParams: NavParams, public sDesp: DespachoServiceProvider,
     public sGlobal: GlobalServiceProvider) {
     this.bolBulto = true;
     this.bolSubBulto = false;
@@ -34,46 +34,46 @@ export class EmbarquePage_05Page {
     this.listarBultosXCargarTransporte(this.vParameter.Id_Tra);
   }
 
-  presentPopover(myEvent){
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, {'page' : 1});
+  presentPopover(myEvent) {
+    let popover = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 1 });
     popover.present({
       ev: myEvent
     });
 
-    popover.onDidDismiss(popoverData =>{
-      if(popoverData == 4){
+    popover.onDidDismiss(popoverData => {
+      if (popoverData == 4) {
         this.navCtrl.pop();
         var nav = this.app.getRootNav();
         nav.setRoot(HomePage);
       }
     });
   }
-  
-  mostrarBultos(): void{
+
+  mostrarBultos(): void {
     this.bolSubBulto = false;
-    if(this.bolSubBulto == false){
+    if (this.bolSubBulto == false) {
       this.listarBultosXCargarTransporte(this.vParameter.Id_Tra);
       this.bolBulto = true;
     }
   }
 
-  mostrarSubBultos(): void{
+  mostrarSubBultos(): void {
     this.bolBulto = false;
-    if(this.bolBulto == false){
+    if (this.bolBulto == false) {
       this.listarSubBultosLeidos(this.vParameter.Id_Tra, 2);
       this.bolSubBulto = true;
     }
   }
 
-  listarBultosXCargarTransporte(strIdTransporte): void{
-    this.sDesp.listarBultosXCargarTransporte(strIdTransporte).then(result=>{
+  listarBultosXCargarTransporte(strIdTransporte): void {
+    this.sDesp.listarBultosXCargarTransporte(strIdTransporte).then(result => {
       this.listBulto = result;
       this.rowCount = this.listBulto.length;
     });
   }
 
-  listarSubBultosLeidos(strTransaccion, tipo): void{
-    this.sDesp.listarSubBultosLeidos(strTransaccion, tipo).then(result=>{
+  listarSubBultosLeidos(strTransaccion, tipo): void {
+    this.sDesp.listarSubBultosLeidos(strTransaccion, tipo).then(result => {
       this.listSubBulto = result;
       this.rowCount = this.listSubBulto.length;
     });

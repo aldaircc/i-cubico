@@ -3,7 +3,7 @@
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
--->    
+-->
 <ion-header>
     <ion-toolbar no-padding no-margin color="primary">
         <ion-grid style="padding: 0px;">
@@ -15,9 +15,6 @@
                 </ion-col>
                 <ion-col no-margin no-padding col-3>
                     <ion-buttons start style="margin-top: 12px; text-align: center">
-                        <!-- <button no-margin no-padding ion-button icon-only (click)="getPickingProductoLoad()">
-                            <ion-icon name="sync"></ion-icon>
-                        </button> -->
                         <button no-margin no-padding ion-button icon-only (click)="presentPopover($event)">
                             <ion-icon name="more"></ion-icon>
                         </button>
@@ -28,43 +25,38 @@
     </ion-toolbar>
 
     <ion-grid class="bgHeader statico">
-            <ion-row no-padding no-margin>
-                <ion-col col-3 class="bgHeader-col">
-                    <ion-label class="bgHeader-label-button">
-                        N° Ruta:
-                    </ion-label>
-                </ion-col>
-                <ion-col col-5 class="bgHeader-col">
-                    <ion-label class="bgHeader-text-button">
-                        {{ contador }} / {{ total }}
-                    </ion-label>
-                </ion-col>
-                <ion-col col-4 class="bgHeader-col">
-                    <button ion-button (click)="BackRutaPicking()" [disabled]="!Backisenabled " class="bgHeader-button"
-                        icon-start>
-                        <ion-icon name='arrow-dropleft'></ion-icon>
-                    </button>
-    
-                    <button ion-button (click)="NextRutaPicking()" [disabled]="Nextisenabled" class="bgHeader-button"
-                        icon-end>
-                        <ion-icon name='arrow-dropright'></ion-icon>
-                    </button>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+        <ion-row no-padding no-margin>
+            <ion-col col-3 class="bgHeader-col">
+                <ion-label class="bgHeader-label-button">
+                    N° Ruta:
+                </ion-label>
+            </ion-col>
+            <ion-col col-5 class="bgHeader-col">
+                <ion-label class="bgHeader-text-button">
+                    {{ contador }} / {{ total }}
+                </ion-label>
+            </ion-col>
+            <ion-col col-4 class="bgHeader-col">
+                <button ion-button (click)="BackRutaPicking()" [disabled]="!Backisenabled " class="bgHeader-button"
+                    icon-start>
+                    <ion-icon name='arrow-dropleft'></ion-icon>
+                </button>
+
+                <button ion-button (click)="NextRutaPicking()" [disabled]="Nextisenabled" class="bgHeader-button"
+                    icon-end>
+                    <ion-icon name='arrow-dropright'></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-header>
 
 
 
 <ion-content [ngClass]="{bgWhite: (!isBgRed && !isBgYellow && !isBgGreen), bgRed:(isBgRed), bgYellow:(isBgYellow), bgGreen:(isBgGreen), bgWhite:(isbgWhite)}">
- 
+
     <ion-grid style="padding: 0px;">
         <ion-row no-padding style="margin-top: 15px; margin-bottom: 15px;">
-            <!-- <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
-                <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                    Descripción:
-                </ion-label>
-            </ion-col> -->
             <ion-col col-12 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
                 <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
                     {{ pickingProducto.Producto }}
@@ -82,7 +74,7 @@
                     {{ pickingProducto.CodigoProducto }}
                 </ion-label>
             </ion-col>
-        </ion-row>        
+        </ion-row>
         <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;">
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
                 <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
@@ -98,7 +90,7 @@
         <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;">
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
                 <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                    Cant. <br/> Pedida:
+                    Cant. <br /> Pedida:
                 </ion-label>
             </ion-col>
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
@@ -108,7 +100,7 @@
             </ion-col>
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
                 <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                    Cant. <br/> Atendida:
+                    Cant. <br /> Atendida:
                 </ion-label>
             </ion-col>
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
@@ -142,7 +134,7 @@
             </ion-col>
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
                 <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
-                    Saldo <br/> por caja:
+                    Saldo <br /> por caja:
                 </ion-label>
             </ion-col>
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
@@ -159,7 +151,8 @@
             </ion-col>
             <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
                 <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-                    <ion-input #txtCodBarraUA type="text" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+                    <ion-input #txtCodBarraUA type="text" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()"
+                        style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
@@ -171,12 +164,10 @@
             </ion-col>
             <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
                 <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-                    <ion-input #txtCantidadUA type="text"  value="Textcantidad" [disabled]="Txtcantidadisenabled" [(ngModel)]="Textcantidad" 
-                     (keydown)="keydown($event)" (keyup)="keyup($event)" (keyup.enter)="registarUA()"  placeholder="0.00" style="font-weight:bold; font-size: 13px; 
-                    padding: 0px; margin: 0px; color:dimgray;" ></ion-input>
-<!-- (ngModelChange)="onTextcantidadChange($event)"  -->
-                    <!-- <input type="text" [(ngModel)]="miModelo.field" name="field" #field="ngModel" number/>
-<p *ngIf="field.errors?.number">error message</p> -->
+                    <ion-input #txtCantidadUA type="text" value="Textcantidad" [disabled]="Txtcantidadisenabled"
+                        [(ngModel)]="Textcantidad" (keydown)="keydown($event)" (keyup)="keyup($event)" (keyup.enter)="registarUA()"
+                        placeholder="0.00" style="font-weight:bold; font-size: 13px; 
+                    padding: 0px; margin: 0px; color:dimgray;"></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
@@ -184,101 +175,44 @@
     </ion-grid>
 </ion-content>
 
-<!-- <ion-footer>
-    <ion-grid style="padding-left: 0px; padding-right: 0px; padding-top: 0px; padding-bottom: 5px;">
-        <ion-row no-padding no-margin>
-            <ion-col col-4 style="margin: 0px; padding: 1px; ">
-                <button ion-button large full style="background:  #A4A4A4" (click)="goDetallePickingPage()">
-                    <div>
-                        <ion-icon name='cube'></ion-icon> <br>
-                        <label style="font-size: 10px">Detalle Picking</label>
-                    </div>
-                </button>
-            </ion-col>
-            <ion-col col-4 style="margin: 0px; padding: 1px; ">
-                <button ion-button (click)="goDetallePorProductoPage()" large full style="background:  #A4A4A4">
-                    <div>
-                        <ion-icon name='list-box'></ion-icon> <br>
-                        <label style="font-size: 10px">Ver UAs</label>
-                    </div>
-                    <ion-icon name=""></ion-icon>
-                </button>
-            </ion-col>
-            <ion-col col-4 style="margin: 0px; padding: 1px; ">
-                <button ion-button large full (click)="goRutaPickingPageUpdate()" style="background:  #A4A4A4">
-                    <div>
-                        <ion-icon name='add'></ion-icon> <br>
-                        <label style="font-size: 10px">Ubicaciones</label>
-                    </div>
-                    <ion-icon name=""></ion-icon>
-                </button>
-            </ion-col>
-        </ion-row>
-        <ion-row no-padding no-margin>
-            <ion-col col-6 style="margin: 0px; padding: 1px; ">
-                <button ion-button (click)="goReabastecimientoPage()" large full style="background:  #A4A4A4">
-                    <div>
-                        <ion-icon name='logo-dropbox'></ion-icon> <br>
-                        <label style="font-size: 10px">Reabastecimiento</label>
-                    </div>
-                </button>
-            </ion-col>
-            <ion-col col-6 style="margin: 0px; padding: 1px; ">
-                <button ion-button large full (click)="registarUA()" style="background:  #A4A4A4">
-                    <div>
-                        <ion-icon name='checkbox-outline'></ion-icon> <br>
-                        <label style="font-size: 10px">Registrar</label>
-                    </div>
-                    <ion-icon name=""></ion-icon>
-                </button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-</ion-footer> -->
-
 <ion-footer style="background:#054B77">
     <ion-grid style="margin: 0px; padding: 0px">
-      <ion-row>
-        <ion-col style="margin: 0px; padding: 0px; width: 20%;">
-          <button ion-button style=" margin: 0px; padding: 0px" (click)="goDetallePickingPage()"
-            medium full>
-            <div>
-              <ion-icon name='cube'></ion-icon> <br>
-            </div>
-          </button>
-        </ion-col>
-        <ion-col style="margin: 0px; padding: 0px; width: 20%;">
-          <button ion-button style=" margin: 0px; padding: 0px" (click)="goDetallePorProductoPage()"
-            medium full>
-            <div>
-              <ion-icon name='list-box'></ion-icon> <br>
-            </div>
-          </button>
-        </ion-col>
-        <ion-col style="margin: 0px; padding: 0px; width: 20%;">
-          <button ion-button style="margin: 0px; padding: 0px" (click)="goRutaPickingPageUpdate()"
-            medium full>
-            <div>
-              <ion-icon name='add'></ion-icon> <br>
-            </div>
-          </button>
-        </ion-col>
-        <ion-col style="margin: 0px; padding: 0px; width: 20%;">
-          <button ion-button style=" margin: 0px; padding: 0px" (click)="goReabastecimientoPage()"
-            medium full>
-            <div>
-              <ion-icon name='logo-dropbox'></ion-icon> <br>
-            </div>
-          </button>
-        </ion-col>
-        <ion-col style="margin: 0px; padding: 0px; width: 20%;">
-          <button ion-button style=" margin: 0px; padding: 0px" (click)="registarUA()"
-            medium full>
-            <div>
-              <ion-icon name='checkbox-outline'></ion-icon> <br>
-            </div>
-          </button>
-        </ion-col>
-      </ion-row>
+        <ion-row>
+            <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+                <button ion-button style=" margin: 0px; padding: 0px" (click)="goDetallePickingPage()" medium full>
+                    <div>
+                        <ion-icon name='cube'></ion-icon> <br>
+                    </div>
+                </button>
+            </ion-col>
+            <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+                <button ion-button style=" margin: 0px; padding: 0px" (click)="goDetallePorProductoPage()" medium full>
+                    <div>
+                        <ion-icon name='list-box'></ion-icon> <br>
+                    </div>
+                </button>
+            </ion-col>
+            <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+                <button ion-button style="margin: 0px; padding: 0px" (click)="goRutaPickingPageUpdate()" medium full>
+                    <div>
+                        <ion-icon name='add'></ion-icon> <br>
+                    </div>
+                </button>
+            </ion-col>
+            <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+                <button ion-button style=" margin: 0px; padding: 0px" (click)="goReabastecimientoPage()" medium full>
+                    <div>
+                        <ion-icon name='logo-dropbox'></ion-icon> <br>
+                    </div>
+                </button>
+            </ion-col>
+            <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+                <button ion-button style=" margin: 0px; padding: 0px" (click)="registarUA()" medium full>
+                    <div>
+                        <ion-icon name='checkbox-outline'></ion-icon> <br>
+                    </div>
+                </button>
+            </ion-col>
+        </ion-row>
     </ion-grid>
-  </ion-footer>
+</ion-footer>

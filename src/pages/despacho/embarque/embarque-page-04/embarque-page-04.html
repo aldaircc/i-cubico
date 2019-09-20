@@ -66,33 +66,17 @@
       </ion-col>
       <ion-col> {{ subBultoLeido }} / {{ vParameter.totalSaldo }}</ion-col>
     </ion-row>
-
   </ion-grid>
-
-  <!-- <ion-item>
-      <ion-label stacked>Código bulto:</ion-label>
-      <ion-input #inputCodeBarBulto type="text" [(ngModel)]="strCodeBarBulto" (keyup.enter)="cargarBulto()" #inputCodeBarBulto></ion-input>
-    </ion-item> -->
 </ion-content>
 
-<!-- <ion-footer>
-  <ion-toolbar>
-    <ion-buttons right>
-      <button ion-button icon-only (click)="goToEmbarPage05(vParameter)">
-        <ion-icon name="list-box" size="large"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer> -->
-
 <ion-footer>
-    <ion-grid class="bgFooter">
-      <ion-row>
-        <ion-col col-12 class="bgFooter-col">
-          <button ion-button icon-start (click)="goToEmbarPage05(vParameter)">
-            <ion-icon name="list-box"></ion-icon>
-          </button>
-        </ion-col>
-      </ion-row>    
-    </ion-grid>
-  </ion-footer>
+  <ion-grid class="bgFooter">
+    <ion-row>
+      <ion-col col-12 class="bgFooter-col">
+        <button ion-button icon-start (click)="goToEmbarPage05(vParameter)">
+          <ion-icon name="list-box"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

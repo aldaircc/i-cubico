@@ -16,37 +16,34 @@ import { GlobalServiceProvider } from '../../providers/global-service/global-ser
   templateUrl: 'impresora.html',
 })
 export class ImpresoraPage {
-
-  userDetail : any;
-  listImpresora : any;
-
+  userDetail: any;
+  listImpresora: any;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public sImpresora:ImpresoraServiceProvider, public alertCtrl: AlertController,
-    public viewCtrl:ViewController, public sGlobal:GlobalServiceProvider) {
-      this.listarAccesosImpresoraXUsuario(this.sGlobal.userName);
+    public sImpresora: ImpresoraServiceProvider, public alertCtrl: AlertController,
+    public viewCtrl: ViewController, public sGlobal: GlobalServiceProvider) {
+    this.listarAccesosImpresoraXUsuario(this.sGlobal.userName);
   }
 
   ionViewDidLoad() {
-    
   }
 
-  listarAccesosImpresoraXUsuario(usuario){
-    this.sImpresora.listarAccesosImpresoraXUsuario(usuario).then(result=>{
+  listarAccesosImpresoraXUsuario(usuario) {
+    this.sImpresora.listarAccesosImpresoraXUsuario(usuario).then(result => {
       this.listImpresora = result;
-    });    
+    });
   }
 
-  selectImpresora(print){
+  selectImpresora(print) {
     const confirm = this.alertCtrl.create({
       title: 'Impresora',
-      message: 'Ha seleccionado la impresora '+ print.Nombre+'. ¿Desea continuar?',
+      message: 'Ha seleccionado la impresora ' + print.Nombre + '. ¿Desea continuar?',
       buttons: [
         {
           text: 'Si',
           handler: () => {
             this.sGlobal.Id_Impresora = print.Id_Impresora;
             this.sGlobal.nombreImpresora = print.Nombre;
-            let printSel = {'printSel': print.Nombre };
+            let printSel = { 'printSel': print.Nombre };
             this.dismiss(printSel);
           }
         },
@@ -61,7 +58,7 @@ export class ImpresoraPage {
     confirm.present();
   }
 
-  dismiss(dataSel){
+  dismiss(dataSel) {
     this.viewCtrl.dismiss(dataSel);
   }
 }

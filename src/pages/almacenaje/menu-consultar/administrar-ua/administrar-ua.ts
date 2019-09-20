@@ -69,11 +69,6 @@ export class AdministrarUaPage {
     public toastCtrl: ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider,
     public modalCtrl: ModalController, public sEtq: EtiquetadoServiceProvider, public popoverCtrl: PopoverController) {
     this.vDatosRecibidos = navParams.get('data');
-    // if (this.vDatosRecibidos.page == 3) {
-    //   debugger;
-    //   this.codeBarUA = this.vDatosRecibidos.CodBar_UA;
-    //   this.validarCodeBarUA();
-    // }
     if (this.vDatosRecibidos.page == 'modal') {
       this.botonisDisplay = true;
       this.titutlo1isDisplay = false;
@@ -84,7 +79,7 @@ export class AdministrarUaPage {
   validarCodeBarUA() {
     if (this.codeBarUA) {
       if (this.codeBarUA.trim() != "") {
-        if(this.codeBarUA.length==12){
+        if (this.codeBarUA.length == 12) {
           debugger;
           this.sAlmacenaje.getListarUAUbicada(this.codeBarUA, this.sGlobal.Id_Almacen).then((result) => {
             debugger;
@@ -95,38 +90,33 @@ export class AdministrarUaPage {
                 if (resultAlert) {
                   this.limpiar();
                   setTimeout(() => {
-                    //this.txtCodUARef.setFocus();
                     this.selectAll(this.txtCodUA);
                   }, (500));
                 }
               })
             } else {
               this.ResultUA_Aux = this.ResultUA[0];
-              // this.FechaEmision = result[0].FechaEmision;
               this.FechaEmision = moment(result[0].FechaEmision, "DD-MM-YYYY").toDate().toISOString();
-              // this.FechaVencimiento = result[0].FechaVencimiento;
               this.FechaVencimiento = moment(result[0].FechaVencimiento, "DD-MM-YYYY").toDate().toISOString();
               this.Lote = result[0].Lote;
-              this.Cantidad = result[0].Cantidad;            
-  
-              // this.FechaEmisionBk = result[0].FechaEmision;
+              this.Cantidad = result[0].Cantidad;
+
               this.FechaEmisionBk = moment(result[0].FechaEmision, "DD-MM-YYYY").toDate().toISOString();
-              // this.FechaVencimientoBk = result[0].FechaVencimiento;
               this.FechaVencimientoBk = moment(result[0].FechaVencimiento, "DD-MM-YYYY").toDate().toISOString();
               this.LoteBk = result[0].Lote;
               this.CantidadBk = result[0].Cantidad;
-  
+
               this.btnReimprimirisenabled = true;
               this.btnEliminarisenabled = true;
               this.btnActualizarisenabled = true;
               this.btnReasignarisenabled = true;
               this.btnReubicarisenabled = true;
               this.btnParticionarisenabled = true;
-  
+
               setTimeout(() => {
                 this.selectAll(this.txtCantidad);
               }, (500));
-  
+
               if (this.sGlobal.Id_Impresora == 0) {
                 this.NombreImpresora = "NINGUNA";
               } else {
@@ -136,23 +126,21 @@ export class AdministrarUaPage {
           }, err => {
             console.log('E-getDataRutaPicking', err);
           });
-        }else{
+        } else {
           this.presentToast("El código de UA debe tener 12 dígitos.");
           setTimeout(() => {
             this.selectAll(this.txtCodUA);
           }, (500));
-        }        
+        }
       } else {
         this.presentToast("Ingrese código de UA");
         setTimeout(() => {
-          //this.txtCodUARef.setFocus();
           this.selectAll(this.txtCodUA);
         }, (500));
       }
     } else {
       this.presentToast("Ingrese código de UA");
       setTimeout(() => {
-        //this.txtCodUARef.setFocus();
         this.selectAll(this.txtCodUA);
       }, (500));
     }
@@ -164,16 +152,10 @@ export class AdministrarUaPage {
       if (result) {
         debugger
         let fecha = new Date().toISOString();
-        // let fechaEmision = moment(this.FechaEmision, "DD-MM-YYYY").toDate();
-        // let fechaEmisionString = fechaEmision.toISOString();
-        // let fechaVencimiento = moment(this.FechaVencimiento, "DD-MM-YYYY").toDate();
-        // let fechaVencimientoString = fechaVencimiento.toISOString();
         debugger;
         let objUA = {
           'UA_CodBarra': this.ResultUA[0].UA_CodBarra,
           'FechaRegistro': "/Date(" + Date.parse(fecha) + ")/",
-          // 'FechaEmision': "/Date(" + Date.parse(fechaEmisionString) + ")/",
-          // 'FechaVencimiento': "/Date(" + Date.parse(fechaVencimientoString) + ")/",
           'FechaEmision': "/Date(" + Date.parse(this.FechaEmision) + ")/",
           'FechaVencimiento': "/Date(" + Date.parse(this.FechaVencimiento) + ")/",
           'Lote': this.Lote,
@@ -220,13 +202,9 @@ export class AdministrarUaPage {
         if (resultAlert3) {
           debugger
           let fecha = new Date().toISOString();
-          // let fechaEmision = moment(this.FechaEmision, "DD-MM-YYYY").toDate();
-          // let fechaEmisionString = fechaEmision.toISOString();
-          // let fechaVencimiento = moment(this.FechaVencimiento, "DD-MM-YYYY").toDate();
-          // let fechaVencimientoString = fechaVencimiento.toISOString();
           debugger;
           let objUA = {
-            
+
             'UA_CodBarra': this.ResultUA[0].UA_CodBarra,
             'FechaRegistro': "/Date(" + Date.parse(fecha) + ")/",
             'FechaEmision': "/Date(" + Date.parse(this.FechaEmision) + ")/",
@@ -254,7 +232,6 @@ export class AdministrarUaPage {
     } else {
       this.presentAlert("No se ha modificado algún campo de la UA.");
     }
-
   }
 
   reImprimirUA() {
@@ -269,7 +246,6 @@ export class AdministrarUaPage {
       debugger;
       if (this.sGlobal.Id_Impresora == 0) {
         this.presentAlert("Impresora no existe. Seleccionar otra impresora").then((resultAlert) => {
-          //Mostrar lista de impresoras.   
           this.showModalImpresora();
         })
       } else {
@@ -283,7 +259,6 @@ export class AdministrarUaPage {
     } else {
       this.presentAlert("No es posible reimprimir, existen campos modificados. Volver a ingresar la UA").then((resultAlert) => {
         setTimeout(() => {
-          //this.txtCodUARef.setFocus();
           this.selectAll(this.txtCodUA);
         }, (500));
       })
@@ -313,7 +288,7 @@ export class AdministrarUaPage {
     listEtq.push({ "campo": "|COMPOSICION|", "valor": "" });
     listEtq.push({ "campo": "|UMED|", "valor": this.ResultUA_Aux.UM });
     // listEtq.push({ "campo": "|CANTIDAD|", "valor": parseFloat(this.Cantidad).toFixed(2) });
-    listEtq.push({ "campo": "|CANTIDAD|", "valor": parseFloat(this.Cantidad)});
+    listEtq.push({ "campo": "|CANTIDAD|", "valor": parseFloat(this.Cantidad) });
     listEtq.push({ "campo": "|COPIAS|", "valor": "1" });
     listEtq.push({ "campo": "|CODBARRA|", "valor": this.codeBarUA });
     listEtq.push({ "campo": "|PRODUCTO|", "valor": this.ResultUA_Aux.Descripcion });
@@ -344,7 +319,7 @@ export class AdministrarUaPage {
     popover.onDidDismiss(popoverData => {
       if (popoverData == 3) {
         this.showModalImpresora();
-      } 
+      }
     });
   }
 
@@ -358,7 +333,6 @@ export class AdministrarUaPage {
         this.NombreImpresora = this.sGlobal.nombreImpresora;
         console.log('Id_Impresora - actualizada', this.sGlobal.Id_Impresora);
       }
-      // this.NombreImpresora = this.sGlobal.nombreImpresora;
     });
   }
 
@@ -381,7 +355,6 @@ export class AdministrarUaPage {
     this.btnReubicarisenabled = false;
     this.btnParticionarisenabled = false;
     setTimeout(() => {
-      //this.txtCodUARef.setFocus();
       this.selectAll(this.txtCodUA);
     }, (500));
   }
@@ -398,15 +371,15 @@ export class AdministrarUaPage {
     }
 
     if (cant == 0) { //Significa que es un número entero      
-        if (val.length > 5) {
-          if (name == "txtCant") {
-            this.Cantidad = 0;
-            setTimeout(() => {
-              this.selectAll(this.txtCantidad);
-            }, (500));
-          }
-          alert("La cantidad ingresada debe ser menor. Máximo 5 números enteros y 3 decimales.")
+      if (val.length > 5) {
+        if (name == "txtCant") {
+          this.Cantidad = 0;
+          setTimeout(() => {
+            this.selectAll(this.txtCantidad);
+          }, (500));
         }
+        alert("La cantidad ingresada debe ser menor. Máximo 5 números enteros y 3 decimales.")
+      }
     } else if (cant == 1) {
       //Metodo para saber cuantos digitos hay despues del .
       var punto = 0;
@@ -437,10 +410,8 @@ export class AdministrarUaPage {
         }, (500));
       }
       alert("El número ingresado no tiene formato correcto, vuelva a ingresar.")
-    }    
+    }
   }
-
-  
 
   selectAll(el: ElementRef) {
     let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
@@ -474,7 +445,6 @@ export class AdministrarUaPage {
     })
   }
 
-
   presentAlertConfirm(message): Promise<boolean> {
     return new Promise((resolve, reject) => {
       const confirm = this.alertCtrl.create({
@@ -506,7 +476,6 @@ export class AdministrarUaPage {
     if (this.Cantidad > this.CantidadBk) {
       this.presentAlert("La cantidad no debe ser mayor o igual al de la UA").then((resultAlert) => {
         setTimeout(() => {
-          //this.txtCantidadRef.setFocus();
           this.selectAll(this.txtCantidad);
         }, (500));
       })
@@ -514,11 +483,10 @@ export class AdministrarUaPage {
     } else if (this.Cantidad == this.CantidadBk) {
       this.presentAlert("La cantidad no debe ser mayor o igual al de la UA").then((resultAlert) => {
         setTimeout(() => {
-          //this.txtCantidadRef.setFocus();
           this.selectAll(this.txtCantidad);
         }, (500));
       })
-    }else{
+    } else {
       this.vAdministrarUAPage = {
         'CodBar_UA': this.codeBarUA,
         'Lote': this.Lote,
@@ -528,12 +496,12 @@ export class AdministrarUaPage {
       this.navCtrl.push(ReasignarUaPage, {
         data: this.vAdministrarUAPage, reasignar: this.reasignarCallback
       });
-    }    
+    }
   }
 
-  dataFromReasignarUaPage : any;  
-  dataFromReubicarUaPage : any;  
-  dataFromParticionarUaPage : any; 
+  dataFromReasignarUaPage: any;
+  dataFromReubicarUaPage: any;
+  dataFromParticionarUaPage: any;
   reasignarCallback = data => {
     debugger;
     this.dataFromReasignarUaPage = data;
@@ -560,17 +528,7 @@ export class AdministrarUaPage {
     this.vDatosRecibidos = this.dataFromParticionarUaPage;
     this.codeBarUA = this.vDatosRecibidos.CodBar_UA;
     this.validarCodeBarUA();
-  }; 
-
-  // goReubicarUaPage() {
-  //   this.vAdministrarUAPage = {
-  //     'CodBar_UA': this.codeBarUA,
-  //     'Id_Ubicacion': this.ResultUA[0].Id_Ubicacion
-  //   };
-  //   this.navCtrl.push(ReubicarUaPage, {
-  //     data: this.vAdministrarUAPage
-  //   });
-  // }
+  };
 
   goReubicarUaPage() {
     this.vAdministrarUAPage = {
@@ -583,11 +541,10 @@ export class AdministrarUaPage {
   }
 
   goParticionarUaPage() {
-        debugger;
+    debugger;
     if (this.Cantidad > this.CantidadBk) {
       this.presentAlert("La cantidad no debe ser mayor o igual al de la UA").then((resultAlert) => {
         setTimeout(() => {
-          //this.txtCantidadRef.setFocus();
           this.selectAll(this.txtCantidad);
         }, (500));
       })
@@ -595,7 +552,6 @@ export class AdministrarUaPage {
     } else if (this.Cantidad == this.CantidadBk) {
       this.presentAlert("La cantidad no debe ser mayor o igual al de la UA").then((resultAlert) => {
         setTimeout(() => {
-          //this.txtCantidadRef.setFocus();
           this.selectAll(this.txtCantidad);
         }, (500));
       })
@@ -607,9 +563,7 @@ export class AdministrarUaPage {
         'Codigo': this.ResultUA_Aux.Codigo,
         'DescProducto': this.ResultUA_Aux.Descripcion,
         'Lote': this.Lote,
-        // 'FechaEmision': this.FechaEmision,
-        'FechaEmision': moment(this.FechaEmision).format("DD-MM-YYYY"),        
-        // 'FechaVencimiento': this.FechaVencimiento,
+        'FechaEmision': moment(this.FechaEmision).format("DD-MM-YYYY"),
         'FechaVencimiento': moment(this.FechaVencimiento).format("DD-MM-YYYY"),
         'Pasillo': this.ResultUA_Aux.Pasillo,
         'CantidadTotal': parseFloat(this.Cantidad)
@@ -619,10 +573,6 @@ export class AdministrarUaPage {
       });
     }
   }
-
-  // goMenuConsultarPage() {
-  //   this.navCtrl.push(MenuConsultarPage);
-  // }
 
   goPickingPage() {
     this.navCtrl.push(PickingPage);
@@ -674,38 +624,9 @@ export class AdministrarUaPage {
   }
 
   ionViewDidLoad() {
-    // this.navBar.backButtonClick = (e: UIEvent) => {
-    //   // if(this.vDatosRecibidos.page == 4){
-    //   //   this.goPickingPage();
-    //   // }else if(this.vDatosRecibidos.page == 5){
-    //   //   this.goRutaPickingPage();
-    //   // }
-    //   // else if(this.vDatosRecibidos.page == 6){
-    //   //   this.goDetallePickingPage();
-    //   // }
-    //   // else if(this.vDatosRecibidos.page == 7){
-    //   //   this.goCerrarPickingPage();
-    //   // }
-    //   // else if(this.vDatosRecibidos.page == 8){
-    //   //   this.dismiss();
-    //   // }
-    //   // else if(this.vDatosRecibidos.page == 9){
-    //   //   //Ir a detalle por producto/ver uas
-    //   // }
-    //   // else if(this.vDatosRecibidos.page == 10){
-    //   //   //Ir a reabastecimiento
-    //   // }
-    //   // else{
-    //   //   this.goMenuConsultarPage();
-    //   // }
-    //   this.goMenuConsultarPage();
-    // }
     setTimeout(() => {
-      //this.keyboard.hide();
-      //this.txtCodUARef.setFocus();
       this.selectAll(this.txtCodUA);
     }, (500));
     console.log('ionViewDidLoad AdministrarUaPage');
   }
-
 }

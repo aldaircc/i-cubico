@@ -6,7 +6,6 @@ import { ReubicacionPage } from '../almacenaje/reubicacion/reubicacion'
 import { ReabastecimientoAlmacenajePage } from '../almacenaje/reabastecimiento-almacenaje/reabastecimiento-almacenaje'
 import { ConsultarUbicacionPage } from '../almacenaje/consultar-ubicacion/consultar-ubicacion'
 import { MenuConsultarPage } from '../almacenaje/menu-consultar/menu-consultar'
-import { MainMenuPage } from '../main-menu/main-menu'
 import { GlobalServiceProvider } from '../../providers/global-service/global-service';
 
 @IonicPage()
@@ -17,9 +16,6 @@ import { GlobalServiceProvider } from '../../providers/global-service/global-ser
 
 export class AlmacenajePage {
     @ViewChild(Navbar) navBar: Navbar;
-
-    //userProfile={"Almacen":"","ApeNom":"","page":"1"};
-
     constructor(public navCtrl: NavController, public auth: AuthService, public toastCtrl: ToastController,
         public sGlobal: GlobalServiceProvider) {
     }
@@ -45,12 +41,6 @@ export class AlmacenajePage {
     }
 
     ionViewDidLoad() {
-        // this.navBar.backButtonClick = (e: UIEvent) => {
-        //     this.userProfile.Almacen = this.sGlobal.nombreAlmacen;
-        //     this.userProfile.ApeNom = this.sGlobal.apeNom;
-        //     this.navCtrl.push(MainMenuPage, this.userProfile);
-        //     //this.navCtrl.push(MainMenuPage);
-        // }
         console.log('ionViewDidLoad PickingPage');
     }
 }

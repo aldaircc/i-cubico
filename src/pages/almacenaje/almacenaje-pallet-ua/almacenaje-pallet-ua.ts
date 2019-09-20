@@ -32,36 +32,31 @@ export class AlmacenajePalletUaPage {
   rowCount: any = 0;
   rowCountTotal: any = 0;
 
-  vUbicacion : any ={
-    'Sector' : "",
-    'Fila' : "",
-    'Columna' : "",
-    'Nivel' : "",
-    'Posicion' : "",
-    'CodigoBarraUbi' : "",
-    'Id_Ubicacion' : 0,
-    'Id_Ubicacion_Transito' : 0,
-    'CantidadPallets' : 0,
-    'lst_UA' : []
+  vUbicacion: any = {
+    'Sector': "",
+    'Fila': "",
+    'Columna': "",
+    'Nivel': "",
+    'Posicion': "",
+    'CodigoBarraUbi': "",
+    'Id_Ubicacion': 0,
+    'Id_Ubicacion_Transito': 0,
+    'CantidadPallets': 0,
+    'lst_UA': []
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vDatosUbicacion = navParams.get('data');
-    ///this.vUbicacion = (navParams.get('vUbicacion') != null) ? navParams.get('vUbicacion') : this.vUbicacion;
     debugger;
     this.rowCountTotal = this.vDatosUbicacion.CantidadPallets;
-    // if(this.vUbicacion.CantidadPallets != 0)
-    // {
-    //   this.rowCountTotal = this.vUbicacion.CantidadPallets;
-    // }
   }
 
   validarCodeBar() {
     debugger;
     if (this.codeBar) {
       if (this.codeBar.trim() != "") {
-        if(this.codeBar.length==14){
+        if (this.codeBar.length == 14) {
           this.codBar = this.vDatosUbicacion.CodigoBarraUbi.trim();
           if (this.codeBar.trim() == this.codBar) {
             this.isbgWhite = false;
@@ -84,9 +79,9 @@ export class AlmacenajePalletUaPage {
               }
             })
           }
-        }else{
+        } else {
           this.presentToast("El código de ubicación debe tener 14 dígitos.");
-        }        
+        }
       }
       else {
         this.presentToast("Ingrese código de ubicación");
@@ -122,8 +117,6 @@ export class AlmacenajePalletUaPage {
                   this.isBgGreen = true;
                   this.presentAlert("Proceso de almacenaje de Pallets/UA´s finalizado.").then((resultAlert) => {
                     if (resultAlert) {
-                      //this.goPalletsUasTransito();
-                      // this.navCtrl.pop();
                       this.goBackPalletTransito();
                     }
                   })
@@ -189,15 +182,12 @@ export class AlmacenajePalletUaPage {
       'CantidadPallets': this.vDatosUbicacion.CantidadPallets,
       'lst_UA': this.vDatosUbicacion.lst_UA
     };
-    // this.navCtrl.push(OtraUbicacionPage, {
-    //   data: this.vAlmacenajePalletUaPage
-    // });
     this.navCtrl.push(OtraUbicacionPage, {
       data: this.vAlmacenajePalletUaPage, ubicacion: this.Selectedcallback
     });
   }
 
-  dataFromOtraUbicacionPage : any;  
+  dataFromOtraUbicacionPage: any;
   Selectedcallback = data => {
     debugger;
     this.dataFromOtraUbicacionPage = data;
@@ -215,26 +205,15 @@ export class AlmacenajePalletUaPage {
     this.vDatosUbicacion.lst_UA = this.dataFromOtraUbicacionPage.lst_UA;
   };
 
-
-  goBackPalletTransito(){
+  goBackPalletTransito() {
     debugger;
-      this.navCtrl.pop().then(() => {
-        this.vAlmacenajePalletUaPage = {
-          'Id_Ubicacion': this.vDatosUbicacion.Id_Ubicacion
-        };
-        this.navParams.get('palletTransito')(this.vAlmacenajePalletUaPage);
-      });
+    this.navCtrl.pop().then(() => {
+      this.vAlmacenajePalletUaPage = {
+        'Id_Ubicacion': this.vDatosUbicacion.Id_Ubicacion
+      };
+      this.navParams.get('palletTransito')(this.vAlmacenajePalletUaPage);
+    });
   }
-
-  // goPalletsUasTransito() {
-  //   debugger;
-  //   this.vAlmacenajePalletUaPage = {
-  //     'Id_Ubicacion_Transito': this.vDatosUbicacion.Id_Ubicacion_Transito
-  //   };
-  //   this.navCtrl.push(PalletsTransitoPage, {
-  //     data: this.vAlmacenajePalletUaPage
-  //   });
-  // }
 
   selectAll(el: ElementRef) {
     let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
@@ -243,7 +222,6 @@ export class AlmacenajePalletUaPage {
 
   ionViewDidLoad() {
     setTimeout(() => {
-      //this.txtCodUbicacionRef.setFocus();
       this.selectAll(this.txtCodUbicacion);
     }, (500));
     console.log('ionViewDidLoad AlmacenajePalletUaPage');
