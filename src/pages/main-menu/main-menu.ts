@@ -11,6 +11,7 @@ import { InventarioPage_01Page } from '../inventario/inventario-page-01/inventar
 import { DespachoPage } from '../despacho/despacho';
 
 import { GlobalServiceProvider } from '../../providers/global-service/global-service';
+import { AuthService } from '../../providers/auth-service/auth-service';
 
 import { WarehouseSelectPage } from '../warehouse-select/warehouse-select';
 
@@ -31,9 +32,60 @@ export class MainMenuPage {
 
   userProfile: any;
   vMainMenuPage: any;
+  responseData: any;
 
-  constructor(private app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider, public viewCtrl: ViewController) {
+  btnReciboisenabled: boolean = false;
+  btnAlmacenajeisenabled: boolean = false;
+  btnPickingisenabled: boolean = false;
+  btnEmbalajeisenabled: boolean = false;
+  btnDespachoisenabled: boolean = false;
+  btnTransferenciaisenabled: boolean = false;
+  btnInventarioisenabled: boolean = false;
+  btnEtiquetadoisenabled: boolean = false;
+
+  constructor(private app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, 
+    public sGlobal: GlobalServiceProvider, public viewCtrl: ViewController, public auth: AuthService,) {
     this.userProfile = this.navParams.data;
+    this.accesosModulos();
+  }
+
+  accesosModulos(){
+    let paramAcceso = { "strUser": this.sGlobal.userName, "Tipo": "M", "intIdRF" : this.sGlobal.Id_Almacen };
+    debugger
+    this.auth.getAccesosMenusXUsuario(paramAcceso).then((result) => {
+      debugger;
+      this.responseData = result;
+      if (this.responseData.length > 0) {
+        for(var i = 0; i < this.responseData.length; i++){
+          if(this.responseData[i].Url == "MREC01"){ //Recepcion
+            this.btnReciboisenabled = true;
+          }
+          if(this.responseData[i].Url == "MUBI01"){ //Ubicacion
+            this.btnAlmacenajeisenabled = true;
+          }
+          if(this.responseData[i].Url == "MPCK01"){ //Picking
+            this.btnPickingisenabled = true;
+          }
+          if(this.responseData[i].Url == "MDES01"){ //Despacho
+            this.btnEmbalajeisenabled = true;
+          }
+          if(this.responseData[i].Url == "MINV01"){ //Inventario
+            this.btnInventarioisenabled = true;
+          }
+          if(this.responseData[i].Url == "METQ01"){ //Etiquetado
+            this.btnEtiquetadoisenabled = true;
+          }
+          if(this.responseData[i].Url == "MEMB01"){ //Embarque
+            this.btnDespachoisenabled = true;
+          }
+          if(this.responseData[i].Url == "MPRO01"){ //Produccion
+            this.btnTransferenciaisenabled = true;
+          }
+        }
+      }
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   ionViewDidLoad() {

@@ -27,8 +27,6 @@ export class GlobalServiceProvider {
   apeNom: string = "";
   url: string = "";
   urlPrint: string = "";
-  // url: string = "";
-  // urlPrint: string = "";
   usuario: string;
   produccion: string;
   tablaEst: string;

@@ -53,6 +53,7 @@ export class HomePage {
           this.sGlobal.loadXML();
 
           this.auth.getUsers(this.userData).then((result) => {
+            debugger;
             this.responseData = result;
             if (this.responseData.length > 0) {
               this.sGlobal.vUserData = result;
@@ -73,6 +74,7 @@ export class HomePage {
 
   iniciarSesionWeb() {
     this.auth.getUsers(this.userData).then((result) => {
+      debugger;
       this.responseData = result;
       if (this.responseData.length > 0) {
         this.sGlobal.vUserData = result;

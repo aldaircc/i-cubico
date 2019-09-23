@@ -286,7 +286,7 @@ export class AdministrarUaPage {
     listEtq.push({ "campo": "|ORDEN|", "valor": "" });
     listEtq.push({ "campo": "|USUARIO|", "valor": this.sGlobal.apeNom });
     listEtq.push({ "campo": "|COMPOSICION|", "valor": "" });
-    listEtq.push({ "campo": "|UMED|", "valor": this.ResultUA_Aux.UM });
+    listEtq.push({ "campo": "|UM|", "valor": this.ResultUA_Aux.UM });
     // listEtq.push({ "campo": "|CANTIDAD|", "valor": parseFloat(this.Cantidad).toFixed(2) });
     listEtq.push({ "campo": "|CANTIDAD|", "valor": parseFloat(this.Cantidad) });
     listEtq.push({ "campo": "|COPIAS|", "valor": "1" });

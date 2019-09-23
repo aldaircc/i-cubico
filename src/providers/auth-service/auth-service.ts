@@ -13,6 +13,19 @@ export class AuthService {
     this.headers.append('Content-Type', 'application/json');
   }
 
+  getAccesosMenusXUsuario(parametros) {
+    return new Promise(resolve => {
+      debugger;
+      this.http.get(this.sGlobal.usuario + 'Accesos', { params: parametros })
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log(err);
+        });
+    });
+  }
+
   getUsers(credenciales) {
     return new Promise(resolve => {
       debugger;
