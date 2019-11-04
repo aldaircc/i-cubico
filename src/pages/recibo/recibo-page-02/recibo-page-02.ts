@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Navbar, Platform, App, NavParams, AlertController, ModalController, PopoverController } from 'ionic-angular';
+import { IonicPage, Platform, ViewController, NavController, Navbar, App, NavParams, AlertController, ModalController, PopoverController } from 'ionic-angular';
 import { ReciboServiceProvider } from '../../../providers/recibo-service/recibo-service';
 import { ReciboPage_03Page } from '../recibo-page-03/recibo-page-03';
 import { ImpresoraPage } from '../../impresora/impresora';
@@ -40,22 +40,27 @@ export class ReciboPage_02Page {
   countProcess: number = 0;
   countFinalizado: number = 0;
   cantPendiente: number = 0;
+  valorpopoverGlobal: boolean = false
+  popoverGlobal: any;
 
   constructor(public app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams,
     private alertCtrl: AlertController, public sRecibo: ReciboServiceProvider,
-    public modalCtrl: ModalController, public popoverCtrl: PopoverController, public sGlobal: GlobalServiceProvider) {
+    public modalCtrl: ModalController, public popoverCtrl: PopoverController, public sGlobal: GlobalServiceProvider,
+    public viewCtrl: ViewController) {
     this.vReciboPage01 = navParams.get('data');
     const data = JSON.parse(localStorage.getItem('vUserData'));
     this.userDetail = data;
   }
 
   presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 12 });
-    popover.present({
+    this.valorpopoverGlobal = true;
+    this.popoverGlobal = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 12 });
+    this.popoverGlobal.present({
       ev: myEvent
     });
 
-    popover.onDidDismiss(popoverData => {
+    this.popoverGlobal.onDidDismiss(popoverData => {
+      this.valorpopoverGlobal = false;
       if (popoverData == 2) {
         if (this.listAuxDetailTx.length != this.listConfirm.length) {
           this.showModalIncidencia(this.vReciboPage01);
@@ -404,6 +409,16 @@ export class ReciboPage_02Page {
 
   ionViewWillEnter() {
     this.getDetailXTx(this.vReciboPage01.Id_Tx);
+
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if(this.valorpopoverGlobal){
+        this.valorpopoverGlobal = false;
+        this.popoverGlobal.dismiss();
+      }else{
+        this.navCtrl.pop(); 
+      }      
+  });
   }
 
   ionViewDidLoad() {

@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, App, ModalController, Navbar, NavController, NavParams, PopoverController, ToastController, AlertController } from 'ionic-angular';
+import { IonicPage, Platform, ViewController, App, ModalController, Navbar, NavController, NavParams, PopoverController, ToastController, AlertController } from 'ionic-angular';
 import { DetallePorProductoPage } from '../detalle-por-producto/detalle-por-producto'
 import { ReabastecimientoPage } from '../reabastecimiento/reabastecimiento'
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
@@ -58,10 +58,13 @@ export class PickingPorProductoPage {
   @ViewChild('txtCodBarraUA', { read: ElementRef }) private txtCodBarraUA: ElementRef;
   @ViewChild('txtCantidadUA', { read: ElementRef }) private txtCantidadUA: ElementRef;
 
+  valorpopoverGlobal: boolean = false
+popoverGlobal: any;
+
   constructor(public app: App, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController,
     public toastCtrl: ToastController, public alertCtrl: AlertController,
-    public sGlobal: GlobalServiceProvider) {
+    public sGlobal: GlobalServiceProvider, public viewCtrl: ViewController, private platform: Platform) {
     this.vRutaPickingPage = navParams.get('data');
     this.getPickingProductoLoad();
   }
@@ -206,45 +209,51 @@ export class PickingPorProductoPage {
       //Editar cantidad de la UA
       this.presentToast("Cantidad de UA no puede ser mayor al saldo");
     } else {
-      //Registrar cantidad de la UA
-      debugger;
-      // Registrar UA
-      let objUA = {
-        'UA_CodBarra': this.codeBar.trim(),
-        'Id_Tx': this.vRutaPickingPage.Id_Tx,
-        'Id_Producto': this.pickingProducto.IdProducto,
-        'Id_UM': this.pickingProducto.IdUMBase,
-        'Cantidad': this.Textcantidad,
-        'FlagAnulado': false,
-        'Id_TerminalRF': this.sGlobal.Id_TerminalRF,
-        'Item': this.pickingProducto.Item,
-        'Id_Almacen': this.sGlobal.Id_Almacen,
-        'UsuarioRegistro': this.sGlobal.userName
-      };
-      this.sPicking.RegistarEliminarUA(objUA).then(result => {
+      if (this.sGlobal.Id_TerminalRF == 0) 
+      {
+        this.presentAlert("El campo Id RF no esta configurado. Contactese con el administrador del sistema.");        
+      } else {
+        //Registrar cantidad de la UA
         debugger;
-        this.resultRegistrar = result;
-        if (this.resultRegistrar.errNumber == 0) {
-          this.isBgRed = false;
-          this.isBgYellow = false;
-          this.isBgGreen = true;
-          this.codeBar = "";
-          this.Textcantidad = "";
-        } else {
-          this.isBgRed = true;
-          this.isBgYellow = false;
-          this.isBgGreen = false;
-          this.codeBar = "";
-          this.Textcantidad = "";
-          this.presentToast(this.resultRegistrar.message);
-        }
-        //Actulizar los campos cant. atendida y saldo
-        this.getPickingProductoUpdate(this.vRutaPickingPage.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen);
+        // Registrar UA
+        let objUA = {
+          'UA_CodBarra': this.codeBar.trim(),
+          'Id_Tx': this.vRutaPickingPage.Id_Tx,
+          'Id_Producto': this.pickingProducto.IdProducto,
+          'Id_UM': this.pickingProducto.IdUMBase,
+          'Cantidad': this.Textcantidad,
+          'FlagAnulado': false,
+          'Id_TerminalRF': this.sGlobal.Id_TerminalRF,
+          'Item': this.pickingProducto.Item,
+          'Id_Almacen': this.sGlobal.Id_Almacen,
+          'UsuarioRegistro': this.sGlobal.userName,
+          'UsuarioModificacion': this.sGlobal.userName
+        };
+        this.sPicking.RegistarEliminarUA(objUA).then(result => {
+          debugger;
+          this.resultRegistrar = result;
+          if (this.resultRegistrar.errNumber == 0) {
+            this.isBgRed = false;
+            this.isBgYellow = false;
+            this.isBgGreen = true;
+            this.codeBar = "";
+            this.Textcantidad = "";
+          } else {
+            this.isBgRed = true;
+            this.isBgYellow = false;
+            this.isBgGreen = false;
+            this.codeBar = "";
+            this.Textcantidad = "";
+            this.presentToast(this.resultRegistrar.message);
+          }
+          //Actulizar los campos cant. atendida y saldo
+          this.getPickingProductoUpdate(this.vRutaPickingPage.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen);
 
-        setTimeout(() => {
-          this.selectAll(this.txtCodBarraUA);
-        }, (500));
-      });
+          setTimeout(() => {
+            this.selectAll(this.txtCodBarraUA);
+          }, (500));
+        });
+      }
     }
   }
 
@@ -272,44 +281,51 @@ export class PickingPorProductoPage {
     debugger;
     if (this.codeBar) {
       if (this.codeBar.trim() != "") {
-        this.sPicking.getValidarUAPicking(this.vRutaPickingPage.Id_Tx, this.codeBar.trim(), this.pickingProducto.IdProducto, this.pickingProducto.LoteProducto, this.pickingProducto.IdUbicacion).then((result) => {
-          debugger;
-          this.UAPicking = result;
-          if (this.UAPicking.errNumber == 0) {
-            this.isbgWhite = false;
-            this.isBgRed = false;
-            this.isBgYellow = true;
-            this.isBgGreen = false;
-            //Mostrar cantidad de la UA
-            this.Textcantidad = this.UAPicking.valor1;
-            setTimeout(() => {
-              this.selectAll(this.txtCantidadUA);
-            }, (500));
+        if (this.codeBar.length == 12) {
+          this.sPicking.getValidarUAPicking(this.vRutaPickingPage.Id_Tx, this.codeBar.trim(), this.pickingProducto.IdProducto, this.pickingProducto.LoteProducto, this.pickingProducto.IdUbicacion).then((result) => {
+            debugger;
+            this.UAPicking = result;
+            if (this.UAPicking.errNumber == 0) {
+              this.isbgWhite = false;
+              this.isBgRed = false;
+              this.isBgYellow = true;
+              this.isBgGreen = false;
+              //Mostrar cantidad de la UA
+              this.Textcantidad = this.UAPicking.valor1;
+              setTimeout(() => {
+                this.selectAll(this.txtCantidadUA);
+              }, (500));
 
-            if (this.UAPicking.valor2 != 2) {
-              //Bloquear campo cantidad
-              this.Txtcantidadisenabled = false;
-              if (this.UAPicking.valor2 == 1) {
-                //Registrar cantidad de la UA automaticamente
-                this.registarUA();
+              if (this.UAPicking.valor2 != 2) {
+                //Bloquear campo cantidad
+                this.Txtcantidadisenabled = false;
+                if (this.UAPicking.valor2 == 1) {
+                  //Registrar cantidad de la UA automaticamente
+                  this.registarUA();
+                }
               }
+            } else {
+              this.presentToast(this.UAPicking.message);
+              //this.presentToast("UA no pertenece a la ubicación");
+              this.isbgWhite = false;
+              this.isBgRed = true;
+              this.isBgYellow = false;
+              this.isBgGreen = false;
+              this.codeBar = "";
+              this.Textcantidad = "";
+              setTimeout(() => {
+                this.selectAll(this.txtCodBarraUA);
+              }, (500));
             }
-          } else {
-            this.presentToast(this.UAPicking.message);
-            //this.presentToast("UA no pertenece a la ubicación");
-            this.isbgWhite = false;
-            this.isBgRed = true;
-            this.isBgYellow = false;
-            this.isBgGreen = false;
-            this.codeBar = "";
-            this.Textcantidad = "";
-            setTimeout(() => {
-              this.selectAll(this.txtCodBarraUA);
-            }, (500));
-          }
-        }, (err) => {
-          console.log('E-Verficar UA', err);
-        });
+          }, (err) => {
+            console.log('E-Verficar UA', err);
+          });
+        } else {
+          this.presentToast("El código de UA debe tener 12 dígitos.");
+          setTimeout(() => {
+            this.selectAll(this.txtCodBarraUA);
+          }, (500));
+        }
       } else {
         this.presentToast("Ingresar código de UA");
         this.isbgWhite = false;
@@ -374,8 +390,9 @@ export class PickingPorProductoPage {
           debugger;
           var codigo_Ubi = this.listaTempPickingProducto[this.posicion + 1].CodBarraUbi;
           var transito = this.listaTempPickingProducto[this.posicion + 1].FlagTransito;
-
+          debugger;
           if (this.pickingProducto.CodBarraUbi == codigo_Ubi) {
+            debugger;
             //avanzar al siguiente producto en la misma pantalla
             this.presentAlert("Item completado");
             this.total = this.listaTempPickingProducto.length;
@@ -389,18 +406,22 @@ export class PickingPorProductoPage {
               this.Nextisenabled = true;
             }
           } else {
+            debugger;
             //volver a ruta picking y ubicarse en la posicion siguiente...          
             this.presentAlert("Item completado").then((resultAlert2) => {
 
               if (transito == false) {
+                debugger;
+                this.pickingProducto.idRutaPicking = this.listaTempPickingProducto[this.posicion].idRutaPicking + 1;
                 this.goRutaPickingPage();
               } else {
+                debugger;
                 this.goOrdenesPicking();
               }
             })
           }
         } else {
-
+          debugger;
         }
       }
     }
@@ -409,7 +430,7 @@ export class PickingPorProductoPage {
   NextRutaPicking() {
     debugger;
     if (this.pickingProducto.Saldo > 0) {
-      this.presentAlertConfirm("¿Desea generar una orden de reabastecimiento?”.").then((result) => {
+      this.presentAlertConfirm("¿Desea generar una orden de reabastecimiento?").then((result) => {
         if (result) {
           this.goReabastecimientoPage();
         } else {
@@ -473,7 +494,7 @@ export class PickingPorProductoPage {
   BackRutaPicking() {
     debugger;
     if (this.pickingProducto.Saldo > 0) {
-      this.presentAlertConfirm("¿Desea generar una orden de reabastecimiento?”.").then((result) => {
+      this.presentAlertConfirm("¿Desea generar una orden de reabastecimiento?").then((result) => {
         if (result) {
           this.goReabastecimientoPage();
         } else {
@@ -579,12 +600,14 @@ export class PickingPorProductoPage {
   }
 
   presentPopover(ev) {
-    let popover = this.popoverCtrl.create(PopoverPickingPage, { 'page': 1 });
-    popover.present({
+    this.valorpopoverGlobal = true;
+    this.popoverGlobal = this.popoverCtrl.create(PopoverPickingPage, { 'page': 1 });
+    this.popoverGlobal.present({
       ev: ev
     });
 
-    popover.onDidDismiss(popoverData => {
+    this.popoverGlobal.onDidDismiss(popoverData => {
+      this.valorpopoverGlobal = false;
       if (popoverData == 1) {
         if (this.vRutaPickingPage.Id_Estado != 2) {
           this.showModalIncidencia(this.vRutaPickingPage);
@@ -666,6 +689,7 @@ export class PickingPorProductoPage {
   goRutaPickingPage() {
     debugger;
     this.navCtrl.pop().then(() => {
+      debugger;
       this.vPickingXProducto = {
         'idRutaPicking': this.pickingProducto.idRutaPicking,
         'Id_Tx': this.vRutaPickingPage.Id_Tx,
@@ -815,6 +839,18 @@ export class PickingPorProductoPage {
       this.selectAll(this.txtCodBarraUA);
     }, (500));
     console.log('ionViewDidLoad PickingPorProductoPage');
+  }
+
+  ionViewWillEnter(){
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if(this.valorpopoverGlobal){
+        this.valorpopoverGlobal = false;
+        this.popoverGlobal.dismiss();
+      }else{
+        this.navCtrl.pop(); 
+      }      
+  });
   }
 
 }

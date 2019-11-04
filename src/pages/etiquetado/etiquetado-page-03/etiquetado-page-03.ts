@@ -61,6 +61,7 @@ export class EtiquetadoPage_03Page {
   }
 
   validarExisteUA(strUA) {
+    debugger;
     this.sAlm.validarExisteUA(strUA).then(result => {
       let res: any = result;
       if (res.length != 0) {
@@ -70,20 +71,40 @@ export class EtiquetadoPage_03Page {
           this.selectAll(this.inputUA, 500);
           return;
         } else {
-          this.listUAs.push({
-            'UA_CodBarra': res[0].UA_CodBarra,
-            'Id_Producto': res[0].Id_Producto,
-            'CodigoProducto': res[0].CodigoProducto,
-            'NombreProducto': res[0].NombreProducto,
-            'Id_UM': res[0].Id_UM,
-            'UM': res[0].UM,
-            'Cantidad': res[0].Cantidad,
-            'LoteLab': res[0].LoteLab,
-            'LotePT': res[0].LotePT,
-            'FlagDisponible': res[0].FlagDisponible,
-            'FlagAveriado': res[0].FlagAveriado,
-            'Id_Marca': res[0].Id_Marca
-          });
+          debugger;
+          if (res.length == 1) {
+            this.listUAs.push({
+              'UA_CodBarra': res[0].UA_CodBarra,
+              'Id_Producto': res[0].Id_Producto,
+              'CodigoProducto': res[0].CodigoProducto,
+              'NombreProducto': res[0].NombreProducto,
+              'Id_UM': res[0].Id_UM,
+              'UM': res[0].UM,
+              'Cantidad': res[0].Cantidad,
+              'LoteLab': res[0].LoteLab,
+              'LotePT': res[0].LotePT,
+              'FlagDisponible': res[0].FlagDisponible,
+              'FlagAveriado': res[0].FlagAveriado,
+              'Id_Marca': res[0].Id_Marca
+            });
+          } else {
+            this.listUAs = res;
+          }
+
+          // this.listUAs.push({
+          //   'UA_CodBarra': res[0].UA_CodBarra,
+          //   'Id_Producto': res[0].Id_Producto,
+          //   'CodigoProducto': res[0].CodigoProducto,
+          //   'NombreProducto': res[0].NombreProducto,
+          //   'Id_UM': res[0].Id_UM,
+          //   'UM': res[0].UM,
+          //   'Cantidad': res[0].Cantidad,
+          //   'LoteLab': res[0].LoteLab,
+          //   'LotePT': res[0].LotePT,
+          //   'FlagDisponible': res[0].FlagDisponible,
+          //   'FlagAveriado': res[0].FlagAveriado,
+          //   'Id_Marca': res[0].Id_Marca
+          // });
           this.rowCount = this.listUAs.length;
           this.strUA = "";
           this.selectAll(this.inputUA, 500);

@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, App, NavController, NavParams, PopoverController, ToastController, AlertController, ModalController } from 'ionic-angular';
+import { IonicPage, Platform, ViewController, App, NavController, NavParams, PopoverController, ToastController, AlertController, ModalController } from 'ionic-angular';
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 import { ImpresoraPage } from '../../impresora/impresora'
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
@@ -33,15 +33,18 @@ export class CierrePickingPage {
   resultCierre: any = [];
   Aceptarisenabled: boolean = false;
 
+  valorpopoverGlobal: boolean = false
+popoverGlobal: any;
+
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController,
     public toastCtrl: ToastController, public alertCtrl: AlertController,
-    public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider, public sEtq: EtiquetadoServiceProvider) {
+    public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider, 
+    public sEtq: EtiquetadoServiceProvider, public viewCtrl: ViewController, private platform: Platform) {
     this.vRutaPickingPage = navParams.get('data');
   }
 
   keydown(event: any) {
-    debugger;
     const MY_REGEXP = /^\s*(\-|\+)?(\d+|(\d*(\.\d*)))([eE][+-]?\d+)?\s*$/;
     let newValue = event.target.value;
     let regExp = new RegExp(MY_REGEXP);
@@ -52,7 +55,6 @@ export class CierrePickingPage {
   }
 
   keyup(event: any) {
-    debugger;
     const MY_REGEXP = /^\s*(\-|\+)?(\d+|(\d*(\.\d*)))([eE][+-]?\d+)?\s*$/;
     let newValue = event.target.value;
     let regExp = new RegExp(MY_REGEXP);
@@ -69,8 +71,10 @@ export class CierrePickingPage {
   validarCodeBar() {
     debugger;
     if (this.codeBar) {
+      debugger;
       if (this.codeBar.trim() != "") {
-        this.sPicking.getMuelleXAlmacen(2, this.codeBar.trim()).then((result) => {
+        debugger;
+        this.sPicking.getMuelleXAlmacen(this.sGlobal.Id_Almacen, this.codeBar.trim()).then((result) => {
           debugger;
           this.listNombreMuelleXAlmacen = result;
           if (this.listNombreMuelleXAlmacen.length > 0) {
@@ -78,11 +82,12 @@ export class CierrePickingPage {
             this.Aceptarisenabled = true;
             console.log('Datos Muelle por almacen', this.listNombreMuelleXAlmacen);
           } else {
+            debugger;
             this.resultMuelleXAlmacen = [];
             this.Aceptarisenabled = false;
             this.codeBar = "";
 
-            this.presentAlert("¿Código de barras muelle no es correcto”.").then((resultAlert3) => {
+            this.presentAlert("Código de barras muelle no es correcto").then((resultAlert3) => {
               if (resultAlert3) {
                 // Mostrar lista de impresoras
                 setTimeout(() => {
@@ -115,7 +120,7 @@ export class CierrePickingPage {
 
   CerrarPicking() {
     if (this.vRutaPickingPage.Saldo > 0) {
-      this.presentAlertConfirm("Va a cerrar orden de picking incompleta, ¿Desea continuar?”.").then((resultAlert) => {
+      this.presentAlertConfirm("Va a cerrar orden de picking incompleta, ¿Desea continuar?").then((resultAlert) => {
         if (resultAlert) {
           // Cerrar Picking
           this.sPicking.CerrarPicking(this.vRutaPickingPage.Id_Tx, 6, this.sGlobal.userName, this.listNombreMuelleXAlmacen[0].Id_Muelle, this.sGlobal.Id_Almacen).then((resultCerrar) => {
@@ -124,7 +129,7 @@ export class CierrePickingPage {
             if (this.resultCierre.errNumber == 0) {
               this.presentAlert("Operación exitosa").then((resultAlert2) => {
                 if (resultAlert2) {
-                  this.presentAlertConfirm("¿Desea imprimir el picking?”.").then((resultAlert3) => {
+                  this.presentAlertConfirm("¿Desea imprimir el picking?").then((resultAlert3) => {
                     if (resultAlert3) {
                       // Mostrar lista de impresoras
                       this.showModalImpresora();
@@ -148,7 +153,7 @@ export class CierrePickingPage {
         }
       })
     } else {
-      this.presentAlertConfirm("Desea cerrar picking?”.").then((resultAlertCompleto) => {
+      this.presentAlertConfirm("¿Desea cerrar picking?").then((resultAlertCompleto) => {
         if (resultAlertCompleto) {
           // Cerrar Picking
           this.sPicking.CerrarPicking(this.vRutaPickingPage.Id_Tx, 5, this.sGlobal.userName, this.listNombreMuelleXAlmacen[0].Id_Muelle, this.sGlobal.Id_Almacen).then((resultCerrar) => {
@@ -157,7 +162,7 @@ export class CierrePickingPage {
             if (this.resultCierre.errNumber == 0) {
               this.presentAlert("Operación exitosa").then((resultAlert) => {
                 if (resultAlert) {
-                  this.presentAlertConfirm("¿Desea imprimir el picking?”.").then((result) => {
+                  this.presentAlertConfirm("¿Desea imprimir el picking?").then((result) => {
                     if (result) {
                       // Mostrar lista de impresoras
                       this.showModalImpresora();
@@ -209,7 +214,7 @@ export class CierrePickingPage {
           if (this.listNombreMuelleXAlmacen.length > 0) {
             console.log('Datos Muelle por almacen', this.listNombreMuelleXAlmacen);
             if (this.vRutaPickingPage.Saldo > 0) {
-              this.presentAlertConfirm("Va a cerrar orden de picking incompleta, ¿Desea continuar?”.").then((resultAlert) => {
+              this.presentAlertConfirm("Va a cerrar orden de picking incompleta, ¿Desea continuar?").then((resultAlert) => {
                 if (resultAlert) {
                   // Cerrar Picking
                   this.sPicking.CerrarPicking(this.vRutaPickingPage.Id_Tx, 6, this.sGlobal.userName, this.listNombreMuelleXAlmacen[0].Id_Muelle, this.sGlobal.Id_Almacen).then((resultCerrar) => {
@@ -218,7 +223,7 @@ export class CierrePickingPage {
                     if (this.resultCierre.errNumber == 0) {
                       this.presentAlert("Operación exitosa").then((resultAlert2) => {
                         if (resultAlert2) {
-                          this.presentAlertConfirm("¿Desea imprimir el picking?”.").then((resultAlert3) => {
+                          this.presentAlertConfirm("¿Desea imprimir el picking?").then((resultAlert3) => {
                             if (resultAlert3) {
                               // Mostrar lista de impresoras
                               this.showModalImpresora();
@@ -239,7 +244,7 @@ export class CierrePickingPage {
                 }
               })
             } else {
-              this.presentAlertConfirm("Desea cerrar picking?”.").then((resultAlertCompleto) => {
+              this.presentAlertConfirm("¿Desea cerrar picking?").then((resultAlertCompleto) => {
                 if (resultAlertCompleto) {
                   // Cerrar Picking
                   this.sPicking.CerrarPicking(this.vRutaPickingPage.Id_Tx, 5, this.sGlobal.userName, this.listNombreMuelleXAlmacen[0].Id_Muelle, this.sGlobal.Id_Almacen).then((resultCerrar) => {
@@ -248,7 +253,7 @@ export class CierrePickingPage {
                     if (this.resultCierre.errNumber == 0) {
                       this.presentAlert("Operación exitosa").then((resultAlert) => {
                         if (resultAlert) {
-                          this.presentAlertConfirm("¿Desea imprimir el picking?”.").then((result) => {
+                          this.presentAlertConfirm("¿Desea imprimir el picking?").then((result) => {
                             if (result) {
                               // Mostrar lista de impresoras
                               this.showModalImpresora();
@@ -389,12 +394,15 @@ export class CierrePickingPage {
   }
 
   presentPopover(ev) {
-    let popover = this.popoverCtrl.create(PopoverPickingPage, { 'page': 1 });
-    popover.present({
+    this.valorpopoverGlobal = true;
+
+    this.popoverGlobal = this.popoverCtrl.create(PopoverPickingPage, { 'page': 1 });
+    this.popoverGlobal.present({
       ev: ev
     });
 
-    popover.onDidDismiss(popoverData => {
+    this.popoverGlobal.onDidDismiss(popoverData => {
+      this.valorpopoverGlobal = false;
       if (popoverData == 1) {
         this.showModalIncidencia(this.vRutaPickingPage);
       } else if (popoverData == 2) {
@@ -446,5 +454,17 @@ export class CierrePickingPage {
       this.selectAll(this.txtCodMuelle);
     }, (500));
     console.log('ionViewDidLoad CierrePickingPage');
+  }
+
+  ionViewWillEnter(){
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if(this.valorpopoverGlobal){
+        this.valorpopoverGlobal = false;
+        this.popoverGlobal.dismiss();
+      }else{
+        this.navCtrl.pop(); 
+      }      
+  });
   }
 }

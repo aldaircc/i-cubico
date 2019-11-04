@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, ViewController, NavController, NavParams, AlertController, ToastController, PopoverController, ModalController, Navbar } from 'ionic-angular';
+import { IonicPage, ViewController, NavController, NavParams, AlertController, ToastController, PopoverController, ModalController, Navbar, Platform  } from 'ionic-angular';
 import { ReasignarUaPage } from '../reasignar-ua/reasignar-ua'
 import { ReubicarUaPage } from '../reubicar-ua/reubicar-ua'
 import { ParticionarUaPage } from '../particionar-ua/particionar-ua'
@@ -28,7 +28,7 @@ import { PopoverReciboComponent } from '../../../../components/popover-recibo/po
 @IonicPage()
 @Component({
   selector: 'page-administrar-ua',
-  templateUrl: 'administrar-ua.html',
+  templateUrl: 'administrar-ua.html'
 })
 export class AdministrarUaPage {
 
@@ -37,6 +37,8 @@ export class AdministrarUaPage {
   @ViewChild('txtCodUA', { read: ElementRef }) private txtCodUA: ElementRef;
   @ViewChild('txtCantidad') txtCantidadRef;
   @ViewChild('txtCantidad', { read: ElementRef }) private txtCantidad: ElementRef;
+
+  
 
 
   fecha: any;
@@ -64,10 +66,22 @@ export class AdministrarUaPage {
   botonisDisplay: boolean = false;
   titutlo1isDisplay: boolean = true;
   titutlo2isDisplay: boolean = false;
+
+  id_FormatLabel: any;
+
+  valorpopoverGlobal: boolean = false
+  popoverGlobal: any;
+
+  formatLabels: any = [
+    { 'Id_Format': 1, 'Label': 'ETQ_UA.txt' },
+    { 'Id_Format': 2, 'Label': 'ETQ_UAGrande.txt' }
+  ];
+
   // private keyboard: Keyboard
   constructor(public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider,
-    public modalCtrl: ModalController, public sEtq: EtiquetadoServiceProvider, public popoverCtrl: PopoverController) {
+    public modalCtrl: ModalController, public sEtq: EtiquetadoServiceProvider, public popoverCtrl: PopoverController,
+    private platform: Platform) {
     this.vDatosRecibidos = navParams.get('data');
     if (this.vDatosRecibidos.page == 'modal') {
       this.botonisDisplay = true;
@@ -75,6 +89,7 @@ export class AdministrarUaPage {
       this.titutlo2isDisplay = true;
     }
   }
+  
 
   validarCodeBarUA() {
     if (this.codeBarUA) {
@@ -300,8 +315,9 @@ export class AdministrarUaPage {
     listContainer.push({ 'etiqueta': listEtq });
 
     debugger;
-
-    this.sEtq.imprimirListaEtiquetas(listContainer, 'ETQ_UA.txt', this.sGlobal.nombreImpresora, true).then(result => {
+    let format = this.formatLabels.filter(x => x.Id_Format == this.id_FormatLabel)[0];
+    // this.sEtq.imprimirListaEtiquetas(listContainer, 'ETQ_UA.txt', this.sGlobal.nombreImpresora, true).then(result => {
+    this.sEtq.imprimirListaEtiquetas(listContainer, format.Label, this.sGlobal.nombreImpresora, true).then(result => {
       debugger;
       var message: any = result;
       if (message.errNumber == -1) {
@@ -310,17 +326,25 @@ export class AdministrarUaPage {
     });
   }
 
-  presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 21 });
-    popover.present({
-      ev: myEvent
-    });
+  
 
-    popover.onDidDismiss(popoverData => {
+  presentPopover(myEvent) {
+    debugger;
+    let popover
+    this.valorpopoverGlobal = true;
+    this.popoverGlobal = this.popoverCtrl.create(PopoverReciboComponent, { 
+      'page': 21    });
+    this.popoverGlobal.present({      
+      ev: myEvent      
+    });
+    this.popoverGlobal.onDidDismiss(popoverData => {
+      this.valorpopoverGlobal = false;
       if (popoverData == 3) {
         this.showModalImpresora();
-      }
+      }   
     });
+
+    
   }
 
   showModalImpresora() {
@@ -354,6 +378,7 @@ export class AdministrarUaPage {
     this.btnReasignarisenabled = false;
     this.btnReubicarisenabled = false;
     this.btnParticionarisenabled = false;
+    this.id_FormatLabel = "";
     setTimeout(() => {
       this.selectAll(this.txtCodUA);
     }, (500));
@@ -623,10 +648,24 @@ export class AdministrarUaPage {
     this.viewCtrl.dismiss(data);
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad() { 
     setTimeout(() => {
       this.selectAll(this.txtCodUA);
-    }, (500));
+    }, (500));    
     console.log('ionViewDidLoad AdministrarUaPage');
   }
+
+  ionViewWillEnter(){
+    debugger;
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if(this.valorpopoverGlobal){
+        this.valorpopoverGlobal = false;
+        this.popoverGlobal.dismiss();
+      }else{
+        this.navCtrl.pop(); 
+      }      
+  });
+  }
+  
 }

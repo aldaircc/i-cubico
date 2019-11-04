@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController, PopoverController, App } from 'ionic-angular';
+import { IonicPage, Platform, ViewController, NavController, NavParams, AlertController, ModalController, PopoverController, App } from 'ionic-angular';
 import { DespachoServiceProvider } from '../../../../providers/despacho-service/despacho-service';
 import { EmbarquePage_04Page } from '../embarque-page-04/embarque-page-04';
 import { GlobalServiceProvider } from '../../../../providers/global-service/global-service';
@@ -35,22 +35,37 @@ export class EmbarquePage_03Page {
   listDetalleProceso: any = [];
   listDetalleFinalizado: any = [];
 
+  valorpopoverGlobal: boolean = false
+  popoverGlobal: any;
+
   constructor(public app: App, public popoverCtrl: PopoverController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
-    public sGlobal: GlobalServiceProvider, public sDesp: DespachoServiceProvider) {
+    public sGlobal: GlobalServiceProvider, public sDesp: DespachoServiceProvider, public viewCtrl: ViewController, private platform: Platform) {
     this.vParameter = this.navParams.get('vParameter');
   }
 
   ionViewWillEnter() {
     this.listarDetalleXTransporte(this.vParameter.Id_Tra);
+
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if (this.valorpopoverGlobal) {
+        this.valorpopoverGlobal = false;
+        this.popoverGlobal.dismiss();
+      } else {
+        this.navCtrl.pop();
+      }
+    });
   }
 
   presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 1 });
-    popover.present({
+    this.valorpopoverGlobal = true;
+    this.popoverGlobal = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 1 });
+    this.popoverGlobal.present({
       ev: myEvent
     });
 
-    popover.onDidDismiss(popoverData => {
+    this.popoverGlobal.onDidDismiss(popoverData => {
+      this.valorpopoverGlobal = false;
       if (popoverData == 4) {
         this.navCtrl.pop();
         var nav = this.app.getRootNav();

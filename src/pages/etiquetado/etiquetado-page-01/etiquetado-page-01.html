@@ -162,8 +162,10 @@
       </ion-col>
       <ion-col col-4 col-sm no-padding no-margin>
         <ion-item>
-          <ion-input type="text" min="0" max="999" placeholder="0" [(ngModel)]="cantxEtq" name="txtCant" onkeypress="return (event.charCode != 46 && event.charCode > 31 && (event.charCode < 48 || event.charCode > 57)) ? false :true"
-            (keyup)="numEtqTextChange($event)" #iCantidad [disabled]="!cantDisabled">
+          <ion-input type="text" min="0" max="999" placeholder="0" [(ngModel)]="cantxEtq" name="txtCant" 
+          onkeypress="return (event.charCode != 46 && event.charCode > 31 && (event.charCode < 48 || event.charCode > 57)) ? false :true"
+          (ionChange)="numEtqTextChange($event)" #iCantidad [disabled]="!cantDisabled">
+          <!-- (keyup)="numEtqTextChange($event)" -->
           </ion-input>
         </ion-item>
       </ion-col>
@@ -174,7 +176,7 @@
 
       <ion-col col-4 col-sm no-padding no-margin>
         <ion-item>
-          <ion-input type="text" min="0" placeholder="0" [(ngModel)]="numEtq" name="txtNumEtq" (keyup)="numEtqTextChange($event)"
+          <ion-input type="text" min="0" placeholder="0" [(ngModel)]="numEtq" name="txtNumEtq" (ionChange)="numEtqTextChange($event)"
             #iNumEtq [disabled]="!etqDisabled" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"></ion-input>
         </ion-item>
       </ion-col>
@@ -188,7 +190,7 @@
 
       <ion-col col-4 col-sm no-padding no-margin>
         <ion-item>
-          <ion-input type="text" min="0" placeholder="0" [(ngModel)]="cantEtqSaldo" (keyup)="numEtqTextChange($event)"
+          <ion-input type="text" min="0" placeholder="0" [(ngModel)]="cantEtqSaldo" (ionChange)="numEtqTextChange($event)"
             #iSaldoEtq [disabled]="!saldoDisabled" name="txtEtqSaldo" onkeypress="return (event.charCode != 46 && event.charCode > 31 && (event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-input>
         </ion-item>
       </ion-col>

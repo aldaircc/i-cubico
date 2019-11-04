@@ -56,7 +56,6 @@ export class GlobalServiceProvider {
     this.apeNom = "";
     this.Id_Almacen = 0;
     this.Id_Muelle = 0;
-    this.Id_TerminalRF = 0;
     this.Id_Centro = 0;
     this.nombreEmpresa = "";
     this.nombreImpresora = "";

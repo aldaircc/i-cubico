@@ -10,7 +10,7 @@
             <ion-row no-padding no-margin>
                 <ion-col no-margin no-padding col-9>
                     <ion-navbar no-padding no-margin>
-                        <ion-label style="font-size: 15px; color: white; font-weight:bold;">DETALLE POR PRODUCTO</ion-label>
+                        <ion-label style="font-size: 12px; color: white; font-weight:bold;">DETALLE POR PRODUCTO</ion-label>
                     </ion-navbar>
                 </ion-col>
                 <ion-col no-margin no-padding col-3>
@@ -62,7 +62,14 @@
     </ion-grid>
 
     <ion-row class="statico">
-        <ion-searchbar placeholder="Buscar UA" (ionInput)="filterItems($event)" [(ngModel)]="searchQuery"></ion-searchbar>
+            <ion-item>
+                    <ion-label>
+                        <ion-icon name="search"></ion-icon>
+                    </ion-label>
+                    <ion-input maxlength="30" [(ngModel)]="searchQuery" placeholder="Buscar UA" (ionChange)="filterItems($event)"></ion-input>
+                </ion-item>
+
+        <!-- <ion-searchbar maxlength="30" placeholder="Buscar UA" (ionInput)="filterItems($event)" [(ngModel)]="searchQuery"></ion-searchbar> -->
     </ion-row>
 </ion-header>
 
@@ -85,12 +92,12 @@
                             </ion-col>
                         </ion-row>
                         <ion-row no-padding no-margin>
-                            <ion-col col-3 no-padding no-margin>
+                            <ion-col col-4 no-padding no-margin>
                                 <ion-label no-padding no-margin style="font-weight:bold;">
                                     Fecha y Hora:
                                 </ion-label>
                             </ion-col>
-                            <ion-col col-9 no-padding no-margin>
+                            <ion-col col-8 no-padding no-margin>
                                 <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
                                     {{ objDetalleProducto.FechaRegistro|momentjs: 'DD/MM/YYYY HH:mm' }}
                                 </ion-label>

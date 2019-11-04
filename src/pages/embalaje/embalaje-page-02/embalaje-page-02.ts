@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController, PopoverController,ToastController } from 'ionic-angular';
+import { IonicPage, Platform, ViewController, NavController, NavParams, AlertController, ModalController, PopoverController,ToastController } from 'ionic-angular';
 import { HomePage } from '../../home/home';
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
 import { PopoverEmbalajeComponent } from '../../../components/popover-embalaje/popover-embalaje';
@@ -33,9 +33,13 @@ export class EmbalajePage_02Page {
   listDetalleConfirm: any = [];
   listDetalleProceso: any = [];
 
+  valorpopoverGlobal: boolean = false
+popoverGlobal: any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public toastCtrl: ToastController,private alertCtrl: AlertController,public sEmbalaje: EmbalajeServiceProvider, 
-    public popoverCtrl: PopoverController,public sGlobal: GlobalServiceProvider,public modalCtrl: ModalController) {            
+    public popoverCtrl: PopoverController,public sGlobal: GlobalServiceProvider,public modalCtrl: ModalController,
+    public viewCtrl: ViewController, private platform: Platform) {            
   }
 
   ionViewDidLoad() {
@@ -175,13 +179,14 @@ export class EmbalajePage_02Page {
   }
 
    presentPopover(myEvent){
-    
-    let popover = this.popoverCtrl.create(PopoverEmbalajeComponent, {'page' : 12, 'has_Id_Tx': (this.rowReciboSelect != undefined) ? true : false });
-    popover.present({
+    this.valorpopoverGlobal = true;
+    this.popoverGlobal = this.popoverCtrl.create(PopoverEmbalajeComponent, {'page' : 12, 'has_Id_Tx': (this.rowReciboSelect != undefined) ? true : false });
+    this.popoverGlobal.present({
       ev: myEvent
     });
 
-    popover.onDidDismiss(popoverData =>{     
+    this.popoverGlobal.onDidDismiss(popoverData =>{     
+      this.valorpopoverGlobal = false;
      console.log(popoverData);
       if(popoverData == 1){
         this.showModalIncidencia(this.rowReciboSelect);
@@ -273,6 +278,15 @@ export class EmbalajePage_02Page {
 
   ionViewWillEnter() {    
     this.getDataEmbalaje();
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if(this.valorpopoverGlobal){
+        this.valorpopoverGlobal = false;
+        this.popoverGlobal.dismiss();
+      }else{
+        this.navCtrl.pop(); 
+      }      
+  });
   }
 
 }

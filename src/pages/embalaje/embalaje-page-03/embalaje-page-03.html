@@ -54,7 +54,7 @@
           </ion-col>
 
           <ion-col col-10 col-sm>
-            <ion-card-content no-padding>
+            <ion-card-content no-padding (press)="selectItem(objDetEmbalaje)">
               <h5>{{objDetEmbalaje.Producto}}</h5>
               <h5><b>Codigo: </b> {{objDetEmbalaje.Codigo}}</h5>
               <h5><b>Lote: </b> {{objDetEmbalaje.Lote}}</h5>

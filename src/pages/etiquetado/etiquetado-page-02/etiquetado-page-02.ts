@@ -32,6 +32,8 @@ export class EtiquetadoPage_02Page {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sEtq: EtiquetadoServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.listarCuentasXAlmacenUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen, 0);
+
+
   }
 
   filtrarProducto(): void {
@@ -88,6 +90,10 @@ export class EtiquetadoPage_02Page {
     this.sEtq.listarCuentasXAlmacenUsuario(strUsuario, intIdAlmacen, intIdCuenta).then(result => {
       debugger;
       this.listCuentaAlmac = result;
+
+      if(this.listCuentaAlmac.length==1){
+        this.IdCuenta = this.listCuentaAlmac[0].Id_Cuenta;
+      }
     });
   }
 

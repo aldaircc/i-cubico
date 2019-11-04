@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController, ModalController, App } from 'ionic-angular';
+import { IonicPage, ViewController, NavController, NavParams, PopoverController, ModalController, App, Platform } from 'ionic-angular';
 import { GlobalServiceProvider } from '../../../../providers/global-service/global-service';
 import { DespachoServiceProvider } from '../../../../providers/despacho-service/despacho-service';
 import { EmbarquePage_02Page } from '../embarque-page-02/embarque-page-02';
@@ -25,17 +25,23 @@ export class EmbarquePage_01Page {
   listAuxEmbarque: any;
   rowCount: number = 0;
 
+  valorpopoverGlobal01: boolean = false
+  popoverGlobal: any;
+
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public modalCtrl: ModalController,
-    public sGlobal: GlobalServiceProvider, public sDesp: DespachoServiceProvider) {
+    public sGlobal: GlobalServiceProvider, public sDesp: DespachoServiceProvider, private platform: Platform, public viewCtrl: ViewController) {
   }
 
   presentPopover(event) {
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 52 });
-    popover.present({
+    debugger;
+    this.valorpopoverGlobal01 = true;
+    this.popoverGlobal = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 52 });
+    this.popoverGlobal.present({
       ev: event
     });
 
-    popover.onDidDismiss(popoverData => {
+    this.popoverGlobal.onDidDismiss(popoverData => {
+      this.valorpopoverGlobal01 = false;
       if (popoverData == 4) {
         this.navCtrl.pop();
         var nav = this.app.getRootNav();
@@ -88,9 +94,24 @@ export class EmbarquePage_01Page {
     };
 
     this.navCtrl.push(EmbarquePage_02Page, { 'vParameter': parameter });
+  }  
+
+  ionViewDidLoad(){
   }
 
   ionViewWillEnter() {
     this.listarPlanificacionXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen);
+
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if(this.valorpopoverGlobal01){
+        this.valorpopoverGlobal01 = false;
+        this.popoverGlobal.dismiss();
+      }
+      else{
+        this.navCtrl.pop(); 
+      }      
+  });
+
   }
 }

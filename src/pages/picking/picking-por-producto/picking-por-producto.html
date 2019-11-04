@@ -56,14 +56,14 @@
 <ion-content [ngClass]="{bgWhite: (!isBgRed && !isBgYellow && !isBgGreen), bgRed:(isBgRed), bgYellow:(isBgYellow), bgGreen:(isBgGreen), bgWhite:(isbgWhite)}">
 
     <ion-grid style="padding: 0px;">
-        <ion-row no-padding style="margin-top: 15px; margin-bottom: 15px;">
+        <ion-row no-padding style="margin-top: 8px; margin-bottom: 8px;">
             <ion-col col-12 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
                 <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px; color:dimgray">
                     {{ pickingProducto.Producto }}
                 </ion-label>
             </ion-col>
         </ion-row>
-        <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px; ">
+        <ion-row no-padding style="margin-top: 0px; margin-bottom: 8px; ">
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
                 <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
                     Código:
@@ -75,7 +75,7 @@
                 </ion-label>
             </ion-col>
         </ion-row>
-        <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;">
+        <ion-row no-padding style="margin-top: 0px; margin-bottom: 8px;">
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
                 <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
                     Lote:
@@ -87,7 +87,7 @@
                 </ion-label>
             </ion-col>
         </ion-row>
-        <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;">
+        <ion-row no-padding style="margin-top: 0px; margin-bottom: 8px;">
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
                 <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
                     Cant. <br /> Pedida:
@@ -109,7 +109,7 @@
                 </ion-label>
             </ion-col>
         </ion-row>
-        <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;">
+        <ion-row no-padding style="margin-top: 0px; margin-bottom: 8px;">
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
                 <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
                     Saldo:
@@ -121,7 +121,7 @@
                 </ion-label>
             </ion-col>
         </ion-row>
-        <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;">
+        <ion-row no-padding style="margin-top: 0px; margin-bottom: 8px;">
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
                 <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 10px; margin-bottom: 0px;">
                     Cajas:
@@ -129,7 +129,7 @@
             </ion-col>
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
                 <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 10px; margin-bottom: 0px; color:dimgray">
-                    {{pickingProducto.Caja | number:'1.2-2'}}
+                    {{pickingProducto.Caja}}
                 </ion-label>
             </ion-col>
             <ion-col col-3 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
@@ -143,7 +143,7 @@
                 </ion-label>
             </ion-col>
         </ion-row>
-        <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;">
+        <ion-row no-padding style="margin-top: 0px; margin-bottom: 8px;">
             <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
                 <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 16px; margin-bottom: 0px;">
                     Cod. Barra:
@@ -152,11 +152,11 @@
             <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
                 <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
                     <ion-input #txtCodBarraUA type="text" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()"
-                        style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+                        style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray" maxlength="12"></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
-        <ion-row no-padding style="margin-top: 0px; margin-bottom: 15px;">
+        <ion-row no-padding style="margin-top: 0px; margin-bottom: 8px;">
             <ion-col col-4 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px; padding-bottom: 0px;">
                 <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 16px; margin-bottom: 0px;">
                     Cantidad:

@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, Navbar, NavController, NavParams, ViewController, ModalController, AlertController, PopoverController, App, Select } from 'ionic-angular';
+import { IonicPage, Navbar, Platform, NavController, NavParams, ViewController, ModalController, AlertController, PopoverController, App, Select } from 'ionic-angular';
 import { ImpresoraPage } from '../../impresora/impresora';
 import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
@@ -98,6 +98,9 @@ export class EtiquetadoPage_01Page {
   titutlos1isDisplay: boolean = false;
   titutlos2isDisplay: boolean = true;
 
+  valorpopoverGlobal: boolean = false
+  popoverGlobal: any;
+
   @ViewChild('selectUA_Alt') selectUA_Alt: Select;
   @ViewChild('selectFormat') selectFormat: Select;
   @ViewChild('selectSubAlmacen') selectSubAlmacen: Select;
@@ -113,7 +116,7 @@ export class EtiquetadoPage_01Page {
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public viewCtrl: ViewController, public sEtq: EtiquetadoServiceProvider,
     public modalCtrl: ModalController, public alertCtrl: AlertController,
-    public sGlobal: GlobalServiceProvider, public popoverCtrl: PopoverController) {
+    public sGlobal: GlobalServiceProvider, public popoverCtrl: PopoverController, private platform: Platform) {
 
     this.isVisibleSearchButton = (navParams.get('codePage') != null) ? true : false;
     this.titutlos1isDisplay = (navParams.get('codePage') != null) ? false : true;
@@ -137,7 +140,8 @@ export class EtiquetadoPage_01Page {
 
       this.listarSubAlmacenesXCuenta(this.vEtq.IdCuentaLPN, this.sGlobal.Id_Almacen);
 
-      this.id_SubAlm = this.vEtq.Id_SubAlmacen;
+      
+      // this.id_SubAlm = this.vEtq.Id_SubAlmacen;
       this.id_UAlt = this.vEtq.Id_UM;
 
       debugger;
@@ -240,8 +244,18 @@ export class EtiquetadoPage_01Page {
 
   listarSubAlmacenesXCuenta(intIdCuenta, intIdAlmacen) {
     this.sEtq.listarSubAlmacenesXCuenta(intIdCuenta, intIdAlmacen).then(result => {
+      debugger;
       console.log('result listarSubAlmacenesXCuenta', result);
       this.listSubAlm = result;
+      if(this.listSubAlm.length>0){
+        for(var i=0; i < this.listSubAlm.length; i++){
+          if(this.listSubAlm[i].FlagxDefecto){
+            this.id_SubAlm = this.listSubAlm[i].Id_SubAlmacen;
+          }
+        }        
+      }else{
+        this.id_SubAlm = this.vEtq.Id_SubAlmacen;
+      }
     });
   }
 
@@ -476,7 +490,8 @@ export class EtiquetadoPage_01Page {
           listEtq.push({ "campo": "|CANTBULTO|", "valor": this.cantxEtq });
           listEtq.push({ "campo": "|CANTXBULTO|", "valor": this.cantXBulto });
           listEtq.push({ "campo": "|SALDO|", "valor": "0" });
-          listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo == true) ? "" : currentDate.format('dd/MM/yyyy') });
+          // listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo == true) ? "" : currentDate.format('dd/MM/yyyy') });
+          listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo == true) ? moment(objImp.FechaEmision).format('DD/MM/YYYY') : currentDate.format('dd/MM/yyyy') });
           listEtq.push({ "campo": "|ORDEN|", "valor": (this.findArticulo == true) ? "" : this.vEtq.NroDoc });
           listEtq.push({ "campo": "|USUARIO|", "valor": this.sGlobal.userName });
           listEtq.push({ "campo": "|COMPOSICION|", "valor": this.vEtq.CondicionAlmac });
@@ -504,7 +519,8 @@ export class EtiquetadoPage_01Page {
           listEtq.push({ "campo": "|CANTBULTO|", "valor": (i == 0 && this.cantEtqSaldo > 0) ? this.residuo / this.cantXBulto : this.cantxEtq });
           listEtq.push({ "campo": "|CANTXBULTO|", "valor": this.cantXBulto });
           listEtq.push({ "campo": "|SALDO|", "valor": (i == 0 && this.cantEtqSaldo > 0) ? this.residuo % this.cantXBulto : 0 });
-          listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo != false) ? "" : currentDate.format('dd/MM/yyyy') });
+          // listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo != false) ? "" : currentDate.format('dd/MM/yyyy') });
+          listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo != false) ? moment(objImp.FechaEmision).format('DD/MM/YYYY') : currentDate.format('dd/MM/yyyy') });
           listEtq.push({ "campo": "|ORDEN|", "valor": (this.findArticulo != false) ? "" : this.vEtq.NroDoc });
           listEtq.push({ "campo": "|USUARIO|", "valor": this.sGlobal.userName });
           listEtq.push({ "campo": "|COMPOSICION|", "valor": this.vEtq.CondicionAlmac });
@@ -563,8 +579,13 @@ export class EtiquetadoPage_01Page {
   }
 
   numEtqTextChange(ev: any) {
-    let val = ev.target.value;
-    let name = ev.target.name;
+    debugger;
+    let val = ev.value;
+    let name = ev.ngControl.name;
+
+    if(val==""){
+      val = "0"
+    }
 
     let cant = 0; //Cantidad de puntos en la cadena
     for (var i = 0; i < val.length; i++) {
@@ -635,8 +656,12 @@ export class EtiquetadoPage_01Page {
     }
   }
 
-  dismiss() {
-    this.viewCtrl.dismiss();
+  // dismiss() {
+  //   this.viewCtrl.dismiss();
+  // }
+
+  dismiss(data = { 'response': 400 }) {
+    this.viewCtrl.dismiss(data);
   }
 
   goToEtqPage02() {
@@ -669,12 +694,14 @@ export class EtiquetadoPage_01Page {
   };
 
   presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 21 });
-    popover.present({
+    this.valorpopoverGlobal = true;
+    this.popoverGlobal = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 21 });
+    this.popoverGlobal.present({
       ev: myEvent
     });
 
-    popover.onDidDismiss(popoverData => {
+    this.popoverGlobal.onDidDismiss(popoverData => {
+      this.valorpopoverGlobal = false;
       if (popoverData == 3) {
         this.showModalImpresora();
       } else if (popoverData == 4) {
@@ -696,7 +723,20 @@ export class EtiquetadoPage_01Page {
     }, time);
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad() {   
     console.log('ionViewDidLoad EtiquetadoPage01');
+  }
+
+  ionViewWillEnter(){
+    debugger;
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if(this.valorpopoverGlobal){
+        this.valorpopoverGlobal = false;
+        this.popoverGlobal.dismiss();
+      }else{
+        this.navCtrl.pop(); 
+      }      
+  });
   }
 }

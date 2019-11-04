@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the BultoMasivoPage page.
@@ -15,11 +15,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class BultoMasivoPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  valorpopoverGlobal: boolean = false
+  popoverGlobal: any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private platform: Platform) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BultoMasivoPage');
+  }
+
+  ionViewWillEnter() {
+
   }
 
 }

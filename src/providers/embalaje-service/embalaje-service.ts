@@ -32,6 +32,21 @@ export class EmbalajeServiceProvider {
     });
   }
 
+  ListarTransaccionDetEmbalaje(strId_Tx, intItem) {
+    var parameter: any;
+    parameter = { "strId_Tx": strId_Tx, "intItem": intItem };
+
+    return new Promise(resolve => {
+      this.http.get(this.sGlobal.despacho + 'ListarTransaccionDetEmbalaje', { params: parameter })
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log('Error ListarTransaccionDetEmbalaje', err);
+        })
+    });
+  }
+
   ListarDespachoDetalle(strId_Tx) {
     var parameter: any;
     parameter = { "strIdTx": strId_Tx };

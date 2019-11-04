@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, PopoverController, ModalController, LoadingController, VirtualScroll } from 'ionic-angular';
+import { IonicPage, Platform, ViewController, NavController, NavParams, AlertController, PopoverController, ModalController, LoadingController, VirtualScroll } from 'ionic-angular';
 import { ReciboServiceProvider } from '../../../providers/recibo-service/recibo-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { ReciboPage_05Page } from '../recibo-page-05/recibo-page-05';
@@ -25,18 +25,30 @@ export class ReciboPage_04Page {
   rowCount: number = 0;
   callBackReciboPage04: any;
   wasDeleted: boolean = false;
+  valorpopoverGlobal: boolean = false
+  popoverGlobal: any;
   @ViewChild('virtualScroll', { read: VirtualScroll }) virtualScroll: VirtualScroll;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public sRecibo: ReciboServiceProvider,
     public sGlobal: GlobalServiceProvider, public popoverCtrl: PopoverController,
-    public modalCtrl: ModalController, public loadingCtrl: LoadingController) {
+    public modalCtrl: ModalController, public loadingCtrl: LoadingController,
+    public viewCtrl: ViewController, private platform: Platform) {
     this.vReciboPage03 = navParams.get('dataPage03');
     this.callBackReciboPage04 = navParams.get('callBackReciboPage04');
   }
 
   ionViewWillEnter() {
     this.listarUAXProductoTx(this.vReciboPage03.Id_Tx, this.vReciboPage03.Id_Articulo, this.vReciboPage03.Item);
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if(this.valorpopoverGlobal){
+        this.valorpopoverGlobal = false;
+        this.popoverGlobal.dismiss();
+      }else{
+        this.navCtrl.pop(); 
+      }      
+  });
   }
 
   ionViewWillLeave() {
@@ -231,12 +243,14 @@ export class ReciboPage_04Page {
   }
 
   presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 14 });
-    popover.present({
+    this.valorpopoverGlobal = true;
+    this.popoverGlobal = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 14 });
+    this.popoverGlobal.present({
       ev: myEvent
     });
 
-    popover.onDidDismiss(option => {
+    this.popoverGlobal.onDidDismiss(option => {
+      this.valorpopoverGlobal = false;
       if (option == 3) {
         this.showModalImpresora();
       }

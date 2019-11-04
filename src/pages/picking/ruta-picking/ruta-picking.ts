@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, App, Navbar, NavController, NavParams, PopoverController, ModalController, ToastController, AlertController } from 'ionic-angular';
+import { IonicPage, Platform, ViewController, App, Navbar, NavController, NavParams, PopoverController, ModalController, ToastController, AlertController } from 'ionic-angular';
 import { DetallePickingPage } from '../detalle-picking/detalle-picking';
 import { PickingPorProductoPage } from '../picking-por-producto/picking-por-producto';
 import { CierrePickingPage } from '../cierre-picking/cierre-picking';
@@ -47,12 +47,15 @@ export class RutaPickingPage {
   isbgWhite: boolean = false;
   Backisenabled: boolean = false;
   Nextisenabled: boolean = false;
+  valorpopoverGlobal: boolean = false
+  popoverGlobal: any;
 
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController,
     public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider, public modalCtrl: ModalController,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController, public viewCtrl: ViewController, private platform: Platform) {
+      debugger;
     this.vPickingPage = navParams.get('data');
     this.getDataRutaPicking(this.vPickingPage.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
@@ -61,16 +64,23 @@ export class RutaPickingPage {
     debugger;
     if (this.codeBar) {
       if (this.codeBar.trim() != "") {
-        this.codBar = this.rutaPicking.CodBarraUbi.trim();
-        if (this.codeBar.trim() == this.codBar) {
-          this.isbgWhite = true;
-          this.isBgRed = false;
-          this.goPickingPorProductoPage();
+        if (this.codeBar.length == 14) {
+          this.codBar = this.rutaPicking.CodBarraUbi.trim();
+          if (this.codeBar.trim() == this.codBar) {
+            this.isbgWhite = true;
+            this.isBgRed = false;
+            this.goPickingPorProductoPage();
+          } else {
+            this.isbgWhite = false;
+            this.isBgRed = true;
+            this.codeBar = "";
+            this.presentToast("Código de ubicación incorrecto");
+          }
         } else {
-          this.isbgWhite = false;
-          this.isBgRed = true;
-          this.codeBar = "";
-          this.presentToast("Código de ubicación incorrecto");
+          this.presentToast("El código de ubicación debe tener 14 dígitos.");
+          setTimeout(() => {
+            this.selectAll(this.txtCodUbicacion);
+          }, (500));
         }
       }
       else {
@@ -85,9 +95,11 @@ export class RutaPickingPage {
   }
 
   getDataRutaPicking(strNroDoc, strUsuario, intIdAlmacen) {
+    debugger;
     this.sPicking.getDataRutaPicking(strNroDoc, strUsuario, intIdAlmacen).then((result) => {
       debugger;
       this.idRutaPicking = 0;
+      this.listaRutaPicking = [];
       this.listaTempRutaPicking = result;
       for (var i = 0; i < this.listaTempRutaPicking.length; i++) {
         var obj = {
@@ -120,14 +132,19 @@ export class RutaPickingPage {
           'Sector': result[i].Sector,
           'UMBase': result[i].UMBase
         };
+        debugger;
         this.listaRutaPicking.push(obj);
         this.idRutaPicking = this.idRutaPicking + 1;
       }
       //Agregar columna idRuta, para que se pueda usar al momento de volver de detalle
       //comparar idRuta para actualizar la posicion de la lista
+      debugger;
       for (var i = 0; i < this.listaRutaPicking.length; i++) {
+        debugger;
         if (result[i].Saldo > 0) {
+          debugger;
           if (result[i].FlagTransito == false) {
+            debugger;
             var id = this.vPickingPage.idRutaPicking;
             this.contador = 1;
             if (id) {
@@ -295,12 +312,14 @@ export class RutaPickingPage {
   }
 
   presentPopover(ev) {
-    let popover = this.popoverCtrl.create(PopoverPickingPage, { 'page': 1 });
-    popover.present({
+    this.valorpopoverGlobal = true;
+    this.popoverGlobal = this.popoverCtrl.create(PopoverPickingPage, { 'page': 1 });
+    this.popoverGlobal.present({
       ev: ev
     });
 
-    popover.onDidDismiss(popoverData => {
+    this.popoverGlobal.onDidDismiss(popoverData => {
+      this.valorpopoverGlobal = false;
       if (popoverData == 1) {
         if (this.vPickingPage.Id_Estado != 2) {
           this.showModalIncidencia(this.vPickingPage);
@@ -432,6 +451,8 @@ export class RutaPickingPage {
     console.log('data received from other page', this.dataFromDetallePickingPage);
     debugger;
     this.vRutaPickingPage = this.dataFromDetallePickingPage;
+    
+    
   };
 
   goDetallePickingPage() {
@@ -477,7 +498,12 @@ export class RutaPickingPage {
     this.dataFromPickingPorProductoPage = data;
     console.log('data received from other page', this.dataFromPickingPorProductoPage);
     debugger;
-    this.vRutaPickingPage = this.dataFromPickingPorProductoPage;
+    this.vPickingPage = this.dataFromPickingPorProductoPage;
+    this.codeBar = "";
+    this.getDataRutaPicking(this.vPickingPage.Id_Tx, this.sGlobal.userName, this.sGlobal.Id_Almacen);
+    setTimeout(() => {
+      this.selectAll(this.txtCodUbicacion);
+    }, (500));
   };
 
   goPickingPorProductoPage() {
@@ -508,6 +534,18 @@ export class RutaPickingPage {
       this.selectAll(this.txtCodUbicacion);
     }, (500));
     console.log('ionViewDidLoad RutaPickingPage');
+  }
+
+  ionViewWillEnter(){
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if(this.valorpopoverGlobal){
+        this.valorpopoverGlobal = false;
+        this.popoverGlobal.dismiss();
+      }else{
+        this.navCtrl.pop(); 
+      }      
+  });
   }
 }
 

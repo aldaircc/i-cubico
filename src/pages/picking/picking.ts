@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { PickingServiceProvider } from '../../providers/picking-service/picking-service';
-import { IonicPage, App, Navbar, NavController, NavParams, ModalController, PopoverController, ToastController, AlertController } from 'ionic-angular';
+import { IonicPage, Platform, ViewController, App, Navbar, NavController, NavParams, ModalController, PopoverController, ToastController, AlertController } from 'ionic-angular';
 import { RutaPickingPage } from '../picking/ruta-picking/ruta-picking'
 import { IncidenciaPage } from '../incidencia/incidencia';
 import { PopoverPickingPage } from '../picking/popover/popover-picking/popover-picking'
@@ -40,11 +40,14 @@ export class PickingPage {
   rowCountSinTrabajar: any;
   rowCountProceso: any;
   rowPickingSelect: any;
+  valorpopoverGlobal: boolean = false
+  popoverGlobal: any;
 
   @ViewChild(Navbar) navBar: Navbar;
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, public modalCtrl: ModalController, private popoverCtrl: PopoverController,
-    public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider, public alertCtrl: AlertController) {
+    public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider, public alertCtrl: AlertController,
+    public viewCtrl: ViewController, private platform: Platform) {
     const data = JSON.parse(localStorage.getItem('vUserData'));
     this.userDetail = this.sGlobal.apeNom;
     this.nomAlmacen = this.sGlobal.nombreAlmacen;
@@ -54,7 +57,8 @@ export class PickingPage {
 
   filterItems(ev: any) {
     debugger;
-    const val = ev.target.value;
+    // const val = ev.target.value;
+    const val = ev.value;
     if (val && val.trim() != '') {
       this.listAuxOrdenesPicking = this.listOrdenesPicking.filter((item) => {
         return (item.NumOrden.toLowerCase().indexOf(val.toLowerCase()) > -1);
@@ -104,7 +108,7 @@ export class PickingPage {
       this.presentToast('No puede registrar incidencia de una transacción que no fue iniciada.');
     } else {
       this.rowPickingSelect = obj;
-      this.presentToast('Se habilito la opción Registrar incidencias.');
+      this.presentToast('Se habilitó la opción Registrar incidencias.');
     }
   }
 
@@ -282,11 +286,13 @@ export class PickingPage {
   }
 
   presentPopover(ev) {
-    let popover = this.popoverCtrl.create(PopoverPickingPage, { 'page': 0, 'has_Id_Tx': (this.rowPickingSelect != undefined) ? true : false });
-    popover.present({
+    this.valorpopoverGlobal = true;
+    this.popoverGlobal = this.popoverCtrl.create(PopoverPickingPage, { 'page': 0, 'has_Id_Tx': (this.rowPickingSelect != undefined) ? true : false });
+    this.popoverGlobal.present({
       ev: ev
     });
-    popover.onDidDismiss(popoverData => {
+    this.popoverGlobal.onDidDismiss(popoverData => {
+      this.valorpopoverGlobal = false;
       if (popoverData == 1) {
         this.showModalIncidencia(this.rowPickingSelect);
       } else if (popoverData == 2) {
@@ -341,5 +347,14 @@ export class PickingPage {
 
   ionViewWillEnter() {
     this.getDataOrdenes();
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if(this.valorpopoverGlobal){
+        this.valorpopoverGlobal = false;
+        this.popoverGlobal.dismiss();
+      }else{
+        this.navCtrl.pop(); 
+      }      
+  });
   }
 }

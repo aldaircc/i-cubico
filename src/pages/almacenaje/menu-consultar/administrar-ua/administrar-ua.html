@@ -215,7 +215,7 @@
         </ion-label>
       </ion-col>
     </ion-row>
-    <ion-row no-padding style="margin-top: 0px; margin-bottom: 0px; ">
+    <!-- <ion-row no-padding style="margin-top: 0px; margin-bottom: 0px; ">
       <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 12px; margin-bottom: 0px;">
           Impresora:
@@ -226,7 +226,19 @@
           {{ NombreImpresora }}
         </ion-label>
       </ion-col>
+    </ion-row> -->
+
+    <ion-row style="padding-left: 10px">
+      <ion-col col-12 col-sm no-padding no-margin>
+        <ion-select placeholder="Formato" [(ngModel)]="id_FormatLabel" interface="action-sheet" #selectFormat style="padding: 8px 3px 8px 5px">
+          <ion-option value="" disabled selected>Formato</ion-option>
+          <ion-option *ngFor="let f of formatLabels" value="{{ f.Id_Format }}">{{ f.Label }}</ion-option>
+        </ion-select>
+      </ion-col>
     </ion-row>
+
+    
+
   </ion-grid>
 </ion-content>
 

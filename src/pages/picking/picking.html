@@ -56,7 +56,15 @@
     </ion-grid>
 
     <ion-row class="statico">
-        <ion-searchbar placeholder="Buscar N° de Orden" (ionInput)="filterItems($event)" [(ngModel)]="searchQuery"></ion-searchbar>
+        <ion-item>
+            <ion-label>
+                <ion-icon name="search"></ion-icon>
+            </ion-label>
+            <ion-input maxlength="35" [(ngModel)]="searchQuery" placeholder="Buscar N° de Orden" (ionChange)="filterItems($event)"></ion-input>
+        </ion-item>
+
+        <!-- <ion-input  placeholder="Buscar N° de Orden" (ionInput)="filterItems($event)" [(ngModel)]="searchQuery" 
+        ></ion-input> -->
     </ion-row>
 </ion-header>
 
@@ -105,12 +113,12 @@
                                     {{objPicking.FechaDocumento|momentjs: 'DD/MM/YYYY'}}
                                 </ion-label>
                             </ion-col>
-                            <ion-col col-2 no-padding no-margin>
-                                <ion-label no-padding no-margin style="font-weight:bold;">
+                            <ion-col col-3 no-padding no-margin>
+                                <ion-label no-margin style="font-weight:bold; padding-left: 10px">
                                     Entrega:
                                 </ion-label>
                             </ion-col>
-                            <ion-col col-4 no-padding no-margin>
+                            <ion-col col-3 no-padding no-margin>
                                 <ion-label no-padding no-margin style="font-weight:bold; color:dimgray ">
                                     {{objPicking.FechaLlegada|momentjs: 'DD/MM/YYYY'}}
                                 </ion-label>

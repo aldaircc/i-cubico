@@ -3,6 +3,7 @@ import { IonicPage, App, NavController, NavParams, AlertController, Platform, Vi
 import { MainMenuPage } from '../main-menu/main-menu';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { GlobalServiceProvider } from '../../providers/global-service/global-service';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the WarehouseSelectPage page.
@@ -123,6 +124,8 @@ export class WarehouseSelectPage {
 
   goBack(): void {
     this.navCtrl.pop();
+    var nav = this.app.getRootNav();
+    nav.setRoot(HomePage);
   }
 
   goNext(): void {

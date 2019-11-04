@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, Platform, NavParams, ToastController, IonicFormInput, Button, PopoverController, ModalController, App, AlertController } from 'ionic-angular';
+import { IonicPage, ViewController, NavController, Platform, NavParams, ToastController, IonicFormInput, Button, PopoverController, ModalController, App, AlertController } from 'ionic-angular';
 import { ReciboServiceProvider } from '../../../providers/recibo-service/recibo-service';
 import { isNullOrUndefined } from '../../../../node_modules/@swimlane/ngx-datatable/release/utils';
 import { ReciboPage_04Page } from '../recibo-page-04/recibo-page-04';
@@ -36,6 +36,9 @@ export class ReciboPage_03Page {
   isBgYellow: boolean = false;
   isBgGreen: boolean = false;
 
+  valorpopoverGlobal: boolean = false
+popoverGlobal: any;
+
   @ViewChild('iBtnSave') iBtnSave: Button;
   @ViewChild('iCodeBar', { read: ElementRef }) private iCodeBar: ElementRef;
   @ViewChild('iCantidadRecibida', { read: ElementRef }) private iCantidadRecibida: ElementRef;
@@ -43,7 +46,7 @@ export class ReciboPage_03Page {
   constructor(public app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams,
     public toastCtrl: ToastController, public sRecibo: ReciboServiceProvider,
     public popoverCtrl: PopoverController, public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController, public viewCtrl: ViewController) {
     this.vReciboPage02 = navParams.get('dataPage02');
   }
 
@@ -481,12 +484,14 @@ export class ReciboPage_03Page {
   }
 
   presentReciboPopover(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 13 });
-    popover.present({
+    this.valorpopoverGlobal = true;
+    this.popoverGlobal = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 13 });
+    this.popoverGlobal.present({
       ev: myEvent
     });
 
-    popover.onDidDismiss(popoverData => {
+    this.popoverGlobal.onDidDismiss(popoverData => {
+      this.valorpopoverGlobal = false;
       if (popoverData == 1) {
         console.log('data para imprimir', this.vReciboPage02);
         this.navigateToEtqCajaLpn(this.vReciboPage02);
@@ -630,6 +635,16 @@ export class ReciboPage_03Page {
   ionViewWillEnter() {
     this.selectAll(this.iCodeBar, 500);
     this.getUAsProducto(this.vReciboPage02.Id_Tx, this.vReciboPage02.Id_Producto, this.vReciboPage02.Item);
+
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if(this.valorpopoverGlobal){
+        this.valorpopoverGlobal = false;
+        this.popoverGlobal.dismiss();
+      }else{
+        this.navCtrl.pop(); 
+      }      
+  });
   }
 
   ionViewDidLoad() {

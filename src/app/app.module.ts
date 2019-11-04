@@ -96,6 +96,7 @@ import { EmbalajePage_06Page } from '../pages/embalaje/embalaje-page-06/embalaje
 import { EmbalajePage_07Page } from '../pages/embalaje/embalaje-page-07/embalaje-page-07';//YUS
 import { EmbalajePage_08Page } from '../pages/embalaje/embalaje-page-08/embalaje-page-08';//YUS
 import { EmbalajePage_09Page } from '../pages/embalaje/embalaje-page-09/embalaje-page-09';//YUS
+import { EmbalajePage_10Page } from '../pages/embalaje/embalaje-page-10/embalaje-page-10';//aromero
 import { BultoMasivoPage } from '../pages/embalaje/bulto-masivo/bulto-masivo';//aromero
 import { SelectAllDirective } from '../directives/select-all/select-all';
 import { AlmacenajeServiceProvider } from '../providers/almacenaje-service/almacenaje-service';
@@ -173,6 +174,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     EmbalajePage_07Page, //YUS
     EmbalajePage_08Page, //YUS
     EmbalajePage_09Page, //YUS
+    EmbalajePage_10Page, //aromero
     BultoMasivoPage, //YUS
     SelectAllDirective, //Loque#369Dev
     TransitoPage, //aromero
@@ -271,6 +273,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     EmbalajePage_07Page, //YUS
     EmbalajePage_08Page, //YUS
     EmbalajePage_09Page, //YUS
+    EmbalajePage_10Page, //aromero
     TransitoPage, //aromero
     PalletsTransitoPage, //aromero
     DetallePalletUaPage, //aromero

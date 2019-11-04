@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, Platform, NavController, NavParams, App, ViewController } from 'ionic-angular';
+import { IonicPage, Platform, AlertController, NavController, NavParams, App, ViewController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { ReciboPage } from '../recibo/recibo';
 import { PickingPage } from '../picking/picking';
@@ -44,7 +44,7 @@ export class MainMenuPage {
   btnEtiquetadoisenabled: boolean = false;
 
   constructor(private app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, 
-    public sGlobal: GlobalServiceProvider, public viewCtrl: ViewController, public auth: AuthService,) {
+    public sGlobal: GlobalServiceProvider, public viewCtrl: ViewController, public auth: AuthService, public alertCtrl: AlertController) {
     this.userProfile = this.navParams.data;
     this.accesosModulos();
   }
@@ -97,11 +97,53 @@ export class MainMenuPage {
     this.navCtrl.pop();
   }
 
-  goBackLoginPage(): void {
-    debugger;
-    this.sGlobal.Id_Centro = 0;
-    this.sGlobal.Id_Almacen = 0;
-    this.navCtrl.push(HomePage);
+  // goBackLoginPage(): void {
+  //   debugger;
+  //   this.sGlobal.Id_Centro = 0;
+  //   this.sGlobal.Id_Almacen = 0;
+  //   this.navCtrl.push(HomePage);
+  // }
+
+  goBackLoginPage() {
+    debugger
+    this.presentAlertConfirm("¿Deseas cerrar sesión?").then((result) => {
+      if (result) {
+        localStorage.clear();
+        setTimeout(() => this.goBack(), 1000);
+      }
+    })
+  }
+
+  goBack(): void {
+    this.navCtrl.pop();
+    var nav = this.app.getRootNav();
+    nav.setRoot(HomePage);
+  }
+
+  presentAlertConfirm(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+              resolve(false);
+              console.log('Disagree clicked');
+            }
+          },
+          {
+            text: 'Aceptar',
+            handler: () => {
+              resolve(true);
+              console.log('Agree clicked');
+            }
+          }
+        ]
+      });
+      confirm.present();
+    })
   }
 
   goReciboPage() {

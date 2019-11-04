@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController, PopoverController, ToastController } from 'ionic-angular';
+import { IonicPage, Platform, ViewController, NavController, NavParams, AlertController, ModalController, PopoverController, ToastController } from 'ionic-angular';
 import { HomePage } from '../../home/home';
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
 import { PopoverEmbalajeComponent } from '../../../components/popover-embalaje/popover-embalaje';
@@ -10,6 +10,7 @@ import { EmbalajePage_02Page } from '../embalaje-page-02/embalaje-page-02';
 import { IncidenciaPage } from '../../incidencia/incidencia';
 import { ImpresoraPage } from '../../impresora/impresora';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
+import { EmbalajePage_10Page } from '../embalaje-page-10/embalaje-page-10';
 
 /**
  * Generated class for the EmbalajePage_03Page page.
@@ -29,6 +30,11 @@ export class EmbalajePage_03Page {
   listDetEmbalaje: any;
   listAuxDetEmbalaje: any;
   listDetBultosEmbalaje: any;
+
+  listTransacDetEmbalaje: any;
+
+  vListaProductoSelect: any;
+
   vNroBulto: any;
   vTipoCierre: any;
 
@@ -41,11 +47,16 @@ export class EmbalajePage_03Page {
 
   resultCierre: any;
 
+  valorpopoverGlobal: boolean = false
+  popoverGlobal: any;
+
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private alertCtrl: AlertController, public toastCtrl: ToastController,
-    public sGlobal: GlobalServiceProvider, public sEmbalaje: EmbalajeServiceProvider, public popoverCtrl: PopoverController, public modalCtrl: ModalController) {
+    public sGlobal: GlobalServiceProvider, public sEmbalaje: EmbalajeServiceProvider,
+    public popoverCtrl: PopoverController, public modalCtrl: ModalController,
+    public viewCtrl: ViewController, private platform: Platform) {
     this.vEmbalajePage02 = navParams.get('dataPage02');
   }
 
@@ -60,6 +71,7 @@ export class EmbalajePage_03Page {
   ListarDespachoDetalle(strId_Tx) {
 
     this.sEmbalaje.ListarDespachoDetalle(strId_Tx).then((result) => {
+      debugger;
       this.listDetEmbalaje = result;
       this.listAuxDetEmbalaje = this.listDetEmbalaje;
 
@@ -154,12 +166,15 @@ export class EmbalajePage_03Page {
     //   ev: myEvent
     // });
 
-    let popover = this.popoverCtrl.create(PopoverEmbalajeComponent, { 'page': 15 });
-    popover.present({
+    this.valorpopoverGlobal = true;
+
+    this.popoverGlobal = this.popoverCtrl.create(PopoverEmbalajeComponent, { 'page': 15 });
+    this.popoverGlobal.present({
       ev: myEvent
     });
 
-    popover.onDidDismiss(popoverData => {
+    this.popoverGlobal.onDidDismiss(popoverData => {
+      this.valorpopoverGlobal = false;
       debugger;
       if (popoverData == 1) {
         // this.showModalIncidencia(this.rowReciboSelect);
@@ -177,7 +192,7 @@ export class EmbalajePage_03Page {
     });
   }
 
-  goBultoMasivo(){
+  goBultoMasivo() {
     this.navCtrl.push(BultoMasivoPage);
   }
 
@@ -258,6 +273,7 @@ export class EmbalajePage_03Page {
 
   ListarBultosDespacho(strId_Tx) {
     this.sEmbalaje.ListarBultosDespacho(strId_Tx).then((result) => {
+      debugger;
       this.listDetBultosEmbalaje = result;
     }, (err) => {
       console.log('E-Embalaje listar', err);
@@ -265,20 +281,77 @@ export class EmbalajePage_03Page {
   }
 
   validacionNroBulto() {
+    debugger;
     if (this.listDetBultosEmbalaje.length > 0)
       this.vNroBulto = this.listDetBultosEmbalaje[this.listDetBultosEmbalaje.length - 1].NroBulto
     else
       this.vNroBulto = 0
   }
 
+  selectItem(obj): void {
+    this.vListaProductoSelect = obj;
+    // {
+    //   'CantidadEmbalado': data.CantidadEmbalado,
+    //   'CantidadPicking': data.CantidadPicking,
+    //   'Id_Producto': data.Id_Producto,
+    //   'Id_Tx': data.Id_Tx,
+    //   'Item': data.Item,
+    //   'Lote': data.Lote
+    // };
+    this.presentToast("El producto " + obj.Producto + " fue seleccionado.")
+  }
+
   goToEmbalajePage04() {
-    this.validacionNroBulto();
-    this.navCtrl.push(EmbalajePage_04Page, {
-      dataPageFiltro: this.filterItemsBultos(1),
-      dataTotalPage03: this.listAuxDetEmbalaje,
-      nroBulto: this.vNroBulto,
-      dataPage02: this.vEmbalajePage02
-    });
+    debugger;
+    //Validar que un item haya sido seleccionado
+    if (this.vListaProductoSelect) {
+      // this.sEmbalaje.ListarTransaccionDetEmbalaje(this.listAuxDetEmbalaje[0].Id_Tx, this.listAuxDetEmbalaje[0].Item).then((result) => {
+      this.sEmbalaje.ListarTransaccionDetEmbalaje(this.vListaProductoSelect.Id_Tx, this.vListaProductoSelect.Item).then((result) => {
+        debugger;
+        this.listTransacDetEmbalaje = result;
+        if (this.listTransacDetEmbalaje.length > 0) {
+          var numItemVisual = 0;
+          if(this.listAuxDetEmbalaje[0].Item==0){
+            numItemVisual = this.vListaProductoSelect.Item + 1;
+          }else if(this.listAuxDetEmbalaje[0].Item==1){
+            numItemVisual = this.vListaProductoSelect.Item;
+          }
+
+          if (this.listTransacDetEmbalaje.length == 1) {
+            this.validacionNroBulto();
+            this.navCtrl.push(EmbalajePage_04Page, {
+              page: 3,
+              //dataPageFiltro: this.filterItemsBultos(1),
+              //dataTotalPage03: this.listAuxDetEmbalaje,
+              nroBulto: this.vNroBulto,
+              dataPage02: this.vEmbalajePage02,
+              lstTransac: this.listTransacDetEmbalaje,
+              lstProductSelect: this.vListaProductoSelect,
+              nroItemVisual: numItemVisual
+              //,nomProducto: ""
+            });
+          } else {
+            debugger;
+            this.validacionNroBulto();
+            this.navCtrl.push(EmbalajePage_10Page, {
+              //listDetEmbalajeTop1: this.filterItemsBultos(1),
+              //listAuxDetEmbalaje: this.listAuxDetEmbalaje,
+              nroBulto: this.vNroBulto,
+              listTransacDetEmbalaje: this.listTransacDetEmbalaje,
+              dataPage02: this.vEmbalajePage02,
+              nroItemVisual: numItemVisual
+              , descProducto: this.vListaProductoSelect.Producto
+            });
+          }
+        } else {
+          alert("No se encontraron registros");
+        }
+      }, (err) => {
+        console.log('E-Embalaje listar', err);
+      });
+    } else {
+      alert("Debe seleccionar un producto.")
+    }
   }
 
   goToEmbalajePage08() {
@@ -291,6 +364,15 @@ export class EmbalajePage_03Page {
   // goToEmbalajePage02Old() {
   //   this.navCtrl.push(EmbalajePage_02Page);
   // }
+
+  presentToast(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 5000,
+      position: 'bottom'
+    });
+    toast.present();
+  }
 
   goToEmbalajePage02() {
     this.navCtrl.getViews().forEach(item => {
@@ -403,8 +485,20 @@ export class EmbalajePage_03Page {
   }
 
   ionViewWillEnter() {
+
+    this.vListaProductoSelect = undefined;
     this.getDataDetEmbalaje();
     this.getDataDetBultosEmbalaje();
+
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if (this.valorpopoverGlobal) {
+        this.valorpopoverGlobal = false;
+        this.popoverGlobal.dismiss();
+      } else {
+        this.navCtrl.pop();
+      }
+    });
   }
 
 }

@@ -33,14 +33,14 @@
       </ion-col>
       <ion-col col-3 col-sm class="bgHeader-col">
         <ion-label class="bgHeader-text-button">
-          {{vNroItem}} / {{vTotalItems}}
+          {{vNroItemVisual}} / {{vTotalItems}}
         </ion-label>
       </ion-col>
       <ion-col class="bgHeader-col">
-        <button ion-button icon-start (click)="goToAnterior()" class="bgHeader-button">
+        <button ion-button icon-start (click)="goToAnterior()" [disabled]="Backisenabled" class="bgHeader-button">
           <ion-icon name="arrow-dropleft"></ion-icon>
         </button>
-        <button ion-button icon-end (click)="goToSiguiente()" class="bgHeader-button">
+        <button ion-button icon-end (click)="goToSiguiente()" [disabled]="Nextisenabled" class="bgHeader-button">
           <ion-icon name="arrow-dropright"></ion-icon>
         </button>
       </ion-col>
@@ -52,7 +52,8 @@
 
 <ion-content padding>
   <ion-row class="bgWhite">
-    <ion-card *ngFor="let objDetBultoEmbalaje of vEmbalajePage03" (press)="getRegistrarIncidencia(objDetBultoEmbalaje)">
+    <!-- <ion-card *ngFor="let objDetBultoEmbalaje of vEmbalajePage03" (press)="getRegistrarIncidencia(objDetBultoEmbalaje)"> -->
+    <ion-card *ngFor="let objDetBultoEmbalaje of vListEmbalajeTemp" (press)="getRegistrarIncidencia(objDetBultoEmbalaje)">
       <ion-card-content>
         <h5>{{objDetBultoEmbalaje.Producto}}</h5>
         <h5><b>Cod. Producto: </b> {{objDetBultoEmbalaje.Codigo}} </h5>

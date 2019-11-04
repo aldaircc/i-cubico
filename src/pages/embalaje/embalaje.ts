@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController, ModalController } from 'ionic-angular';
+import { IonicPage, Platform, ViewController, NavController, NavParams, PopoverController, ModalController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { PopoverEmbalajeComponent } from '../../components/popover-embalaje/popover-embalaje';
 import { EmbalajePage_02Page } from '../embalaje/embalaje-page-02/embalaje-page-02';
@@ -19,8 +19,12 @@ import { ImpresoraPage } from '../impresora/impresora';
 })
 export class EmbalajePage {
 
+  valorpopoverGlobal: boolean = false
+popoverGlobal: any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public popoverCtrl: PopoverController, public modalCtrl: ModalController
+    public popoverCtrl: PopoverController, public modalCtrl: ModalController,
+    public viewCtrl: ViewController, private platform: Platform
   ) {
   }
 
@@ -34,14 +38,16 @@ export class EmbalajePage {
   }
 
   presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverEmbalajeComponent, { 'page': 13 });
+    this.valorpopoverGlobal = true;
+    this.popoverGlobal = this.popoverCtrl.create(PopoverEmbalajeComponent, { 'page': 13 });
     debugger;
-    popover.present({
+    this.popoverGlobal.present({
       ev: myEvent
     });
 
-    popover.onDidDismiss(popoverData => {
+    this.popoverGlobal.onDidDismiss(popoverData => {
       debugger;
+      this.valorpopoverGlobal = false;
       if (popoverData == 4) {
         this.showModalImpresora();
       } else if (popoverData == 5) {
@@ -56,6 +62,18 @@ export class EmbalajePage {
 
   goEmbalajePackingPage() {
     this.navCtrl.push(EmbalajePage_02Page);
+  }
+
+  ionViewWillEnter(){
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if(this.valorpopoverGlobal){
+        this.valorpopoverGlobal = false;
+        this.popoverGlobal.dismiss();
+      }else{
+        this.navCtrl.pop(); 
+      }      
+  });
   }
 
 }

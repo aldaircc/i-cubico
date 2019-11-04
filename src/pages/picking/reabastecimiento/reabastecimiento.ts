@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, App, ModalController, NavController, NavParams, PopoverController, AlertController } from 'ionic-angular';
+import { IonicPage, Platform, ViewController, App, ModalController, NavController, NavParams, PopoverController, AlertController } from 'ionic-angular';
 import { AlmacenajeServiceProvider } from '../../../providers/almacenaje-service/almacenaje-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { IncidenciaPage } from '../../incidencia/incidencia';
@@ -23,10 +23,12 @@ export class ReabastecimientoPage {
 
   vPickingXProducto: any = [];
   TextObservacion: string = '';
+  valorpopoverGlobal: boolean = false
+popoverGlobal: any;
 
   constructor(public app: App, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams,
     public popoverCtrl: PopoverController, public sAlmacenaje: AlmacenajeServiceProvider,
-    public sGlobal: GlobalServiceProvider, public alertCtrl: AlertController) {
+    public sGlobal: GlobalServiceProvider, public alertCtrl: AlertController, public viewCtrl: ViewController, private platform: Platform) {
     this.vPickingXProducto = navParams.get('data');
   }
 
@@ -90,13 +92,14 @@ export class ReabastecimientoPage {
   }
 
   presentPopover(ev) {
-
-    let popover = this.popoverCtrl.create(PopoverPickingPage, { 'page': 1 });
-    popover.present({
+    this.valorpopoverGlobal = true;
+    this.popoverGlobal = this.popoverCtrl.create(PopoverPickingPage, { 'page': 1 });
+    this.popoverGlobal.present({
       ev: ev
     });
 
-    popover.onDidDismiss(popoverData => {
+    this.popoverGlobal.onDidDismiss(popoverData => {
+      this.valorpopoverGlobal = false;
       if (popoverData == 1) {
         this.showModalIncidencia(this.vPickingXProducto);
       } else if (popoverData == 2) {
@@ -164,5 +167,17 @@ export class ReabastecimientoPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ReabastecimientoPage');
+  }
+
+  ionViewWillEnter(){
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if(this.valorpopoverGlobal){
+        this.valorpopoverGlobal = false;
+        this.popoverGlobal.dismiss();
+      }else{
+        this.navCtrl.pop(); 
+      }      
+  });
   }
 }

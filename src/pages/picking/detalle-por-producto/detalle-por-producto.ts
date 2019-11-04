@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, App, ModalController, NavController, NavParams, AlertController, PopoverController, Navbar } from 'ionic-angular';
+import { IonicPage, Platform, ViewController, App, ModalController, NavController, NavParams, AlertController, PopoverController, Navbar } from 'ionic-angular';
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { IncidenciaPage } from '../../incidencia/incidencia';
@@ -32,8 +32,11 @@ export class DetallePorProductoPage {
   rowCount: any;
   searchQuery: string = '';
 
+  valorpopoverGlobal: boolean = false
+popoverGlobal: any;
+
   constructor(public app: App, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams,
-    public sPicking: PickingServiceProvider, public alertCtrl: AlertController,
+    public sPicking: PickingServiceProvider, public alertCtrl: AlertController, public viewCtrl: ViewController, private platform: Platform,
     public popoverCtrl: PopoverController, public sGlobal: GlobalServiceProvider) {
     this.vPickingXProducto = navParams.get('data');
     this.getDetalleXProductoLoad();
@@ -41,7 +44,7 @@ export class DetallePorProductoPage {
 
   filterItems(ev: any) {
     debugger;
-    const val = ev.target.value;
+    const val = ev.value;
     if (val && val.trim() != '') {
       this.listAuxDetalleProducto = this.listDetalleProducto.filter((item) => {
         return (item.UA_CodBarra.toLowerCase().indexOf(val.toLowerCase()) > -1);
@@ -68,7 +71,7 @@ export class DetallePorProductoPage {
       if (this.listDetalleProducto.length > 0) {
         console.log('Datos ordenes picking', this.listDetalleProducto);
       } else {
-        this.presentAlert('No se encontrarón datos.');
+        this.presentAlert('No se encontraron datos.');
       }
     }, (err) => {
       console.log('E-getDetalleXProducto', err);
@@ -76,7 +79,7 @@ export class DetallePorProductoPage {
   }
 
   eliminarUA(data) {
-    this.presentAlertConfirm("¿Desea eliminar UA seleccionada?”.").then((result) => {
+    this.presentAlertConfirm("¿Desea eliminar UA seleccionada?").then((result) => {
       if (result) {
         debugger;
         // Eliminar UA
@@ -238,12 +241,14 @@ export class DetallePorProductoPage {
   }
 
   presentPopover(ev) {
-    let popover = this.popoverCtrl.create(PopoverPickingPage, { 'page': 1 });
-    popover.present({
+    this.valorpopoverGlobal = true;
+    this.popoverGlobal = this.popoverCtrl.create(PopoverPickingPage, { 'page': 1 });
+    this.popoverGlobal.present({
       ev: ev
     });
 
-    popover.onDidDismiss(popoverData => {
+    this.popoverGlobal.onDidDismiss(popoverData => {
+      this.valorpopoverGlobal = false;
       if (popoverData == 1) {
         debugger;
         if (this.vPickingXProducto.Id_Estado != 2) {
@@ -273,5 +278,17 @@ export class DetallePorProductoPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DetallePorProductoPage');
+  }
+
+  ionViewWillEnter(){
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if(this.valorpopoverGlobal){
+        this.valorpopoverGlobal = false;
+        this.popoverGlobal.dismiss();
+      }else{
+        this.navCtrl.pop(); 
+      }      
+  });
   }
 }

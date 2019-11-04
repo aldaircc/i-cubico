@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, PopoverController, App } from 'ionic-angular';
+import { IonicPage, Platform, ViewController, NavController, NavParams, ModalController, PopoverController, App } from 'ionic-angular';
 import { GlobalServiceProvider } from '../../../../providers/global-service/global-service';
 import { DespachoServiceProvider } from '../../../../providers/despacho-service/despacho-service';
 import { EmbarquePage_03Page } from '../embarque-page-03/embarque-page-03';
@@ -22,20 +22,25 @@ export class EmbarquePage_02Page {
   vParameter: any;
   totalSubBultos: number = 0;
   totalSubBultosLeido: number = 0;
+  valorpopoverGlobal02: boolean = false
+  popoverGlobal: any;
 
   constructor(public app: App, public popoverCtrl: PopoverController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider,
-    public sDesp: DespachoServiceProvider) {
+    public sDesp: DespachoServiceProvider, public viewCtrl: ViewController, private platform: Platform) {
     this.vParameter = this.navParams.get('vParameter');
     this.listarSubBultosLeidos(this.vParameter.Id_Tra, 2);
   }
 
   presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 1 });
-    popover.present({
+    debugger;
+    this.valorpopoverGlobal02 = true;
+    this.popoverGlobal = this.popoverCtrl.create(PopoverReciboComponent, { 'page': 1 });
+    this.popoverGlobal.present({
       ev: myEvent
     });
 
-    popover.onDidDismiss(popoverData => {
+    this.popoverGlobal.onDidDismiss(popoverData => {
+      this.valorpopoverGlobal02 = false;
       if (popoverData == 4) {
         this.navCtrl.pop();
         var nav = this.app.getRootNav();
@@ -68,5 +73,22 @@ export class EmbarquePage_02Page {
 
   closeEmbarPage03(): void {
     this.navCtrl.pop();
+  }
+
+  ionViewDidLoad(){
+  }
+
+  ionViewWillEnter() {
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if(this.valorpopoverGlobal02){
+        this.valorpopoverGlobal02 = false;
+        this.popoverGlobal.dismiss();
+      }
+      else{
+        this.navCtrl.pop(); 
+      }      
+  });
+
   }
 }

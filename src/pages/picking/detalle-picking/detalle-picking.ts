@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, App, ModalController, Navbar, NavController, NavParams, PopoverController, ToastController, AlertController } from 'ionic-angular';
+import { IonicPage, Platform, ViewController, App, ModalController, Navbar, NavController, NavParams, PopoverController, ToastController, AlertController } from 'ionic-angular';
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 import { RutaPickingPage } from '../ruta-picking/ruta-picking';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
@@ -44,16 +44,20 @@ export class DetallePickingPage {
   vDetallePickingPage: any;
   idRutaPicking: number = 0;
 
+  valorpopoverGlobal: boolean = false
+  popoverGlobal: any;
+
   constructor(public app: App, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController,
-    public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider, public alertCtrl: AlertController) {
+    public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider, public alertCtrl: AlertController,
+    public viewCtrl: ViewController, private platform: Platform) {
     this.vRutaPickingPage = navParams.get('data');
     this.getDetallePickingLoad();
   }
 
   filterItems(ev: any) {
     debugger;
-    const val = ev.target.value;
+    const val = ev.value;
     if (val && val.trim() != '') {
       this.listAuxDetallePicking = this.listDetallePicking.filter((item) => {
         return (item.CodigoProducto.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.Producto.toLowerCase().indexOf(val.toLowerCase()) > -1);
@@ -307,12 +311,15 @@ export class DetallePickingPage {
   }
 
   presentPopover(ev) {
-    let popover = this.popoverCtrl.create(PopoverPickingPage, { 'page': 1 });
-    popover.present({
+    this.valorpopoverGlobal = true;
+
+    this.popoverGlobal = this.popoverCtrl.create(PopoverPickingPage, { 'page': 1 });
+    this.popoverGlobal.present({
       ev: ev
     });
 
-    popover.onDidDismiss(popoverData => {
+    this.popoverGlobal.onDidDismiss(popoverData => {
+      this.valorpopoverGlobal = false;
       if (popoverData == 1) {
         if (this.vRutaPickingPage.Id_Estado != 2) {
           this.showModalIncidencia(this.vRutaPickingPage);
@@ -471,5 +478,18 @@ export class DetallePickingPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DetallePickingPage');
+  }
+
+  ionViewWillEnter(){
+    this.getDetallePickingLoad();
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if(this.valorpopoverGlobal){
+        this.valorpopoverGlobal = false;
+        this.popoverGlobal.dismiss();
+      }else{
+        this.navCtrl.pop(); 
+      }      
+  });
   }
 }
