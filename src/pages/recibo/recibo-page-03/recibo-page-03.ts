@@ -47,6 +47,7 @@ popoverGlobal: any;
     public toastCtrl: ToastController, public sRecibo: ReciboServiceProvider,
     public popoverCtrl: PopoverController, public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider,
     public alertCtrl: AlertController, public viewCtrl: ViewController) {
+      debugger;
     this.vReciboPage02 = navParams.get('dataPage02');
   }
 
@@ -138,7 +139,7 @@ popoverGlobal: any;
           this.saveTransaction();
         }
       } else {
-
+        debugger;
         if (this.vReciboPage02.Id_TipoMovimiento === 0) {
           this.presentToast('Esta transacción no tiene tipo de movimiento');
           return;
@@ -199,7 +200,7 @@ popoverGlobal: any;
           });
 
         } else {
-
+          debugger;
           ua = {
             'UA_CodBarra': this.codeBar.Text,
             'Id_Producto': this.vReciboPage02.Id_Producto,
@@ -346,6 +347,7 @@ popoverGlobal: any;
 
     this.vReciboPage02.TipoAlmacenaje = (this.vReciboPage02.TipoAlmacenaje == undefined) ? 0 : this.vReciboPage02.TipoAlmacenaje;
     this.sRecibo.registrarUATransito(objTxUbi).then((result) => {
+      debugger;
       let rpta: any = result;
       var sumCantidad = this.cantidadRec + this.vReciboPage02.CantidadOperacion;
 
@@ -378,7 +380,7 @@ popoverGlobal: any;
         'Id_UM': this.vReciboPage02.Id_UM,
         'FlagAnulado': false
       };
-
+      debugger;
       if (this.vReciboPage02.Id_TipoMovimiento == 0) {
         this.presentToast('Esta transacción no tiene tipo de movimiento');
         return;
@@ -388,10 +390,12 @@ popoverGlobal: any;
         this.vReciboPage02.Id_TipoMovimiento === 13 ||
         this.vReciboPage02.Id_TipoMovimiento === 14) {
         this.sRecibo.registrarUATransferencia(objUA).then(result => {
+          debugger;
           this.evaluarResultado(result);
         });
       } else {
         this.sRecibo.registrarUA(objUA).then(result => {
+          debugger;
           this.evaluarResultado(result);
         });
       }
@@ -454,6 +458,7 @@ popoverGlobal: any;
   }
 
   goToReciboPage04() {
+    debugger;
     let obj = {
       "Id_Tx": this.vReciboPage02.Id_Tx,
       "NumOrden": this.vReciboPage02.NumOrden,

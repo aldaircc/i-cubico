@@ -8,6 +8,7 @@ import { IncidenciaPage } from '../../incidencia/incidencia';
 import { ReciboPage } from '../../recibo/recibo';
 import { EtiquetadoPage_01Page } from '../../etiquetado/etiquetado-page-01/etiquetado-page-01';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
+import moment from 'moment';
 
 /**
  * Generated class for the ReciboPage_02Page page.
@@ -233,6 +234,7 @@ export class ReciboPage_02Page {
   }
 
   goToReciboPage03(data) {
+    debugger;
     this.vReciboPage02 = {
       "Id_Tx": this.vReciboPage01.Id_Tx,
       "NumOrden": this.vReciboPage01.NumOrden,
@@ -241,8 +243,8 @@ export class ReciboPage_02Page {
       "Id_Producto": data.Id_Producto,
       "UM": data.UM,
       "Id_UM": data.Id_UM,
-      "Fecha_Emi": data.FechaEmision,
-      "Fecha_Venci": data.FechaVencimiento,
+      "Fecha_Emi": data.FechaEmision == null ? "" : moment(data.FechaEmision).format('DD/MM/YYYY'),
+      "Fecha_Venci": data.FechaVencimiento == null ? "" : moment(data.FechaVencimiento).format('DD/MM/YYYY'),
       "Lote": data.Lote,
       "CantPedida": data.CantidadPedida,
       "CantidadOperacion": data.CantidadOperacion,
@@ -263,8 +265,8 @@ export class ReciboPage_02Page {
       "TipoAlmacenaje": data.TipoAlmacenaje,
       "Acceso": 0,
       "NroDoc": this.vReciboPage01.NumOrden,
-      "FecEmi": data.FechaEmision,
-      "FecVen": data.FechaVencimiento,
+      "FecEmi": data.FechaEmision == null ? "" : data.FechaEmision,
+      "FecVen": data.FechaVencimiento == null ? "" : data.FechaVencimiento,
       "FlagSerie": data.FlagSeriePT,
       "FlagLote": data.FlagLotePT,
       "CondicionAlmac": data.CondicionAlmacenamiento,
@@ -329,7 +331,7 @@ export class ReciboPage_02Page {
   navigateToEtqCajaLpn(data) {
     debugger;
     let objEtq = {
-      "LoteLab": data.Lote,
+      "LoteLab": data.Lote==null ? "" : data.Lote,
       "Id_Producto": data.Id_Producto,
       "Id_UM": data.Id_UM,
       "CantidadPedida": data.CantidadPedida,
@@ -360,6 +362,7 @@ export class ReciboPage_02Page {
     let etqModal = this.modalCtrl.create(EtiquetadoPage_01Page, { vEtq: objEtq });
     etqModal.onDidDismiss(data => {
       console.log("Data retornada del modal", data);
+      this.backButtonHardware();
     });
     etqModal.present();
   }
@@ -410,6 +413,18 @@ export class ReciboPage_02Page {
   ionViewWillEnter() {
     this.getDetailXTx(this.vReciboPage01.Id_Tx);
 
+    this.platform.registerBackButtonAction(() => {
+      debugger;
+      if(this.valorpopoverGlobal){
+        this.valorpopoverGlobal = false;
+        this.popoverGlobal.dismiss();
+      }else{
+        this.navCtrl.pop(); 
+      }      
+  });
+  }
+
+  backButtonHardware(){
     this.platform.registerBackButtonAction(() => {
       debugger;
       if(this.valorpopoverGlobal){

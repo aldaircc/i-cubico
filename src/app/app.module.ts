@@ -59,27 +59,34 @@ import { InventarioPage_06Page } from '../pages/inventario/inventario-page-06/in
 import { DespachoPage } from '../pages/despacho/despacho';
 import { EmbalajePage } from '../pages/embalaje/embalaje';
 import { PickingServiceProvider } from '../providers/picking-service/picking-service';
-import {TransitoPage} from '../pages/almacenaje/transito/transito' //aromero
-import {PalletsTransitoPage} from '../pages/almacenaje/pallets-transito/pallets-transito' //aromero
-import {DetallePalletUaPage} from '../pages/almacenaje/detalle-pallet-ua/detalle-pallet-ua' //aromero
-import {OtraUbicacionPage} from '../pages/almacenaje/otra-ubicacion/otra-ubicacion' //aromero
-import {AlmacenajePalletUaPage} from '../pages/almacenaje/almacenaje-pallet-ua/almacenaje-pallet-ua' //aromero
-import {ReubicacionPage} from '../pages/almacenaje/reubicacion/reubicacion' //aromero
-import {ReubicacionDestinoPage} from '../pages/almacenaje/reubicacion-destino/reubicacion-destino' //aromero
-import {ReabastecimientoAlmacenajePage} from '../pages/almacenaje/reabastecimiento-almacenaje/reabastecimiento-almacenaje' //aromero
-import {ReabastecimientoPickingPage} from '../pages/almacenaje/reabastecimiento-picking/reabastecimiento-picking' //aromero
-import {ListaPalletUaPage} from '../pages/almacenaje/lista-pallet-ua/lista-pallet-ua' //aromero
-import {UbicacionDestinoPage} from '../pages/almacenaje/ubicacion-destino/ubicacion-destino' //aromero
-import {ConsultarUbicacionPage} from '../pages/almacenaje/consultar-ubicacion/consultar-ubicacion' //aromero
-import {DetalleProductoPage} from '../pages/almacenaje/detalle-producto/detalle-producto' //aromero
-import {MenuConsultarPage} from '../pages/almacenaje/menu-consultar/menu-consultar' //aromero
-import {AdministrarUaPage} from '../pages/almacenaje/menu-consultar/administrar-ua/administrar-ua' //aromero
-import {ReasignarUaPage} from '../pages/almacenaje/menu-consultar/reasignar-ua/reasignar-ua' //aromero
-import {ReubicarUaPage} from '../pages/almacenaje/menu-consultar/reubicar-ua/reubicar-ua' //aromero
-import {ParticionarUaPage} from '../pages/almacenaje/menu-consultar/particionar-ua/particionar-ua' //aromero
-import {ConsultarPalletPage} from '../pages/almacenaje/menu-consultar/consultar-pallet/consultar-pallet' //aromero
-import {ConsultarEanPage} from '../pages/almacenaje/menu-consultar/consultar-ean/consultar-ean' //aromero
-import {UbicacionOrigenPage} from '../pages/almacenaje/ubicacion-origen/ubicacion-origen' //aromero
+import { TransitoPage } from '../pages/almacenaje/transito/transito' //aromero
+import { PalletsTransitoPage } from '../pages/almacenaje/pallets-transito/pallets-transito' //aromero
+import { DetallePalletUaPage } from '../pages/almacenaje/detalle-pallet-ua/detalle-pallet-ua' //aromero
+import { OtraUbicacionPage } from '../pages/almacenaje/otra-ubicacion/otra-ubicacion' //aromero
+import { AlmacenajePalletUaPage } from '../pages/almacenaje/almacenaje-pallet-ua/almacenaje-pallet-ua' //aromero
+import { ReubicacionPage } from '../pages/almacenaje/reubicacion/reubicacion' //aromero
+import { ReubicacionDestinoPage } from '../pages/almacenaje/reubicacion-destino/reubicacion-destino' //aromero
+import { ReabastecimientoAlmacenajePage } from '../pages/almacenaje/reabastecimiento-almacenaje/reabastecimiento-almacenaje' //aromero
+import { ReabastecimientoPickingPage } from '../pages/almacenaje/reabastecimiento-picking/reabastecimiento-picking' //aromero
+import { ListaPalletUaPage } from '../pages/almacenaje/lista-pallet-ua/lista-pallet-ua' //aromero
+import { UbicacionDestinoPage } from '../pages/almacenaje/ubicacion-destino/ubicacion-destino' //aromero
+import { ConsultarUbicacionPage } from '../pages/almacenaje/consultar-ubicacion/consultar-ubicacion' //aromero
+import { DetalleProductoPage } from '../pages/almacenaje/detalle-producto/detalle-producto' //aromero
+import { MenuConsultarPage } from '../pages/almacenaje/menu-consultar/menu-consultar' //aromero
+import { AdministrarUaPage } from '../pages/almacenaje/menu-consultar/administrar-ua/administrar-ua' //aromero
+import { ReasignarUaPage } from '../pages/almacenaje/menu-consultar/reasignar-ua/reasignar-ua' //aromero
+import { ReubicarUaPage } from '../pages/almacenaje/menu-consultar/reubicar-ua/reubicar-ua' //aromero
+import { ParticionarUaPage } from '../pages/almacenaje/menu-consultar/particionar-ua/particionar-ua' //aromero
+import { ConsultarPalletPage } from '../pages/almacenaje/menu-consultar/consultar-pallet/consultar-pallet' //aromero
+import { ConsultarEanPage } from '../pages/almacenaje/menu-consultar/consultar-ean/consultar-ean' //aromero
+import { UbicacionOrigenPage } from '../pages/almacenaje/ubicacion-origen/ubicacion-origen' //aromero
+
+import { SolicitudReabastecimientoPage } from '../pages/almacenaje/solicitud-reabastecimiento/solicitud-reabastecimiento' //aromero
+import { AbastecimientoSolicitudPage } from '../pages/almacenaje/abastecimiento-solicitud/abastecimiento-solicitud' //aromero
+import { ReubicarSolicitudPage } from '../pages/almacenaje/reubicar-solicitud/reubicar-solicitud' //aromero
+
+
+
 import { EmbarquePage_01Page } from '../pages/despacho/embarque/embarque-page-01/embarque-page-01'; //Loque#369Dev
 import { EmbarquePage_02Page } from '../pages/despacho/embarque/embarque-page-02/embarque-page-02'; //Loque#369Dev
 import { EmbarquePage_03Page } from '../pages/despacho/embarque/embarque-page-03/embarque-page-03'; //Loque#369Dev
@@ -123,7 +130,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     ReciboPage_03Page, //Loque#369Dev
     ReciboPage_04Page, //Loque#369Dev
     ReciboPage_05Page, //Loque#369Dev
-	  TransferPage_01Page, //Loque#369Dev
+    TransferPage_01Page, //Loque#369Dev
     TransferPage_02Page, //Loque#369Dev
     TransferPage_03Page, //Loque#369Dev
     TransferPage_04Page, //Loque#369Dev
@@ -198,14 +205,17 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     ConsultarPalletPage, //aromero
     ConsultarEanPage, //aromero
     UbicacionOrigenPage, //aromero
+    SolicitudReabastecimientoPage, //aromero
+    AbastecimientoSolicitudPage, //aromero
+    ReubicarSolicitudPage, //aromero
     ConfigurarPage, //YUS    
     ParametrosPage //YUS  
   ],
   imports: [
-    BrowserModule,HttpModule,HttpClientModule,
-    IonicModule.forRoot(MyApp,{
+    BrowserModule, HttpModule, HttpClientModule,
+    IonicModule.forRoot(MyApp, {
       monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Setiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-      monthShortNames: ['ENE','FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SET', 'OCT', 'NOV', 'DIC']
+      monthShortNames: ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SET', 'OCT', 'NOV', 'DIC']
     }),  //Loque#369Dev
     WarehouseSelectPageModule,
     MainMenuPageModule,
@@ -294,6 +304,9 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     ParticionarUaPage, //aromero
     ConsultarPalletPage, //aromero
     ConsultarEanPage, //aromero
+    SolicitudReabastecimientoPage, //aromero
+    AbastecimientoSolicitudPage, //aromero
+    ReubicarSolicitudPage, //aromero
     UbicacionOrigenPage, //aromero
     ConfigurarPage, //YUS    
     ParametrosPage//YUS   
@@ -304,7 +317,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     HTTP,
     File,
     AndroidPermissions,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     AuthService, //Loque#369Dev
     ReciboServiceProvider, //Loque#369Dev
     ImpresoraServiceProvider, //Loque#369Dev
@@ -316,7 +329,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     AlmacenajeServiceProvider,
     InventarioServiceProvider,
     DespachoServiceProvider //Loque#369Dev
-    
+
   ]
 })
-export class AppModule {}
+export class AppModule { }

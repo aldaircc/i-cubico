@@ -6,6 +6,7 @@ import { ReubicacionPage } from '../almacenaje/reubicacion/reubicacion'
 import { ReabastecimientoAlmacenajePage } from '../almacenaje/reabastecimiento-almacenaje/reabastecimiento-almacenaje'
 import { ConsultarUbicacionPage } from '../almacenaje/consultar-ubicacion/consultar-ubicacion'
 import { MenuConsultarPage } from '../almacenaje/menu-consultar/menu-consultar'
+import { SolicitudReabastecimientoPage } from '../almacenaje/solicitud-reabastecimiento/solicitud-reabastecimiento'
 import { GlobalServiceProvider } from '../../providers/global-service/global-service';
 
 @IonicPage()
@@ -39,6 +40,10 @@ export class AlmacenajePage {
     goMenuConsultarPage() {
         this.navCtrl.push(MenuConsultarPage);
     }
+
+    // goSolicitudReabastecimientoPage() {
+    //     this.navCtrl.push(SolicitudReabastecimientoPage);
+    // }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad PickingPage');

@@ -196,7 +196,7 @@
       </ion-col>
 
       <ion-col col-6 col-sm no-padding no-margin>
-        <ion-select placeholder="Sub almacén" [(ngModel)]="id_SubAlm" interface="action-sheet" #selectSubAlmacen style="padding: 8px 3px 8px 3px">
+        <ion-select [disabled]="!subAlmacenDisabled" placeholder="Sub almacén" [(ngModel)]="id_SubAlm" interface="action-sheet" #selectSubAlmacen style="padding: 8px 3px 8px 3px">
           <ion-option value="" disabled selected>Sub almacén</ion-option>
           <ion-option *ngFor="let sa of listSubAlm" value="{{ sa.Id_SubAlmacen }}">{{ sa.NombreSubAlmacen }}
           </ion-option>

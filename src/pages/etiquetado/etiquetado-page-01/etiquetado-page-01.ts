@@ -82,6 +82,7 @@ export class EtiquetadoPage_01Page {
   etqDisabled: boolean = true;
   saldoDisabled: boolean = true;
   UMAlterDisabled: boolean = true;
+  subAlmacenDisabled : boolean = true;
   cantXBulto: number = 0;
   residuo: number = 0;
 
@@ -132,15 +133,20 @@ export class EtiquetadoPage_01Page {
     this.resultNumEtq = true;
     this.resultEtqSaldo = true;
     if (this.vEtq.Codigo != null) {
-
+      debugger;
       this.lote = this.vEtq.LoteLab;
       this.serie = "";
-      this.fecEmi = (this.vEtq.FecEmi != null) ? moment(this.vEtq.FecEmi).toISOString() : this.fecEmi; // .format('YYYY-MM-DD');
-      this.fecVen = (this.vEtq.FecVen != null) ? moment(this.vEtq.FecVen).toISOString() : this.fecVen;//format('YYYY-MM-DD');
+      this.fecEmi = (this.vEtq.FecEmi != null) ? moment(this.vEtq.FecEmi).toISOString()  : this.fecEmi; // .format('YYYY-MM-DD');
+      this.fecVen = (this.vEtq.FecVen != null) ? moment(this.vEtq.FecVen).toISOString()  : this.fecVen;//format('YYYY-MM-DD');
+
+
+      // moment(objImp.FechaEmision).format('DD/MM/YYYY') : currentDate.format('dd/MM/yyyy')
+      // this.fecEmi = (this.vEtq.FecEmi != null) ? moment(this.vEtq.FecEmi).toISOString() : "/Date(" + Date.parse(this.fecEmi) + ")/"; // .format('YYYY-MM-DD');
+      // this.fecVen = (this.vEtq.FecVen != null) ? moment(this.vEtq.FecVen).toISOString() : "/Date(" + Date.parse(this.fecVen) + ")/";//format('YYYY-MM-DD');
 
       this.listarSubAlmacenesXCuenta(this.vEtq.IdCuentaLPN, this.sGlobal.Id_Almacen);
 
-      
+
       // this.id_SubAlm = this.vEtq.Id_SubAlmacen;
       this.id_UAlt = this.vEtq.Id_UM;
 
@@ -247,15 +253,21 @@ export class EtiquetadoPage_01Page {
       debugger;
       console.log('result listarSubAlmacenesXCuenta', result);
       this.listSubAlm = result;
-      if(this.listSubAlm.length>0){
-        for(var i=0; i < this.listSubAlm.length; i++){
-          if(this.listSubAlm[i].FlagxDefecto){
-            this.id_SubAlm = this.listSubAlm[i].Id_SubAlmacen;
-          }
-        }        
-      }else{
+      if(this.vEtq.page){
+        this.subAlmacenDisabled = false;
         this.id_SubAlm = this.vEtq.Id_SubAlmacen;
-      }
+      }else{
+        this.subAlmacenDisabled = true;
+        if (this.listSubAlm.length > 0) {
+          for (var i = 0; i < this.listSubAlm.length; i++) {
+            if (this.listSubAlm[i].FlagxDefecto) {
+              this.id_SubAlm = this.listSubAlm[i].Id_SubAlmacen;
+            }
+          }
+        } else {
+          this.id_SubAlm = this.vEtq.Id_SubAlmacen;
+        }
+      }      
     });
   }
 
@@ -473,6 +485,7 @@ export class EtiquetadoPage_01Page {
       debugger;
       var listContainer = [];
       var listEtq = [];
+      // let currentDate = moment(new Date());
       let currentDate = moment(new Date());
       let obj = this.listUM.filter(x => x.Id_UM == this.id_UAlt)[0];
 
@@ -491,7 +504,7 @@ export class EtiquetadoPage_01Page {
           listEtq.push({ "campo": "|CANTXBULTO|", "valor": this.cantXBulto });
           listEtq.push({ "campo": "|SALDO|", "valor": "0" });
           // listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo == true) ? "" : currentDate.format('dd/MM/yyyy') });
-          listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo == true) ? moment(objImp.FechaEmision).format('DD/MM/YYYY') : currentDate.format('dd/MM/yyyy') });
+          listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo == true) ? moment(objImp.FechaEmision).format('DD/MM/YYYY') : currentDate.format('DD/MM/YYYY') });
           listEtq.push({ "campo": "|ORDEN|", "valor": (this.findArticulo == true) ? "" : this.vEtq.NroDoc });
           listEtq.push({ "campo": "|USUARIO|", "valor": this.sGlobal.userName });
           listEtq.push({ "campo": "|COMPOSICION|", "valor": this.vEtq.CondicionAlmac });
@@ -520,7 +533,7 @@ export class EtiquetadoPage_01Page {
           listEtq.push({ "campo": "|CANTXBULTO|", "valor": this.cantXBulto });
           listEtq.push({ "campo": "|SALDO|", "valor": (i == 0 && this.cantEtqSaldo > 0) ? this.residuo % this.cantXBulto : 0 });
           // listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo != false) ? "" : currentDate.format('dd/MM/yyyy') });
-          listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo != false) ? moment(objImp.FechaEmision).format('DD/MM/YYYY') : currentDate.format('dd/MM/yyyy') });
+          listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo != false) ? moment(objImp.FechaEmision).format('DD/MM/YYYY') : currentDate.format('DD/MM/YYYY') });
           listEtq.push({ "campo": "|ORDEN|", "valor": (this.findArticulo != false) ? "" : this.vEtq.NroDoc });
           listEtq.push({ "campo": "|USUARIO|", "valor": this.sGlobal.userName });
           listEtq.push({ "campo": "|COMPOSICION|", "valor": this.vEtq.CondicionAlmac });
@@ -583,7 +596,7 @@ export class EtiquetadoPage_01Page {
     let val = ev.value;
     let name = ev.ngControl.name;
 
-    if(val==""){
+    if (val == "") {
       val = "0"
     }
 
@@ -723,20 +736,20 @@ export class EtiquetadoPage_01Page {
     }, time);
   }
 
-  ionViewDidLoad() {   
+  ionViewDidLoad() {
     console.log('ionViewDidLoad EtiquetadoPage01');
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     debugger;
     this.platform.registerBackButtonAction(() => {
       debugger;
-      if(this.valorpopoverGlobal){
+      if (this.valorpopoverGlobal) {
         this.valorpopoverGlobal = false;
         this.popoverGlobal.dismiss();
-      }else{
-        this.navCtrl.pop(); 
-      }      
-  });
+      } else {
+        this.navCtrl.pop();
+      }
+    });
   }
 }
