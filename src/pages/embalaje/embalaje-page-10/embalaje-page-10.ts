@@ -25,6 +25,7 @@ export class EmbalajePage_10Page {
   vlistTransacDetEmbalaje: any;
   vEmbalajePage02: any;
   vProducto: any;
+  vCodProducto: any;
   rowCount: any;
 
   vNroItemVisual: number;

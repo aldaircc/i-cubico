@@ -362,7 +362,7 @@ popoverGlobal: any;
       if (saldoTotal == 0) {
         //se sugiere cerrar picking
         debugger;
-        this.presentAlertConfirm("Orden de picking completa. ¿Desea cerrar picking?”.").then((result) => {
+        this.presentAlertConfirm("Orden de picking completa. ¿Desea cerrar picking?").then((result) => {
           if (result) {
             // Ir a pagina cerrar picking
             this.goCerrarPickingPage();
@@ -371,17 +371,18 @@ popoverGlobal: any;
             this.goOrdenesPicking();
           }
         })
-      } else {
-        this.presentAlertConfirm("Orden de picking incompleta. ¿Desea cerrar picking?”.").then((result) => {
-          if (result) {
-            // Ir a pagina cerrar picking
-            this.goCerrarPickingPage();
-          } else {
-            // this.goDetallePickingPage2();
-            this.goOrdenesPicking();
-          }
-        })
-      }
+      } 
+      // else {
+      //   this.presentAlertConfirm("Orden de picking incompleta. ¿Desea cerrar picking?").then((result) => {
+      //     if (result) {
+      //       // Ir a pagina cerrar picking
+      //       this.goCerrarPickingPage();
+      //     } else {
+      //       // this.goDetallePickingPage2();
+      //       this.goOrdenesPicking();
+      //     }
+      //   })
+      // }
     } else {//Si el saldo total de los productos con ruta se No completa
       debugger;
       if (this.pickingProducto.Saldo == 0) {//Si Item completado

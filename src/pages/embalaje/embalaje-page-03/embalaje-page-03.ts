@@ -339,8 +339,8 @@ export class EmbalajePage_03Page {
               nroBulto: this.vNroBulto,
               listTransacDetEmbalaje: this.listTransacDetEmbalaje,
               dataPage02: this.vEmbalajePage02,
-              nroItemVisual: numItemVisual
-              , descProducto: this.vListaProductoSelect.Producto
+              nroItemVisual: numItemVisual, 
+              descProducto: this.vListaProductoSelect.Producto
             });
           }
         } else {

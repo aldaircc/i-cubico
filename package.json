@@ -36,8 +36,10 @@
     "@swimlane/ngx-datatable": "^14.0.0",
     "@types/node": "^12.7.4",
     "brmasker-ionic-3": "^1.6.3",
-    "cordova-android": "7.0.0",
+    "cordova-android": "^8.1.0",
+    "cordova-android-support-gradle-release": "^3.0.1",
     "cordova-browser": "5.0.4",
+    "cordova-ios": "^5.0.1",
     "cordova-plugin-android-permissions": "^0.10.0",
     "cordova-plugin-decimal-keyboard": "^1.0.0",
     "cordova-plugin-device": "^2.0.2",
@@ -81,11 +83,13 @@
       "cordova-plugin-decimal-key": {},
       "cordova-plugin-file": {},
       "cordova-plugin-statusbar": {},
-      "cordova-plugin-android-permissions": {}
+      "cordova-plugin-android-permissions": {},
+      "cordova-android-support-gradle-release": {}
     },
     "platforms": [
-      "android",
-      "browser"
+      "browser",
+      "ios",
+      "android"
     ]
   }
 }
