@@ -308,4 +308,31 @@ export class PickingServiceProvider {
         })
     });
   }
+
+  RegistrarSolicitudPicking(strIdTx, intItem, intIdProducto, intIdSubAlmacen, decCantidad, intIdAlmacen, strUsuario) {
+    console.log("entra 2");
+    let parameter = {
+      'strIdTx': strIdTx,
+      'intItem': intItem,
+      'intIdProducto': intIdProducto,
+      'intIdSubAlmacen': intIdSubAlmacen,
+      'decCantidad': decCantidad,
+      'intIdAlmacen': intIdAlmacen,
+      'strUsuario': strUsuario      
+    };
+
+    console.log("parametros " + JSON.stringify(parameter));
+
+    return new Promise((result, reject) => {
+      this.http.post(this.sGlobal.pickingService + 'RegistrarSolicitudPicking/strIdTx/intItem/intIdProducto/intIdSubAlmacen/decCantidad/intIdAlmacen/strUsuario', JSON.stringify(parameter), { headers: this.headers })
+        .map(res => res.json())
+        .subscribe(data => {
+          result(data);
+        }, err => {
+          console.log('E-RegistrarSolicitudPicking', err);
+        })
+    });
+  }
+
+
 }

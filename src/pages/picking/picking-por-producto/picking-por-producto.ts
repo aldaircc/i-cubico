@@ -276,9 +276,18 @@ popoverGlobal: any;
       event.target.value = newValue.slice(0, -1);
     }
   }
-
+  private isDisabled: boolean=false;
   validarCodeBar() {
-    debugger;
+    debugger;        
+    
+    if(this.codeBar.substring(0,1) == "P"){      
+      this.isDisabled = true;      
+    }
+    else
+    {
+      this.isDisabled = false;      
+    }
+
     if (this.codeBar) {
       if (this.codeBar.trim() != "") {
         if (this.codeBar.length == 12) {
@@ -827,6 +836,26 @@ popoverGlobal: any;
     };
     this.navCtrl.push(ReabastecimientoPage, {
       data: this.vPickingXProducto
+    });
+  }
+
+  RegistrarSolicitudPicking(): void {
+    this.presentAlertConfirm("¿Estás seguro de registrar la solicitud?").then((result) => {
+      console.log("entra");
+      this.sPicking.RegistrarSolicitudPicking(this.vRutaPickingPage.Id_Tx,this.pickingProducto.Item,this.pickingProducto.IdProducto,0,this.pickingProducto.Saldo,this.sGlobal.Id_Almacen,this.sGlobal.userName).then(result => {        
+        var message: any = result;
+        if (message.errNumber == 0 || message.errNumber == 1) {
+          console.log("exito");
+          this.presentAlert(message.message);          
+        }         
+        else {
+          this.presentAlert("No se realizó el registro de la solicitud");
+        }
+      });    
+
+      
+
+
     });
   }
 

@@ -151,7 +151,7 @@
             </ion-col>
             <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
                 <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-                    <ion-input #txtCodBarraUA type="text" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()"
+                    <ion-input  #txtCodBarraUA type="text" value="" [(ngModel)]="codeBar" (keyup.enter)="validarCodeBar()"
                         style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray" maxlength="12"></ion-input>
                 </ion-item>
             </ion-col>
@@ -164,7 +164,7 @@
             </ion-col>
             <ion-col col-8 style="padding-left: 0px; padding-right: 0px;  padding-top: 0px;  padding-bottom: 0px;">
                 <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-                    <ion-input #txtCantidadUA type="text" value="Textcantidad" [disabled]="Txtcantidadisenabled"
+                    <ion-input disabled="{{isDisabled}}" #txtCantidadUA type="text" value="Textcantidad" [disabled]="Txtcantidadisenabled"
                         [(ngModel)]="Textcantidad" (keydown)="keydown($event)" (keyup)="keyup($event)" (keyup.enter)="registarUA()"
                         placeholder="0.00" style="font-weight:bold; font-size: 13px; 
                     padding: 0px; margin: 0px; color:dimgray;"></ion-input>
@@ -199,10 +199,17 @@
                     </div>
                 </button>
             </ion-col>
-            <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+            <!-- <ion-col style="margin: 0px; padding: 0px; width: 20%;">
                 <button ion-button style=" margin: 0px; padding: 0px" (click)="goReabastecimientoPage()" medium full>
                     <div>
                         <ion-icon name='logo-dropbox'></ion-icon> <br>
+                    </div>
+                </button>
+            </ion-col> -->
+            <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+                <button ion-button style=" margin: 0px; padding: 0px" (click)="RegistrarSolicitudPicking()" medium full>
+                    <div>
+                        <ion-icon name='list'></ion-icon> <br>
                     </div>
                 </button>
             </ion-col>
