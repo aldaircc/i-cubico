@@ -31,10 +31,11 @@ export class PalletsTransitoPage {
   listUbicacion: any;
   listAuxPalletTransito: any = [];
   rowCount: any = 0;
+  vId_Ubicacion: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl:ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
-    this.vTransitoPage = navParams.get('data'); 
+      this.vId_Ubicacion = this.vTransitoPage = navParams.get('data'); 
   }
 
   ubicacion(){
@@ -73,7 +74,7 @@ export class PalletsTransitoPage {
       if(this.codeBar.trim()!=""){
         if(this.codeBar.length==12){
           debugger;
-          this.sAlmacenaje.getValidarUATransito(this.codeBar, this.vTransitoPage.Id_Ubicacion_Transito).then((result)=>{
+          this.sAlmacenaje.getValidarUATransito(this.codeBar, this.vId_Ubicacion.Id_Ubicacion_Transito).then((result)=>{
             debugger;
             this.listPalletTransito = result;
             if(this.listPalletTransito.length == 0){
