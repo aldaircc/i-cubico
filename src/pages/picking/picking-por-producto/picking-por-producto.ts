@@ -841,19 +841,20 @@ popoverGlobal: any;
 
   RegistrarSolicitudPicking(): void {
     this.presentAlertConfirm("¿Estás seguro de registrar la solicitud?").then((result) => {
-      console.log("entra");
-      this.sPicking.RegistrarSolicitudPicking(this.vRutaPickingPage.Id_Tx,this.pickingProducto.Item,this.pickingProducto.IdProducto,0,this.pickingProducto.Saldo,this.sGlobal.Id_Almacen,this.sGlobal.userName).then(result => {        
-        var message: any = result;
-        if (message.errNumber == 0 || message.errNumber == 1) {
-          console.log("exito");
-          this.presentAlert(message.message);          
-        }         
-        else {
-          this.presentAlert("No se realizó el registro de la solicitud");
-        }
-      });    
+      if (result) {
+        console.log("entra");
+        this.sPicking.RegistrarSolicitudPicking(this.vRutaPickingPage.Id_Tx,this.pickingProducto.Item,this.pickingProducto.IdProducto,0,this.pickingProducto.Saldo,this.sGlobal.Id_Almacen,this.sGlobal.userName).then(result => {        
+          var message: any = result;
+          if (message.errNumber == 0 || message.errNumber == 1) {
+            console.log("exito");
+            this.presentAlert(message.message);          
+          }         
+          else {
+            this.presentAlert("No se realizó el registro de la solicitud");
+          }
+        });    
 
-      
+      }
 
 
     });
