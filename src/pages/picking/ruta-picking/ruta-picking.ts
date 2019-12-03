@@ -536,6 +536,27 @@ export class RutaPickingPage {
     console.log('ionViewDidLoad RutaPickingPage');
   }
 
+  RegistrarSolicitudPicking(): void {
+    this.presentAlertConfirm("¿Estás seguro de registrar la solicitud?").then((result) => {
+      if (result) {
+        console.log("entra");        
+        this.sPicking.RegistrarSolicitudPicking(this.vRutaPickingPage.Id_Tx,this.listaRutaPicking[0].Item,this.listaRutaPicking[0].IdProducto,0,this.listaRutaPicking[0].Saldo,this.sGlobal.Id_Almacen,this.sGlobal.userName).then(result => {        
+          var message: any = result;
+          if (message.errNumber == 0 || message.errNumber == 1) {
+            console.log("exito");
+            this.presentAlert(message.message);          
+          }         
+          else {
+            this.presentAlert("No se realizó el registro de la solicitud");
+          }
+        });    
+
+      }
+
+
+    });
+  }
+
   ionViewWillEnter(){
     this.platform.registerBackButtonAction(() => {
       debugger;
