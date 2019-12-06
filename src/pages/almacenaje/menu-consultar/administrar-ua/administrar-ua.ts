@@ -499,18 +499,12 @@ export class AdministrarUaPage {
   goReasignarUaPage() {
     debugger;
     if (this.Cantidad > this.CantidadBk) {
-      this.presentAlert("La cantidad no debe ser mayor o igual al de la UA").then((resultAlert) => {
+      this.presentAlert("La cantidad no debe ser mayor").then((resultAlert) => {
         setTimeout(() => {
           this.selectAll(this.txtCantidad);
         }, (500));
       })
 
-    } else if (this.Cantidad == this.CantidadBk) {
-      this.presentAlert("La cantidad no debe ser mayor o igual al de la UA").then((resultAlert) => {
-        setTimeout(() => {
-          this.selectAll(this.txtCantidad);
-        }, (500));
-      })
     } else {
       this.vAdministrarUAPage = {
         'CodBar_UA': this.codeBarUA,
