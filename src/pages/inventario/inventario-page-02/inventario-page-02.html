@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar no-padding no-margin color="primary">
-    <ion-title>Detalle de programación</ion-title>
+    <ion-title>DETALLE DE PROGRAMACIÓN</ion-title>
   </ion-navbar>
 
   <ion-grid class="bgHeader statico">
@@ -71,19 +71,16 @@
           </ion-col>
           <ion-col col-10 col-sm>
             <ion-row>
-              <ion-col class="iv02-card-col" col-4 col-sm>
+              <ion-col class="iv02-card-col" col-5 col-sm>
                 <ion-label class="iv02-card-label fieldForm">Cod articulo:</ion-label>
               </ion-col>
-              <ion-col class="iv02-card-col" col-8 col-sm>
+              <ion-col class="iv02-card-col" col-7 col-sm>
                 <ion-label class="iv02-card-label">{{ obj.Codigo }}</ion-label>
               </ion-col>
             </ion-row>
-            <ion-row>
-              <ion-col class="iv02-card-col" col-4 col-sm>
-                <ion-label class="iv02-card-label fieldForm">Articulo:</ion-label>
-              </ion-col>
+            <ion-row>            
               <ion-col class="iv02-card-col">
-                <ion-label class="iv02-card-label">{{ obj.Producto }}</ion-label>
+                <ion-label text-wrap class="iv02-card-label">{{ obj.Producto }}</ion-label>
               </ion-col>
             </ion-row>
             <ion-row>
@@ -95,10 +92,10 @@
               </ion-col>
             </ion-row>
             <ion-row>
-              <ion-col class="iv02-card-col" col-sm>
+              <ion-col class="iv02-card-col" col-7 col-sm>
                 <ion-label class="iv02-card-label fieldForm">Usuario inventariador:</ion-label>
               </ion-col>
-              <ion-col class="iv02-card-col" col-sm>
+              <ion-col class="iv02-card-col" col-5 col-sm>
                 <ion-label class="iv02-card-label">{{ obj.UsuarioInventariador }}</ion-label>
               </ion-col>
             </ion-row>

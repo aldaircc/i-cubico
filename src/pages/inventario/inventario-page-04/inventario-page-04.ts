@@ -46,6 +46,8 @@ export class InventarioPage_04Page {
   @ViewChild('inputCantidad', { read: ElementRef }) private inputCantidad: ElementRef;
   @ViewChild('inputCodeBarUA', { read: ElementRef }) private inputCodeBarUA: ElementRef;
 
+  @ViewChild('inputCodeBarUA') input2;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vParameter = this.navParams.get('vParameter');
@@ -85,10 +87,13 @@ export class InventarioPage_04Page {
   }
 
   listarUAsXUbicacionInventario(strIdInventario, strCodBarraUbi): void {
+    
     this.sInve.listarUAsXUbicacionInventario(strIdInventario, strCodBarraUbi).then(result => {
       this.listUAsxUbi = result;
       this.intCountUAs = this.listUAsxUbi.length;
       if (this.intCountUAs != this.vParameter.cantidadxUbicacion) {
+        console.log(this.intCountUAs,"total count uas");
+        console.log(this.vParameter.cantidadxUbicacion,"total cant ubicación");
         this.presentAlert("No se ha inventariado todas UAs de esta ubicación,\r ¿Está seguro de continuar?").then((resultAlert) => {
           if (resultAlert) {
             if (this.vParameter.TipoInventario == 'CICLICO') {
@@ -104,37 +109,45 @@ export class InventarioPage_04Page {
     });
   }
 
-  validarUbicacion(): void {
-    if (this.strTipoInventario == 'GENERAL') {
-      this.validarUbicacionInventario(this.strUbicacion, this.sGlobal.Id_Almacen, this.vParameter.Id_Sector, this.vParameter.Fila, 1);
-    } else {
-      if (this.strUbicacion.trim() == this.vParameter.CodigoBarra.trim()) {
-        this.validarUbicacionInventario(this.strUbicacion, this.sGlobal.Id_Almacen, 0, "", 2);
-      } else {
-        let message = this.alertCtrl.create({
-          title: 'Inventario',
-          message: 'Ubicación no corresponde, ¿Desea inventariar?',
-          buttons: [
-            {
-              text: 'No',
-              role: 'cancel',
-              handler: () => {
-                return;
-              }
-            },
-            {
-              text: 'Si',
-              handler: () => {
-                this.validarUbicacionInventario(this.strUbicacion, this.sGlobal.Id_Almacen, 0, "", 2);
-                return true;
-              }
-            }
-          ]
-        });
-        message.present();
-
-      }
+  validarUbicacion(): void {    
+    if (this.strUbicacion.trim() == "") {
+      alert("Ingrese código de ubicación");
     }
+    else if (this.strUbicacion.length != 14) {
+      alert("El código de ubicación debe tener 14 dígitos.");
+    }
+    else{
+      if (this.strTipoInventario == 'GENERAL') {
+        this.validarUbicacionInventario(this.strUbicacion, this.sGlobal.Id_Almacen, this.vParameter.Id_Sector, this.vParameter.Fila, 1);
+      } else {
+        if (this.strUbicacion.trim() == this.vParameter.CodigoBarra.trim()) {
+          this.validarUbicacionInventario(this.strUbicacion, this.sGlobal.Id_Almacen, 0, "", 2);
+        } else {
+          let message = this.alertCtrl.create({
+            title: 'Inventario',
+            message: 'Ubicación no corresponde, ¿Desea inventariar?',
+            buttons: [
+              {
+                text: 'No',
+                role: 'cancel',
+                handler: () => {
+                  return;
+                }
+              },
+              {
+                text: 'Si',
+                handler: () => {
+                  this.validarUbicacionInventario(this.strUbicacion, this.sGlobal.Id_Almacen, 0, "", 2);
+                  return true;
+                }
+              }
+            ]
+          });
+          message.present();
+
+        }
+      }
+   }
   }
 
   validarUbicacionInventario(CodBarraUbi, intIdAlmacen, intIdSector, strFila, intTipo): void {
@@ -153,10 +166,15 @@ export class InventarioPage_04Page {
   }
 
   buscarArticuloEnLista(): void {
-    if (this.vParameter.TipoInventario == 'GENERAL') {
-      this.validarUAInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, 0, this.strCodeBarUA);
-    } else {
-      this.validarUAInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, this.vParameter.Id_Producto, this.strCodeBarUA);
+    if (this.strCodeBarUA.length != 12) {
+      alert("El código de ubicación debe tener 12 caracteres.");
+    }
+    else{
+      if (this.vParameter.TipoInventario == 'GENERAL') {
+        this.validarUAInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, 0, this.strCodeBarUA);      
+      } else {
+        this.validarUAInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, this.vParameter.Id_Producto, this.strCodeBarUA);      
+      }
     }
   }
 
@@ -203,17 +221,17 @@ export class InventarioPage_04Page {
                 text: 'Si',
                 handler: () => {
                   this.txtAveriados.Text = res[0].CantidadAveriado;
-                  this.txtCantidad.Text = res[0].Saldo;
+                  this.txtCantidad.Text = res[0].Saldo;                  
                   if (!this.validarDatoInv()) {
                     this.isVisibleData = false;
-                    this.grabarDatosInvent(this.uaValidada);
-                  }
+                    this.grabarDatosInvent(this.uaValidada);                    
+                  }                  
                 }
               }
             ]
-          });
-          alert.present();
-        }
+          });                    
+          alert.present();                      
+        }        
       } else {
         this.isBgRed = true;
         this.isBgGreen = false;
@@ -292,7 +310,7 @@ export class InventarioPage_04Page {
           this.isVisibleData = false;
           this.isBgYellow = false;
           this.isBgRed = false;
-          this.isBgGreen = true;
+          this.isBgGreen = true;          
         } else {
           this.isBgYellow = false;
           this.isBgRed = true;
@@ -319,7 +337,7 @@ export class InventarioPage_04Page {
             {
               text: 'Si',
               handler: () => {
-                this.continueGrabar();
+                this.continueGrabar();                                
               }
             }
           ]
@@ -418,7 +436,9 @@ export class InventarioPage_04Page {
       'UsuarioInventariador': this.vParameter.UsuarioInventariador,
 
       'Cod_Ubicacion': this.strUbicacion,
-      'Id_Producto': (this.vParameter.Id_Producto != undefined) ? this.vParameter.Id_Producto : -1
+      'Id_Producto': (this.vParameter.Id_Producto != undefined) ? this.vParameter.Id_Producto : -1,
+      'Codigo': this.vParameter.Codigo,
+      'Producto': this.vParameter.Producto
     };
 
     this.navCtrl.push(InventarioPage_05Page, { 'vParameter': parameter });

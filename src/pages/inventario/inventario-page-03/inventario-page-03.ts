@@ -101,26 +101,48 @@ export class InventarioPage_03Page {
 
   cerrarInventario(): void {
     if (this.vParameter.Id_Estado == 3) {
-
-      const confirm = this.alertCtrl.create({
-        title: 'Confirmar cierre',
-        message: '¿Está seguro de cerrar el inventario del sector ' + this.lblInfo01.Value + ', fila ' + this.lblInfo02.Value + '?',
-        buttons: [
-          {
-            text: 'Si',
-            handler: () => {
-              this.initInventario(this.vParameter.Id_Inventario, 2);
+      if (this.strTipoInventario == 'GENERAL') {
+        const confirm = this.alertCtrl.create({
+          title: 'Confirmar cierre',
+          message: '¿Está seguro de cerrar el inventario del Sector ' + this.vParameter.Sector + ', ' + this.lblInfo02.Text + ' ' + this.lblInfo02.Value + '?',
+          buttons: [
+            {
+              text: 'Si',
+              handler: () => {
+                this.initInventario(this.vParameter.Id_Inventario, 2);              
+              }
+            },
+            {
+              text: 'No',
+              handler: () => {
+                return;
+              }
             }
-          },
-          {
-            text: 'No',
-            handler: () => {
-              return;
+          ]
+        });
+        confirm.present();
+      }
+      else{
+        const confirm = this.alertCtrl.create({
+          title: 'Confirmar cierre',
+          message: '¿Está seguro de cerrar el inventario del ' + this.lblInfo02.Text + ' ' + this.lblInfo02.Value + '?',
+          buttons: [
+            {
+              text: 'Si',
+              handler: () => {
+                this.initInventario(this.vParameter.Id_Inventario, 2);              
+              }
+            },
+            {
+              text: 'No',
+              handler: () => {
+                return;
+              }
             }
-          }
-        ]
-      });
-      confirm.present();
+          ]
+        });
+        confirm.present();
+      }
     } else {
       alert('No puede cerrar un inventario que no se ha iniciado');
       this.selectAll(this.inputInventariador, 500);
@@ -129,16 +151,18 @@ export class InventarioPage_03Page {
   }
 
   initInventario(Id_Tx, intTipo): void {
+    console.log(Id_Tx, this.lblInfo01.Value, this.vParameter.Lote, this.txtInventareador.Text, this.sGlobal.userName, this.sGlobal.Id_TerminalRF, intTipo);
     if (this.strTipoInventario == 'GENERAL') {
       this.iniTerInvXPercha(Id_Tx, this.lblInfo01.Value, this.lblInfo02.Value, this.txtInventareador.Text, this.sGlobal.userName, this.sGlobal.Id_TerminalRF, intTipo);
     } else {
-      this.iniTerInvXProducto(Id_Tx, this.lblInfo01.Value, this.vParameter.Lote, this.txtInventareador.Text, this.sGlobal.userName, this.sGlobal.Id_TerminalRF, intTipo);
+      this.iniTerInvXProducto(Id_Tx, this.vParameter.Id_Producto, this.vParameter.Lote, this.txtInventareador.Text, this.sGlobal.userName, this.sGlobal.Id_TerminalRF, intTipo);
     }
   }
 
   iniTerInvXProducto(strIdInventario, intIdProducto, strLote, strUsuarioInventariador, strUsuario, intIdRF, intTipo): void {
     this.sInve.iniTerInvXProducto(strIdInventario, intIdProducto, strLote, strUsuarioInventariador, strUsuario, intIdRF, intTipo).then(result => {
       let res: any = result;
+      console.log(res.errNumber,"rpta");
       if (res.errNumber != 0) {
         alert("No se pudo cerrar el inventario");
       } else {

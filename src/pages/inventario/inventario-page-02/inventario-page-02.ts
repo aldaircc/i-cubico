@@ -57,7 +57,7 @@ export class InventarioPage_02Page {
     });
   }
 
-  goToInventPage03(data): void {
+  goToInventPage03(data): void {    
     var parameter: any;
 
     parameter = (this.vParameter.TipoInventario == 'GENERAL') ?
@@ -76,6 +76,8 @@ export class InventarioPage_02Page {
       {
         'Id_Inventario': data.Id_Inventario,
         'Id_Estado': data.Id_Estado,
+        'Id_Sector': data.Id_Sector,
+        'Sector': data.Sector,
         'UsuarioInventariador': data.UsuarioInventariador,
         'UsuarioAsignado': data.UsuarioAsignado,
         'Id_Producto': data.Id_Producto,

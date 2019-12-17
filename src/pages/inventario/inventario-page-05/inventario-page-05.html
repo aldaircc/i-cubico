@@ -6,16 +6,37 @@
 -->
 <ion-header>
   <ion-navbar no-padding no-margin color="primary">
-    <ion-title>Detalle de inventario</ion-title>
+    <ion-title>DETALLE DE INVENTARIO</ion-title>
   </ion-navbar>
 
   <ion-grid class="bgHeader">
     <ion-row>
-      <ion-col col-3 col-sm>
+      <ion-col col-4 col-sm>
         <div class="textHeader">Inventario:</div>
       </ion-col>
-      <ion-col col-9 col-sm>
+      <ion-col col-8 col-sm>
         <div class="valueHeader">{{ vParameter.Id_Inventario }}</div>
+      </ion-col>
+    </ion-row>    
+    <ion-row *ngIf="vParameter.TipoInventario == 'GENERAL'" >
+      <ion-col col-4 col-sm>
+        <div class="textHeader">Fila:</div>
+      </ion-col>
+      <ion-col col-8 col-sm>
+        <div class="valueHeader">{{ vParameter.Fila }}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="vParameter.TipoInventario == 'CICLICO'" >
+      <ion-col col-4 col-sm>
+        <div class="textHeader">Código:</div>
+      </ion-col>
+      <ion-col col-8 col-sm>
+        <div class="valueHeader">{{ vParameter.Codigo }}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="vParameter.TipoInventario == 'CICLICO'" >    
+      <ion-col col-12 col-sm>
+        <div text-wrap class="valueHeader">{{ vParameter.Producto }}</div>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -33,15 +54,15 @@
               </ion-col>
               <ion-col class="iv05-card-col" col-5 col-sm>
                 <ion-label class="iv05-card-label">{{ obj.Sector }}</ion-label>
-              </ion-col>
-              <ion-col class="iv05-card-col" col-2 col-sm>
+              </ion-col>  
+              <ion-col *ngIf="vParameter.TipoInventario == 'CICLICO'"  class="iv05-card-col" col-2 col-sm>
                 <ion-label class="iv05-card-label fieldForm">Fila:</ion-label>
               </ion-col>
-              <ion-col class="iv05-card-col" col-2 col-sm>
+              <ion-col *ngIf="vParameter.TipoInventario == 'CICLICO'"  class="iv05-card-col" col-2 col-sm>
                 <ion-label class="iv05-card-label">{{ obj.Fila }}</ion-label>
-              </ion-col>
+              </ion-col>                 
             </ion-row>
-            <ion-row>
+            <ion-row *ngIf="vParameter.TipoInventario == 'GENERAL'">
               <ion-col class="iv05-card-col" col-3 col-sm>
                 <ion-label class="iv05-card-label fieldForm">Código:</ion-label>
               </ion-col>
@@ -49,9 +70,9 @@
                 <ion-label class="iv05-card-label">{{ obj.Codigo }}</ion-label>
               </ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row *ngIf="vParameter.TipoInventario == 'GENERAL'">
               <ion-col class="iv05-card-col" col-12 col-sm>
-                <ion-label class="iv05-card-label">{{ obj.Producto }}</ion-label>
+                <ion-label text-wrap class="iv05-card-label">{{ obj.Producto }}</ion-label>
               </ion-col>
             </ion-row>
             <ion-row>
@@ -70,7 +91,7 @@
                 <ion-label class="iv05-card-label">{{ obj.UM }}</ion-label>
               </ion-col>
               <ion-col class="iv05-card-col" col-4 col-sm>
-                <ion-label class="iv05-card-label fieldForm">Cant. Invent.:</ion-label>
+                <ion-label class="iv05-card-label fieldForm">C. Invent.:</ion-label>
               </ion-col>
               <ion-col class="iv05-card-col" col-2 col-sm>
                 <ion-label class="iv05-card-label">{{ obj.CantidadInv | number:'1.2-2' }}</ion-label>
@@ -78,13 +99,13 @@
             </ion-row>
             <ion-row>
               <ion-col class="iv05-card-col" col-3 col-sm>
-                <ion-label class="iv05-card-label fieldForm">Cant. UA:</ion-label>
+                <ion-label class="iv05-card-label fieldForm">C. UA:</ion-label>
               </ion-col>
               <ion-col class="iv05-card-col" col-3 col-sm>
                 <ion-label class="iv05-card-label">{{ obj.CantidadUA | number:'1.2-2'}}</ion-label>
               </ion-col>
               <ion-col class="iv05-card-col" col-4 col-sm>
-                <ion-label class="iv05-card-label fieldForm">Cant. Averiada:</ion-label>
+                <ion-label class="iv05-card-label fieldForm">C. Averiada:</ion-label>
               </ion-col>
               <ion-col class="iv05-card-col" col-2 col-sm>
                 <ion-label class="iv05-card-label">{{ obj.CantidadAveriada | number:'1.2-2'}}</ion-label>

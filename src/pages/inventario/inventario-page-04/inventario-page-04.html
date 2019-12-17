@@ -6,7 +6,7 @@
 -->
 <ion-header>
   <ion-navbar no-padding no-margin color="primary">
-    <ion-title>Inicio inventario</ion-title>
+    <ion-title>INICIO INVENTARIO</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -41,18 +41,18 @@
   <ion-list>
     <ion-item class="input-has-focus">
       <ion-label>Ubicación:</ion-label>
-      <ion-input type="text" [(ngModel)]="strUbicacion" (keyup.enter)="validarUbicacion()" [disabled]="!isEnabledUbicacion"
-        #inputUbicacion></ion-input>
+      <ion-input type="text" maxlength="14" [(ngModel)]="strUbicacion" (keyup.enter)="validarUbicacion()" [disabled]="!isEnabledUbicacion"
+        #inputUbicacion onkeypress="return ((event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label>Código de barras UA:</ion-label>
-      <ion-input type="text" [(ngModel)]="strCodeBarUA" (keyup.enter)="buscarArticuloEnLista()" [disabled]="!isEnabledCodeBar"
+      <ion-label>UA/Pallet:</ion-label>
+      <ion-input type="text" maxlength="12" [(ngModel)]="strCodeBarUA" (keyup.enter)="buscarArticuloEnLista()" [disabled]="!isEnabledCodeBar"
         #inputCodeBarUA></ion-input>
     </ion-item>
 
     <ion-item [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgRed }" [hidden]="!isVisibleData">
-      <ion-label> {{ strArticulo }} </ion-label>
+      <ion-label text-wrap> {{ strArticulo }} </ion-label>
     </ion-item>
 
     <ion-item [ngClass]="{ bgYellow: isBgYellow, bgGreen: isBgGreen, bgRed: isBgRed }" [hidden]="!isVisibleData">
@@ -78,7 +78,7 @@
       <ion-col style="margin: 0px; padding: 0px; width: 20%;">
         <button ion-button style=" margin: 0px; padding: 0px" (click)="cambiarUbicacion()" medium full>
           <div>
-            <ion-icon name='checkmark'></ion-icon> <br>
+            <ion-icon name='pin'></ion-icon> <br>
           </div>
         </button>
       </ion-col>
@@ -89,19 +89,19 @@
             <ion-icon name='grid'></ion-icon> <br>
           </div>
         </button>
+      </ion-col>     
+      <ion-col style="margin: 0px; padding: 0px; width: 20%;">
+        <button ion-button style=" margin: 0px; padding: 0px" (click)="goToDetail()" medium full>
+          <div>
+            <ion-icon name='reorder'></ion-icon> <br>
+          </div>
+        </button>
       </ion-col>
       <ion-col style="margin: 0px; padding: 0px; width: 20%;">
         <button ion-button style="margin: 0px; padding: 0px" (click)="registrar()" [hidden]="!isVisibleData" medium
           full>
           <div>
-            <ion-icon name='alarm'></ion-icon> <br>
-          </div>
-        </button>
-      </ion-col>
-      <ion-col style="margin: 0px; padding: 0px; width: 20%;">
-        <button ion-button style=" margin: 0px; padding: 0px" (click)="goToDetail()" medium full>
-          <div>
-            <ion-icon name='reorder'></ion-icon> <br>
+            <ion-icon name='checkbox-outline'></ion-icon> <br>
           </div>
         </button>
       </ion-col>
