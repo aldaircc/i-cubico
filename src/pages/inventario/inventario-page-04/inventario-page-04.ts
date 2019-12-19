@@ -46,7 +46,7 @@ export class InventarioPage_04Page {
   @ViewChild('inputCantidad', { read: ElementRef }) private inputCantidad: ElementRef;
   @ViewChild('inputCodeBarUA', { read: ElementRef }) private inputCodeBarUA: ElementRef;
 
-  @ViewChild('inputCodeBarUA') input2;
+  @ViewChild('inputCodeBarUA') inputCodeBarUA2;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
@@ -211,10 +211,20 @@ export class InventarioPage_04Page {
                 text: 'No',
                 role: 'cancel',
                 handler: () => {
-                  this.isVisibleData = true;
-                  setTimeout(() => {
-                    this.inputAveriado.setFocus();
-                  }, 600);
+                  if(strUA.substring(0,1)=="P"){
+                    this.isVisibleData = false;
+                    this.isBgYellow = false;
+                    this.strCodeBarUA = "";
+                    setTimeout(() => {
+                      this.inputCodeBarUA2.setFocus();
+                    }, 600);
+                  }
+                  else{
+                    this.isVisibleData = true;
+                    setTimeout(() => {
+                      this.inputAveriado.setFocus();
+                    }, 600);
+                  }
                 }
               },
               {
@@ -226,6 +236,9 @@ export class InventarioPage_04Page {
                     this.isVisibleData = false;
                     this.grabarDatosInvent(this.uaValidada);                    
                   }                  
+                  setTimeout(() => {
+                    this.inputCodeBarUA2.setFocus();
+                  }, 600); 
                 }
               }
             ]
@@ -337,7 +350,10 @@ export class InventarioPage_04Page {
             {
               text: 'Si',
               handler: () => {
-                this.continueGrabar();                                
+                this.continueGrabar();  
+                setTimeout(() => {
+                  this.inputCodeBarUA2.setFocus();
+                }, 600);                                
               }
             }
           ]
@@ -345,6 +361,9 @@ export class InventarioPage_04Page {
         message.present();
       } else {
         this.continueGrabar();
+        setTimeout(() => {
+          this.inputCodeBarUA2.setFocus();
+        }, 600);  
       }
     }
   }
@@ -362,7 +381,7 @@ export class InventarioPage_04Page {
 
       let message = this.alertCtrl.create({
         title: 'Aviso',
-        message: 'Existe diferencias en el conteo, se recomienda que revise otravez. ¿Desea registar este conteo?',
+        message: 'Existe diferencias en el conteo, se recomienda que revise otra vez. ¿Desea registar este conteo?',
         buttons: [
           {
             text: 'No',

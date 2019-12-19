@@ -6,7 +6,7 @@
 -->
 <ion-header>
   <ion-navbar no-padding no-margin color="primary">
-    <ion-title>INVENTARIO TIPO</ion-title>
+    <ion-label style="font-size: 15px; color: white; font-weight:bold;">INVENTARIO TIPO</ion-label>
   </ion-navbar>
 </ion-header>
 
@@ -37,8 +37,13 @@
         </ion-label>
       </ion-col>
     </ion-row>
-    <ion-row no-padding no-margin>     
-      <ion-col col-12 class="bgHeader-col">
+    <ion-row no-padding no-margin>         
+      <ion-col col-5 class="bgHeader-col">
+        <ion-label class="bgHeader-label">
+              Fila/Rack:
+        </ion-label>
+      </ion-col>
+      <ion-col col-7 class="bgHeader-col">
         <ion-label text-wrap class="bgHeader-text">
           {{ lblInfo02.Value }}
         </ion-label>

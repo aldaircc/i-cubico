@@ -57,7 +57,7 @@ export class InventarioPage_03Page {
   continuarInventario(): void {
     if (this.btnIniciar.Text == 'Iniciar') {
       if (this.txtInventareador.Text.trim() == "") {
-        alert('Ingrese Inventareador');
+        alert('Ingrese Inventariador');
         this.selectAll(this.inputInventariador, 500);
         return;
       } else {
@@ -163,10 +163,12 @@ export class InventarioPage_03Page {
     this.sInve.iniTerInvXProducto(strIdInventario, intIdProducto, strLote, strUsuarioInventariador, strUsuario, intIdRF, intTipo).then(result => {
       let res: any = result;
       console.log(res.errNumber,"rpta");
-      if (res.errNumber != 0) {
-        alert("No se pudo cerrar el inventario");
-      } else {
-        alert("Cierre de inventario exitoso");
+      if(intTipo != 1){
+        if (res.errNumber != 0) {
+          alert("No se pudo cerrar el inventario");
+        } else {
+          alert("Cierre de inventario exitoso");
+        }
       }
     });
   }
@@ -174,10 +176,12 @@ export class InventarioPage_03Page {
   iniTerInvXPercha(strIdInventario, intIdSector, strFila, strUsuarioInventariador, strUsuario, intIdRF, intTipo): void {
     this.sInve.iniTerInvXPercha(strIdInventario, intIdSector, strFila, strUsuarioInventariador, strUsuario, intIdRF, intTipo).then(result => {
       let res: any = result;
-      if (res.errNumber != 0) {
-        alert("No se pudo inicializar el inventario");
-      } else {
-        alert("Cierre de inventario exitoso");
+      if(intTipo != 1){
+        if (res.errNumber != 0) {
+          alert("No se pudo cerrar el inventario");
+        } else {
+          alert("Cierre de inventario exitoso");
+        }
       }
     });
   }
