@@ -21,8 +21,13 @@ export class ConsultarUbicacionPage {
   codeBar: string;
   codeBarBK: string;
   listUas: any = [];
+  resultUbicacion: any;
   vConsultarUbicacionPage: any = [];
   rowCount: any = 0;
+  Fila: any;
+  Columna: any;
+  Nivel: any;
+  Posicion: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
@@ -38,6 +43,7 @@ export class ConsultarUbicacionPage {
           this.codeBarBK = this.codeBar.trim();
           debugger;
           this.ListarUAsXUbicacion();
+          this.ListarUbicacionXCodigoBarra();
         } else {
           this.presentToast("El código de ubicación debe tener 14 dígitos.");
           setTimeout(() => {
@@ -56,6 +62,25 @@ export class ConsultarUbicacionPage {
         this.selectAll(this.txtBuscar);
       }, (500));
     }
+  }
+
+  ListarUbicacionXCodigoBarra() {
+    this.sAlmacenaje.getListarUbicacionXCodigoBarra(this.codeBar, this.sGlobal.Id_Almacen).then((result) => {
+      debugger;
+      this.resultUbicacion = result;
+      if (this.resultUbicacion.length > 0) {
+        this.Fila = this.resultUbicacion[0].Fila;
+        this.Columna = this.resultUbicacion[0].Columna;
+        this.Nivel = this.resultUbicacion[0].Nivel;
+        this.Posicion = this.resultUbicacion[0].Posicion;                
+      } else {
+        //Mensaje la ubicacion no exiset
+        this.presentAlert("Ubicación no existe.").then((resultAlert) => {          
+        })
+      }
+    }, err => {
+      console.log('E-getListarUbicacionXCodigoBarra', err);
+    });
   }
 
   ListarUAsXUbicacion() {

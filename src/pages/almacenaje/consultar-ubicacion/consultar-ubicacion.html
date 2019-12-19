@@ -22,6 +22,50 @@
             [(ngModel)]="codeBar" onkeypress="return ((event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-searchbar>
     </ion-row>
 
+    <ion-grid>
+        <ion-row no-padding no-margin>
+          <ion-col col-1 no-padding>  
+            <ion-label>F:</ion-label>     
+          </ion-col>
+          <ion-col col-2 no-padding>                           
+            <ion-row class="box-row" style="height: 43px">                            
+              <ion-label class="box-label">
+                {{ Fila }}
+              </ion-label>
+            </ion-row>
+          </ion-col>
+          <ion-col col-1 no-padding>  
+            <ion-label>C:</ion-label>     
+          </ion-col>
+          <ion-col col-2 no-padding>
+            <ion-row class="box-row" style="height: 43px">              
+              <ion-label class="box-label">
+                {{ Columna }}
+              </ion-label>
+            </ion-row>
+          </ion-col>
+          <ion-col col-1 no-padding>  
+            <ion-label>N:</ion-label>     
+          </ion-col>
+          <ion-col col-2 no-padding>
+            <ion-row class="box-row" style="height: 43px">                              
+              <ion-label class="box-label">
+                {{ Nivel }}
+              </ion-label>
+            </ion-row>
+          </ion-col>
+          <ion-col col-1 no-padding>  
+            <ion-label>P:</ion-label>    
+          </ion-col>
+          <ion-col col-2 no-padding>
+            <ion-row class="box-row" style="height: 43px">              
+              <ion-label class="box-label">
+                {{ Posicion }}
+              </ion-label>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 </ion-header>
 
 <ion-content>
