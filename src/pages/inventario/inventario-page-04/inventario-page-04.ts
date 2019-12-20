@@ -201,6 +201,15 @@ export class InventarioPage_04Page {
         this.strArticulo = res[0].Producto;
         this.strUM = res[0].UM;
 
+        if(strUA.substring(0,1)=="P"){
+          this.isVisibleData = false;
+          this.isBgYellow = false;
+          this.strCodeBarUA = "";
+          setTimeout(() => {
+            this.inputCodeBarUA2.setFocus();
+          }, 600);
+        }
+
         if (res[0].BULTO.toUpperCase() == "BULTO_CERRADO") {
 
           let alert = this.alertCtrl.create({
