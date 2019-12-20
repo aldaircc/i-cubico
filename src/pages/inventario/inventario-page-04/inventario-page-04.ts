@@ -165,7 +165,8 @@ export class InventarioPage_04Page {
     });
   }
 
-  buscarArticuloEnLista(): void {
+  buscarArticuloEnLista(): void {   
+    this.isEnabledCodeBar = false;
     if (this.strCodeBarUA.length != 12) {
       alert("El código de ubicación debe tener 12 caracteres.");
     }
@@ -175,11 +176,12 @@ export class InventarioPage_04Page {
       } else {
         this.validarUAInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, this.vParameter.Id_Producto, this.strCodeBarUA);      
       }
-    }
+    }    
   }
 
   validarUAInventario(strIdInventario, intIdAlmacen, intIdProducto, strUA): void {
     this.sInve.validarUAInventario(strIdInventario, intIdAlmacen, intIdProducto, strUA).then(result => {
+      this.isEnabledCodeBar = true;
       this.uaValidada = null;
       let res: any = result;
       if (res != null && res.length > 0) {
@@ -219,7 +221,7 @@ export class InventarioPage_04Page {
               {
                 text: 'No',
                 role: 'cancel',
-                handler: () => {
+                handler: () => {                  
                   if(strUA.substring(0,1)=="P"){
                     this.isVisibleData = false;
                     this.isBgYellow = false;
@@ -473,7 +475,7 @@ export class InventarioPage_04Page {
   }
 
   pressEnterAveriado(): void {
-    this.txtAveriados.Text = '0';
+    // this.txtAveriados.Text = '0';
     this.selectAll(this.inputCantidad, 600);
   }
 

@@ -32,10 +32,10 @@ export class InventarioPage_02Page {
     this.vParameter = this.navParams.get('vParameter');
     if (this.vParameter.TipoInventario == 'CICLICO') {
       this.isCiclico = true;
-      this.listarProductosXUsuarioInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, 'ADMIN', this.vParameter.Id_Estado);
+      this.listarProductosXUsuarioInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, this.sGlobal.userName, this.vParameter.Id_Estado);
     } else if (this.vParameter.TipoInventario == 'GENERAL') {
       this.isGeneral = true;
-      this.listarPerchasXUsuarioInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, 'ADMIN', this.vParameter.Id_Estado);
+      this.listarPerchasXUsuarioInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, this.sGlobal.userName, this.vParameter.Id_Estado);
     }
   }
 
