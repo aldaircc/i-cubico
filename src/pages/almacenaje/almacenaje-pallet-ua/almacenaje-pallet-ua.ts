@@ -191,6 +191,12 @@ export class AlmacenajePalletUaPage {
   Selectedcallback = data => {
     debugger;
     this.dataFromOtraUbicacionPage = data;
+    this.codeBar = this.dataFromOtraUbicacionPage.CodigoBarra.trim();
+    
+    setTimeout(() => {
+      this.txtCodUbicacionRef.setFocus();
+    }, (500));   
+
     console.log('data received from other page', this.dataFromOtraUbicacionPage);
     debugger;
     this.vDatosUbicacion.Sector = this.dataFromOtraUbicacionPage.Sector;

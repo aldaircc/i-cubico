@@ -24,7 +24,7 @@ export class OtraUbicacionPage {
   radioGroupisenabled2: boolean = false;
   radioGroupisenabled3: boolean = false;
   txtCodUbicacionisenabled: boolean = false;
-  tipoFiltro: number = 0;
+  tipoFiltro: number = 3;
   listUbicaciones: any = [];
   listAuxUbicaciones: any = [];
   codeBar: string;
@@ -50,8 +50,17 @@ export class OtraUbicacionPage {
     let obj = this.listSector.filter(x => x.Id_Sector == this.id_Sectorlt)[0];
     debugger;
     var idMarca = this.vDatosUbicacion.Id_Marca;
+    console.log(idMarca,"ID MaRCA");
     var idCondicion = 1;
     this.ListarUbicacionesDisponibles(this.sGlobal.Id_Almacen, idMarca, idCondicion, obj.Id_Sector)
+    // if(this.tipoFiltro == 2){
+    //   this.ListarUbicacionesDisponibles(this.sGlobal.Id_Almacen, idMarca, idCondicion, obj.Id_Sector)
+    // }
+    if(this.tipoFiltro == 3){            
+      setTimeout(() => {        
+        this.selectAll(this.txtCodUbicacion);
+      }, (500));
+    }      
   }
 
   onChangeRadio() {
@@ -132,7 +141,7 @@ export class OtraUbicacionPage {
         this.radioGroupisenabled1 = true;
         this.radioGroupisenabled2 = true;
         this.radioGroupisenabled3 = true;
-        this.tipoFiltro = 1;
+        // this.tipoFiltro = 1;
       }
     });
   }
@@ -153,6 +162,7 @@ export class OtraUbicacionPage {
 
   SeleccionarUbicacion(data) {
     debugger;
+    console.log(data,"datooooos");
     this.navCtrl.pop().then(() => {
       data.Id_Ubicacion_Transito = this.vDatosUbicacion.Id_Ubicacion_Transito,
         data.CantidadPallets = this.vDatosUbicacion.CantidadPallets,
