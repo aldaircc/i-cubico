@@ -19,6 +19,7 @@ import moment from 'moment';
   templateUrl: 'inventario-page-03.html',
 })
 export class InventarioPage_03Page {
+  vParametrosDetalleProgramacion: any;
   vParameter: any;
   isInit: boolean = false;
   btnIniciar: any = { 'Text': '' };
@@ -110,6 +111,18 @@ export class InventarioPage_03Page {
               text: 'Si',
               handler: () => {
                 this.initInventario(this.vParameter.Id_Inventario, 2);              
+
+                this.navCtrl.pop().then(() => {
+                  this.vParametrosDetalleProgramacion = {
+                    'Id_Inventario': this.vParameter.Id_Inventario,
+                    'Id_Estado': this.vParameter.Id_Estado,
+                    'TipoInventario': this.vParameter.TipoInventario,
+                    'FechaProgramacion' :this.vParameter.FechaProgramacion,
+                  };
+                  debugger;
+                  this.navParams.get('DetalleProgramacion')(this.vParametrosDetalleProgramacion);
+                });
+
               }
             },
             {
@@ -130,7 +143,17 @@ export class InventarioPage_03Page {
             {
               text: 'Si',
               handler: () => {
-                this.initInventario(this.vParameter.Id_Inventario, 2);              
+                this.initInventario(this.vParameter.Id_Inventario, 2);     
+                
+                this.navCtrl.pop().then(() => {
+                  this.vParametrosDetalleProgramacion = {
+                    'Id_Inventario': this.vParameter.Id_Inventario,
+                    'Id_Estado': this.vParameter.Id_Estado,
+                    'TipoInventario': this.vParameter.TipoInventario,
+                    'FechaProgramacion' :this.vParameter.FechaProgramacion,
+                  };                  
+                  this.navParams.get('DetalleProgramacion')(this.vParametrosDetalleProgramacion);
+                });
               }
             },
             {

@@ -30,6 +30,7 @@ export class InventarioPage_02Page {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sInve: InventarioServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vParameter = this.navParams.get('vParameter');
+    debugger;
     if (this.vParameter.TipoInventario == 'CICLICO') {
       this.isCiclico = true;
       this.listarProductosXUsuarioInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, this.sGlobal.userName, this.vParameter.Id_Estado);
@@ -56,6 +57,28 @@ export class InventarioPage_02Page {
       this.rowCount = this.listPercha.length;
     });
   }
+
+  dataFromAlmacenajePalletUAPage : any;  
+  Selectedcallback = data => {    
+    this.dataFromAlmacenajePalletUAPage = data;
+    console.log('data received from other page', this.dataFromAlmacenajePalletUAPage);
+    this.vParameter = this.dataFromAlmacenajePalletUAPage;    
+    debugger;
+    console.log(this.vParameter,"parametros");
+    console.log(this.sGlobal.Id_Almacen,"almacén");
+    console.log(this.sGlobal.userName,"usuario");
+    
+     
+    if (this.vParameter.TipoInventario == 'CICLICO') {
+      this.isCiclico = true;
+      this.listarProductosXUsuarioInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, this.sGlobal.userName, this.vParameter.Id_Estado);
+    } else if (this.vParameter.TipoInventario == 'GENERAL') {
+      this.isGeneral = true;
+      this.listarPerchasXUsuarioInventario(this.vParameter.Id_Inventario, this.sGlobal.Id_Almacen, this.sGlobal.userName, this.vParameter.Id_Estado);
+    }
+    
+    
+  };
 
   goToInventPage03(data): void {    
     var parameter: any;
@@ -89,6 +112,8 @@ export class InventarioPage_02Page {
       }
       ;
 
-    this.navCtrl.push(InventarioPage_03Page, { 'vParameter': parameter });
+    this.navCtrl.push(InventarioPage_03Page, { 
+      'vParameter': parameter, DetalleProgramacion: this.Selectedcallback
+    });
   }
 }
