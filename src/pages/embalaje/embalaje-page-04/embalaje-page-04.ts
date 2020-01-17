@@ -206,9 +206,7 @@ export class EmbalajePage_04Page {
   }
 
   goToSiguiente() {
-    //Consultar embalaje y su es mas de 1 Ir a la pantalla Lote x Producto 
-    debugger;
-    debugger;
+    //Consultar embalaje y su es mas de 1 Ir a la pantalla Lote x Producto       
     if (this.vNroItemVisual != this.vEmbalajeTotalPage03.length) {
       this.filterItemsBultos(this.vNroItem + 1);
       this.vNroItem = (this.vNroItem + 1);
@@ -340,7 +338,8 @@ export class EmbalajePage_04Page {
     });
   }
 
-  llenarNumeros() {
+
+  llenarNumeros2() {
     debugger;
     if(this.vNroBulto==0){
       this.vNroBulto = this.vNroBulto + 1;
@@ -350,6 +349,26 @@ export class EmbalajePage_04Page {
         this.vNroBultoCeros = s = "0" + s;
       return this.vNroBultoCeros;
     }else{
+      debugger;
+      this.vNroBulto = this.vNroBulto + 1;
+      this.vNroBultoCeros = parseInt(this.vNroBultoCeros) + 1;
+      let s = this.vNroBultoCeros + "";
+      while (s.length < 3)
+        this.vNroBultoCeros = s = "0" + s;
+      return this.vNroBultoCeros;
+    }    
+  }
+
+  llenarNumeros() {
+    debugger;
+    if(this.vNroBulto==0){
+      this.vNroBulto = this.vNroBulto + 1;
+      this.vNroBultoCeros = parseInt(this.vNroBultoCeros) + 1;
+      let s = this.vNroBultoCeros + "";
+      while (s.length < 3)
+        this.vNroBultoCeros = s = "0" + s;
+      return this.vNroBultoCeros;
+    }else{      
       //this.vNroBulto = this.vNroBulto + 1;
       //this.vNroBultoCeros = parseInt(this.vNroBultoCeros) + 1;
       let s = this.vNroBultoCeros + "";
@@ -583,6 +602,9 @@ export class EmbalajePage_04Page {
       var respuesta: any = result;
       if (respuesta.errNumber == -1)
         this.mostrarConfirmacion("Advetencia", respuesta.message);
+      // else{
+      //   this.goToSiguiente();
+      // }
 
     });
   }
@@ -658,9 +680,9 @@ export class EmbalajePage_04Page {
   ionViewWillEnter() {
     this.getDataDetEmbalaje();
     this.getDataDetBultosEmbalaje();
-
+    debugger;
     if (this.sGlobal.resultGrabarBulto) {
-      this.llenarNumeros();
+      this.llenarNumeros2();      
       this.sGlobal.resultGrabarBulto = false;
     }
 

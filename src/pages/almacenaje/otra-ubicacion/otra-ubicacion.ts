@@ -34,12 +34,20 @@ export class OtraUbicacionPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider,
     public sAlmacenaje: AlmacenajeServiceProvider, public toastCtrl: ToastController) {
-    this.vDatosUbicacion = navParams.get('data');
-    debugger;
-    this.listarSectoresXAlmacen();
+    this.vDatosUbicacion = navParams.get('data');        
+    this.listarSectoresXAlmacen();          
+  }
+
+  listarUbicacionXCodigoBarra(){    
+    this.sAlmacenaje.listarUbicacionXCodigoBarra(this.codeBar,this.sGlobal.Id_Almacen).then(result => {
+
+      this.listUbicaciones = result;
+      this.listAuxUbicaciones = this.listUbicaciones;
+    });
   }
 
   listarSectoresXAlmacen() {
+    
     this.sAlmacenaje.getListarSectoresXAlmacen(this.sGlobal.Id_Almacen).then(result => {
       debugger;
       this.listSector = result;
@@ -101,9 +109,10 @@ export class OtraUbicacionPage {
     if (this.codeBar) {
       if (this.codeBar.trim() != "") {
         if (this.codeBar.length == 14) {
-          this.listAuxUbicaciones = this.listUbicaciones.filter((item) => {
-            return (item.CodigoBarra.trim() == this.codeBar.trim());
-          });
+          this.listarUbicacionXCodigoBarra();
+          // this.listAuxUbicaciones = this.listUbicaciones.filter((item) => {
+          //   return (item.CodigoBarra.trim() == this.codeBar.trim());
+          // });
           this.rowCount = this.listAuxUbicaciones.length;
           if (this.rowCount == 0) {
             this.presentToast("No se encontraron registros");

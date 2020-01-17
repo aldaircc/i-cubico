@@ -97,13 +97,15 @@ export class EmbalajePage_06Page {
   }
 
   goToReciboPage04() {
+    this.sGlobal.resultGrabarBulto = true;
+    
     this.navCtrl.getViews().forEach(item => {
-      if (item.name == 'EmbalajePage_04Page') {
+      if (item.name == 'EmbalajePage_04Page') {                
         this.navCtrl.popTo(item);
       }
     });
   }
-
+  
   ionViewDidLoad() {
     this.navBar.backButtonClick = (e: UIEvent) => {
       this.navCtrl.getViews().forEach(item => {

@@ -126,13 +126,18 @@ export class EmbalajePage_05Page {
 
 
   mostrarAlerta(objDetBultoXBulto) {
-    this.lstDetalleBultoXBulto.forEach(element => {
-      if (element.NroBulto == objDetBultoXBulto.NroBulto) {
-        this.vNroItem++;
-      }
+    debugger;    
+    // this.lstDetalleBultoXBulto.forEach(element => {
+    //   console.log(element.NroBulto,"elemento");
+    //   console.log(objDetBultoXBulto.NroBulto,"OBJETO");
+    //   if (element.NroBulto == objDetBultoXBulto.NroBulto) {
+    //     console.log("entra: " + element.NroBulto)
+    //     this.vNroItem++;
+    //   }
 
-    });
-    if (this.vNroItem == 1) {
+    // });
+   
+    if(this.lstDetalleBultoXBulto.length != objDetBultoXBulto.Item){
       this.mostrarConfirmacion("No se puede eliminar porque hay bultos superiores", "Eliminar Bulto");
       this.vNroItem = 0;
     }

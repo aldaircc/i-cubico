@@ -94,6 +94,32 @@ export class AlmacenajePalletUaPage {
     }, (500));
   }
 
+  validarCodeBar2() {
+    debugger;
+    if (this.codeBar) {
+      if (this.codeBar.trim() != "") {
+        if (this.codeBar.length == 14) {
+          this.codBar = this.vDatosUbicacion.CodigoBarraUbi.trim();          
+            this.isbgWhite = false;
+            this.isBgRed = false;
+            this.isBgYellow = true;
+            this.isBgGreen = false;
+            this.valorCodBarra = true;          
+        } else {
+          this.presentToast("El código de ubicación debe tener 14 dígitos.");
+        }
+      }
+      else {
+        this.presentToast("Ingrese código de ubicación");
+      }
+    } else {
+      this.presentToast("Ingrese código de ubicación");
+    }
+    setTimeout(() => {
+      this.txtCodUbicacionRef.setFocus();
+    }, (500));
+  }
+
   registrarUAUbicacion() {
     if (this.codeBar) {
       if (this.codeBar.trim() != "") {
@@ -192,7 +218,7 @@ export class AlmacenajePalletUaPage {
     debugger;
     this.dataFromOtraUbicacionPage = data;
     this.codeBar = this.dataFromOtraUbicacionPage.CodigoBarra.trim();
-    
+    this.validarCodeBar2();
     setTimeout(() => {
       this.txtCodUbicacionRef.setFocus();
     }, (500));   
