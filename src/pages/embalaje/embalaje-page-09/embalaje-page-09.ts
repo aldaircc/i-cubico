@@ -150,13 +150,11 @@ export class EmbalajePage_09Page {
     alertConfirmacion.present();
   }
 
-  goToEmbalajePage04() {
-    debugger;
-    this.navCtrl.push(EmbalajePage_04Page, {
-      dataPageFiltro: this.vEmbalajePage03,
-      dataPage02: this.vEmbalajePage02,
-      dataTotalPage03: this.vEmbalajeTotalPage03,
-      nroBulto: this.vNroBulto2
+  goToEmbalajePage04() {    
+    this.navCtrl.getViews().forEach(item => {
+      if (item.name == 'EmbalajePage_04Page') {                
+        this.navCtrl.popTo(item);
+      }
     });
   }
 

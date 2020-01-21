@@ -186,7 +186,7 @@ export class EmbalajePage_03Page {
       if (popoverData == 4) {
         this.showModalImpresora();
       } else if (popoverData == 5) {
-        this.goBackLoginPage();
+        this.mostrarMensajeConfirmacion();       
       }
       this.rowReciboSelect = null;
     });
@@ -196,6 +196,13 @@ export class EmbalajePage_03Page {
     this.navCtrl.push(BultoMasivoPage);
   }
 
+  mostrarMensajeConfirmacion() {
+    this.presentAlertConfirm("¿Está seguro de cerrar sesión?").then((result) => {
+      if (result) {
+        this.goBackLoginPage();
+      }
+    })  
+  };
 
   showModalIncidencia(data) {
     let obj = {

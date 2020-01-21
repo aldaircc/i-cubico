@@ -50,6 +50,14 @@ popoverGlobal: any;
     this.ListarDespachoXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen);
   }
 
+  mostrarMensajeConfirmacion() {
+    this.presentAlertConfirm("¿Está seguro de cerrar sesión?").then((result) => {
+      if (result) {
+        this.goBackLoginPage();
+      }
+    })  
+  };
+
   ListarDespachoXUsuario(strUsuario, intIdAlmacen) {
     this.sEmbalaje.ListarDespachoXUsuario(strUsuario, intIdAlmacen).then((result) => {
 
@@ -194,7 +202,7 @@ popoverGlobal: any;
       if(popoverData == 4){
         this.showModalImpresora();
       }else if(popoverData == 5){
-        this.goBackLoginPage();
+        this.mostrarMensajeConfirmacion();       
       }
       this.rowReciboSelect = null;
     });   
@@ -274,6 +282,32 @@ popoverGlobal: any;
       dataPage02: this.vEmbalajePage02
     });
 
+  }
+
+  presentAlertConfirm(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+              resolve(false);
+              console.log('Disagree clicked');
+            }
+          },
+          {
+            text: 'Aceptar',
+            handler: () => {
+              resolve(true);
+              console.log('Agree clicked');
+            }
+          }
+        ]
+      });
+      confirm.present();
+    })
   }
 
   ionViewWillEnter() {    
