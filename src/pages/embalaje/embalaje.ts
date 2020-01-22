@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, Platform, ViewController, NavController, NavParams, PopoverController, ModalController } from 'ionic-angular';
+import { IonicPage, Platform, ViewController, NavController, AlertController, NavParams, PopoverController, ModalController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { PopoverEmbalajeComponent } from '../../components/popover-embalaje/popover-embalaje';
 import { EmbalajePage_02Page } from '../embalaje/embalaje-page-02/embalaje-page-02';
@@ -23,6 +23,7 @@ export class EmbalajePage {
 popoverGlobal: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
+    private alertCtrl: AlertController,
     public popoverCtrl: PopoverController, public modalCtrl: ModalController,
     public viewCtrl: ViewController, private platform: Platform
   ) {
@@ -51,9 +52,43 @@ popoverGlobal: any;
       if (popoverData == 4) {
         this.showModalImpresora();
       } else if (popoverData == 5) {
-        this.goBackLoginPage();
+        this.mostrarMensajeConfirmacion();
       }
     });
+  }
+
+  mostrarMensajeConfirmacion() {
+    this.presentAlertConfirm("¿Está seguro de cerrar sesión?").then((result) => {
+      if (result) {
+        this.goBackLoginPage();
+      }
+    })  
+  };
+
+  presentAlertConfirm(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+              resolve(false);
+              console.log('Disagree clicked');
+            }
+          },
+          {
+            text: 'Aceptar',
+            handler: () => {
+              resolve(true);
+              console.log('Agree clicked');
+            }
+          }
+        ]
+      });
+      confirm.present();
+    })
   }
 
   goBackLoginPage(): void {
