@@ -115,6 +115,10 @@ import { ParametrosPage } from '../pages/configurar/parametros/parametros';//YUS
 import { HTTP } from '@ionic-native/http/ngx';
 import { File } from '@ionic-native/file';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { ImpresionPickingCopiaPage } from '../pages/picking/impresion-picking-copia/impresion-picking-copia';
+import { ConsultarBultoPage } from '../pages/embalaje/consultar-bulto/consultar-bulto';
+
+
 
 @NgModule({
   declarations: [
@@ -209,7 +213,9 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     AbastecimientoSolicitudPage, //aromero
     ReubicarSolicitudPage, //aromero
     ConfigurarPage, //YUS    
-    ParametrosPage //YUS  
+    ParametrosPage, //YUS      
+    ImpresionPickingCopiaPage, //YUS  
+    ConsultarBultoPage //YUS    
   ],
   imports: [
     BrowserModule, HttpModule, HttpClientModule,
@@ -309,7 +315,9 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     ReubicarSolicitudPage, //aromero
     UbicacionOrigenPage, //aromero
     ConfigurarPage, //YUS    
-    ParametrosPage//YUS   
+    ParametrosPage,//YUS   
+    ImpresionPickingCopiaPage, //YUS      
+    ConsultarBultoPage //YUS      
   ],
   providers: [
     StatusBar,
@@ -329,7 +337,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     AlmacenajeServiceProvider,
     InventarioServiceProvider,
     DespachoServiceProvider //Loque#369Dev
-
+    
   ]
 })
 export class AppModule { }
