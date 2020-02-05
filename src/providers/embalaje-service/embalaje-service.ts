@@ -163,4 +163,19 @@ export class EmbalajeServiceProvider {
     });
   }
 
+  ConsultarBulto(strCodigoBarraBulto) {
+    var parameter: any;
+    parameter = { "strCodigoBarraBulto": strCodigoBarraBulto};
+
+    return new Promise(resolve => {
+      this.http.get(this.sGlobal.despacho + 'ConsultarBulto', { params: parameter })
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log('Error ConsultarBarraBulto', err);
+        })
+    });
+  }
+
 }

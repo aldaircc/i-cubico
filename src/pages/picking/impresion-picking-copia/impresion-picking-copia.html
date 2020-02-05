@@ -1,0 +1,78 @@
+<!--
+  Generated template for the ImpresionPickingCopiaPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-toolbar no-padding no-margin color="primary">
+    <ion-navbar>
+        <ion-label style="font-size: 15px; color: white; font-weight:bold;">IMPRIMIR COPIAS</ion-label>            
+    </ion-navbar>
+    <!-- <ion-buttons start>
+        <button ion-button icon-only (click)="presentPopover($event)">
+            <ion-icon name="more"></ion-icon>
+        </button>
+    </ion-buttons> -->
+</ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+      <ion-row>
+          <ion-col>
+              <div>
+                  <h6><b>Impresora:</b></h6>
+              </div>
+          </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-item>
+              <ion-select col-12 col-sm interface="action-sheet" [(ngModel)]="id_Impresora" (ionChange)="obtenerNombreImpresora()">
+                  <ion-option *ngFor="let impresora of listImpresora" value="{{ impresora.Id_Impresora }}">{{
+                      impresora.Nombre }} </ion-option>
+              </ion-select>
+          </ion-item>
+      </ion-row>
+      <ion-row>
+          <ion-item>
+              <ion-label>Etiqueta Grande</ion-label>
+              <ion-checkbox [checked]="bolEtiquetaGrande" (ionChange)="checkboxClicked($event);" ></ion-checkbox>
+          </ion-item>
+      </ion-row>
+      <ion-row>
+          <ion-col>
+              <div>
+                  <h6><b>Total de Copias a Imprimir:</b></h6>
+              </div>
+          </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col col-5 col-sm></ion-col>
+          <ion-col col-3 col-sm no-padding no-margin>
+            <ion-item>
+              <ion-input type="number" style="margin:0px" placeholder="0" [(ngModel)]="vUltimoBulto" #iNumCopia></ion-input>
+            </ion-item>
+          </ion-col>         
+          <ion-col col-4 col-sm></ion-col>
+      </ion-row>
+
+  </ion-grid>
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-grid class="bgFooter">
+      <ion-row>
+          <ion-col col-12 class="bgFooter-col">
+              <button ion-button icon-start (click)="imprimir()">
+                  <ion-icon name="md-print"></ion-icon>
+              </button>
+          </ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-footer>

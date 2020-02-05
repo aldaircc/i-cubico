@@ -4,6 +4,7 @@ import { HomePage } from '../home/home';
 import { PopoverEmbalajeComponent } from '../../components/popover-embalaje/popover-embalaje';
 import { EmbalajePage_02Page } from '../embalaje/embalaje-page-02/embalaje-page-02';
 import { ImpresoraPage } from '../impresora/impresora';
+import { ConsultarBultoPage } from './consultar-bulto/consultar-bulto';
 
 /**
  * Generated class for the EmbalajePage page.
@@ -97,6 +98,10 @@ popoverGlobal: any;
 
   goEmbalajePackingPage() {
     this.navCtrl.push(EmbalajePage_02Page);
+  }
+
+  goConsultarBulto() {      
+    this.navCtrl.push(ConsultarBultoPage);
   }
 
   ionViewWillEnter(){

@@ -1,0 +1,249 @@
+<!--
+  Generated template for the ConsultarBultoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-label style="font-size: 15px; color: white; font-weight:bold;">CONSULTAR BULTO</ion-label>      
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-grid style="padding: 0px;">
+    <ion-row no-padding style="margin-top: 0px; margin-bottom: 0px; ">
+      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
+          Bulto:
+        </ion-label>
+      </ion-col>
+      <ion-col col-7 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
+          <ion-input #txtCodBarBulto [(ngModel)]="codeBarBulto" maxlength="16" (keyup.enter)="validarBulto()" type="text"
+            value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px; color:dimgray"></ion-input>
+        </ion-item>
+      </ion-col>     
+    </ion-row>
+    <ion-row no-padding style="margin-top: 20px; margin-bottom: 3px; ">
+      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          ID:
+        </ion-label>
+      </ion-col>
+      <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          {{ ResultBulto.Id_Tx }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding style="margin-top: 0px; margin-bottom: 3px; ">
+      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          Nro. Orden:
+        </ion-label>
+      </ion-col>
+      <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          {{ ResultBulto.NumOrden }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding style="margin-top: 0px; margin-bottom: 3px; ">
+      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          Cliente:
+        </ion-label>
+      </ion-col>
+      <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          {{ ResultBulto.Cliente }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding style="margin-top: 0px; margin-bottom: 3px; ">
+      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          Dirección:
+        </ion-label>
+      </ion-col>
+      <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label text-wrap style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          {{ ResultBulto.Direccion }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding style="margin-top: 0px; margin-bottom: 3px; ">
+      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          Conductor:
+        </ion-label>
+      </ion-col>
+      <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label text-wrap style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          {{ ResultBulto.Conductor }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding style="margin-top: 0px; margin-bottom: 3px; ">
+      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          Vehículo:
+        </ion-label>
+      </ion-col>
+      <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          {{ ResultBulto.Vehiculo }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding style="margin-top: 0px; margin-bottom: 3px; ">
+      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          Item:
+        </ion-label>
+      </ion-col>
+      <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          {{ ResultBulto.NroItem }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding style="margin-top: 0px; margin-bottom: 3px; ">
+      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          Peso:
+        </ion-label>
+      </ion-col>
+      <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          {{ ResultBulto.Peso }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding style="margin-top: 0px; margin-bottom: 3px; ">
+      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          Estado:
+        </ion-label>
+      </ion-col>
+      <ion-col col-8 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          {{ ResultBulto.Estado }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-row no-padding style="margin-top: 3px; margin-bottom: 3px; ">
+      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          Sector:
+        </ion-label>
+      </ion-col>
+      <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          {{ ResultUA_Aux.Sector }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row no-padding no-margin>
+      <ion-col col-3 no-padding>
+        <ion-row class="box-row" style="height: 43px">
+          <ion-label class="box-label">
+            {{ ResultUA_Aux.Fila }}
+          </ion-label>
+        </ion-row>
+      </ion-col>
+      <ion-col col-3 no-padding>
+        <ion-row class="box-row" style="height: 43px">
+          <ion-label class="box-label">
+            {{ ResultUA_Aux.Columna }}
+          </ion-label>
+        </ion-row>
+      </ion-col>
+      <ion-col col-3 no-padding>
+        <ion-row class="box-row" style="height: 43px">
+          <ion-label class="box-label">
+            {{ ResultUA_Aux.Nivel }}
+          </ion-label>
+        </ion-row>
+      </ion-col>
+      <ion-col col-3 no-padding>
+        <ion-row class="box-row" style="height: 43px">
+          <ion-label class="box-label">
+            {{ ResultUA_Aux.Posicion }}
+          </ion-label>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid style="padding: 0px;">
+    <ion-row no-padding style="margin-top: 5px; margin-bottom: 0px; ">
+      <ion-col col-2 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 5px; margin-bottom: 0px;">
+          F.E:
+        </ion-label>
+      </ion-col>
+      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-datetime style="font-weight:bold" displayFormat="DD/MM/YYYY" pickerFormat="MMM DD YYYY" max="2999-12-31"
+          [(ngModel)]="this.FechaEmision"></ion-datetime>
+      </ion-col>
+      <ion-col col-2 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 5px; margin-bottom: 0px;">
+          F.V:
+        </ion-label>
+      </ion-col>
+      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-datetime style="font-weight:bold" displayFormat="DD/MM/YYYY" pickerFormat="MMM DD YYYY" max="2999-12-31"
+          [(ngModel)]="FechaVencimiento"></ion-datetime>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding style="margin-top: 0px; margin-bottom: 0px; ">
+      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
+          Lote:
+        </ion-label>
+      </ion-col>
+      <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
+          <ion-input #txtLote [(ngModel)]="Lote" maxlength="30" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px;"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding style="margin-top: 0px; margin-bottom: 0px; ">
+      <ion-col col-4 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 12px; margin-bottom: 0px;">
+          Cantidad:
+        </ion-label>
+      </ion-col>
+      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
+          <ion-input #txtCantidad [(ngModel)]="Cantidad" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px;"
+            (keyup)="CantidadChange($event)" name="txtCant" onkeypress="return (event.charCode != 46 && event.charCode > 31 && (event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 12px; margin-bottom: 0px;">
+          {{ ResultUA_Aux.UM }}
+        </ion-label>
+      </ion-col>
+    </ion-row>   
+    <ion-row style="padding-left: 10px">
+      <ion-col col-12 col-sm no-padding no-margin>
+        <ion-select placeholder="Formato" [(ngModel)]="id_FormatLabel" interface="action-sheet" #selectFormat style="padding: 8px 3px 8px 5px">
+          <ion-option value="" disabled selected>Formato</ion-option>
+          <ion-option *ngFor="let f of formatLabels" value="{{ f.Id_Format }}">{{ f.Label }}</ion-option>
+        </ion-select>
+      </ion-col>
+    </ion-row> -->
+
+    
+
+  </ion-grid>
+</ion-content>

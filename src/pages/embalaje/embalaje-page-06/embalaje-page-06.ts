@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, Navbar, NavController, NavParams, AlertController } from 'ionic-angular';
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
 import { EmbalajePage_07Page } from '../embalaje-page-07/embalaje-page-07';
+import { EmbalajePage_08Page } from '../embalaje-page-08/embalaje-page-08';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 
 /**
@@ -99,10 +100,14 @@ export class EmbalajePage_06Page {
   goToReciboPage04() {
     this.sGlobal.resultGrabarBulto = true;
     
-    this.navCtrl.getViews().forEach(item => {
-      if (item.name == 'EmbalajePage_04Page') {                
-        this.navCtrl.popTo(item);
-      }
+    // this.navCtrl.getViews().forEach(item => {
+    //   if (item.name == 'EmbalajePage_04Page') {                
+    //     this.navCtrl.popTo(item);
+    //   }
+    // });
+
+    this.navCtrl.push(EmbalajePage_08Page, {
+      dataPage02: this.vEmbalajePage02
     });
   }
   

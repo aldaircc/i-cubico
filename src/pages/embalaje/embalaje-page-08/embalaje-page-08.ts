@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Checkbox } from 'ionic-angular';
 import moment from 'moment';
 import { ImpresoraServiceProvider } from '../../../providers/impresora-service/impresora-service';
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
@@ -26,9 +26,11 @@ export class EmbalajePage_08Page {
   listDetBultosEmbalaje: any;
   vEmbalajeTotalPage02: any;
   formatLabels: any = 'ETQ_Bultov2.txt';
+  formatLabelsGrande: any = 'ETQ_Bulto_BIGv2.txt';
   id_Impresora: any;
   vNombreImpresora: any;
   vUltimoBulto: any;
+  bolEtiquetaGrande: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sImpresora: ImpresoraServiceProvider, public sEmbalaje: EmbalajeServiceProvider, public sEtq: EtiquetadoServiceProvider,
@@ -116,15 +118,31 @@ export class EmbalajePage_08Page {
       listEtq.push({ "campo": "|GUIA|", "valor": "" });
       listContainer.push({ 'etiqueta': listEtq });
     }
-    this.sEtq.imprimirListaEtiquetas(listContainer, this.formatLabels, this.vNombreImpresora, true).then(result => {
+
+    var formatoEtiqueta;
+    if(this.bolEtiquetaGrande)
+      formatoEtiqueta = this.formatLabelsGrande;
+    else
+      formatoEtiqueta = this.formatLabels;
+          
+    this.sEtq.imprimirListaEtiquetas(listContainer, formatoEtiqueta, this.vNombreImpresora, true).then(result => {
       debugger;
       var message: any = result;
       if (message.errNumber == -1) {
         alert(message.mensaje);
       } else {
         alert("Impresión exitosa.");
+        this.navCtrl.getViews().forEach(item => {
+          if (item.name == 'EmbalajePage_04Page') {                
+            this.navCtrl.popTo(item);
+          }
+        });
       }
     });
+  }
+  
+  checkboxClicked(chkEliminar: Checkbox) {
+    this.bolEtiquetaGrande = chkEliminar.checked;
   }
 
   ionViewDidLoad() {

@@ -9,6 +9,7 @@ import { ConsultarUbicacionPage } from '../../almacenaje/consultar-ubicacion/con
 import { HomePage } from '../../home/home';
 import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
 import { PopoverPickingPage } from '../../picking/popover/popover-picking/popover-picking'
+import { ImpresionPickingCopiaPage } from '../../picking/impresion-picking-copia/impresion-picking-copia';
 
 /**
  * Generated class for the CierrePickingPage page.
@@ -132,10 +133,10 @@ popoverGlobal: any;
                   this.presentAlertConfirm("¿Desea imprimir el picking?").then((resultAlert3) => {
                     if (resultAlert3) {
                       // Mostrar lista de impresoras
-                      this.showModalImpresora();
+                      this.showModalCopiaImpresion();                      
                     }
                     //Ir a detalle ordenes
-                    this.goPickingPage();
+                    // this.goPickingPage();
                   })
                 }
               })
@@ -165,10 +166,10 @@ popoverGlobal: any;
                   this.presentAlertConfirm("¿Desea imprimir el picking?").then((result) => {
                     if (result) {
                       // Mostrar lista de impresoras
-                      this.showModalImpresora();
+                      this.showModalCopiaImpresion();                      
                     }
                     //Ir a detalle ordenes
-                    this.goPickingPage();
+                    // this.goPickingPage();
                   })
                 }
               })
@@ -433,6 +434,12 @@ popoverGlobal: any;
         this.imprimir();
       }
     });
+  }
+
+  showModalCopiaImpresion() {
+    this.navCtrl.push(ImpresionPickingCopiaPage, {      
+      dataPage02: this.vRutaPickingPage
+    });    
   }
 
   goBackRutaPicking() {

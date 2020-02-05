@@ -70,7 +70,7 @@
     </ion-col>
     <ion-col col-3 col-sm>
       <ion-item>
-        <ion-input id="txtCantidad" type="number" min="0" placeholder="0.00" [(ngModel)]="cantEmbalar" onkeypress="return (event.charCode != 46 && event.charCode > 31 && (event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-input>
+        <ion-input id="txtCantidad" type="number" min="0" placeholder="0.00" [(ngModel)]="cantEmbalar" pattern="^[0-9]+" onkeypress="return (event.charCode != 46 && event.charCode > 31 && (event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-input>
       </ion-item>
     </ion-col>
 

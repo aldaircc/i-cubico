@@ -14,95 +14,60 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content no padding>
     <ion-grid>
-    <ion-row>   
-        <ion-col>            
-        <div>
-            <h6><b>Cliente:</b></h6>  
-        </div>   
-         </ion-col>            
-    </ion-row>   
-    <ion-row >  
-            <ion-col>               
-        <div> 
-            {{vEmbalajePage02.Cliente}}
-        </div>
-        </ion-col>            
-    </ion-row>   
-    <ion-row> 
-        <ion-col>            
-        <div>      
-            <h6><b>Ciudad:</b></h6>                 
-        </div>   
-        </ion-col>      
-    </ion-row>   
-    <ion-row>   
-            <ion-col>            
-            <div>
-        {{vEmbalajePage02.Ciudad}}     
-        </div>       
-        </ion-col>            
-    </ion-row>   
-    <ion-row>    
-        <ion-col>            
-            <div>  
-                <h6><b>Dirección:</b></h6>
-            </div>
-        </ion-col>            
-    </ion-row>   
-    <ion-row> 
-        <ion-col>               
-            <div>             
-            {{vEmbalajePage02.Direccion}}                     
-            </div>
-        </ion-col>  
-    </ion-row>   
-    <ion-row>    
-        <ion-col>              
-            <div>
-                <h6><b>Cod. Bulto:</b></h6>    
-            </div>   
-        </ion-col>            
-    </ion-row>   
-    <ion-row>
-        <ion-col>            
-            <div>
-            {{vEmbalajePage02.Id_Tx}}/{{vNroBultoCeros}}                
-            </div>
-        </ion-col>  
-    </ion-row> 
-    
-    <ion-row>
+    <ion-row align-items-center>   
       <ion-col col-4 col-sm>            
-          <h6><b>Peso Físico:</b></h6>
-      </ion-col>
-      <ion-col col-3 col-sm>            
-        <ion-item>
-            <ion-input type="Text" placeholder="0.00" [(ngModel)]="pesoFisico" disabled></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col col-2 col-sm>
-            <h6>Kg.</h6>
+        <ion-label class="fieldForm"> Cliente:</ion-label>   
+      </ion-col>          
+      <ion-col col-8 col-sm>{{ vEmbalajePage02.Cliente }}</ion-col>  
+    </ion-row>  
+    <ion-row align-items-center>   
+      <ion-col col-4 col-sm>            
+      <ion-label class="fieldForm"> Ciudad:</ion-label>   
+       </ion-col>          
+       <ion-col col-8 col-sm>{{ vEmbalajePage02.Ciudad }}</ion-col>  
+  </ion-row>    
+  <ion-row align-items-center>   
+    <ion-col col-4 col-sm>            
+    <ion-label class="fieldForm"> Dirección:</ion-label>   
+     </ion-col>          
+     <ion-col col-8 col-sm>{{ vEmbalajePage02.Direccion }}</ion-col>  
+  </ion-row>
+  <ion-row align-items-center>   
+    <ion-col col-4 col-sm>            
+    <ion-label class="fieldForm"> Cod. Bulto:</ion-label>   
+     </ion-col>          
+     <ion-col col-8 col-sm>{{vEmbalajePage02.Id_Tx}}/{{vNroBultoCeros}}</ion-col>  
+  </ion-row>    
+  <ion-row align-items-center>   
+    <ion-col col-4 col-sm>            
+      <ion-label class="fieldForm"> Peso Físico:</ion-label>   
+     </ion-col>   
+     <ion-col col-3 col-sm>                   
+     <ion-item>
+      <ion-input type="Text" placeholder="0.00" [(ngModel)]="pesoFisico" disabled></ion-input>
+      </ion-item>
     </ion-col>
-      <ion-col col-1 col-sm> 
-        <button clear ion-button icon-only (click)="goToEmbalajePage07()">
-          <ion-icon name="ios-stopwatch-outline"></ion-icon>
-        </button> 
-      </ion-col>         
-    </ion-row>
-    <ion-row> 
-        <ion-col>            
-            <div>
-                <h6><b>Observaciones:</b></h6>     
-            </div>
-        </ion-col>
-    </ion-row>
-    <ion-row> 
-        <ion-item>                
-            <ion-textarea type="Text" ></ion-textarea>                
-        </ion-item> 
-    </ion-row>
+    <ion-col col-2 col-sm>
+          <h6>Kg.</h6>
+    </ion-col>
+  <ion-col col-1 col-sm> 
+    <button clear ion-button icon-only (click)="goToEmbalajePage07()">
+      <ion-icon name="ios-stopwatch-outline"></ion-icon>
+    </button> 
+  </ion-col>        
+  </ion-row>        
+  <ion-row align-items-center>   
+    <ion-col col-12 col-sm>            
+      <ion-label class="fieldForm"> Observaciones:</ion-label>   
+    </ion-col>               
+  </ion-row>    
+  <ion-row align-items-center>
+    <ion-col col-12 col-sm>            
+      <ion-textarea type="Text"></ion-textarea>   
+     </ion-col>
+  </ion-row>    
 </ion-grid>
 
 </ion-content>

@@ -34,7 +34,7 @@
                 <ion-label class="margin-text-circle-button">PACKING</ion-label>
             </ion-col>           
         </ion-row>
-        <ion-row text-center>             
+        <ion-row text-center  style="height: 50%">             
             <ion-col col-12 col-sm align-self-center>
                 <button class="btn">
                     <ion-icon class="xl-icon" name="cube" color="dark"></ion-icon>
@@ -42,6 +42,14 @@
                 <ion-label class="margin-text-circle-button">BULTO MÁSTER</ion-label>
             </ion-col>
         </ion-row>          
+        <ion-row text-center>             
+          <ion-col col-12 col-sm align-self-center>
+              <button class="btn" (click)="goConsultarBulto()">
+                  <ion-icon class="xl-icon" name="search" color="dark"></ion-icon>
+              </button>
+              <ion-label class="margin-text-circle-button">CONSULTAR BULTO</ion-label>
+          </ion-col>
+      </ion-row>       
     </ion-grid>
   
 </ion-content>

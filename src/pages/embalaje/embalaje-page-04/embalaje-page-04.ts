@@ -74,9 +74,6 @@ export class EmbalajePage_04Page {
     this.vPage = navParams.get('page');
     this.vNroItemVisual = navParams.get('nroItemVisual');
 
-
-
-
     //     var objTemp = {      
     //       'CantXCaja': this.vEmbalajePage03[0].CantXCaja,
     //       'CantidadDespacho': this.vPage == 3 ? this.vEmbalajePage03[0].CantidadDespacho : this.vLisTransacEmbalaje.CantidadEmbalado,
@@ -663,9 +660,43 @@ export class EmbalajePage_04Page {
       if (popoverData == 4) {
         this.showModalImpresora();
       } else if (popoverData == 5) {
-        this.goBackLoginPage();
+        this.mostrarMensajeConfirmacion();
       }
     });
+  }
+
+  mostrarMensajeConfirmacion() {
+    this.presentAlertConfirm("¿Está seguro de cerrar sesión?").then((result) => {
+      if (result) {
+        this.goBackLoginPage();
+      }
+    })  
+  };
+
+  presentAlertConfirm(message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const confirm = this.alertCtrl.create({
+        title: 'Mensaje',
+        message: message,
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+              resolve(false);
+              console.log('Disagree clicked');
+            }
+          },
+          {
+            text: 'Aceptar',
+            handler: () => {
+              resolve(true);
+              console.log('Agree clicked');
+            }
+          }
+        ]
+      });
+      confirm.present();
+    })
   }
 
   showModalImpresora() {
