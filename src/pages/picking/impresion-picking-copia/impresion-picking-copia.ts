@@ -79,7 +79,7 @@ export class ImpresionPickingCopiaPage {
   }
 
   imprimir() {
-    debugger;
+    debugger;    
     var listContainer = [];
     var listEtq = [];
     listEtq = [];
@@ -90,22 +90,20 @@ export class ImpresionPickingCopiaPage {
     listEtq.push({ "campo": "|USUARIO|", "valor": this.sGlobal.apeNom });
     listContainer.push({ 'etiqueta': listEtq });
 
-    this.sEtq.imprimirListaEtiquetas(listContainer, 'ETQ_Pickingv2.txt', this.vNombreImpresora, true).then(result => {
-      debugger;
-      var message: any = result;
-      if (message.errNumber == -1) {
-        alert(message.mensaje);
-      }
-      else {
-        alert("Impresión exitosa.");
-        this.goPickingPage();
-        // this.navCtrl.getViews().forEach(item => {
-        //   if (item.name == 'EmbalajePage_04Page') {                
-        //     this.navCtrl.popTo(item);
-        //   }
-        // });
-      }
-    });
+    for (let index = 0; index < this.vUltimoBulto; index++) {          
+      this.sEtq.imprimirListaEtiquetas(listContainer, 'ETQ_Pickingv2.txt', this.vNombreImpresora, true).then(result => {        
+          if(index == (this.vUltimoBulto - 1)){
+            var message: any = result;
+            if (message.errNumber == -1) {
+              alert(message.mensaje);
+            }
+            else {
+              alert("Impresión exitosa.");
+              this.goPickingPage();        
+            }
+          }
+      });
+    } 
   }
 
   checkboxClicked(chkEliminar: Checkbox) {
