@@ -20,6 +20,8 @@ export class ConsultarBultoPage {
 
   codeBarBulto: string;
   ResultBulto: any = [];
+  vMostrar: boolean = false;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sEmbalaje: EmbalajeServiceProvider, public sGlobal: GlobalServiceProvider,
     public modalCtrl: ModalController, public popoverCtrl: PopoverController,
@@ -47,17 +49,25 @@ export class ConsultarBultoPage {
     toast.present();
   }
 
-  validarBulto() {
-    if (this.codeBarBulto.trim() != "") {
+  validarBulto() {    
+    if (this.codeBarBulto != undefined) {
       if (this.codeBarBulto.length == 16) {
         this.sEmbalaje.ConsultarBulto(this.codeBarBulto).then((result) => {
-          this.ResultBulto = result;
+          console.log(this.ResultBulto.Id_Tx,"resultadoo");
+          console.log(this.ResultBulto.length,"resultado del bulto");
+          this.ResultBulto = result;          
+          // if (this.ResultBulto.length > 0) {
+            this.vMostrar = true;
+          // } else {
+          //   this.presentToast("No se encontraron datos.");
+          // }
         }, err => {
-          console.log('E-getBulto', err);
+          console.log('E-getBulto', err);          
         }); 
       }
       else {
         this.presentToast("El código del bulto debe tener 16 dígitos.");
+        this.vMostrar = false;
         setTimeout(() => {
           this.selectAll(this.txtCodBarBulto);
         }, (500));
@@ -65,6 +75,7 @@ export class ConsultarBultoPage {
     } 
     else {
       this.presentToast("Ingrese código de bulto.");
+      this.vMostrar = false;
       setTimeout(() => {
         this.selectAll(this.txtCodBarBulto);
       }, (500));
