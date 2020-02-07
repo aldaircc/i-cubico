@@ -52,9 +52,9 @@ export class ConsultarBultoPage {
   validarBulto() {    
     if (this.codeBarBulto != undefined) {
       if (this.codeBarBulto.length == 16) {
-        this.sEmbalaje.ConsultarBulto(this.codeBarBulto).then((result) => {
-          console.log(result.length,"rurururururu");                  
-          if (result.length > 0) {
+        this.sEmbalaje.ConsultarBulto(this.codeBarBulto).then((result) => {          
+          this.ResultBulto = result;               
+          if (this.ResultBulto.length > 0) {
             this.ResultBulto = result[0]; 
             this.vMostrar = true;
           } else {
