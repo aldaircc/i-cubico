@@ -53,14 +53,14 @@ export class ConsultarBultoPage {
     if (this.codeBarBulto != undefined) {
       if (this.codeBarBulto.length == 16) {
         this.sEmbalaje.ConsultarBulto(this.codeBarBulto).then((result) => {
-          console.log(this.ResultBulto.Id_Tx,"resultadoo");
-          console.log(this.ResultBulto.length,"resultado del bulto");
-          this.ResultBulto = result;          
-          // if (this.ResultBulto.length > 0) {
+          console.log(result.length,"rurururururu");                  
+          if (result.length > 0) {
+            this.ResultBulto = result[0]; 
             this.vMostrar = true;
-          // } else {
-          //   this.presentToast("No se encontraron datos.");
-          // }
+          } else {
+             this.presentToast("No se encontraron datos.");
+             this.vMostrar = false;
+          }
         }, err => {
           console.log('E-getBulto', err);          
         }); 
