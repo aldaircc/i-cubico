@@ -35,7 +35,7 @@ export class PopoverEmbalajeComponent {
       case 12:
         this.isDisplayIncidencia = value.has_Id_Tx;
         this.isDisplayMasivo = false;
-        this.isDisplayEtqMaster = true;
+        this.isDisplayEtqMaster = false;
         this.isDisplayPrint = true;
         this.isDisplayCerrar = true;
         break;
@@ -49,8 +49,8 @@ export class PopoverEmbalajeComponent {
         break;
       case 15:
         this.isDisplayIncidencia = true;
-        this.isDisplayMasivo = true;
-        this.isDisplayEtqMaster = true;
+        this.isDisplayMasivo = false;
+        this.isDisplayEtqMaster = false;
         this.isDisplayPrint = true;
         this.isDisplayCerrar = true;
         break;

@@ -60,6 +60,9 @@ export class ConsultarBultoPage {
           } else {
              this.presentToast("No se encontraron datos.");
              this.vMostrar = false;
+             setTimeout(() => {
+              this.selectAll(this.txtCodBarBulto);
+            }, (500));
           }
         }, err => {
           console.log('E-getBulto', err);          
