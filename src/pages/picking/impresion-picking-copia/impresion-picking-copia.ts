@@ -25,9 +25,7 @@ export class ImpresionPickingCopiaPage {
   vEmbalajeTotalPage02: any;
   id_Impresora: any;
   vNombreImpresora: any;
-  vUltimoBulto: any;
-  bolEtiquetaGrande: boolean = false;
-
+  vUltimoBulto: any;  
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sImpresora: ImpresoraServiceProvider, public sEmbalaje: EmbalajeServiceProvider, public sEtq: EtiquetadoServiceProvider,
@@ -63,8 +61,7 @@ export class ImpresionPickingCopiaPage {
     this.getDataAccesosImpresoraXUsuario();
   }
 
-  obtenerNombreImpresora() {
-    this.id_Impresora
+  obtenerNombreImpresora() {    
     this.vNombreImpresora = this.listImpresora.filter((item) => {
       return (item.Id_Impresora == this.id_Impresora);
     });
@@ -104,11 +101,7 @@ export class ImpresionPickingCopiaPage {
           }
       });
     } 
-  }
-
-  checkboxClicked(chkEliminar: Checkbox) {
-    this.bolEtiquetaGrande = chkEliminar.checked;
-  }
+  }  
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ImpresionPickingCopiaPage');
