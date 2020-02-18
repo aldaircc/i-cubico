@@ -31,6 +31,7 @@ export class EmbalajePage_08Page {
   vNombreImpresora: any;
   vUltimoBulto: any;
   bolEtiquetaGrande: boolean = false;
+  vUltimoBulto2: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sImpresora: ImpresoraServiceProvider, public sEmbalaje: EmbalajeServiceProvider, public sEtq: EtiquetadoServiceProvider,
@@ -100,23 +101,25 @@ export class EmbalajePage_08Page {
     var listEtq = [];
     let currentDate = moment(new Date());
     for (let i = 0; i < this.listDetBultosEmbalaje.length; i++) {
-      listEtq = [];
-      listEtq.push({ "campo": "|FACTURA|", "valor": "" });
-      listEtq.push({ "campo": "|CODZONA|", "valor": this.vEmbalajeTotalPage02.CodigoZona });
-      listEtq.push({ "campo": "|CLIENTE|", "valor": this.vEmbalajeTotalPage02.Cliente });
-      listEtq.push({ "campo": "|ALMACEN|", "valor": this.sGlobal.nombreAlmacen });
-      listEtq.push({ "campo": "|ZONA|", "valor": this.vEmbalajeTotalPage02.Zona });
-      listEtq.push({ "campo": "|DIRECCION|", "valor": this.vEmbalajeTotalPage02.Direccion });
-      listEtq.push({ "campo": "|PICKING|", "valor": this.vEmbalajeTotalPage02.NumOrden });
-      listEtq.push({ "campo": "|BULTO|", "valor": this.listDetBultosEmbalaje[i].NroBulto });
-      listEtq.push({ "campo": "|CODBARRA|", "valor": this.listDetBultosEmbalaje[i].CodigoBarra });
-      listEtq.push({ "campo": "|PESO|", "valor": this.listDetBultosEmbalaje[i].Peso });
-      listEtq.push({ "campo": "|CIUDAD|", "valor": this.vEmbalajeTotalPage02.Ciudad });
-      listEtq.push({ "campo": "|PEDIDO|", "valor": this.vEmbalajeTotalPage02.NumOrden });
-      listEtq.push({ "campo": "|FECHA|", "valor": currentDate.format("DD/MM/YYYY") });
-      listEtq.push({ "campo": "|OBSERVACION|", "valor": this.listDetBultosEmbalaje[i].Observacion });
-      listEtq.push({ "campo": "|GUIA|", "valor": "" });
-      listContainer.push({ 'etiqueta': listEtq });
+      if (i == this.listDetBultosEmbalaje.length - 1){        
+        listEtq = [];
+        listEtq.push({ "campo": "|FACTURA|", "valor": "" });
+        listEtq.push({ "campo": "|CODZONA|", "valor": this.vEmbalajeTotalPage02.CodigoZona });
+        listEtq.push({ "campo": "|CLIENTE|", "valor": this.vEmbalajeTotalPage02.Cliente });
+        listEtq.push({ "campo": "|ALMACEN|", "valor": this.sGlobal.nombreAlmacen });
+        listEtq.push({ "campo": "|ZONA|", "valor": this.vEmbalajeTotalPage02.Zona });
+        listEtq.push({ "campo": "|DIRECCION|", "valor": this.vEmbalajeTotalPage02.Direccion });
+        listEtq.push({ "campo": "|PICKING|", "valor": this.vEmbalajeTotalPage02.NumOrden });
+        listEtq.push({ "campo": "|BULTO|", "valor": this.listDetBultosEmbalaje[i].NroBulto });
+        listEtq.push({ "campo": "|CODBARRA|", "valor": this.listDetBultosEmbalaje[i].CodigoBarra });
+        listEtq.push({ "campo": "|PESO|", "valor": this.listDetBultosEmbalaje[i].Peso });
+        listEtq.push({ "campo": "|CIUDAD|", "valor": this.vEmbalajeTotalPage02.Ciudad });
+        listEtq.push({ "campo": "|PEDIDO|", "valor": this.vEmbalajeTotalPage02.NumOrden });
+        listEtq.push({ "campo": "|FECHA|", "valor": currentDate.format("DD/MM/YYYY") });
+        listEtq.push({ "campo": "|OBSERVACION|", "valor": this.listDetBultosEmbalaje[i].Observacion });
+        listEtq.push({ "campo": "|GUIA|", "valor": "" });
+        listContainer.push({ 'etiqueta': listEtq });
+      }
     }
 
     var formatoEtiqueta;
