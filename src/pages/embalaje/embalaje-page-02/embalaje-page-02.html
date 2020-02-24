@@ -43,7 +43,7 @@
 <ion-content>
   <!-- Start:  data-binding list -->
   <ion-row>
-    <ion-searchbar (ionInput)="filterItems($event)" placeholder="Buscar..."></ion-searchbar>
+    <ion-searchbar (ionInput)="filterItems($event)" [(ngModel)]="numeroOrden" (keyup.enter)="ListarDespachoXUsuarioOrden()" placeholder="Buscar..."></ion-searchbar>
   </ion-row>
 
   <ion-row class="bgWhite">

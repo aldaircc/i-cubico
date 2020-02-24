@@ -32,6 +32,7 @@ export class EmbalajePage_02Page {
   listAuxEmbalaje: any = [];
   listDetalleConfirm: any = [];
   listDetalleProceso: any = [];
+  numeroOrden:string;
 
   valorpopoverGlobal: boolean = false
 popoverGlobal: any;
@@ -141,6 +142,47 @@ popoverGlobal: any;
     toast.present();
   }
   
+  ListarDespachoXUsuarioOrden (strUsuario, intIdAlmacen){
+    this.sEmbalaje.ListarDespachoXUsuarioOrden(this.numeroOrden,strUsuario, intIdAlmacen).then((result) => {          
+      this.listAuxEmbalaje = [];        
+      this.listEmbalaje = result;      
+      for (var i = 0; i < this.listEmbalaje.length; i++) {
+        var obj = {
+          'Ciudad': result[i].Ciudad,
+          'Cliente': result[i].Cliente,
+          'CodigoZona': result[i].CodigoZona,
+          'Direccion': result[i].Direccion,
+          'Estado': result[i].Estado,
+          'FechaDocumento': result[i].FechaDocumento,
+          'FechaLlegada': result[i].FechaLlegada,
+          'FlagCajaRegistradora': result[i].FlagCajaRegistradora,
+          'FlagEtqLogistica': result[i].FlagEtqLogistica,
+          'FlagEtqSGAA': result[i].FlagEtqSGAA,
+          'FlagPausa': result[i].FlagPausa,
+          'FlagVolumen': result[i].FlagVolumen,
+          'Id_Ciudad': result[i].Id_Ciudad,
+          'Id_ClienteLab': result[i].Id_ClienteLab,
+          'Id_Estado': result[i].Id_Estado,
+          'Id_Sucursal': result[i].Id_Sucursal,
+          'Id_TipoDocumento': result[i].Id_TipoDocumento,
+          'Id_TipoMovimiento': result[i].Id_TipoMovimiento,
+          'Id_Tx': result[i].Id_Tx,
+          'NumOrden': result[i].NumOrden,
+          'NumeroFactura': result[i].NumeroFactura,
+          'Observacion': result[i].Observacion,
+          'Socio': result[i].Socio,
+          'Sucursal': result[i].Sucursal,
+          'TipoDocumento': result[i].TipoDocumento,
+          'TipoMovimiento': result[i].TipoMovimiento,
+          'Zona': result[i].Zona
+        };
+        this.listAuxEmbalaje.push(obj);
+      }
+      this.rowCount = this.listAuxEmbalaje.length;
+    }, err => {
+      console.log('E-getBulto', err);          
+    }); 
+  }
 
   filterItems(ev: any) {
     const val = ev.target.value;

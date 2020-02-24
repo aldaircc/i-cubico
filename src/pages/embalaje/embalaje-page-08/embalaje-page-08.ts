@@ -117,6 +117,7 @@ export class EmbalajePage_08Page {
         listEtq.push({ "campo": "|PEDIDO|", "valor": this.vEmbalajeTotalPage02.NumOrden });
         listEtq.push({ "campo": "|FECHA|", "valor": currentDate.format("DD/MM/YYYY") });
         listEtq.push({ "campo": "|OBSERVACION|", "valor": this.listDetBultosEmbalaje[i].Observacion });
+        listEtq.push({ "campo": "|CANTIDAD|", "valor": this.listDetBultosEmbalaje[i].Cantidad });
         listEtq.push({ "campo": "|GUIA|", "valor": "" });
         listContainer.push({ 'etiqueta': listEtq });
       }

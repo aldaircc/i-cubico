@@ -178,4 +178,19 @@ export class EmbalajeServiceProvider {
     });
   }
 
+  ListarDespachoXUsuarioOrden(strNumOrden, strUsuario,intIdAlmacen) {
+    var parameter: any;
+    parameter = { "strNumOrden": strNumOrden, "strUsuario": strUsuario ,"intIdAlmacen": intIdAlmacen};
+
+    return new Promise(resolve => {
+      this.http.get(this.sGlobal.despacho + 'ListarDespachoXUsuarioOrden', { params: parameter })
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log('Error ConsultarBarraBulto', err);
+        })
+    });
+  }
+
 }
