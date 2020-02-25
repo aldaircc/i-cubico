@@ -142,8 +142,8 @@ popoverGlobal: any;
     toast.present();
   }
   
-  ListarDespachoXUsuarioOrden (strUsuario, intIdAlmacen){
-    this.sEmbalaje.ListarDespachoXUsuarioOrden(this.numeroOrden,strUsuario, intIdAlmacen).then((result) => {          
+  ListarDespachoXUsuarioOrden (){    
+    this.sEmbalaje.ListarDespachoXUsuarioOrden(this.numeroOrden,this.sGlobal.userName, this.sGlobal.Id_Almacen).then((result) => {          
       this.listAuxEmbalaje = [];        
       this.listEmbalaje = result;      
       for (var i = 0; i < this.listEmbalaje.length; i++) {
