@@ -141,7 +141,7 @@ popoverGlobal: any;
 
     toast.present();
   }
-  
+   
   ListarDespachoXUsuarioOrden (){    
     this.sEmbalaje.ListarDespachoXUsuarioOrden(this.numeroOrden,this.sGlobal.userName, this.sGlobal.Id_Almacen).then((result) => {          
       this.listAuxEmbalaje = [];        
