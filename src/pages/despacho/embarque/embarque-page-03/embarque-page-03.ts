@@ -26,6 +26,7 @@ export class EmbarquePage_03Page {
   rowCount: number = 0;
   totalBultos: number = 0;
   totalSaldo: number = 0;
+  totalOperado: number = 0;
 
   rowCountPendiente: number = 0;
   rowCountEnProceso: number = 0;
@@ -98,6 +99,7 @@ export class EmbarquePage_03Page {
       }
       this.totalBultos = this.listDetalle.reduce((sum, c) => sum + c.CantidadBultos, 0);
       this.totalSaldo = this.listDetalle.reduce((sum, c) => sum + c.SaldoBultos, 0);
+      this.totalOperado = this.listDetalle.reduce((sum, c) => sum + c.OperacionBultos, 0);
     });
   }
 
