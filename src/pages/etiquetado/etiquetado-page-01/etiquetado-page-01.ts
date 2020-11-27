@@ -167,6 +167,17 @@ export class EtiquetadoPage_01Page {
           this.selectAll(this.iSerie, 500);
         }
       }
+      else{
+        this.isEnabledSerie = false;
+        this.isEnabledLote = true;
+        this.fecEmiChecked = true;
+        this.fecVenChecked = true;
+        this.UMAlterDisabled = true;
+        this.cantDisabled = true;        
+        this.etqDisabled = true;    
+        this.saldoDisabled = true;        
+      }
+
       if (this.vEtq.FlagLote) {
         this.isEnabledSerie = false;
         this.isEnabledLote = true;
@@ -194,6 +205,16 @@ export class EtiquetadoPage_01Page {
           this.numEtq = this.vEtq.Saldo / this.cantxEtq;
           this.cantEtqSaldo = this.vEtq.Saldo % this.cantxEtq;
         }
+      }
+      else{
+        this.isEnabledSerie = true;
+        this.isEnabledLote = false;
+        this.fecEmiChecked = false;
+        this.fecVenChecked = false;
+        this.UMAlterDisabled = false;
+        this.cantDisabled = false;
+        this.etqDisabled = false;
+        this.saldoDisabled = false;
       }
       if (this.vEtq.FlagSerie && this.vEtq.FlagLote) {
         this.isEnabledSerie = true;

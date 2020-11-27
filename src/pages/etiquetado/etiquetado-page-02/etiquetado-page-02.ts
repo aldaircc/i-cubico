@@ -20,10 +20,11 @@ export class EtiquetadoPage_02Page {
   @ViewChild('txtFiltro') txtFiltroRef;
   @ViewChild('selectFormat') selectFormat: Select;
   @ViewChild('txtFiltro', { read: ElementRef }) private txtFiltro: ElementRef;
+  public cuenta: string;
 
   listCuentaAlmac: any;
   listFilter: any;
-  tipoFiltro: number = 0;
+  tipoFiltro: number = 1;
   IdCuenta: number = 0;
   filterText: string = "";
   rowCount: string = "";
@@ -32,8 +33,7 @@ export class EtiquetadoPage_02Page {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sEtq: EtiquetadoServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.listarCuentasXAlmacenUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen, 0);
-
-
+    this.cuenta = "1";        
   }
 
   filtrarProducto(): void {

@@ -29,27 +29,27 @@
       </ion-col>
     </ion-row>
 
-    <ion-row radio-group [(ngModel)]="tipoFiltro" (ionChange)="onChangeRadio($event)">
-      <ion-col color="primary">
-        <ion-item>
-          <ion-label>Código</ion-label>
-          <ion-radio mode="md" item-left value="1"></ion-radio>
-        </ion-item>
-      </ion-col>
+    <ion-row radio-group [(ngModel)]="tipoFiltro" (ionChange)="onChangeRadio($event)">    
+        <ion-col color="primary">
+          <ion-item>
+            <ion-label>Código</ion-label>
+            <ion-radio mode="md" item-left name="cuenta" value="1"></ion-radio>
+          </ion-item>
+        </ion-col>
 
-      <ion-col>
-        <ion-item>
-          <ion-label>Descripción</ion-label>
-          <ion-radio mode="md" item-left value="2"></ion-radio>
-        </ion-item>
-      </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Descripción</ion-label>
+            <ion-radio mode="md" item-left name="cuenta"  value="2"></ion-radio>
+          </ion-item>
+        </ion-col>
 
-      <ion-col>
-        <ion-item>
-          <ion-label>EAN13</ion-label>
-          <ion-radio mode="md" item-left value="3"></ion-radio>
-        </ion-item>
-      </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>EAN13</ion-label>
+            <ion-radio mode="md" item-left name="cuenta" value="3"></ion-radio>
+          </ion-item>
+        </ion-col>      
     </ion-row>
 
     <ion-row>
