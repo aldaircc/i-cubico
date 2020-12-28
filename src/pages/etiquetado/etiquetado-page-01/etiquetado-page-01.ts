@@ -232,6 +232,24 @@ export class EtiquetadoPage_01Page {
           this.selectAll(this.iSerie, 500);
         }
       }
+
+      if (!this.vEtq.FlagSerie && !this.vEtq.FlagLote) {
+        this.isEnabledSerie = false;
+        this.isEnabledLote = false;
+        this.fecEmiChecked = false;
+        this.fecVenChecked = false;
+        this.UMAlterDisabled = false;
+        this.cantDisabled = true;
+        this.cantxEtq = 1;
+        this.etqDisabled = false;
+        this.numEtq = 1;
+        this.saldoDisabled = false;
+        this.cantEtqSaldo = 0;
+        if (!this.vEtq.page) {
+          this.selectAll(this.iSerie, 500);
+        }
+      }
+
       this.calcularTotalSuma();
       this.lote = (this.vEtq.FlagLote == true) ? this.vEtq.LoteLab : "";
     }
