@@ -241,7 +241,7 @@ export class EtiquetadoPage_01Page {
         this.UMAlterDisabled = false;
         this.cantDisabled = true;
         this.cantxEtq = 1;
-        this.etqDisabled = false;
+        this.etqDisabled = true;
         this.numEtq = 1;
         this.saldoDisabled = false;
         this.cantEtqSaldo = 0;

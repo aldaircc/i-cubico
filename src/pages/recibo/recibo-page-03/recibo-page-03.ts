@@ -31,7 +31,7 @@ export class ReciboPage_03Page {
   cantidadBulto: number = 0;
   cantidad: number = 0;
   isDisabledSave: boolean = true;
-  bolUaValida: boolean = false;
+  bolUaValida: boolean = true;
   bolUa: boolean = false;
   isBgRed: boolean = false;
   isBgYellow: boolean = false;
@@ -77,6 +77,12 @@ popoverGlobal: any;
   }
 
   validarCodeBar() {    
+    if (this.vReciboPage02.Saldo < this.cantidadRec) {
+      this.presentToast("La cantidad ingresada es mayor al saldo");
+      this.selectAll(this.iCantidadRecibida, 500);      
+      return true;
+    }
+
       if (this.vReciboPage02.FlagSeriePT == true) {
 
         if (this.codeBar.Text.trim().length >= 6) {
@@ -97,7 +103,7 @@ popoverGlobal: any;
                   this.isBgRed = true;
                   this.isBgYellow = false;
                   this.isDisabledSave = false;
-                  this.bolUaValida = false;
+                  // this.bolUaValida = false;
                   this.bolUa = false;
                   this.cantidadRec = 0;
                   this.codeBar.Text = "";
@@ -105,7 +111,7 @@ popoverGlobal: any;
                   this.presentToast(rpta.message);
                 } else {
                   this.bolUa = true;
-                  this.bolUaValida = false;
+                  // this.bolUaValida = false;
                 }
               }, (err) => {
                 console.log('E-validarReciboTransferenciaSerie', err);
@@ -118,7 +124,7 @@ popoverGlobal: any;
                 this.codeBar.Text = "";
                 this.cantidadRec = 0;
                 this.bolUa = false;
-                this.bolUaValida = false;
+                // this.bolUaValida = false;
                 this.isBgRed = true;
                 this.isBgYellow = false;
                 this.isBgGreen = false;
@@ -126,7 +132,7 @@ popoverGlobal: any;
                 this.presentToast(res.message);
               } else {
                 this.bolUa = true;
-                this.bolUaValida = false;
+                // this.bolUaValida = false;
               }
             });
           }
@@ -148,7 +154,7 @@ popoverGlobal: any;
           this.isBgYellow = false;
           this.isBgGreen = false;
           this.bolUa = false;
-          this.bolUaValida = false;
+          // this.bolUaValida = false;
           this.cantidadAve = 0;
           this.cantidadRec = 0;
           this.selectAll(this.iCodeBar, 500);
@@ -238,7 +244,7 @@ popoverGlobal: any;
                 this.isBgYellow = true;
                 this.isBgGreen = false;
                 this.bolUa = true;
-                this.bolUaValida = true;
+                // this.bolUaValida = true;
                 this.cantidadRec = rpta.valor1;
                 this.codeBar.Tag = this.codeBar.Text;
                 this.selectAll(this.iCantidadRecibida, 500);
@@ -254,7 +260,7 @@ popoverGlobal: any;
                 this.codeBar.Tag = '';
                 this.presentToast(rpta.message);
                 this.bolUa = false;
-                this.bolUaValida = false;
+                // this.bolUaValida = false;
                 this.cantidadAve = 0;
                 this.cantidadRec = 0;
                 this.selectAll(this.iCodeBar, 500);
@@ -265,7 +271,7 @@ popoverGlobal: any;
                 this.isBgGreen = false;
                 this.presentToast(rpta.message);
                 this.bolUa = false;
-                this.bolUaValida = false;
+                // this.bolUaValida = false;
                 this.cantidadAve = 0;
                 this.cantidadRec = 0;
                 this.selectAll(this.iCodeBar, 500);
@@ -275,7 +281,7 @@ popoverGlobal: any;
                 this.isBgGreen = false;
                 this.presentToast(rpta.message);
                 this.bolUa = false;
-                this.bolUaValida = false;
+                // this.bolUaValida = false;
                 this.cantidadAve = 0;
                 this.cantidadRec = 0;
                 this.selectAll(this.iCodeBar, 500);
@@ -288,7 +294,7 @@ popoverGlobal: any;
             this.isBgYellow = false;
             this.isBgGreen = false;
             this.bolUa = false;
-            this.bolUaValida = false;
+            // this.bolUaValida = false;
             this.cantidadAve = 0;
             this.cantidadRec = 0;
             this.selectAll(this.iCodeBar, 500);
@@ -321,11 +327,20 @@ popoverGlobal: any;
     }
 
     if (isNullOrUndefined(this.cantidadRec) || this.cantidadRec === 0) {
-      this.presentToast("Ingrese el cantidad");
+      this.presentToast("Ingrese la cantidad");
       this.selectAll(this.iCantidadRecibida, 500);
       result = false;
       return result;
     }
+
+    if (this.vReciboPage02.CantPedida < this.cantidadRec) {
+      this.presentToast("Ingrese la cantidad");
+      this.selectAll(this.iCantidadRecibida, 500);
+      result = true;
+      return result;
+    }
+
+    
 
     if (!this.vReciboPage02.FlagSeriePT) {
       if (!(this.codeBar.Text.trim() == this.codeBar.Tag.trim())) {
@@ -436,7 +451,7 @@ popoverGlobal: any;
       this.isBgYellow = false;
       this.isBgGreen = true;
       this.selectAll(this.iCodeBar, 500);
-      this.bolUaValida = false;
+      // this.bolUaValida = false;
       this.cantidadAve = 0;
       this.cantidadRec = 0;
       this.codeBar.Text = "";
@@ -476,7 +491,7 @@ popoverGlobal: any;
         this.vReciboPage02.Saldo = values.saldo;
         this.vReciboPage02.CantidadOperacion = this.vReciboPage02.CantPedida - values.saldo;
       }
-      resolve();
+      
     });
   }
 

@@ -290,51 +290,69 @@ popoverGlobal: any;
 
     if (this.codeBar) {
       if (this.codeBar.trim() != "") {
-        if (this.codeBar.length == 12) {
-          this.sPicking.getValidarUAPicking(this.vRutaPickingPage.Id_Tx, this.codeBar.trim(), this.pickingProducto.IdProducto, this.pickingProducto.LoteProducto, this.pickingProducto.IdUbicacion).then((result) => {
-            debugger;
-            this.UAPicking = result;
-            if (this.UAPicking.errNumber == 0) {
-              this.isbgWhite = false;
-              this.isBgRed = false;
-              this.isBgYellow = true;
-              this.isBgGreen = false;
-              //Mostrar cantidad de la UA
-              this.Textcantidad = this.UAPicking.valor1;
+        this.sPicking.ValidarSerie(this.pickingProducto.IdProducto).then((result) => {  
+          console.log(result);
+          //FlagSeriePT
+          var message: any = result;
+          if( message.valor2 == 1){
+            if (this.codeBar.length != 6) {
+              this.presentToast("El código de UA debe tener 6 dígitos.");
               setTimeout(() => {
-                this.selectAll(this.txtCantidadUA);
+                this.selectAll(this.txtCodBarraUA);
               }, (500));
-
-              if (this.UAPicking.valor2 != 2) {
-                //Bloquear campo cantidad
-                this.Txtcantidadisenabled = false;
-                if (this.UAPicking.valor2 == 1) {
-                  //Registrar cantidad de la UA automaticamente
-                  this.registarUA();
+            }            
+          } 
+          else{            
+            if (this.codeBar.length == 12) {
+              this.sPicking.getValidarUAPicking(this.vRutaPickingPage.Id_Tx, this.codeBar.trim(), this.pickingProducto.IdProducto, this.pickingProducto.LoteProducto, this.pickingProducto.IdUbicacion).then((result) => {
+                debugger;
+                this.UAPicking = result;
+                if (this.UAPicking.errNumber == 0) {
+                  this.isbgWhite = false;
+                  this.isBgRed = false;
+                  this.isBgYellow = true;
+                  this.isBgGreen = false;
+                  //Mostrar cantidad de la UA
+                  this.Textcantidad = this.UAPicking.valor1;
+                  setTimeout(() => {
+                    this.selectAll(this.txtCantidadUA);
+                  }, (500));
+    
+                  if (this.UAPicking.valor2 != 2) {
+                    //Bloquear campo cantidad
+                    this.Txtcantidadisenabled = false;
+                    if (this.UAPicking.valor2 == 1) {
+                      //Registrar cantidad de la UA automaticamente
+                      this.registarUA();
+                    }
+                  }
+                } else {
+                  this.presentToast(this.UAPicking.message);
+                  //this.presentToast("UA no pertenece a la ubicación");
+                  this.isbgWhite = false;
+                  this.isBgRed = true;
+                  this.isBgYellow = false;
+                  this.isBgGreen = false;
+                  this.codeBar = "";
+                  this.Textcantidad = "";
+                  setTimeout(() => {
+                    this.selectAll(this.txtCodBarraUA);
+                  }, (500));
                 }
-              }
+              }, (err) => {
+                console.log('E-Verficar UA', err);
+              });
             } else {
-              this.presentToast(this.UAPicking.message);
-              //this.presentToast("UA no pertenece a la ubicación");
-              this.isbgWhite = false;
-              this.isBgRed = true;
-              this.isBgYellow = false;
-              this.isBgGreen = false;
-              this.codeBar = "";
-              this.Textcantidad = "";
+              this.presentToast("El código de UA debe tener 12 dígitos.");
               setTimeout(() => {
                 this.selectAll(this.txtCodBarraUA);
               }, (500));
             }
-          }, (err) => {
-            console.log('E-Verficar UA', err);
-          });
-        } else {
-          this.presentToast("El código de UA debe tener 12 dígitos.");
-          setTimeout(() => {
-            this.selectAll(this.txtCodBarraUA);
-          }, (500));
-        }
+
+
+          }
+
+        });
       } else {
         this.presentToast("Ingresar código de UA");
         this.isbgWhite = false;
