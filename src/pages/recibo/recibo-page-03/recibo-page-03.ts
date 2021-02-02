@@ -77,78 +77,212 @@ popoverGlobal: any;
   }
 
   validarCodeBar() {    
-    if (this.vReciboPage02.Saldo < this.cantidadRec) {
-      this.presentToast("La cantidad ingresada es mayor al saldo");
-      this.selectAll(this.iCantidadRecibida, 500);      
-      return true;
-    }
+    if (this.vReciboPage02.FlagSeriePT == true) {
+  
+      if (this.codeBar.Text.trim().length >= 6) {
 
-      if (this.vReciboPage02.FlagSeriePT == true) {
+        if (this.vReciboPage02.Id_TipoMovimiento === 0) {
+          this.presentToast("Esta transacción no tiene tipo de movimiento");
+          return;
+        }
 
-        if (this.codeBar.Text.trim().length >= 6) {
-
-          if (this.vReciboPage02.Id_TipoMovimiento === 0) {
-            this.presentToast("Esta transacción no tiene tipo de movimiento");
-            return;
-          }
-
-          if (this.vReciboPage02.Id_TipoMovimiento === 11 ||
-            this.vReciboPage02.Id_TipoMovimiento === 13 ||
-            this.vReciboPage02.Id_TipoMovimiento === 14) {
-            this.sRecibo.validarReciboTransferenciaSerie(this.vReciboPage02.NumOrden, this.codeBar.Text,
-              this.vReciboPage02.Item).then((result) => {
-                debugger;
-                let rpta: any = result;
-                if (rpta.errNumber != 0) {
-                  this.isBgRed = true;
-                  this.isBgYellow = false;
-                  this.isDisabledSave = false;
-                  // this.bolUaValida = false;
-                  this.bolUa = false;
-                  this.cantidadRec = 0;
-                  this.codeBar.Text = "";
-                  this.selectAll(this.iCodeBar, 500);
-                  this.presentToast(rpta.message);
-                } else {
-                  this.bolUa = true;
-                  // this.bolUaValida = false;
-                }
-              }, (err) => {
-                console.log('E-validarReciboTransferenciaSerie', err);
-              });
-          } else {
-            this.sRecibo.validarReciboSerie(this.codeBar.Text, this.vReciboPage02.Id_Tx, this.vReciboPage02.Id_Producto).then(result => {
-              let res: any = result;
+        if (this.vReciboPage02.Id_TipoMovimiento === 11 ||
+          this.vReciboPage02.Id_TipoMovimiento === 13 ||
+          this.vReciboPage02.Id_TipoMovimiento === 14) {
+          this.sRecibo.validarReciboTransferenciaSerie(this.vReciboPage02.NumOrden, this.codeBar.Text,
+            this.vReciboPage02.Item).then((result) => {
               debugger;
-              if (res.errNumber != 0) {
-                this.codeBar.Text = "";
-                this.cantidadRec = 0;
-                this.bolUa = false;
-                // this.bolUaValida = false;
+              let rpta: any = result;
+              if (rpta.errNumber != 0) {
                 this.isBgRed = true;
                 this.isBgYellow = false;
-                this.isBgGreen = false;
+                this.isDisabledSave = false;
+                // this.bolUaValida = false;
+                this.bolUa = false;
+                this.cantidadRec = 0;
+                this.codeBar.Text = "";
                 this.selectAll(this.iCodeBar, 500);
-                this.presentToast(res.message);
+                this.presentToast(rpta.message);
               } else {
                 this.bolUa = true;
                 // this.bolUaValida = false;
               }
+            }, (err) => {
+              console.log('E-validarReciboTransferenciaSerie', err);
             });
-          }
+        } else {
+          this.sRecibo.validarReciboSerie(this.codeBar.Text, this.vReciboPage02.Id_Tx, this.vReciboPage02.Id_Producto).then(result => {
+            let res: any = result;
+            debugger;
+            if (res.errNumber != 0) {
+              this.codeBar.Text = "";
+              this.cantidadRec = 0;
+              this.bolUa = false;
+              // this.bolUaValida = false;
+              this.isBgRed = true;
+              this.isBgYellow = false;
+              this.isBgGreen = false;
+              this.selectAll(this.iCodeBar, 500);
+              this.presentToast(res.message);
+            } else {
+              this.bolUa = true;
+              // this.bolUaValida = false;
+            }
+          });
+        }
+        debugger;
+        this.isBgRed = false;
+        this.isBgYellow = true;
+        this.cantidad = 1;
+        this.cantidadRec = this.cantidad;
+        this.selectAll(this.iCantidadRecibida, 500);
+
+        if (this.vReciboPage02.bolAutomatic === true) {
+          this.saveTransaction();
+        }
+
+      }    
+      else{
+        this.presentToast("Ingrese código de barras correcto");
+        this.isBgRed = true;
+        this.isBgYellow = false;
+        this.isBgGreen = false;
+        this.bolUa = false;
+        // this.bolUaValida = false;
+        this.cantidadAve = 0;
+        this.cantidadRec = 0;
+        this.selectAll(this.iCodeBar, 500);
+      }        
+    } else {
+      debugger;
+      if (this.vReciboPage02.Id_TipoMovimiento === 0) {
+        this.presentToast('Esta transacción no tiene tipo de movimiento');
+        return;
+      }
+
+      var ua: any;
+
+      if (this.vReciboPage02.Id_TipoMovimiento == 11 ||
+        this.vReciboPage02.Id_TipoMovimiento == 13 ||
+        this.vReciboPage02.Id_TipoMovimiento == 14) {
+        ua = {
+          'Id_Tx': this.vReciboPage02.Id_Tx,
+          'UA_CodBarra': this.codeBar.Text,
+          'Id_Producto': this.vReciboPage02.Id_Producto,
+          'Item': this.vReciboPage02.Item,
+          'Id_Almacen': this.sGlobal.Id_Almacen
+        };
+
+        this.sRecibo.validarUAReciboTransferencia(ua).then((result) => {
+          this.cantidad = 0;
           debugger;
-          this.isBgRed = false;
-          this.isBgYellow = true;
-          this.cantidad = 1;
-          this.cantidadRec = this.cantidad;
-          this.selectAll(this.iCantidadRecibida, 500);
+          let rpta: any = result;
+          if (rpta.errNumber === 0) {
 
-          if (this.vReciboPage02.bolAutomatic === true) {
-            this.saveTransaction();
+            if (this.cantidad === 0) {
+              this.cantidad = rpta.valor1;
+            }
+
+            this.cantidadRec = rpta.valor1;
+            this.codeBar.Tag = this.codeBar.Text;
+            this.selectAll(this.iCantidadRecibida, 500);
+            this.isBgYellow = true;
+            this.isBgRed = false;
+            this.isBgGreen = false;
+            if (this.vReciboPage02.bolAutomatic === true) {
+              this.saveTransaction();
+            }
+
+          } else if (rpta.errNumber === 1) {
+            this.isBgRed = true;
+            this.isBgYellow = false;
+            this.isBgGreen = false;
+            this.selectAll(this.iCodeBar, 500);
+            this.presentToast(rpta.message);
+          } else if (rpta.errNumber === -1) {
+            this.isBgRed = true;
+            this.isBgYellow = false;
+            this.isBgGreen = false;
+            this.presentToast(rpta.message);
+            this.selectAll(this.iCodeBar, 500);
+          } else {
+            this.isBgRed = true;
+            this.isBgYellow = false;
+            this.isBgGreen = false;
+            this.presentToast(rpta.message);
+            this.selectAll(this.iCodeBar, 500);
           }
+        });
 
-        }    
-        else{
+      } else {
+
+        if (this.codeBar.Text.trim().length >= 12) {
+          debugger;
+          ua = {
+            'UA_CodBarra': this.codeBar.Text,
+            'Id_Producto': this.vReciboPage02.Id_Producto,
+            'Item': this.vReciboPage02.Item
+          }
+          this.sRecibo.validarUARecibo(ua).then((result) => {
+            this.cantidad = 0;
+            this.selectAll(this.iCodeBar, 500);
+            let rpta: any = result;
+            debugger;
+            if (rpta.errNumber === 0) {
+
+              if (this.cantidad === 0) {
+                this.cantidad = rpta.valor1;
+              }
+
+              this.isBgRed = false;
+              this.isBgYellow = true;
+              this.isBgGreen = false;
+              this.bolUa = true;
+              // this.bolUaValida = true;
+              this.cantidadRec = rpta.valor1;
+              this.codeBar.Tag = this.codeBar.Text;
+              this.selectAll(this.iCantidadRecibida, 500);
+
+              if (this.vReciboPage02.bolAutomatic == true) {
+                this.saveTransaction();
+              }
+
+            } else if (rpta.errNumber === 1) {
+              this.isBgRed = true;
+              this.isBgYellow = false;
+              this.isBgGreen = false;
+              this.codeBar.Tag = '';
+              this.presentToast(rpta.message);
+              this.bolUa = false;
+              // this.bolUaValida = false;
+              this.cantidadAve = 0;
+              this.cantidadRec = 0;
+              this.selectAll(this.iCodeBar, 500);
+            } else if (rpta.errNumber === -1) {
+              this.codeBar.Tag = '';
+              this.isBgRed = true;
+              this.isBgYellow = false;
+              this.isBgGreen = false;
+              this.presentToast(rpta.message);
+              this.bolUa = false;
+              // this.bolUaValida = false;
+              this.cantidadAve = 0;
+              this.cantidadRec = 0;
+              this.selectAll(this.iCodeBar, 500);
+            } else {
+              this.isBgRed = true;
+              this.isBgYellow = false;
+              this.isBgGreen = false;
+              this.presentToast(rpta.message);
+              this.bolUa = false;
+              // this.bolUaValida = false;
+              this.cantidadAve = 0;
+              this.cantidadRec = 0;
+              this.selectAll(this.iCodeBar, 500);
+            }
+          });
+        }
+        else {
           this.presentToast("Ingrese código de barras correcto");
           this.isBgRed = true;
           this.isBgYellow = false;
@@ -158,157 +292,42 @@ popoverGlobal: any;
           this.cantidadAve = 0;
           this.cantidadRec = 0;
           this.selectAll(this.iCodeBar, 500);
-        }        
-      } else {
-        debugger;
-        if (this.vReciboPage02.Id_TipoMovimiento === 0) {
-          this.presentToast('Esta transacción no tiene tipo de movimiento');
-          return;
         }
+      }
+    }  
+  }
 
-        var ua: any;
 
-        if (this.vReciboPage02.Id_TipoMovimiento == 11 ||
-          this.vReciboPage02.Id_TipoMovimiento == 13 ||
-          this.vReciboPage02.Id_TipoMovimiento == 14) {
-          ua = {
-            'Id_Tx': this.vReciboPage02.Id_Tx,
-            'UA_CodBarra': this.codeBar.Text,
-            'Id_Producto': this.vReciboPage02.Id_Producto,
-            'Item': this.vReciboPage02.Item,
-            'Id_Almacen': this.sGlobal.Id_Almacen
-          };
-
-          this.sRecibo.validarUAReciboTransferencia(ua).then((result) => {
-            this.cantidad = 0;
-            debugger;
-            let rpta: any = result;
-            if (rpta.errNumber === 0) {
-
-              if (this.cantidad === 0) {
-                this.cantidad = rpta.valor1;
-              }
-
-              this.cantidadRec = rpta.valor1;
-              this.codeBar.Tag = this.codeBar.Text;
-              this.selectAll(this.iCantidadRecibida, 500);
-              this.isBgYellow = true;
-              this.isBgRed = false;
-              this.isBgGreen = false;
-              if (this.vReciboPage02.bolAutomatic === true) {
-                this.saveTransaction();
-              }
-
-            } else if (rpta.errNumber === 1) {
-              this.isBgRed = true;
-              this.isBgYellow = false;
-              this.isBgGreen = false;
-              this.selectAll(this.iCodeBar, 500);
-              this.presentToast(rpta.message);
-            } else if (rpta.errNumber === -1) {
-              this.isBgRed = true;
-              this.isBgYellow = false;
-              this.isBgGreen = false;
-              this.presentToast(rpta.message);
-              this.selectAll(this.iCodeBar, 500);
-            } else {
-              this.isBgRed = true;
-              this.isBgYellow = false;
-              this.isBgGreen = false;
-              this.presentToast(rpta.message);
-              this.selectAll(this.iCodeBar, 500);
-            }
-          });
-
-        } else {
-
-          if (this.codeBar.Text.trim().length >= 12) {
-            debugger;
-            ua = {
-              'UA_CodBarra': this.codeBar.Text,
-              'Id_Producto': this.vReciboPage02.Id_Producto,
-              'Item': this.vReciboPage02.Item
-            }
-            this.sRecibo.validarUARecibo(ua).then((result) => {
-              this.cantidad = 0;
-              this.selectAll(this.iCodeBar, 500);
-              let rpta: any = result;
-              debugger;
-              if (rpta.errNumber === 0) {
-
-                if (this.cantidad === 0) {
-                  this.cantidad = rpta.valor1;
-                }
-
-                this.isBgRed = false;
-                this.isBgYellow = true;
-                this.isBgGreen = false;
-                this.bolUa = true;
-                // this.bolUaValida = true;
-                this.cantidadRec = rpta.valor1;
-                this.codeBar.Tag = this.codeBar.Text;
-                this.selectAll(this.iCantidadRecibida, 500);
-
-                if (this.vReciboPage02.bolAutomatic == true) {
-                  this.saveTransaction();
-                }
-
-              } else if (rpta.errNumber === 1) {
-                this.isBgRed = true;
-                this.isBgYellow = false;
-                this.isBgGreen = false;
-                this.codeBar.Tag = '';
-                this.presentToast(rpta.message);
-                this.bolUa = false;
-                // this.bolUaValida = false;
-                this.cantidadAve = 0;
-                this.cantidadRec = 0;
-                this.selectAll(this.iCodeBar, 500);
-              } else if (rpta.errNumber === -1) {
-                this.codeBar.Tag = '';
-                this.isBgRed = true;
-                this.isBgYellow = false;
-                this.isBgGreen = false;
-                this.presentToast(rpta.message);
-                this.bolUa = false;
-                // this.bolUaValida = false;
-                this.cantidadAve = 0;
-                this.cantidadRec = 0;
-                this.selectAll(this.iCodeBar, 500);
-              } else {
-                this.isBgRed = true;
-                this.isBgYellow = false;
-                this.isBgGreen = false;
-                this.presentToast(rpta.message);
-                this.bolUa = false;
-                // this.bolUaValida = false;
-                this.cantidadAve = 0;
-                this.cantidadRec = 0;
-                this.selectAll(this.iCodeBar, 500);
-              }
-            });
-          }
-          else {
-            this.presentToast("Ingrese código de barras correcto");
-            this.isBgRed = true;
-            this.isBgYellow = false;
-            this.isBgGreen = false;
-            this.bolUa = false;
-            // this.bolUaValida = false;
-            this.cantidadAve = 0;
-            this.cantidadRec = 0;
-            this.selectAll(this.iCodeBar, 500);
+  presentConfirmDialog(title, message): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const confirm = this.alertCtrl.create({
+        title: title,
+        message: message,
+        buttons: [{
+          text: 'Si',
+          handler: () => {
+            resolve(true);
+          },
+        },
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            resolve(false);
           }
         }
-      }    
+        ]
+      });
+      confirm.present();
+    })
   }
 
   validarCamposIngreso() {
     debugger;
     var result: boolean = true;    
-
+   
     if (this.bolUa == false) {
-      alert('Debe ingresar una UA correcta');
+      alert('Debe validar o ingresar una UA correcta');
       result = false;
       this.selectAll(this.iCodeBar, 500);
       return result;
@@ -319,28 +338,26 @@ popoverGlobal: any;
       return result;
     }
 
-    if (isNullOrUndefined(this.codeBar.Text) || this.codeBar.Text.trim() == "") {
+    if (this.codeBar.Text.trim() == "") {
       this.presentToast('Ingrese el código de barras');
       this.selectAll(this.iCodeBar, 500);
       result = false;
       return result;
     }
 
-    if (isNullOrUndefined(this.cantidadRec) || this.cantidadRec === 0) {
+    if (this.cantidadRec == 0) {
       this.presentToast("Ingrese la cantidad");
       this.selectAll(this.iCantidadRecibida, 500);
       result = false;
       return result;
     }
 
-    if (this.vReciboPage02.CantPedida < this.cantidadRec) {
-      this.presentToast("Ingrese la cantidad");
-      this.selectAll(this.iCantidadRecibida, 500);
-      result = true;
-      return result;
-    }
-
-    
+    // if (this.vReciboPage02.CantPedida < this.cantidadRec) {
+    //   this.presentToast("Ingrese la cantidad");
+    //   this.selectAll(this.iCantidadRecibida, 500);
+    //   result = false;
+    //   return result;
+    // }
 
     if (!this.vReciboPage02.FlagSeriePT) {
       if (!(this.codeBar.Text.trim() == this.codeBar.Tag.trim())) {
@@ -363,81 +380,170 @@ popoverGlobal: any;
     if (isNullOrUndefined(this.cantidadAve)) {
       this.cantidadAve = 0;
     }
+   
     return result;
   }
 
   saveTransaction() {
-    if (!this.validarCamposIngreso()) {
-      console.log('hay campos pendientes de llenar');
-      return;
+    
+    if (this.vReciboPage02.Saldo < this.cantidadRec) {     
+      this.presentConfirmDialog('Confirmación', 'La cantidad ingresada es mayor al saldo, ¿Está seguro de continuar?').then(rpta => {
+        if (rpta == true) {        
+                    
+          if (!this.validarCamposIngreso()) {
+            debugger;              
+            console.log('hay campos pendientes de llenar');
+            return;
+          }
+            var objTxUbi = {
+            'TipoUbicacion': 1,
+            'Id_Producto': this.vReciboPage02.Id_Producto,
+            'Id_Ubicacion_Origen': 0,
+            'Id_Almacen': this.sGlobal.Id_Almacen,
+            'Id_Tx': this.vReciboPage02.Id_Tx,
+            'Prioridad': 10,
+            'Observacion': ' from ionic ',
+            'UsuarioModificacion': this.sGlobal.userName
+            };
+
+            this.vReciboPage02.TipoAlmacenaje = (this.vReciboPage02.TipoAlmacenaje == undefined) ? 0 : this.vReciboPage02.TipoAlmacenaje;
+            this.sRecibo.registrarUATransito(objTxUbi).then((result) => {
+              debugger;
+              let rpta: any = result;
+              var sumCantidad = this.cantidadRec + this.vReciboPage02.CantidadOperacion;
+
+              if (this.cantidad != 0) {
+                if (this.cantidad != this.cantidadRec) {
+                  this.presentToast('Esta cantidad no corresponde');
+                  this.selectAll(this.iCantidadRecibida, 500);
+                  return;
+                }
+              }
+
+              let objUA = {
+                'UA_CodBarra': this.codeBar.Text,
+                'Id_Tx': this.vReciboPage02.Id_Tx,
+                'Id_Producto': this.vReciboPage02.Id_Producto,
+                'LoteLab': this.vReciboPage02.LoteLab,
+                'Serie': (this.vReciboPage02.FlagSeriePT === true) ? this.codeBar.Text : null,
+                'FechaEmision': this.vReciboPage02.FechaEmision,
+                'FechaVencimiento': this.vReciboPage02.FechaVencimiento,
+                'Cantidad': this.cantidadRec,
+                'Saldo': this.cantidadRec,
+                'CantidadAveriada': this.cantidadAve,
+                'Id_TerminalRF': this.sGlobal.Id_TerminalRF,
+                'Item': this.vReciboPage02.Item,
+                'Id_Ubicacion': 0,
+                'Id_Tx_Ubi': (result === "") ? null : result,
+                'Observacion': '',
+                'UsuarioRegistro': this.sGlobal.userName,
+                'Id_Almacen': this.sGlobal.Id_Almacen,
+                'Id_UM': this.vReciboPage02.Id_UM,
+                'FlagAnulado': false
+              };
+              debugger;
+              if (this.vReciboPage02.Id_TipoMovimiento == 0) {
+                this.presentToast('Esta transacción no tiene tipo de movimiento');
+                return;
+              }
+
+              if (this.vReciboPage02.Id_TipoMovimiento === 11 ||
+                this.vReciboPage02.Id_TipoMovimiento === 13 ||
+                this.vReciboPage02.Id_TipoMovimiento === 14) {
+                this.sRecibo.registrarUATransferencia(objUA).then(result => {
+                  debugger;
+                  this.evaluarResultado(result);
+                });
+              } else {
+                this.sRecibo.registrarUA(objUA).then(result => {
+                  debugger;
+                  this.evaluarResultado(result);
+                });
+              }
+            });
+         
+      
+        } else {                
+          this.selectAll(this.iCantidadRecibida, 500);       
+          return true;
+        }
+      });   
     }
+    else{
+      
+      if (!this.validarCamposIngreso()) {
+        debugger;           
+        console.log('hay campos pendientes de llenar');
+        return;
+      }   
 
-    var objTxUbi = {
-      'TipoUbicacion': 1,
-      'Id_Producto': this.vReciboPage02.Id_Producto,
-      'Id_Ubicacion_Origen': 0,
-      'Id_Almacen': this.sGlobal.Id_Almacen,
-      'Id_Tx': this.vReciboPage02.Id_Tx,
-      'Prioridad': 10,
-      'Observacion': ' from ionic ',
-      'UsuarioModificacion': this.sGlobal.userName
-    };
+      var objTxUbi = {
+        'TipoUbicacion': 1,
+        'Id_Producto': this.vReciboPage02.Id_Producto,
+        'Id_Ubicacion_Origen': 0,
+        'Id_Almacen': this.sGlobal.Id_Almacen,
+        'Id_Tx': this.vReciboPage02.Id_Tx,
+        'Prioridad': 10,
+        'Observacion': ' from ionic ',
+        'UsuarioModificacion': this.sGlobal.userName
+      };
 
-    this.vReciboPage02.TipoAlmacenaje = (this.vReciboPage02.TipoAlmacenaje == undefined) ? 0 : this.vReciboPage02.TipoAlmacenaje;
-    this.sRecibo.registrarUATransito(objTxUbi).then((result) => {
-      debugger;
-      let rpta: any = result;
-      var sumCantidad = this.cantidadRec + this.vReciboPage02.CantidadOperacion;
+      this.vReciboPage02.TipoAlmacenaje = (this.vReciboPage02.TipoAlmacenaje == undefined) ? 0 : this.vReciboPage02.TipoAlmacenaje;
+      this.sRecibo.registrarUATransito(objTxUbi).then((result) => {
+        debugger;
+        let rpta: any = result;
+        var sumCantidad = this.cantidadRec + this.vReciboPage02.CantidadOperacion;
 
-      if (this.cantidad != 0) {
-        if (this.cantidad != this.cantidadRec) {
-          this.presentToast('Esta cantidad no corresponde');
-          this.selectAll(this.iCantidadRecibida, 500);
+        if (this.cantidad != 0) {
+          if (this.cantidad != this.cantidadRec) {
+            this.presentToast('Esta cantidad no corresponde');
+            this.selectAll(this.iCantidadRecibida, 500);
+            return;
+          }
+        }
+
+        let objUA = {
+          'UA_CodBarra': this.codeBar.Text,
+          'Id_Tx': this.vReciboPage02.Id_Tx,
+          'Id_Producto': this.vReciboPage02.Id_Producto,
+          'LoteLab': this.vReciboPage02.LoteLab,
+          'Serie': (this.vReciboPage02.FlagSeriePT === true) ? this.codeBar.Text : null,
+          'FechaEmision': this.vReciboPage02.FechaEmision,
+          'FechaVencimiento': this.vReciboPage02.FechaVencimiento,
+          'Cantidad': this.cantidadRec,
+          'Saldo': this.cantidadRec,
+          'CantidadAveriada': this.cantidadAve,
+          'Id_TerminalRF': this.sGlobal.Id_TerminalRF,
+          'Item': this.vReciboPage02.Item,
+          'Id_Ubicacion': 0,
+          'Id_Tx_Ubi': (result === "") ? null : result,
+          'Observacion': '',
+          'UsuarioRegistro': this.sGlobal.userName,
+          'Id_Almacen': this.sGlobal.Id_Almacen,
+          'Id_UM': this.vReciboPage02.Id_UM,
+          'FlagAnulado': false
+        };
+        debugger;
+        if (this.vReciboPage02.Id_TipoMovimiento == 0) {
+          this.presentToast('Esta transacción no tiene tipo de movimiento');
           return;
         }
-      }
 
-      let objUA = {
-        'UA_CodBarra': this.codeBar.Text,
-        'Id_Tx': this.vReciboPage02.Id_Tx,
-        'Id_Producto': this.vReciboPage02.Id_Producto,
-        'LoteLab': this.vReciboPage02.LoteLab,
-        'Serie': (this.vReciboPage02.FlagSeriePT === true) ? this.codeBar.Text : null,
-        'FechaEmision': this.vReciboPage02.FechaEmision,
-        'FechaVencimiento': this.vReciboPage02.FechaVencimiento,
-        'Cantidad': this.cantidadRec,
-        'Saldo': this.cantidadRec,
-        'CantidadAveriada': this.cantidadAve,
-        'Id_TerminalRF': this.sGlobal.Id_TerminalRF,
-        'Item': this.vReciboPage02.Item,
-        'Id_Ubicacion': 0,
-        'Id_Tx_Ubi': (result === "") ? null : result,
-        'Observacion': '',
-        'UsuarioRegistro': this.sGlobal.userName,
-        'Id_Almacen': this.sGlobal.Id_Almacen,
-        'Id_UM': this.vReciboPage02.Id_UM,
-        'FlagAnulado': false
-      };
-      debugger;
-      if (this.vReciboPage02.Id_TipoMovimiento == 0) {
-        this.presentToast('Esta transacción no tiene tipo de movimiento');
-        return;
-      }
-
-      if (this.vReciboPage02.Id_TipoMovimiento === 11 ||
-        this.vReciboPage02.Id_TipoMovimiento === 13 ||
-        this.vReciboPage02.Id_TipoMovimiento === 14) {
-        this.sRecibo.registrarUATransferencia(objUA).then(result => {
-          debugger;
-          this.evaluarResultado(result);
-        });
-      } else {
-        this.sRecibo.registrarUA(objUA).then(result => {
-          debugger;
-          this.evaluarResultado(result);
-        });
-      }
-    });
+        if (this.vReciboPage02.Id_TipoMovimiento === 11 ||
+          this.vReciboPage02.Id_TipoMovimiento === 13 ||
+          this.vReciboPage02.Id_TipoMovimiento === 14) {
+          this.sRecibo.registrarUATransferencia(objUA).then(result => {
+            debugger;
+            this.evaluarResultado(result);
+          });
+        } else {
+          this.sRecibo.registrarUA(objUA).then(result => {
+            debugger;
+            this.evaluarResultado(result);
+          });
+        }
+      });     
+    }
   }
 
   evaluarResultado(message) {
