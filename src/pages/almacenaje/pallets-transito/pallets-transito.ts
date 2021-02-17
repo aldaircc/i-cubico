@@ -72,7 +72,7 @@ export class PalletsTransitoPage {
   validarCodigo(){
     if(this.codeBar){
       if(this.codeBar.trim()!=""){
-        if(this.codeBar.length==12){
+        if(this.codeBar.length>=6 && this.codeBar.length<=12){
           debugger;
           this.sAlmacenaje.getValidarUATransito(this.codeBar, this.vId_Ubicacion.Id_Ubicacion_Transito).then((result)=>{
             debugger;
@@ -167,7 +167,7 @@ export class PalletsTransitoPage {
             console.log('E-getDataRutaPicking',err);
           }); 
         }else{
-          this.presentToast("El código de Pallet/UA's debe tener 12 dígitos.");
+          this.presentToast("El código de Pallet/UA's debe tener entre 6 y 12 dígitos.");
           setTimeout(() => {          
             this.txtCodPalletUaRef.setFocus();
             this.selectAll(this.txtCodPalletUa);

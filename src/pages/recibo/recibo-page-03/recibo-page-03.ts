@@ -172,7 +172,6 @@ popoverGlobal: any;
           'Item': this.vReciboPage02.Item,
           'Id_Almacen': this.sGlobal.Id_Almacen
         };
-
         this.sRecibo.validarUAReciboTransferencia(ua).then((result) => {
           this.cantidad = 0;
           debugger;
@@ -189,6 +188,7 @@ popoverGlobal: any;
             this.isBgYellow = true;
             this.isBgRed = false;
             this.isBgGreen = false;
+            this.bolUa = true;
             if (this.vReciboPage02.bolAutomatic === true) {
               this.saveTransaction();
             }
@@ -197,18 +197,21 @@ popoverGlobal: any;
             this.isBgRed = true;
             this.isBgYellow = false;
             this.isBgGreen = false;
+            this.bolUa = false;
             this.selectAll(this.iCodeBar, 500);
             this.presentToast(rpta.message);
           } else if (rpta.errNumber === -1) {
             this.isBgRed = true;
             this.isBgYellow = false;
             this.isBgGreen = false;
+            this.bolUa = false;
             this.presentToast(rpta.message);
             this.selectAll(this.iCodeBar, 500);
           } else {
             this.isBgRed = true;
             this.isBgYellow = false;
             this.isBgGreen = false;
+            this.bolUa = false;
             this.presentToast(rpta.message);
             this.selectAll(this.iCodeBar, 500);
           }
