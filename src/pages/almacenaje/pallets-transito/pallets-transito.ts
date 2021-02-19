@@ -167,7 +167,7 @@ export class PalletsTransitoPage {
             console.log('E-getDataRutaPicking',err);
           }); 
         }else{
-          this.presentToast("El código de Pallet/UA's debe tener entre 6 y 20 dígitos.");
+          this.presentToast("El código de Pallet/UA's debe ser mayor a 5 dígitos.");
           setTimeout(() => {          
             this.txtCodPalletUaRef.setFocus();
             this.selectAll(this.txtCodPalletUa);
