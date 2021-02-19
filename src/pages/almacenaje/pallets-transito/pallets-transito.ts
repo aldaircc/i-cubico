@@ -72,7 +72,7 @@ export class PalletsTransitoPage {
   validarCodigo(){
     if(this.codeBar){
       if(this.codeBar.trim()!=""){
-        if(this.codeBar.length>=6 && this.codeBar.length<=20){
+        if(this.codeBar.length>=6 && this.codeBar.length<=100){
           debugger;
           this.sAlmacenaje.getValidarUATransito(this.codeBar, this.vId_Ubicacion.Id_Ubicacion_Transito).then((result)=>{
             debugger;
