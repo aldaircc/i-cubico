@@ -37,6 +37,8 @@ import { MomentjsPipe } from '../pipes/momentjs/momentjs'; //Loque#369Dev
 import { NgxDatatableModule } from '@swimlane/ngx-datatable'; //Loque#369Dev
 import { IncidenciaServiceProvider } from '../providers/incidencia-service/incidencia-service'; //Loque#369Dev
 import { IncidenciaPage } from '../pages/incidencia/incidencia'; //Loque#369Dev
+import { OpcionesPage } from '../pages/etiquetado/opciones/opciones';
+import { EtiquetadoSeriesPage } from '../pages/etiquetado/etiquetado-series/etiquetado-series';
 import { EtiquetadoPage_01Page } from '../pages/etiquetado/etiquetado-page-01/etiquetado-page-01'; //Loque#369Dev
 import { EtiquetadoPage_02Page } from '../pages/etiquetado/etiquetado-page-02/etiquetado-page-02'; //Loque#369Dev
 import { EtiquetadoPage_03Page } from '../pages/etiquetado/etiquetado-page-03/etiquetado-page-03'; //Loque#369Dev
@@ -143,6 +145,8 @@ import { ConsultarBultoPage } from '../pages/embalaje/consultar-bulto/consultar-
     AlmacenajePage, //Loque#369Dev
     ImpresoraPage, //Loque#369Dev
     IncidenciaPage, //Loque#369Dev
+    OpcionesPage,
+    EtiquetadoSeriesPage,
     EtiquetadoPage_01Page, //Loque#369Dev
     EtiquetadoPage_02Page, //Loque#369Dev
     EtiquetadoPage_03Page, //Loque#369Dev
@@ -250,6 +254,8 @@ import { ConsultarBultoPage } from '../pages/embalaje/consultar-bulto/consultar-
     AlmacenajePage, //Loque#369Dev
     ImpresoraPage, //Loque#369Dev
     IncidenciaPage, //Loque#369Dev
+    OpcionesPage,
+    EtiquetadoSeriesPage,
     EtiquetadoPage_01Page, //Loque#369Dev
     EtiquetadoPage_02Page, //Loque#369Dev
     EtiquetadoPage_03Page, //Loque#369Dev
@@ -319,7 +325,7 @@ import { ConsultarBultoPage } from '../pages/embalaje/consultar-bulto/consultar-
     ImpresionPickingCopiaPage, //YUS      
     ConsultarBultoPage //YUS      
   ],
-  providers: [
+  providers: [    
     StatusBar,
     SplashScreen,
     HTTP,

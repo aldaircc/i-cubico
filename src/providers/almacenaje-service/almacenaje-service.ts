@@ -67,6 +67,21 @@ export class AlmacenajeServiceProvider {
     });
   }
 
+  validarExisteSerie(strSerie) {
+    let parameter = {
+      'strSerie': strSerie
+    };
+    return new Promise(result => {
+      this.http.get(this.sGlobal.almacenajeService + 'ValidarExisteSerie', { params: parameter })
+        .map(res => res.json())
+        .subscribe(data => {
+          result(data);
+        }, err => {
+          console.log('E-validarExisteSerie', err);
+        })
+    });
+  }
+
   registrarUAsUbicacion(listStrUA, intIdUbicacion, strUsuario) {
     debugger;
     let parameter = {

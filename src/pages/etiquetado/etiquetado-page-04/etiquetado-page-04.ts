@@ -36,6 +36,7 @@ export class EtiquetadoPage_04Page {
     this.vParameter = this.navParams.get('listUA');
     this.rowCount = this.vParameter.length;
   }
+ 
 
   verificarUbicacion(): void {
     if (this.strUbicacion.trim() != "") {
@@ -122,6 +123,9 @@ export class EtiquetadoPage_04Page {
   goToUbicarUA() {
     this.navCtrl.getViews().forEach(item => {
       if (item.name == 'EtiquetadoPage_03Page') {
+        this.navCtrl.popTo(item);
+      }
+      if (item.name == 'EtiquetadoSeriesPage') {
         this.navCtrl.popTo(item);
       }
     });
