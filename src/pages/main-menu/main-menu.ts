@@ -14,6 +14,7 @@ import { GlobalServiceProvider } from '../../providers/global-service/global-ser
 import { AuthService } from '../../providers/auth-service/auth-service';
 
 import { WarehouseSelectPage } from '../warehouse-select/warehouse-select';
+import { OpcionesPage } from '../etiquetado/opciones/opciones';
 
 
 /**
@@ -164,7 +165,7 @@ export class MainMenuPage {
   }
 
   goEtiquetado() {
-    this.navCtrl.push(EtiquetadoPage_01Page, { codePage: 7 });
+    this.navCtrl.push(OpcionesPage);
   }
 
   goTransferencia() {
