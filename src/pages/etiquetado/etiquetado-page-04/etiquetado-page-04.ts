@@ -29,11 +29,22 @@ export class EtiquetadoPage_04Page {
   codigoBarra: string = "";
   strUbicacion: string = "";
   vParameter: any;
+  vParameterFlagSerie: boolean=false;
+  Id_Producto: any;
+  Id_Condicion: any;
+
   @ViewChild('inputUbi', { read: ElementRef }) private inputUbi: ElementRef;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sAlmac: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
-    this.vParameter = this.navParams.get('listUA');
+    this.vParameter = this.navParams.get('listUA');  
+    this.vParameterFlagSerie  = this.navParams.get('flagSerie');  
+    this.Id_Producto =  this.navParams.get('Id_Producto');    
+    this.Id_Condicion =  this.navParams.get('Id_Condicion');    
+    console.log(this.vParameter, "parámetros lista");
+    console.log(this.Id_Producto);
+    console.log(this.Id_Condicion);
+    console.log(this.vParameterFlagSerie,"flagSerie");
     this.rowCount = this.vParameter.length;
   }
  
@@ -81,12 +92,26 @@ export class EtiquetadoPage_04Page {
   }
 
   registrarUbic(): void {
-    if (this.strUbicacion.trim() != "" && this.id_Ubicacion != 0) {
-      this.registrarUAsUbicacion(this.vParameter, this.id_Ubicacion, this.sGlobal.userName);
-    } else {
-      alert('Ingresar y/o validar ubicación');
-      this.selectAll(this.inputUbi, 600);
+
+    if(this.vParameterFlagSerie){
+      
+      if (this.strUbicacion.trim() != "" && this.id_Ubicacion != 0) {
+        this.registrarSeriesUbicacion(this.vParameter, this.id_Ubicacion,this.Id_Producto,this.Id_Condicion , this.sGlobal.userName);
+      } else {
+        alert('Ingresar y/o validar ubicación');
+        this.selectAll(this.inputUbi, 600);
+      }
+
     }
+    else{
+      if (this.strUbicacion.trim() != "" && this.id_Ubicacion != 0) {
+        this.registrarUAsUbicacion(this.vParameter, this.id_Ubicacion, this.sGlobal.userName);
+      } else {
+        alert('Ingresar y/o validar ubicación');
+        this.selectAll(this.inputUbi, 600);
+      }
+    }    
+
   }
 
   selectAll(el: ElementRef, time) {
@@ -98,6 +123,30 @@ export class EtiquetadoPage_04Page {
 
   registrarUAsUbicacion(listStrUA, intId_Ubicacion, strUsuario): void {
     this.sAlmac.registrarUAsUbicacion(listStrUA, intId_Ubicacion, strUsuario).then(result => {
+      let res: any = result;
+      if (res.errNumber == 0) {
+        alert('Se ubicó correctamente');
+        this.fila = "";
+        this.columna = "";
+        this.nivel = "";
+        this.posicion = "";
+        this.pasillo = "";
+        this.sector = "";
+        this.id_Ubicacion = 0;
+        this.codigoBarra = "";
+        this.id_Sector = 0;
+        this.strUbicacion = "";
+        this.selectAll(this.inputUbi, 500);
+        this.goToUbicarUA();
+      } else {
+        alert(res.message);
+        this.selectAll(this.inputUbi, 600);
+      }
+    });
+  }
+
+  registrarSeriesUbicacion(listStrUA, intId_Ubicacion,intIdProducto,intIdCondicion, strUsuario): void {
+    this.sAlmac.registrarSeriesUbicacion(listStrUA, intId_Ubicacion,intIdProducto,intIdCondicion, strUsuario).then(result => {
       let res: any = result;
       if (res.errNumber == 0) {
         alert('Se ubicó correctamente');

@@ -67,9 +67,10 @@ export class AlmacenajeServiceProvider {
     });
   }
 
-  validarExisteSerie(strSerie) {
+  validarExisteSerie(strSerie, intId_Producto) {
     let parameter = {
-      'strSerie': strSerie
+      'strSerie': strSerie,
+      'intId_Producto': intId_Producto
     };
     return new Promise(result => {
       this.http.get(this.sGlobal.almacenajeService + 'ValidarExisteSerie', { params: parameter })
@@ -94,12 +95,35 @@ export class AlmacenajeServiceProvider {
       this.http.post(this.sGlobal.almacenajeService + 'RegistrarUAsUbicacion/strUA/intIdUbicacion/strUsuario', JSON.stringify(parameter), { headers: this.headers })
         .map(res => res.json())
         .subscribe(data => {
-          result(data);
+          result(data);          
         }, err => {
           console.log('E-registrarUAsUbicacion', err);
         })
     });
   }
+
+  registrarSeriesUbicacion(listStrUA, intIdUbicacion,intIdProducto,intIdCondicion, strUsuario) {    
+    let parameter = {
+      'strUA': listStrUA,
+      'intIdUbicacion': intIdUbicacion,
+      'intIdProducto': intIdProducto,
+      'intIdCondicion': intIdCondicion,
+      'intIdCentro': this.sGlobal.Id_Centro,
+      'intIdAlmacen': this.sGlobal.Id_Almacen,      
+      'strUsuario': strUsuario
+    };
+
+    return new Promise((result, reject) => {
+      this.http.post(this.sGlobal.almacenajeService + 'RegistrarSeriesUbicacion/strUA/intIdUbicacion/intIdProducto/intIdCondicion/intIdCentro/intIdAlmacen/strUsuario', JSON.stringify(parameter), { headers: this.headers })
+        .map(res => res.json())
+        .subscribe(data => {
+          result(data);          
+        }, err => {
+          console.log('E-RegistrarSeriesUbicacion', err);
+        })
+    });
+  }
+
 
   //aromero
   getUbicacionTransito(intIdAlmacen) {

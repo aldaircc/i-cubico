@@ -57,6 +57,7 @@ export class EtiquetadoSeriesPage {
     this.vEtq.Codigo = this.dataFromEtqPage02.Codigo;        
     this.vEtq.Articulo = this.dataFromEtqPage02.Descripcion;            
     this.vEtq.Id_Producto = this.dataFromEtqPage02.Id_Producto;                
+    this.vEtq.Id_Condicion = this.dataFromEtqPage02.Id_Condicion;                
   };  
 
   selectAll(el: ElementRef, time) {
@@ -85,7 +86,6 @@ export class EtiquetadoSeriesPage {
   }
 
   AddUA(): void {
-
     if (this.vEtq.Codigo == null || this.vEtq.Articulo == null || this.vEtq.Codigo == "" || this.vEtq.Articulo == "") {
       this.presentToast('Debe buscar el producto');
       this.selectAll(this.iSerie, 500);
@@ -95,10 +95,11 @@ export class EtiquetadoSeriesPage {
     if (this.serie.trim() == "") {
       this.presentToast('Ingresar Serie');
       this.selectAll(this.iSerie, 500);
-
       return;
     }
-    if (this.serie.length == 5) {
+
+    console.log(this.serie.length,"total");
+    if (this.serie.length != 6) {
         this.presentToast('El código de la serie debe tener 6 dígitos.');
         this.selectAll(this.iSerie, 500);
         return;
@@ -111,51 +112,27 @@ export class EtiquetadoSeriesPage {
       return;
     }
 
-    this.validarExisteSerie(this.serie);
+    this.validarExisteSerie(this.serie,this.vEtq.Id_Producto);
   }
 
-  validarExisteSerie(strSerie) {    
-    this.sAlm.validarExisteSerie(strSerie).then(result => {
+  validarExisteSerie(strSerie, intId_Producto) {    
+    this.sAlm.validarExisteSerie(strSerie, intId_Producto).then(result => {
       let res: any = result;
-      if (res.length != 0) {
+      console.log(res,"respuesta");
+      console.log(res.errNumber,"número");
 
-        debugger;
-        if (!(this.serie == res[0].serie) && !(this.vEtq.Id_Producto == res[0].Id_Producto)) {
-          this.presentToast('La serie no corresponde al producto');
+        if(res.errNumber == 0){
+          this.listUAs.push({            
+            'Serie': this.serie         
+          });
           this.serie = "";
-          this.selectAll(this.iSerie, 500);    
-                        
         }
-        
-        
-        if (this.existInList()) {
+        else{
+          this.presentToast(res.message);
           this.serie = "";
-          this.selectAll(this.iSerie, 500);
-          return;
-        } else {
-          debugger;
-          if (res.length == 1) {
-            this.listUAs.push({
-              'UA_CodBarra': res[0].UA_CodBarra,
-              'Id_Producto': res[0].Id_Producto,
-              'CodigoProducto': res[0].CodigoProducto,
-              'NombreProducto': res[0].NombreProducto,                            
-              'Cantidad': res[0].Cantidad,                    
-              'Serie': res[0].Serie
-            });
-          } else {
-            this.listUAs = res;
-          }
-
-          this.rowCount = this.listUAs.length;
-          this.serie = "";
-          this.selectAll(this.iSerie, 500);
+          this.selectAll(this.iSerie, 500);  
+          // this.listUAs = res;  
         }
-      } else {
-        this.presentToast('La serie ingresada no existe');
-        this.serie = "";
-        this.selectAll(this.iSerie, 500);
-      }
     });
   }
 
@@ -206,10 +183,10 @@ export class EtiquetadoSeriesPage {
 
       var listUA = [];
       this.listUAs.forEach(el => {
-        listUA.push(el.UA_CodBarra);
+        listUA.push(el.Serie);        
       });
 
-      this.navCtrl.push(EtiquetadoPage_04Page, { 'listUA': listUA });
+      this.navCtrl.push(EtiquetadoPage_04Page, { 'flagSerie': true, 'listUA': listUA, 'Id_Producto': this.vEtq.Id_Producto,'Id_Condicion':this.vEtq.Id_Condicion });
     } else {
       this.presentToast('No existen series registradas');
       this.selectAll(this.iSerie, 500);
