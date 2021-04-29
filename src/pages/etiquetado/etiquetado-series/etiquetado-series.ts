@@ -100,7 +100,7 @@ export class EtiquetadoSeriesPage {
 
     console.log(this.serie.length,"total");
     if (this.serie.length < 6 || this.serie.length > 30) {
-        this.presentToast('El código de la serie debe tener 6 dígitos.');
+        this.presentToast('El código de la serie debe tener más de 5 dígitos.');
         this.selectAll(this.iSerie, 500);
         return;
       }
