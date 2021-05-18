@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { AlmacenajeServiceProvider } from '../../../providers/almacenaje-service/almacenaje-service';
+import { AlmacenajePalletUaPage } from '../almacenaje-pallet-ua/almacenaje-pallet-ua';
 
 /**
  * Generated class for the OtraUbicacionPage page.
@@ -31,10 +32,15 @@ export class OtraUbicacionPage {
   rowCount: any = 0;
   vOtraUbiacionPage: any;
   vDatosUbicacion: any = [];
+  
+  vTotalUAS: number;
+  vPalletTransitoPage: any = [];      
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider,
     public sAlmacenaje: AlmacenajeServiceProvider, public toastCtrl: ToastController) {
-    this.vDatosUbicacion = navParams.get('data');        
+    this.vDatosUbicacion = navParams.get('data');    
+    this.vTotalUAS = navParams.get('totalUas');    
+    
     this.listarSectoresXAlmacen();          
   }
 
@@ -172,12 +178,31 @@ export class OtraUbicacionPage {
   SeleccionarUbicacion(data) {
     debugger;
     console.log(data,"datooooos");
-    this.navCtrl.pop().then(() => {
-      data.Id_Ubicacion_Transito = this.vDatosUbicacion.Id_Ubicacion_Transito,
-        data.CantidadPallets = this.vDatosUbicacion.CantidadPallets,
-        data.lst_UA = this.vDatosUbicacion.lst_UA,
-        this.navParams.get('ubicacion')(data);
+
+    this.vPalletTransitoPage = {      
+      'Sector' :data.Sector,
+      'Fila' : data.Fila,
+      'Columna' : data.Columna,
+      'Nivel' : data.Nivel,
+      'Posicion' : data.Posicion,
+      'CodigoBarraUbi' : data.CodigoBarra,
+      'Id_Ubicacion' : data.Id_Ubicacion,
+      'Id_Ubicacion_Transito' : data.Id_Ubicacion_Transito,
+      'CantidadPallets' : this.vTotalUAS,
+      'Id_Marca' : data.Id_Marca,
+      'lst_UA' : data.listUA
+    };
+    this.navCtrl.push(AlmacenajePalletUaPage, {
+      data: this.vPalletTransitoPage
     });
+
+    // this.navCtrl.pop().then(() => {
+    //   data.Id_Ubicacion_Transito = this.vDatosUbicacion.Id_Ubicacion_Transito,
+    //     data.CantidadPallets = this.vDatosUbicacion.CantidadPallets,
+    //     data.lst_UA = this.vDatosUbicacion.lst_UA
+        
+    //    // this.navParams.get('data')(data);
+    // });
   }  
 
   ionViewDidLoad() {

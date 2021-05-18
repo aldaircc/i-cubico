@@ -38,7 +38,7 @@ export class PalletsTransitoPage {
       this.vId_Ubicacion = this.vTransitoPage = navParams.get('data'); 
   }
 
-  ubicacion(){
+  ubicacion(){    
     if(this.listAuxPalletTransito.length>0){
       var intIdMarca = this.listAuxPalletTransito[0].Id_Marca;
       var intIdAlmacen = this.sGlobal.Id_Almacen;
@@ -321,11 +321,16 @@ export class PalletsTransitoPage {
   }
 
   goOtraUbicacionPage() {    
+    console.log(this.vPalletTransitoPage);
+    console.log(this.rowCount);
+    debugger;
+
     this.vPalletTransitoPage = {
       'Id_Marca' : this.listAuxPalletTransito[0].Id_Marca
-    };
+    };        
     this.navCtrl.push(OtraUbicacionPage, {
-      data: this.vPalletTransitoPage
+      data: this.vPalletTransitoPage,
+      totalUas: this.rowCount
     });
   }
 

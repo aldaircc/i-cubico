@@ -290,20 +290,20 @@ popoverGlobal: any;
 
     if (this.codeBar) {
       if (this.codeBar.trim() != "") {
-        this.sPicking.ValidarSerie(this.pickingProducto.IdProducto).then((result) => {  
-          console.log(result);
-          //FlagSeriePT
-          var message: any = result;
-          if( message.valor2 == 1){
-            if (this.codeBar.length != 6) {
-              this.presentToast("El código de UA debe tener 6 dígitos.");
-              setTimeout(() => {
-                this.selectAll(this.txtCodBarraUA);
-              }, (500));
-            }            
-          } 
-          else{            
-            if (this.codeBar.length == 12) {
+        // this.sPicking.ValidarSerie(this.pickingProducto.IdProducto).then((result) => {  
+        //   console.log(result);
+        //   //FlagSeriePT
+        //   var message: any = result;
+        //   if( message.valor2 == 1){
+        //     if (this.codeBar.length < 6) {
+        //       this.presentToast("El código de UA debe tener más de 5 dígitos.");
+        //       setTimeout(() => {
+        //         this.selectAll(this.txtCodBarraUA);
+        //       }, (500));
+        //     }            
+        //   } 
+        //   else{            
+            if (this.codeBar.length > 5) {
               this.sPicking.getValidarUAPicking(this.vRutaPickingPage.Id_Tx, this.codeBar.trim(), this.pickingProducto.IdProducto, this.pickingProducto.LoteProducto, this.pickingProducto.IdUbicacion).then((result) => {
                 debugger;
                 this.UAPicking = result;
@@ -343,16 +343,16 @@ popoverGlobal: any;
                 console.log('E-Verficar UA', err);
               });
             } else {
-              this.presentToast("El código de UA debe tener 12 dígitos.");
+              this.presentToast("El código de UA debe tener más de 5 dígitos.");
               setTimeout(() => {
                 this.selectAll(this.txtCodBarraUA);
               }, (500));
             }
 
 
-          }
+          // }
 
-        });
+        // });
       } else {
         this.presentToast("Ingresar código de UA");
         this.isbgWhite = false;
