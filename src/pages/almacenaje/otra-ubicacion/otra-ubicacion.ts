@@ -32,7 +32,7 @@ export class OtraUbicacionPage {
   rowCount: any = 0;
   vOtraUbiacionPage: any;
   vDatosUbicacion: any = [];
-  
+
   vTotalUAS: number;
   vPalletTransitoPage: any = [];      
 
@@ -179,6 +179,8 @@ export class OtraUbicacionPage {
     debugger;
     console.log(data,"datooooos");
 
+    console.log(this.vDatosUbicacion,"DATOSS UBIA");
+
     this.vPalletTransitoPage = {      
       'Sector' :data.Sector,
       'Fila' : data.Fila,
@@ -187,10 +189,10 @@ export class OtraUbicacionPage {
       'Posicion' : data.Posicion,
       'CodigoBarraUbi' : data.CodigoBarra,
       'Id_Ubicacion' : data.Id_Ubicacion,
-      'Id_Ubicacion_Transito' : data.Id_Ubicacion_Transito,
+      'Id_Ubicacion_Transito' : this.vDatosUbicacion.Id_Ubicacion_Transito,
       'CantidadPallets' : this.vTotalUAS,
       'Id_Marca' : data.Id_Marca,
-      'lst_UA' : data.listUA
+      'lst_UA' : this.vDatosUbicacion.listUA
     };
     this.navCtrl.push(AlmacenajePalletUaPage, {
       data: this.vPalletTransitoPage

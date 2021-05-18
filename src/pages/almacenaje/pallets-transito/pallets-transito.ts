@@ -35,6 +35,7 @@ export class PalletsTransitoPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl:ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
+      debugger;
       this.vId_Ubicacion = this.vTransitoPage = navParams.get('data'); 
   }
 
@@ -299,7 +300,7 @@ export class PalletsTransitoPage {
       'lst_UA' : listUA
     };
     this.navCtrl.push(AlmacenajePalletUaPage, {
-      data: this.vPalletTransitoPage, palletTransito: this.Selectedcallback
+      data: this.vPalletTransitoPage, vId_Ubicacion: this.Selectedcallback
     });
   }
 
@@ -325,8 +326,16 @@ export class PalletsTransitoPage {
     console.log(this.rowCount);
     debugger;
 
+    var listUA = [];
+    this.listAuxPalletTransito.forEach(el => {
+      listUA.push(el.UA_CodBarra);
+    });
+
+
     this.vPalletTransitoPage = {
-      'Id_Marca' : this.listAuxPalletTransito[0].Id_Marca
+      'Id_Marca' : this.listAuxPalletTransito[0].Id_Marca,
+      'listUA' : listUA,
+      'Id_Ubicacion_Transito': this.vId_Ubicacion.Id_Ubicacion_Transito
     };        
     this.navCtrl.push(OtraUbicacionPage, {
       data: this.vPalletTransitoPage,

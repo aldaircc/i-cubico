@@ -239,11 +239,19 @@ export class AlmacenajePalletUaPage {
 
   goBackPalletTransito() {
     debugger;
-    this.navCtrl.pop().then(() => {
-      this.vAlmacenajePalletUaPage = {
-        'Id_Ubicacion': this.vDatosUbicacion.Id_Ubicacion
-      };
-      this.navParams.get('palletTransito')(this.vAlmacenajePalletUaPage);
+    // this.navCtrl.pop().then(() => {
+    //   this.vAlmacenajePalletUaPage = {
+    //     'Id_Ubicacion': this.vDatosUbicacion.Id_Ubicacion
+    //   };      
+    //   this.navParams.get('palletTransito')(this.vAlmacenajePalletUaPage);
+    // });
+    
+    this.vAlmacenajePalletUaPage = {
+          'Id_Ubicacion_Transito':  this.vDatosUbicacion.Id_Ubicacion_Transito
+    };      
+
+    this.navCtrl.push(PalletsTransitoPage, {
+      data: this.vAlmacenajePalletUaPage
     });
   }
 
