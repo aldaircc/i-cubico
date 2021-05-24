@@ -226,7 +226,7 @@ export class EtiquetadoPage_01Page {
         this.cantxEtq = 1;
         this.etqDisabled = false;
         this.numEtq = 1;
-        this.saldoDisabled = false;
+        this.saldoDisabled = true;
         this.cantEtqSaldo = 0;
         if (!this.vEtq.page) {
           this.selectAll(this.iSerie, 500);

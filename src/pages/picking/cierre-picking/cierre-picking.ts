@@ -10,6 +10,7 @@ import { HomePage } from '../../home/home';
 import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
 import { PopoverPickingPage } from '../../picking/popover/popover-picking/popover-picking'
 import { ImpresionPickingCopiaPage } from '../../picking/impresion-picking-copia/impresion-picking-copia';
+import { PickingPage } from '../picking';
 
 /**
  * Generated class for the CierrePickingPage page.
@@ -117,7 +118,7 @@ popoverGlobal: any;
       }, (500));
     }
 
-  }
+  }  
 
   CerrarPicking() {
     if (this.vRutaPickingPage.Saldo > 0) {
@@ -135,8 +136,10 @@ popoverGlobal: any;
                       // Mostrar lista de impresoras
                       this.showModalCopiaImpresion();                      
                     }
+                    else{
                     //Ir a detalle ordenes
-                    // this.goPickingPage();
+                      this.goPickingPage();
+                    }
                   })
                 }
               })
@@ -168,8 +171,10 @@ popoverGlobal: any;
                       // Mostrar lista de impresoras
                       this.showModalCopiaImpresion();                      
                     }
-                    //Ir a detalle ordenes
-                    // this.goPickingPage();
+                    else{
+                      //Ir a detalle ordenes
+                      this.goPickingPage();
+                    }
                   })
                 }
               })
@@ -448,7 +453,8 @@ popoverGlobal: any;
   }
 
   goPickingPage() {
-    this.navCtrl.popTo(this.navCtrl.getByIndex(3));
+    // this.navCtrl.popTo(this.navCtrl.getByIndex(3));
+    this.navCtrl.push(PickingPage);
   }
 
   selectAll(el: ElementRef) {

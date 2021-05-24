@@ -125,7 +125,9 @@ export class EtiquetadoSeriesPage {
           this.listUAs.push({            
             'Serie': this.serie         
           });
+          this.rowCount = this.listUAs.length;
           this.serie = "";
+
         }
         else{
           this.presentToast(res.message);

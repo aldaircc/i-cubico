@@ -7,7 +7,7 @@
 <ion-header class="sgaaTitleBackcolor" no-border>
   <ion-toolbar no-padding no-margin color="primary">
     <ion-navbar hideBackButton >
-      <ion-label style="font-size: 15px; color: white; font-weight:bold;">LOTE POR PRODUCTO</ion-label>                        
+      <ion-label style="font-size: 15px; color: white; font-weight:bold;">LOTE/SERIE POR PRODUCTO</ion-label>                        
     </ion-navbar>
   </ion-toolbar>
   <ion-grid class="bgHeader statico">
@@ -42,7 +42,7 @@
         <ion-row>          
             <ion-col col-10 col-sm>
               <ion-card-content no-padding>
-                <h5><b>Lote: </b> {{objTransacEmbalaje.Lote}}</h5>
+                <h5><b>Lote/Serie: </b> {{objTransacEmbalaje.Lote}}</h5>
                 <h5><b>C.Picking: </b> {{objTransacEmbalaje.CantidadPicking|number : '1.2-2' }}</h5>
                 <h5><b>C.Embalado: </b> {{objTransacEmbalaje.CantidadEmbalado|number : '1.2-2' }}</h5>
                 <h5><b>Saldo: </b> {{objTransacEmbalaje.CantidadPicking - objTransacEmbalaje.CantidadEmbalado|number : '1.2-2' }}</h5>

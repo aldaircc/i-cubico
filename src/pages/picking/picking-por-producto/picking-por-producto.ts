@@ -59,7 +59,7 @@ export class PickingPorProductoPage {
   @ViewChild('txtCantidadUA', { read: ElementRef }) private txtCantidadUA: ElementRef;
 
   valorpopoverGlobal: boolean = false
-popoverGlobal: any;
+  popoverGlobal: any;
 
   constructor(public app: App, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams,
     public sPicking: PickingServiceProvider, private popoverCtrl: PopoverController,
@@ -209,9 +209,8 @@ popoverGlobal: any;
       //Editar cantidad de la UA
       this.presentToast("Cantidad de UA no puede ser mayor al saldo");
     } else {
-      if (this.sGlobal.Id_TerminalRF == 0) 
-      {
-        this.presentAlert("El campo Id RF no esta configurado. Contactese con el administrador del sistema.");        
+      if (this.sGlobal.Id_TerminalRF == 0) {
+        this.presentAlert("El campo Id RF no esta configurado. Contactese con el administrador del sistema.");
       } else {
         //Registrar cantidad de la UA
         debugger;
@@ -276,96 +275,19 @@ popoverGlobal: any;
       event.target.value = newValue.slice(0, -1);
     }
   }
-  private isDisabled: boolean=false;
+  private isDisabled: boolean = false;
   validarCodeBar() {
-    debugger;        
-    
-    if(this.codeBar.substring(0,1) == "P"){      
-      this.isDisabled = true;      
+    debugger;
+
+    if (this.codeBar.substring(0, 1) == "P") {
+      this.isDisabled = true;
     }
-    else
-    {
-      this.isDisabled = false;      
+    else {
+      this.isDisabled = false;
     }
 
-    if (this.codeBar) {
-      if (this.codeBar.trim() != "") {
-        // this.sPicking.ValidarSerie(this.pickingProducto.IdProducto).then((result) => {  
-        //   console.log(result);
-        //   //FlagSeriePT
-        //   var message: any = result;
-        //   if( message.valor2 == 1){
-        //     if (this.codeBar.length < 6) {
-        //       this.presentToast("El código de UA debe tener más de 5 dígitos.");
-        //       setTimeout(() => {
-        //         this.selectAll(this.txtCodBarraUA);
-        //       }, (500));
-        //     }            
-        //   } 
-        //   else{            
-            if (this.codeBar.length > 5) {
-              this.sPicking.getValidarUAPicking(this.vRutaPickingPage.Id_Tx, this.codeBar.trim(), this.pickingProducto.IdProducto, this.pickingProducto.LoteProducto, this.pickingProducto.IdUbicacion).then((result) => {
-                debugger;
-                this.UAPicking = result;
-                if (this.UAPicking.errNumber == 0) {
-                  this.isbgWhite = false;
-                  this.isBgRed = false;
-                  this.isBgYellow = true;
-                  this.isBgGreen = false;
-                  //Mostrar cantidad de la UA
-                  this.Textcantidad = this.UAPicking.valor1;
-                  setTimeout(() => {
-                    this.selectAll(this.txtCantidadUA);
-                  }, (500));
-    
-                  if (this.UAPicking.valor2 != 2) {
-                    //Bloquear campo cantidad
-                    this.Txtcantidadisenabled = false;
-                    if (this.UAPicking.valor2 == 1) {
-                      //Registrar cantidad de la UA automaticamente
-                      this.registarUA();
-                    }
-                  }
-                } else {
-                  this.presentToast(this.UAPicking.message);
-                  //this.presentToast("UA no pertenece a la ubicación");
-                  this.isbgWhite = false;
-                  this.isBgRed = true;
-                  this.isBgYellow = false;
-                  this.isBgGreen = false;
-                  this.codeBar = "";
-                  this.Textcantidad = "";
-                  setTimeout(() => {
-                    this.selectAll(this.txtCodBarraUA);
-                  }, (500));
-                }
-              }, (err) => {
-                console.log('E-Verficar UA', err);
-              });
-            } else {
-              this.presentToast("El código de UA debe tener más de 5 dígitos.");
-              setTimeout(() => {
-                this.selectAll(this.txtCodBarraUA);
-              }, (500));
-            }
 
-
-          // }
-
-        // });
-      } else {
-        this.presentToast("Ingresar código de UA");
-        this.isbgWhite = false;
-        this.isBgRed = true;
-        this.isBgYellow = false;
-        this.isBgGreen = false;
-        this.codeBar = "";
-        this.Textcantidad = "";
-        setTimeout(() => {
-          this.selectAll(this.txtCodBarraUA);
-        }, (500));
-      }
-    } else {
+    if (this.codeBar.trim() == "") {
       this.presentToast("Ingresar código de UA");
       this.isBgRed = true;
       this.isBgYellow = false;
@@ -375,6 +297,108 @@ popoverGlobal: any;
       setTimeout(() => {
         this.selectAll(this.txtCodBarraUA);
       }, (500));
+
+      return;
+    }
+
+    if (this.pickingProducto.IdPasillo == 1) {
+
+      if (this.codeBar.length < 6) {
+        this.presentToast("El código de serie debe tener más de 5 dígitos.");
+        setTimeout(() => {
+          this.selectAll(this.txtCodBarraUA);
+        }, (500));
+
+        return;
+      }
+
+      this.sPicking.ValidarSeriePicking(this.vRutaPickingPage.Id_Tx, this.pickingProducto.IdUbicacion, this.pickingProducto.Item, this.pickingProducto.IdProducto, this.codeBar.trim()).then((result) => {
+
+        this.UAPicking = result;
+        if (this.UAPicking.errNumber == 0) {
+          this.isbgWhite = false;
+          this.isBgRed = false;
+          this.isBgYellow = true;
+          this.isBgGreen = false;
+          //Mostrar cantidad de la UA
+          this.Textcantidad = "1";
+          setTimeout(() => {
+            this.selectAll(this.txtCantidadUA);
+          }, (500));
+
+          if (this.UAPicking.valor2 != 2) {
+            //Bloquear campo cantidad
+            this.Txtcantidadisenabled = false;
+            if (this.UAPicking.valor2 == 1) {
+              //Registrar cantidad de la UA automaticamente
+              this.registarUA();
+            }
+          }
+        } else {
+          this.presentToast(this.UAPicking.message);
+          this.isbgWhite = false;
+          this.isBgRed = true;
+          this.isBgYellow = false;
+          this.isBgGreen = false;
+          this.codeBar = "";
+          this.Textcantidad = "";
+          setTimeout(() => {
+            this.selectAll(this.txtCodBarraUA);
+          }, (500));
+        }
+
+      });
+
+    }
+    else {
+
+      if (this.codeBar.length != 12 ) {
+        this.presentToast("El código de barra debe tener 12 dígitos.");
+        setTimeout(() => {
+          this.selectAll(this.txtCodBarraUA);
+        }, (500));
+
+        return;
+      }
+
+      this.sPicking.getValidarUAPicking(this.vRutaPickingPage.Id_Tx, this.codeBar.trim(), this.pickingProducto.IdProducto, this.pickingProducto.LoteProducto, this.pickingProducto.IdUbicacion).then((result) => {
+        debugger;
+        this.UAPicking = result;
+        if (this.UAPicking.errNumber == 0) {
+          this.isbgWhite = false;
+          this.isBgRed = false;
+          this.isBgYellow = true;
+          this.isBgGreen = false;
+          //Mostrar cantidad de la UA
+          this.Textcantidad = this.UAPicking.valor1;
+          setTimeout(() => {
+            this.selectAll(this.txtCantidadUA);
+          }, (500));
+
+          if (this.UAPicking.valor2 != 2) {
+            //Bloquear campo cantidad
+            this.Txtcantidadisenabled = false;
+            if (this.UAPicking.valor2 == 1) {
+              //Registrar cantidad de la UA automaticamente
+              this.registarUA();
+            }
+          }
+        } else {
+          this.presentToast(this.UAPicking.message);
+          this.isbgWhite = false;
+          this.isBgRed = true;
+          this.isBgYellow = false;
+          this.isBgGreen = false;
+          this.codeBar = "";
+          this.Textcantidad = "";
+          setTimeout(() => {
+            this.selectAll(this.txtCodBarraUA);
+          }, (500));
+        }
+      }, (err) => {
+        console.log('E-Verficar UA', err);
+      });
+
     }
   }
 
@@ -398,7 +422,7 @@ popoverGlobal: any;
             this.goOrdenesPicking();
           }
         })
-      } 
+      }
       // else {
       //   this.presentAlertConfirm("Orden de picking incompleta. ¿Desea cerrar picking?").then((result) => {
       //     if (result) {
@@ -861,16 +885,16 @@ popoverGlobal: any;
     this.presentAlertConfirm("¿Estás seguro de registrar la solicitud?").then((result) => {
       if (result) {
         console.log("entra");
-        this.sPicking.RegistrarSolicitudPicking(this.vRutaPickingPage.Id_Tx,this.pickingProducto.Item,this.pickingProducto.IdProducto,0,this.pickingProducto.Saldo,this.sGlobal.Id_Almacen,this.sGlobal.userName).then(result => {        
+        this.sPicking.RegistrarSolicitudPicking(this.vRutaPickingPage.Id_Tx, this.pickingProducto.Item, this.pickingProducto.IdProducto, 0, this.pickingProducto.Saldo, this.sGlobal.Id_Almacen, this.sGlobal.userName).then(result => {
           var message: any = result;
           if (message.errNumber == 0 || message.errNumber == 1) {
             console.log("exito");
-            this.presentAlert(message.message);          
-          }         
+            this.presentAlert(message.message);
+          }
           else {
             this.presentAlert("No se realizó el registro de la solicitud");
           }
-        });    
+        });
 
       }
 
@@ -890,16 +914,16 @@ popoverGlobal: any;
     console.log('ionViewDidLoad PickingPorProductoPage');
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.platform.registerBackButtonAction(() => {
       debugger;
-      if(this.valorpopoverGlobal){
+      if (this.valorpopoverGlobal) {
         this.valorpopoverGlobal = false;
         this.popoverGlobal.dismiss();
-      }else{
-        this.navCtrl.pop(); 
-      }      
-  });
+      } else {
+        this.navCtrl.pop();
+      }
+    });
   }
 
 }
