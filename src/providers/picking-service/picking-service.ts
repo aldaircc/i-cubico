@@ -334,16 +334,22 @@ export class PickingServiceProvider {
     });
   }
 
-  ValidarSerie(Id_Producto) {
+  ValidarSeriePicking(strIdTx,intIdUbicacion,intItem,intIdProducto,strSerie) {
     var parameter: any;
-    parameter = { "id_producto": Id_Producto };
+    parameter = {
+      "strIdTx": strIdTx,
+      "intIdUbicacion": intIdUbicacion,
+      "intItem": intItem,
+      "intIdProducto": intIdProducto,
+      "strSerie": strSerie      
+    };
     return new Promise(resolve => {
-      this.http.get(this.sGlobal.pickingService + 'ValidarSerie', { params: parameter })
+      this.http.get(this.sGlobal.pickingService + 'ValidarSeriePicking', { params: parameter })
         .map(res => res.json())
         .subscribe(data => {
           resolve(data);
         }, err => {
-          console.log('Error ValidarSerie', err);
+          console.log('Error ValidarSeriePicking', err);
         })
     });
   }
