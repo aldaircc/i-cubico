@@ -168,11 +168,32 @@ export class AdministrarUaPage {
         debugger
         let fecha = new Date().toISOString();
         debugger;
+
+        let feEmi;
+        let feVenc;
+
+        if(this.FechaEmision == ""){
+          feEmi = null;
+        }
+        else{
+          feEmi = "/Date("  + this.FechaEmision + ")/";
+        }
+
+        if(this.FechaVencimiento == ""){
+          feVenc = null;
+        }
+        else{
+          feVenc = "/Date("  + this.FechaVencimiento + ")/" ; 
+        }
+
+
+
+
         let objUA = {
           'UA_CodBarra': this.ResultUA[0].UA_CodBarra,
           'FechaRegistro': "/Date(" + Date.parse(fecha) + ")/",
-          'FechaEmision': "/Date(" + Date.parse(this.FechaEmision) + ")/",
-          'FechaVencimiento': "/Date(" + Date.parse(this.FechaVencimiento) + ")/",
+          'FechaEmision': feEmi,
+          'FechaVencimiento': feVenc,
           'Lote': this.Lote,
           'Cantidad': this.Cantidad,
           'UsuarioRegistro': this.sGlobal.userName
@@ -218,12 +239,30 @@ export class AdministrarUaPage {
           debugger
           let fecha = new Date().toISOString();
           debugger;
+
+          let feEmi;
+          let feVenc;
+
+          if(this.FechaEmision == ""){
+            feEmi = null;
+          }
+          else{
+            feEmi = "/Date("  + this.FechaEmision + ")/";
+          }
+
+          if(this.FechaVencimiento == ""){
+            feVenc = null;
+          }
+          else{
+            feVenc = "/Date("  + this.FechaVencimiento + ")/" ; 
+          }
+
           let objUA = {
 
             'UA_CodBarra': this.ResultUA[0].UA_CodBarra,
             'FechaRegistro': "/Date(" + Date.parse(fecha) + ")/",
-            'FechaEmision': "/Date(" + Date.parse(this.FechaEmision) + ")/",
-            'FechaVencimiento': "/Date(" + Date.parse(this.FechaVencimiento) + ")/",
+            'FechaEmision':  feEmi,
+            'FechaVencimiento':  feVenc,
             'LoteLab': this.Lote,
             'Cantidad': this.Cantidad,
             'UsuarioRegistro': this.sGlobal.userName
@@ -582,8 +621,8 @@ export class AdministrarUaPage {
         'Codigo': this.ResultUA_Aux.Codigo,
         'DescProducto': this.ResultUA_Aux.Descripcion,
         'Lote': this.Lote,
-        'FechaEmision': moment(this.FechaEmision).format("DD-MM-YYYY"),
-        'FechaVencimiento': moment(this.FechaVencimiento).format("DD-MM-YYYY"),
+        'FechaEmision':  (this.FechaEmision == null) ? "" : moment(this.FechaEmision).format("DD-MM-YYYY"),
+        'FechaVencimiento': (this.FechaVencimiento == null) ? "" : moment(this.FechaVencimiento).format("DD-MM-YYYY"),
         'Pasillo': this.ResultUA_Aux.Pasillo,
         'CantidadTotal': parseFloat(this.Cantidad)
       };
