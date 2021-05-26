@@ -111,13 +111,13 @@ export class AdministrarUaPage {
               })
             } else {
               this.ResultUA_Aux = this.ResultUA[0];
-              this.FechaEmision = moment(result[0].FechaEmision, "DD-MM-YYYY").toDate().toISOString();
-              this.FechaVencimiento = moment(result[0].FechaVencimiento, "DD-MM-YYYY").toDate().toISOString();
+              this.FechaEmision =  ( result[0].FechaEmision == null) ? "" :  moment(result[0].FechaEmision, "DD-MM-YYYY").toDate().toISOString();
+              this.FechaVencimiento = (result[0].FechaVencimiento == null) ? "" : moment(result[0].FechaVencimiento, "DD-MM-YYYY").toDate().toISOString();
               this.Lote = result[0].Lote;
               this.Cantidad = result[0].Cantidad;
 
-              this.FechaEmisionBk = moment(result[0].FechaEmision, "DD-MM-YYYY").toDate().toISOString();
-              this.FechaVencimientoBk = moment(result[0].FechaVencimiento, "DD-MM-YYYY").toDate().toISOString();
+              this.FechaEmisionBk = ( result[0].FechaEmision == null) ? "" : moment(result[0].FechaEmision, "DD-MM-YYYY").toDate().toISOString();
+              this.FechaVencimientoBk = (result[0].FechaVencimiento == null) ? "" : moment(result[0].FechaVencimiento, "DD-MM-YYYY").toDate().toISOString();
               this.LoteBk = result[0].Lote;
               this.CantidadBk = result[0].Cantidad;
 
