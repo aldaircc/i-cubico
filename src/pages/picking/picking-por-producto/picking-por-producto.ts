@@ -42,7 +42,7 @@ export class PickingPorProductoPage {
   idRutaPicking: number = 0;
   Backisenabled: boolean = false;
   Nextisenabled: boolean = false;
-  Txtcantidadisenabled: boolean = false;
+  Txtcantidadisenabled: boolean = true;
   isBgRed: boolean = false;
   isBgYellow: boolean = false;
   isBgGreen: boolean = false;
@@ -51,6 +51,8 @@ export class PickingPorProductoPage {
   Textcantidad: string = '';
   codUbicacion: string;
   valor: number = 0;
+  codigoBarraSerie: string;
+
 
   @ViewChild(Navbar) navBar: Navbar;
   @ViewChild('txtCodBarraUA') txtCodBarraUARef;
@@ -204,7 +206,7 @@ export class PickingPorProductoPage {
     });
   }
 
-  registarUA() {
+  registarUA(strCodBarra) {
     if (parseInt(this.Textcantidad) > this.pickingProducto.Saldo) { //Cantidad de la UA es mayor al saldo
       //Editar cantidad de la UA
       this.presentToast("Cantidad de UA no puede ser mayor al saldo");
@@ -216,7 +218,7 @@ export class PickingPorProductoPage {
         debugger;
         // Registrar UA
         let objUA = {
-          'UA_CodBarra': this.codeBar.trim(),
+          'UA_CodBarra': strCodBarra,
           'Id_Tx': this.vRutaPickingPage.Id_Tx,
           'Id_Producto': this.pickingProducto.IdProducto,
           'Id_UM': this.pickingProducto.IdUMBase,
@@ -313,7 +315,7 @@ export class PickingPorProductoPage {
       }
 
       this.sPicking.ValidarSeriePicking(this.vRutaPickingPage.Id_Tx, this.pickingProducto.IdUbicacion, this.pickingProducto.Item, this.pickingProducto.IdProducto, this.codeBar.trim()).then((result) => {
-
+        debugger;
         this.UAPicking = result;
         if (this.UAPicking.errNumber == 0) {
           this.isbgWhite = false;
@@ -323,7 +325,8 @@ export class PickingPorProductoPage {
           //Mostrar cantidad de la UA
           this.Textcantidad = "1";
           this.Txtcantidadisenabled = false;
-          this.registarUA();
+          this.codigoBarraSerie =  this.UAPicking.message;
+          this.registarUA(this.codigoBarraSerie);
           setTimeout(() => {
             this.selectAll(this.txtCantidadUA);
           }, (500));
@@ -374,8 +377,11 @@ export class PickingPorProductoPage {
             this.Txtcantidadisenabled = false;
             if (this.UAPicking.valor2 == 1) {
               //Registrar cantidad de la UA automaticamente
-              this.registarUA();
+              this.registarUA(this.codeBar.trim());
             }
+          }
+          else{
+            this.Txtcantidadisenabled = true;
           }
         } else {
           this.presentToast(this.UAPicking.message);
