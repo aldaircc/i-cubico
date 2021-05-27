@@ -322,18 +322,12 @@ export class PickingPorProductoPage {
           this.isBgGreen = false;
           //Mostrar cantidad de la UA
           this.Textcantidad = "1";
+          this.Txtcantidadisenabled = false;
+          this.registarUA();
           setTimeout(() => {
             this.selectAll(this.txtCantidadUA);
           }, (500));
-
-          if (this.UAPicking.valor2 != 2) {
-            //Bloquear campo cantidad
-            this.Txtcantidadisenabled = false;
-            if (this.UAPicking.valor2 == 1) {
-              //Registrar cantidad de la UA automaticamente
-              this.registarUA();
-            }
-          }
+          
         } else {
           this.presentToast(this.UAPicking.message);
           this.isbgWhite = false;
