@@ -206,7 +206,15 @@ export class PickingPorProductoPage {
     });
   }
 
-  registarUA(strCodBarra) {
+  registarUA() {
+    let strCodBarra;
+    if (this.pickingProducto.IdPasillo == 1) {
+      strCodBarra =  this.codigoBarraSerie;
+    }
+    else{
+      strCodBarra = this.codeBar.trim()
+      }
+      
     if (parseInt(this.Textcantidad) > this.pickingProducto.Saldo) { //Cantidad de la UA es mayor al saldo
       //Editar cantidad de la UA
       this.presentToast("Cantidad de UA no puede ser mayor al saldo");
@@ -326,7 +334,7 @@ export class PickingPorProductoPage {
           this.Textcantidad = "1";
           this.Txtcantidadisenabled = false;
           this.codigoBarraSerie =  this.UAPicking.message;
-          this.registarUA(this.codigoBarraSerie);
+          this.registarUA();
           setTimeout(() => {
             this.selectAll(this.txtCantidadUA);
           }, (500));
@@ -377,7 +385,7 @@ export class PickingPorProductoPage {
             this.Txtcantidadisenabled = false;
             if (this.UAPicking.valor2 == 1) {
               //Registrar cantidad de la UA automaticamente
-              this.registarUA(this.codeBar.trim());
+              this.registarUA();
             }
           }
           else{

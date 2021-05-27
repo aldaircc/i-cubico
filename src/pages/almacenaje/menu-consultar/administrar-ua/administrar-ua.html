@@ -193,7 +193,7 @@
       </ion-col>
       <ion-col col-9 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-item style="font-weight:bold; padding: 0px; margin: 0px;">
-          <ion-input #txtLote [(ngModel)]="Lote" maxlength="30" type="text" value="" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px;"></ion-input>
+          <ion-input #txtLote [(ngModel)]="Lote" maxlength="30" type="text" value="" [readonly]="LoteReadOnly" style="font-weight:bold; font-size: 13px; padding: 0px; margin: 0px;"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>

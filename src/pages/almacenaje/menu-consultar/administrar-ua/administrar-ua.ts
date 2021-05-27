@@ -69,8 +69,9 @@ export class AdministrarUaPage {
 
   id_FormatLabel: any;
 
-  valorpopoverGlobal: boolean = false
+  valorpopoverGlobal: boolean = false;
   popoverGlobal: any;
+  LoteReadOnly: boolean = false;
 
   formatLabels: any = [
     { 'Id_Format': 1, 'Label': 'ETQ_UA.txt' },
@@ -110,6 +111,16 @@ export class AdministrarUaPage {
                 }
               })
             } else {
+
+              if(this.ResultUA[0].Lote == '999999'){
+                this.LoteReadOnly = true;
+
+
+              }
+              else{
+                this.LoteReadOnly = false;
+              }
+
               this.ResultUA_Aux = this.ResultUA[0];
               this.FechaEmision =  ( result[0].FechaEmision == null) ? "" :  moment(result[0].FechaEmision, "DD-MM-YYYY").toDate().toISOString();
               this.FechaVencimiento = (result[0].FechaVencimiento == null) ? "" : moment(result[0].FechaVencimiento, "DD-MM-YYYY").toDate().toISOString();
