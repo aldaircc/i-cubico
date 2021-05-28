@@ -68,7 +68,6 @@ export class PickingPorProductoPage {
     public toastCtrl: ToastController, public alertCtrl: AlertController,
     public sGlobal: GlobalServiceProvider, public viewCtrl: ViewController, private platform: Platform) {
     this.vRutaPickingPage = navParams.get('data');
-    this.getPickingProductoLoad();
   }
 
   getPickingProductoLoad() {
@@ -920,6 +919,10 @@ export class PickingPorProductoPage {
       this.selectAll(this.txtCodBarraUA);
     }, (500));
     console.log('ionViewDidLoad PickingPorProductoPage');
+  }
+
+  ionViewDidEnter() {        
+    this.getPickingProductoLoad();
   }
 
   ionViewWillEnter() {
