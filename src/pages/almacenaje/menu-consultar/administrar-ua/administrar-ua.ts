@@ -187,14 +187,14 @@ export class AdministrarUaPage {
           feEmi = null;
         }
         else{
-          feEmi = "/Date("  + this.FechaEmision + ")/";
+          feEmi = "/Date("  + Date.parse(moment(this.FechaEmision).toISOString()) + ")/";
         }
 
         if(this.FechaVencimiento == ""){
           feVenc = null;
         }
         else{
-          feVenc = "/Date("  + this.FechaVencimiento + ")/" ; 
+          feVenc = "/Date("  + Date.parse(moment(this.FechaVencimiento).toISOString()) + ")/" ; 
         }
 
 
@@ -258,14 +258,14 @@ export class AdministrarUaPage {
             feEmi = null;
           }
           else{
-            feEmi = "/Date("  + this.FechaEmision + ")/";
+            feEmi = "/Date("  + Date.parse(moment(this.FechaEmision).toISOString()) + ")/";
           }
 
           if(this.FechaVencimiento == ""){
             feVenc = null;
           }
           else{
-            feVenc = "/Date("  + this.FechaVencimiento + ")/" ; 
+            feVenc = "/Date("  + Date.parse(moment(this.FechaVencimiento).toISOString()) + ")/" ; 
           }
 
           let objUA = {
