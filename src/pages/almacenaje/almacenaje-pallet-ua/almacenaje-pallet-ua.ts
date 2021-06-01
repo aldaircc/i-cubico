@@ -209,7 +209,8 @@ export class AlmacenajePalletUaPage {
       'lst_UA': this.vDatosUbicacion.lst_UA
     };
     this.navCtrl.push(OtraUbicacionPage, {
-      data: this.vAlmacenajePalletUaPage, ubicacion: this.Selectedcallback
+      data: this.vAlmacenajePalletUaPage, ubicacion: this.Selectedcallback,
+      totalUas: this.rowCountTotal
     });
   }
 

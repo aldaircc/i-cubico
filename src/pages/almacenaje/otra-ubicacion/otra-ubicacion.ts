@@ -40,7 +40,8 @@ export class OtraUbicacionPage {
     public sAlmacenaje: AlmacenajeServiceProvider, public toastCtrl: ToastController) {
     this.vDatosUbicacion = navParams.get('data');    
     this.vTotalUAS = navParams.get('totalUas');    
-    
+    console.log(this.vDatosUbicacion,"ubicaciones yus")
+    console.log(this.vTotalUAS,"ubicaciones yus")
     this.listarSectoresXAlmacen();          
   }
 
@@ -192,7 +193,7 @@ export class OtraUbicacionPage {
       'Id_Ubicacion_Transito' : this.vDatosUbicacion.Id_Ubicacion_Transito,
       'CantidadPallets' : this.vTotalUAS,
       'Id_Marca' : data.Id_Marca,
-      'lst_UA' : this.vDatosUbicacion.listUA
+      'lst_UA' : this.vDatosUbicacion.lst_UA
     };
     this.navCtrl.push(AlmacenajePalletUaPage, {
       data: this.vPalletTransitoPage
