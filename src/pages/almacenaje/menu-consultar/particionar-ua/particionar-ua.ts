@@ -90,7 +90,7 @@ export class ParticionarUaPage {
       debugger;
       this.NuevaUA = result;
 
-      if (this.NuevaUA.trim() != "") {
+      if (this.NuevaUA.trim() != "" || this.NuevaUA.trim() != null) {
         debugger;
         var listContainer = [];
         var listEtq = [];
@@ -132,7 +132,7 @@ export class ParticionarUaPage {
           }
         });
       } else {
-        this.presentAlert("No se pudo particionar la UA.");
+        this.presentAlert("No se pudo particionar la UA, verificar el saldo de la UA.");
       }
     });
   }
