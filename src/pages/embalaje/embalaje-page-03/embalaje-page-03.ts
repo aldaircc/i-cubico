@@ -410,7 +410,7 @@ export class EmbalajePage_03Page {
         // Mostrar lista de impresoras
         console.log('Buy clicked');
         console.log(this.vTipoCierre);
-        this.sEmbalaje.CerrarDespacho(this.vEmbalajePage02.Id_Tx, this.vTipoCierre, "admin", 2).then((result) => {
+        this.sEmbalaje.CerrarDespacho(this.vEmbalajePage02.Id_Tx, this.vTipoCierre, this.sGlobal.userName, this.sGlobal.Id_Almacen).then((result) => {
           debugger;
           this.resultCierre = result;
           debugger;
