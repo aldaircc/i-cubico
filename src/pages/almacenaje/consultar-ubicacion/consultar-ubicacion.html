@@ -19,7 +19,7 @@
 
     <ion-row class="statico">
         <ion-searchbar #txtBuscar placeholder="Cod. Barra ubicación" maxlength="14" (keyup.enter)="validarCodigo()"
-            [(ngModel)]="codeBar" onkeypress="return ((event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-searchbar>
+            [(ngModel)]="codeBar" maxlength="14" onkeypress="return ((event.charCode < 48 || event.charCode > 57)) ? false :true"></ion-searchbar>
     </ion-row>
 
     <ion-grid>

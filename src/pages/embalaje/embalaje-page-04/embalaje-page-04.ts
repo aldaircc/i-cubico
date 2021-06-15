@@ -202,6 +202,13 @@ export class EmbalajePage_04Page {
 
   }
 
+
+  ionViewDidEnter() {
+    this.getDataDetEmbalajeUpdate(this.vListEmbalajeTemp[0].Id_Tx, this.vListEmbalajeTemp[0].Item, this.vListEmbalajeTemp[0].Lote);    
+  }
+
+
+
   goToSiguiente() {
     //Consultar embalaje y su es mas de 1 Ir a la pantalla Lote x Producto       
     if (this.vNroItemVisual != this.vEmbalajeTotalPage03.length) {

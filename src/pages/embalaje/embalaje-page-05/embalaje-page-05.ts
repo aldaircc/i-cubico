@@ -136,8 +136,8 @@ export class EmbalajePage_05Page {
     //   }
 
     // });
-   
-    if(this.lstDetalleBultoXBulto.length != objDetBultoXBulto.Item){
+    
+    if(this.lstDetalleBultoXBulto[this.lstDetalleBultoXBulto.length-1].NroBulto != objDetBultoXBulto.NroBulto){
       this.mostrarConfirmacion("No se puede eliminar porque hay bultos superiores", "Eliminar Bulto");
       this.vNroItem = 0;
     }
