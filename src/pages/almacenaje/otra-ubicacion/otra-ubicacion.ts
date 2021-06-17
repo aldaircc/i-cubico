@@ -193,7 +193,7 @@ export class OtraUbicacionPage {
       'Id_Ubicacion_Transito' : this.vDatosUbicacion.Id_Ubicacion_Transito,
       'CantidadPallets' : this.vTotalUAS,
       'Id_Marca' : data.Id_Marca,
-      'lst_UA' : this.vDatosUbicacion.lst_UA
+      'lst_UA' : this.vDatosUbicacion.listUA
     };
     this.navCtrl.push(AlmacenajePalletUaPage, {
       data: this.vPalletTransitoPage
