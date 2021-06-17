@@ -267,6 +267,20 @@ export class AlmacenajeServiceProvider {
     });
   }
 
+  getValidarExisteUAUbicada_V2(strUA, strLote, intIdUbicacion, tipo) {
+    var parameter: any;
+    parameter = { 'STRUA': strUA, 'STRLOTE': strLote, 'INTIDUBICACION': intIdUbicacion, 'tipo': tipo};
+    return new Promise(resolve => {
+      this.http.get(this.sGlobal.almacenajeService + 'ValidarExisteUAUbicada_V2', { params: parameter })
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log('Error getValidarExisteUAUbicada', err);
+        })
+    });
+  }
+
   //aromero
   postReubicacionMasiva(IdCentro, IdProducto, IdAlmacen, Cantidad, IdUbicacionDestino, strUsuario, strUA) {
     debugger;

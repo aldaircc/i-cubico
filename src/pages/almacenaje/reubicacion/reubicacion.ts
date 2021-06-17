@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, Navbar, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, Navbar, NavController, NavParams, AlertController, ToastController, Checkbox } from 'ionic-angular';
 import { ReubicacionDestinoPage } from '../../almacenaje/reubicacion-destino/reubicacion-destino'
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { AlmacenajeServiceProvider } from '../../../providers/almacenaje-service/almacenaje-service';
@@ -35,6 +35,7 @@ export class ReubicacionPage {
   txtPalletUaisenabled: boolean = false;
   rowCount: any = 0;
   vReubicacionDestinoPage: any = [];
+  bolSerie: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl: ToastController, public sGlobal: GlobalServiceProvider, public sAlmacenaje: AlmacenajeServiceProvider) {
@@ -118,14 +119,40 @@ export class ReubicacionPage {
     });
   }
 
+  checkboxClicked(chkSerie: Checkbox) {
+    this.bolSerie = chkSerie.checked;
+  }
+
   validarPalletUA() {
     debugger;
+
+
+    if(this.bolSerie){
+      if (this.codePalletUA.length < 6 || this.codePalletUA.length > 30) {
+        this.presentToast('El código de la serie debe tener más de 5 dígitos.');
+        setTimeout(() => {
+          this.selectAll(this.txtPalletUa);
+        }, (500));
+        return;
+      }
+    }
+    else{
+
+      if (this.codePalletUA.length != 12) {        
+        this.presentToast("El código Pallet/UA debe tener 12 dígitos.");
+              setTimeout(() => {
+                this.selectAll(this.txtPalletUa);
+              }, (500));
+
+        return;
+      }
+    }
+
     if (this.codeBar) {
       if (this.codeBar.trim() != "") {
         if (this.codePalletUA) {
-          if (this.codePalletUA.trim() != "") {
-            if (this.codePalletUA.length == 12) {
-              this.sAlmacenaje.getValidarExisteUAUbicada(this.codePalletUA, "", this.resultUbicacion[0].Id_Ubicacion).then((result) => {
+          if (this.codePalletUA.trim() != "") {            
+              this.sAlmacenaje.getValidarExisteUAUbicada_V2(this.codePalletUA, "", this.resultUbicacion[0].Id_Ubicacion,this.bolSerie).then((result) => {
                 debugger;
                 this.resultPalletUA = result;
                 if (this.resultPalletUA.length > 0) {
@@ -177,7 +204,7 @@ export class ReubicacionPage {
                         };
                         this.listAuxResultPalletUA.push(obj);
                       } else {
-                        this.presentAlert("El código de Pallet/UA ya se encuentra en la lista.").then((resultAlert) => {
+                        this.presentAlert("El código de Pallet/UA/Serie ya se encuentra en la lista.").then((resultAlert) => {
                           if (resultAlert) {
                             setTimeout(() => {
                               this.codePalletUA = "";
@@ -193,9 +220,8 @@ export class ReubicacionPage {
                     this.codePalletUA = "";
                     this.selectAll(this.txtPalletUa);
                   }, (500));
-
                 } else {
-                  this.presentAlert("UA/Pallet no pertenece a la ubicación.").then((resultAlert) => {
+                  this.presentAlert("UA/Pallet/Serie no pertenece a la ubicación.").then((resultAlert) => {
                     if (resultAlert) {
                       setTimeout(() => {
                         this.selectAll(this.txtPalletUa);
@@ -205,22 +231,16 @@ export class ReubicacionPage {
                 }
               }, err => {
                 console.log('E-getListarUbicacionXCodigoBarra', err);
-              });
-            } else {
-              this.presentToast("El código Pallet/UA debe tener 12 dígitos.");
-              setTimeout(() => {
-                this.selectAll(this.txtPalletUa);
-              }, (500));
-            }
+              });         
           }
           else {
-            this.presentToast("Ingrese código de Pallet/UA");
+            this.presentToast("Ingrese código de Pallet/UA/Serie");
             setTimeout(() => {
               this.selectAll(this.txtPalletUa);
             }, (500));
           }
         } else {
-          this.presentToast("Ingrese código de Pallet/UA");
+          this.presentToast("Ingrese código de Pallet/UA/Serie");
           setTimeout(() => {
             this.selectAll(this.txtPalletUa);
           }, (500));

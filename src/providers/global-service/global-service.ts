@@ -18,14 +18,16 @@ export class GlobalServiceProvider {
   Id_Impresora: number = 0;
   Id_Muelle: number = 0;
   Id_Centro: number = 0;
-  Id_TerminalRF: number = 0;
+  Id_TerminalRF: number = 2;
   nombreAlmacen: string = "";
   nombreImpresora: string;
   nombreEmpresa: string;
   nombreCentro: string;
   userName: string = "";
   apeNom: string = "";
-  url: string = "";
+  // url: string = "http://cubico.boyles.com.pe:8083/SGAA_WCF/";
+  // url: string = "http://www.cubicowms.pe:8087/SGAA_WCF/";
+  url: string = "http://172.16.32.15:8085/SGAA_WCF/";
   urlPrint: string = "";
   usuario: string;
   produccion: string;
