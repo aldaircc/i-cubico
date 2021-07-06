@@ -77,6 +77,7 @@ popoverGlobal: any;
   }
 
   validarCodeBar() {    
+    debugger;
     if (this.vReciboPage02.FlagSeriePT == true) {
   
       if (this.codeBar.Text.trim().length >= 6) {
@@ -105,6 +106,14 @@ popoverGlobal: any;
                 this.presentToast(rpta.message);
               } else {
                 this.bolUa = true;
+                this.isBgYellow = true;
+                this.cantidad = 1;
+                this.cantidadRec = this.cantidad;
+                this.selectAll(this.iCantidadRecibida, 500);
+                this.codeBar.Tag = this.codeBar.Text;
+                if (this.vReciboPage02.bolAutomatic === true) {
+                  this.saveTransaction();
+                }
                 // this.bolUaValida = false;
               }
             }, (err) => {
@@ -125,22 +134,22 @@ popoverGlobal: any;
               this.selectAll(this.iCodeBar, 500);
               this.presentToast(res.message);
             } else {
+              this.isBgRed = false;
+              this.isBgYellow = true;
+              this.cantidad = 1;
+              this.cantidadRec = this.cantidad;
+              this.selectAll(this.iCantidadRecibida, 500);
               this.bolUa = true;
+              this.codeBar.Tag = this.codeBar.Text;
+              if (this.vReciboPage02.bolAutomatic === true) {
+                this.saveTransaction();
+              }
               // this.bolUaValida = false;
             }
           });
         }
         debugger;
-        this.isBgRed = false;
-        this.isBgYellow = true;
-        this.cantidad = 1;
-        this.cantidadRec = this.cantidad;
-        this.selectAll(this.iCantidadRecibida, 500);
-
-        if (this.vReciboPage02.bolAutomatic === true) {
-          this.saveTransaction();
-        }
-
+        
       }    
       else{
         this.presentToast("Ingrese código de barras correcto");
@@ -148,6 +157,7 @@ popoverGlobal: any;
         this.isBgYellow = false;
         this.isBgGreen = false;
         this.bolUa = false;
+        this.codeBar.Tag = '';
         // this.bolUaValida = false;
         this.cantidadAve = 0;
         this.cantidadRec = 0;
@@ -287,6 +297,7 @@ popoverGlobal: any;
         }
         else {
           this.presentToast("Ingrese código de barras correcto");
+          this.codeBar.Tag = '';
           this.isBgRed = true;
           this.isBgYellow = false;
           this.isBgGreen = false;
