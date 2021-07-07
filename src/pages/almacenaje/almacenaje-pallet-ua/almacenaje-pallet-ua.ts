@@ -30,7 +30,7 @@ export class AlmacenajePalletUaPage {
   isBgYellow: boolean = false;
   valorCodBarra: boolean = false;
   rowCount: any = 0;
-  rowCountTotal: any = 0;
+  rowCountTotal: any = 0;  
 
   vUbicacion: any = {
     'Sector': "",
@@ -204,12 +204,12 @@ export class AlmacenajePalletUaPage {
   }
 
   goOtraUbicacionPage() {
-    debugger;
+    debugger;    
     this.vAlmacenajePalletUaPage = {
       'Id_Ubicacion_Transito': this.vDatosUbicacion.Id_Ubicacion_Transito,
       'Id_Marca': this.vDatosUbicacion.Id_Marca,
       'CantidadPallets': this.vDatosUbicacion.CantidadPallets,
-      'lst_UA': this.vDatosUbicacion.lst_UA
+      'listUA': this.vDatosUbicacion.lst_UA
     };
     this.navCtrl.push(OtraUbicacionPage, {
       data: this.vAlmacenajePalletUaPage, ubicacion: this.Selectedcallback,
