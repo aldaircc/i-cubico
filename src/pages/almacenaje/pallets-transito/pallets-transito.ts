@@ -32,6 +32,7 @@ export class PalletsTransitoPage {
   listAuxPalletTransito: any = [];
   rowCount: any = 0;
   vId_Ubicacion: any;
+  serieUA: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     public toastCtrl:ToastController, public sAlmacenaje: AlmacenajeServiceProvider, public sGlobal: GlobalServiceProvider) {
@@ -89,7 +90,12 @@ export class PalletsTransitoPage {
               })
             }else{
               if(this.listAuxPalletTransito.length == 0){
-                for (var i = 0; i < this.listPalletTransito.length; i++) {
+                for (var i = 0; i < this.listPalletTransito.length; i++) {                   
+                  if(result[i].Serie == null)
+                    this.serieUA = result[i].UA_CodBarra;
+                  else
+                    this.serieUA = result[i].Serie;
+
                   var obj = {
                     'Cantidad': result[i].Cantidad,
                     'CodigoProducto': result[i].CodigoProducto,
@@ -115,6 +121,12 @@ export class PalletsTransitoPage {
                 //Validar que num de UA recibida no se encuentre en la lista Auxiliar
                 for (var i = 0; i < this.listPalletTransito.length; i++) {
                   var resultUA = false;
+                  
+                  if(result[i].LotePT == null)
+                    this.serieUA = result[i].UA_CodBarra;
+                  else
+                    this.serieUA = result[i].Serie;
+
                   var UA = result[i].UA_CodBarra;
                   for (var j = 0; j < this.listAuxPalletTransito.length; j++) {
                     if(UA == this.listAuxPalletTransito[j].UA_CodBarra){ //Si no se encuentra en la lista agregar elemento a la lista

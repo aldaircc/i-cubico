@@ -50,6 +50,7 @@ export class AlmacenajePalletUaPage {
     this.vDatosUbicacion = navParams.get('data');
     debugger;
     this.rowCountTotal = this.vDatosUbicacion.CantidadPallets;
+    this.codeBar = this.vDatosUbicacion.CodigoBarraUbi.trim();    
   }
 
   validarCodeBar() {
@@ -121,6 +122,8 @@ export class AlmacenajePalletUaPage {
   }
 
   registrarUAUbicacion() {
+    this.validarCodeBar();
+
     if (this.codeBar) {
       if (this.codeBar.trim() != "") {
         if (this.valorCodBarra) {
