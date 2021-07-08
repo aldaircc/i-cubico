@@ -63,7 +63,7 @@ export class PalletsTransitoPage {
         console.log('E-getDataRutaPicking',err);
       });
     }else{
-      this.presentToast("No se encontraron registros, ingrese código de Pallet/UA's");
+      this.presentToast("No se encontraron registros, ingrese código de Pallet/UA/Serie");
         setTimeout(() => {
           this.txtCodPalletUaRef.setFocus();
           this.selectAll(this.txtCodPalletUa);
@@ -80,7 +80,7 @@ export class PalletsTransitoPage {
             debugger;
             this.listPalletTransito = result;
             if(this.listPalletTransito.length == 0){
-              this.presentAlert("Pallet/UA' no registrada").then((resultAlert) => {
+              this.presentAlert("Pallet/UA/Serie' no registrada").then((resultAlert) => {
                 if (resultAlert) {
                   setTimeout(() => {
                     this.txtCodPalletUaRef.setFocus();
@@ -113,7 +113,8 @@ export class PalletsTransitoPage {
                     'NombreProducto': result[i].NombreProducto,
                     'Serie': result[i].Serie,
                     'UA_CodBarra': result[i].UA_CodBarra,
-                    'UM': result[i].UM
+                    'UM': result[i].UM,
+                    'SerieUA': this.serieUA
                   };
                   this.listAuxPalletTransito.push(obj);
                 }
@@ -151,12 +152,13 @@ export class PalletsTransitoPage {
                       'NombreProducto': result[i].NombreProducto,
                       'Serie': result[i].Serie,
                       'UA_CodBarra': result[i].UA_CodBarra,
-                      'UM': result[i].UM
+                      'UM': result[i].UM,
+                      'SerieUA': this.serieUA
                     };
                     this.listAuxPalletTransito.push(obj);
                     
                   }else{
-                    this.presentAlert("El código de Pallet/UA ya se encuentra en la lista.").then((resultAlert) => {
+                    this.presentAlert("El código de Pallet/UA/Serie ya se encuentra en la lista.").then((resultAlert) => {
                       if (resultAlert) {
                         setTimeout(() => {
                           this.codeBar = "";
@@ -180,21 +182,21 @@ export class PalletsTransitoPage {
             console.log('E-getDataRutaPicking',err);
           }); 
         }else{
-          this.presentToast("El código de Pallet/UA's debe ser mayor a 5 dígitos.");
+          this.presentToast("El código de Pallet/UA/Serie debe ser mayor a 5 dígitos.");
           setTimeout(() => {          
             this.txtCodPalletUaRef.setFocus();
             this.selectAll(this.txtCodPalletUa);
           }, (500));
         }               
       }else{
-        this.presentToast("Ingrese código de Pallet/UA's");
+        this.presentToast("Ingrese código de Pallet/UA/Serie");
         setTimeout(() => {          
           this.txtCodPalletUaRef.setFocus();
           this.selectAll(this.txtCodPalletUa);
         }, (500));
       }
     }else{
-      this.presentToast("Ingrese código de Pallet/UA's");
+      this.presentToast("Ingrese código de Pallet/UA/Serie");
       setTimeout(() => {
         this.txtCodPalletUaRef.setFocus();
         this.selectAll(this.txtCodPalletUa);
@@ -204,7 +206,7 @@ export class PalletsTransitoPage {
 
   eliminarPalletUA(data){
     debugger;
-    this.presentAlertConfirm("¿Está seguro de eliminar el Pallet/UA?”.").then((result) => {
+    this.presentAlertConfirm("¿Está seguro de eliminar el Pallet/UA/Serie?”.").then((result) => {
       if (result) {
         for (var j = 0; j < this.listAuxPalletTransito.length; j++) {
           if(data.UA_CodBarra == this.listAuxPalletTransito[j].UA_CodBarra){ //Si no se encuentra en la lista agregar elemento a la lista
