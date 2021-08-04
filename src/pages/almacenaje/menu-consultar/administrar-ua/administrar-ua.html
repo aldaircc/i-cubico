@@ -17,12 +17,12 @@
         </ion-col>
         <ion-col no-margin no-padding col-10 [hidden]="!titutlo1isDisplay">
           <ion-navbar no-padding no-margin>
-            <ion-label style="font-size: 15px; color: white; font-weight:bold;">ADMINISTRAR UA</ion-label>
+            <ion-label style="font-size: 15px; color: white; font-weight:bold;">ADMINISTRAR UA/SERIE</ion-label>
           </ion-navbar>
         </ion-col>
         <ion-col no-margin no-padding col-8 [hidden]="!titutlo2isDisplay">
           <ion-navbar no-padding no-margin>
-            <ion-label style="font-size: 15px; color: white; font-weight:bold;">ADMINISTRAR UA</ion-label>
+            <ion-label style="font-size: 15px; color: white; font-weight:bold;">ADMINISTRAR UA/SERIE</ion-label>
           </ion-navbar>
         </ion-col>
 
@@ -52,7 +52,7 @@
     <ion-row no-padding style="margin-top: 0px; margin-bottom: 0px; ">
       <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
         <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 15px; margin-bottom: 0px;">
-          UA:
+          UA/SERIE:
         </ion-label>
       </ion-col>
       <ion-col col-7 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
@@ -66,6 +66,16 @@
           style="position: absolute;	top: 0;	bottom: 0; left: 0; right: 0; width: 80%; margin: auto; background:none;">
           <ion-icon name="barcode" color="dark"></ion-icon>
         </button>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding style="margin-top: 0px; margin-bottom: 3px; ">
+      <ion-col col-3 style="padding-left: 2px; padding-right: 2px;  padding-top: 0px;  padding-bottom: 0px;">
+        <ion-label style="padding-left: 10px; font-weight:bold; margin-top: 3px; margin-bottom: 0px;">
+          Serie:
+        </ion-label>
+      </ion-col>
+      <ion-col col-1 style="padding-left: 2px; padding-right: 2px;  padding-top: 2px;  padding-bottom: 0px;">
+        <ion-checkbox [(ngModel)]="serieChecked"></ion-checkbox>
       </ion-col>
     </ion-row>
     <ion-row no-padding style="margin-top: 0px; margin-bottom: 3px; ">

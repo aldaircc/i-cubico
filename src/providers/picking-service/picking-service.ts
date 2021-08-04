@@ -258,7 +258,7 @@ export class PickingServiceProvider {
     };
 
     return new Promise((result) => {
-      this.http.get(this.sGlobal.pickingService + 'ListarUAsTransferidasXSubAlmacen', { params: parameter })
+      this.http.get(this.sGlobal.pickingService + 'ListarUAsTransferidasXSubAlmacen_V2', { params: parameter })
         .map(res => res.json())
         .subscribe(data => {
           result(data);

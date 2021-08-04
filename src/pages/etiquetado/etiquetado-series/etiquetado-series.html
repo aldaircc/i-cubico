@@ -100,6 +100,18 @@
       </ion-col>
 
     </ion-row>
+    <ion-row>
+      <ion-col col-2 col-sm no-padding no-margin>
+        Sub Almacén
+      </ion-col>
+      <ion-col col-10 col-sm no-padding no-margin>
+        <ion-select placeholder="Sub Almacén" [(ngModel)]="id_SubAlm" interface="action-sheet" #selectSubAlmacen style="padding: 8px 3px 8px 10px">
+          <ion-option value="" selected>Seleccionar</ion-option>
+          <ion-option *ngFor="let sa of listSubAlm" value="{{ sa.Id_SubAlmacen }}">{{ sa.NombreSubAlmacen }}
+          </ion-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 
   <ion-card *ngFor="let obj of listUAs">

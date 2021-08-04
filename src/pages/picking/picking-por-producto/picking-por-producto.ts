@@ -52,7 +52,7 @@ export class PickingPorProductoPage {
   codUbicacion: string;
   valor: number = 0;
   codigoBarraSerie: string;
-
+  IdUbiGlobal: any;
 
   @ViewChild(Navbar) navBar: Navbar;
   @ViewChild('txtCodBarraUA') txtCodBarraUARef;
@@ -128,6 +128,7 @@ export class PickingPorProductoPage {
             this.contador = id + 1;
             this.posicion = id;
             this.pickingProducto = result[this.posicion];
+            this.IdUbiGlobal = this.pickingProducto.IdUbicacion;
             if (this.contador == 1) {
               this.Backisenabled = false;
             } else { this.Backisenabled = true; }
@@ -321,38 +322,45 @@ export class PickingPorProductoPage {
         return;
       }
 
-      this.sPicking.ValidarSeriePicking(this.vRutaPickingPage.Id_Tx, this.pickingProducto.IdUbicacion, this.pickingProducto.Item, this.pickingProducto.IdProducto, this.codeBar.trim()).then((result) => {
-        debugger;
-        this.UAPicking = result;
-        if (this.UAPicking.errNumber == 0) {
-          this.isbgWhite = false;
-          this.isBgRed = false;
-          this.isBgYellow = true;
-          this.isBgGreen = false;
-          //Mostrar cantidad de la UA
-          this.Textcantidad = "1";
-          this.Txtcantidadisenabled = false;
-          this.codigoBarraSerie =  this.UAPicking.message;
-          this.registarUA();
-          setTimeout(() => {
-            this.selectAll(this.txtCantidadUA);
-          }, (500));
-          
-        } else {
-          this.presentToast(this.UAPicking.message);
-          this.isbgWhite = false;
-          this.isBgRed = true;
-          this.isBgYellow = false;
-          this.isBgGreen = false;
-          this.codeBar = "";
-          this.Textcantidad = "";
-          setTimeout(() => {
-            this.selectAll(this.txtCodBarraUA);
-          }, (500));
-        }
+      
 
-      });
+      if(this.IdUbiGlobal == this.pickingProducto.IdUbicacion){
 
+        this.sPicking.ValidarSeriePicking(this.vRutaPickingPage.Id_Tx, this.pickingProducto.IdUbicacion, this.pickingProducto.Item, this.pickingProducto.IdProducto, this.codeBar.trim()).then((result) => {
+          debugger;
+          this.UAPicking = result;
+          if (this.UAPicking.errNumber == 0) {
+            this.isbgWhite = false;
+            this.isBgRed = false;
+            this.isBgYellow = true;
+            this.isBgGreen = false;
+            //Mostrar cantidad de la UA
+            this.Textcantidad = "1";
+            this.Txtcantidadisenabled = false;
+            this.codigoBarraSerie =  this.UAPicking.message;
+            this.registarUA();
+            setTimeout(() => {
+              this.selectAll(this.txtCantidadUA);
+            }, (500));
+            
+          } else {
+            this.presentToast(this.UAPicking.message);
+            this.isbgWhite = false;
+            this.isBgRed = true;
+            this.isBgYellow = false;
+            this.isBgGreen = false;
+            this.codeBar = "";
+            this.Textcantidad = "";
+            setTimeout(() => {
+              this.selectAll(this.txtCodBarraUA);
+            }, (500));
+          }
+
+        });
+      }
+      else{
+        this.goRutaPickingPageUpdate();
+      }
     }
     else {
 

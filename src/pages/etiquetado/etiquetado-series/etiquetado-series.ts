@@ -1,9 +1,10 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController, Select } from 'ionic-angular';
 import { EtiquetadoPage_02Page } from '../etiquetado-page-02/etiquetado-page-02';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { AlmacenajeServiceProvider } from '../../../providers/almacenaje-service/almacenaje-service';
 import { EtiquetadoPage_04Page } from '../etiquetado-page-04/etiquetado-page-04';
+import { EtiquetadoServiceProvider } from '../../../providers/etiquetado-service/etiquetado-service';
 /**
  * Generated class for the EtiquetadoSeriesPage page.
  *
@@ -21,7 +22,8 @@ export class EtiquetadoSeriesPage {
   vEtq: any = {    
     'Articulo': "",        
     'Codigo': null,                            
-    'Id_Producto': 0    
+    'Id_Producto': 0,
+    'IdCuentaLPN': 0    
   };
 
   isVisibleSearchButton: boolean = false;
@@ -32,16 +34,19 @@ export class EtiquetadoSeriesPage {
 
   listUAs: any = [];  
   rowCount: number = 0;
-  serie: string = "";                  
- 
+  serie: string = "";  
+  listSubAlm: any = [];                
+  id_SubAlm: any;
+   
   @ViewChild('iSerie', { read: ElementRef }) private iSerie: ElementRef;  
+  @ViewChild('selectSubAlmacen') selectSubAlmacen: Select;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
-    public sGlobal: GlobalServiceProvider, public sAlm: AlmacenajeServiceProvider, public toastCtrl: ToastController) {
+    public sGlobal: GlobalServiceProvider, public sEtq: EtiquetadoServiceProvider, public sAlm: AlmacenajeServiceProvider, public toastCtrl: ToastController) {
 
     this.isVisibleSearchButton = (navParams.get('codePage') != null) ? true : false;
     this.titutlos1isDisplay = (navParams.get('codePage') != null) ? false : true;
-    this.titutlos2isDisplay = (navParams.get('codePage') != null) ? true : false;
+    this.titutlos2isDisplay = (navParams.get('codePage') != null) ? true : false;    
   }
  
   goToEtqPage02() {    
@@ -52,12 +57,16 @@ export class EtiquetadoSeriesPage {
   }
 
   dataFromEtqPage02: any;
-  productSelectedcallback = data => {
+  productSelectedcallback = data =>  {
+    console.log(data,"datos");
+    debugger;    
+    this.listarSubAlmacenesXCuenta(data.IdCuentaLPN, this.sGlobal.Id_Almacen);
     this.dataFromEtqPage02 = data;    
     this.vEtq.Codigo = this.dataFromEtqPage02.Codigo;        
     this.vEtq.Articulo = this.dataFromEtqPage02.Descripcion;            
     this.vEtq.Id_Producto = this.dataFromEtqPage02.Id_Producto;                
-    this.vEtq.Id_Condicion = this.dataFromEtqPage02.Id_Condicion;                
+    this.vEtq.Id_Condicion = this.dataFromEtqPage02.Id_Condicion;       
+    this.vEtq.IdCuentaLPN = this.dataFromEtqPage02.IdCuentaLPN;         
   };  
 
   selectAll(el: ElementRef, time) {
@@ -179,8 +188,15 @@ export class EtiquetadoSeriesPage {
 
   }
 
-
   goToEtqPage04(): void {
+    if (this.id_SubAlm == 0 || this.id_SubAlm == undefined) {      
+      this.presentToast('Seleccione Sub Almacén');
+      setTimeout(() => {
+        this.selectSubAlmacen.open();
+      }, 500); 
+      return;     
+    }
+
     if (this.listUAs.length != 0) {
 
       var listUA = [];
@@ -188,7 +204,7 @@ export class EtiquetadoSeriesPage {
         listUA.push(el.Serie);        
       });
 
-      this.navCtrl.push(EtiquetadoPage_04Page, { 'flagSerie': true, 'listUA': listUA, 'Id_Producto': this.vEtq.Id_Producto,'Id_Condicion':this.vEtq.Id_Condicion });
+      this.navCtrl.push(EtiquetadoPage_04Page, { 'flagSerie': true, 'listUA': listUA, 'Id_Producto': this.vEtq.Id_Producto,'Id_Condicion':this.vEtq.Id_Condicion, 'Id_SubAlm': this.id_SubAlm });
     } else {
       this.presentToast('No existen series registradas');
       this.selectAll(this.iSerie, 500);
@@ -200,6 +216,7 @@ export class EtiquetadoSeriesPage {
     this.serie = "";
     this.rowCount = 0;
     this.selectAll(this.iSerie, 500);
+    this.id_SubAlm = "";
   }
 
   async confirmarRetorno (){
@@ -251,6 +268,16 @@ export class EtiquetadoSeriesPage {
       confirm.present();
     })
   }
- 
+
+  listarSubAlmacenesXCuenta(intIdCuenta, intIdAlmacen) {
+    console.log(intIdCuenta,"CUENTA");
+    console.log(intIdAlmacen,"ALMACEN");
+
+    this.sEtq.listarSubAlmacenesXCuenta(intIdCuenta, intIdAlmacen).then(result => {
+      debugger;
+      console.log('result listarSubAlmacenesXCuenta', result);
+      this.listSubAlm = result;  
+    });
+  }  
 
 }

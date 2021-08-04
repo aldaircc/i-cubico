@@ -72,6 +72,7 @@ export class AdministrarUaPage {
   valorpopoverGlobal: boolean = false;
   popoverGlobal: any;
   LoteReadOnly: boolean = false;
+  serieChecked: boolean = false;
 
   formatLabels: any = [
     { 'Id_Format': 1, 'Label': 'ETQ_UA.txt' },
@@ -93,67 +94,146 @@ export class AdministrarUaPage {
   
 
   validarCodeBarUA() {
-    if (this.codeBarUA) {
-      if (this.codeBarUA.trim() != "") {
-        if (this.codeBarUA.length == 12) {
-          debugger;
-          this.sAlmacenaje.getListarUAUbicada(this.codeBarUA, this.sGlobal.Id_Almacen).then((result) => {
-            debugger;
-            this.ResultUA = result;
-            if (this.ResultUA.length == 0) {
-              this.NombreImpresora = "NINGUNA";
-              this.presentAlert("UA' no registrada").then((resultAlert) => {
-                if (resultAlert) {
-                  this.limpiar();
-                  setTimeout(() => {
-                    this.selectAll(this.txtCodUA);
-                  }, (500));
-                }
-              })
-            } else {
 
-              if(this.ResultUA[0].Lote == '999999'){
-                this.LoteReadOnly = true;
-
-
-              }
-              else{
-                this.LoteReadOnly = false;
-              }
-
-              this.ResultUA_Aux = this.ResultUA[0];
-              this.FechaEmision =  ( result[0].FechaEmision == null) ? "" :  moment(result[0].FechaEmision, "DD-MM-YYYY").toDate().toISOString();
-              this.FechaVencimiento = (result[0].FechaVencimiento == null) ? "" : moment(result[0].FechaVencimiento, "DD-MM-YYYY").toDate().toISOString();
-              this.Lote = result[0].Lote;
-              this.Cantidad = result[0].Cantidad;
-
-              this.FechaEmisionBk = ( result[0].FechaEmision == null) ? "" : moment(result[0].FechaEmision, "DD-MM-YYYY").toDate().toISOString();
-              this.FechaVencimientoBk = (result[0].FechaVencimiento == null) ? "" : moment(result[0].FechaVencimiento, "DD-MM-YYYY").toDate().toISOString();
-              this.LoteBk = result[0].Lote;
-              this.CantidadBk = result[0].Cantidad;
-
-              this.btnReimprimirisenabled = true;
-              this.btnEliminarisenabled = true;
-              this.btnActualizarisenabled = true;
-              this.btnReasignarisenabled = true;
-              this.btnReubicarisenabled = true;
-              this.btnParticionarisenabled = true;
-
+    console.log(this.serieChecked,"serie chekadaa");
+    if(this.serieChecked){
+      debugger;        
+      if (!this.codeBarUA || this.codeBarUA.trim() == "") {
+        this.presentToast("Ingrese la serie");
+        setTimeout(() => {
+          this.selectAll(this.txtCodUA);
+        }, (500));   
+        return;                                                                               
+      }
+      if (this.codeBarUA.length < 6) {
+        this.presentToast("El código de la serie debe tener más de 5 dígitos");
+        setTimeout(() => {
+          this.selectAll(this.txtCodUA);
+        }, (500));   
+        return;                                                                               
+      }
+      this.sAlmacenaje.getListarSerieUbicada(this.codeBarUA, this.sGlobal.Id_Almacen).then((result) => {
+        debugger;
+        this.ResultUA = result;
+        if (this.ResultUA.length == 0) {
+          this.NombreImpresora = "NINGUNA";
+          this.presentAlert("Serie no registrada").then((resultAlert) => {
+            if (resultAlert) {
+              this.limpiar();
               setTimeout(() => {
-                this.selectAll(this.txtCantidad);
+                this.selectAll(this.txtCodUA);
               }, (500));
-
-              if (this.sGlobal.Id_Impresora == 0) {
-                this.NombreImpresora = "NINGUNA";
-              } else {
-                this.NombreImpresora = this.sGlobal.nombreImpresora;
-              }
             }
-          }, err => {
-            console.log('E-getDataRutaPicking', err);
-          });
+          })
         } else {
-          this.presentToast("El código de UA debe tener 12 dígitos.");
+
+          if(this.ResultUA[0].Lote == '999999'){
+            this.LoteReadOnly = true;
+          }
+          else{
+            this.LoteReadOnly = false;
+          }
+
+          this.ResultUA_Aux = this.ResultUA[0];
+          this.FechaEmision =  ( result[0].FechaEmision == null) ? "" :  moment(result[0].FechaEmision, "DD-MM-YYYY").toDate().toISOString();
+          this.FechaVencimiento = (result[0].FechaVencimiento == null) ? "" : moment(result[0].FechaVencimiento, "DD-MM-YYYY").toDate().toISOString();
+          this.Lote = result[0].Lote;
+          this.Cantidad = result[0].Cantidad;
+
+          this.FechaEmisionBk = ( result[0].FechaEmision == null) ? "" : moment(result[0].FechaEmision, "DD-MM-YYYY").toDate().toISOString();
+          this.FechaVencimientoBk = (result[0].FechaVencimiento == null) ? "" : moment(result[0].FechaVencimiento, "DD-MM-YYYY").toDate().toISOString();
+          this.LoteBk = result[0].Lote;
+          this.CantidadBk = result[0].Cantidad;
+
+          this.btnReimprimirisenabled = true;
+          this.btnEliminarisenabled = true;
+          this.btnActualizarisenabled = true;
+          this.btnReasignarisenabled = true;
+          this.btnReubicarisenabled = true;
+          this.btnParticionarisenabled = true;
+
+          setTimeout(() => {
+            this.selectAll(this.txtCantidad);
+          }, (500));
+
+          if (this.sGlobal.Id_Impresora == 0) {
+            this.NombreImpresora = "NINGUNA";
+          } else {
+            this.NombreImpresora = this.sGlobal.nombreImpresora;
+          }
+        }
+      }, err => {
+        console.log('E-getListarSerieUbicada', err);
+      });
+    }
+    else{
+      if (this.codeBarUA) {
+        if (this.codeBarUA.trim() != "") {
+          if (this.codeBarUA.length == 12) {
+            debugger;
+            this.sAlmacenaje.getListarUAUbicada(this.codeBarUA, this.sGlobal.Id_Almacen).then((result) => {
+              debugger;
+              this.ResultUA = result;
+              if (this.ResultUA.length == 0) {
+                this.NombreImpresora = "NINGUNA";
+                this.presentAlert("UA' no registrada").then((resultAlert) => {
+                  if (resultAlert) {
+                    this.limpiar();
+                    setTimeout(() => {
+                      this.selectAll(this.txtCodUA);
+                    }, (500));
+                  }
+                })
+              } else {
+
+                if(this.ResultUA[0].Lote == '999999'){
+                  this.LoteReadOnly = true;
+
+
+                }
+                else{
+                  this.LoteReadOnly = false;
+                }
+
+                this.ResultUA_Aux = this.ResultUA[0];
+                this.FechaEmision =  ( result[0].FechaEmision == null) ? "" :  moment(result[0].FechaEmision, "DD-MM-YYYY").toDate().toISOString();
+                this.FechaVencimiento = (result[0].FechaVencimiento == null) ? "" : moment(result[0].FechaVencimiento, "DD-MM-YYYY").toDate().toISOString();
+                this.Lote = result[0].Lote;
+                this.Cantidad = result[0].Cantidad;
+
+                this.FechaEmisionBk = ( result[0].FechaEmision == null) ? "" : moment(result[0].FechaEmision, "DD-MM-YYYY").toDate().toISOString();
+                this.FechaVencimientoBk = (result[0].FechaVencimiento == null) ? "" : moment(result[0].FechaVencimiento, "DD-MM-YYYY").toDate().toISOString();
+                this.LoteBk = result[0].Lote;
+                this.CantidadBk = result[0].Cantidad;
+
+                this.btnReimprimirisenabled = true;
+                this.btnEliminarisenabled = true;
+                this.btnActualizarisenabled = true;
+                this.btnReasignarisenabled = true;
+                this.btnReubicarisenabled = true;
+                this.btnParticionarisenabled = true;
+
+                setTimeout(() => {
+                  this.selectAll(this.txtCantidad);
+                }, (500));
+
+                if (this.sGlobal.Id_Impresora == 0) {
+                  this.NombreImpresora = "NINGUNA";
+                } else {
+                  this.NombreImpresora = this.sGlobal.nombreImpresora;
+                }
+              }
+            }, err => {
+              console.log('E-getDataRutaPicking', err);
+            });
+          } else {
+            this.presentToast("El código de UA debe tener 12 dígitos.");
+            setTimeout(() => {
+              this.selectAll(this.txtCodUA);
+            }, (500));
+          }
+        } else {
+          this.presentToast("Ingrese código de UA");
           setTimeout(() => {
             this.selectAll(this.txtCodUA);
           }, (500));
@@ -164,11 +244,6 @@ export class AdministrarUaPage {
           this.selectAll(this.txtCodUA);
         }, (500));
       }
-    } else {
-      this.presentToast("Ingrese código de UA");
-      setTimeout(() => {
-        this.selectAll(this.txtCodUA);
-      }, (500));
     }
   }
 

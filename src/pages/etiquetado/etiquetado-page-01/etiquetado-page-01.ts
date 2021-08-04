@@ -493,7 +493,8 @@ export class EtiquetadoPage_01Page {
                 'Id_Estado': this.vEtq.Id_Condicion,
                 'SaldoEtiqueta': (cantEtqSaldo == 0) ? 0 : cantEtqSaldo,
                 'Id_Causal': null,
-                'Id_SubAlmacen': this.id_SubAlm
+                'Id_SubAlmacen': this.id_SubAlm,
+                'Serie': this.serie
               };
               debugger;
 

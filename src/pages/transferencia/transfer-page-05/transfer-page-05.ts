@@ -31,38 +31,14 @@ export class TransferPage_05Page {
   }
 
   listarUAsTransferidasXSubAlmacen(strIdTx,intId_Producto, strLote, intId_Ubicacion): void{
-    this.sPicking.listarUAsTransferidasXSubAlmacen(strIdTx, intId_Producto, strLote, intId_Ubicacion).then(result=>{
-      debugger;
+    this.sPicking.listarUAsTransferidasXSubAlmacen(strIdTx, intId_Producto, strLote, intId_Ubicacion).then(result=>{      
       var res: any = result;
       var strSector = "";
       res.forEach(el => {
-        let dataUbi = el.UbicacionDestino.split('-');
-        dataUbi.forEach(cel => {
-          let val = cel.split(':');
-          if(val[0].trim().length > 1){
-            strSector = val[0].substring(0, val[0].length - 1).trim();
-            el.Sector = strSector;
-            el.Fila = val[1].trim();
-          }else{
-            switch (val[0].trim()){
-              case  'F': 
-                el.Fila = (parseInt(val[1]) <= 9) ? "0" + val[1].trim() : val[1].trim();
-                break;
-              case  'N': 
-                el.Nivel = (parseInt(val[1]) <= 9) ? "0" + val[1].trim() : val[1].trim();
-                break;
-              case  'C': 
-                el.Columna = (parseInt(val[1]) <= 9) ? "0" + val[1].trim() : val[1].trim();
-                break;
-              case  'P': 
-                el.Posicion = (parseInt(val[1]) <= 9) ? "0" + val[1].trim() : val[1].trim();
-                break;
-              default:
-                break;
-            }
-          }
-        });
-        el.Ubicacion_2 = el.UbicacionDestino.replace(strSector, '');
+        if(el.UbicacionDestino != ""){
+          el.Sector = el.Sector;          
+          el.Ubicacion_2 = el.Ubicacion;          
+        }
       });
 
       this.listUAsTrans = res;

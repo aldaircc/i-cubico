@@ -50,7 +50,7 @@ export class EtiquetadoServiceProvider {
     };
 
     return new Promise((result, reject) => {
-      this.http.post(this.sGlobal.recepcion + 'registrarUAMasivo/imp/idCentro', JSON.stringify(parameter), { headers: this.headers })
+      this.http.post(this.sGlobal.recepcion + 'registrarUAMasivoV2/imp/idCentro', JSON.stringify(parameter), { headers: this.headers })
         .map(res => res.json())
         .subscribe(data => {
           result(data);

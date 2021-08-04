@@ -102,7 +102,7 @@ export class AlmacenajeServiceProvider {
     });
   }
 
-  registrarSeriesUbicacion(listStrUA, intIdUbicacion,intIdProducto,intIdCondicion, strUsuario) {    
+  registrarSeriesUbicacion(listStrUA, intIdUbicacion,intIdProducto,intIdCondicion, strUsuario, intIdSubAlmacen) {    
     let parameter = {
       'strUA': listStrUA,
       'intIdUbicacion': intIdUbicacion,
@@ -110,11 +110,12 @@ export class AlmacenajeServiceProvider {
       'intIdCondicion': intIdCondicion,
       'intIdCentro': this.sGlobal.Id_Centro,
       'intIdAlmacen': this.sGlobal.Id_Almacen,      
-      'strUsuario': strUsuario
+      'strUsuario': strUsuario,
+      'intIdSubAlmacen': intIdSubAlmacen
     };
 
     return new Promise((result, reject) => {
-      this.http.post(this.sGlobal.almacenajeService + 'RegistrarSeriesUbicacion/strUA/intIdUbicacion/intIdProducto/intIdCondicion/intIdCentro/intIdAlmacen/strUsuario', JSON.stringify(parameter), { headers: this.headers })
+      this.http.post(this.sGlobal.almacenajeService + 'RegistrarSeriesUbicacion_V2/strUA/intIdUbicacion/intIdProducto/intIdCondicion/intIdCentro/intIdAlmacen/strUsuario/intIdSubAlmacen', JSON.stringify(parameter), { headers: this.headers })
         .map(res => res.json())
         .subscribe(data => {
           result(data);          
@@ -242,7 +243,7 @@ export class AlmacenajeServiceProvider {
     var parameter: any;
     parameter = { 'STRBARRAUBICACION': strUbi, 'INTIDALMACEN': intIdAlmacen };
     return new Promise(resolve => {
-      this.http.get(this.sGlobal.almacenajeService + 'ListarUAsXUbicacion', { params: parameter })
+      this.http.get(this.sGlobal.almacenajeService + 'ListarUAsXUbicacion_V2', { params: parameter })
         .map(res => res.json())
         .subscribe(data => {
           resolve(data);
@@ -331,6 +332,20 @@ export class AlmacenajeServiceProvider {
     parameter = { 'STRUA': strUA, 'INTIDALMACEN': intIdAlmacen };
     return new Promise(resolve => {
       this.http.get(this.sGlobal.almacenajeService + 'ListarUAUbicada', { params: parameter })
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log('Error getListarUAUbicada', err);
+        })
+    });
+  }
+
+  getListarSerieUbicada(serie, intIdAlmacen) {
+    var parameter: any;
+    parameter = { 'serie': serie, 'INTIDALMACEN': intIdAlmacen };
+    return new Promise(resolve => {
+      this.http.get(this.sGlobal.almacenajeService + 'ListarSerieUbicada', { params: parameter })
         .map(res => res.json())
         .subscribe(data => {
           resolve(data);

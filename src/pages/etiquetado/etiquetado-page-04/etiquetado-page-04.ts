@@ -32,6 +32,7 @@ export class EtiquetadoPage_04Page {
   vParameterFlagSerie: boolean=false;
   Id_Producto: any;
   Id_Condicion: any;
+  Id_SubAlmacen: any;
 
   @ViewChild('inputUbi', { read: ElementRef }) private inputUbi: ElementRef;
 
@@ -40,11 +41,13 @@ export class EtiquetadoPage_04Page {
     this.vParameter = this.navParams.get('listUA');  
     this.vParameterFlagSerie  = this.navParams.get('flagSerie');  
     this.Id_Producto =  this.navParams.get('Id_Producto');    
-    this.Id_Condicion =  this.navParams.get('Id_Condicion');    
+    this.Id_Condicion =  this.navParams.get('Id_Condicion');  
+    this.Id_SubAlmacen =  this.navParams.get('Id_SubAlm');      
     console.log(this.vParameter, "parámetros lista");
     console.log(this.Id_Producto);
     console.log(this.Id_Condicion);
     console.log(this.vParameterFlagSerie,"flagSerie");
+    console.log(this.Id_SubAlmacen,"Sub Almacen");
     this.rowCount = this.vParameter.length;
   }
  
@@ -96,7 +99,7 @@ export class EtiquetadoPage_04Page {
     if(this.vParameterFlagSerie){
       
       if (this.strUbicacion.trim() != "" && this.id_Ubicacion != 0) {
-        this.registrarSeriesUbicacion(this.vParameter, this.id_Ubicacion,this.Id_Producto,this.Id_Condicion , this.sGlobal.userName);
+        this.registrarSeriesUbicacion(this.vParameter, this.id_Ubicacion,this.Id_Producto,this.Id_Condicion , this.sGlobal.userName,this.Id_SubAlmacen);
       } else {
         alert('Ingresar y/o validar ubicación');
         this.selectAll(this.inputUbi, 600);
@@ -145,8 +148,8 @@ export class EtiquetadoPage_04Page {
     });
   }
 
-  registrarSeriesUbicacion(listStrUA, intId_Ubicacion,intIdProducto,intIdCondicion, strUsuario): void {
-    this.sAlmac.registrarSeriesUbicacion(listStrUA, intId_Ubicacion,intIdProducto,intIdCondicion, strUsuario).then(result => {
+  registrarSeriesUbicacion(listStrUA, intId_Ubicacion,intIdProducto,intIdCondicion, strUsuario, intIdSubAlmacen): void {
+    this.sAlmac.registrarSeriesUbicacion(listStrUA, intId_Ubicacion,intIdProducto,intIdCondicion, strUsuario, intIdSubAlmacen).then(result => {
       let res: any = result;
       if (res.errNumber == 0) {
         alert('Se ubicó correctamente');
