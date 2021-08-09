@@ -7,14 +7,19 @@
 <ion-header>
 
   <ion-toolbar no-padding no-margin color="primary">
-    <ion-navbar>
-      <ion-label style="font-size: 15px; color: white; font-weight:bold;">PREPARAR BULTOS</ion-label>                  
-    </ion-navbar>
-    <ion-buttons start>
+    <ion-navbar hideBackButton>
+      <ion-buttons left>
+        <button ion-button (click)="confirmacionBack()">
+            <ion-icon class="customIcon" name="arrow-back"></ion-icon>
+        </button>
+    </ion-buttons>
+    <ion-title>PREPARAR BULTOS</ion-title>                     
+    <ion-buttons end>
       <button ion-button icon-only (click)="presentPopover($event)">
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-buttons>
+  </ion-navbar>
   </ion-toolbar>
 
   <ion-grid class="bgHeader statico">

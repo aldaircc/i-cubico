@@ -741,6 +741,7 @@ export class EmbalajePage_04Page {
   }
 
   ionViewDidLoad() {
+    debugger;
     this.navBar.backButtonClick = (e: UIEvent) => {
       this.navCtrl.getViews().forEach(item => {
         if (item.name == 'EmbalajePage_03Page') {
@@ -749,4 +750,9 @@ export class EmbalajePage_04Page {
       });
     }
   }
+
+  confirmacionBack(): void {
+    this.navCtrl.pop();          
+  }
+
 }
