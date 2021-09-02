@@ -69,8 +69,7 @@ popoverGlobal: any;
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 2000,
-      position: 'bottom'
+      duration: 1500            
     });
 
     toast.present();
@@ -103,7 +102,7 @@ popoverGlobal: any;
                 this.cantidadRec = 0;
                 this.codeBar.Text = "";
                 this.selectAll(this.iCodeBar, 500);
-                this.presentToast(rpta.message);
+                this.presentToast(rpta.message);                
               } else {
                 this.bolUa = true;
                 this.isBgYellow = true;
@@ -577,13 +576,13 @@ popoverGlobal: any;
       this.codeBar.Text = "";
       this.codeBar.Tag = "";
 
-      if (saldo == 0) {
-        this.presentToast('Producto completo');
-        this.selectAll(this.iCodeBar, 500);
-      } else {
-        this.presentToast('Registro exitoso');
-        this.selectAll(this.iCodeBar, 500);
-      }
+      // if (saldo == 0) {
+      //   this.presentToast('Producto completo');
+      //   this.selectAll(this.iCodeBar, 500);
+      // } else {
+      //   this.presentToast('Registro exitoso');
+      //   this.selectAll(this.iCodeBar, 500);
+      // }
     } else if (message.errNumber == 1) {
       this.isBgRed = true;
       this.isBgYellow = false;
