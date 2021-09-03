@@ -69,7 +69,13 @@ popoverGlobal: any;
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 1500            
+      duration: 1000            
+    });
+
+    toast.onDidDismiss(() => {      
+      this.selectAll(this.iCodeBar, 500);
+      this.codeBar.Text = "";
+     
     });
 
     toast.present();
@@ -96,8 +102,7 @@ popoverGlobal: any;
               if (rpta.errNumber != 0) {
                 this.isBgRed = true;
                 this.isBgYellow = false;
-                this.isDisabledSave = false;
-                // this.bolUaValida = false;
+                this.isDisabledSave = false;                
                 this.bolUa = false;
                 this.cantidadRec = 0;
                 this.codeBar.Text = "";
@@ -112,8 +117,7 @@ popoverGlobal: any;
                 this.codeBar.Tag = this.codeBar.Text;
                 if (this.vReciboPage02.bolAutomatic === true) {
                   this.saveTransaction();
-                }
-                // this.bolUaValida = false;
+                }                
               }
             }, (err) => {
               console.log('E-validarReciboTransferenciaSerie', err);
@@ -125,8 +129,7 @@ popoverGlobal: any;
             if (res.errNumber != 0) {
               this.codeBar.Text = "";
               this.cantidadRec = 0;
-              this.bolUa = false;
-              // this.bolUaValida = false;
+              this.bolUa = false;              
               this.isBgRed = true;
               this.isBgYellow = false;
               this.isBgGreen = false;
@@ -142,8 +145,7 @@ popoverGlobal: any;
               this.codeBar.Tag = this.codeBar.Text;
               if (this.vReciboPage02.bolAutomatic === true) {
                 this.saveTransaction();
-              }
-              // this.bolUaValida = false;
+              }              
             }
           });
         }
@@ -156,8 +158,7 @@ popoverGlobal: any;
         this.isBgYellow = false;
         this.isBgGreen = false;
         this.bolUa = false;
-        this.codeBar.Tag = '';
-        // this.bolUaValida = false;
+        this.codeBar.Tag = '';        
         this.cantidadAve = 0;
         this.cantidadRec = 0;
         this.selectAll(this.iCodeBar, 500);
@@ -249,8 +250,7 @@ popoverGlobal: any;
               this.isBgRed = false;
               this.isBgYellow = true;
               this.isBgGreen = false;
-              this.bolUa = true;
-              // this.bolUaValida = true;
+              this.bolUa = true;              
               this.cantidadRec = rpta.valor1;
               this.codeBar.Tag = this.codeBar.Text;
               this.selectAll(this.iCantidadRecibida, 500);
@@ -265,8 +265,7 @@ popoverGlobal: any;
               this.isBgGreen = false;
               this.codeBar.Tag = '';
               this.presentToast(rpta.message);
-              this.bolUa = false;
-              // this.bolUaValida = false;
+              this.bolUa = false;              
               this.cantidadAve = 0;
               this.cantidadRec = 0;
               this.selectAll(this.iCodeBar, 500);
@@ -276,8 +275,7 @@ popoverGlobal: any;
               this.isBgYellow = false;
               this.isBgGreen = false;
               this.presentToast(rpta.message);
-              this.bolUa = false;
-              // this.bolUaValida = false;
+              this.bolUa = false;              
               this.cantidadAve = 0;
               this.cantidadRec = 0;
               this.selectAll(this.iCodeBar, 500);
@@ -286,8 +284,7 @@ popoverGlobal: any;
               this.isBgYellow = false;
               this.isBgGreen = false;
               this.presentToast(rpta.message);
-              this.bolUa = false;
-              // this.bolUaValida = false;
+              this.bolUa = false;              
               this.cantidadAve = 0;
               this.cantidadRec = 0;
               this.selectAll(this.iCodeBar, 500);
@@ -300,8 +297,7 @@ popoverGlobal: any;
           this.isBgRed = true;
           this.isBgYellow = false;
           this.isBgGreen = false;
-          this.bolUa = false;
-          // this.bolUaValida = false;
+          this.bolUa = false;          
           this.cantidadAve = 0;
           this.cantidadRec = 0;
           this.selectAll(this.iCodeBar, 500);
@@ -576,13 +572,15 @@ popoverGlobal: any;
       this.codeBar.Text = "";
       this.codeBar.Tag = "";
 
-      // if (saldo == 0) {
-      //   this.presentToast('Producto completo');
-      //   this.selectAll(this.iCodeBar, 500);
-      // } else {
-      //   this.presentToast('Registro exitoso');
-      //   this.selectAll(this.iCodeBar, 500);
-      // }
+      if (saldo == 0) {
+        this.presentToast('Producto completo');
+        this.selectAll(this.iCodeBar, 500);
+        this.codeBar.Text = "";
+      } else {
+        this.presentToast('Registro exitoso');
+        this.selectAll(this.iCodeBar, 500);
+        this.codeBar.Text = "";
+      }
     } else if (message.errNumber == 1) {
       this.isBgRed = true;
       this.isBgYellow = false;
