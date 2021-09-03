@@ -73,9 +73,8 @@ popoverGlobal: any;
     });
 
     toast.onDidDismiss(() => {      
-      this.selectAll(this.iCodeBar, 500);
+      this.selectAll(this.iCodeBar, 100);
       this.codeBar.Text = "";
-     
     });
 
     toast.present();
