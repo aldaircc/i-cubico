@@ -7,6 +7,8 @@ import { GlobalServiceProvider } from '../../providers/global-service/global-ser
 import { PopoverReciboComponent } from '../../components/popover-recibo/popover-recibo';
 import { ImpresoraPage } from '../impresora/impresora';
 import { HomePage } from '../home/home';
+import { MainMenuPage } from '../main-menu/main-menu'
+
 
 /**
  * Generated class for the ReciboPage page.
@@ -33,10 +35,13 @@ export class ReciboPage {
   listProcess: any = [];
   countConfirm: number = 0;
   countProcess: number = 0;
+  userProfile: any;
 
   constructor(public app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController,
     public toastCtrl: ToastController, public sRecibo: ReciboServiceProvider, public modalCtrl: ModalController, public sGlobal: GlobalServiceProvider,
-    public alertCtrl: AlertController, public viewCtrl: ViewController) { }
+    public alertCtrl: AlertController, public viewCtrl: ViewController) {
+      this.userProfile = this.navParams.data;
+     }
 
   showToast(message, duration, position, showClose, closeText, dismissChange) {
     let toast = this.toastCtrl.create({
@@ -274,4 +279,9 @@ export class ReciboPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ReciboPage');
   }
+
+  confirmacionBack(): void {    
+    this.navCtrl.push(MainMenuPage,this.userProfile);    
+  }
+
 }

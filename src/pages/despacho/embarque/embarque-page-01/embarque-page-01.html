@@ -7,7 +7,12 @@
 <ion-header>
 
   <ion-toolbar no-padding no-margin color="primary">
-    <ion-navbar>
+    <ion-navbar hideBackButton>
+      <ion-buttons left>
+        <button ion-button (click)="confirmacionBack()">
+            <ion-icon class="customIcon" name="arrow-back"></ion-icon>
+        </button>
+      </ion-buttons>
       <ion-title>EMBARQUE</ion-title>
     </ion-navbar>
     <ion-buttons start>

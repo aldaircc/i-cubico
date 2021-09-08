@@ -5,6 +5,7 @@ import { ReciboBultoPage_01Page } from './recibo/recibo-bulto-page-01/recibo-bul
 import { PopoverReciboComponent } from '../../components/popover-recibo/popover-recibo';
 import { HomePage } from '../home/home';
 import { ImpresoraPage } from '../impresora/impresora';
+import { MainMenuPage } from '../main-menu/main-menu';
 
 /**
  * Generated class for the DespachoPage page.
@@ -21,10 +22,12 @@ import { ImpresoraPage } from '../impresora/impresora';
 export class DespachoPage {
 
   valorpopoverGlobal: boolean = false
-popoverGlobal: any;
+  popoverGlobal: any;
+  userProfile: any;
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public popoverCtrl: PopoverController, public modalCtrl: ModalController, public viewCtrl: ViewController, private platform: Platform) {
+      this.userProfile = this.navParams.data;
   }
 
   presentPopover(myEvent) {
@@ -52,7 +55,7 @@ popoverGlobal: any;
   }
 
   goToEmbarPage01() {
-    this.navCtrl.push(EmbarquePage_01Page);
+    this.navCtrl.push(EmbarquePage_01Page,this.userProfile);
   }
 
   gotToReciboBultoPage01() {
@@ -69,5 +72,10 @@ popoverGlobal: any;
         this.navCtrl.pop(); 
       }      
   });
+  }
+
+  confirmacionBack(): void {
+    debugger;
+    this.navCtrl.push(MainMenuPage,this.userProfile);    
   }
 }

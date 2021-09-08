@@ -10,7 +10,12 @@
         <ion-grid style="padding: 0px;">
             <ion-row no-padding no-margin>
                 <ion-col col-9 no-padding no-margin>
-                    <ion-navbar no-padding no-margin>
+                    <ion-navbar hideBackButton no-padding no-margin>
+                        <ion-buttons left>
+                            <button ion-button (click)="confirmacionBack()">
+                                <ion-icon class="customIcon" name="arrow-back"></ion-icon>
+                            </button>
+                          </ion-buttons>
                         <ion-label style="font-size: 15px; color: white; font-weight:bold;">ORDENES DE PICKING</ion-label>
                     </ion-navbar>
                 </ion-col>

@@ -148,12 +148,11 @@ export class MainMenuPage {
   }
 
   goReciboPage() {
-    this.navCtrl.push(ReciboPage);
+    this.navCtrl.push(ReciboPage,this.userProfile);
   }
 
-  goPickingPage() {
-    debugger;
-    this.navCtrl.push(PickingPage);
+  goPickingPage() {    
+    this.navCtrl.push(PickingPage,this.userProfile);
   }
 
   goAlmacenajePage() {
@@ -177,6 +176,6 @@ export class MainMenuPage {
   }
 
   goDespacho() {
-    this.navCtrl.push(DespachoPage);
+    this.navCtrl.push(DespachoPage,this.userProfile);
   }
 }

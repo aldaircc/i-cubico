@@ -6,6 +6,7 @@ import { EmbarquePage_02Page } from '../embarque-page-02/embarque-page-02';
 import { PopoverReciboComponent } from '../../../../components/popover-recibo/popover-recibo';
 import { IncidenciaPage } from '../../../incidencia/incidencia';
 import { HomePage } from '../../../home/home';
+import { DespachoPage } from '../../../despacho/despacho';
 
 /**
  * Generated class for the EmbarquePage_01Page page.
@@ -24,12 +25,14 @@ export class EmbarquePage_01Page {
   listEmbarque: any;
   listAuxEmbarque: any;
   rowCount: number = 0;
+  userProfile: any;
 
   valorpopoverGlobal01: boolean = false
   popoverGlobal: any;
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public modalCtrl: ModalController,
     public sGlobal: GlobalServiceProvider, public sDesp: DespachoServiceProvider, private platform: Platform, public viewCtrl: ViewController) {
+      this.userProfile = this.navParams.data;
   }
 
   presentPopover(event) {
@@ -114,4 +117,9 @@ export class EmbarquePage_01Page {
   });
 
   }
+
+  confirmacionBack(): void {
+    this.navCtrl.push(DespachoPage,this.userProfile);    
+  }
+
 }

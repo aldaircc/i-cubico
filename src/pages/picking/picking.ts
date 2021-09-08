@@ -42,6 +42,7 @@ export class PickingPage {
   rowPickingSelect: any;
   valorpopoverGlobal: boolean = false
   popoverGlobal: any;
+  userProfile: any;
 
   @ViewChild(Navbar) navBar: Navbar;
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
@@ -53,6 +54,7 @@ export class PickingPage {
     this.nomAlmacen = this.sGlobal.nombreAlmacen;
     this.vDatosRecibidos = navParams.get('data');
     this.getDataOrdenes();
+    this.userProfile = this.navParams.data;
   }
 
   filterItems(ev: any) {
@@ -355,6 +357,10 @@ export class PickingPage {
       }else{
         this.navCtrl.pop(); 
       }      
-  });
+    });
+  }
+
+  confirmacionBack(): void {
+    this.navCtrl.push(MainMenuPage,this.userProfile);    
   }
 }
