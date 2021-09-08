@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Navbar, IonicPage, ToastController } from 'ionic-angular';
+import { NavController, Navbar,NavParams, IonicPage, ToastController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { TransitoPage } from '../almacenaje/transito/transito'
 import { ReubicacionPage } from '../almacenaje/reubicacion/reubicacion'
@@ -8,6 +8,7 @@ import { ConsultarUbicacionPage } from '../almacenaje/consultar-ubicacion/consul
 import { MenuConsultarPage } from '../almacenaje/menu-consultar/menu-consultar'
 import { SolicitudReabastecimientoPage } from '../almacenaje/solicitud-reabastecimiento/solicitud-reabastecimiento'
 import { GlobalServiceProvider } from '../../providers/global-service/global-service';
+import { MainMenuPage } from '../main-menu/main-menu';
 
 @IonicPage()
 @Component({
@@ -17,12 +18,15 @@ import { GlobalServiceProvider } from '../../providers/global-service/global-ser
 
 export class AlmacenajePage {
     @ViewChild(Navbar) navBar: Navbar;
-    constructor(public navCtrl: NavController, public auth: AuthService, public toastCtrl: ToastController,
+    userProfile: any;
+
+    constructor(public navCtrl: NavController,  public navParams: NavParams, public auth: AuthService, public toastCtrl: ToastController,
         public sGlobal: GlobalServiceProvider) {
+            this.userProfile = this.navParams.data;
     }
 
     goTransitoPage() {
-        this.navCtrl.push(TransitoPage);
+        this.navCtrl.push(TransitoPage,this.userProfile);
     }
 
     goReubicacionPage() {
@@ -30,7 +34,7 @@ export class AlmacenajePage {
     }
 
     goReabastecimientoPage() {
-        this.navCtrl.push(ReabastecimientoAlmacenajePage);
+        this.navCtrl.push(ReabastecimientoAlmacenajePage,this.userProfile);
     }
 
     goConsultarUbicacionPage() {
@@ -47,5 +51,9 @@ export class AlmacenajePage {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad PickingPage');
+    }
+
+    confirmacionBack(): void {
+        this.navCtrl.push(MainMenuPage,this.userProfile);    
     }
 }

@@ -7,6 +7,8 @@ import { EmbalajePage_03Page } from '../embalaje-page-03/embalaje-page-03';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { IncidenciaPage } from '../../incidencia/incidencia';
 import { ImpresoraPage } from '../../impresora/impresora';
+import { EmbalajePage } from '../../embalaje/embalaje';
+
 
 /**
  * Generated class for the EmbalajePage_02Page page.
@@ -35,12 +37,14 @@ export class EmbalajePage_02Page {
   numeroOrden:string;
 
   valorpopoverGlobal: boolean = false
-popoverGlobal: any;
+  popoverGlobal: any;
+  userProfile: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public toastCtrl: ToastController,private alertCtrl: AlertController,public sEmbalaje: EmbalajeServiceProvider, 
     public popoverCtrl: PopoverController,public sGlobal: GlobalServiceProvider,public modalCtrl: ModalController,
     public viewCtrl: ViewController, private platform: Platform) {            
+      this.userProfile = this.navParams.data;
   }
 
   ionViewDidLoad() {
@@ -364,5 +368,10 @@ popoverGlobal: any;
       }      
   });
   }
+
+  confirmacionBack(): void {
+    this.navCtrl.push(EmbalajePage,this.userProfile);    
+  }
+
 
 }

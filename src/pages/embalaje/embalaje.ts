@@ -5,6 +5,7 @@ import { PopoverEmbalajeComponent } from '../../components/popover-embalaje/popo
 import { EmbalajePage_02Page } from '../embalaje/embalaje-page-02/embalaje-page-02';
 import { ImpresoraPage } from '../impresora/impresora';
 import { ConsultarBultoPage } from './consultar-bulto/consultar-bulto';
+import { MainMenuPage } from '../main-menu/main-menu';
 
 /**
  * Generated class for the EmbalajePage page.
@@ -20,14 +21,16 @@ import { ConsultarBultoPage } from './consultar-bulto/consultar-bulto';
 })
 export class EmbalajePage {
 
-  valorpopoverGlobal: boolean = false
+valorpopoverGlobal: boolean = false
 popoverGlobal: any;
+userProfile: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private alertCtrl: AlertController,
     public popoverCtrl: PopoverController, public modalCtrl: ModalController,
     public viewCtrl: ViewController, private platform: Platform
   ) {
+    this.userProfile = this.navParams.data;
   }
 
   ionViewDidLoad() {
@@ -97,7 +100,7 @@ popoverGlobal: any;
   }
 
   goEmbalajePackingPage() {
-    this.navCtrl.push(EmbalajePage_02Page);
+    this.navCtrl.push(EmbalajePage_02Page,this.userProfile);
   }
 
   goConsultarBulto() {      
@@ -114,6 +117,10 @@ popoverGlobal: any;
         this.navCtrl.pop(); 
       }      
   });
+  }
+
+  confirmacionBack(): void {
+    this.navCtrl.push(MainMenuPage,this.userProfile);    
   }
 
 }

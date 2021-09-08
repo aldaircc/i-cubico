@@ -6,15 +6,22 @@
 -->
 <ion-header>
     <ion-toolbar no-padding no-margin color="primary">
-        <ion-grid style="padding: 0px;">
-            <ion-row no-padding no-margin>
-                <ion-col col-12 no-padding no-margin>
-                    <ion-navbar no-padding no-margin>
-                        <ion-label style="font-size: 15px; color: white; font-weight:bold;">OPCIONES DE ALMACENAJE</ion-label>
-                    </ion-navbar>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+        <ion-navbar hideBackButton no-padding no-margin>
+            <ion-buttons left>
+                <button ion-button (click)="confirmacionBack()">
+                    <ion-icon class="customIcon" name="arrow-back"></ion-icon>
+                </button>
+            </ion-buttons>      
+            <ion-grid style="padding: 0px;">
+                <ion-row no-padding no-margin>
+                    <ion-col col-12 no-padding no-margin>
+                        <ion-navbar no-padding no-margin>
+                            <ion-label style="font-size: 15px; color: white; font-weight:bold;">OPCIONES DE ALMACENAJE</ion-label>
+                        </ion-navbar>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-navbar>
     </ion-toolbar>
 </ion-header>
 

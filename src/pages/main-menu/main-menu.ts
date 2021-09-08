@@ -156,11 +156,11 @@ export class MainMenuPage {
   }
 
   goAlmacenajePage() {
-    this.navCtrl.push(AlmacenajePage);
+    this.navCtrl.push(AlmacenajePage,this.userProfile);
   }
 
   goEmbalajePage() {
-    this.navCtrl.push(EmbalajePage);
+    this.navCtrl.push(EmbalajePage,this.userProfile);
   }
 
   goEtiquetado() {

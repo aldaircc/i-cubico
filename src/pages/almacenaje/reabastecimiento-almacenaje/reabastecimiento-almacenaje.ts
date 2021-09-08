@@ -3,7 +3,7 @@ import { IonicPage, Navbar, NavController, NavParams, ToastController, AlertCont
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { UbicacionOrigenPage } from '../ubicacion-origen/ubicacion-origen'
 import { AlmacenajeServiceProvider } from '../../../providers/almacenaje-service/almacenaje-service';
-
+import { AlmacenajePage } from '../../almacenaje/almacenaje'
 
 /**
  * Generated class for the ReabastecimientoAlmacenajePage page.
@@ -30,13 +30,15 @@ export class ReabastecimientoAlmacenajePage {
   rowCountSinTrabajar: any;
   rowCountProceso: any;
   vReabastecerPage: any;
+  userProfile: any;
 
   constructor(public app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public sGlobal: GlobalServiceProvider,
     public sAlmacenaje: AlmacenajeServiceProvider, public toastCtrl: ToastController, public alertCtrl: AlertController) {
     this.fecha = new Date().toISOString();
     this.nomAlmacen = this.sGlobal.nombreAlmacen;
-    this.userDetail = this.sGlobal.userName;
+    this.userDetail = this.sGlobal.userName;    
     this.getReabastecimiento();
+    this.userProfile = this.navParams.data;
   }
 
   getReabastecimiento() {
@@ -159,13 +161,22 @@ export class ReabastecimientoAlmacenajePage {
   }
 
   ionViewDidLoad() {
-    this.navBar.backButtonClick = (e: UIEvent) => {
-      this.presentAlertConfirm("¿Está seguro de salir?").then((result) => {
-        if (result) {
-          this.navCtrl.pop();
-        }
-      })
-    }   
-    console.log('ionViewDidLoad ReabastecimientoAlmacenajePage');
+    // this.navBar.backButtonClick = (e: UIEvent) => {
+    //   this.presentAlertConfirm("¿Está seguro de salir?").then((result) => {
+    //     if (result) {
+    //       this.navCtrl.pop();
+    //     }
+    //   })
+    // }   
+    // console.log('ionViewDidLoad ReabastecimientoAlmacenajePage');
   }
+
+  confirmacionBack(): void {
+    this.presentAlertConfirm("¿Está seguro de salir?").then((result) => {
+      if (result) {
+        this.navCtrl.push(AlmacenajePage,this.userProfile);    
+      }
+    })
+  }
+  
 }

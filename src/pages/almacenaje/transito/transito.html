@@ -6,22 +6,29 @@
 -->
 <ion-header>
     <ion-toolbar no-padding no-margin color="primary">
-        <ion-grid style="padding: 0px;">
-            <ion-row no-padding no-margin>
-                <ion-col col-9 no-padding no-margin>
-                    <ion-navbar no-padding no-margin>
-                        <ion-label style="font-size: 15px; color: white; font-weight:bold;">TRÁNSITO</ion-label>
-                    </ion-navbar>
-                </ion-col>
-                <ion-col col-3 no-padding no-margin>
-                    <ion-buttons start style="margin-top: 12px; text-align: center">
-                        <button ion-button icon-only (click)="getUbicacionTransitoLoad()">
-                            <ion-icon name="sync"></ion-icon>
-                        </button>
-                    </ion-buttons>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+        <ion-navbar hideBackButton no-padding no-margin>
+            <ion-buttons left>
+                <button ion-button (click)="confirmacionBack()">
+                    <ion-icon class="customIcon" name="arrow-back"></ion-icon>
+                </button>
+            </ion-buttons>      
+            <ion-grid style="padding: 0px;">
+                <ion-row no-padding no-margin>
+                    <ion-col col-9 no-padding no-margin>
+                        <ion-navbar no-padding no-margin>
+                            <ion-label style="font-size: 15px; color: white; font-weight:bold;">TRÁNSITO</ion-label>
+                        </ion-navbar>
+                    </ion-col>
+                    <ion-col col-3 no-padding no-margin>
+                        <ion-buttons start style="margin-top: 12px; text-align: center">
+                            <button ion-button icon-only (click)="getUbicacionTransitoLoad()">
+                                <ion-icon name="sync"></ion-icon>
+                            </button>
+                        </ion-buttons>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-navbar>
     </ion-toolbar>
 
     <ion-grid class="bgHeader statico">
