@@ -786,5 +786,9 @@ export class AdministrarUaPage {
       }      
   });
   }
+
+  onChangeSerie(){    
+    this.selectAll(this.txtCodUA);
+  }
   
 }

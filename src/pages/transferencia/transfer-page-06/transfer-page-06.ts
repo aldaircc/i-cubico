@@ -113,4 +113,8 @@ export class TransferPage_06Page {
       nativeEl.select();
     }, time);
   }
+
+  ionViewWillEnter() {
+    this.selectAll(this.inputUbicacion, 500);
+  }
 }

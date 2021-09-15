@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { PickingServiceProvider } from '../../../providers/picking-service/picking-service';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
@@ -27,10 +27,19 @@ export class TransferPage_04Page {
   isEnablebtnPicking: boolean = false;
   isError: boolean = false;
   isNormal: boolean = true;
+  @ViewChild('iCodeBar', { read: ElementRef }) private iCodeBar: ElementRef;
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController,
     public sPicking: PickingServiceProvider, public sGlobal: GlobalServiceProvider) {
-    this.vParameter = this.navParams.get('vParameter');
+    this.vParameter = this.navParams.get('vParameter');    
+  }
+
+  selectAll(el: ElementRef, time) {
+    let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
+    setTimeout(() => {
+      nativeEl.select();
+    }, time);
   }
 
   validarUATransfSubAlmacen(strIdTx, strUA, strLote, intIdSubAlmacen, intIdUbicacion, intItem) {
@@ -177,5 +186,9 @@ export class TransferPage_04Page {
       }
     });
     modalIncidencia.present();
+  }
+
+  ionViewWillEnter() {
+    this.selectAll(this.iCodeBar, 500);
   }
 }
