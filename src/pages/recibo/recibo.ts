@@ -23,7 +23,7 @@ import { MainMenuPage } from '../main-menu/main-menu'
   templateUrl: 'recibo.html',
 })
 export class ReciboPage {
-
+  searchQuery: string = '';
   @ViewChild(Navbar) navBar: Navbar;
   userDetail: any;
   listAuxRecepcion: any;
@@ -124,10 +124,11 @@ export class ReciboPage {
   }
 
   filterItems(ev: any) {
-    const val = ev.target.value;
-    if (val && val.trim() != '') {
-      this.listAuxRecepcion = this.listRecepcion.filter((item) => {
-        return (item.NumOrden.toLowerCase().indexOf(val.toLowerCase()) > -1);
+    const val = ev.value;
+    if (val && val.trim() != '') {      
+      this.listAuxRecepcion = this.listRecepcion.filter((item) => {       
+        if(item.NumOrden!=null)
+          return (item.NumOrden.toLowerCase().indexOf(val.toLowerCase()) > -1);
       });
       this.rowCount = this.listAuxRecepcion.length;
       if (this.rowCount > 0) {
@@ -239,6 +240,7 @@ export class ReciboPage {
   }
 
   getDataRecepcion() {
+    this.searchQuery = "";
     this.getRecepcionesXUsuario(this.sGlobal.userName, this.sGlobal.Id_Almacen, this.sGlobal.Id_Muelle);
   }
 

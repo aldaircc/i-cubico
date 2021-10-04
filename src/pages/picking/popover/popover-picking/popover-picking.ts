@@ -21,6 +21,7 @@ export class PopoverPickingPage {
   isDisplayUA: boolean = false;
   isDisplayUbicacion: boolean = false;
   isDisplayCerrar: boolean = false;
+  isDisplayCerrarPicking: boolean = false;
 
 
   constructor(public viewCtrl: ViewController) {
@@ -35,12 +36,14 @@ export class PopoverPickingPage {
         this.isDisplayUA = true;
         this.isDisplayUbicacion = true;
         this.isDisplayCerrar = true;
+        this.isDisplayCerrarPicking = true;
         break;
       case 1:
         this.isDisplayIncidencias = true;
         this.isDisplayUA = true;
         this.isDisplayUbicacion = true;
         this.isDisplayCerrar = true;
+        this.isDisplayCerrarPicking = true;
         break;
       default:
         break;

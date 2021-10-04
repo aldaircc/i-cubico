@@ -57,13 +57,12 @@ export class PickingPage {
     this.userProfile = this.navParams.data;
   }
 
-  filterItems(ev: any) {
-    debugger;
-    // const val = ev.target.value;
+  filterItems(ev: any) {    
     const val = ev.value;
     if (val && val.trim() != '') {
       this.listAuxOrdenesPicking = this.listOrdenesPicking.filter((item) => {
-        return (item.NumOrden.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        if(item.NumOrden!=null)
+          return (item.NumOrden.toLowerCase().indexOf(val.toLowerCase()) > -1);
       });
       this.rowCount = this.listAuxOrdenesPicking.length;
       if (this.rowCount > 0) {
@@ -350,7 +349,6 @@ export class PickingPage {
   ionViewWillEnter() {
     this.getDataOrdenes();
     this.platform.registerBackButtonAction(() => {
-      debugger;
       if(this.valorpopoverGlobal){
         this.valorpopoverGlobal = false;
         this.popoverGlobal.dismiss();

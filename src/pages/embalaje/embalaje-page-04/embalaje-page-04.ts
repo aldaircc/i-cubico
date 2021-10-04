@@ -482,6 +482,11 @@ export class EmbalajePage_04Page {
       this.vEmbalajeTotalPage03 = this.listAuxDetEmbalaje = this.listDetEmbalaje;
       debugger;
       this.vTotalItems = this.rowCount = this.listAuxDetEmbalaje.length;
+      console.log(result[0].FlagSeriePT,"flag de la serie")
+      if(result[0].FlagSeriePT)
+        this.cantEmbalar = 1;
+      else
+        this.cantEmbalar = 0;
 
       if (this.vNroItemVisual == this.vTotalItems) {
         this.Nextisenabled = true;

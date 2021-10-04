@@ -121,6 +121,7 @@ export class ReubicacionPage {
 
   checkboxClicked(chkSerie: Checkbox) {
     this.bolSerie = chkSerie.checked;
+    this.selectAll(this.txtPalletUa);
   }
 
   validarPalletUA() {

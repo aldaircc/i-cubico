@@ -343,6 +343,7 @@ export class EmbalajePage_03Page {
             this.navCtrl.push(EmbalajePage_10Page, {
               //listDetEmbalajeTop1: this.filterItemsBultos(1),
               //listAuxDetEmbalaje: this.listAuxDetEmbalaje,
+              Id_UM: this.listDetEmbalaje[0].Id_UM,
               nroBulto: this.vNroBulto,
               listTransacDetEmbalaje: this.listTransacDetEmbalaje,
               dataPage02: this.vEmbalajePage02,
@@ -375,7 +376,7 @@ export class EmbalajePage_03Page {
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 5000,
+      duration: 2000,
       position: 'bottom'
     });
     toast.present();

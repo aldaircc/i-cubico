@@ -52,12 +52,12 @@ export class EmbalajeServiceProvider {
     parameter = { "strIdTx": strId_Tx };
 
     return new Promise(resolve => {
-      this.http.get(this.sGlobal.despacho + 'ListarDespachoDetalle', { params: parameter })
+      this.http.get(this.sGlobal.despacho + 'ListarDespachoDetalle_V3', { params: parameter })
         .map(res => res.json())
         .subscribe(data => {
           resolve(data);
         }, err => {
-          console.log('Error ListarDespachoDetalle', err);
+          console.log('Error SGAA_SP_S_ListarDespachoDetalle_V3', err);
         })
     });
   }
@@ -104,6 +104,22 @@ export class EmbalajeServiceProvider {
     });
   }
 
+  ListarDetalleXBulto(strIdTx, intNroBulto){
+
+    var parameter: any;
+    parameter = { "strIdTx": strIdTx, 'intNroBulto': intNroBulto};
+    return new Promise(resolve => {
+      this.http.get(this.sGlobal.despacho + 'ListarDetalleXBulto', { params: parameter })
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log('Error ListarDetalleXBulto', err);
+        })
+    });
+
+  }  
+
   RegistrarProductoBulto(entidadEmbalaje) {
     var parameter: any;
     parameter = { "entidad": entidadEmbalaje };
@@ -123,7 +139,7 @@ export class EmbalajeServiceProvider {
     var parameter: any;
     parameter = { "entidad": entidadEmbalaje };
     return new Promise((resolve, reject) => {
-      this.http.post(this.sGlobal.despacho + 'RegistrarPesoBulto/entidad', JSON.stringify(parameter), { headers: this.headers })
+      this.http.post(this.sGlobal.despacho + 'RegistrarPesoBulto_V2/entidad', JSON.stringify(parameter), { headers: this.headers })
         .map(res => res.json())
         .subscribe(data => {
           resolve(data);
@@ -192,5 +208,18 @@ export class EmbalajeServiceProvider {
         })
     });
   }
+
+  ListaCajaEmbalaje() {    
+    return new Promise(resolve => {
+      this.http.get(this.sGlobal.cajaEmbalajeService + 'ListaCajaEmbalaje')
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log('Error ConsultarBarraBulto', err);
+        })
+    });
+  }
+
 
 }

@@ -27,6 +27,8 @@ export class EmbalajePage_06Page {
   peso: any;
   pesoFisico: any;
   resultRegistro: any;
+  listCajaEmbajale: any;
+  Id_Caja: any;
 
   @ViewChild(Navbar) navBar: Navbar;
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
@@ -52,7 +54,8 @@ export class EmbalajePage_06Page {
         'NroBulto': this.vNroBulto,
         'Peso': this.pesoFisico,
         'Observacion': this.vEmbalajePage02.Direccion,
-        'CodigoBarra': this.vEmbalajePage02.Id_Tx + '/' + this.vNroBultoCeros
+        'CodigoBarra': this.vEmbalajePage02.Id_Tx + '/' + this.vNroBultoCeros,
+        'Id_Caja': this.Id_Caja
       };
       debugger;
       this.sEmbalaje.RegistrarPesoBulto(objEmbalaje).then((result) => {
@@ -117,6 +120,9 @@ export class EmbalajePage_06Page {
         if (item.name == 'EmbalajePage_04Page') {
           this.navCtrl.popTo(item);
         }
+        if (item.name == 'EmbalajePage_10Page') {          
+          this.navCtrl.popTo(item);
+        }
       });
     }
     console.log('ionViewDidLoad EmbalajePage_06Page');
@@ -126,7 +132,8 @@ export class EmbalajePage_06Page {
     this.vFlagNuevoNumero = true;
   }
 
-  ionViewWillEnter() {
+  ionViewWillEnter() {    
+    this.ListarCajasEmbalaje();
     if (this.sGlobal.resultObtenerPeso) {
       debugger;
       this.pesoFisico = this.sGlobal.pesoBulto;
@@ -134,4 +141,17 @@ export class EmbalajePage_06Page {
       this.sGlobal.pesoBulto = 0;
     }
   }
+
+  ListarCajasEmbalaje() {
+    this.sEmbalaje.ListaCajaEmbalaje().then((result) => {
+      this.listCajaEmbajale = result;      
+      if (this.listCajaEmbajale.length > 0) {
+      } else {
+        alert('No se encontrarón datos.');
+      }
+    }, (err) => {
+      console.log('E-Embalaje listar', err);
+    });
+  }
+
 }

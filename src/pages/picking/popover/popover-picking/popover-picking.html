@@ -5,11 +5,14 @@
   Ionic pages and navigation.
 -->
 <ion-grid no-padding no-margin style="background: #BDBDBD">
+    <button ion-item (tap)="itemClick(5)" style="background: #BDBDBD; color:white" [hidden]="!isDisplayCerrarPicking">
+        <ion-icon name="md-cube" style="color:white"></ion-icon> Cerrar Picking
+    </button>
     <button ion-item (tap)="itemClick(1)" style="background: #BDBDBD; color:white" [hidden]="!isDisplayIncidencias">
         <ion-icon name="md-create" style="color:white"></ion-icon> Registrar Incidencias
     </button>
     <button ion-item (tap)="itemClick(2)" style="background: #BDBDBD; color:white" [hidden]="!isDisplayUA">
-        <ion-icon name="md-cube" style="color:white"></ion-icon> Administrar UA
+        <ion-icon name="ios-cube-outline" style="color:white"></ion-icon> Administrar UA
     </button>
     <button ion-item (tap)="itemClick(3)" style="background: #BDBDBD; color:white" [hidden]="!isDisplayUbicacion">
         <ion-icon name="md-search" style="color:white"></ion-icon> Consultar Ubicación

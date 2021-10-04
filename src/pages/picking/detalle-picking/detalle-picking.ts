@@ -343,6 +343,9 @@ export class DetallePickingPage {
           }
         })
       }
+      else if (popoverData == 5) {        
+        this.goCerrarPickingPage();        
+      }
     });
   }
 

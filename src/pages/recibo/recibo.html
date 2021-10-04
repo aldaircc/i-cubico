@@ -57,13 +57,26 @@
     </ion-row>
   </ion-grid>
 
+  <ion-row class="statico">
+    <ion-item>
+        <ion-label>
+            <ion-icon name="search"></ion-icon>
+        </ion-label>
+        <ion-input maxlength="35" [(ngModel)]="searchQuery" placeholder="Buscar N° de Orden" (ionChange)="filterItems($event)"></ion-input>
+    </ion-item>
+
+    <!-- <ion-input  placeholder="Buscar N° de Orden" (ionInput)="filterItems($event)" [(ngModel)]="searchQuery" 
+    ></ion-input> -->
+</ion-row>
+
+
 </ion-header>
 
 <ion-content no-scroll>
   <!-- Start:  data-binding list -->
-  <ion-row>
-    <ion-searchbar (ionInput)="filterItems($event)" placeholder="Buscar"></ion-searchbar>
-  </ion-row>
+  <!-- <ion-row>
+    <ion-searchbar placeholder="Buscar" [(ngModel)]="searchQuery"  (ionChange)="filterItems($event)"></ion-searchbar>
+  </ion-row> -->
 
   <ion-row class="bgWhite">
   </ion-row>
