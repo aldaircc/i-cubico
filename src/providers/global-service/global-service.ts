@@ -16,7 +16,7 @@ export class GlobalServiceProvider {
 
   Id_Almacen: number = 0;
   Id_Impresora: number = 0;
-  Id_Muelle: number = 0;
+  Id_Muelle: number = 0; 
   Id_Centro: number = 0;
   Id_TerminalRF: number = 2;
   nombreAlmacen: string = "";
@@ -25,10 +25,15 @@ export class GlobalServiceProvider {
   nombreCentro: string;
   userName: string = "";
   apeNom: string = "";
-  // url: string = "http://cubico.boyles.com.pe:8083/SGAA_WCF/";
-  // url: string = "http://www.cubicowms.pe:8087/SGAA_WCF/";
-  url: string = "http://172.16.32.15:8085/SGAA_WCF/";
+  url: string = "";
+  //url: string = "http://cubico.boyles.com.pe:8083/SGAA_WCF/";  
+  //url: string = "http://192.168.0.10:8085/SGAA_WCF/";
+  //url: string = "http://www.cubicowms.pe:8087/SGAA_WCF/";
+  // url: string = "http://190.12.44.4/SGAA_WCF/";
+  //url: string = "http://172.16.32.15:8085/SGAA_WCF/";
+  //urlPrint: string = "http://www.cubicowms.pe:8087/SGAA_WCF_PRINT/";
   urlPrint: string = "";
+  //urlPrint: string = "http://172.16.32.15/SGAA_WCF_PRINT/";
   usuario: string;
   produccion: string;
   tablaEst: string;
@@ -48,6 +53,7 @@ export class GlobalServiceProvider {
   resultGrabarBulto: any;
   xmlItems: any;
   file1: any;
+  cajaEmbalajeService: any;
 
   constructor(public http: HttpClient) {
     this.loadXML();
@@ -76,5 +82,6 @@ export class GlobalServiceProvider {
     this.almacenajeService = this.url + "AlmacenajeService.svc/rest/";
     this.inventarioService = this.url + "InventarioService.svc/rest/";
     this.despachoService = this.url + "DespachoService.svc/rest/";
+    this.cajaEmbalajeService = this.url + "CajaEmbalajeService.svc/rest/";
   }
 }
