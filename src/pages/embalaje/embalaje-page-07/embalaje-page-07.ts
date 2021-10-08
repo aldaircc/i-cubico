@@ -33,6 +33,7 @@ export class EmbalajePage_07Page {
     this.vNroBulto = navParams.get('dataNroBulto');
     this.vNroBultoCeros = navParams.get('dataNroBultoCeros');
     this.vEmbalajePage02 = navParams.get('dataPage02');
+    this.sGlobal.resultGrabarBulto = false; 
   }
 
   getDataBalanzasXAlmacen() {

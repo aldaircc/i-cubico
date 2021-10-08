@@ -1,4 +1,4 @@
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, Navbar, Platform, ViewController, NavController, NavParams, AlertController, PopoverController, ModalController, ToastController } from 'ionic-angular';
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
 import { EmbalajePage_05Page } from '../embalaje-page-05/embalaje-page-05';
@@ -27,7 +27,7 @@ import { EmbalajePage_10Page } from '../embalaje-page-10/embalaje-page-10';
 export class EmbalajePage_04Page {
 
   @ViewChild(Navbar) navBar: Navbar;
-
+  @ViewChild('txtCantidad', { read: ElementRef }) private txtCantidad: ElementRef;
   vEmbalajePage03: any;
   vLisTransacEmbalaje: any;
   vListProductSelect: any;
@@ -745,8 +745,18 @@ export class EmbalajePage_04Page {
     });
   }
 
+  selectAll(el: ElementRef) {
+    let nativeEl: HTMLInputElement = el.nativeElement.querySelector('input');
+    nativeEl.select();
+  }
+
   ionViewDidLoad() {
     debugger;
+    setTimeout(() => {
+      this.cantEmbalar = 0;
+      this.selectAll(this.txtCantidad);
+    }, (500));
+
     this.navBar.backButtonClick = (e: UIEvent) => {
       this.navCtrl.getViews().forEach(item => {
         if (item.name == 'EmbalajePage_03Page') {

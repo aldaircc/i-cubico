@@ -29,15 +29,15 @@ export class EmbalajePage_08Page {
   formatLabelsGrande: any = 'ETQ_Bulto_BIGv2.txt';
   id_Impresora: any;
   vNombreImpresora: any;
-  vUltimoBulto: any;
-  bolEtiquetaGrande: boolean = false;
-  vUltimoBulto2: any;
+  vNroBulto: any;
+  bolEtiquetaGrande: boolean = false;  
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public sImpresora: ImpresoraServiceProvider, public sEmbalaje: EmbalajeServiceProvider, public sEtq: EtiquetadoServiceProvider,
     public alertCtrl: AlertController, public sGlobal: GlobalServiceProvider) {
     debugger;
     this.vEmbalajeTotalPage02 = navParams.get('dataPage02');
+    this.vNroBulto = navParams.get('nroBulto');    
     this.getDataDetBultosEmbalaje();
   }
 
@@ -78,8 +78,8 @@ export class EmbalajePage_08Page {
       this.listDetBultosEmbalaje = result;
       debugger;
       for (let index = 0; index < this.listDetBultosEmbalaje.length; index++) {
-        if (index == this.listDetBultosEmbalaje.length - 1)
-          this.vUltimoBulto = this.listDetBultosEmbalaje[index].NroBulto;
+        if (this.listDetBultosEmbalaje[index].NroBulto == this.vNroBulto)
+          this.vNroBulto = this.listDetBultosEmbalaje[index].NroBulto;
       }
     }, (err) => {
       console.log('E-Embalaje listar', err);
@@ -101,7 +101,7 @@ export class EmbalajePage_08Page {
     var listEtq = [];
     let currentDate = moment(new Date());
     for (let i = 0; i < this.listDetBultosEmbalaje.length; i++) {
-      if (i == this.listDetBultosEmbalaje.length - 1){        
+      if (this.listDetBultosEmbalaje[i].NroBulto == this.vNroBulto){
         listEtq = [];
         listEtq.push({ "campo": "|FACTURA|", "valor": "" });
         listEtq.push({ "campo": "|CODZONA|", "valor": this.vEmbalajeTotalPage02.CodigoZona });

@@ -27,7 +27,7 @@
       <ion-list *ngSwitchCase="'bultos'">
         <ion-row class="bgWhite">
           <ion-card *ngFor="let objDetBultosEmbalaje of listDetBultosEmbalaje">        
-            <ion-card-content>  
+            <ion-card-content no-padding (press)="selectItem(objDetBultosEmbalaje)">  
               <ion-row>
                 <ion-col col-10 col-sm>
                   <h5><b>N°Bulto: </b>{{objDetBultosEmbalaje.NroBulto}}</h5>                          
@@ -78,12 +78,12 @@
 
 <ion-footer>
     <ion-grid class="bgFooter">
-        <ion-row>
-            <ion-col col-12 class="bgFooter-col">
-                <button ion-button icon-start (click)="goToEmbalajePage06()">
-                    <ion-icon name="logo-dropbox"></ion-icon>
-                </button>
-            </ion-col>
+        <ion-row>      
+          <ion-col col-12 class="bgFooter-col">
+          <button ion-button icon-start (click)="goToEmbalajePage10()">
+            <ion-icon name="md-cube"></ion-icon>
+          </button>
+        </ion-col>   
         </ion-row>
     </ion-grid>
 </ion-footer>

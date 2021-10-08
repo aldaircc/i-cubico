@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
+import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { EmbalajePage_04Page } from '../embalaje-page-04/embalaje-page-04';
 
 
@@ -27,7 +28,8 @@ export class EmbalajePage_09Page {
   vNroBulto2: any;
   vFlagTodoItems: false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    private alertCtrl: AlertController, public sGlobal: GlobalServiceProvider,
     public sEmbalaje: EmbalajeServiceProvider) {
     this.vNroBulto = navParams.get('dataNroBulto');
     this.vNroBultoCeros = navParams.get('dataNroBultoCeros');
@@ -36,6 +38,7 @@ export class EmbalajePage_09Page {
     this.vEmbalajeTotalPage03 = navParams.get('dataTotalPage03');
     this.vNroBulto2 = navParams.get('dataNroBulto2');
     this.vFlagTodoItems = navParams.get('flagTodoItems');
+    this.sGlobal.resultGrabarBulto = false;
   }
 
   ionViewDidLoad() {

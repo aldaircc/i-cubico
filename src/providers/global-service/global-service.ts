@@ -50,7 +50,7 @@ export class GlobalServiceProvider {
   resultIncidencia: any;
   resultObtenerPeso: any;
   pesoBulto: any;
-  resultGrabarBulto: any;
+  resultGrabarBulto: any = false;
   xmlItems: any;
   file1: any;
   cajaEmbalajeService: any;

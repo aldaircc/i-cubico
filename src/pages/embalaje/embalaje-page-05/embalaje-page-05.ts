@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController,ToastController } from 'ionic-angular';
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
 import { EmbalajePage_06Page } from '../embalaje-page-06/embalaje-page-06';
 import { EmbalajePage_09Page } from '../embalaje-page-09/embalaje-page-09';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
+import { EmbalajePage_10Page } from '../embalaje-page-10/embalaje-page-10';
+
 
 /**
  * Generated class for the EmbalajePage_05Page page.
@@ -31,8 +33,12 @@ export class EmbalajePage_05Page {
   vTotalDetalle: any = 1;
   vUltimoBulto: any;
   vNroItem: any = 0;
+  vBultoSelect: any;
+  vProducto: any;
+  vlistTransacDetEmbalaje:any;
+  
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController,
     private alertCtrl: AlertController,
     public sEmbalaje: EmbalajeServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vEmbalajePage03 = navParams.get('dataPageFiltro');
@@ -40,6 +46,9 @@ export class EmbalajePage_05Page {
     this.vNroBulto = navParams.get('dataNroBulto');
     this.vNroBultoCeros = navParams.get('dataNroBultoCeros');
     this.vEmbalajePage02 = navParams.get('dataPage02');
+    this.vProducto = navParams.get('descProducto');
+    this.vlistTransacDetEmbalaje = navParams.get('listTransacDetEmbalaje');
+    this.sGlobal.resultGrabarBulto = false;
     debugger;
   }
 
@@ -98,6 +107,22 @@ export class EmbalajePage_05Page {
     });
   }
 
+  goToEmbalajePage10() {            
+    if (this.vBultoSelect) {             
+      var nroBulto = parseInt(this.vBultoSelect.NroBulto);      
+      this.navCtrl.push(EmbalajePage_10Page, {
+        nroBulto: nroBulto,        
+        dataPage02: this.vEmbalajePage02,
+        descProducto: this.vProducto,
+        nroItemVisual: this.vBultoSelect.NroItem,           
+        listTransacDetEmbalaje: this.vlistTransacDetEmbalaje,            
+      });
+    }
+    else {
+     alert("Debe seleccionar un bulto")
+    }
+  }
+
   goToEmbalajePage09(objDetBultosEmbalaje) {
     this.vNroBultoCerosItems = objDetBultosEmbalaje.NroBulto;
     this.llenarNumeros(objDetBultosEmbalaje.NroBulto);
@@ -125,18 +150,7 @@ export class EmbalajePage_05Page {
   }
 
 
-  mostrarAlerta(objDetBultoXBulto) {
-    debugger;    
-    // this.lstDetalleBultoXBulto.forEach(element => {
-    //   console.log(element.NroBulto,"elemento");
-    //   console.log(objDetBultoXBulto.NroBulto,"OBJETO");
-    //   if (element.NroBulto == objDetBultoXBulto.NroBulto) {
-    //     console.log("entra: " + element.NroBulto)
-    //     this.vNroItem++;
-    //   }
-
-    // });
-    
+  mostrarAlerta(objDetBultoXBulto) {      
     if(this.lstDetalleBultoXBulto[this.lstDetalleBultoXBulto.length-1].NroBulto != objDetBultoXBulto.NroBulto){
       this.mostrarConfirmacion("No se puede eliminar porque hay bultos superiores", "Eliminar Bulto");
       this.vNroItem = 0;
@@ -205,4 +219,19 @@ export class EmbalajePage_05Page {
     this.getDataDetBultosEmbalaje();
     this.getDataDetalleBultoXBulto();
   }
+
+  presentToast(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 2000,
+      position: 'bottom'
+    });
+    toast.present();
+  }
+
+  selectItem(obj): void {
+    this.vBultoSelect = obj;
+    this.presentToast("El bulto " + obj.NroBulto + " fue seleccionado.")
+  }
+
 }

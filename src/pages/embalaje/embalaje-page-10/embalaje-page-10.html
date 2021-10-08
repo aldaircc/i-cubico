@@ -6,8 +6,13 @@
 -->
 <ion-header class="sgaaTitleBackcolor" no-border>
   <ion-toolbar no-padding no-margin color="primary">
-    <ion-navbar>
-      <ion-label style="font-size: 15px; color: white; font-weight:bold;">LOTE/SERIE POR PRODUCTO</ion-label>                        
+    <ion-navbar hideBackButton>
+      <ion-buttons left>
+        <button ion-button (click)="confirmacionBack()">
+            <ion-icon class="customIcon" name="arrow-back"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-label style="font-size: 15px; color: white; font-weight:bold;">SERIE POR PRODUCTO</ion-label>                        
     </ion-navbar>
   </ion-toolbar>
   <ion-grid class="bgHeader statico">
@@ -41,7 +46,7 @@
 
   <!-- Start:  data-binding list -->
   <ion-row>
-    <ion-input #txtSerie (keyup.enter)="registrarSerie()" [(ngModel)]="vSerie"  placeholder="Ingresar Serie/Lote"></ion-input>
+    <ion-input #txtSerie (keyup.enter)="registrarSerie()" [(ngModel)]="vSerie"  placeholder="Ingresar Serie"></ion-input>
   </ion-row>
 
   <ion-row class="bgWhite">
@@ -50,8 +55,7 @@
         <ion-row>          
             <ion-col col-10 col-sm>
               <ion-card-content no-padding>
-                <h5><b>Código: </b> {{objTransacEmbalaje.Codigo}}</h5>
-                <h5><b>Producto: </b> {{objTransacEmbalaje.Producto}}</h5>
+                <h5><b>Código: </b> {{objTransacEmbalaje.Codigo}}</h5>                
                 <h5><b>Cantidad: </b> {{objTransacEmbalaje.Cantidad|number : '1.2-2' }}</h5>
                 <h5><b>Serie/Lote: </b> {{objTransacEmbalaje.Serie}}</h5>                
               </ion-card-content>
@@ -79,8 +83,9 @@
         </ion-label>
       </ion-col>
     </ion-row>
-
-    <ion-row>
+  </ion-grid>
+  <ion-grid style="margin: 0px; padding: 0px">
+    <ion-row no-padding no-margin>
       <ion-col style="margin: 0px; padding: 0px;">
         <button ion-button style=" margin: 0px; padding: 0px" (click)="goToEmbalajePage07()" medium full>
           <div>
@@ -110,9 +115,5 @@
         </button>
       </ion-col>
     </ion-row>
-
-
-
-
   </ion-grid>
 </ion-footer>

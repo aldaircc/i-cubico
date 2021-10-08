@@ -43,7 +43,8 @@ export class EmbalajePage_02Page {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public toastCtrl: ToastController,private alertCtrl: AlertController,public sEmbalaje: EmbalajeServiceProvider, 
     public popoverCtrl: PopoverController,public sGlobal: GlobalServiceProvider,public modalCtrl: ModalController,
-    public viewCtrl: ViewController, private platform: Platform) {            
+    public viewCtrl: ViewController, private platform: Platform) {
+      debugger;            
       this.userProfile = this.navParams.data;
   }
 
@@ -323,9 +324,10 @@ export class EmbalajePage_02Page {
       "CodigoZona":data.CodigoZona,
       "Zona":data.Zona
     };
-    
+    debugger;
     this.navCtrl.push(EmbalajePage_03Page, {
-      dataPage02: this.vEmbalajePage02
+      dataPage02: this.vEmbalajePage02,      
+      data: this.userProfile
     });
 
   }

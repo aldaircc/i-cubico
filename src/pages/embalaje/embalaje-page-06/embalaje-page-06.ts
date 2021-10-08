@@ -3,6 +3,7 @@ import { IonicPage, Navbar, NavController, NavParams, AlertController } from 'io
 import { EmbalajeServiceProvider } from '../../../providers/embalaje-service/embalaje-service';
 import { EmbalajePage_07Page } from '../embalaje-page-07/embalaje-page-07';
 import { EmbalajePage_08Page } from '../embalaje-page-08/embalaje-page-08';
+import { EmbalajePage_10Page } from '../embalaje-page-10/embalaje-page-10';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 
 /**
@@ -29,13 +30,21 @@ export class EmbalajePage_06Page {
   resultRegistro: any;
   listCajaEmbajale: any;
   Id_Caja: any;
+  vlistTransacDetEmbalaje: any;
+  vProducto: any;
+  vNroItemVisual: any;
 
   @ViewChild(Navbar) navBar: Navbar;
+  data: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
     public sEmbalaje: EmbalajeServiceProvider, public sGlobal: GlobalServiceProvider) {
     this.vNroBulto = navParams.get('dataNroBulto');
     this.vNroBultoCeros = navParams.get('dataNroBultoCeros');
     this.vEmbalajePage02 = navParams.get('dataPage02');
+    this.vlistTransacDetEmbalaje = navParams.get('listTransacDetEmbalaje');
+    this.vProducto = navParams.get('descProducto');
+    this.vNroItemVisual = navParams.get('nroItemVisual');
+    this.data = this.navParams.get('data');
   }
 
   goToEmbalajePage07() {
@@ -75,6 +84,7 @@ export class EmbalajePage_06Page {
   }
 
   goPrepararBultosBack() {
+    alert("entra page4")
     this.navCtrl.getViews().forEach(item => {
       if (item.name == 'EmbalajePage_04Page') {
         this.sGlobal.resultGrabarBulto = true;
@@ -110,7 +120,8 @@ export class EmbalajePage_06Page {
     // });
 
     this.navCtrl.push(EmbalajePage_08Page, {
-      dataPage02: this.vEmbalajePage02
+      dataPage02: this.vEmbalajePage02,
+      nroBulto :this.vNroBulto
     });
   }
   
@@ -119,10 +130,7 @@ export class EmbalajePage_06Page {
       this.navCtrl.getViews().forEach(item => {
         if (item.name == 'EmbalajePage_04Page') {
           this.navCtrl.popTo(item);
-        }
-        if (item.name == 'EmbalajePage_10Page') {          
-          this.navCtrl.popTo(item);
-        }
+        }       
       });
     }
     console.log('ionViewDidLoad EmbalajePage_06Page');
@@ -152,6 +160,39 @@ export class EmbalajePage_06Page {
     }, (err) => {
       console.log('E-Embalaje listar', err);
     });
+  }
+
+  confirmacionBack(): void {     
+   
+    debugger;
+
+    // this.navCtrl.popTo( this.navCtrl.getByIndex(1));
+    var conta =  this.navCtrl.getViews().length - 2;
+    var name = this.navCtrl.getViews()[conta].name
+    console.log(name);
+    // let targetView = this.navCtrl.getViews().filter(view=> view.id == 'EmbalajePage_10Page')
+    // targetView.length ? this.navCtrl.popTo(targetView[0]) : this.navCtrl.pop()
+
+    // this.navCtrl.getViews().forEach(item => {
+    //   alert(item.name)
+     if (name == 'EmbalajePage_04Page') {      
+         this.sGlobal.resultGrabarBulto = true;
+         this.navCtrl.pop();
+       }
+      
+      if (name == 'EmbalajePage_10Page') {        
+        this.navCtrl.push(EmbalajePage_10Page, {
+          dataPage02: this.vEmbalajePage02,
+          nroBulto: this.vNroBulto,
+          listTransacDetEmbalaje: this.vlistTransacDetEmbalaje,
+          descProducto: this.vProducto,
+          nroItemVisual: this.vNroItemVisual,
+          data: this.data
+        });
+      }
+    
+
+
   }
 
 }
