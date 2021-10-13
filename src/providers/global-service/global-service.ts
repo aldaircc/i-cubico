@@ -25,6 +25,7 @@ export class GlobalServiceProvider {
   nombreCentro: string;
   userName: string = "";
   apeNom: string = "";
+  urlExterno: string = "";
   url: string = "";
   //url: string = "http://cubico.boyles.com.pe:8083/SGAA_WCF/";  
   //url: string = "http://192.168.0.10:8085/SGAA_WCF/";

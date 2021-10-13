@@ -24,6 +24,7 @@ export class ParametrosPage {
 
   public rutaServicioBD: any;
   public rutaServicioImpresion: any;
+  public rutaServicioExterno: any;
   public idRF: any;
   public clave: any;
   public jsonItems: any;
@@ -43,6 +44,7 @@ export class ParametrosPage {
           debugger;
           this.rutaServicioBD = data.url;
           this.rutaServicioImpresion = data.urlPrint;
+          this.rutaServicioExterno = data.urlExterno;
           this.idRF = data.idRF;
           this.clave = data.passwordConfig;
         }
@@ -123,6 +125,7 @@ export class ParametrosPage {
       let data = {
         url: this.rutaServicioBD,
         urlPrint: this.rutaServicioImpresion,
+        urlExterno: this.rutaServicioExterno,
         idRF: this.idRF,
         passwordConfig: this.clave
       };

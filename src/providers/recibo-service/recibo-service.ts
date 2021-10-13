@@ -215,4 +215,18 @@ export class ReciboServiceProvider {
         })
     });
   }
+
+  notificarRecepcionApi(idTx) {
+    var parameter =  idTx;
+    return new Promise((resolve, reject) => {
+      this.http.post(this.sGlobal.urlExterno + 'Notificacion/Recepcion', JSON.stringify(parameter), { headers: this.headers })
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log('Error cerrarRecepcion', err);
+        })
+    });
+  }
+
 }

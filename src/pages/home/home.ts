@@ -49,6 +49,7 @@ export class HomePage {
           debugger;
           this.sGlobal.url = data.url;
           this.sGlobal.urlPrint = data.urlPrint;
+          this.sGlobal.urlExterno = data.urlExterno;
           this.sGlobal.Id_TerminalRF = data.idRF;
           this.sGlobal.loadXML();
 

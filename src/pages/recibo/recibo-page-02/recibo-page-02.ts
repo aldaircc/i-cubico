@@ -302,6 +302,10 @@ export class ReciboPage_02Page {
               this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result => {
                 let res: any = result;
                 this.getDetailXTx(this.vReciboPage01.Id_Tx);
+                if(this.sGlobal.urlExterno != "" && this.sGlobal.urlExterno !=null){
+                  if(this.vReciboPage01.Id_TipoMovimiento == 3)
+                    this.sRecibo.notificarRecepcionApi(this.vReciboPage01.Id_Tx)
+                }
                 this.navCtrl.push(ReciboPage);
               });
             }
@@ -315,6 +319,11 @@ export class ReciboPage_02Page {
               this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result => {
                 let res: any = result;
                 this.getDetailXTx(this.vReciboPage01.Id_Tx);
+                
+                if(this.sGlobal.urlExterno != "" && this.sGlobal.urlExterno !=null){
+                  if(this.vReciboPage01.Id_TipoMovimiento == 3)
+                    this.sRecibo.notificarRecepcionApi(this.vReciboPage01.Id_Tx)
+                }
                 this.navCtrl.push(ReciboPage);
               });
             } else {
