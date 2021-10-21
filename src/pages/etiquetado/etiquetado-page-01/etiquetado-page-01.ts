@@ -101,6 +101,7 @@ export class EtiquetadoPage_01Page {
 
   valorpopoverGlobal: boolean = false
   popoverGlobal: any;
+  factorG: any;
 
   @ViewChild('selectUA_Alt') selectUA_Alt: Select;
   @ViewChild('selectFormat') selectFormat: Select;
@@ -124,11 +125,14 @@ export class EtiquetadoPage_01Page {
     this.titutlos2isDisplay = (navParams.get('codePage') != null) ? true : false;
 
     this.vEtq = (navParams.get('vEtq') != null) ? navParams.get('vEtq') : this.vEtq;
+    this.factorG = this.vEtq.Factor;
+    console.log(this.factorG,"factor General");
     this.listarUMxProducto(this.vEtq.Id_Producto);
   }
 
   initPage(): void {
     debugger;
+
     this.resultCantidad = true;
     this.resultNumEtq = true;
     this.resultEtqSaldo = true;
@@ -256,18 +260,21 @@ export class EtiquetadoPage_01Page {
   }
 
   onChange() {
-    debugger;
+    debugger;    
     let obj = this.listUM.filter(x => x.Id_UM == this.id_UAlt)[0];
     //cantidad por bulto 
     this.cantXBulto = parseInt(obj.CantXBulto);
     if (this.findArticulo == false) {
       let factor: number = parseInt(obj.Factor); //Serie true 1 :  parseInt(obj.Factor); 
-      let numEtqPrint: number = parseInt(this.vEtq.CantidadPedida) / factor; //Serie true 1 :  parseInt(obj.Factor); 
-      let saldoEtq: number = parseInt(this.vEtq.CantidadPedida) - (numEtqPrint * factor); //Serie true 0 :  parseInt(obj.Factor); 
+      // let numEtqPrint: number =  parseInt(this.vEtq.CantidadPedida) / factor; //Serie true 1 :  parseInt(obj.Factor); 
+      let numEtqPrint: number =  this.factorG / factor *  parseInt(this.vEtq.CantidadPedida); //Serie true 1 :  parseInt(obj.Factor); 
+      // let saldoEtq: number = parseInt(this.vEtq.CantidadPedida) - (numEtqPrint * factor); //Serie true 0 :  parseInt(obj.Factor); 
+      let saldoEtq: number = (parseInt(this.vEtq.CantidadPedida) * this.factorG) - (numEtqPrint * factor); //Serie true 0 :  parseInt(obj.Factor); 
+
 
       this.cantxEtq = factor;
       debugger;
-      this.numEtq = numEtqPrint;
+      this.numEtq = Math.floor(numEtqPrint);
       this.cantEtqSaldo = saldoEtq;
     } else {
       this.cantxEtq = parseInt(obj.CantXBulto);

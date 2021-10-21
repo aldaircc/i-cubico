@@ -781,6 +781,7 @@ popoverGlobal: any;
       "IdCuentaLPN": data.IdCuentaLPN,
       "Id_SubAlmacen": data.Id_SubAlmacen,
       "Saldo": data.Saldo,
+      "Factor": data.Factor,
       "page": true
     }
 

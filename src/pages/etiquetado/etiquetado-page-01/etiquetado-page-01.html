@@ -141,7 +141,7 @@
     <!-- Fila 03 -->
     <ion-row align-items-center>
       <ion-col col-6 col-sm no-padding no-margin>
-        <ion-select placeholder="UA alternativa" [(ngModel)]="id_UAlt" interface="action-sheet" #selectUA_Alt
+        <ion-select (ionChange)="onChange($event)" placeholder="UA alternativa" [(ngModel)]="id_UAlt" interface="action-sheet" #selectUA_Alt
           [disabled]="!UMAlterDisabled" style="padding: 8px 8px 8px 0px">
           <ion-option value="" default>UA alternativa</ion-option>
           <ion-option *ngFor="let ua of listUM" value="{{ ua.Id_UM }}">{{ ua.Nombre }} </ion-option>
