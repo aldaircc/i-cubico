@@ -563,7 +563,8 @@ export class EtiquetadoPage_01Page {
           listEtq.push({ "campo": "|PRODUCTO|", "valor": this.vEtq.Articulo });
           listEtq.push({ "campo": "|EAN14|", "valor": obj.EAN14 });
           listEtq.push({ "campo": "|EAN|", "valor": (obj.Nombre.toUpperCase() == this.vEtq.UM.toString().trim()) ? "13" : "14" });
-          listEtq.push({ "campo": "|CANTIDAD|", "valor": (i == 0 && this.cantEtqSaldo > 0) ? this.cantEtqSaldo : this.cantxEtq });
+          // listEtq.push({ "campo": "|CANTIDAD|", "valor": (i == 0 && this.cantEtqSaldo > 0) ? this.cantEtqSaldo : this.cantxEtq });
+          listEtq.push({ "campo": "|CANTIDAD|", "valor": res[i].Cantidad });
           listEtq.push({ "campo": "|SALDOTEXT|", "valor": "0" });
           listContainer.push({ 'etiqueta': listEtq });
         }
@@ -592,7 +593,7 @@ export class EtiquetadoPage_01Page {
           listEtq.push({ "campo": "|PRODUCTO|", "valor": this.vEtq.Articulo });
           listEtq.push({ "campo": "|EAN14|", "valor": obj.EAN14 });
           listEtq.push({ "campo": "|EAN|", "valor": (obj.Nombre.toUpperCase() == this.vEtq.UM) ? "13" : "14" });
-          listEtq.push({ "campo": "|CANTIDAD|", "valor": (i == 0 && this.cantEtqSaldo > 0) ? this.cantEtqSaldo : this.cantxEtq });
+          listEtq.push({ "campo": "|CANTIDAD|", "valor": res[i].Cantidad });
           listContainer.push({ 'etiqueta': listEtq });
         }
       }
