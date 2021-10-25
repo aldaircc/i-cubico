@@ -101,7 +101,7 @@ export class EtiquetadoPage_01Page {
 
   valorpopoverGlobal: boolean = false
   popoverGlobal: any;
-  factorG: any;
+  factorG: number = 0;
 
   @ViewChild('selectUA_Alt') selectUA_Alt: Select;
   @ViewChild('selectFormat') selectFormat: Select;
@@ -486,13 +486,19 @@ export class EtiquetadoPage_01Page {
               numEtq = this.numEtq;
               cantEtqSaldo = this.cantEtqSaldo;
               cantxEtq = this.cantxEtq;
+              
+              let lote;
+              if(this.lote !=null)
+                lote = this.lote.toUpperCase()              
+              else              
+                lote =this.lote
 
               var objImp =
               {
                 'CantidadEtiqueta': parseInt(numEtq) + ((cantEtqSaldo) > 0 ? 1 : 0),
                 'Cantidad': cantxEtq,
                 'Id_Producto': this.vEtq.Id_Producto,
-                'LoteLab': (this.vEtq.FlagLote == true) ? this.lote.toUpperCase() : null,
+                'LoteLab': (this.vEtq.FlagLote == true) ? lote : null,
                 'FechaEmision': (this.fecEmiChecked == true) ? "/Date(" + Date.parse(this.fecEmi) + ")/" : null,
                 'FechaVencimiento': (this.fecVenChecked == true) ? "/Date(" + Date.parse(this.fecVen) + ")/" : null,
                 'Item': this.vEtq.Item,
