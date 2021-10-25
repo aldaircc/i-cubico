@@ -123,9 +123,9 @@ export class EtiquetadoPage_01Page {
     this.isVisibleSearchButton = (navParams.get('codePage') != null) ? true : false;
     this.titutlos1isDisplay = (navParams.get('codePage') != null) ? false : true;
     this.titutlos2isDisplay = (navParams.get('codePage') != null) ? true : false;
-
+    debugger;
     this.vEtq = (navParams.get('vEtq') != null) ? navParams.get('vEtq') : this.vEtq;
-    this.factorG = this.vEtq.Factor;
+    isNaN(this.vEtq.Factor)? this.factorG = 0 : this.factorG = this.vEtq.Factor;
     console.log(this.factorG,"factor General");
     this.listarUMxProducto(this.vEtq.Id_Producto);
   }
