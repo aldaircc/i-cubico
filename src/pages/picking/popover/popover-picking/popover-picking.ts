@@ -36,15 +36,22 @@ export class PopoverPickingPage {
         this.isDisplayUA = true;
         this.isDisplayUbicacion = true;
         this.isDisplayCerrar = true;
-        this.isDisplayCerrarPicking = true;
+        this.isDisplayCerrarPicking = false;
         break;
       case 1:
         this.isDisplayIncidencias = true;
         this.isDisplayUA = true;
         this.isDisplayUbicacion = true;
         this.isDisplayCerrar = true;
-        this.isDisplayCerrarPicking = true;
+        this.isDisplayCerrarPicking = false;
         break;
+      case 2:
+          this.isDisplayIncidencias = true;
+          this.isDisplayUA = true;
+          this.isDisplayUbicacion = true;
+          this.isDisplayCerrar = true;
+          this.isDisplayCerrarPicking = true;
+          break;
       default:
         break;
     }

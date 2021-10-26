@@ -313,7 +313,7 @@ export class DetallePickingPage {
   presentPopover(ev) {
     this.valorpopoverGlobal = true;
 
-    this.popoverGlobal = this.popoverCtrl.create(PopoverPickingPage, { 'page': 1 });
+    this.popoverGlobal = this.popoverCtrl.create(PopoverPickingPage, { 'page': 2 });
     this.popoverGlobal.present({
       ev: ev
     });
