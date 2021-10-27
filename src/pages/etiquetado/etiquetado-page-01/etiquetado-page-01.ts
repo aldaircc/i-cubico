@@ -557,7 +557,8 @@ export class EtiquetadoPage_01Page {
           listEtq.push({ "campo": "|CANTXBULTO|", "valor": this.cantXBulto });
           listEtq.push({ "campo": "|SALDO|", "valor": "0" });
           // listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo == true) ? "" : currentDate.format('dd/MM/yyyy') });
-          listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo == true) ? moment(objImp.FechaEmision).format('DD/MM/YYYY') : currentDate.format('DD/MM/YYYY') });
+          //listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo == true) ? moment(objImp.FechaEmision).format('DD/MM/YYYY') : currentDate.format('DD/MM/YYYY') });
+          listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo == true) ? moment(objImp.FechaEmision).format('MM/DD/YYYY') : currentDate.format('MM/DD/YYYY') });// SANNA
           listEtq.push({ "campo": "|ORDEN|", "valor": (this.findArticulo == true) ? "" : this.vEtq.NroDoc });
           listEtq.push({ "campo": "|USUARIO|", "valor": this.sGlobal.userName });
           listEtq.push({ "campo": "|COMPOSICION|", "valor": this.vEtq.CondicionAlmac });
@@ -587,7 +588,8 @@ export class EtiquetadoPage_01Page {
           listEtq.push({ "campo": "|CANTXBULTO|", "valor": this.cantXBulto });
           listEtq.push({ "campo": "|SALDO|", "valor": (i == 0 && this.cantEtqSaldo > 0) ? this.residuo % this.cantXBulto : 0 });
           // listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo != false) ? "" : currentDate.format('dd/MM/yyyy') });
-          listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo != false) ? moment(objImp.FechaEmision).format('DD/MM/YYYY') : currentDate.format('DD/MM/YYYY') });
+          // listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo != false) ? moment(objImp.FechaEmision).format('DD/MM/YYYY') : currentDate.format('DD/MM/YYYY') });
+          listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo != false) ? moment(objImp.FechaEmision).format('MM/DD/YYYY') : currentDate.format('MM/DD/YYYY') });//SANNA
           listEtq.push({ "campo": "|ORDEN|", "valor": (this.findArticulo != false) ? "" : this.vEtq.NroDoc });
           listEtq.push({ "campo": "|USUARIO|", "valor": this.sGlobal.userName });
           listEtq.push({ "campo": "|COMPOSICION|", "valor": this.vEtq.CondicionAlmac });
