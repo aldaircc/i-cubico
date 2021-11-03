@@ -9,6 +9,7 @@ import { ReciboPage } from '../../recibo/recibo';
 import { EtiquetadoPage_01Page } from '../../etiquetado/etiquetado-page-01/etiquetado-page-01';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import moment from 'moment';
+import { ignoreElements } from 'rxjs/operator/ignoreElements';
 
 /**
  * Generated class for the ReciboPage_02Page page.
@@ -292,20 +293,42 @@ export class ReciboPage_02Page {
       let saldo = this.listDetailTx.reduce(function (prev, cur) {
         return prev + cur.Saldo;
       }, 0);
-
-      debugger;
+      
       if (this.listAuxDetailTx.length != this.listConfirm.length) {
         if (saldo > 0) {
           this.cantPendiente = this.countConfirm + this.countProcess;
           this.presentAlertConfirm("Existen " + this.cantPendiente + " producto(s) con saldo pendiente ¿Está seguro de cerrar la transacción?").then((resultAlert) => {
             if (resultAlert) {
+
+              this.sRecibo.ValidarCierreRecepcionAPI(this.vReciboPage01.Id_Tx).then((result) => {
+                console.log(result,"resultado")  
+                debugger;              
+                if(result[0].FlagConfirmadoSAP != 1){
+                  if(this.vReciboPage01.Id_TipoMovimiento == 3){
+                    console.log("Notificar API")
+                    this.sRecibo.notificarRecepcionApi(this.vReciboPage01.Id_Tx);
+                  }
+                }
+              });
+
+              if(this.sGlobal.urlExterno != "" && this.sGlobal.urlExterno !=null){
+                //Validar FlagConfirmadoSAP
+                this.sRecibo.ValidarCierreRecepcionAPI(this.vReciboPage01.Id_Tx).then((result) => {
+                  console.log(result,"resultado")
+                  
+                  if(result[0].FlagConfirmadoSAP != 1){
+                    if(this.vReciboPage01.Id_TipoMovimiento == 3){
+                      console.log("Notificar API")
+                      this.sRecibo.notificarRecepcionApi(this.vReciboPage01.Id_Tx);
+                    }
+                  }
+                });
+              }
+              console.log("Cerrar Recepción");                     
               this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result => {
                 let res: any = result;
                 this.getDetailXTx(this.vReciboPage01.Id_Tx);
-                if(this.sGlobal.urlExterno != "" && this.sGlobal.urlExterno !=null){
-                  if(this.vReciboPage01.Id_TipoMovimiento == 3)
-                    this.sRecibo.notificarRecepcionApi(this.vReciboPage01.Id_Tx)
-                }
+     
                 this.navCtrl.push(ReciboPage);
               });
             }
@@ -316,16 +339,35 @@ export class ReciboPage_02Page {
         } else {
           this.presentAlertConfirm("¿Está seguro de cerrar la transacción?").then((resultAlert) => {
             if (resultAlert) {
-              this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result => {
-                let res: any = result;
-                this.getDetailXTx(this.vReciboPage01.Id_Tx);
-                
-                if(this.sGlobal.urlExterno != "" && this.sGlobal.urlExterno !=null){
-                  if(this.vReciboPage01.Id_TipoMovimiento == 3)
-                    this.sRecibo.notificarRecepcionApi(this.vReciboPage01.Id_Tx)
-                }
-                this.navCtrl.push(ReciboPage);
-              });
+
+              if(this.sGlobal.urlExterno != "" && this.sGlobal.urlExterno !=null){
+                //Validar FlagConfirmadoSAP
+                this.sRecibo.ValidarCierreRecepcionAPI(this.vReciboPage01.Id_Tx).then((result) => {
+                  console.log(result,"resultado")
+                  
+                  if(result[0].FlagConfirmadoSAP != 1){
+                    if(this.vReciboPage01.Id_TipoMovimiento == 3){
+                      console.log("Notificar API")
+                      this.sRecibo.notificarRecepcionApi(this.vReciboPage01.Id_Tx);
+                    }
+
+                    console.log("Cerrar Recepción");                     
+                    this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result => {
+                      let res: any = result;
+                      this.getDetailXTx(this.vReciboPage01.Id_Tx);                           
+                      this.navCtrl.push(ReciboPage);
+                    });
+                  }
+                });
+              }
+              else{
+                console.log("Cerrar Recepción");                     
+                this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result => {
+                  let res: any = result;
+                  this.getDetailXTx(this.vReciboPage01.Id_Tx);                           
+                  this.navCtrl.push(ReciboPage);
+                });
+              }
             } else {
               return;
             }

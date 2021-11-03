@@ -229,4 +229,17 @@ export class ReciboServiceProvider {
     });
   }
 
+  ValidarCierreRecepcionAPI(strId_Tx) {
+    var parameter = { 'strId_Tx': strId_Tx};
+    return new Promise(resolve => {
+      this.http.get(this.sGlobal.recepcion + 'ValidarCierreRecepcionAPI', { params: parameter })
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log('Error ValidarCierreRecepcionAPI');
+        })
+    });
+  }
+
 }
