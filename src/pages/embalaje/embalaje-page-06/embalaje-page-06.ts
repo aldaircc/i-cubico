@@ -73,7 +73,14 @@ export class EmbalajePage_06Page {
         this.resultRegistro = result;
         if (this.resultRegistro.errNumber == 0) {
           this.presentAlert(this.resultRegistro.message);
-          this.goPrepararBultosBack();
+          //this.goPrepararBultosBack();
+          this.sGlobal.resultGrabarBulto = true;        
+          this.navCtrl.push(EmbalajePage_08Page, {
+            dataPage02: this.vEmbalajePage02,
+            nroBulto :this.vNroBulto
+          });
+
+
         } else {
           this.presentAlert(this.resultRegistro.message);
         }
@@ -83,8 +90,7 @@ export class EmbalajePage_06Page {
     }
   }
 
-  goPrepararBultosBack() {
-    alert("entra page4")
+  goPrepararBultosBack() {    
     this.navCtrl.getViews().forEach(item => {
       if (item.name == 'EmbalajePage_04Page') {
         this.sGlobal.resultGrabarBulto = true;
