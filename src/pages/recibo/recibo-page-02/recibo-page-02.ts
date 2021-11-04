@@ -309,6 +309,10 @@ export class ReciboPage_02Page {
                       console.log("Notificar API")
                       this.sRecibo.notificarRecepcionApi(this.vReciboPage01.Id_Tx);
                     }
+                    if(this.vReciboPage01.Id_TipoMovimiento == 11){
+                      console.log("Notificar transferencia API")
+                      this.sRecibo.notificarTransferenciaApi(this.vReciboPage01.Id_Tx);
+                    }
                   }
 
                   console.log("Cerrar Recepción");                     
@@ -348,6 +352,11 @@ export class ReciboPage_02Page {
                       console.log("Notificar API")
                       this.sRecibo.notificarRecepcionApi(this.vReciboPage01.Id_Tx);
                     }
+                    if(this.vReciboPage01.Id_TipoMovimiento == 11){
+                      console.log("Notificar transferencia API")
+                      this.sRecibo.notificarTransferenciaApi(this.vReciboPage01.Id_Tx);
+                    }
+
                   }
 
                   console.log("Cerrar Recepción");                     
