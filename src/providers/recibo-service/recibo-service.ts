@@ -224,7 +224,20 @@ export class ReciboServiceProvider {
         .subscribe(data => {
           resolve(data);
         }, err => {
-          console.log('Error cerrarRecepcion', err);
+          console.log('Error notificarRecepcionApi', err);
+        })
+    });
+  }
+
+  notificarTransferenciaApi(idTx) {    
+    var parameter = { 'CODIGO': idTx };
+    return new Promise((resolve, reject) => {
+      this.http.post(this.sGlobal.urlExterno + 'Notificacion/Transferencia', JSON.stringify(parameter), { headers: this.headers })
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log('Error notificarTransferenciaApi', err);
         })
     });
   }
