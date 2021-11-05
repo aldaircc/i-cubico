@@ -57,7 +57,7 @@ export class EmbalajePage_06Page {
 
   GuardarPesoBulto() {
     debugger;
-    if (this.pesoFisico > 1) {
+    if (this.pesoFisico > 0) {
       var objEmbalaje = {
         'Id_Tx': this.vEmbalajePage02.Id_Tx,
         'NroBulto': this.vNroBulto,

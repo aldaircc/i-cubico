@@ -328,7 +328,7 @@ export class EmbalajePage_03Page {
             numItemVisual = this.vListaProductoSelect.Item;
           }
           
-          if ((this.listDetEmbalaje[0].FlagLotePT == 1 && this.listDetEmbalaje[0].FlagSeriePT == 0) || (this.listDetEmbalaje[0].FlagLotePT == 0 && this.listDetEmbalaje[0].FlagSeriePT == 0)) {
+          if ((this.vListaProductoSelect.FlagLotePT == 1 && this.vListaProductoSelect.FlagSeriePT == 0) || (this.vListaProductoSelect.FlagLotePT == 0 && this.vListaProductoSelect.FlagSeriePT == 0)) {
             this.validacionNroBulto();
             this.navCtrl.push(EmbalajePage_04Page, {
               page: 3,             
@@ -340,10 +340,10 @@ export class EmbalajePage_03Page {
             });
           }
           else{
-            if ((this.listDetEmbalaje[0].FlagSeriePT == 1 && this.listDetEmbalaje[0].FlagLotePT == 0) || (this.listDetEmbalaje[0].FlagLotePT == 1 && this.listDetEmbalaje[0].FlagSeriePT == 1)) {               
+            if ((this.vListaProductoSelect.FlagSeriePT == 1 && this.vListaProductoSelect.FlagLotePT == 0) || (this.vListaProductoSelect.FlagLotePT == 1 && this.vListaProductoSelect.FlagSeriePT == 1)) {               
               this.validacionNroBulto();
               this.navCtrl.push(EmbalajePage_10Page, {                
-                Id_UM: this.listDetEmbalaje[0].Id_UM,
+                Id_UM: this.vListaProductoSelect.Id_UM,
                 nroBulto: this.vNroBulto,
                 listTransacDetEmbalaje: this.listTransacDetEmbalaje,
                 dataPage02: this.vEmbalajePage02,
@@ -353,11 +353,6 @@ export class EmbalajePage_03Page {
               });
             }
           }
-
-          
-
-
-
         } else {
           alert("No se encontraron registros");
         }
