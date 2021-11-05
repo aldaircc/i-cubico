@@ -44,6 +44,7 @@ export class ReciboPage_02Page {
   cantPendiente: number = 0;
   valorpopoverGlobal: boolean = false
   popoverGlobal: any;
+  listError: any = [];
 
   constructor(public app: App, public platform: Platform, public navCtrl: NavController, public navParams: NavParams,
     private alertCtrl: AlertController, public sRecibo: ReciboServiceProvider,
@@ -299,37 +300,44 @@ export class ReciboPage_02Page {
           this.cantPendiente = this.countConfirm + this.countProcess;
           this.presentAlertConfirm("Existen " + this.cantPendiente + " producto(s) con saldo pendiente ¿Está seguro de cerrar la transacción?").then((resultAlert) => {
             if (resultAlert) {
-              if(this.sGlobal.urlExterno != "" && this.sGlobal.urlExterno !=null){            
-                //Validar FlagConfirmadoSAP
-                this.sRecibo.ValidarCierreRecepcionAPI(this.vReciboPage01.Id_Tx).then((result) => {
-                  console.log(result,"resultado")
-                  
+              if(this.sGlobal.urlExterno != "" && this.sGlobal.urlExterno !=null){                            
+                this.sRecibo.ValidarCierreRecepcionAPI(this.vReciboPage01.Id_Tx).then((result) => {                                    
                   if(result[0].FlagConfirmadoSAP != 1){
-                    if(this.vReciboPage01.Id_TipoMovimiento == 3){
-                      console.log("Notificar API")
-                      this.sRecibo.notificarRecepcionApi(this.vReciboPage01.Id_Tx);
+                    if(this.vReciboPage01.Id_TipoMovimiento == 3){                      
+                      this.sRecibo.notificarRecepcionApi(this.vReciboPage01.Id_Tx).then((result) => {
+                        if(result[0].err_number != 0){
+                          this.presentAlert(result[0].err_message);
+                        }
+                        else{                          
+                          this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result => {
+                            let res: any = result;
+                            this.getDetailXTx(this.vReciboPage01.Id_Tx);                           
+                            this.navCtrl.push(ReciboPage);
+                          });
+                        }                      
+                      });
                     }
-                    if(this.vReciboPage01.Id_TipoMovimiento == 11){
-                      console.log("Notificar transferencia API")
-                      this.sRecibo.notificarTransferenciaApi(this.vReciboPage01.Id_Tx);
+                    if(this.vReciboPage01.Id_TipoMovimiento == 11){                      
+                      this.sRecibo.notificarTransferenciaApi(this.vReciboPage01.Id_Tx).then((result) => {                        
+                        if(result[0].err_number != 0){
+                          this.presentAlert(result[0].err_message);
+                        }
+                        else{                                           
+                          this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result => {
+                            let res: any = result;
+                            this.getDetailXTx(this.vReciboPage01.Id_Tx);                           
+                            this.navCtrl.push(ReciboPage);
+                          });
+                        }
+                      });
                     }
-                  }
-
-                  console.log("Cerrar Recepción");                     
-                  this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result => {
-                    let res: any = result;
-                    this.getDetailXTx(this.vReciboPage01.Id_Tx);                           
-                    this.navCtrl.push(ReciboPage);
-                  });
-
+                  }              
                 });
               }
-              else{
-                console.log("Cerrar Recepción");                     
+              else{                                  
                 this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result => {
                   let res: any = result;
-                  this.getDetailXTx(this.vReciboPage01.Id_Tx);
-      
+                  this.getDetailXTx(this.vReciboPage01.Id_Tx);      
                   this.navCtrl.push(ReciboPage);
                 });
               }
@@ -341,39 +349,45 @@ export class ReciboPage_02Page {
         } else {
           this.presentAlertConfirm("¿Está seguro de cerrar la transacción?").then((resultAlert) => {
             if (resultAlert) {
-
               if(this.sGlobal.urlExterno != "" && this.sGlobal.urlExterno !=null){
-                //Validar FlagConfirmadoSAP
-                this.sRecibo.ValidarCierreRecepcionAPI(this.vReciboPage01.Id_Tx).then((result) => {
-                  console.log(result,"resultado")
-                  
+                this.sRecibo.ValidarCierreRecepcionAPI(this.vReciboPage01.Id_Tx).then((result) => {            
                   if(result[0].FlagConfirmadoSAP != 1){
-                    if(this.vReciboPage01.Id_TipoMovimiento == 3){
-                      console.log("Notificar API")
-                      this.sRecibo.notificarRecepcionApi(this.vReciboPage01.Id_Tx);
+                    if(this.vReciboPage01.Id_TipoMovimiento == 3){                      
+                      this.sRecibo.notificarRecepcionApi(this.vReciboPage01.Id_Tx).then((result) => {                        
+                        if(result[0].err_number != 0){
+                          this.presentAlert(result[0].err_message);
+                        }
+                        else{                                             
+                          this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result => {
+                          let res: any = result;
+                          this.getDetailXTx(this.vReciboPage01.Id_Tx);                           
+                          this.navCtrl.push(ReciboPage);
+                          });
+                        }
+                      });
                     }
-                    if(this.vReciboPage01.Id_TipoMovimiento == 11){
-                      console.log("Notificar transferencia API")
-                      this.sRecibo.notificarTransferenciaApi(this.vReciboPage01.Id_Tx);
+                    if(this.vReciboPage01.Id_TipoMovimiento == 11){                      
+                      this.sRecibo.notificarTransferenciaApi(this.vReciboPage01.Id_Tx).then((result) => {                        
+                        if(result[0].err_number != 0){
+                          this.presentAlert(result[0].err_message);
+                        }
+                        else{                          
+                          this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result => {
+                          let res: any = result;
+                          this.getDetailXTx(this.vReciboPage01.Id_Tx);                           
+                          this.navCtrl.push(ReciboPage);
+                          });
+                        }
+                      });
                     }
-
-                  }
-
-                  console.log("Cerrar Recepción");                     
-                  this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result => {
-                    let res: any = result;
-                    this.getDetailXTx(this.vReciboPage01.Id_Tx);                           
-                    this.navCtrl.push(ReciboPage);
-                  });
-                  
+                  }                                    
                 });
               }
-              else{
-                console.log("Cerrar Recepción");                     
+              else{                                    
                 this.sRecibo.cerrarRecepcion(this.vReciboPage01.Id_Tx, (saldo > 0 ? 6 : 5), this.sGlobal.userName).then(result => {
-                  let res: any = result;
-                  this.getDetailXTx(this.vReciboPage01.Id_Tx);                           
-                  this.navCtrl.push(ReciboPage);
+                let res: any = result;
+                this.getDetailXTx(this.vReciboPage01.Id_Tx);                           
+                this.navCtrl.push(ReciboPage);
                 });
               }
             } else {
