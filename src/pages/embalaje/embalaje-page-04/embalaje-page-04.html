@@ -34,19 +34,19 @@
           {{vNroBultoCeros}}
         </ion-label>
       </ion-col>
-      <ion-col col-3 col-sm class="bgHeader-col">
+      <!-- <ion-col col-3 col-sm class="bgHeader-col">
         <ion-label class="bgHeader-text-button">
           {{vNroItemVisual}} / {{vTotalItems}}
         </ion-label>
-      </ion-col>
-      <ion-col class="bgHeader-col">
+      </ion-col> -->
+      <!-- <ion-col class="bgHeader-col">
         <button ion-button icon-start (click)="goToAnterior()" [disabled]="Backisenabled" class="bgHeader-button">
           <ion-icon name="arrow-dropleft"></ion-icon>
         </button>
         <button ion-button icon-end (click)="goToSiguiente()" [disabled]="Nextisenabled" class="bgHeader-button">
           <ion-icon name="arrow-dropright"></ion-icon>
         </button>
-      </ion-col>
+      </ion-col> -->
     </ion-row>
   </ion-grid>
 
@@ -60,7 +60,7 @@
       <ion-card-content>
         <h5>{{objDetBultoEmbalaje.Producto}}</h5>
         <h5><b>Cod. Producto: </b> {{objDetBultoEmbalaje.Codigo}} </h5>
-        <h5><b>Lote/Serie: </b> {{objDetBultoEmbalaje.Lote}} </h5>
+        <h5><b>Lote: </b> {{objDetBultoEmbalaje.Lote}} </h5>
         <h5><b>C. Picking: </b>{{objDetBultoEmbalaje.CantidadOperacion|number : '1.2-2' }}</h5>
         <h5><b>Saldo: </b>{{objDetBultoEmbalaje.Saldo|number : '1.2-2' }}</h5>
         <h5><b>C. Pedida: </b>{{objDetBultoEmbalaje.CantidadPedida|number : '1.2-2' }}</h5>
@@ -104,13 +104,13 @@
           </div>
         </button>
       </ion-col>
-      <ion-col style="margin: 0px; padding: 0px; ">
+      <!-- <ion-col style="margin: 0px; padding: 0px; ">
         <button ion-button style="margin: 0px; padding: 0px" (click)="goToEmbalajePage05()" medium full>
           <div>
             <ion-icon name='md-list'></ion-icon> <br>
           </div>
         </button>
-      </ion-col>
+      </ion-col> -->
       <ion-col style="margin: 0px; padding: 0px; ">
         <button ion-button style="margin: 0px; padding: 0px" (click)="goToEmbalajePage09()" medium full>
           <div>

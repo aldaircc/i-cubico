@@ -26,6 +26,9 @@ export class EmbalajePage_07Page {
   vDetalleDespacho: any = [];
   vPage: any;
   IdBalanza: number = 0;
+  vEmbalajePage03: any;
+  vLisTransacEmbalaje: any;  
+  data: any;
   @ViewChild('selectFormat') selectFormat: Select;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -33,6 +36,9 @@ export class EmbalajePage_07Page {
     this.vNroBulto = navParams.get('dataNroBulto');
     this.vNroBultoCeros = navParams.get('dataNroBultoCeros');
     this.vEmbalajePage02 = navParams.get('dataPage02');
+    this.vEmbalajePage03 = navParams.get('dataPageFiltro');
+    this.vLisTransacEmbalaje = navParams.get('lstTransac');    
+    this.data = this.navParams.get('data');
     this.sGlobal.resultGrabarBulto = false; 
   }
 
@@ -78,32 +84,36 @@ export class EmbalajePage_07Page {
   }
 
   goDetalleDespacho() {
-    debugger;
-    let message = this.validarCampos();
+    debugger;    
+    let message = this.validarCampos();    
     if (message.length > 0) {
       alert(message);
       return;
     }
-    var resultFor = false;
-    this.navCtrl.getViews().forEach(item => {
-      debugger;
-      if (item.name == 'EmbalajePage_06Page') {
-        debugger;
-        resultFor = true;
-        this.sGlobal.resultObtenerPeso = true;
-        this.sGlobal.pesoBulto = this.pesoFisico;
-        this.navCtrl.popTo(item);
-      }
-    });
+    var resultFor = false;    
+    // this.navCtrl.getViews().forEach(item => {
+    //   debugger;    
+    //   if (item.name == 'EmbalajePage_06Page') {
+    //     debugger;
+    //     resultFor = true;
+    //     this.sGlobal.resultObtenerPeso = true;
+    //     this.sGlobal.pesoBulto = this.pesoFisico;
+    //     this.navCtrl.popTo(item);
+    //   }    
+    // });
 
-    if (!resultFor) {
+    if (!resultFor) {    
       this.sGlobal.resultObtenerPeso = true;
       this.sGlobal.pesoBulto = this.pesoFisico;
       this.navCtrl.push(EmbalajePage_06Page, {
-        dataNroBulto: this.vNroBulto, dataNroBultoCeros: this.vNroBultoCeros,
-        dataPage02: this.vEmbalajePage02
-      });
-    }
+        dataNroBulto: this.vNroBulto, 
+        dataNroBultoCeros: this.vNroBultoCeros,
+        dataPage02: this.vEmbalajePage02,
+        dataPageFiltro: this.vEmbalajePage03,
+        lstTransac: this.vLisTransacEmbalaje,           
+        data: this.data
+      });    
+    }    
   }
 
   ionViewDidLoad() {

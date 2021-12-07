@@ -8,6 +8,9 @@ import { EmbalajePage_06Page } from '../embalaje-page-06/embalaje-page-06';
 import { EmbalajePage_07Page } from '../embalaje-page-07/embalaje-page-07';
 import { EmbalajePage_09Page } from '../embalaje-page-09/embalaje-page-09';
 import { EmbalajePage_03Page } from '../embalaje-page-03/embalaje-page-03';
+import { ignoreElements } from 'rxjs/operator/ignoreElements';
+import { v } from '@angular/core/src/render3';
+import { DeferObservable } from 'rxjs/observable/DeferObservable';
 
 /**
  * Generated class for the EmbalajePage_10Page page.
@@ -23,72 +26,49 @@ import { EmbalajePage_03Page } from '../embalaje-page-03/embalaje-page-03';
 })
 export class EmbalajePage_10Page {
   
-  @ViewChild('txtSerie', { read: ElementRef }) private txtSerie: ElementRef;
-  vlistDetEmbalajeTop1: any;
-  vlistAuxDetEmbalaje: any;
+  @ViewChild('txtSerie') txtSerieRef;
+  @ViewChild('txtSerie', { read: ElementRef }) private txtSerie: ElementRef;  
   vNroBulto: any;
   vNroBultoCeros: any;
   vSerie: any;
-  vListaTransac: any;
-
-  vlistTransacDetEmbalaje: any;
-  vEmbalajePage02: any;
-  vProducto: any;
-  vCodProducto: any;
-  rowCount: any;
-  Id_UM: any;
+  vEmbalajePage02: any;    
+  rowCount: any;  
   resultadoRegistroSerie: any;
-  listDetalleXBulto: any = [];
+  listDetalleXBulto: any = [];    
 
-  valorpopoverGlobal: boolean = false
-  popoverGlobal: any;
-
-  vNroItemVisual: number;
   vEmbalajePage03: any;
   vEmbalajeTotalPage03:any;
   vUltimoNroBulto: any;
   lstBultosDespacho: any;
   data: any;
+  vListaProductoSelect: any;
+  vPage: any;
+  vSaldo: any;
+  vFiltroProductos: any;
+  lstProductoDespacho:any;
+  vItem: any;
+  vValido: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl: AlertController,
     public popoverCtrl: PopoverController, public sGlobal: GlobalServiceProvider, public sEmbalaje: EmbalajeServiceProvider) {
-    debugger;
-    //this.vlistDetEmbalajeTop1 = navParams.get('listDetEmbalajeTop1');
-    //this.vlistAuxDetEmbalaje = navParams.get('listAuxDetEmbalaje');
-    this.data = this.navParams.get('data');
-    this.vNroBulto = this.vNroBultoCeros = navParams.get('nroBulto');
-    this.vlistTransacDetEmbalaje = navParams.get('listTransacDetEmbalaje');
-    this.vEmbalajePage02 = navParams.get('dataPage02');
-    this.vNroItemVisual = navParams.get('nroItemVisual');
-    this.vProducto = navParams.get('descProducto');
-    // this.rowCount = this.vlistTransacDetEmbalaje.length;
+    debugger;   
     
-    this.Id_UM = navParams.get('Id_UM');
-    this.llenarNumeros();
-  }
+    this.data = this.navParams.get('data');
+    this.vNroBulto = this.vNroBultoCeros = navParams.get('nroBulto');    
+    this.vEmbalajePage02 = navParams.get('dataPage02');    
+    this.vListaProductoSelect = navParams.get('dataPageFiltro');    
+    this.vPage = navParams.get('page');   
+    this.vSaldo = this.vListaProductoSelect.Saldo
+    if(this.vPage==5 || this.vPage==8)     
+      this.vSaldo = navParams.get('vSaldo');
+    
+    if(this.vPage!=5)     
+      this.llenarNumeros();
+    
+    this.vItem = navParams.get('item');
+      
 
 
-  goToEmbalajePage04(data) {
-    debugger;
-    this.vListaTransac = {
-      'CantidadEmbalado': data.CantidadEmbalado,
-      'CantidadPicking': data.CantidadPicking,
-      'Id_Producto': data.Id_Producto,
-      'Id_Tx': data.Id_Tx,
-      'Item': data.Item,
-      'Lote': data.Lote
-    };
-
-    this.navCtrl.push(EmbalajePage_04Page, {
-      page: 10,
-      //dataPageFiltro: this.vlistDetEmbalajeTop1,
-      //dataTotalPage03: this.vlistAuxDetEmbalaje,
-      nroBulto: this.vNroBulto,
-      dataPage02: this.vEmbalajePage02,
-      lstTransac: this.vListaTransac,
-      nroItemVisual : this.vNroItemVisual
-      //,nomProducto: this.vProducto
-    });
   }
 
   ionViewDidLoad() {                   
@@ -121,43 +101,66 @@ export class EmbalajePage_10Page {
   }
 
   registrarSerie(){
-    var resultSerie = false;
+    // var resultSerie = false;
 
-    for (var j = 0; j < this.listDetalleXBulto.length; j++) {
-      if(this.vSerie == this.listDetalleXBulto[j].Serie){
-        resultSerie = true;
-      }                  
-    }
+    // for (var j = 0; j < this.listDetalleXBulto.length; j++) {
+    //   if(this.vSerie == this.listDetalleXBulto[j].Serie){
+    //     resultSerie = true;
+    //   }                  
+    // }
 
-    if(resultSerie){
-      this.presentAlert("La Serie ya se encuentra en la lista.").then((resultAlert) => {
-        if (resultAlert) {
-          setTimeout(() => {
-            this.vSerie = "";
-            this.selectAll(this.txtSerie);
-          }, (500));
-        }
-      })
-    }
-    else{
+    // if(resultSerie){
+    //   this.presentAlert("La Serie ya se encuentra en la lista.").then((resultAlert) => {
+    //     if (resultAlert) {
+    //       setTimeout(() => {
+    //         this.vSerie = "";
+    //         this.selectAll(this.txtSerie);
+    //       }, (500));
+    //     }
+    //   })
+    // }
+    
+    this.sEmbalaje.ValidarSerieEmbalaje(this.vSerie,this.vListaProductoSelect.Id_Tx).then((result) => {     
+      this.vValido = result;
+
+      if(this.vValido.errNumber != 0){
+        
+        this.presentAlert("La serie ya se encuentra registrada").then((resultAlert) => {
+          if (resultAlert) {
+            setTimeout(() => {
+              this.vSerie = "";
+              this.selectAll(this.txtSerie);
+            }, (500));
+          }
+        });                
+      }
+      else{
+
         var objEmbalaje = {
-          'Id_Tx': this.vlistTransacDetEmbalaje[0].Id_Tx,
+          'Id_Tx': this.vListaProductoSelect.Id_Tx,
           'NroBulto': this.vNroBulto,
-          'Id_Producto': this.vlistTransacDetEmbalaje[0].Id_Producto,
-          'Id_UM': this.Id_UM,
+          'Id_Producto': this.vListaProductoSelect.Id_Producto,
+          'Id_UM': this.vListaProductoSelect.Id_UM,
           'Cantidad': 1,
           'Anulado': 0,
           'Id_RF': this.sGlobal.Id_TerminalRF,
-          'Item': this.vlistTransacDetEmbalaje[0].Item,
+          'Item': this.vListaProductoSelect.Item,
           'Id_Almacen': this.sGlobal.Id_Almacen,
           'UsuarioRegistro': this.sGlobal.userName,
           'Id_UMP': 0,
-          'Lote': this.vSerie
+          'Lote': this.vSerie,
+          'Serie': this.vSerie,
+          'Codigo': this.vListaProductoSelect.Codigo,
         };
           console.log(objEmbalaje,"datos a grabar")
+          
         this.sEmbalaje.RegistrarProductoBulto(objEmbalaje).then((result) => {
+          debugger;
           this.resultadoRegistroSerie = result;
           if(this.resultadoRegistroSerie.errNumber == 0){
+            this.listDetalleXBulto.unshift(objEmbalaje);
+            this.vListaProductoSelect.Saldo = this.vListaProductoSelect.Saldo - 1;
+            this.rowCount = this.listDetalleXBulto.length;
             this.vSerie = "";            
           }
           else{
@@ -173,10 +176,14 @@ export class EmbalajePage_10Page {
 
           }
                            
-          this.ListarDetalleXBulto(this.vlistTransacDetEmbalaje[0].Id_Tx,this.vNroBulto);
+          //this.ListarDetalleXBulto(this.vListaProductoSelect.Id_Tx,this.vNroBulto);
                         
          });
-    }
+      } 
+    })
+  
+       
+    
   }
 
   ListarDetalleXBulto(strIdTx, intNroBulto) {
@@ -191,27 +198,31 @@ export class EmbalajePage_10Page {
 
 
   goToEmbalajePage05() {
-    this.navCtrl.push(EmbalajePage_05Page, {
-      dataPageFiltro: this.vEmbalajePage03,
-      dataNroBultoCeros: this.vNroBultoCeros,
-      dataTotalPage03: this.vEmbalajeTotalPage03,
-      dataNroBulto: this.vNroBulto,
-      dataPage02: this.vEmbalajePage02,
-      descProducto: this.vProducto,
-      listTransacDetEmbalaje: this.vlistTransacDetEmbalaje
-    });
+    debugger;
+    this.vPage = 5;
+      this.navCtrl.push(EmbalajePage_05Page, {
+        dataPageFiltro: this.vListaProductoSelect,
+        dataNroBultoCeros: this.vNroBultoCeros,
+        dataTotalPage03: this.vEmbalajeTotalPage03,
+        dataNroBulto: this.vNroBulto,
+        dataPage02: this.vEmbalajePage02,
+        descProducto: this.vListaProductoSelect.Producto, 
+        vSaldo: this.vSaldo,        
+      });  
   }
   
   goToEmbalajePage06() {    
+    debugger;
+    this.vPage = 6;
     if(this.listDetalleXBulto.length > 0){
       this.navCtrl.push(EmbalajePage_06Page, {
         dataNroBulto: this.vNroBulto,
         dataNroBultoCeros: this.vNroBultoCeros,
-        dataPage02: this.vEmbalajePage02,
-        listTransacDetEmbalaje: this.vlistTransacDetEmbalaje,
-        descProducto: this.vProducto,
-        nroItemVisual: this.vNroItemVisual,
-        data: this.data
+        dataPage02: this.vEmbalajePage02,        
+        descProducto: this.vListaProductoSelect.Producto,        
+        dataPageFiltro: this.vListaProductoSelect,
+        data: this.data,
+        vSaldo: this.vSaldo
       });
     }
     else{      
@@ -226,15 +237,30 @@ export class EmbalajePage_10Page {
     }
   }
 
-  goToEmbalajePage07() {
-    this.navCtrl.push(EmbalajePage_07Page, {
-      dataNroBulto: this.vNroBulto,
-      dataNroBultoCeros: this.vNroBultoCeros,
-      dataPage02: this.vEmbalajePage02
-    });
+  goToEmbalajePage07() {   
+
+    if(this.listDetalleXBulto.length > 0){
+      this.vPage = 7;
+      this.navCtrl.push(EmbalajePage_07Page, {
+        dataNroBulto: this.vNroBulto,
+        dataNroBultoCeros: this.vNroBultoCeros,
+        dataPage02: this.vEmbalajePage02
+      });
+    }
+    else{      
+      this.presentAlert("No hay series agregadas").then((resultAlert) => {
+        if (resultAlert) {
+          setTimeout(() => {
+            this.vSerie = "";
+            this.selectAll(this.txtSerie);
+          }, (500));
+        }
+      })
+    }
   }
 
-  goToEmbalajePage09() {
+  goToEmbalajePage09() {   
+    this.vPage = 9;
     this.navCtrl.push(EmbalajePage_09Page, {
       dataPageFiltro: this.vEmbalajePage03,
       dataNroBultoCeros: this.vNroBultoCeros,
@@ -248,21 +274,20 @@ export class EmbalajePage_10Page {
 
   llenarNumeros() {
     debugger;
-    if(this.vNroBulto ==0){
-      this.vNroBulto = this.vNroBulto + 1;
-      this.vNroBultoCeros = parseInt(this.vNroBultoCeros) + 1;
+    if(this.vPage == 5){      
       let s = this.vNroBultoCeros + "";
       while (s.length < 3)
         this.vNroBultoCeros = s = "0" + s;
       return this.vNroBultoCeros;
-    }else{      
-      //this.vNroBulto = this.vNroBulto + 1;
-      //this.vNroBultoCeros = parseInt(this.vNroBultoCeros) + 1;
-      let s = this.vNroBultoCeros + "";
-      while (s.length < 3)
-        this.vNroBultoCeros = s = "0" + s;
-      return this.vNroBultoCeros;
-    }    
+    }
+    else{     
+        this.vNroBulto = this.vNroBulto + 1;
+        this.vNroBultoCeros = parseInt(this.vNroBultoCeros) + 1;
+        let s = this.vNroBultoCeros + "";
+        while (s.length < 3)
+          this.vNroBultoCeros = s = "0" + s;
+        return this.vNroBultoCeros;                 
+    }
   }
 
   incrementarNumeroBulto() {
@@ -284,20 +309,38 @@ export class EmbalajePage_10Page {
       return this.vNroBultoCeros;
     }    
   }
+ 
+  ionViewWillEnter() {     
+    debugger;    
 
-
-  ionViewWillEnter() {        
-    console.log(this.sGlobal.resultGrabarBulto,"FlagResultado Grabar");        
-    if (this.sGlobal.resultGrabarBulto) {            
-      this.getDataDetBultosEmbalaje();
-    } 
-    else{
-     this.ListarDetalleXBulto(this.vlistTransacDetEmbalaje[0].Id_Tx,this.vNroBulto);
-      this.sGlobal.resultGrabarBulto = false;          
+    if(this.vPage == 3){
+      //Lista las series
+      this.ListarDetalleXBulto(this.vListaProductoSelect.Id_Tx,this.vNroBulto); 
     }
-    setTimeout(() => {
-      this.vSerie = "";
-      this.selectAll(this.txtSerie);
+
+    if(this.vPage == 5){                       
+      //Lista las series
+      this.ListarDetalleXBulto(this.vListaProductoSelect.Id_Tx,this.vNroBulto);      
+      //Lista los producto de la orden para obtener el saldo actual
+      this.getListarDespachoDetalle();
+    }
+
+    if(this.vPage == 9){                 
+      //Lista los bultos que contienen series y las series
+      this.ListarBultosDespacho(this.vListaProductoSelect.Id_Tx);  
+      //Lista los producto de la orden para obtener el saldo actual
+      this.getListarDespachoDetalle();
+      //  //Lista las series
+      // this.ListarDetalleXBulto(this.vListaProductoSelect.Id_Tx,this.vNroBulto);      
+    }
+
+    if(this.vPage == 8){
+    //Lista los bultos que contienen series y las series
+    this.ListarBultosDespacho(this.vListaProductoSelect.Id_Tx);    
+    }    
+      
+    setTimeout(() => {      
+      this.txtSerieRef.setFocus();            
     }, (500));    
   }    
 
@@ -308,34 +351,37 @@ export class EmbalajePage_10Page {
     });
   }
 
-  getDataDetBultosEmbalaje() {
-    this.ListarBultosDespacho(this.vEmbalajePage02.Id_Tx);   
+  getListarDespachoDetalle() {
+    this.ListarDespachoDetalle(this.vEmbalajePage02.Id_Tx);   
   }
 
-  ListarBultosDespacho(strId_Tx) {
-    this.sEmbalaje.ListarBultosDespacho(strId_Tx).then((result) => {    
-      this.lstBultosDespacho = result;  
+  ListarDespachoDetalle(strId_Tx) {
+    this.sEmbalaje.ListarDespachoDetalle(strId_Tx).then((result) => {    
+      this.lstProductoDespacho = result;  
+      debugger;
       
-      this.vUltimoNroBulto = this.lstBultosDespacho[this.lstBultosDespacho.length - 1].NroBulto;           
-      
-      if(this.vUltimoNroBulto != this.vNroBulto){
-        this.vNroBulto = this.vUltimoNroBulto;
-        this.sEmbalaje.ListarDetalleXBulto(strId_Tx,this.vNroBulto).then((result) => {           
-            this.listDetalleXBulto = result;        
-            this.rowCount = this.listDetalleXBulto.length;        
-        }, (err) => {
-          console.log('ListarDetalleXBulto', err);
-        });             
-      }    
-      else{
-        this.incrementarNumeroBulto();                 
-        this.sEmbalaje.ListarDetalleXBulto(strId_Tx,this.vNroBulto).then((result) => {           
-          this.listDetalleXBulto = result;        
-          this.rowCount = this.listDetalleXBulto.length;        
-        }, (err) => {
-          console.log('ListarDetalleXBulto', err);
-        });          
-      }   
+      var lista;
+      if(this.vItem != null && this.vItem != undefined){
+        this.vListaProductoSelect =  this.lstProductoDespacho.filter((item) => {      
+          return (item.Item == this.vItem);
+        });
+      }            
+      if(this.vPage == 9){
+        lista =  this.lstProductoDespacho.filter((item) => {      
+          return (item.Item == this.vListaProductoSelect.Item);
+        });
+        this.vListaProductoSelect = lista[0];
+      }      
+
+      // else{
+      //   this.vListaProductoSelect =  this.lstProductoDespacho.filter((item) => {      
+      //     return (item.Item == this.vListaProductoSelect.Item);
+      //   });
+      // }
+
+    
+
+      // this.vSaldo = this.vFiltroProductos[0].Saldo;      
       setTimeout(() => {
         this.vSerie = "";
         this.selectAll(this.txtSerie);
@@ -344,5 +390,53 @@ export class EmbalajePage_10Page {
       console.log('E-Embalaje listar', err);
     });
   }
+
+  ListarBultosDespacho(strId_Tx) {
+    this.sEmbalaje.ListarBultosDespacho(strId_Tx).then((result) => {    
+      this.lstBultosDespacho = result;  
+      debugger;
+
+      this.lstBultosDespacho =  this.lstBultosDespacho.filter((flag) => {      
+        return (flag.FlagImpreso == 1);
+      });
+
+
+      if(this.lstBultosDespacho.length >0){
+        this.vNroBulto = this.lstBultosDespacho[this.lstBultosDespacho.length - 1].NroBulto + 1;   
+      }
+      else{
+        this.vNroBulto = 1
+      }
+      //Lista las series
+      this.ListarDetalleXBulto(this.vListaProductoSelect.Id_Tx,this.vNroBulto);      
+    })
+  }
+  //     if(this.vUltimoNroBulto != this.vNroBulto){
+   
+  //       this.vNroBulto = this.vUltimoNroBulto;
+  //       this.sEmbalaje.ListarDetalleXBulto(strId_Tx,this.vNroBulto).then((result) => {           
+  //           this.listDetalleXBulto = result;        
+  //           this.rowCount = this.listDetalleXBulto.length;        
+  //       }, (err) => {
+  //         console.log('ListarDetalleXBulto', err);
+  //       });             
+  //     }    
+  //     else{
+  //       this.incrementarNumeroBulto();                 
+  //       this.sEmbalaje.ListarDetalleXBulto(strId_Tx,this.vNroBulto).then((result) => {           
+  //         this.listDetalleXBulto = result;        
+  //         this.rowCount = this.listDetalleXBulto.length;        
+  //       }, (err) => {
+  //         console.log('ListarDetalleXBulto', err);
+  //       });          
+  //     }   
+  //     setTimeout(() => {
+  //       this.vSerie = "";
+  //       this.selectAll(this.txtSerie);
+  //     }, (500));    
+  //   }, (err) => {
+  //     console.log('E-Embalaje listar', err);
+  //   });
+  // }
 
 }

@@ -5,6 +5,7 @@ import { EmbalajePage_06Page } from '../embalaje-page-06/embalaje-page-06';
 import { EmbalajePage_09Page } from '../embalaje-page-09/embalaje-page-09';
 import { GlobalServiceProvider } from '../../../providers/global-service/global-service';
 import { EmbalajePage_10Page } from '../embalaje-page-10/embalaje-page-10';
+import { EmbalajePage_04Page } from '../embalaje-page-04/embalaje-page-04';
 
 
 /**
@@ -35,8 +36,9 @@ export class EmbalajePage_05Page {
   vNroItem: any = 0;
   vBultoSelect: any;
   vProducto: any;
-  vlistTransacDetEmbalaje:any;
-  
+  //vlistTransacDetEmbalaje:any;
+  vLisTransacEmbalaje:any;
+  vSaldo:any;  
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController,
     private alertCtrl: AlertController,
@@ -47,8 +49,11 @@ export class EmbalajePage_05Page {
     this.vNroBultoCeros = navParams.get('dataNroBultoCeros');
     this.vEmbalajePage02 = navParams.get('dataPage02');
     this.vProducto = navParams.get('descProducto');
-    this.vlistTransacDetEmbalaje = navParams.get('listTransacDetEmbalaje');
+    //this.vlistTransacDetEmbalaje = navParams.get('listTransacDetEmbalaje');
     this.sGlobal.resultGrabarBulto = false;
+    this.vLisTransacEmbalaje = navParams.get('lstTransac');   
+    this.vSaldo = navParams.get('vSaldo');   
+           
     debugger;
   }
 
@@ -107,23 +112,44 @@ export class EmbalajePage_05Page {
     });
   }
 
-  goToEmbalajePage10() {            
-    if (this.vBultoSelect) {             
-      var nroBulto = parseInt(this.vBultoSelect.NroBulto);      
-      this.navCtrl.push(EmbalajePage_10Page, {
-        nroBulto: nroBulto,        
-        dataPage02: this.vEmbalajePage02,
-        descProducto: this.vProducto,
-        nroItemVisual: this.vBultoSelect.NroItem,           
-        listTransacDetEmbalaje: this.vlistTransacDetEmbalaje,            
-      });
+  goToEmbalajePage10() {        
+    debugger;    
+    var a = this.vEmbalajePage03;
+    if (this.vBultoSelect) {           
+      if ((this.vEmbalajePage03.FlagLotePT == 1 && this.vEmbalajePage03.FlagSeriePT == 0) || (this.vEmbalajePage03.FlagLotePT == 0 && this.vEmbalajePage03.FlagSeriePT == 0)) {
+        var nroBulto = parseInt(this.vBultoSelect.NroBulto); 
+        this.navCtrl.push(EmbalajePage_04Page, {       
+          page: 5,
+          nroBulto: nroBulto,
+          dataPage02: this.vEmbalajePage02,
+          // lstTransac: this.vEmbalajePage03,
+          // lstProductSelect: this.vListaProductoSelect,
+          lstTransac: this.vLisTransacEmbalaje,
+          nroItemVisual: this.vBultoSelect.NroItem,    
+        });
+      }
+      else{
+        if ((this.vEmbalajePage03.FlagSeriePT == 1 && this.vEmbalajePage03.FlagLotePT == 0) || (this.vEmbalajePage03.FlagLotePT == 1 && this.vEmbalajePage03.FlagSeriePT == 1)) {                        
+          var nroBulto = parseInt(this.vBultoSelect.NroBulto);      
+          this.navCtrl.push(EmbalajePage_10Page, {
+            page: 5,
+            nroBulto: nroBulto,        
+            dataPage02: this.vEmbalajePage02,
+            descProducto: this.vProducto,
+            nroItemVisual: this.vBultoSelect.NroItem,           
+            //listTransacDetEmbalaje: this.vlistTransacDetEmbalaje,   
+            dataPageFiltro: this.vEmbalajePage03,     
+            vSaldo: this.vSaldo    
+          });
+        }
+      }
     }
     else {
      alert("Debe seleccionar un bulto")
     }
   }
 
-  goToEmbalajePage09(objDetBultosEmbalaje) {
+  goToEmbalajePage09(objDetBultosEmbalaje) {    
     this.vNroBultoCerosItems = objDetBultosEmbalaje.NroBulto;
     this.llenarNumeros(objDetBultosEmbalaje.NroBulto);
     this.navCtrl.push(EmbalajePage_09Page, {
@@ -200,7 +226,7 @@ export class EmbalajePage_05Page {
                 this.mostrarConfirmacion(respuesta.message, "Confirmación");
                 this.getDataDetBultosEmbalaje();
                 this.getDataDetalleBultoXBulto();
-                this.vNroItem = 0;
+                this.vNroItem = 0;                
               });
 
             }
@@ -217,7 +243,7 @@ export class EmbalajePage_05Page {
 
   ionViewWillEnter() {
     this.getDataDetBultosEmbalaje();
-    this.getDataDetalleBultoXBulto();
+    this.getDataDetalleBultoXBulto();    
   }
 
   presentToast(message) {
@@ -230,6 +256,7 @@ export class EmbalajePage_05Page {
   }
 
   selectItem(obj): void {
+    debugger;
     this.vBultoSelect = obj;
     this.presentToast("El bulto " + obj.NroBulto + " fue seleccionado.")
   }

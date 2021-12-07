@@ -30,9 +30,11 @@ export class EmbalajePage_06Page {
   resultRegistro: any;
   listCajaEmbajale: any;
   Id_Caja: any;
-  vlistTransacDetEmbalaje: any;
-  vProducto: any;
-  vNroItemVisual: any;
+  //vlistTransacDetEmbalaje: any;
+  vProducto: any;  
+  vEmbalajePage03: any;
+  vSaldo:any;
+  vLisTransacEmbalaje:any;
 
   @ViewChild(Navbar) navBar: Navbar;
   data: any;
@@ -41,17 +43,27 @@ export class EmbalajePage_06Page {
     this.vNroBulto = navParams.get('dataNroBulto');
     this.vNroBultoCeros = navParams.get('dataNroBultoCeros');
     this.vEmbalajePage02 = navParams.get('dataPage02');
-    this.vlistTransacDetEmbalaje = navParams.get('listTransacDetEmbalaje');
-    this.vProducto = navParams.get('descProducto');
-    this.vNroItemVisual = navParams.get('nroItemVisual');
+    //this.vlistTransacDetEmbalaje = navParams.get('listTransacDetEmbalaje');
+    this.vProducto = navParams.get('descProducto');    
     this.data = this.navParams.get('data');
+    this.vEmbalajePage03 = navParams.get('dataPageFiltro');
+    this.vSaldo = navParams.get('vSaldo');
+
+    this.vLisTransacEmbalaje = navParams.get('lstTransac');
+
+    
+
+    debugger;
   }
 
   goToEmbalajePage07() {
     debugger;
     this.navCtrl.push(EmbalajePage_07Page, {
       dataNroBulto: this.vNroBulto, dataNroBultoCeros: this.vNroBultoCeros,
-      dataPage02: this.vEmbalajePage02
+      dataPage02: this.vEmbalajePage02,      
+      dataPageFiltro: this.vEmbalajePage03,
+      lstTransac: this.vLisTransacEmbalaje,           
+      data: this.data
     });
   }
 
@@ -77,7 +89,11 @@ export class EmbalajePage_06Page {
           this.sGlobal.resultGrabarBulto = true;        
           this.navCtrl.push(EmbalajePage_08Page, {
             dataPage02: this.vEmbalajePage02,
-            nroBulto :this.vNroBulto
+            nroBulto :this.vNroBulto,
+            data: this.data,
+            dataPageFiltro: this.vEmbalajePage03,
+            vSaldo: this.vSaldo,           
+            lstTransac: this.vLisTransacEmbalaje           
           });
 
 
@@ -127,8 +143,12 @@ export class EmbalajePage_06Page {
 
     this.navCtrl.push(EmbalajePage_08Page, {
       dataPage02: this.vEmbalajePage02,
-      nroBulto :this.vNroBulto
-    });
+      nroBulto :this.vNroBulto,
+      data: this.data,
+      dataPageFiltro: this.vEmbalajePage03,
+      vSaldo: this.vSaldo,           
+      lstTransac: this.vLisTransacEmbalaje           
+    });   
   }
   
   ionViewDidLoad() {
@@ -186,15 +206,22 @@ export class EmbalajePage_06Page {
          this.navCtrl.pop();
        }
       
-      if (name == 'EmbalajePage_10Page') {        
-        this.navCtrl.push(EmbalajePage_10Page, {
-          dataPage02: this.vEmbalajePage02,
-          nroBulto: this.vNroBulto,
-          listTransacDetEmbalaje: this.vlistTransacDetEmbalaje,
-          descProducto: this.vProducto,
-          nroItemVisual: this.vNroItemVisual,
-          data: this.data
-        });
+      if (name == 'EmbalajePage_10Page') {      
+        // this.sGlobal.resultGrabarBulto = true;  
+        // this.navCtrl.push(EmbalajePage_10Page, {
+        //   dataPage02: this.vEmbalajePage02,
+        //   nroBulto: this.vNroBulto,
+        //   //listTransacDetEmbalaje: this.vlistTransacDetEmbalaje,
+        //   descProducto: this.vProducto,          
+        //   data: this.data,
+        //   dataPageFiltro: this.vEmbalajePage03
+        // });
+
+        this.navCtrl.pop();
+      }
+
+      if (name == 'EmbalajePage_07Page') {      
+        this.navCtrl.pop();
       }
     
 

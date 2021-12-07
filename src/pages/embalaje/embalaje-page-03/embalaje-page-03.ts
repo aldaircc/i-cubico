@@ -50,7 +50,7 @@ export class EmbalajePage_03Page {
   valorpopoverGlobal: boolean = false
   popoverGlobal: any;
   data: any;
-
+  listBultosImpresos: any;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -285,7 +285,14 @@ export class EmbalajePage_03Page {
   ListarBultosDespacho(strId_Tx) {
     this.sEmbalaje.ListarBultosDespacho(strId_Tx).then((result) => {
       debugger;
-      this.listDetBultosEmbalaje = result;
+      //this.listDetBultosEmbalaje = result;
+      this.listBultosImpresos= result;
+
+      this.listDetBultosEmbalaje =  this.listBultosImpresos.filter((flag) => {      
+        return (flag.FlagImpreso == 1);
+      });
+
+
     }, (err) => {
       console.log('E-Embalaje listar', err);
     });
@@ -336,19 +343,20 @@ export class EmbalajePage_03Page {
               dataPage02: this.vEmbalajePage02,
               lstTransac: this.listTransacDetEmbalaje,
               lstProductSelect: this.vListaProductoSelect,
-              nroItemVisual: numItemVisual              
+              nroItemVisual: numItemVisual,
+              data: this.data              
             });
           }
           else{
             if ((this.vListaProductoSelect.FlagSeriePT == 1 && this.vListaProductoSelect.FlagLotePT == 0) || (this.vListaProductoSelect.FlagLotePT == 1 && this.vListaProductoSelect.FlagSeriePT == 1)) {               
               this.validacionNroBulto();
-              this.navCtrl.push(EmbalajePage_10Page, {                
-                Id_UM: this.vListaProductoSelect.Id_UM,
-                nroBulto: this.vNroBulto,
-                listTransacDetEmbalaje: this.listTransacDetEmbalaje,
+              debugger;
+              this.navCtrl.push(EmbalajePage_10Page, {                                
+                page: 3,
+                nroBulto: this.vNroBulto,                
                 dataPage02: this.vEmbalajePage02,
-                nroItemVisual: numItemVisual, 
-                descProducto: this.vListaProductoSelect.Producto,
+                //nroItemVisual: numItemVisual,                 
+                dataPageFiltro : this.vListaProductoSelect,
                 data: this.data
               });
             }
@@ -366,8 +374,13 @@ export class EmbalajePage_03Page {
 
   goToEmbalajePage08() {
     debugger;
+    
+    this.validacionNroBulto();
     this.navCtrl.push(EmbalajePage_08Page, {
-      dataPage02: this.vEmbalajePage02
+      dataPage02: this.vEmbalajePage02,
+      nroBulto: this.vNroBulto,
+      page: 3,
+      data: this.data
     });
   }
 
@@ -491,7 +504,7 @@ export class EmbalajePage_03Page {
   }
 
   ionViewWillEnter() {
-
+    debugger;
     this.vListaProductoSelect = undefined;
     this.getDataDetEmbalaje();
     this.getDataDetBultosEmbalaje();

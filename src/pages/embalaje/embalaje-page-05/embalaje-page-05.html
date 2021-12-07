@@ -14,9 +14,9 @@
             <ion-segment-button value="bultos" style="color:white">
               Bultos
             </ion-segment-button>
-            <ion-segment-button value="detalleBultos" style="color:white">
+            <!-- <ion-segment-button value="detalleBultos" style="color:white">
               Detalle Bultos
-            </ion-segment-button>           
+            </ion-segment-button>            -->
           </ion-segment>
     </ion-toolbar>
 </ion-header>
@@ -27,7 +27,8 @@
       <ion-list *ngSwitchCase="'bultos'">
         <ion-row class="bgWhite">
           <ion-card *ngFor="let objDetBultosEmbalaje of listDetBultosEmbalaje">        
-            <ion-card-content no-padding (press)="selectItem(objDetBultosEmbalaje)">  
+            <!-- <ion-card-content no-padding (press)="selectItem(objDetBultosEmbalaje)">   -->
+            <ion-card-content>  
               <ion-row>
                 <ion-col col-10 col-sm>
                   <h5><b>N°Bulto: </b>{{objDetBultosEmbalaje.NroBulto}}</h5>                          
@@ -35,13 +36,13 @@
                   <h5><b>Peso Físico: </b>{{objDetBultosEmbalaje.Peso|number : '1.2-2' }}</h5>                                
                   <h5><b>Observaciones: </b>{{objDetBultosEmbalaje.Observacion }}</h5>
                 </ion-col>
-                <ion-col col-2 col-sm>                 
+                <!-- <ion-col col-2 col-sm>                 
                   <ion-row>
                       <button clear ion-button icon-only (click)="goToEmbalajePage09(objDetBultosEmbalaje)">
                         <ion-icon name="ios-albums-outline"></ion-icon>
                       </button>
                     </ion-row>
-                </ion-col>
+                </ion-col> -->
               </ion-row>
             </ion-card-content>
           </ion-card>
@@ -49,7 +50,7 @@
       </ion-list>
     
     
-        <ion-list *ngSwitchCase="'detalleBultos'">
+        <!-- <ion-list *ngSwitchCase="'detalleBultos'">
           <ion-row class="bgWhite">
             <ion-card *ngFor="let objDetBultoXBulto of lstDetalleBultoXBulto">        
               <ion-card-content>  
@@ -72,11 +73,11 @@
               </ion-card-content>
             </ion-card>
           </ion-row>     
-        </ion-list>
+        </ion-list> -->
     </div>
 </ion-content>
 
-<ion-footer>
+<!-- <ion-footer>
     <ion-grid class="bgFooter">
         <ion-row>      
           <ion-col col-12 class="bgFooter-col">
@@ -86,6 +87,6 @@
         </ion-col>   
         </ion-row>
     </ion-grid>
-</ion-footer>
+</ion-footer> -->
 
 

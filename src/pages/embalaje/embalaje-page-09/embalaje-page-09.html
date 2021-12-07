@@ -7,45 +7,86 @@
 <ion-header>
 
   <ion-toolbar no-padding no-margin color="primary">
-    <ion-navbar>
-      <ion-label style="font-size: 15px; color: white; font-weight:bold;">ÍTEMS AÑADIDOS</ion-label>                  
-    </ion-navbar>
+      <ion-navbar>
+        <ion-label style="font-size: 15px; color: white; font-weight:bold;">DETALLE</ion-label>                              
+      </ion-navbar>
+      <ion-segment [(ngModel)]="detalle">
+          <ion-segment-button value="bultos" style="color:white">
+            Bultos
+          </ion-segment-button>
+          <ion-segment-button value="detalleBultos" style="color:white">
+            Detalle Bultos
+          </ion-segment-button>           
+      </ion-segment>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding>
-  <ion-row class="bgWhite">
-    <ion-card *ngFor="let objDetBultoXBulto of lstDetalleBultoXBulto">
-      <ion-card-content>
-        <ion-row>
-          <ion-col col-10 col-sm>
-            <h5><b>{{objDetBultoXBulto.Producto}}</b></h5>
-            <h5><b>Código: </b>{{objDetBultoXBulto.Codigo}}</h5>
-            <h5><b>Cantidad: </b>{{objDetBultoXBulto.Cantidad|number : '1.2-2' }}</h5>
-            <h5><b>N° Bulto: </b>{{ objDetBultoXBulto.NroBulto }}</h5>
-            <h5><b>Ítem: </b>{{objDetBultoXBulto.Item }}</h5>
-            <h5><b>Lote/Serie: </b>{{objDetBultoXBulto.LoteLab }}</h5>
-          </ion-col>
-          <ion-col col-2 col-sm>
-            <button clear ion-button icon-only (click)="EliminarItems(objDetBultoXBulto)">
-              <ion-icon name="md-trash" color="dark"></ion-icon>
-            </button>
-          </ion-col>
-        </ion-row>
-      </ion-card-content>
-    </ion-card>
-  </ion-row>
+  <div [ngSwitch]="detalle">     
+    <ion-list *ngSwitchCase="'bultos'">
+      <ion-row class="bgWhite">
+        <ion-card *ngFor="let objDetBultosEmbalaje of listDetBultosEmbalaje">        
+          <!-- <ion-card-content no-padding (press)="selectItem(objDetBultosEmbalaje)">   -->
+            <ion-card-content no-padding>  
+            <ion-row>
+              <ion-col col-10 col-sm>
+                <h5><b>N°Bulto: </b>{{objDetBultosEmbalaje.NroBulto}}</h5>                          
+                <h5><b>Cantidad Ítems: </b>{{objDetBultosEmbalaje.NroItem}}</h5>                                                    
+                <h5><b>Peso Físico: </b>{{objDetBultosEmbalaje.Peso|number : '1.2-2' }}</h5>                                
+                <h5><b>Observaciones: </b>{{objDetBultosEmbalaje.Observacion }}</h5>
+              </ion-col>
+              <ion-col col-2 col-sm>                 
+                <ion-row>
+                    <button clear ion-button icon-only (click)="goToEmbalajePage12(objDetBultosEmbalaje)">
+                      <ion-icon name="ios-albums-outline"></ion-icon>
+                    </button>
+                  </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+    </ion-list>
+  
+  
+      <ion-list *ngSwitchCase="'detalleBultos'">
+        <ion-row class="bgWhite">
+          <ion-card *ngFor="let objDetBultoXBulto of lstDetalleBultoXBulto">        
+            <ion-card-content>  
+              <ion-row>
+                <ion-col col-10 col-sm>
+                  <h5><b>N°Bulto: </b>{{objDetBultoXBulto.NroBulto}}</h5>                          
+                  <h5><b></b>{{objDetBultoXBulto.Producto}}</h5>                                                    
+                  <h5><b>Código: </b>{{objDetBultoXBulto.Codigo}}</h5>                                
+                  <h5><b>Cantidad: </b>{{objDetBultoXBulto.Cantidad|number : '1.2-2' }}</h5>                                
+                  <h5><b>Item: </b>{{objDetBultoXBulto.Item}}</h5>                                
+                  <h5><b>Lote: </b>{{objDetBultoXBulto.LoteLab}}</h5>
+                  <h5><b>U.M: </b>{{objDetBultoXBulto.UM}}</h5>
+                </ion-col>                  
+                <ion-col col-2 col-sm>
+                    <button clear ion-button icon-only (click)="eliminarBulto(objDetBultoXBulto)">
+                      <ion-icon name="md-trash" color="dark"></ion-icon>
+                    </button>
+                </ion-col>                  
+              </ion-row>                                                    
+            </ion-card-content>
+          </ion-card>
+        </ion-row>     
+      </ion-list>
+  </div>
 </ion-content>
 
-<ion-footer>
+<!-- <ion-footer>
   <ion-grid class="bgFooter">
-    <ion-row>
-      <ion-col col-12 class="bgFooter-col">
-        <button ion-button icon-start (click)="goToEmbalajePage04()">
+      <ion-row>      
+        <ion-col col-12 class="bgFooter-col">
+        <button ion-button icon-start (click)="goToEmbalajePage10()">
           <ion-icon name="md-cube"></ion-icon>
         </button>
-      </ion-col>
-    </ion-row>
+      </ion-col>   
+      </ion-row>
   </ion-grid>
-</ion-footer>
+</ion-footer> -->
+
+

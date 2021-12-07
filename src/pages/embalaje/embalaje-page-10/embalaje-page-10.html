@@ -29,7 +29,15 @@
         <div class="bgHeader-label">Producto:</div>
       </ion-col>
       <ion-col col-8 col-sm class="bgHeader-col">
-        <div class="bgHeader-text">{{ vProducto }}</div>
+        <div class="bgHeader-text">{{ vListaProductoSelect.Producto }}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-4 col-sm class="bgHeader-col">
+        <div class="bgHeader-label">Saldo:</div>
+      </ion-col>
+      <ion-col col-8 col-sm class="bgHeader-col">
+        <div class="bgHeader-text">{{ vListaProductoSelect.Saldo }}</div>
       </ion-col>
     </ion-row>
     <ion-row align-items-center>
@@ -60,14 +68,6 @@
                 <h5><b>Serie/Lote: </b> {{objTransacEmbalaje.Serie}}</h5>                
               </ion-card-content>
             </ion-col>
-<!-- 
-            <ion-col col-2 col-sm>
-              <ion-card-content no-padding>
-                <button no-margin no-padding ion-button icon-only clear (click)="goToEmbalajePage04(objTransacEmbalaje)" style="position: absolute;	top: 0;	bottom: 0; left: 0; right: 0; width: 80%; margin: auto; background:none;">
-                  <ion-icon name="md-play" color="dark"></ion-icon>
-                </button>
-              </ion-card-content>
-            </ion-col>          -->
         </ion-row>
       </ion-grid>
     </ion-card>
@@ -100,13 +100,13 @@
           </div>
         </button>
       </ion-col>
-      <ion-col style="margin: 0px; padding: 0px; ">
+      <!-- <ion-col style="margin: 0px; padding: 0px; ">
         <button ion-button style="margin: 0px; padding: 0px" (click)="goToEmbalajePage05()" medium full>
           <div>
             <ion-icon name='md-list'></ion-icon> <br>
           </div>
         </button>
-      </ion-col>
+      </ion-col> -->
       <ion-col style="margin: 0px; padding: 0px; ">
         <button ion-button style="margin: 0px; padding: 0px" (click)="goToEmbalajePage09()" medium full>
           <div>
