@@ -221,5 +221,34 @@ export class EmbalajeServiceProvider {
     });
   }
 
+  RegistrarBultoImpreso(Id_Tx,NroBulto) {
+    var parameter: any;
+    parameter = { "Id_Tx": Id_Tx, "NroBulto": NroBulto};
+    return new Promise((resolve, reject) => {
+      this.http.post(this.sGlobal.despacho + 'RegistrarBultoImpreso/Id_Tx/NroBulto', JSON.stringify(parameter), { headers: this.headers })
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+          console.log('RegistrarProductoBulto', data);
+        }, err => {
+          console.log('Error RegistrarBultoImpreso', err);
+        })
+    });
+  }
+
+  ValidarSerieEmbalaje(strLoteLab, strId_Tx) {
+    var parameter: any;
+    parameter = { "strLoteLab": strLoteLab, "strId_Tx": strId_Tx  };
+
+    return new Promise(resolve => {
+      this.http.get(this.sGlobal.despacho + 'ValidarSerieEmbalaje', { params: parameter })
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log('Error ValidarSerieEmbalaje', err);
+        })
+    });
+  }
 
 }
