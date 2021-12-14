@@ -557,7 +557,7 @@ export class EtiquetadoPage_01Page {
           listEtq.push({ "campo": "|CANTBULTO|", "valor": this.cantxEtq });
           listEtq.push({ "campo": "|CANTXBULTO|", "valor": this.cantXBulto });
           listEtq.push({ "campo": "|SALDO|", "valor": "0" });          
-          listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo == true) ? ((objImp.FechaVencimiento != null) ? moment(objImp.FechaEmision).format('DD/MM/YYYY') : "" ): currentDate.format('DD/MM/YYYY') });          
+          listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo == true) ? ((objImp.FechaEmision != null) ? moment(objImp.FechaEmision).format('DD/MM/YYYY') : "" ): currentDate.format('DD/MM/YYYY') });          
           listEtq.push({ "campo": "|ORDEN|", "valor": (this.findArticulo == true) ? "" : this.vEtq.NroDoc });
           listEtq.push({ "campo": "|USUARIO|", "valor": this.sGlobal.userName });
           listEtq.push({ "campo": "|COMPOSICION|", "valor": this.vEtq.CondicionAlmac });
@@ -587,7 +587,7 @@ export class EtiquetadoPage_01Page {
           listEtq.push({ "campo": "|CANTBULTO|", "valor": (i == 0 && this.cantEtqSaldo > 0) ? this.residuo / this.cantXBulto : this.cantxEtq });
           listEtq.push({ "campo": "|CANTXBULTO|", "valor": this.cantXBulto });
           listEtq.push({ "campo": "|SALDO|", "valor": (i == 0 && this.cantEtqSaldo > 0) ? this.residuo % this.cantXBulto : 0 });          
-          listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo != false) ? ((objImp.FechaVencimiento != null) ? moment(objImp.FechaEmision).format('DD/MM/YYYY') : "" ): currentDate.format('DD/MM/YYYY') });
+          listEtq.push({ "campo": "|FECHA_INGRESO|", "valor": (this.findArticulo != false) ? ((objImp.FechaEmision != null) ? moment(objImp.FechaEmision).format('DD/MM/YYYY') : "" ): currentDate.format('DD/MM/YYYY') });
           listEtq.push({ "campo": "|ORDEN|", "valor": (this.findArticulo != false) ? "" : this.vEtq.NroDoc });
           listEtq.push({ "campo": "|USUARIO|", "valor": this.sGlobal.userName });
           listEtq.push({ "campo": "|COMPOSICION|", "valor": this.vEtq.CondicionAlmac });
