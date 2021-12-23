@@ -30,11 +30,16 @@
           <!-- <ion-card-content no-padding (press)="selectItem(objDetBultosEmbalaje)">   -->
             <ion-card-content no-padding>  
             <ion-row>
-              <ion-col col-10 col-sm>
+              <ion-col col-8 col-sm>
                 <h5><b>N°Bulto: </b>{{objDetBultosEmbalaje.NroBulto}}</h5>                          
                 <h5><b>Cantidad Ítems: </b>{{objDetBultosEmbalaje.NroItem}}</h5>                                                    
                 <h5><b>Peso Físico: </b>{{objDetBultosEmbalaje.Peso|number : '1.2-2' }}</h5>                                
                 <h5><b>Observaciones: </b>{{objDetBultosEmbalaje.Observacion }}</h5>
+              </ion-col>
+              <ion-col col-2 col-sm>
+                <button clear ion-button icon-only (click)="EliminarPacking(objDetBultosEmbalaje)">
+                  <ion-icon name="md-trash" color="dark"></ion-icon>
+                </button>
               </ion-col>
               <ion-col col-2 col-sm>                 
                 <ion-row>

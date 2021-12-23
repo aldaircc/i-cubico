@@ -261,4 +261,48 @@ export class EmbalajePage_09Page {
     this.presentToast("El bulto " + obj.NroBulto + " fue seleccionado.")
   }
 
+
+  EliminarPacking(objDetBultosEmbalaje) {    
+    alert("eliminar");
+    objDetBultosEmbalaje.Lote = objDetBultosEmbalaje.LoteLab;
+    this.mostrarAlertaEliminarPacking(objDetBultosEmbalaje);
+  }
+
+  mostrarAlertaEliminarPacking(objDetBultosEmbalaje) {
+    var message = "";
+    message = "¿Desea eliminar el bulto " +objDetBultosEmbalaje.NroBulto +  "?";
+
+    let alert = this.alertCtrl.create({
+      title: 'Eliminar Bulto',
+      message: message,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            console.log('Aceptar clicked');
+            console.log(objDetBultosEmbalaje);            
+            this.sEmbalaje.EliminarPacking(objDetBultosEmbalaje).then((result) => {              
+              console.log(result);
+              var respuesta: any = result;
+              this.mostrarConfirmacion(respuesta.message,"Confirmación");
+              this.getDataDetBultosEmbalaje();
+              this.getDataDetalleBultoXBulto();
+            });
+
+          }
+        }
+      ]
+    });
+    alert.present();
+
+  }
+
+
 }

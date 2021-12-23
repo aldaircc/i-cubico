@@ -251,4 +251,19 @@ export class EmbalajeServiceProvider {
     });
   }
 
+  EliminarPacking(entidadEmbalaje) {
+    var parameter: any;
+    parameter = { "entidad": entidadEmbalaje };
+    return new Promise((resolve, reject) => {
+      this.http.post(this.sGlobal.despacho + 'EliminarPacking/entidad', JSON.stringify(parameter), { headers: this.headers })
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+          console.log('EliminarPacking', data);
+        }, err => {
+          console.log('Error EliminarPacking', err);
+        })
+    });
+  }
+
 }

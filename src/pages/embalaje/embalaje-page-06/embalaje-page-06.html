@@ -44,19 +44,7 @@
     <ion-label class="fieldForm"> Cod. Bulto:</ion-label>   
      </ion-col>          
      <ion-col col-8 col-sm>{{vEmbalajePage02.Id_Tx}}/{{vNroBultoCeros}}</ion-col>  
-  </ion-row>    
-  <ion-row align-items-center>   
-    <ion-col col-4 col-sm>            
-    <ion-label class="fieldForm"> Embalaje:</ion-label>   
-     </ion-col>          
-     <ion-col>
-       <ion-select col-8 col-sm interface="action-sheet" [(ngModel)]="Id_Caja">
-         <ion-option *ngFor="let cajaEmbalaje of listCajaEmbajale" value="{{ cajaEmbalaje.Id_Caja }}">
-          {{ cajaEmbalaje.NombreCajaEmbalaje }}
-         </ion-option>
-       </ion-select>
-      </ion-col>  
-  </ion-row>    
+  </ion-row>      
   <ion-row align-items-center>   
     <ion-col col-4 col-sm>            
       <ion-label class="fieldForm"> Peso Físico:</ion-label>   
@@ -74,7 +62,19 @@
       <ion-icon name="ios-stopwatch-outline"></ion-icon>
     </button> 
   </ion-col>        
-  </ion-row>        
+  </ion-row>    
+  <ion-row align-items-center>   
+    <ion-col col-4 col-sm>            
+    <ion-label class="fieldForm"> Embalaje:</ion-label>   
+     </ion-col>          
+     <ion-col>
+       <ion-select col-8 col-sm interface="action-sheet" [(ngModel)]="Id_Caja">
+         <ion-option *ngFor="let cajaEmbalaje of listCajaEmbajale" value="{{ cajaEmbalaje.Id_Caja }}">
+          {{ cajaEmbalaje.NombreCajaEmbalaje }}
+         </ion-option>
+       </ion-select>
+      </ion-col>  
+  </ion-row>      
   <ion-row align-items-center>   
     <ion-col col-12 col-sm>            
       <ion-label class="fieldForm"> Observaciones:</ion-label>   
