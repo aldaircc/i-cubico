@@ -262,8 +262,7 @@ export class EmbalajePage_09Page {
   }
 
 
-  EliminarPacking(objDetBultosEmbalaje) {    
-    alert("eliminar");
+  EliminarPacking(objDetBultosEmbalaje) {        
     objDetBultosEmbalaje.Lote = objDetBultosEmbalaje.LoteLab;
     this.mostrarAlertaEliminarPacking(objDetBultosEmbalaje);
   }
