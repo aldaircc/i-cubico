@@ -507,7 +507,7 @@ export class EtiquetadoPage_01Page {
                 'SaldoEtiqueta': (cantEtqSaldo == 0) ? 0 : cantEtqSaldo,
                 'Id_Causal': null,
                 'Id_SubAlmacen': this.id_SubAlm,
-                'Serie': this.serie
+                'Serie': (this.vEtq.FlagSerie == true) ?  this.serie : null,
               };
               debugger;
 

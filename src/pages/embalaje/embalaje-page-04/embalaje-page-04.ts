@@ -135,7 +135,9 @@ export class EmbalajePage_04Page {
     this.navCtrl.push(EmbalajePage_07Page, {
       dataNroBulto: this.vNroBulto,
       dataNroBultoCeros: this.vNroBultoCeros,
-      dataPage02: this.vEmbalajePage02
+      dataPage02: this.vEmbalajePage02,
+      dataPageFiltro: this.vListProductSelect,
+      lstTransac: this.vLisTransacEmbalaje
     });
   }
 
