@@ -106,6 +106,8 @@ import { EmbalajePage_07Page } from '../pages/embalaje/embalaje-page-07/embalaje
 import { EmbalajePage_08Page } from '../pages/embalaje/embalaje-page-08/embalaje-page-08';//YUS
 import { EmbalajePage_09Page } from '../pages/embalaje/embalaje-page-09/embalaje-page-09';//YUS
 import { EmbalajePage_10Page } from '../pages/embalaje/embalaje-page-10/embalaje-page-10';//aromero
+import { EmbalajePage_11Page } from '../pages/embalaje/embalaje-page-11/embalaje-page-11';//YUS
+import { EmbalajePage_12Page } from '../pages/embalaje/embalaje-page-12/embalaje-page-12';//YUS
 import { BultoMasivoPage } from '../pages/embalaje/bulto-masivo/bulto-masivo';//aromero
 import { SelectAllDirective } from '../directives/select-all/select-all';
 import { AlmacenajeServiceProvider } from '../providers/almacenaje-service/almacenaje-service';
@@ -190,6 +192,8 @@ import { ConsultarBultoPage } from '../pages/embalaje/consultar-bulto/consultar-
     EmbalajePage_08Page, //YUS
     EmbalajePage_09Page, //YUS
     EmbalajePage_10Page, //aromero
+    EmbalajePage_11Page, //YUS
+    EmbalajePage_12Page, //YUS
     BultoMasivoPage, //YUS
     SelectAllDirective, //Loque#369Dev
     TransitoPage, //aromero
@@ -296,6 +300,8 @@ import { ConsultarBultoPage } from '../pages/embalaje/consultar-bulto/consultar-
     EmbalajePage_08Page, //YUS
     EmbalajePage_09Page, //YUS
     EmbalajePage_10Page, //aromero
+    EmbalajePage_11Page, //YUS
+    EmbalajePage_12Page, //YUS
     TransitoPage, //aromero
     PalletsTransitoPage, //aromero
     DetallePalletUaPage, //aromero
